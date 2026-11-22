@@ -1,0 +1,19 @@
+entries = IntSeq(1, 300).map((i) -> new Dynamic {
+  id = i
+  key = "item-\(i)"
+  unicode = "한글-\(i)-😀"
+  big = 9007199254740993 + i
+  ratio = i * 0.25
+  active = i % 2 == 0
+  raw = Bytes(i % 256, (i * 7) % 256, 255, 0)
+  duration = i.ms
+  size = i.kib
+  tags = Set("a", "b-\(i % 5)")
+})
+meta {
+  total = entries.length
+  nested {
+    left = Pair("k", 42)
+    right = Map("x", 1, "y", 2, "z", 3)
+  }
+}

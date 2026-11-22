@@ -15,7 +15,9 @@ use crate::schema::module_schema_to_js;
 use crate::values::decoded_value_to_js;
 use napi::{
     Env, Result, ScopedTask,
-    bindgen_prelude::{Array, AsyncTask, BigInt, Function, Null, Object, Uint8Array, Utf16String},
+    bindgen_prelude::{
+        Array, AsyncTask, BigInt, BufferSlice, Function, Null, Object, Uint8Array, Utf16String,
+    },
     threadsafe_function::UnknownReturnValue,
 };
 use napi_derive::napi;
@@ -1086,7 +1088,9 @@ fn project_info_to_js<'env>(env: &'env Env, proj: &Project) -> Result<Object<'en
 
 struct SessionState {
     session: SourceSession,
+    columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer,
     closed: bool,
+    pending_continue: bool,
 }
 
 #[derive(Clone)]
@@ -1328,6 +1332,10 @@ impl EvaluatorShared {
             .as_ref()
             .map(|b| b.enter_call(Arc::clone(&call_cancel), watchdog.deadline()));
 
+        let is_continue = matches!(op, EvalOp::ContinueRunning { .. });
+        if is_continue {
+            guard.pending_continue = false;
+        }
         let outcome = self.run_op_locked(
             &mut guard.session,
             op,
@@ -1433,6 +1441,21 @@ impl EvaluatorShared {
         timeout_ms: Option<u64>,
     ) -> std::result::Result<EvalOutput, NativeError> {
         match op {
+            EvalOp::ContinueRunning { binary } => {
+                let val = self
+                    .drive_session(session, call_cancel, watchdog, timeout_ms)
+                    .map_err(|e| self.map_runtime_err(session, e, timeout_ms))?;
+                if binary {
+                    let bytes = SourceSession::result_bytes(val)
+                        .map(|b| b.to_vec())
+                        .map_err(|e| self.map_runtime_err(session, e, timeout_ms))?;
+                    Ok(EvalOutput::Bytes(bytes))
+                } else {
+                    let text = SourceSession::result_string(val)
+                        .map_err(|e| self.map_runtime_err(session, e, timeout_ms))?;
+                    Ok(EvalOutput::Text(text))
+                }
+            }
             EvalOp::OutputText { uri, contents } => {
                 let text = self.eval_string_locked(
                     session,
@@ -2162,6 +2185,9 @@ impl TestReporterMode {
 }
 
 enum EvalOp {
+    ContinueRunning {
+        binary: bool,
+    },
     OutputText {
         uri: PklString,
         contents: Option<PklString>,
@@ -2374,6 +2400,7 @@ impl<'task> ScopedTask<'task> for EvalCloseTask {
         let mut guard = self.state.lock().unwrap_or_else(|e| e.into_inner());
         if !guard.closed {
             guard.closed = true;
+            guard.columnar_buf.clear_and_release();
             guard.session.close();
             self.host.close();
         }
@@ -2410,7 +2437,9 @@ impl NativeEvaluator {
             host: built.host,
             state: Arc::new(Mutex::new(SessionState {
                 session,
+                columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer::new(),
                 closed: false,
+                pending_continue: false,
             })),
             bridge: built.bridge,
             logger: built.logger,
@@ -2503,6 +2532,7 @@ impl NativeEvaluator {
         if let Ok(mut guard) = self.shared.state.try_lock() {
             if !guard.closed {
                 guard.closed = true;
+                guard.columnar_buf.clear_and_release();
                 guard.session.close();
                 self.shared.host.close();
             }
@@ -2569,6 +2599,180 @@ impl NativeEvaluator {
                 .execute_op(op, timeout, call_cancel, start_gen, None)
         });
         eval_output_to_js(env, outcome)
+    }
+
+    /// Bounded synchronous try-poll fast path for warm-cached pure-standard-host calls
+    /// with no custom JS hooks/readers or timeouts. Only enters when `uri` is already
+    /// warm-cached in the session; runs a single bounded VM poll (`32_768` steps). If it
+    /// completes immediately (`HostPoll::Ready`), returns the JS outcome directly without
+    /// scheduling a libuv worker thread. If it yields or requests Host I/O, leaves the
+    /// started operation intact (never cancelling the session) and returns a sentinel
+    /// object `{ __continueAsync: true }` so JS immediately continues on `AsyncTask`.
+    fn try_poll_cached_fast<'env>(
+        &self,
+        env: &'env Env,
+        uri: &Utf16String,
+        contents: Option<&Utf16String>,
+        expression: &str,
+        binary: bool,
+    ) -> Result<Option<Object<'env>>> {
+        if self.shared.has_js_callbacks
+            || self.shared.default_timeout_ms.is_some()
+            || self.shared.closed_flag.load(Ordering::SeqCst)
+        {
+            return Ok(None);
+        }
+        let Ok(mut guard) = self.shared.state.try_lock() else {
+            return Ok(None);
+        };
+        if guard.closed || guard.pending_continue || guard.session.is_closed() {
+            return Ok(None);
+        }
+        let uri_pkl = utf16_to_pkl(uri);
+        let contents_pkl = contents.map(utf16_to_pkl);
+        if contents_pkl.is_some() && uri_pkl == "repl:text" {
+            return Ok(None);
+        }
+        let spec = match self.shared.prepare_spec(&uri_pkl, contents_pkl.as_ref()) {
+            Ok(spec) => spec,
+            Err(_) => return Ok(None),
+        };
+        if !guard.session.has_warm_cached_module(&spec.uri) {
+            return Ok(None);
+        }
+        let now = self.shared.host.clock_ms();
+        let started = if binary {
+            guard
+                .session
+                .start_evaluation_pkl_binary(spec, expression, now, None)
+        } else {
+            guard.session.start_evaluation(spec, expression, now, None)
+        };
+        if let Err(err) = started {
+            let mapped = self.shared.map_runtime_err(&guard.session, err, None);
+            return Ok(Some(eval_output_to_js(env, Err(mapped))?));
+        }
+        match guard.session.poll(now, 32_768) {
+            HostPoll::Ready(result) => {
+                if binary {
+                    match result.and_then(SourceSession::result_bytes) {
+                        Ok(bytes) => {
+                            let slice: &[u8] = &bytes;
+                            let copied = BufferSlice::copy_from(env, slice)?;
+                            return Ok(Some(to_js_outcome(env, Ok(copied))?));
+                        }
+                        Err(err) => {
+                            let mapped = self.shared.map_runtime_err(&guard.session, err, None);
+                            return Ok(Some(eval_output_to_js(env, Err(mapped))?));
+                        }
+                    }
+                }
+                let outcome = result
+                    .and_then(|val| SourceSession::result_string(val).map(EvalOutput::Text))
+                    .map_err(|err| self.shared.map_runtime_err(&guard.session, err, None));
+                Ok(Some(eval_output_to_js(env, outcome)?))
+            }
+            HostPoll::Yielded
+            | HostPoll::Module { .. }
+            | HostPoll::Read { .. }
+            | HostPoll::Glob { .. }
+            | HostPoll::Log { .. }
+            | HostPoll::TransformFrame { .. } => {
+                guard.pending_continue = true;
+                let mut marker = Object::new(env)?;
+                marker.set("__continueAsync", true)?;
+                Ok(Some(marker))
+            }
+        }
+    }
+
+    #[napi]
+    pub fn continue_pending_fast(
+        &self,
+        binary: bool,
+        timeout_ms: Option<BigInt>,
+        call_id: Option<BigInt>,
+    ) -> AsyncTask<EvalAsyncTask> {
+        let parsed =
+            parse_opt_timeout(&timeout_ms).map(|t| (EvalOp::ContinueRunning { binary }, t));
+        self.spawn_task(parsed, call_id)
+    }
+
+    #[napi]
+    pub fn try_evaluate_output_text_fast<'env>(
+        &self,
+        env: &'env Env,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+    ) -> Result<Option<Object<'env>>> {
+        self.try_poll_cached_fast(env, &uri, contents.as_ref(), "output.text", false)
+    }
+
+    #[napi]
+    pub fn try_evaluate_expression_fast<'env>(
+        &self,
+        env: &'env Env,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+        expression: Utf16String,
+    ) -> Result<Option<Object<'env>>> {
+        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
+        self.try_poll_cached_fast(env, &uri, contents.as_ref(), &expr_str, false)
+    }
+
+    #[napi]
+    pub fn try_evaluate_expression_pkl_binary_fast<'env>(
+        &self,
+        env: &'env Env,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+        expression: Utf16String,
+    ) -> Result<Option<Object<'env>>> {
+        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
+        self.try_poll_cached_fast(env, &uri, contents.as_ref(), &expr_str, true)
+    }
+
+    #[napi]
+    pub fn try_evaluate_expression_columnar_fast<'env>(
+        &self,
+        env: &'env Env,
+        uri: Utf16String,
+        contents: Option<Utf16String>,
+        expression: Utf16String,
+    ) -> Result<Option<BufferSlice<'env>>> {
+        if self.shared.has_js_callbacks
+            || self.shared.default_timeout_ms.is_some()
+            || self.shared.closed_flag.load(Ordering::SeqCst)
+        {
+            return Ok(None);
+        }
+        let Ok(mut guard) = self.shared.state.try_lock() else {
+            return Ok(None);
+        };
+        if guard.closed || guard.pending_continue || guard.session.is_closed() {
+            return Ok(None);
+        }
+        let uri_pkl = utf16_to_pkl(&uri);
+        let contents_pkl = contents.as_ref().map(utf16_to_pkl);
+        if contents_pkl.is_some() && uri_pkl == "repl:text" {
+            return Ok(None);
+        }
+        let spec = match self.shared.prepare_spec(&uri_pkl, contents_pkl.as_ref()) {
+            Ok(spec) => spec,
+            Err(_) => return Ok(None),
+        };
+        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
+        let SessionState {
+            session,
+            columnar_buf,
+            ..
+        } = &mut *guard;
+        if !session.try_pack_warm_expression_columnar(&spec.uri, &expr_str, columnar_buf) {
+            return Ok(None);
+        }
+        let copied = BufferSlice::copy_from(env, columnar_buf.as_bytes())?;
+        columnar_buf.shrink_if_oversized();
+        Ok(Some(copied))
     }
 
     #[napi]

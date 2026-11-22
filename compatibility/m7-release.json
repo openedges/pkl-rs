@@ -1,0 +1,724 @@
+{
+  "baseline": {
+    "checkout": "external/pkl",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d",
+    "source_url_template": "https://github.com/apple/pkl/blob/e51fb2f91774265666f94980ec630db794a4db2d/{path}#L{line}",
+    "url": "https://github.com/apple/pkl.git",
+    "version": "0.32.0"
+  },
+  "counts": {
+    "excluded_scope_entries": 3,
+    "m7_benchmark_workload_modes": 34,
+    "m7_fuzz_categories": 7,
+    "m7_requirement_groups": 12,
+    "m7_requirement_impl_status": {
+      "linked": 12
+    },
+    "m7_requirements_by_track": {
+      "benchmark": 8,
+      "fuzz": 1,
+      "release-matrix": 1,
+      "soak": 2
+    },
+    "m7_soak_target_scenarios": 18,
+    "platform_matrix_entries": 9,
+    "prior_milestone_manifests": 6,
+    "unpinned_optional_references": 1
+  },
+  "coverage_gate": null,
+  "excluded_by_scope_2026_11_20": [
+    {
+      "id": "jvm-adapter",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: JVM public API compatibility adapter is excluded from required product scope (java_api=8239, kotlin_api=597, jvm_spi=2 retained as census only)."
+    },
+    {
+      "id": "pkl-codegen-java",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Java code generator CLI command/options excluded from required product scope."
+    },
+    {
+      "id": "pkl-codegen-kotlin",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Kotlin code generator CLI command/options excluded from required product scope."
+    }
+  ],
+  "platform_matrix": [
+    {
+      "category": "native-os",
+      "id": "darwin-arm64",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "darwin-x64",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "linux-x64-gnu",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "linux-arm64-gnu",
+      "required_for_release": true
+    },
+    {
+      "category": "native-os",
+      "id": "win32-x64-msvc",
+      "required_for_release": true
+    },
+    {
+      "category": "wasm-browser",
+      "id": "browser-chromium",
+      "required_for_release": true
+    },
+    {
+      "category": "wasm-browser",
+      "id": "browser-firefox",
+      "required_for_release": true
+    },
+    {
+      "category": "wasm-browser",
+      "id": "browser-webkit",
+      "required_for_release": true
+    },
+    {
+      "category": "ci-provenance",
+      "id": "hosted-ci",
+      "required_for_release": true
+    }
+  ],
+  "prior_milestones": [
+    {
+      "bytes": 8631536,
+      "counts": {
+        "api_by_scope": {
+          "internal-source-candidate": 5190,
+          "source-candidate": 3646
+        },
+        "builtins_without_external_member": [],
+        "by_category": {
+          "builtin": 542,
+          "cli_argument": 6,
+          "cli_command": 17,
+          "cli_option": 86,
+          "java_api": 8239,
+          "kotlin_api": 597,
+          "language_parser": 137,
+          "language_token": 109,
+          "protocol_field": 119,
+          "protocol_tag": 19,
+          "renderer": 17,
+          "resource": 27,
+          "specification": 487,
+          "stdlib": 1222
+        },
+        "external_members": 542,
+        "external_members_without_builtin": [],
+        "items": 11624,
+        "sources": 985,
+        "sources_by_module": {
+          "build-logic": 32,
+          "docs": 16,
+          "pkl-cli": 31,
+          "pkl-codegen-java": 4,
+          "pkl-codegen-kotlin": 4,
+          "pkl-commons": 6,
+          "pkl-commons-cli": 18,
+          "pkl-commons-test": 54,
+          "pkl-config-java": 45,
+          "pkl-config-kotlin": 4,
+          "pkl-core": 591,
+          "pkl-doc": 43,
+          "pkl-executor": 15,
+          "pkl-formatter": 8,
+          "pkl-gradle": 32,
+          "pkl-parser": 51,
+          "pkl-server": 7,
+          "stdlib": 24
+        },
+        "stdlib_by_visibility": {
+          "local": 21,
+          "public": 1201
+        }
+      },
+      "description": "Pinned Pkl 0.32.0 source, corpus, smoke, regressions, and M0 GraalVM CE 25.0.1 baseline",
+      "manifest": "compatibility/inventory.json",
+      "milestone": "M0",
+      "sha256": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070"
+    },
+    {
+      "bytes": 8019737,
+      "counts": {
+        "cases": 4586,
+        "cases_by_execution": {
+          "ready": 4575,
+          "unmapped": 11
+        },
+        "requirements": 475,
+        "requirements_by_kind": {
+          "language_parser": 137,
+          "language_token": 109,
+          "semantic-family": 31,
+          "specification": 198
+        }
+      },
+      "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
+      "manifest": "compatibility/m2-language.json",
+      "milestone": "M2",
+      "sha256": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9"
+    },
+    {
+      "bytes": 111079,
+      "counts": {
+        "builtin_total": 542,
+        "inventory_total_m3_category_items": 1781,
+        "m3_differential_cases": 118,
+        "m3_differential_cases_by_lane": {
+          "formats-renderers": 77,
+          "output-files": 13,
+          "pklbinary-decode": 28
+        },
+        "probe_plan_rows": 560,
+        "renderer_total": 17,
+        "stdlib_by_visibility": {
+          "local": 21,
+          "public": 1201
+        },
+        "stdlib_deferred": 8,
+        "stdlib_m3_required": 1214,
+        "stdlib_total": 1222
+      },
+      "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
+      "manifest": "compatibility/m3-stdlib-output.json",
+      "milestone": "M3",
+      "sha256": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa"
+    },
+    {
+      "bytes": 41462,
+      "counts": {
+        "bundled_ca_roots_exact_match": true,
+        "functional_stdlib_items": 104,
+        "inventory_cli_command_dispositions": {
+          "deferred:M5": 7,
+          "excluded": 2,
+          "m4-exercised": 8
+        },
+        "inventory_cli_command_total": 17,
+        "inventory_cli_option_dispositions": {
+          "deferred:M5": 23,
+          "excluded": 19,
+          "m3-covered": 13,
+          "m4-required": 31
+        },
+        "inventory_cli_option_total": 86,
+        "inventory_protocol_field_dispositions": {
+          "deferred:M5": 82,
+          "m4-required": 37
+        },
+        "inventory_protocol_field_total": 119,
+        "inventory_protocol_tag_dispositions": {
+          "deferred:M5": 6,
+          "m4-required": 13
+        },
+        "inventory_protocol_tag_total": 19,
+        "inventory_resource_dispositions": {
+          "deferred:M5": 17,
+          "m4-required": 3,
+          "non-applicable": 4,
+          "shared-core": 3
+        },
+        "inventory_resource_total": 27,
+        "m4_requirement_groups": 16,
+        "m4_static_cases": 86,
+        "m4_static_cases_by_lane": {
+          "external-readers": 11,
+          "host-io-http-security": 48,
+          "projects-packages-cache": 27
+        },
+        "m4_total_5lane_cases": 429,
+        "pantry_dev_cases": 126,
+        "pantry_packaged_cases": 217,
+        "pantry_unfixed_external_inputs": 2,
+        "pantry_verified_offline_remote_packages": 7
+      },
+      "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
+      "manifest": "compatibility/m4-io-packages.json",
+      "milestone": "M4",
+      "sha256": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558"
+    },
+    {
+      "bytes": 63781,
+      "counts": {
+        "corpus_formatter_snippet_cases": 30,
+        "excluded_2026_11_20_java_api": 8239,
+        "excluded_2026_11_20_kotlin_api": 597,
+        "functional_stdlib_items": 121,
+        "inventory_cli_argument_total": 6,
+        "inventory_cli_command_dispositions": {
+          "excluded": 2,
+          "m4-exercised-and-m5-product": 8,
+          "m5-new": 7
+        },
+        "inventory_cli_command_total": 17,
+        "inventory_cli_option_dispositions": {
+          "excluded": 19,
+          "m3-covered": 12,
+          "m4-exercised": 29,
+          "m5-new": 26
+        },
+        "inventory_cli_option_m5_new_breakdown": {
+          "m5:cli-other": 15,
+          "m5:format": 6,
+          "m5:pkldoc": 5
+        },
+        "inventory_cli_option_total": 86,
+        "inventory_protocol_field_dispositions": {
+          "m4-required": 37,
+          "m5-required": 82
+        },
+        "inventory_protocol_field_total": 119,
+        "inventory_protocol_tag_dispositions": {
+          "m4-and-m5-callbacks": 13,
+          "m5-required": 6
+        },
+        "inventory_protocol_tag_total": 19,
+        "inventory_resource_dispositions": {
+          "excluded-jvm-spi": 2,
+          "m4-required": 3,
+          "m5-pkldoc": 17,
+          "non-applicable-build": 2,
+          "shared-core": 3
+        },
+        "inventory_resource_total": 27,
+        "m5_cases_by_lane": {
+          "formatter": 43,
+          "pkldoc": 15,
+          "repl": 12,
+          "rust-api-and-cli": 50,
+          "server": 22
+        },
+        "m5_dynamic_formatter_snippet_cases": 30,
+        "m5_requirement_groups": 16,
+        "m5_requirement_impl_status": {
+          "linked": 16
+        },
+        "m5_static_cases": 112,
+        "m5_total_5lane_cases": 142,
+        "pkldoc_vendored_assets_exact_matches": 17,
+        "pkldoc_vendored_assets_status": "exact-match",
+        "stdlib_doc_package_info_items": 8
+      },
+      "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
+      "manifest": "compatibility/m5-product-tools.json",
+      "milestone": "M5",
+      "sha256": "8e95dfe52708b72ed1bc1af7d65ac2ec75649955f58a0333a3b7fac98d9c1c6d"
+    },
+    {
+      "bytes": 37108,
+      "counts": {
+        "m6_capability_boundary_cases": 6,
+        "m6_capability_boundary_cases_by_lane": {
+          "wasm-browser": 4,
+          "wasm-node": 2
+        },
+        "m6_capability_keys": 19,
+        "m6_cases_by_lane": {
+          "cross-target-parity": 12,
+          "napi-node": 26,
+          "packaging-and-install": 5,
+          "wasm-browser": 33,
+          "wasm-node": 10
+        },
+        "m6_common_js_exports": 19,
+        "m6_executable_cases": 80,
+        "m6_executable_cases_by_lane": {
+          "cross-target-parity": 12,
+          "napi-node": 26,
+          "packaging-and-install": 5,
+          "wasm-browser": 29,
+          "wasm-node": 8
+        },
+        "m6_requirement_groups": 14,
+        "m6_requirement_impl_status": {
+          "linked": 14
+        },
+        "m6_total_cases": 86
+      },
+      "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
+      "manifest": "compatibility/m6-wasm-napi.json",
+      "milestone": "M6",
+      "sha256": "bf8c1912ff3426e637beae9f4c09cad81d89dcaf87a72dffc862356b5efcb7db"
+    }
+  ],
+  "requirements": {
+    "m7:fuzz:seeded-differential-corpus": {
+      "description": "Deterministic seeded differential fuzzing across all 7 language/renderer/formatter categories with automatic delta shrinking and 0 raw-byte mismatches",
+      "fuzz_categories": [
+        "expressions-numerics",
+        "strings-regex-glob",
+        "objects-amendments-generators",
+        "collections-units",
+        "types-closures",
+        "multi-format-rendering",
+        "formatter-fuzz"
+      ],
+      "implementation_links": [
+        {
+          "path": "tools/m7_fuzz.py",
+          "sha256": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
+          "symbol": "verify_report"
+        },
+        {
+          "path": "tools/m7_fuzz.py",
+          "sha256": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
+          "symbol": "classify_fuzz_case"
+        },
+        {
+          "path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs",
+          "sha256": "8607f51fe38580a83f51d3892a8dce3c0fde44d598a7a6b727433cce2a4878cf",
+          "symbol": "eval_single"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "fuzz"
+    },
+    "m7:perf:core-6-cold-cli": {
+      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x Java (Temurin 21 live + M0 GraalVM 25 reference)",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_cold_cli_pair"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "evaluate_ratio_verdict"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "scalar:cold-cli",
+        "stdlib-collections:cold-cli",
+        "recursive-compute:cold-cli",
+        "large-output:cold-cli",
+        "failure-diagnostics:cold-cli",
+        "import-graph:cold-cli"
+      ]
+    },
+    "m7:perf:core-6-fresh-evaluator": {
+      "description": "Core 6 workloads fresh-evaluator-per-request op time and os.wait4 peak RSS <= 1.00x Java",
+      "implementation_links": [
+        {
+          "path": "crates/pkl/examples/m7_bench_probe.rs",
+          "sha256": "63b57f30bdaa87a03abc8e4ac4e880b8ecef52aab92fcd65cf993be07d5b64a4",
+          "symbol": "invoke"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "parse_probe_series"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/base_snapshot.rs",
+          "sha256": "40fea365f9d19b400d473ec4a6c8dd727510561f3d1c00d65c6b987d3dbd443c",
+          "symbol": "BaseSnapshot"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "scalar:fresh-evaluator",
+        "stdlib-collections:fresh-evaluator",
+        "recursive-compute:fresh-evaluator",
+        "large-output:fresh-evaluator",
+        "failure-diagnostics:fresh-evaluator",
+        "import-graph:fresh-evaluator"
+      ]
+    },
+    "m7:perf:core-6-persistent": {
+      "description": "Core 6 workloads warmed resident persistent evaluator op time and os.wait4 peak RSS <= 1.00x Java",
+      "implementation_links": [
+        {
+          "path": "crates/pkl/examples/m7_bench_probe.rs",
+          "sha256": "63b57f30bdaa87a03abc8e4ac4e880b8ecef52aab92fcd65cf993be07d5b64a4",
+          "symbol": "run_window"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_api_probe_pair"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/fast_int.rs",
+          "sha256": "9c0d47587b8b44f45fc4e745880708a5a38ff6e0e6d528903ed9b150c511a061",
+          "symbol": "FastIntOp"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "scalar:persistent",
+        "stdlib-collections:persistent",
+        "recursive-compute:persistent",
+        "large-output:persistent",
+        "failure-diagnostics:persistent",
+        "import-graph:persistent"
+      ]
+    },
+    "m7:perf:napi-and-wasm-bindings": {
+      "description": "Node N-API, Wasm Node, and real Playwright Chromium Wasm init/compile, warm eval, BigInt/Uint8Array conversion, and host process RSS",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_js_binding_workload"
+        },
+        {
+          "path": "benchmarks/m7_fixtures/bench_napi.mjs",
+          "sha256": "1bce22697df796b88430987627359a0173a5ba35b803ae7fb124a5e4bf380943",
+          "symbol": "verifyTypedValue"
+        },
+        {
+          "path": "benchmarks/m7_fixtures/bench_wasm_node.mjs",
+          "sha256": "3dc7dcabfc47b3fe5168f6bad56c0972c790e915bce9a4662b10d7c247240c65",
+          "symbol": "verifyTypedValue"
+        },
+        {
+          "path": "benchmarks/m7_fixtures/bench_wasm_browser.mjs",
+          "sha256": "7308681d3767a9d1dc536b2111febb3da9b468016108cc2cfcf6033acef8bd7b",
+          "symbol": "sampleDescendantTreeRssBytes"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
+          "sha256": "ac3302be1ccdcf47cf76e5d772902c5907cbb621856b9900fd409f456e75a88f",
+          "symbol": "try_fast_encode_pkl_binary"
+        },
+        {
+          "path": "crates/pkl-runtime/src/vm/columnar_value.rs",
+          "sha256": "35f3b457861da2cfdcbc1c8505590d6fcf9dab4144030e713423e394c2d09861",
+          "symbol": "ColumnarValueBuffer"
+        },
+        {
+          "path": "packages/pkl-wasm/src/values.mjs",
+          "sha256": "52ed0c84b427d1baa63c5285a1350daca3f250f94956e54a0aefa248f41ff475",
+          "symbol": "tryDecodePklBinaryFast"
+        },
+        {
+          "path": "packages/pkl-napi/src/runtime.cjs",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
+          "symbol": "tryDecodePklBinaryFast"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "napi-eval-text:napi",
+        "napi-typed-conversion:napi",
+        "wasm-node-eval-text:wasm-node",
+        "wasm-node-typed-conversion:wasm-node",
+        "wasm-browser-eval-text:wasm-browser",
+        "wasm-browser-typed-conversion:wasm-browser"
+      ]
+    },
+    "m7:perf:packages-http-cache": {
+      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_packages_http_workload"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "packages-http-warm:cold-cli",
+        "packages-http-cold:cold-cli"
+      ]
+    },
+    "m7:perf:reflection-stdlib": {
+      "description": "import \"pkl:reflect\" stdlib reflection cold CLI and persistent evaluator time & peak RSS <= 1.00x Java",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "run_suite"
+        },
+        {
+          "path": "crates/pkl/examples/m7_bench_probe.rs",
+          "sha256": "63b57f30bdaa87a03abc8e4ac4e880b8ecef52aab92fcd65cf993be07d5b64a4",
+          "symbol": "call_eval"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "reflection-stdlib:cold-cli",
+        "reflection-stdlib:persistent"
+      ]
+    },
+    "m7:perf:renderers-files-binary": {
+      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Java",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_output_files_workload"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_cold_cli_pair"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "renderers-files:cold-cli",
+        "renderers-binary:cold-cli"
+      ]
+    },
+    "m7:perf:repl-server-formatter-pkldoc": {
+      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation",
+      "implementation_links": [
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_server_workload"
+        },
+        {
+          "path": "tools/m7_benchmark.py",
+          "sha256": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+          "symbol": "_run_pkldoc_workload"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "benchmark",
+      "workload_ids": [
+        "repl-session:cold-cli",
+        "server-session:steady-server",
+        "formatter-large:cold-cli",
+        "pkldoc-single-package:cold-cli"
+      ]
+    },
+    "m7:release:ci-and-platform-matrix": {
+      "description": "CI workflow covering M0-M7 verification gates and honest platform/browser/hosted-CI matrix reporting",
+      "implementation_links": [
+        {
+          "path": "tools/m7_manifest.py",
+          "sha256": "f4a6b0f8352f2cd0500266522fed75898c574cf2ca7381385ff5c8ba6a9a4c5b",
+          "symbol": "verify_release"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "sha256": "b95958a6b5b1e23a80b90302df59f537f458fb85a1c020d3c34d5226dba42a1c",
+          "symbol": "compatibility-tooling"
+        }
+      ],
+      "implementation_status": "linked",
+      "track": "release-matrix"
+    },
+    "m7:soak:napi-and-wasm-memory-reclamation": {
+      "description": "All 6 long-running memory reclamation scenarios bounded on @pkl-rs/napi and @pkl-rs/wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
+      "implementation_links": [
+        {
+          "path": "tools/m7_memory_soak.py",
+          "sha256": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380",
+          "symbol": "analyze_series"
+        },
+        {
+          "path": "tests/fixtures/m7/soak/run_napi_soak.mjs",
+          "sha256": "4bd65ff41ee806e3e71e480532fc6884d6e7ff37005a59130c309f2c044e46c4",
+          "symbol": "runScenario"
+        },
+        {
+          "path": "tests/fixtures/m7/soak/run_wasm_soak.mjs",
+          "sha256": "9bcf1c7f64578673f4a5b30106d730ccfb89192f0d5be90acbe2af3a239a54c8",
+          "symbol": "runScenario"
+        },
+        {
+          "path": "packages/pkl-wasm/src/index.mjs",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "symbol": "_disposeWasmIfClosed"
+        }
+      ],
+      "implementation_status": "linked",
+      "soak_pairs": [
+        "napi-node/repeated-success",
+        "napi-node/repeated-failure",
+        "napi-node/unique-sources-churn",
+        "napi-node/cyclic-graphs",
+        "napi-node/lifecycle-cancel-timeout-close",
+        "napi-node/cache-churn",
+        "wasm-node/repeated-success",
+        "wasm-node/repeated-failure",
+        "wasm-node/unique-sources-churn",
+        "wasm-node/cyclic-graphs",
+        "wasm-node/lifecycle-cancel-timeout-close",
+        "wasm-node/cache-churn"
+      ],
+      "track": "soak"
+    },
+    "m7:soak:native-memory-reclamation": {
+      "description": "All 6 long-running memory reclamation scenarios bounded on native Rust evaluator (zero RSS/FD/PID leaks)",
+      "implementation_links": [
+        {
+          "path": "tools/m7_memory_soak.py",
+          "sha256": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380",
+          "symbol": "verify_report"
+        },
+        {
+          "path": "crates/pkl/examples/m7_memory_soak_probe.rs",
+          "sha256": "4beeac4e1c11f300db53e7cc10ec7556ffc404fd216f7d255af6d720123b6be9",
+          "symbol": "main"
+        },
+        {
+          "path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs",
+          "sha256": "8607f51fe38580a83f51d3892a8dce3c0fde44d598a7a6b727433cce2a4878cf",
+          "symbol": "eval_single"
+        }
+      ],
+      "implementation_status": "linked",
+      "soak_pairs": [
+        "native/repeated-success",
+        "native/repeated-failure",
+        "native/unique-sources-churn",
+        "native/cyclic-graphs",
+        "native/lifecycle-cancel-timeout-close",
+        "native/cache-churn"
+      ],
+      "track": "soak"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (Rust/Java <= 1.00 per workload), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
+  "sources": {
+    "benchmarks/m7_workloads.json": "b498064d67d0823dd9893d8bcc73af5a38b37affbe4143a2a616b9453f8ad42b",
+    "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
+    "compatibility/m2-language.json": "5bbd56de0180fc2b6b34d627645e676443157a3d3c8f8fbfccb69560bde12dc9",
+    "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
+    "compatibility/m4-io-packages.json": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558",
+    "compatibility/m5-product-tools.json": "8e95dfe52708b72ed1bc1af7d65ac2ec75649955f58a0333a3b7fac98d9c1c6d",
+    "compatibility/m6-wasm-napi.json": "bf8c1912ff3426e637beae9f4c09cad81d89dcaf87a72dffc862356b5efcb7db",
+    "compatibility/m7-mappings.json": "6b2a109a4a26523851d0c4db1d24299b6bc506d397161f764e18d021f3efd316",
+    "oracle.lock.json": "035fa94a2706344b29d94c8cd3d233d2447007bad0a1a52f8911756e460f0bbc",
+    "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
+    "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
+    "tools/m7_benchmark.py": "3048d16bcf8941703081c96d7372f110702803bc88de397e266f6004f061e1d6",
+    "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
+    "tools/m7_memory_soak.py": "f770515d27e09bff1a88948e43ca0ef2402636b97b649848e9d339982cd56380"
+  },
+  "target_ratios": {
+    "execution_time_max": 1.0,
+    "peak_rss_max": 1.0
+  },
+  "unpinned_optional_references": [
+    {
+      "id": "native-image-reference",
+      "reason": "Official upstream Pkl native-image binary is not pinned in oracle.lock.json (which pins pkl-tools-0.32.0.jar, Temurin 21.0.13.1+2-LTS, and GraalVM CE 25.0.1). Never replaces warm JVM reference.",
+      "status": "unverified-not-pinned"
+    }
+  ]
+}

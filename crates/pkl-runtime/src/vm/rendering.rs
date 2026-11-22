@@ -616,166 +616,7 @@ impl Vm {
     }
     fn advance_pcf(&mut self, run: &mut RenderRun) -> Result<bool, RuntimeError> {
         if let Some(await_) = run.await_.take() {
-            match await_ {
-                Await::ProtobufAlternative => {
-                    let Value::Bool(accepted) = self.pop()? else {
-                        return Err(invalid("protobuf alternative result"));
-                    };
-                    let Some(Task::Protobuf(ProtoTask::Field(field))) = run.tasks.last_mut() else {
-                        return Err(invalid("protobuf alternative continuation"));
-                    };
-                    field.accepted = Some(accepted);
-                }
-                Await::ProtobufString => {
-                    let Value::String(text) = self.pop()? else {
-                        return Err(invalid("protobuf scalar string"));
-                    };
-                    run.append_value(&text);
-                }
-                Await::XmlRead { .. } => {
-                    let value = self.pop()?;
-                    let Some(Task::Xml(task)) = run.tasks.last_mut() else {
-                        return Err(invalid("XML read continuation"));
-                    };
-                    task.input = Some(value);
-                }
-                Await::JsonnetWrapper {
-                    depth, import_str, ..
-                } => {
-                    let Value::String(text) = self.pop()? else {
-                        return Err(invalid("checked Jsonnet wrapper String"));
-                    };
-                    if import_str {
-                        run.append("importstr ");
-                        run.append_value(&super::jsonnet::quoted(&text));
-                    } else {
-                        run.append("std.extVar(");
-                        run.append_value(&super::jsonnet::string(
-                            &text,
-                            &run.indent,
-                            &run.indentation(depth),
-                        ));
-                        run.append(")");
-                    }
-                }
-                Await::PlistKey { depth, .. } => {
-                    let Value::String(text) = self.pop()? else {
-                        return Err(invalid("checked Plist directive key text"));
-                    };
-                    run.plist_key(&text, depth);
-                }
-                Await::PropertiesKey { verbatim } => {
-                    let Value::String(text) = self.pop()? else {
-                        return Err(invalid("Properties key string"));
-                    };
-                    if verbatim {
-                        run.append_value(&text);
-                    } else {
-                        run.append_value(&properties_string(&text, true, run.restrict_charset));
-                    }
-                }
-                Await::Option(index) => {
-                    let value = self.pop()?;
-                    assert_eq!(index, run.options.len());
-                    run.options.push(value);
-                }
-                Await::Mapping => {
-                    self.pop()?;
-                }
-                Await::PropertyTransformer | Await::PropertyFunction | Await::PropertyResult => {
-                    let value = self.pop()?;
-                    let Some(Task::Property(p)) = run.tasks.last_mut() else {
-                        return Err(invalid("property converter continuation"));
-                    };
-                    match await_ {
-                        Await::PropertyTransformer => p.annotation = value,
-                        Await::PropertyFunction => p.function = Some(value),
-                        Await::PropertyResult => p.property = value,
-                        _ => unreachable!(),
-                    }
-                }
-                Await::ConverterVisit => {
-                    let converted = self.pop()?.boxed();
-                    let Some(Task::Visit { value, .. }) = run.tasks.last_mut() else {
-                        return Err(invalid("converted visit"));
-                    };
-                    *value = converted;
-                }
-                Await::ConverterMember { key } => {
-                    let converted = self.pop()?;
-                    let Some(Task::Member(member)) = run.tasks.last_mut() else {
-                        return Err(invalid("converted member"));
-                    };
-                    if key {
-                        member.key = converted;
-                    } else {
-                        member.value = converted;
-                    }
-                }
-                Await::Shallow => {
-                    self.pop()?;
-                }
-                Await::Directive { .. } if run.format == Format::PklBinary => {
-                    let Value::Bytes(bytes) = self.pop()? else {
-                        return Err(invalid("checked render directive bytes"));
-                    };
-                    run.binary.raw(&bytes)?;
-                }
-                Await::Directive { .. } => {
-                    let Value::String(text) = self.pop()? else {
-                        return Err(invalid("checked render directive text"));
-                    };
-                    run.append_value(&text);
-                    if run.format == Format::Properties && run.properties_document {
-                        run.append("\n");
-                    }
-                }
-                Await::PcfDirective {
-                    receiver, stage, ..
-                } => {
-                    let value = self.pop()?;
-                    match stage {
-                        0 => {
-                            if let Value::String(text) = value {
-                                run.append_value(&text);
-                            }
-                        }
-                        1 => {
-                            let Some(Task::PcfDirective { depth, path, .. }) = run.tasks.last()
-                            else {
-                                return Err(invalid("pcf directive continuation"));
-                            };
-                            let (depth, path) = (*depth, path.clone());
-                            run.value(value, depth, false, false, false, path);
-                        }
-                        2 => {
-                            if let Value::String(text) = value {
-                                run.append_value(&text);
-                            }
-                            run.active.remove(&receiver);
-                        }
-                        _ => return Err(invalid("pcf directive stage")),
-                    }
-                }
-                Await::KeyEquality => {
-                    let Value::Bool(equal) = self.pop()? else {
-                        return Err(invalid("renderer key equality"));
-                    };
-                    let Some(Task::Members(m)) = run.tasks.last_mut() else {
-                        return Err(invalid("renderer member state"));
-                    };
-                    if equal {
-                        let left = &m.seen[m.compare - 1].0.key;
-                        let right = &m.members[m.next].descriptor.key;
-                        if let (Value::Object(left), Value::Object(right)) = (left, right) {
-                            self.heap.key_equalities.insert((*left, *right));
-                        }
-                        m.next += 1;
-                        m.compare = 0;
-                        m.prepared = false;
-                    }
-                }
-            }
+            self.advance_pcf_await(run, await_)?;
         }
         let names: &[&str] = if run.format == Format::PklBinary {
             &["converters", "convertPropertyTransformers"]
@@ -856,101 +697,7 @@ impl Vm {
             return Ok(false);
         }
         if !run.started {
-            run.started = true;
-            if run.format == Format::PklBinary {
-                // BytesRenderer has no text formatting or omission options.
-            } else if run.format == Format::Yaml {
-                let (
-                    Value::String(mode),
-                    Value::Int(width),
-                    Value::Bool(omit),
-                    Value::Bool(stream),
-                ) = (
-                    &run.options[0],
-                    &run.options[1],
-                    &run.options[2],
-                    &run.options[3],
-                )
-                else {
-                    return Err(invalid("YAML options"));
-                };
-                let width = width.get() as i32;
-                if width == 0 {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Pinned Java YAML zero narrowed indent raises an oracle-internal error; this boundary remains unresolved.",
-                    ));
-                }
-                let mode = match mode.as_str() {
-                    Some("compat") => super::yaml::Mode::Compat,
-                    Some("1.1") => super::yaml::Mode::Yaml11,
-                    Some("1.2") => super::yaml::Mode::Yaml12,
-                    _ => return Err(invalid("checked YAML mode")),
-                };
-                run.yaml = Some(super::yaml::Emitter::new(mode, width as usize));
-                run.omit_null = *omit;
-                run.yaml_stream = *stream;
-            } else if run.format == Format::Xml {
-                let Value::String(indent) = &run.options[0] else {
-                    return Err(invalid("XML indent"));
-                };
-                run.indent = indent.clone();
-                run.omit_null = true;
-            } else if matches!(run.format, Format::Plist | Format::Protobuf) {
-                let Value::String(indent) = &run.options[0] else {
-                    return Err(invalid("Plist indent type"));
-                };
-                run.indent = indent.clone();
-                // Pinned PListRenderer always omits null properties and entries.
-                run.omit_null = true;
-            } else if run.format == Format::Properties {
-                let (Value::Bool(omit), Value::Bool(restrict)) = (&run.options[0], &run.options[1])
-                else {
-                    return Err(invalid("Properties renderer options"));
-                };
-                run.omit_null = *omit;
-                run.restrict_charset = *restrict;
-            } else if run.format == Format::Jsonnet {
-                run.indent = match &run.options[0] {
-                    Value::String(indent) => indent.clone(),
-                    value if value.is_null() => PklString::default(),
-                    _ => return Err(invalid("checked Jsonnet indent")),
-                };
-                let Value::Bool(omit) = run.options[1] else {
-                    return Err(invalid("checked Jsonnet omit"));
-                };
-                run.omit_null = omit;
-            } else {
-                let Value::String(indent) = &run.options[0] else {
-                    return Err(invalid("renderer indent type"));
-                };
-                run.indent = indent.clone();
-                let Value::Bool(omit) = run.options[1] else {
-                    return Err(invalid("renderer omit type"));
-                };
-                run.omit_null = omit;
-            }
-            if run.format == Format::Pcf {
-                let Value::Bool(custom) = run.options[2] else {
-                    return Err(invalid("renderer delimiter type"));
-                };
-                run.custom = custom;
-            }
-            let (Value::Object(mapping), Value::Object(transformers)) =
-                (&run.options[names.len() - 2], &run.options[names.len() - 1])
-            else {
-                return Err(invalid("renderer mappings"));
-            };
-            run.converters = Converters::load(&self.heap, *mapping, *transformers)?;
-            run.tasks.push(Task::Visit {
-                value: run.root.clone(),
-                depth: 0,
-                standalone: false,
-                root: true,
-                string_element: false,
-                path: vec![PathPart::Root],
-                converted: false,
-            });
+            self.advance_pcf_start(run, names.len())?;
             return Ok(false);
         }
         let Some(task) = run.tasks.pop() else {
@@ -980,9 +727,309 @@ impl Vm {
             return Ok(true);
         };
         match task {
-            Task::Protobuf(task) => return self.advance_protobuf(run, task),
-            Task::BinaryArray(length) => run.binary.array(length)?,
-            Task::Xml(task) => return self.advance_xml(run, task),
+            Task::Protobuf(task) => self.advance_protobuf(run, task),
+            Task::BinaryArray(length) => {
+                run.binary.array(length)?;
+                Ok(false)
+            }
+            Task::Xml(task) => self.advance_xml(run, task),
+            Task::RestoreSource(source) => {
+                run.source = source;
+                Ok(false)
+            }
+            Task::Text(text) => {
+                run.append_value(&text);
+                Ok(false)
+            }
+            Task::JsonnetKey { .. }
+            | Task::PlistKey { .. }
+            | Task::YamlKey(..)
+            | Task::PropertiesKey { .. }
+            | Task::PropertiesDirective { .. }
+            | Task::PcfDirective { .. } => self.advance_pcf_keys_and_directives(run, task),
+            Task::Visit { .. } => self.advance_pcf_visit(run, task),
+            Task::OpenObject { .. } | Task::Close { .. } => {
+                self.advance_pcf_open_or_close(run, task)
+            }
+            Task::Members(m) => self.advance_pcf_members(run, m),
+            Task::Member(member) => self.advance_pcf_member(run, member),
+            Task::Property(p) => self.advance_pcf_property(run, p),
+        }
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_await(
+        &mut self,
+        run: &mut RenderRun,
+        await_: Await,
+    ) -> Result<(), RuntimeError> {
+        match await_ {
+            Await::ProtobufAlternative => {
+                let Value::Bool(accepted) = self.pop()? else {
+                    return Err(invalid("protobuf alternative result"));
+                };
+                let Some(Task::Protobuf(ProtoTask::Field(field))) = run.tasks.last_mut() else {
+                    return Err(invalid("protobuf alternative continuation"));
+                };
+                field.accepted = Some(accepted);
+            }
+            Await::ProtobufString => {
+                let Value::String(text) = self.pop()? else {
+                    return Err(invalid("protobuf scalar string"));
+                };
+                run.append_value(&text);
+            }
+            Await::XmlRead { .. } => {
+                let value = self.pop()?;
+                let Some(Task::Xml(task)) = run.tasks.last_mut() else {
+                    return Err(invalid("XML read continuation"));
+                };
+                task.input = Some(value);
+            }
+            Await::JsonnetWrapper {
+                depth, import_str, ..
+            } => {
+                let Value::String(text) = self.pop()? else {
+                    return Err(invalid("checked Jsonnet wrapper String"));
+                };
+                if import_str {
+                    run.append("importstr ");
+                    run.append_value(&super::jsonnet::quoted(&text));
+                } else {
+                    run.append("std.extVar(");
+                    run.append_value(&super::jsonnet::string(
+                        &text,
+                        &run.indent,
+                        &run.indentation(depth),
+                    ));
+                    run.append(")");
+                }
+            }
+            Await::PlistKey { depth, .. } => {
+                let Value::String(text) = self.pop()? else {
+                    return Err(invalid("checked Plist directive key text"));
+                };
+                run.plist_key(&text, depth);
+            }
+            Await::PropertiesKey { verbatim } => {
+                let Value::String(text) = self.pop()? else {
+                    return Err(invalid("Properties key string"));
+                };
+                if verbatim {
+                    run.append_value(&text);
+                } else {
+                    run.append_value(&properties_string(&text, true, run.restrict_charset));
+                }
+            }
+            Await::Option(index) => {
+                let value = self.pop()?;
+                assert_eq!(index, run.options.len());
+                run.options.push(value);
+            }
+            Await::Mapping => {
+                self.pop()?;
+            }
+            Await::PropertyTransformer | Await::PropertyFunction | Await::PropertyResult => {
+                let value = self.pop()?;
+                let Some(Task::Property(p)) = run.tasks.last_mut() else {
+                    return Err(invalid("property converter continuation"));
+                };
+                match await_ {
+                    Await::PropertyTransformer => p.annotation = value,
+                    Await::PropertyFunction => p.function = Some(value),
+                    Await::PropertyResult => p.property = value,
+                    _ => unreachable!(),
+                }
+            }
+            Await::ConverterVisit => {
+                let converted = self.pop()?.boxed();
+                let Some(Task::Visit { value, .. }) = run.tasks.last_mut() else {
+                    return Err(invalid("converted visit"));
+                };
+                *value = converted;
+            }
+            Await::ConverterMember { key } => {
+                let converted = self.pop()?;
+                let Some(Task::Member(member)) = run.tasks.last_mut() else {
+                    return Err(invalid("converted member"));
+                };
+                if key {
+                    member.key = converted;
+                } else {
+                    member.value = converted;
+                }
+            }
+            Await::Shallow => {
+                self.pop()?;
+            }
+            Await::Directive { .. } if run.format == Format::PklBinary => {
+                let Value::Bytes(bytes) = self.pop()? else {
+                    return Err(invalid("checked render directive bytes"));
+                };
+                run.binary.raw(&bytes)?;
+            }
+            Await::Directive { .. } => {
+                let Value::String(text) = self.pop()? else {
+                    return Err(invalid("checked render directive text"));
+                };
+                run.append_value(&text);
+                if run.format == Format::Properties && run.properties_document {
+                    run.append("\n");
+                }
+            }
+            Await::PcfDirective {
+                receiver, stage, ..
+            } => {
+                let value = self.pop()?;
+                match stage {
+                    0 => {
+                        if let Value::String(text) = value {
+                            run.append_value(&text);
+                        }
+                    }
+                    1 => {
+                        let Some(Task::PcfDirective { depth, path, .. }) = run.tasks.last() else {
+                            return Err(invalid("pcf directive continuation"));
+                        };
+                        let (depth, path) = (*depth, path.clone());
+                        run.value(value, depth, false, false, false, path);
+                    }
+                    2 => {
+                        if let Value::String(text) = value {
+                            run.append_value(&text);
+                        }
+                        run.active.remove(&receiver);
+                    }
+                    _ => return Err(invalid("pcf directive stage")),
+                }
+            }
+            Await::KeyEquality => {
+                let Value::Bool(equal) = self.pop()? else {
+                    return Err(invalid("renderer key equality"));
+                };
+                let Some(Task::Members(m)) = run.tasks.last_mut() else {
+                    return Err(invalid("renderer member state"));
+                };
+                if equal {
+                    let left = &m.seen[m.compare - 1].0.key;
+                    let right = &m.members[m.next].descriptor.key;
+                    if let (Value::Object(left), Value::Object(right)) = (left, right) {
+                        self.heap.key_equalities.insert((*left, *right));
+                    }
+                    m.next += 1;
+                    m.compare = 0;
+                    m.prepared = false;
+                }
+            }
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_start(
+        &mut self,
+        run: &mut RenderRun,
+        names_len: usize,
+    ) -> Result<(), RuntimeError> {
+        run.started = true;
+        if run.format == Format::PklBinary {
+            // BytesRenderer has no text formatting or omission options.
+        } else if run.format == Format::Yaml {
+            let (Value::String(mode), Value::Int(width), Value::Bool(omit), Value::Bool(stream)) = (
+                &run.options[0],
+                &run.options[1],
+                &run.options[2],
+                &run.options[3],
+            ) else {
+                return Err(invalid("YAML options"));
+            };
+            let width = width.get() as i32;
+            if width == 0 {
+                return Err(RuntimeError::new(
+                    ErrorKind::Unsupported,
+                    "Pinned Java YAML zero narrowed indent raises an oracle-internal error; this boundary remains unresolved.",
+                ));
+            }
+            let mode = match mode.as_str() {
+                Some("compat") => super::yaml::Mode::Compat,
+                Some("1.1") => super::yaml::Mode::Yaml11,
+                Some("1.2") => super::yaml::Mode::Yaml12,
+                _ => return Err(invalid("checked YAML mode")),
+            };
+            run.yaml = Some(super::yaml::Emitter::new(mode, width as usize));
+            run.omit_null = *omit;
+            run.yaml_stream = *stream;
+        } else if run.format == Format::Xml {
+            let Value::String(indent) = &run.options[0] else {
+                return Err(invalid("XML indent"));
+            };
+            run.indent = indent.clone();
+            run.omit_null = true;
+        } else if matches!(run.format, Format::Plist | Format::Protobuf) {
+            let Value::String(indent) = &run.options[0] else {
+                return Err(invalid("Plist indent type"));
+            };
+            run.indent = indent.clone();
+            // Pinned PListRenderer always omits null properties and entries.
+            run.omit_null = true;
+        } else if run.format == Format::Properties {
+            let (Value::Bool(omit), Value::Bool(restrict)) = (&run.options[0], &run.options[1])
+            else {
+                return Err(invalid("Properties renderer options"));
+            };
+            run.omit_null = *omit;
+            run.restrict_charset = *restrict;
+        } else if run.format == Format::Jsonnet {
+            run.indent = match &run.options[0] {
+                Value::String(indent) => indent.clone(),
+                value if value.is_null() => PklString::default(),
+                _ => return Err(invalid("checked Jsonnet indent")),
+            };
+            let Value::Bool(omit) = run.options[1] else {
+                return Err(invalid("checked Jsonnet omit"));
+            };
+            run.omit_null = omit;
+        } else {
+            let Value::String(indent) = &run.options[0] else {
+                return Err(invalid("renderer indent type"));
+            };
+            run.indent = indent.clone();
+            let Value::Bool(omit) = run.options[1] else {
+                return Err(invalid("renderer omit type"));
+            };
+            run.omit_null = omit;
+        }
+        if run.format == Format::Pcf {
+            let Value::Bool(custom) = run.options[2] else {
+                return Err(invalid("renderer delimiter type"));
+            };
+            run.custom = custom;
+        }
+        let (Value::Object(mapping), Value::Object(transformers)) =
+            (&run.options[names_len - 2], &run.options[names_len - 1])
+        else {
+            return Err(invalid("renderer mappings"));
+        };
+        run.converters = Converters::load(&self.heap, *mapping, *transformers)?;
+        run.tasks.push(Task::Visit {
+            value: run.root.clone(),
+            depth: 0,
+            standalone: false,
+            root: true,
+            string_element: false,
+            path: vec![PathPart::Root],
+            converted: false,
+        });
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_keys_and_directives(
+        &mut self,
+        run: &mut RenderRun,
+        task: Task,
+    ) -> Result<bool, RuntimeError> {
+        match task {
             Task::JsonnetKey { key, depth } => match key {
                 Value::String(text) => run.append_value(&super::jsonnet::field_name(
                     &text,
@@ -1093,133 +1140,59 @@ impl Vm {
                 }
                 _ => return Err(invalid("pcf directive task stage")),
             },
-            Task::RestoreSource(source) => {
-                run.source = source;
-            }
-            Task::Text(text) => run.append_value(&text),
-            Task::Visit {
-                value,
+            _ => unreachable!("key/directive task"),
+        }
+        Ok(false)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_visit(&mut self, run: &mut RenderRun, task: Task) -> Result<bool, RuntimeError> {
+        let Task::Visit {
+            value,
+            depth,
+            standalone,
+            root,
+            string_element,
+            path,
+            converted,
+        } = task
+        else {
+            unreachable!("visit task")
+        };
+        if !converted && let Some(function) = run.converters.select(self, &value, &path)? {
+            run.tasks.push(Task::Visit {
+                value: value.clone(),
                 depth,
                 standalone,
                 root,
                 string_element,
                 path,
-                converted,
-            } => {
-                if !converted && let Some(function) = run.converters.select(self, &value, &path)? {
-                    run.tasks.push(Task::Visit {
-                        value: value.clone(),
-                        depth,
-                        standalone,
-                        root,
-                        string_element,
-                        path,
-                        converted: true,
-                    });
-                    run.await_ = Some(Await::ConverterVisit);
-                    self.invoke_converter(function, value)?;
-                    return Ok(false);
-                }
-                if root {
-                    if run.document && converted {
-                        run.document_original = Some(run.root.clone());
-                    }
-                    run.root = value.clone();
-                    if run.format == Format::Xml {
-                        run.xml_dispatch(value, depth, path, XmlPlace::Top);
-                        return Ok(false);
-                    }
-                    if run.format == Format::Yaml && run.document && run.yaml_stream {
-                        let id = match value {
-                            Value::Object(id)
-                                if matches!(
-                                    self.heap.get(id)?.collection_kind,
-                                    CollectionKind::Listing
-                                        | CollectionKind::List
-                                        | CollectionKind::Set
-                                ) =>
-                            {
-                                id
-                            }
-                            _ => {
-                                let ty = crate::diagnostic_values::type_name(
-                                    &value,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                )?;
-                                let text = crate::diagnostic_values::render(
-                                    &value,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80,
-                                )?;
-                                return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `{ty}`.\nValue: ")).concat(&text)));
-                            }
-                        };
-                        run.active.insert(id);
-                        run.tasks.push(Task::OpenObject {
-                            receiver: id,
-                            depth,
-                            standalone,
-                            root,
-                            path,
-                            stream: true,
-                        });
-                        if self.heap.get(id)?.collection_kind == CollectionKind::Listing {
-                            run.await_ = Some(Await::Shallow);
-                            self.force_shallow_frame(Value::Object(id))?;
-                        }
-                        return Ok(false);
-                    }
-                    if run.format == Format::Plist && run.document {
-                        // VmFunction is an ObjectLike in the pinned Java root gate,
-                        // but subsequently fails its ordinary unsupported-type visit.
-                        let valid = matches!(&value, Value::Function(_))
-                            || matches!(&value, Value::Object(id) if self.heap.get(*id)?.pair.is_none() && self.heap.get(*id)?.reference.is_none());
-                        if !valid {
-                            let ty = crate::diagnostic_values::type_name(
-                                &value,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?;
-                            let text = crate::diagnostic_values::render(
-                                &value,
-                                &self.heap,
-                                &self.program.module_name,
-                                80,
-                            )?;
-                            return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
-                        }
-                        run.append(super::plist::DOCUMENT_HEADER);
-                    }
-                    if run.format == Format::Properties {
-                        let valid = self.properties_document_value(&value)?;
-                        let directive =
-                            matches!(&value, Value::Object(id) if self.is_render_directive(*id)?);
-                        if run.document && !valid {
-                            let ty = crate::diagnostic_values::type_name(
-                                &value,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?;
-                            let text = crate::diagnostic_values::render(
-                                &value,
-                                &self.heap,
-                                &self.program.module_name,
-                                80,
-                            )?;
-                            return Err(RuntimeError::new(ErrorKind::Type,
-                                PklString::from(format!("The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
-                        }
-                        if !run.document && valid && !directive {
-                            return self.pcf_unrenderable(run, &value);
-                        }
-                        run.properties_document = run.document && !directive;
-                    }
-                    if run.format == Format::Pcf
-                        && run.document
-                        && !self.pcf_document_value(&value)?
+                converted: true,
+            });
+            run.await_ = Some(Await::ConverterVisit);
+            self.invoke_converter(function, value)?;
+            return Ok(false);
+        }
+        if root {
+            if run.document && converted {
+                run.document_original = Some(run.root.clone());
+            }
+            run.root = value.clone();
+            if run.format == Format::Xml {
+                run.xml_dispatch(value, depth, path, XmlPlace::Top);
+                return Ok(false);
+            }
+            if run.format == Format::Yaml && run.document && run.yaml_stream {
+                let id = match value {
+                    Value::Object(id)
+                        if matches!(
+                            self.heap.get(id)?.collection_kind,
+                            CollectionKind::Listing | CollectionKind::List | CollectionKind::Set
+                        ) =>
                     {
+                        id
+                    }
+                    _ => {
                         let ty = crate::diagnostic_values::type_name(
                             &value,
                             &self.heap,
@@ -1231,307 +1204,389 @@ impl Vm {
                             &self.program.module_name,
                             80,
                         )?;
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
-                        ));
+                        return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `{ty}`.\nValue: ")).concat(&text)));
                     }
+                };
+                run.active.insert(id);
+                run.tasks.push(Task::OpenObject {
+                    receiver: id,
+                    depth,
+                    standalone,
+                    root,
+                    path,
+                    stream: true,
+                });
+                if self.heap.get(id)?.collection_kind == CollectionKind::Listing {
+                    run.await_ = Some(Await::Shallow);
+                    self.force_shallow_frame(Value::Object(id))?;
                 }
-                if run.format == Format::Protobuf {
-                    return self.protobuf_visit(run, value, root, path);
+                return Ok(false);
+            }
+            if run.format == Format::Plist && run.document {
+                // VmFunction is an ObjectLike in the pinned Java root gate,
+                // but subsequently fails its ordinary unsupported-type visit.
+                let valid = matches!(&value, Value::Function(_))
+                    || matches!(&value, Value::Object(id) if self.heap.get(*id)?.pair.is_none() && self.heap.get(*id)?.reference.is_none());
+                if !valid {
+                    let ty = crate::diagnostic_values::type_name(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?;
+                    let text = crate::diagnostic_values::render(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
                 }
-                if run.format == Format::PklBinary {
-                    return self.binary_visit(run, value, depth, standalone, root, path);
+                run.append(super::plist::DOCUMENT_HEADER);
+            }
+            if run.format == Format::Properties {
+                let valid = self.properties_document_value(&value)?;
+                let directive =
+                    matches!(&value, Value::Object(id) if self.is_render_directive(*id)?);
+                if run.document && !valid {
+                    let ty = crate::diagnostic_values::type_name(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?;
+                    let text = crate::diagnostic_values::render(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::new(ErrorKind::Type,
+                        PklString::from(format!("The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
                 }
-                if run.format == Format::Properties {
-                    match &value {
-                        Value::Null | Value::NullWithDefault(_) => {
-                            if run.properties_document {
-                                run.properties_value("".into(), path);
-                            }
-                            return Ok(false);
-                        }
-                        Value::String(text) => {
-                            run.properties_value(text.clone(), path);
-                            return Ok(false);
-                        }
-                        Value::Bool(_) | Value::Int(_) | Value::Float(_) => {
-                            run.properties_value(scalar_string(&value)?, path);
-                            return Ok(false);
-                        }
-                        Value::Object(_) => {}
-                        _ => return self.pcf_unrenderable(run, &value),
+                if !run.document && valid && !directive {
+                    return self.pcf_unrenderable(run, &value);
+                }
+                run.properties_document = run.document && !directive;
+            }
+            if run.format == Format::Pcf && run.document && !self.pcf_document_value(&value)? {
+                let ty = crate::diagnostic_values::type_name(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                )?;
+                let text = crate::diagnostic_values::render(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
+                ));
+            }
+        }
+        if run.format == Format::Protobuf {
+            return self.protobuf_visit(run, value, root, path);
+        }
+        if run.format == Format::PklBinary {
+            return self.binary_visit(run, value, depth, standalone, root, path);
+        }
+        if run.format == Format::Properties {
+            match &value {
+                Value::Null | Value::NullWithDefault(_) => {
+                    if run.properties_document {
+                        run.properties_value("".into(), path);
                     }
-                }
-                if run.format == Format::Xml {
-                    run.xml_dispatch(value, depth, path, XmlPlace::Visit);
                     return Ok(false);
                 }
-                if run.format == Format::Plist {
-                    if let Some(text) = super::plist::scalar(&value) {
-                        run.append_value(&text);
+                Value::String(text) => {
+                    run.properties_value(text.clone(), path);
+                    return Ok(false);
+                }
+                Value::Bool(_) | Value::Int(_) | Value::Float(_) => {
+                    run.properties_value(scalar_string(&value)?, path);
+                    return Ok(false);
+                }
+                Value::Object(_) => {}
+                _ => return self.pcf_unrenderable(run, &value),
+            }
+        }
+        if run.format == Format::Xml {
+            run.xml_dispatch(value, depth, path, XmlPlace::Visit);
+            return Ok(false);
+        }
+        if run.format == Format::Plist {
+            if let Some(text) = super::plist::scalar(&value) {
+                run.append_value(&text);
+                return Ok(false);
+            }
+            if !matches!(value, Value::Object(_)) {
+                return self.pcf_unrenderable(run, &value);
+            }
+        }
+        if run.format == Format::Yaml {
+            match &value {
+                Value::Null
+                | Value::NullWithDefault(_)
+                | Value::Bool(_)
+                | Value::Int(_)
+                | Value::Float(_) => {
+                    run.yaml.as_mut().unwrap().scalar(&yaml_scalar(&value)?);
+                    return Ok(false);
+                }
+                Value::String(text) => {
+                    run.yaml.as_mut().unwrap().string_value(text);
+                    return Ok(false);
+                }
+                Value::Bytes(bytes) => {
+                    run.yaml.as_mut().unwrap().bytes(bytes);
+                    return Ok(false);
+                }
+                Value::Object(_) => (),
+                _ => return self.pcf_unrenderable(run, &value),
+            }
+        }
+        match value {
+            Value::Null | Value::NullWithDefault(_) => run.append("null"),
+            Value::Bool(value) => run.append(if value { "true" } else { "false" }),
+            Value::Int(value) => run.append(&value.to_string()),
+            Value::Float(value) => {
+                let text = crate::numeric::double_to_string(*value);
+                if run.format == Format::Json && !value.is_finite() {
+                    // ErrorMessages uses Java MessageFormat for the
+                    // numeric argument, unlike the rendered value form.
+                    let diagnostic = if value.is_nan() {
+                        "NaN"
+                    } else if value.is_sign_negative() {
+                        "-∞"
+                    } else {
+                        "∞"
+                    };
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!("Cannot render value `{diagnostic}` as JSON."),
+                    ));
+                }
+                run.append(&text);
+            }
+            Value::DataSize(value) => {
+                if matches!(run.format, Format::Json | Format::Jsonnet) {
+                    return self.pcf_unrenderable(run, &Value::DataSize(value));
+                }
+                run.append(&value.to_string());
+            }
+            Value::IntSeq(value) => {
+                if matches!(run.format, Format::Json | Format::Jsonnet) {
+                    return self.pcf_unrenderable(run, &Value::IntSeq(value));
+                }
+                run.append(&value.to_string());
+            }
+            Value::Regex(value) => {
+                if matches!(run.format, Format::Json | Format::Jsonnet) {
+                    return self.pcf_unrenderable(run, &Value::Regex(value));
+                }
+                // The language PcfRenderer delegates to VmRegex.toString;
+                // renderer string settings do not apply to Regex patterns.
+                run.append_value(&super::regex::string(&value));
+            }
+            Value::Duration(value) => {
+                if matches!(run.format, Format::Json | Format::Jsonnet) {
+                    return self.pcf_unrenderable(run, &Value::Duration(value));
+                }
+                run.append(&value.to_string());
+            }
+            Value::String(value) => run.append_value(&if run.format == Format::Jsonnet {
+                super::jsonnet::string(&value, &run.indent, &run.indentation(depth))
+            } else if run.format == Format::Json {
+                json_string(&value)
+            } else {
+                super::pcf_format::string(
+                    &value,
+                    &run.indentation(depth + usize::from(!string_element)),
+                    run.custom,
+                )
+            }),
+            Value::Bytes(value) => {
+                if matches!(run.format, Format::Json | Format::Jsonnet) {
+                    return self.pcf_unrenderable(run, &Value::Bytes(value));
+                }
+                run.append("Bytes(");
+                for (index, byte) in value.iter().enumerate() {
+                    if index != 0 {
+                        run.append(", ");
+                    }
+                    run.append(&byte.to_string());
+                }
+                run.append(")");
+            }
+            Value::Object(id) => {
+                if run.format == Format::Jsonnet
+                    && let Some(import_str) = self.jsonnet_wrapper(id)?
+                {
+                    run.await_ = Some(Await::JsonnetWrapper {
+                        receiver: id,
+                        path,
+                        depth,
+                        import_str,
+                    });
+                    self.force(
+                        id,
+                        id,
+                        if import_str { "path" } else { "name" }.into(),
+                        false,
+                        true,
+                        false,
+                    )?;
+                    return Ok(false);
+                }
+                if self.is_render_directive(id)? {
+                    if run.format == Format::Properties && run.properties_document {
+                        run.tasks.push(Task::PropertiesDirective {
+                            receiver: id,
+                            path: path.clone(),
+                        });
+                        run.tasks.push(Task::Text(" = ".into()));
+                        run.tasks.push(Task::PropertiesKey {
+                            path,
+                            next: 0,
+                            following: false,
+                        });
                         return Ok(false);
                     }
-                    if !matches!(value, Value::Object(_)) {
-                        return self.pcf_unrenderable(run, &value);
-                    }
+                    run.await_ = Some(Await::Directive { receiver: id, path });
+                    self.force(id, id, "text".into(), false, true, false)?;
+                    return Ok(false);
                 }
-                if run.format == Format::Yaml {
-                    match &value {
-                        Value::Null
-                        | Value::NullWithDefault(_)
-                        | Value::Bool(_)
-                        | Value::Int(_)
-                        | Value::Float(_) => {
-                            run.yaml.as_mut().unwrap().scalar(&yaml_scalar(&value)?);
-                            return Ok(false);
-                        }
-                        Value::String(text) => {
-                            run.yaml.as_mut().unwrap().string_value(text);
-                            return Ok(false);
-                        }
-                        Value::Bytes(bytes) => {
-                            run.yaml.as_mut().unwrap().bytes(bytes);
-                            return Ok(false);
-                        }
-                        Value::Object(_) => (),
-                        _ => return self.pcf_unrenderable(run, &value),
+                if run.format == Format::Pcf && self.is_pcf_render_directive(id)? {
+                    if !run.active.insert(id) {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Cycle,
+                            "cyclic value rendering",
+                        ));
                     }
+                    if standalone {
+                        run.append("new ");
+                    }
+                    run.tasks.push(Task::PcfDirective {
+                        receiver: id,
+                        depth,
+                        path: path.clone(),
+                        stage: 1,
+                    });
+                    run.await_ = Some(Await::PcfDirective {
+                        receiver: id,
+                        path,
+                        stage: 0,
+                    });
+                    self.force(id, id, "before".into(), false, true, false)?;
+                    return Ok(false);
                 }
-                match value {
-                    Value::Null | Value::NullWithDefault(_) => run.append("null"),
-                    Value::Bool(value) => run.append(if value { "true" } else { "false" }),
-                    Value::Int(value) => run.append(&value.to_string()),
-                    Value::Float(value) => {
-                        let text = crate::numeric::double_to_string(*value);
-                        if run.format == Format::Json && !value.is_finite() {
-                            // ErrorMessages uses Java MessageFormat for the
-                            // numeric argument, unlike the rendered value form.
-                            let diagnostic = if value.is_nan() {
-                                "NaN"
-                            } else if value.is_sign_negative() {
-                                "-∞"
-                            } else {
-                                "∞"
-                            };
-                            return Err(RuntimeError::new(
-                                ErrorKind::Type,
-                                format!("Cannot render value `{diagnostic}` as JSON."),
-                            ));
-                        }
-                        run.append(&text);
+                if self.heap.get(id)?.foreign_map_entry.is_some() {
+                    return Err(RuntimeError::foreign(
+                        crate::java_exception::provenance::ForeignOperation::KeyValueHolderTypeVisitor { is_set: false },
+                        "Unknown VM value type: java.util.KeyValueHolder",
+                    ));
+                }
+                if let Some(pair) = self.heap.get(id)?.pair.clone() {
+                    if run.format != Format::Pcf {
+                        return self.pcf_unrenderable(run, &Value::Object(id));
                     }
-                    Value::DataSize(value) => {
-                        if matches!(run.format, Format::Json | Format::Jsonnet) {
-                            return self.pcf_unrenderable(run, &Value::DataSize(value));
-                        }
-                        run.append(&value.to_string());
+                    run.append("Pair(");
+                    run.tasks.push(Task::Text(")".into()));
+                    run.value(pair[1].clone(), depth, true, false, false, path.clone());
+                    run.tasks.push(Task::Text(", ".into()));
+                    run.value(pair[0].clone(), depth, true, false, false, path);
+                    return Ok(false);
+                }
+                if self.heap.get(id)?.reference.is_some() {
+                    return self.pcf_unrenderable(run, &Value::Object(id));
+                }
+                if !run.active.insert(id) {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Cycle,
+                        "cyclic value rendering",
+                    ));
+                }
+                let kind = self.heap.get(id)?.collection_kind;
+                let strict = matches!(
+                    kind,
+                    CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                );
+                if strict {
+                    let array = kind != CollectionKind::Map;
+                    if run.format == Format::Properties && array {
+                        return self.pcf_unrenderable(run, &Value::Object(id));
                     }
-                    Value::IntSeq(value) => {
-                        if matches!(run.format, Format::Json | Format::Jsonnet) {
-                            return self.pcf_unrenderable(run, &Value::IntSeq(value));
-                        }
-                        run.append(&value.to_string());
-                    }
-                    Value::Regex(value) => {
-                        if matches!(run.format, Format::Json | Format::Jsonnet) {
-                            return self.pcf_unrenderable(run, &Value::Regex(value));
-                        }
-                        // The language PcfRenderer delegates to VmRegex.toString;
-                        // renderer string settings do not apply to Regex patterns.
-                        run.append_value(&super::regex::string(&value));
-                    }
-                    Value::Duration(value) => {
-                        if matches!(run.format, Format::Json | Format::Jsonnet) {
-                            return self.pcf_unrenderable(run, &Value::Duration(value));
-                        }
-                        run.append(&value.to_string());
-                    }
-                    Value::String(value) => run.append_value(&if run.format == Format::Jsonnet {
-                        super::jsonnet::string(&value, &run.indent, &run.indentation(depth))
-                    } else if run.format == Format::Json {
-                        json_string(&value)
-                    } else {
-                        super::pcf_format::string(
-                            &value,
-                            &run.indentation(depth + usize::from(!string_element)),
-                            run.custom,
-                        )
-                    }),
-                    Value::Bytes(value) => {
-                        if matches!(run.format, Format::Json | Format::Jsonnet) {
-                            return self.pcf_unrenderable(run, &Value::Bytes(value));
-                        }
-                        run.append("Bytes(");
-                        for (index, byte) in value.iter().enumerate() {
-                            if index != 0 {
-                                run.append(", ");
-                            }
-                            run.append(&byte.to_string());
-                        }
-                        run.append(")");
-                    }
-                    Value::Object(id) => {
-                        if run.format == Format::Jsonnet
-                            && let Some(import_str) = self.jsonnet_wrapper(id)?
-                        {
-                            run.await_ = Some(Await::JsonnetWrapper {
-                                receiver: id,
-                                path,
-                                depth,
-                                import_str,
-                            });
-                            self.force(
-                                id,
-                                id,
-                                if import_str { "path" } else { "name" }.into(),
-                                false,
-                                true,
-                                false,
-                            )?;
-                            return Ok(false);
-                        }
-                        if self.is_render_directive(id)? {
-                            if run.format == Format::Properties && run.properties_document {
-                                run.tasks.push(Task::PropertiesDirective {
-                                    receiver: id,
-                                    path: path.clone(),
-                                });
-                                run.tasks.push(Task::Text(" = ".into()));
-                                run.tasks.push(Task::PropertiesKey {
-                                    path,
-                                    next: 0,
-                                    following: false,
-                                });
-                                return Ok(false);
-                            }
-                            run.await_ = Some(Await::Directive { receiver: id, path });
-                            self.force(id, id, "text".into(), false, true, false)?;
-                            return Ok(false);
-                        }
-                        if run.format == Format::Pcf && self.is_pcf_render_directive(id)? {
-                            if !run.active.insert(id) {
-                                return Err(RuntimeError::new(
-                                    ErrorKind::Cycle,
-                                    "cyclic value rendering",
-                                ));
-                            }
-                            if standalone {
-                                run.append("new ");
-                            }
-                            run.tasks.push(Task::PcfDirective {
-                                receiver: id,
-                                depth,
-                                path: path.clone(),
-                                stage: 1,
-                            });
-                            run.await_ = Some(Await::PcfDirective {
-                                receiver: id,
-                                path,
-                                stage: 0,
-                            });
-                            self.force(id, id, "before".into(), false, true, false)?;
-                            return Ok(false);
-                        }
-                        if self.heap.get(id)?.foreign_map_entry.is_some() {
-                            return Err(RuntimeError::foreign(
-                                crate::java_exception::provenance::ForeignOperation::KeyValueHolderTypeVisitor { is_set: false },
-                                "Unknown VM value type: java.util.KeyValueHolder",
-                            ));
-                        }
-                        if let Some(pair) = self.heap.get(id)?.pair.clone() {
-                            if run.format != Format::Pcf {
-                                return self.pcf_unrenderable(run, &Value::Object(id));
-                            }
-                            run.append("Pair(");
-                            run.tasks.push(Task::Text(")".into()));
-                            run.value(pair[1].clone(), depth, true, false, false, path.clone());
-                            run.tasks.push(Task::Text(", ".into()));
-                            run.value(pair[0].clone(), depth, true, false, false, path);
-                            return Ok(false);
-                        }
-                        if self.heap.get(id)?.reference.is_some() {
-                            return self.pcf_unrenderable(run, &Value::Object(id));
-                        }
-                        if !run.active.insert(id) {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Cycle,
-                                "cyclic value rendering",
-                            ));
-                        }
-                        let kind = self.heap.get(id)?.collection_kind;
-                        let strict = matches!(
-                            kind,
-                            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                        );
-                        if strict {
-                            let array = kind != CollectionKind::Map;
-                            if run.format == Format::Properties && array {
-                                return self.pcf_unrenderable(run, &Value::Object(id));
-                            }
-                            if run.format == Format::Yaml {
-                                run.yaml.as_mut().unwrap().start(array);
-                            } else if !matches!(
-                                run.format,
-                                Format::Properties | Format::Plist | Format::Xml
-                            ) {
-                                run.append(
-                                    if matches!(run.format, Format::Json | Format::Jsonnet) {
-                                        if array { "[" } else { "{" }
-                                    } else {
-                                        match kind {
-                                            CollectionKind::List => "List(",
-                                            CollectionKind::Map => "Map(",
-                                            _ => "Set(",
-                                        }
-                                    },
-                                );
-                            }
-                            let members = collections::ordered_members(&self.heap, id)?
-                                .into_iter()
-                                .map(|descriptor| collections::RenderMember {
-                                    descriptor,
-                                    skip: false,
-                                    code: None,
-                                })
-                                .collect();
-                            run.tasks.push(Task::Members(Members {
-                                xml: None,
-                                receiver: id,
-                                members,
-                                next: 0,
-                                seen: Vec::new(),
-                                compare: 0,
-                                prepared: false,
-                                hash: None,
-                                depth: depth
-                                    + usize::from(matches!(
-                                        run.format,
-                                        Format::Json | Format::Jsonnet | Format::Plist
-                                    )),
-                                document_root: false,
-                                emitted: false,
-                                strict: true,
-                                array,
-                                stream: false,
-                                path,
-                            }));
+                    if run.format == Format::Yaml {
+                        run.yaml.as_mut().unwrap().start(array);
+                    } else if !matches!(
+                        run.format,
+                        Format::Properties | Format::Plist | Format::Xml
+                    ) {
+                        run.append(if matches!(run.format, Format::Json | Format::Jsonnet) {
+                            if array { "[" } else { "{" }
                         } else {
-                            run.tasks.push(Task::OpenObject {
-                                receiver: id,
-                                depth,
-                                standalone,
-                                root,
-                                path,
-                                stream: false,
-                            });
-                            run.await_ = Some(Await::Shallow);
-                            self.force_shallow_frame(Value::Object(id))?;
-                        }
+                            match kind {
+                                CollectionKind::List => "List(",
+                                CollectionKind::Map => "Map(",
+                                _ => "Set(",
+                            }
+                        });
                     }
-                    value => return self.pcf_unrenderable(run, &value),
+                    let members = collections::ordered_members(&self.heap, id)?
+                        .into_iter()
+                        .map(|descriptor| collections::RenderMember {
+                            descriptor,
+                            skip: false,
+                            code: None,
+                        })
+                        .collect();
+                    run.tasks.push(Task::Members(Members {
+                        xml: None,
+                        receiver: id,
+                        members,
+                        next: 0,
+                        seen: Vec::new(),
+                        compare: 0,
+                        prepared: false,
+                        hash: None,
+                        depth: depth
+                            + usize::from(matches!(
+                                run.format,
+                                Format::Json | Format::Jsonnet | Format::Plist
+                            )),
+                        document_root: false,
+                        emitted: false,
+                        strict: true,
+                        array,
+                        stream: false,
+                        path,
+                    }));
+                } else {
+                    run.tasks.push(Task::OpenObject {
+                        receiver: id,
+                        depth,
+                        standalone,
+                        root,
+                        path,
+                        stream: false,
+                    });
+                    run.await_ = Some(Await::Shallow);
+                    self.force_shallow_frame(Value::Object(id))?;
                 }
             }
+            value => return self.pcf_unrenderable(run, &value),
+        }
+        Ok(false)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_open_or_close(
+        &mut self,
+        run: &mut RenderRun,
+        task: Task,
+    ) -> Result<bool, RuntimeError> {
+        match task {
             Task::OpenObject {
                 receiver,
                 depth,
@@ -1632,595 +1687,6 @@ impl Vm {
                     path,
                 }));
             }
-            Task::Members(mut m) => {
-                if m.next == m.members.len() {
-                    if m.xml.is_some() {
-                        return Ok(false);
-                    }
-                    run.tasks.push(Task::Close {
-                        receiver: m.receiver,
-                        depth: m.depth,
-                        document_root: m.document_root,
-                        emitted: m.emitted
-                            || (matches!(
-                                run.format,
-                                Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
-                            ) && m.strict
-                                && !m.array
-                                && !m.members.is_empty()),
-                        strict: m.strict,
-                        array: m.array,
-                        stream: m.stream,
-                    });
-                    return Ok(false);
-                }
-                let item = m.members[m.next].clone();
-                let descriptor = &item.descriptor;
-                if !(matches!(
-                    run.format,
-                    Format::Properties
-                        | Format::Jsonnet
-                        | Format::Yaml
-                        | Format::Plist
-                        | Format::Xml
-                        | Format::PklBinary
-                        | Format::Protobuf
-                ) && m.strict)
-                    && !m.prepared
-                {
-                    m.prepared = true;
-                    let key = descriptor.key.clone();
-                    run.tasks.push(Task::Members(m));
-                    self.prepare_render_key(key);
-                    return Ok(false);
-                }
-                if !(matches!(
-                    run.format,
-                    Format::Properties
-                        | Format::Jsonnet
-                        | Format::Yaml
-                        | Format::Plist
-                        | Format::Xml
-                        | Format::PklBinary
-                        | Format::Protobuf
-                ) && m.strict)
-                {
-                    m.hash = self.java_hash(&descriptor.key)?;
-                    while m.compare < m.seen.len() {
-                        let (seen, hash) = &m.seen[m.compare];
-                        m.compare += 1;
-                        if (seen.kind == CollectionMemberKind::Property)
-                            != (descriptor.kind == CollectionMemberKind::Property)
-                            || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
-                        {
-                            continue;
-                        }
-                        let left = seen.key.clone();
-                        let right = descriptor.key.clone();
-                        run.tasks.push(Task::Members(m));
-                        run.await_ = Some(Await::KeyEquality);
-                        self.begin_equality(left, right, false);
-                        return Ok(false);
-                    }
-                    m.seen.push((descriptor.clone(), m.hash));
-                }
-                m.next += 1;
-                m.compare = 0;
-                m.prepared = false;
-                if item.skip {
-                    run.tasks.push(Task::Members(m));
-                    return Ok(false);
-                }
-                if matches!(
-                    run.format,
-                    Format::Json
-                        | Format::Properties
-                        | Format::Jsonnet
-                        | Format::Yaml
-                        | Format::Plist
-                        | Format::Xml
-                ) && m.array
-                    && m.xml.is_none()
-                    && descriptor.kind != CollectionMemberKind::Element
-                {
-                    let rendered = crate::diagnostic_values::render(
-                        &Value::Object(m.receiver),
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    return Err(RuntimeError::new(ErrorKind::Type,
-                        PklString::from(format!("Cannot render object with both elements and properties/entries as {}.\nObject: ", run.format.name())).concat(&rendered)));
-                }
-                let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
-                    .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
-                if let Some(mode) = &m.xml {
-                    let action = match mode {
-                        XmlMembers::Attributes { name } => XmlAction::Attribute {
-                            name: name.clone(),
-                            key: descriptor.key.clone(),
-                        },
-                        XmlMembers::Elements
-                            if descriptor.kind == CollectionMemberKind::Element =>
-                        {
-                            XmlAction::Dispatch {
-                                place: XmlPlace::Element,
-                                marker_read: false,
-                            }
-                        }
-                        XmlMembers::Elements => {
-                            run.tasks.push(Task::Members(m));
-                            return Ok(false);
-                        }
-                    };
-                    let task = XmlTask {
-                        value,
-                        depth: m.depth,
-                        path: m.path.clone(),
-                        input: None,
-                        action,
-                    };
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::Xml(task));
-                    return Ok(false);
-                }
-                if m.stream {
-                    if m.emitted {
-                        run.yaml.as_mut().unwrap().separator();
-                    }
-                    m.emitted = true;
-                    let path = m.path.clone();
-                    run.tasks.push(Task::Members(m));
-                    run.value(value, 0, false, false, false, path);
-                    return Ok(false);
-                }
-                let descriptor = descriptor.clone();
-                let key = descriptor.key.clone();
-                let previous_source = run.source.clone();
-                if let Some(metadata) = item.code.and_then(|code| self.program.metadata.get(code))
-                    && let Some(span) = metadata.member_span.or(metadata.declaration)
-                {
-                    let renderer = &self.program.metadata[self.frames.last().unwrap().block];
-                    let source = metadata
-                        .source
-                        .as_ref()
-                        .or(self.context.primary_source.as_ref())
-                        .map(|source| {
-                            Arc::new(crate::value::RuntimeSource {
-                                module_name: renderer.source.as_ref().map_or_else(
-                                    || self.program.module_name.clone(),
-                                    |source| source.module_name.clone(),
-                                ),
-                                ..(**source).clone()
-                            })
-                        });
-                    run.source = Some(RuntimeFrame {
-                        anonymous: false,
-                        source,
-                        span,
-                        member: renderer.member.clone(),
-                    });
-                }
-                run.tasks.push(Task::Member(MemberRun {
-                    members: m,
-                    descriptor,
-                    key,
-                    value,
-                    step: 0,
-                    output_name: None,
-                    previous_source,
-                }));
-            }
-            Task::Member(mut member) => {
-                if member.step == 0 {
-                    member.step = 1;
-                    if member.descriptor.kind == CollectionMemberKind::Property {
-                        let annotations = self.pcf_property_annotations(
-                            member.members.receiver,
-                            &member.descriptor.name,
-                        )?;
-                        if !annotations.is_empty() {
-                            let property =
-                                self.make_pair(member.descriptor.key.clone(), member.value.clone());
-                            run.tasks.push(Task::Property(PropertyRun {
-                                member,
-                                annotations,
-                                next: 0,
-                                annotation: Value::Null,
-                                property,
-                                function: None,
-                                step: 0,
-                            }));
-                            return Ok(false);
-                        }
-                    }
-                    if member.descriptor.kind == CollectionMemberKind::Entry
-                        && let Some(function) = run.converters.select(self, &member.key, &[])?
-                    {
-                        let argument = member.key.clone();
-                        run.tasks.push(Task::Member(member));
-                        run.await_ = Some(Await::ConverterMember { key: true });
-                        self.invoke_converter(function, argument)?;
-                        return Ok(false);
-                    }
-                }
-                let mut path = member.members.path.clone();
-                path.push(
-                    if member.descriptor.kind == CollectionMemberKind::Property {
-                        PathPart::Property(if let Value::String(name) = &member.descriptor.key {
-                            name.clone()
-                        } else {
-                            unreachable!("property string key")
-                        })
-                    } else {
-                        PathPart::Entry(member.key.clone())
-                    },
-                );
-                if member.step == 1 {
-                    member.step = 2;
-                    if let Some(function) = run.converters.select(self, &member.value, &path)? {
-                        let argument = member.value.clone();
-                        run.tasks.push(Task::Member(member));
-                        run.await_ = Some(Await::ConverterMember { key: false });
-                        self.invoke_converter(function, argument)?;
-                        return Ok(false);
-                    }
-                }
-                let MemberRun {
-                    members: mut m,
-                    descriptor,
-                    key,
-                    value,
-                    output_name,
-                    previous_source,
-                    ..
-                } = member;
-                if (descriptor.kind == CollectionMemberKind::Property
-                    || (run.format != Format::Pcf
-                        && descriptor.kind == CollectionMemberKind::Entry))
-                    && run.omit_null
-                    && value.is_null()
-                {
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    return Ok(false);
-                }
-                let depth = m.depth;
-                if run.format == Format::Protobuf {
-                    self.protobuf_member(
-                        run,
-                        m,
-                        descriptor,
-                        key,
-                        value,
-                        output_name,
-                        previous_source,
-                        path,
-                    )?;
-                } else if run.format == Format::PklBinary {
-                    self.binary_member(
-                        run,
-                        m,
-                        descriptor,
-                        key,
-                        value,
-                        output_name,
-                        previous_source,
-                        path,
-                    )?;
-                } else if run.format == Format::Xml {
-                    let place = if descriptor.kind == CollectionMemberKind::Element {
-                        XmlPlace::Element
-                    } else {
-                        XmlPlace::Property {
-                            key: if descriptor.kind == CollectionMemberKind::Property {
-                                Value::String(output_name.unwrap_or_else(|| match descriptor.key {
-                                    Value::String(name) => name,
-                                    _ => unreachable!(),
-                                }))
-                            } else {
-                                key
-                            },
-                            enclosing: m.receiver,
-                            validate: true,
-                        }
-                    };
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.xml_dispatch(value, depth, path, place);
-                } else if run.format == Format::Plist {
-                    let element = descriptor.kind == CollectionMemberKind::Element;
-                    if descriptor.kind == CollectionMemberKind::Entry
-                        && !matches!(&key, Value::String(_))
-                        && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
-                    {
-                        return self.plist_non_string_key(m.receiver, &key);
-                    }
-                    if !m.emitted {
-                        run.append(if element { "<array>\n" } else { "<dict>\n" });
-                    }
-                    m.emitted = true;
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.tasks.push(Task::Text("\n".into()));
-                    run.value(value, depth, false, false, false, path);
-                    if element {
-                        run.append_value(&run.indentation(depth));
-                    } else {
-                        let key = if descriptor.kind == CollectionMemberKind::Property {
-                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
-                                Value::String(name) => name,
-                                _ => unreachable!("property string key"),
-                            }))
-                        } else {
-                            key
-                        };
-                        run.tasks.push(Task::PlistKey { key, depth });
-                    }
-                } else if run.format == Format::Yaml {
-                    let element = descriptor.kind == CollectionMemberKind::Element;
-                    if descriptor.kind == CollectionMemberKind::Entry
-                        && !self.yaml_scalar_key(&key)?
-                    {
-                        return self.yaml_non_scalar_key(m.receiver, &key);
-                    }
-                    run.yaml.as_mut().unwrap().member(element, !m.emitted);
-                    m.emitted = true;
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.value(value, depth, false, false, false, path);
-                    if !element {
-                        run.tasks.push(Task::Text(":".into()));
-                        let key = if descriptor.kind == CollectionMemberKind::Property {
-                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
-                                Value::String(name) => name,
-                                _ => unreachable!("property string key"),
-                            }))
-                        } else {
-                            key
-                        };
-                        run.tasks.push(Task::YamlKey(key));
-                    }
-                } else if run.format == Format::Properties {
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    // Root Dynamic elements are converted, then deliberately ignored.
-                    if descriptor.kind == CollectionMemberKind::Element {
-                        return Ok(false);
-                    }
-                    // A keyed Dynamic with elements is wrapped as a Listing and
-                    // converted once more at this same path, as in pinned Java.
-                    if let Value::Object(id) = &value
-                        && self.heap.get(*id)?.collection_kind == CollectionKind::Dynamic
-                        && collections::typed_class(&self.heap, *id)?.is_none()
-                        && !self.heap.get(*id)?.is_module
-                        && self.heap.get(*id)?.length != 0
-                    {
-                        // A VmListing view keeps the Dynamic as its member parent,
-                        // but has Listing identity for converter/class dispatch.
-                        let class = self.canonical_builtin_class(classes::BuiltinClass::Listing);
-                        let object = Object {
-                            parent: Some(*id),
-                            instance_class: Some(class),
-                            collection_kind: CollectionKind::Listing,
-                            length: self.heap.get(*id)?.length,
-                            ..Default::default()
-                        };
-                        let wrapper = self.heap.allocate(object);
-                        run.tasks.push(Task::Visit {
-                            value: Value::Object(wrapper),
-                            depth,
-                            standalone: false,
-                            root: false,
-                            string_element: false,
-                            path,
-                            converted: false,
-                        });
-                    } else {
-                        run.value(value, depth, false, false, false, path);
-                    }
-                } else if run.format == Format::Jsonnet {
-                    let element = descriptor.kind == CollectionMemberKind::Element;
-                    if m.emitted {
-                        run.append(",");
-                    }
-                    if !run.indent.is_empty() {
-                        run.json_newline(depth);
-                    } else if m.emitted || !element {
-                        run.append(" ");
-                    }
-                    if descriptor.kind == CollectionMemberKind::Entry
-                        && !matches!(&key, Value::String(_))
-                        && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
-                    {
-                        return self.jsonnet_non_string_key(m.receiver, &key);
-                    }
-                    m.emitted = true;
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.value(value, depth, false, false, false, path);
-                    if !element {
-                        run.tasks.push(Task::Text(": ".into()));
-                        let key = if descriptor.kind == CollectionMemberKind::Property {
-                            Value::String(output_name.unwrap_or_else(|| match descriptor.key {
-                                Value::String(name) => name,
-                                _ => unreachable!("property string key"),
-                            }))
-                        } else {
-                            key
-                        };
-                        run.tasks.push(Task::JsonnetKey { key, depth });
-                    }
-                } else if run.format == Format::Json {
-                    if m.emitted {
-                        run.append(",");
-                    }
-                    run.json_newline(depth);
-                    m.emitted = true;
-                    let kind = descriptor.kind;
-                    if kind == CollectionMemberKind::Entry
-                        && !matches!(key, Value::String(_))
-                        && !matches!(key, Value::Object(id) if self.is_render_directive(id)?)
-                    {
-                        return self.json_non_string_key(m.receiver, &key);
-                    }
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.value(value, depth, false, false, false, path);
-                    if kind != CollectionMemberKind::Element {
-                        run.tasks.push(Task::Text(
-                            if run.indent.is_empty() { ":" } else { ": " }.into(),
-                        ));
-                        if kind == CollectionMemberKind::Property {
-                            run.tasks
-                                .push(Task::Text(json_string(&output_name.unwrap_or_else(|| {
-                                    if let Value::String(name) = &descriptor.key {
-                                        name.clone()
-                                    } else {
-                                        unreachable!("property string key")
-                                    }
-                                }))));
-                        } else {
-                            run.value(key, depth, false, false, false, Vec::new());
-                        }
-                    }
-                } else if m.strict {
-                    if m.emitted {
-                        run.append(", ");
-                    }
-                    m.emitted = true;
-                    let map = self.heap.get(m.receiver)?.collection_kind == CollectionKind::Map;
-                    run.tasks.push(Task::Members(m));
-                    run.tasks.push(Task::RestoreSource(previous_source));
-                    run.value(value, depth, true, false, false, path);
-                    if map {
-                        run.tasks.push(Task::Text(", ".into()));
-                        run.value(key, depth, true, false, false, Vec::new());
-                    }
-                } else {
-                    match descriptor.kind {
-                        CollectionMemberKind::Property => {
-                            if !run.output_empty() {
-                                run.append("\n");
-                                run.append_value(&run.indentation(depth));
-                            }
-                            let name = output_name.unwrap_or_else(|| {
-                                if let Value::String(name) = &descriptor.key {
-                                    name.clone()
-                                } else {
-                                    unreachable!("property string key")
-                                }
-                            });
-                            if name
-                                .as_str()
-                                .is_some_and(crate::parser::is_regular_identifier)
-                            {
-                                run.append_value(&name);
-                            } else {
-                                run.append("`");
-                                run.append_value(&name);
-                                run.append("`");
-                            }
-                            run.append(if self.pcf_object_like(&value)? {
-                                " "
-                            } else {
-                                " = "
-                            });
-                            m.emitted = true;
-                            run.tasks.push(Task::Members(m));
-                            run.tasks.push(Task::RestoreSource(previous_source));
-                            run.value(value, depth, false, false, false, path);
-                        }
-                        CollectionMemberKind::Element => {
-                            run.append("\n");
-                            run.append_value(&run.indentation(depth));
-                            m.emitted = true;
-                            run.tasks.push(Task::Members(m));
-                            run.tasks.push(Task::RestoreSource(previous_source));
-                            run.value(value, depth, true, false, true, path);
-                        }
-                        CollectionMemberKind::Entry => {
-                            run.append("\n");
-                            run.append_value(&run.indentation(depth));
-                            run.append("[");
-                            let separator = if self.pcf_object_like(&value)? {
-                                "] "
-                            } else {
-                                "] = "
-                            };
-                            m.emitted = true;
-                            run.tasks.push(Task::Members(m));
-                            run.tasks.push(Task::RestoreSource(previous_source));
-                            run.value(value, depth, false, false, false, path);
-                            run.tasks.push(Task::Text(separator.into()));
-                            run.value(key, depth, true, false, false, Vec::new());
-                        }
-                    }
-                }
-            }
-            Task::Property(mut p) => {
-                if p.step == 0 {
-                    if p.next == p.annotations.len() {
-                        let Value::Object(id) = p.property else {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Unsupported,
-                                "Property conversion returned a non-Pair value (pinned Java internal error).",
-                            ));
-                        };
-                        let pair=self.heap.get(id)?.pair.as_ref().ok_or_else(||RuntimeError::new(ErrorKind::Unsupported,"Property conversion returned a non-Pair value (pinned Java internal error)."))?;
-                        let Value::String(name) = &pair[0] else {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Unsupported,
-                                "Property conversion returned a non-String name (pinned Java internal error).",
-                            ));
-                        };
-                        p.member.output_name = Some(name.clone());
-                        p.member.value = pair[1].clone();
-                        run.tasks.push(Task::Member(p.member));
-                        return Ok(false);
-                    }
-                    let annotation = p.annotations[p.next];
-                    p.annotation = Value::Object(annotation);
-                    p.step = 1;
-                    if let Some(function) = run.converters.transformer(self, annotation)? {
-                        let value = p.annotation.clone();
-                        run.tasks.push(Task::Property(p));
-                        run.await_ = Some(Await::PropertyTransformer);
-                        self.invoke_converter(function, value)?;
-                        return Ok(false);
-                    }
-                }
-                if p.step == 1 {
-                    p.step = 2;
-                    let annotation = p.annotation.as_object()?;
-                    run.tasks.push(Task::Property(p));
-                    run.await_ = Some(Await::PropertyFunction);
-                    self.force(annotation, annotation, "render".into(), false, true, false)?;
-                    return Ok(false);
-                }
-                if p.step == 2 {
-                    p.step = 3;
-                    let function = p
-                        .function
-                        .take()
-                        .ok_or_else(|| invalid("annotation render function"))?;
-                    let Value::Function(function) = function else {
-                        return Err(invalid("checked annotation function"));
-                    };
-                    let property = p.property.clone();
-                    run.tasks.push(Task::Property(p));
-                    run.await_ = Some(Await::PropertyResult);
-                    self.invoke_function(
-                        function,
-                        vec![property, Value::Object(run.receiver)],
-                        false,
-                    )?;
-                    return Ok(false);
-                }
-                p.step = 0;
-                p.next += 1;
-                run.tasks.push(Task::Property(p));
-            }
             Task::Close {
                 receiver,
                 depth,
@@ -2275,7 +1741,618 @@ impl Vm {
                 }
                 run.active.remove(&receiver);
             }
+            _ => unreachable!("open/close task"),
         }
+        Ok(false)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_members(
+        &mut self,
+        run: &mut RenderRun,
+        mut m: Members,
+    ) -> Result<bool, RuntimeError> {
+        if m.next == m.members.len() {
+            if m.xml.is_some() {
+                return Ok(false);
+            }
+            run.tasks.push(Task::Close {
+                receiver: m.receiver,
+                depth: m.depth,
+                document_root: m.document_root,
+                emitted: m.emitted
+                    || (matches!(
+                        run.format,
+                        Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
+                    ) && m.strict
+                        && !m.array
+                        && !m.members.is_empty()),
+                strict: m.strict,
+                array: m.array,
+                stream: m.stream,
+            });
+            return Ok(false);
+        }
+        let item = m.members[m.next].clone();
+        let descriptor = &item.descriptor;
+        if !(matches!(
+            run.format,
+            Format::Properties
+                | Format::Jsonnet
+                | Format::Yaml
+                | Format::Plist
+                | Format::Xml
+                | Format::PklBinary
+                | Format::Protobuf
+        ) && m.strict)
+            && !m.prepared
+        {
+            m.prepared = true;
+            let key = descriptor.key.clone();
+            run.tasks.push(Task::Members(m));
+            self.prepare_render_key(key);
+            return Ok(false);
+        }
+        if !(matches!(
+            run.format,
+            Format::Properties
+                | Format::Jsonnet
+                | Format::Yaml
+                | Format::Plist
+                | Format::Xml
+                | Format::PklBinary
+                | Format::Protobuf
+        ) && m.strict)
+        {
+            m.hash = self.java_hash(&descriptor.key)?;
+            while m.compare < m.seen.len() {
+                let (seen, hash) = &m.seen[m.compare];
+                m.compare += 1;
+                if (seen.kind == CollectionMemberKind::Property)
+                    != (descriptor.kind == CollectionMemberKind::Property)
+                    || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
+                {
+                    continue;
+                }
+                let left = seen.key.clone();
+                let right = descriptor.key.clone();
+                run.tasks.push(Task::Members(m));
+                run.await_ = Some(Await::KeyEquality);
+                self.begin_equality(left, right, false);
+                return Ok(false);
+            }
+            m.seen.push((descriptor.clone(), m.hash));
+        }
+        m.next += 1;
+        m.compare = 0;
+        m.prepared = false;
+        if item.skip {
+            run.tasks.push(Task::Members(m));
+            return Ok(false);
+        }
+        if matches!(
+            run.format,
+            Format::Json
+                | Format::Properties
+                | Format::Jsonnet
+                | Format::Yaml
+                | Format::Plist
+                | Format::Xml
+        ) && m.array
+            && m.xml.is_none()
+            && descriptor.kind != CollectionMemberKind::Element
+        {
+            let rendered = crate::diagnostic_values::render(
+                &Value::Object(m.receiver),
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from(format!(
+                    "Cannot render object with both elements and properties/entries as {}.\nObject: ",
+                    run.format.name()
+                ))
+                .concat(&rendered),
+            ));
+        }
+        let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
+            .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
+        if let Some(mode) = &m.xml {
+            let action = match mode {
+                XmlMembers::Attributes { name } => XmlAction::Attribute {
+                    name: name.clone(),
+                    key: descriptor.key.clone(),
+                },
+                XmlMembers::Elements if descriptor.kind == CollectionMemberKind::Element => {
+                    XmlAction::Dispatch {
+                        place: XmlPlace::Element,
+                        marker_read: false,
+                    }
+                }
+                XmlMembers::Elements => {
+                    run.tasks.push(Task::Members(m));
+                    return Ok(false);
+                }
+            };
+            let task = XmlTask {
+                value,
+                depth: m.depth,
+                path: m.path.clone(),
+                input: None,
+                action,
+            };
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::Xml(task));
+            return Ok(false);
+        }
+        if m.stream {
+            if m.emitted {
+                run.yaml.as_mut().unwrap().separator();
+            }
+            m.emitted = true;
+            let path = m.path.clone();
+            run.tasks.push(Task::Members(m));
+            run.value(value, 0, false, false, false, path);
+            return Ok(false);
+        }
+        let descriptor = descriptor.clone();
+        let key = descriptor.key.clone();
+        let previous_source = run.source.clone();
+        if let Some(metadata) = item.code.and_then(|code| self.program.metadata.get(code))
+            && let Some(span) = metadata.member_span.or(metadata.declaration)
+        {
+            let renderer = &self.program.metadata[self.frames.last().unwrap().block];
+            let source = metadata
+                .source
+                .as_ref()
+                .or(self.context.primary_source.as_ref())
+                .map(|source| {
+                    Arc::new(crate::value::RuntimeSource {
+                        module_name: renderer.source.as_ref().map_or_else(
+                            || self.program.module_name.clone(),
+                            |source| source.module_name.clone(),
+                        ),
+                        ..(**source).clone()
+                    })
+                });
+            run.source = Some(RuntimeFrame {
+                anonymous: false,
+                source,
+                span,
+                member: renderer.member.clone(),
+            });
+        }
+        run.tasks.push(Task::Member(MemberRun {
+            members: m,
+            descriptor,
+            key,
+            value,
+            step: 0,
+            output_name: None,
+            previous_source,
+        }));
+        Ok(false)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_member(
+        &mut self,
+        run: &mut RenderRun,
+        mut member: MemberRun,
+    ) -> Result<bool, RuntimeError> {
+        if member.step == 0 {
+            member.step = 1;
+            if member.descriptor.kind == CollectionMemberKind::Property {
+                let annotations = self
+                    .pcf_property_annotations(member.members.receiver, &member.descriptor.name)?;
+                if !annotations.is_empty() {
+                    let property =
+                        self.make_pair(member.descriptor.key.clone(), member.value.clone());
+                    run.tasks.push(Task::Property(PropertyRun {
+                        member,
+                        annotations,
+                        next: 0,
+                        annotation: Value::Null,
+                        property,
+                        function: None,
+                        step: 0,
+                    }));
+                    return Ok(false);
+                }
+            }
+            if member.descriptor.kind == CollectionMemberKind::Entry
+                && let Some(function) = run.converters.select(self, &member.key, &[])?
+            {
+                let argument = member.key.clone();
+                run.tasks.push(Task::Member(member));
+                run.await_ = Some(Await::ConverterMember { key: true });
+                self.invoke_converter(function, argument)?;
+                return Ok(false);
+            }
+        }
+        let mut path = member.members.path.clone();
+        path.push(
+            if member.descriptor.kind == CollectionMemberKind::Property {
+                PathPart::Property(if let Value::String(name) = &member.descriptor.key {
+                    name.clone()
+                } else {
+                    unreachable!("property string key")
+                })
+            } else {
+                PathPart::Entry(member.key.clone())
+            },
+        );
+        if member.step == 1 {
+            member.step = 2;
+            if let Some(function) = run.converters.select(self, &member.value, &path)? {
+                let argument = member.value.clone();
+                run.tasks.push(Task::Member(member));
+                run.await_ = Some(Await::ConverterMember { key: false });
+                self.invoke_converter(function, argument)?;
+                return Ok(false);
+            }
+        }
+        let MemberRun {
+            members: mut m,
+            descriptor,
+            key,
+            value,
+            output_name,
+            previous_source,
+            ..
+        } = member;
+        if (descriptor.kind == CollectionMemberKind::Property
+            || (run.format != Format::Pcf && descriptor.kind == CollectionMemberKind::Entry))
+            && run.omit_null
+            && value.is_null()
+        {
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            return Ok(false);
+        }
+        let depth = m.depth;
+        if run.format == Format::Protobuf {
+            self.protobuf_member(
+                run,
+                m,
+                descriptor,
+                key,
+                value,
+                output_name,
+                previous_source,
+                path,
+            )?;
+        } else if run.format == Format::PklBinary {
+            self.binary_member(
+                run,
+                m,
+                descriptor,
+                key,
+                value,
+                output_name,
+                previous_source,
+                path,
+            )?;
+        } else if run.format == Format::Xml {
+            let place = if descriptor.kind == CollectionMemberKind::Element {
+                XmlPlace::Element
+            } else {
+                XmlPlace::Property {
+                    key: if descriptor.kind == CollectionMemberKind::Property {
+                        Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                            Value::String(name) => name,
+                            _ => unreachable!(),
+                        }))
+                    } else {
+                        key
+                    },
+                    enclosing: m.receiver,
+                    validate: true,
+                }
+            };
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.xml_dispatch(value, depth, path, place);
+        } else if run.format == Format::Plist {
+            let element = descriptor.kind == CollectionMemberKind::Element;
+            if descriptor.kind == CollectionMemberKind::Entry
+                && !matches!(&key, Value::String(_))
+                && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
+            {
+                return self.plist_non_string_key(m.receiver, &key);
+            }
+            if !m.emitted {
+                run.append(if element { "<array>\n" } else { "<dict>\n" });
+            }
+            m.emitted = true;
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.tasks.push(Task::Text("\n".into()));
+            run.value(value, depth, false, false, false, path);
+            if element {
+                run.append_value(&run.indentation(depth));
+            } else {
+                let key = if descriptor.kind == CollectionMemberKind::Property {
+                    Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                        Value::String(name) => name,
+                        _ => unreachable!("property string key"),
+                    }))
+                } else {
+                    key
+                };
+                run.tasks.push(Task::PlistKey { key, depth });
+            }
+        } else if run.format == Format::Yaml {
+            let element = descriptor.kind == CollectionMemberKind::Element;
+            if descriptor.kind == CollectionMemberKind::Entry && !self.yaml_scalar_key(&key)? {
+                return self.yaml_non_scalar_key(m.receiver, &key);
+            }
+            run.yaml.as_mut().unwrap().member(element, !m.emitted);
+            m.emitted = true;
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.value(value, depth, false, false, false, path);
+            if !element {
+                run.tasks.push(Task::Text(":".into()));
+                let key = if descriptor.kind == CollectionMemberKind::Property {
+                    Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                        Value::String(name) => name,
+                        _ => unreachable!("property string key"),
+                    }))
+                } else {
+                    key
+                };
+                run.tasks.push(Task::YamlKey(key));
+            }
+        } else if run.format == Format::Properties {
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            // Root Dynamic elements are converted, then deliberately ignored.
+            if descriptor.kind == CollectionMemberKind::Element {
+                return Ok(false);
+            }
+            // A keyed Dynamic with elements is wrapped as a Listing and
+            // converted once more at this same path, as in pinned Java.
+            if let Value::Object(id) = &value
+                && self.heap.get(*id)?.collection_kind == CollectionKind::Dynamic
+                && collections::typed_class(&self.heap, *id)?.is_none()
+                && !self.heap.get(*id)?.is_module
+                && self.heap.get(*id)?.length != 0
+            {
+                // A VmListing view keeps the Dynamic as its member parent,
+                // but has Listing identity for converter/class dispatch.
+                let class = self.canonical_builtin_class(classes::BuiltinClass::Listing);
+                let object = Object {
+                    parent: Some(*id),
+                    instance_class: Some(class),
+                    collection_kind: CollectionKind::Listing,
+                    length: self.heap.get(*id)?.length,
+                    ..Default::default()
+                };
+                let wrapper = self.heap.allocate(object);
+                run.tasks.push(Task::Visit {
+                    value: Value::Object(wrapper),
+                    depth,
+                    standalone: false,
+                    root: false,
+                    string_element: false,
+                    path,
+                    converted: false,
+                });
+            } else {
+                run.value(value, depth, false, false, false, path);
+            }
+        } else if run.format == Format::Jsonnet {
+            let element = descriptor.kind == CollectionMemberKind::Element;
+            if m.emitted {
+                run.append(",");
+            }
+            if !run.indent.is_empty() {
+                run.json_newline(depth);
+            } else if m.emitted || !element {
+                run.append(" ");
+            }
+            if descriptor.kind == CollectionMemberKind::Entry
+                && !matches!(&key, Value::String(_))
+                && !matches!(&key, Value::Object(id) if self.is_render_directive(*id)?)
+            {
+                return self.jsonnet_non_string_key(m.receiver, &key);
+            }
+            m.emitted = true;
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.value(value, depth, false, false, false, path);
+            if !element {
+                run.tasks.push(Task::Text(": ".into()));
+                let key = if descriptor.kind == CollectionMemberKind::Property {
+                    Value::String(output_name.unwrap_or_else(|| match descriptor.key {
+                        Value::String(name) => name,
+                        _ => unreachable!("property string key"),
+                    }))
+                } else {
+                    key
+                };
+                run.tasks.push(Task::JsonnetKey { key, depth });
+            }
+        } else if run.format == Format::Json {
+            if m.emitted {
+                run.append(",");
+            }
+            run.json_newline(depth);
+            m.emitted = true;
+            let kind = descriptor.kind;
+            if kind == CollectionMemberKind::Entry
+                && !matches!(key, Value::String(_))
+                && !matches!(key, Value::Object(id) if self.is_render_directive(id)?)
+            {
+                return self.json_non_string_key(m.receiver, &key);
+            }
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.value(value, depth, false, false, false, path);
+            if kind != CollectionMemberKind::Element {
+                run.tasks.push(Task::Text(
+                    if run.indent.is_empty() { ":" } else { ": " }.into(),
+                ));
+                if kind == CollectionMemberKind::Property {
+                    run.tasks
+                        .push(Task::Text(json_string(&output_name.unwrap_or_else(|| {
+                            if let Value::String(name) = &descriptor.key {
+                                name.clone()
+                            } else {
+                                unreachable!("property string key")
+                            }
+                        }))));
+                } else {
+                    run.value(key, depth, false, false, false, Vec::new());
+                }
+            }
+        } else if m.strict {
+            if m.emitted {
+                run.append(", ");
+            }
+            m.emitted = true;
+            let map = self.heap.get(m.receiver)?.collection_kind == CollectionKind::Map;
+            run.tasks.push(Task::Members(m));
+            run.tasks.push(Task::RestoreSource(previous_source));
+            run.value(value, depth, true, false, false, path);
+            if map {
+                run.tasks.push(Task::Text(", ".into()));
+                run.value(key, depth, true, false, false, Vec::new());
+            }
+        } else {
+            match descriptor.kind {
+                CollectionMemberKind::Property => {
+                    if !run.output_empty() {
+                        run.append("\n");
+                        run.append_value(&run.indentation(depth));
+                    }
+                    let name = output_name.unwrap_or_else(|| {
+                        if let Value::String(name) = &descriptor.key {
+                            name.clone()
+                        } else {
+                            unreachable!("property string key")
+                        }
+                    });
+                    if name
+                        .as_str()
+                        .is_some_and(crate::parser::is_regular_identifier)
+                    {
+                        run.append_value(&name);
+                    } else {
+                        run.append("`");
+                        run.append_value(&name);
+                        run.append("`");
+                    }
+                    run.append(if self.pcf_object_like(&value)? {
+                        " "
+                    } else {
+                        " = "
+                    });
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, false, false, false, path);
+                }
+                CollectionMemberKind::Element => {
+                    run.append("\n");
+                    run.append_value(&run.indentation(depth));
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, true, false, true, path);
+                }
+                CollectionMemberKind::Entry => {
+                    run.append("\n");
+                    run.append_value(&run.indentation(depth));
+                    run.append("[");
+                    let separator = if self.pcf_object_like(&value)? {
+                        "] "
+                    } else {
+                        "] = "
+                    };
+                    m.emitted = true;
+                    run.tasks.push(Task::Members(m));
+                    run.tasks.push(Task::RestoreSource(previous_source));
+                    run.value(value, depth, false, false, false, path);
+                    run.tasks.push(Task::Text(separator.into()));
+                    run.value(key, depth, true, false, false, Vec::new());
+                }
+            }
+        }
+        Ok(false)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn advance_pcf_property(
+        &mut self,
+        run: &mut RenderRun,
+        mut p: PropertyRun,
+    ) -> Result<bool, RuntimeError> {
+        if p.step == 0 {
+            if p.next == p.annotations.len() {
+                let Value::Object(id) = p.property else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Property conversion returned a non-Pair value (pinned Java internal error).",
+                    ));
+                };
+                let pair = self.heap.get(id)?.pair.as_ref().ok_or_else(|| {
+                    RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Property conversion returned a non-Pair value (pinned Java internal error).",
+                    )
+                })?;
+                let Value::String(name) = &pair[0] else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Unsupported,
+                        "Property conversion returned a non-String name (pinned Java internal error).",
+                    ));
+                };
+                p.member.output_name = Some(name.clone());
+                p.member.value = pair[1].clone();
+                run.tasks.push(Task::Member(p.member));
+                return Ok(false);
+            }
+            let annotation = p.annotations[p.next];
+            p.annotation = Value::Object(annotation);
+            p.step = 1;
+            if let Some(function) = run.converters.transformer(self, annotation)? {
+                let value = p.annotation.clone();
+                run.tasks.push(Task::Property(p));
+                run.await_ = Some(Await::PropertyTransformer);
+                self.invoke_converter(function, value)?;
+                return Ok(false);
+            }
+        }
+        if p.step == 1 {
+            p.step = 2;
+            let annotation = p.annotation.as_object()?;
+            run.tasks.push(Task::Property(p));
+            run.await_ = Some(Await::PropertyFunction);
+            self.force(annotation, annotation, "render".into(), false, true, false)?;
+            return Ok(false);
+        }
+        if p.step == 2 {
+            p.step = 3;
+            let function = p
+                .function
+                .take()
+                .ok_or_else(|| invalid("annotation render function"))?;
+            let Value::Function(function) = function else {
+                return Err(invalid("checked annotation function"));
+            };
+            let property = p.property.clone();
+            run.tasks.push(Task::Property(p));
+            run.await_ = Some(Await::PropertyResult);
+            self.invoke_function(function, vec![property, Value::Object(run.receiver)], false)?;
+            return Ok(false);
+        }
+        p.step = 0;
+        p.next += 1;
+        run.tasks.push(Task::Property(p));
         Ok(false)
     }
     fn yaml_scalar_key(&self, key: &Value) -> Result<bool, RuntimeError> {
@@ -2307,6 +2384,7 @@ impl Vm {
             .concat(&render(key)?),
         ))
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn pcf_property_annotations(
         &self,
         receiver: ObjectId,
@@ -2388,6 +2466,7 @@ impl Vm {
     fn pcf_unrenderable(&self, run: &RenderRun, value: &Value) -> Result<bool, RuntimeError> {
         self.render_unrenderable_at(run, value, run.source.as_ref())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn render_unrenderable_at(
         &self,
         run: &RenderRun,
@@ -2418,7 +2497,7 @@ impl Vm {
         }
         Err(error)
     }
-    fn is_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+    pub(super) fn is_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
         Ok(collections::typed_class(&self.heap, id)?
             .is_some_and(|class| class.id == output::RENDER_DIRECTIVE))
     }
@@ -2517,6 +2596,7 @@ fn same_render_reference(left: &Value, right: &Value) -> bool {
 }
 
 /// The pinned JsonEscaper operates on Java chars, including unpaired surrogates.
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn json_string(value: &PklString) -> PklString {
     let mut units = vec![b'"' as u16];
     for unit in value.encode_utf16() {
@@ -2555,6 +2635,7 @@ fn path_roots(path: &[PathPart], roots: &mut Vec<Value>) {
 }
 
 /// Pinned PropertiesUtils operates on UTF-16 chars, including lone surrogates.
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn properties_string(value: &PklString, key: bool, restrict: bool) -> PklString {
     let mut out = Vec::new();
     for (index, unit) in value.encode_utf16().enumerate() {
@@ -2581,6 +2662,7 @@ fn properties_string(value: &PklString, key: bool, restrict: bool) -> PklString 
     PklString::from_utf16(out)
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn yaml_scalar(value: &Value) -> Result<PklString, RuntimeError> {
     Ok(match value {
         Value::Null | Value::NullWithDefault(_) => "null".into(),

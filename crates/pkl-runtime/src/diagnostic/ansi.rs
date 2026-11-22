@@ -213,9 +213,12 @@ pub mod theme {
 }
 
 /// UTF-16-lossless ANSI escape-code builder matching `org.pkl.core.util.AnsiStringBuilder`.
+/// Uses a direct UTF-8 fast path for valid Unicode and lazily promotes to `Vec<u16>` only
+/// when an unmatched UTF-16 surrogate is encountered.
 #[derive(Clone, Debug)]
 pub struct AnsiStringBuilder {
-    units: Vec<u16>,
+    utf8: String,
+    utf16: Option<Vec<u16>>,
     using_color: bool,
     current_codes: AnsiCodeSet,
     declared_codes: AnsiCodeSet,
@@ -224,10 +227,71 @@ pub struct AnsiStringBuilder {
 impl AnsiStringBuilder {
     pub fn new(using_color: bool) -> Self {
         Self {
-            units: Vec::new(),
+            utf8: String::with_capacity(256),
+            utf16: None,
             using_color,
             current_codes: AnsiCodeSet::EMPTY,
             declared_codes: AnsiCodeSet::EMPTY,
+        }
+    }
+
+    fn promote_to_utf16(&mut self) -> &mut Vec<u16> {
+        if self.utf16.is_none() {
+            let mut units: Vec<u16> = self.utf8.encode_utf16().collect();
+            self.utf8.clear();
+            units.reserve(64);
+            self.utf16 = Some(units);
+        }
+        self.utf16.as_mut().unwrap()
+    }
+
+    #[inline]
+    fn push_raw_str(&mut self, value: &str) {
+        if let Some(units) = &mut self.utf16 {
+            units.extend(value.encode_utf16());
+        } else {
+            self.utf8.push_str(value);
+        }
+    }
+
+    #[inline]
+    fn push_raw_char(&mut self, value: char) {
+        if let Some(units) = &mut self.utf16 {
+            let mut buf = [0u16; 2];
+            units.extend_from_slice(value.encode_utf16(&mut buf));
+        } else {
+            self.utf8.push(value);
+        }
+    }
+
+    #[inline]
+    fn push_raw_pkl(&mut self, value: &PklString) {
+        if let Some(units) = &mut self.utf16 {
+            units.extend(value.encode_utf16());
+        } else if let Some(s) = value.as_str() {
+            self.utf8.push_str(s);
+        } else {
+            self.promote_to_utf16().extend(value.encode_utf16());
+        }
+    }
+
+    #[inline]
+    fn push_raw_utf16(&mut self, value: &[u16]) {
+        if let Some(units) = &mut self.utf16 {
+            units.extend_from_slice(value);
+            return;
+        }
+        if value.iter().all(|&u| u < 0x80) {
+            self.utf8.reserve(value.len());
+            for &u in value {
+                self.utf8.push(u as u8 as char);
+            }
+            return;
+        }
+        if let Ok(s) = String::from_utf16(value) {
+            self.utf8.push_str(&s);
+        } else {
+            self.promote_to_utf16().extend_from_slice(value);
         }
     }
 
@@ -240,27 +304,35 @@ impl AnsiStringBuilder {
     }
 
     pub fn len(&self) -> usize {
-        self.units.len()
+        match &self.utf16 {
+            Some(units) => units.len(),
+            None => self.utf8.len(),
+        }
     }
 
     pub fn is_empty(&self) -> bool {
-        self.units.is_empty()
+        match &self.utf16 {
+            Some(units) => units.is_empty(),
+            None => self.utf8.is_empty(),
+        }
     }
 
     pub fn set_length(&mut self, len: usize) {
-        self.units.truncate(len);
+        match &mut self.utf16 {
+            Some(units) => units.truncate(len),
+            None => self.utf8.truncate(len),
+        }
     }
 
     pub fn append_str(&mut self, value: &str) -> &mut Self {
         self.append_codes();
-        self.units.extend(value.encode_utf16());
+        self.push_raw_str(value);
         self
     }
 
     pub fn append_char(&mut self, value: char) -> &mut Self {
         self.append_codes();
-        let mut buf = [0u16; 2];
-        self.units.extend_from_slice(value.encode_utf16(&mut buf));
+        self.push_raw_char(value);
         self
     }
 
@@ -270,19 +342,19 @@ impl AnsiStringBuilder {
 
     pub fn append_utf16(&mut self, value: &[u16]) -> &mut Self {
         self.append_codes();
-        self.units.extend_from_slice(value);
+        self.push_raw_utf16(value);
         self
     }
 
     pub fn append_pkl(&mut self, value: &PklString) -> &mut Self {
         self.append_codes();
-        self.units.extend(value.encode_utf16());
+        self.push_raw_pkl(value);
         self
     }
 
     pub fn append_styled(&mut self, codes: impl Into<AnsiCodeSet>, value: &str) -> &mut Self {
         if !self.using_color {
-            self.units.extend(value.encode_utf16());
+            self.push_raw_str(value);
             return self;
         }
         let prev = self.declared_codes;
@@ -298,7 +370,7 @@ impl AnsiStringBuilder {
         value: &[u16],
     ) -> &mut Self {
         if !self.using_color {
-            self.units.extend_from_slice(value);
+            self.push_raw_utf16(value);
             return self;
         }
         let prev = self.declared_codes;
@@ -314,7 +386,7 @@ impl AnsiStringBuilder {
         value: &PklString,
     ) -> &mut Self {
         if !self.using_color {
-            self.units.extend(value.encode_utf16());
+            self.push_raw_pkl(value);
             return self;
         }
         let prev = self.declared_codes;
@@ -401,7 +473,7 @@ impl AnsiStringBuilder {
 
     pub fn append_untrusted_str(&mut self, value: &str) -> &mut Self {
         self.append_codes();
-        self.units.extend(value.encode_utf16());
+        self.push_raw_str(value);
         if self.using_color {
             self.do_reset();
             self.do_append_codes(self.current_codes);
@@ -411,7 +483,7 @@ impl AnsiStringBuilder {
 
     pub fn append_untrusted_pkl(&mut self, value: &PklString) -> &mut Self {
         self.append_codes();
-        self.units.extend(value.encode_utf16());
+        self.push_raw_pkl(value);
         if self.using_color {
             self.do_reset();
             self.do_append_codes(self.current_codes);
@@ -421,31 +493,38 @@ impl AnsiStringBuilder {
 
     pub fn finish_pkl(mut self) -> PklString {
         self.reset();
-        PklString::from_utf16(self.units)
+        match self.utf16 {
+            Some(units) => PklString::from_utf16(units),
+            None => PklString::from(self.utf8),
+        }
     }
 
-    pub fn finish_string(self) -> String {
-        self.finish_pkl().to_java_utf8()
+    pub fn finish_string(mut self) -> String {
+        self.reset();
+        match self.utf16 {
+            Some(units) => PklString::from_utf16(units).to_java_utf8(),
+            None => self.utf8,
+        }
     }
 
     fn do_append_codes(&mut self, codes: AnsiCodeSet) {
         if codes.is_empty() {
             return;
         }
-        self.units.extend("\x1b[".encode_utf16());
+        self.push_raw_str("\x1b[");
         let mut first = true;
         for code in ALL_CODES {
             if (codes.0 & (1u64 << (code as u8))) != 0 {
                 if first {
                     first = false;
                 } else {
-                    self.units.push(b';' as u16);
+                    self.push_raw_char(';');
                 }
                 let s = code.sgr_value().to_string();
-                self.units.extend(s.encode_utf16());
+                self.push_raw_str(&s);
             }
         }
-        self.units.push(b'm' as u16);
+        self.push_raw_char('m');
     }
 
     fn append_codes(&mut self) {
@@ -471,7 +550,7 @@ impl AnsiStringBuilder {
     }
 
     fn do_reset(&mut self) {
-        self.units.extend("\x1b[0m".encode_utf16());
+        self.push_raw_str("\x1b[0m");
     }
 }
 

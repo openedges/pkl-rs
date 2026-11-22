@@ -30,6 +30,7 @@ use super::equality::same_key;
 #[path = "collections_tests.rs"]
 mod tests;
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn join_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -170,6 +171,7 @@ impl Vm {
         ) && object.length == 0
             && object.members.is_empty()
             && object.collection_members.is_empty()
+            && object.list_elements.as_ref().is_none_or(Vec::is_empty)
             && object.set_entries.is_empty()
             && object.parent.is_none()
             && object.collection_cast.is_none()
@@ -201,6 +203,7 @@ impl Vm {
         self.stack.push(Value::Function(id));
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_collection_join(&mut self) -> Result<(), RuntimeError> {
         let Value::String(separator) = self.pop()? else {
             return Err(invalid("unchecked collection join separator"));
@@ -217,6 +220,74 @@ impl Vm {
         if shallow && self.heap.get(receiver)?.length == 0 {
             self.stack.push(Value::String("".into()));
             return Ok(());
+        }
+        if !shallow {
+            let object = self.heap.get(receiver)?;
+            if let Some(elems) = &object.list_elements {
+                if elems.is_empty() {
+                    self.stack.push(Value::String("".into()));
+                    return Ok(());
+                }
+                if let Some(sep_str) = separator.as_str()
+                    && elems
+                        .iter()
+                        .all(|val| matches!(val, Value::String(s) if s.as_str().is_some()))
+                {
+                    let total_bytes: usize = elems
+                        .iter()
+                        .map(|val| match val {
+                            Value::String(s) => s.as_str().unwrap().len(),
+                            _ => unreachable!(),
+                        })
+                        .sum::<usize>()
+                        + sep_str.len().saturating_mul(elems.len() - 1);
+                    let mut out = std::mem::take(&mut self.scratch_utf8);
+                    out.clear();
+                    if out.capacity() < total_bytes {
+                        out.reserve(total_bytes - out.capacity());
+                    }
+                    for (idx, val) in elems.iter().enumerate() {
+                        if idx != 0 {
+                            out.push_str(sep_str);
+                        }
+                        if let Value::String(s) = val {
+                            out.push_str(s.as_str().unwrap());
+                        }
+                    }
+                    let joined = PklString::from(out.as_str());
+                    out.clear();
+                    if out.capacity() <= 512 * 1024 {
+                        self.scratch_utf8 = out;
+                    }
+                    self.stack.push(Value::String(joined));
+                    return Ok(());
+                }
+                if elems.iter().all(|val| {
+                    matches!(
+                        val,
+                        Value::String(_)
+                            | Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Bool(_)
+                            | Value::Null
+                            | Value::NullWithDefault(_)
+                    )
+                }) {
+                    let mut out = crate::pkl_string::PklStringBuilder::default();
+                    for (idx, val) in elems.iter().enumerate() {
+                        if idx != 0 {
+                            out.push_value(&separator);
+                        }
+                        if let Value::String(s) = val {
+                            out.push_value(s);
+                        } else {
+                            out.push_value(&scalar_string(val)?);
+                        }
+                    }
+                    self.stack.push(Value::String(out.finish()));
+                    return Ok(());
+                }
+            }
         }
         let values = if shallow {
             Vec::new()
@@ -247,6 +318,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_collection_join(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.len() - 1;
         let mut run = self.frames[frame]
@@ -286,6 +358,7 @@ impl Vm {
 
     // Java Object.toString is also used for PropertiesRenderer path components.
     // Preserve the same forcing and reference behavior as collection join.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn java_value_string(&mut self, value: Value) -> Result<(), RuntimeError> {
         if let Value::Object(id) = &value
             && let Some(entry) = self.heap.get(*id)?.foreign_map_entry.clone()
@@ -363,10 +436,21 @@ pub fn ordered_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
-    if heap.get(receiver)?.collection_kind == CollectionKind::List
-        && heap.get(receiver)?.parent.is_none()
-    {
-        return Ok(heap.get(receiver)?.collection_members.clone());
+    let first = heap.get(receiver)?;
+    if first.collection_kind == CollectionKind::List && first.parent.is_none() {
+        if let Some(elems) = &first.list_elements {
+            return Ok((0..elems.len())
+                .map(|idx| CollectionMember {
+                    key: Value::Int((idx as i64).into()),
+                    name: super::collection_transforms::format_list_element_name(
+                        receiver.index,
+                        idx,
+                    ),
+                    kind: CollectionMemberKind::Element,
+                })
+                .collect());
+        }
+        return Ok(first.collection_members.clone());
     }
     if heap.get(receiver)?.collection_kind == CollectionKind::Map {
         let object = heap.get(receiver)?;
@@ -440,6 +524,23 @@ pub(crate) fn cache_entry_key(
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
         }
         let object = heap.get(id)?;
+        if let Some(name_str) = key.name.as_str()
+            && let Some(rest) = name_str.strip_prefix('\0')
+            && let Some((_, idx_str)) = rest.split_once(':')
+            && let Ok(idx) = idx_str.parse::<usize>()
+        {
+            if let Some(elems) = &object.list_elements
+                && idx < elems.len()
+            {
+                return Ok(Some(Value::Int((idx as i64).into())));
+            }
+            if let Some(member) = object.collection_members.get(idx)
+                && member.name == key.name
+                && member.kind != CollectionMemberKind::Property
+            {
+                return Ok(Some(member.key.clone()));
+            }
+        }
         if let Some(member) = object
             .collection_members
             .iter()
@@ -474,14 +575,50 @@ pub(crate) fn cached_render_value(
     let entry = member.kind != CollectionMemberKind::Property;
     let object = heap.get(receiver)?;
     if entry {
-        for slot in &object.cache_slots {
-            if slot.key.entry
-                && slot.key.owner.is_none()
-                && !slot.key.method
-                && let Some(key) = cache_slot_entry_key(heap, receiver, slot)?
-                && same_key(heap, &member.key, &key)
-            {
-                return Ok(Some(slot.value.clone()));
+        if let Some(elems) = &object.list_elements
+            && let Value::Int(index) = &member.key
+            && index.get() >= 0
+        {
+            return Ok(elems.get(index.get() as usize).cloned());
+        }
+        if object.collection_kind == CollectionKind::List
+            && object.parent.is_none()
+            && let Value::Int(index) = &member.key
+            && index.get() >= 0
+            && let Some(slot) = object.cache_slots.get(index.get() as usize)
+            && slot.key.entry
+            && slot.key.owner.is_none()
+            && !slot.key.method
+            && slot
+                .entry_key
+                .as_ref()
+                .is_some_and(|key| matches!(key, Value::Int(stored) if stored.get() == index.get()))
+        {
+            return Ok(Some(slot.value.clone()));
+        }
+        if object.cache_index.len() == object.cache_slots.len() && object.cache_index.has_hash() {
+            let hash = equality::java_hash_on_heap(heap, &member.key)?.unwrap_or(0);
+            for index in object.cache_index.candidates(Some(hash)) {
+                let slot = &object.cache_slots[index];
+                if slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && let Some(key) = cache_slot_entry_key(heap, receiver, slot)?
+                    && same_key(heap, &member.key, &key)
+                {
+                    return Ok(Some(slot.value.clone()));
+                }
+            }
+        } else {
+            for slot in &object.cache_slots {
+                if slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && let Some(key) = cache_slot_entry_key(heap, receiver, slot)?
+                    && same_key(heap, &member.key, &key)
+                {
+                    return Ok(Some(slot.value.clone()));
+                }
             }
         }
     }
@@ -502,7 +639,11 @@ pub(super) fn forcing_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<CollectionMember>, RuntimeError> {
-    if heap.get(receiver)?.collection_kind == CollectionKind::Map {
+    let receiver_obj = heap.get(receiver)?;
+    if receiver_obj.collection_kind == CollectionKind::Map
+        || (receiver_obj.collection_kind == CollectionKind::List
+            && receiver_obj.list_elements.is_some())
+    {
         return ordered_members(heap, receiver);
     }
     let effective = ordered_members(heap, receiver)?;
@@ -953,6 +1094,7 @@ impl Vm {
         Ok(false)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn insert_map_entry_ordered(
         &mut self,
         id: ObjectId,
@@ -960,7 +1102,6 @@ impl Vm {
         value: Value,
         append_order: Option<bool>,
     ) -> Result<(), RuntimeError> {
-        let mut order = ordered_members(&self.heap, id)?;
         let object = self.heap.get(id)?;
         let append_order = match append_order {
             Some(append) => append,
@@ -970,6 +1111,8 @@ impl Vm {
         let replacing = candidates
             .into_iter()
             .find(|slot| same_key(&self.heap, &key, &object.collection_members[*slot].key));
+        let preserve_implicit_order =
+            object.map_key_order.is_none() && replacing.is_none() && append_order;
         let name = replacing
             .map(|index| object.collection_members[index].name.clone())
             .unwrap_or_else(|| {
@@ -979,13 +1122,20 @@ impl Vm {
                     object.collection_members.len()
                 ))
             });
-        if append_order {
-            order.push(CollectionMember {
-                key: key.clone(),
-                name: name.clone(),
-                kind: CollectionMemberKind::Entry,
-            });
-        }
+        let explicit_order = if preserve_implicit_order {
+            None
+        } else {
+            let mut order = ordered_members(&self.heap, id)?;
+            if append_order {
+                order.push(CollectionMember {
+                    key: key.clone(),
+                    name: name.clone(),
+                    kind: CollectionMemberKind::Entry,
+                });
+            }
+            Some(order)
+        };
+        let object = self.heap.get(id)?;
         let mut hashes = object
             .collection_members
             .iter()
@@ -1017,8 +1167,10 @@ impl Vm {
             });
             object.length = object.map_index().insertion_order().len();
         }
-        object.length = order.len();
-        object.map_key_order = Some(order);
+        if let Some(order) = explicit_order {
+            object.length = order.len();
+            object.map_key_order = Some(order);
+        }
         let cache = CacheKey {
             owner: None,
             name,
@@ -1134,6 +1286,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn check_strict_spread(&self) -> Result<(), RuntimeError> {
         let value = self
             .stack
@@ -1210,7 +1363,7 @@ impl Vm {
         Err(error)
     }
 
-    fn builder(&self) -> Result<ObjectId, RuntimeError> {
+    pub(super) fn builder(&self) -> Result<ObjectId, RuntimeError> {
         self.frames
             .last()
             .and_then(|f| f.builders.last())
@@ -1218,6 +1371,7 @@ impl Vm {
             .ok_or_else(|| invalid("missing collection builder"))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_builtin(
         &mut self,
         receiver: ObjectId,
@@ -1281,7 +1435,11 @@ impl Vm {
                         .blocks
                         .get(frame.block)
                         .and_then(|b| b.get(frame.pc - 1)),
-                    Some(Instruction::GetMember(_) | Instruction::GetConstMember(_))
+                    Some(
+                        Instruction::GetMember(_)
+                            | Instruction::GetConstMember(_)
+                            | Instruction::GetImplicitCustomProperty(_),
+                    )
                 ) {
                     self.stack.push(Value::Object(receiver));
                 }
@@ -1339,43 +1497,60 @@ impl Vm {
         if object.members.len() <= 4 {
             return Ok(());
         }
-        let keys = object
-            .collection_members
-            .iter()
-            .map(|member| {
-                if member.kind == CollectionMemberKind::Property {
-                    Ok(None)
-                } else {
-                    self.java_hash(&member.key)
-                }
-            })
-            .collect::<Result<Option<Vec<_>>, _>>()?;
-        let keys = keys.filter(|_| object.collection_members.len() == object.members.len());
-        let Some(keys) = keys else {
+        if object.collection_members.len() != object.members.len() {
             let object = self.heap.get_mut(id)?;
             object.declaration_index = None;
             object.declaration_hashes.clear();
             return Ok(());
+        }
+        let start = if object.declaration_index.is_some()
+            && object.declaration_hashes.len() <= object.collection_members.len()
+        {
+            object.declaration_hashes.len()
+        } else {
+            0
         };
+        let mut new_hashes =
+            Vec::with_capacity(object.collection_members.len().saturating_sub(start));
+        for member in &object.collection_members[start..] {
+            if member.kind == CollectionMemberKind::Property {
+                let object = self.heap.get_mut(id)?;
+                object.declaration_index = None;
+                object.declaration_hashes.clear();
+                return Ok(());
+            }
+            let Some(hash) = self.java_hash(&member.key)? else {
+                let object = self.heap.get_mut(id)?;
+                object.declaration_index = None;
+                object.declaration_hashes.clear();
+                return Ok(());
+            };
+            new_hashes.push(hash);
+        }
         let object = self.heap.get_mut(id)?;
+        if start == 0 {
+            object.declaration_hashes.clear();
+        }
         let index = object
             .declaration_index
             .get_or_insert_with(|| crate::economic_map::EconomicMapIndex::with_capacity(0));
-        while index.len() < keys.len() {
+        let mut new_iter = new_hashes.into_iter();
+        while index.len() < object.collection_members.len() {
             if index.grow_before_append() {
                 for old in index.start_rehash() {
-                    object.declaration_hashes[old] = keys[old];
-                    index.put_hash(old, keys[old], false);
+                    let hash = object.declaration_hashes[old];
+                    index.put_hash(old, hash, false);
                 }
             }
             let slot = index.push();
-            object.declaration_hashes.push(keys[slot]);
+            let hash = new_iter.next().expect("incremental declaration hash");
+            object.declaration_hashes.push(hash);
             if (!index.has_hash() && index.len() > 4)
-                || (index.has_hash() && index.put_hash(slot, keys[slot], index.should_rehash()))
+                || (index.has_hash() && index.put_hash(slot, hash, index.should_rehash()))
             {
                 for old in index.start_rehash() {
-                    object.declaration_hashes[old] = keys[old];
-                    index.put_hash(old, keys[old], false);
+                    let hash = object.declaration_hashes[old];
+                    index.put_hash(old, hash, false);
                 }
             }
         }
@@ -1527,14 +1702,25 @@ impl Vm {
             name: member.name.clone(),
             kind,
         };
-        let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
-        let replacing = object.collection_members.iter().position(|old| {
-            (descriptor.kind == CollectionMemberKind::Property
-                || candidates
-                    .iter()
-                    .any(|candidate| equality::identical_key(&self.heap, candidate, &old.key)))
-                && same_member(&self.heap, &descriptor, old)
-        });
+        let replacing = if descriptor.kind != CollectionMemberKind::Property
+            && let (Some(index), Some(hash)) =
+                (&object.declaration_index, self.java_hash(&descriptor.key)?)
+            && index.len() == object.collection_members.len()
+        {
+            index.candidates(Some(hash)).into_iter().find(|&pos| {
+                let old = &object.collection_members[pos];
+                same_member(&self.heap, &descriptor, old)
+            })
+        } else {
+            let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
+            object.collection_members.iter().position(|old| {
+                (descriptor.kind == CollectionMemberKind::Property
+                    || candidates
+                        .iter()
+                        .any(|candidate| equality::identical_key(&self.heap, candidate, &old.key)))
+                    && same_member(&self.heap, &descriptor, old)
+            })
+        };
         if replacing.is_some_and(|index| {
             !(object.specialized_literal
                 && kind == CollectionMemberKind::Element
@@ -1609,13 +1795,15 @@ impl Vm {
                 object.collection_members.push(descriptor);
             }
         }
-        if let Some(index) = object.members.iter().position(|old| {
+        if replacing.is_none() && parent.is_none() && kind != CollectionMemberKind::Property {
+            object.members.push(member);
+        } else if let Some(index) = object.members.iter().position(|old| {
             old.name == member.name
                 && old.entry == member.entry
                 && old.local == member.local
                 && old.method == member.method
         }) {
-            object.members[index] = member;
+            object.members.set(index, member);
         } else {
             object.members.push(member);
         }
@@ -1651,6 +1839,25 @@ impl Vm {
     ) -> Result<Member, RuntimeError> {
         loop {
             let object = self.heap.get(source)?;
+            if let Some(elems) = &object.list_elements
+                && descriptor.kind == CollectionMemberKind::Element
+                && let Value::Int(idx) = &descriptor.key
+                && idx.get() >= 0
+                && (idx.get() as usize) < elems.len()
+            {
+                return Ok(Member {
+                    flags: 0,
+                    name: descriptor.name.clone(),
+                    code: usize::MAX,
+                    local: false,
+                    method: false,
+                    entry: true,
+                    ty: None,
+                    type_span: None,
+                    constant: false,
+                    fixed: false,
+                });
+            }
             if let Some(member) = object.members.iter().find(|m| {
                 m.name == descriptor.name
                     && m.entry == (descriptor.kind != CollectionMemberKind::Property)
@@ -2154,7 +2361,13 @@ crate::diagnostic_values::render(
                     {
                         let obj = self.heap.get(owner)?;
                         let idx = index.get() as usize;
-                        if idx < obj.collection_members.len() {
+                        if let Some(elems) = &obj.list_elements {
+                            if let Some(val) = elems.get(idx) {
+                                self.stack.push(val.clone());
+                                return Ok(());
+                            }
+                            None
+                        } else if idx < obj.collection_members.len() {
                             Some(obj.collection_members[idx].clone())
                         } else if idx < obj.length && !obj.collection_members.is_empty() {
                             let base_len = obj
@@ -2856,37 +3069,7 @@ crate::diagnostic_values::render(
                     values.push(self.pop()?);
                 }
                 values.reverse();
-                let id = self.heap.allocate(Object {
-                    collection_kind: CollectionKind::List,
-                    ..Object::default()
-                });
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .builders
-                    .push(id);
-                for value in values {
-                    let member = Member {
-                        flags: 0,
-                        entry: true,
-                        name: PklString::default(),
-                        code: usize::MAX,
-                        local: false,
-                        method: false,
-                        ty: None,
-                        type_span: None,
-                        constant: false,
-                        fixed: false,
-                    };
-                    self.add_collection_member(
-                        member,
-                        None,
-                        CollectionMemberKind::Element,
-                        Some(value),
-                    )?;
-                }
-                self.frames.last_mut().expect("active frame").builders.pop();
-                let id = self.finish_strict_collection(id)?;
+                let id = self.build_strict_list(values);
                 self.stack.push(Value::Object(id));
             }
             _ => return Err(invalid("unexpected collection instruction")),
@@ -3076,7 +3259,7 @@ impl Compiler<'_> {
         } else {
             None
         };
-        self.type_scopes.push(properties.clone());
+        self.type_scopes.push(extract_type_scope(&properties));
         if let Some(first_generator) = members.iter().position(|member| {
             matches!(
                 member,

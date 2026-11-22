@@ -1,0 +1,37 @@
+import "pkl:base"
+import "pkl:reflect"
+
+class ServiceAnnotation extends Annotation {
+  tier: String
+}
+
+@ServiceAnnotation { tier = "critical" }
+open class ServiceConfig {
+  name: String
+  port: Int(isBetween(1, 65535))
+  replicas: Int = 3
+  tags: Listing<String>
+  function summary(): String = "\(name):\(port)x\(replicas)"
+}
+
+class WorkerConfig extends ServiceConfig {
+  concurrency: Int = 8
+}
+
+local sampleService = new WorkerConfig {
+  name = "edge-api"
+  port = 8443
+  tags { "prod"; "arm64"; "pkl" }
+}
+
+function run(seed: Int): String =
+  let (mod = reflect.Module(module))
+    let (baseMod = reflect.Module(base))
+      let (svcClass = reflect.Class(ServiceConfig))
+        let (wrkClass = reflect.Class(WorkerConfig))
+          let (totalBaseProps = baseMod.classes.values.map((c) -> c.properties.length).fold(0, (a, b) -> a + b))
+            "\(mod.classes.length),\(baseMod.classes.length),\(totalBaseProps),\(svcClass.properties.length),\(wrkClass.allProperties.length),\(sampleService.summary()),\(seed)\n"
+
+output {
+  text = run(0)
+}

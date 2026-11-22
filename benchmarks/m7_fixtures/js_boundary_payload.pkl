@@ -1,0 +1,20 @@
+local rows = IntSeq(1, 200).map((i) -> new Dynamic {
+  id = 9007199254740993 + i
+  negId = -9007199254740993 - i
+  label = "row-\(i)-한글-😀"
+  raw = Bytes(i % 256, (i * 3) % 256, 128, 255)
+  active = i % 2 == 0
+})
+
+count = rows.length
+maxBig = 9007199254740993 + 200
+payload = Bytes(0, 1, 2, 127, 128, 254, 255)
+items = rows
+
+function run(seed: Int): String =
+  let (checksum = rows.fold(0, (acc, r) -> acc + r.raw.length + r.label.length + (if (r.active) 1 else 0)))
+    "\(rows.length),\(9007199254740993 + seed),\(checksum),\(rows[0].label),\(payload.length)\n"
+
+output {
+  text = run(0)
+}

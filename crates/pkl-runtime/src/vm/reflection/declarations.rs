@@ -141,8 +141,7 @@ impl Vm {
     fn declaration(&self, owner: ObjectId, code: usize) -> Result<Declaration, RuntimeError> {
         let syntax = self
             .program
-            .declaration_sources
-            .get(&code)
+            .declaration_source(code)
             .ok_or_else(|| invalid("missing original declaration recipe"))?
             .clone();
         let source = self
@@ -654,19 +653,28 @@ impl Vm {
                     .source
                     .as_ref()
                     .ok_or_else(|| invalid("location source"))?;
-                let mut sources = crate::source::SourceMap::default();
-                let id = sources.add(source.uri.clone(), source.text.clone());
-                let position = sources
-                    .get(id)
-                    .unwrap()
-                    .position(frame.span.start)
-                    .ok_or_else(|| invalid("location start"))?;
                 match name {
-                    "line" => run.values.push(Value::Int((position.line as i64).into())),
-                    "column" => run
-                        .values
-                        .push(Value::Int((position.column_utf16 as i64).into())),
+                    "line" => {
+                        let position = source
+                            .text
+                            .index()
+                            .position(frame.span.start)
+                            .ok_or_else(|| invalid("location start"))?;
+                        run.values.push(Value::Int((position.line as i64).into()));
+                    }
+                    "column" => {
+                        let position = source
+                            .text
+                            .index()
+                            .position(frame.span.start)
+                            .ok_or_else(|| invalid("location start"))?;
+                        run.values
+                            .push(Value::Int((position.column_utf16 as i64).into()));
+                    }
                     "displayUri" => {
+                        if source.text.index().position(frame.span.start).is_none() {
+                            return Err(invalid("location start"));
+                        }
                         if let Some(uri) = self.reflection_display_uri(&frame)? {
                             run.values.push(Value::String(uri));
                         } else {

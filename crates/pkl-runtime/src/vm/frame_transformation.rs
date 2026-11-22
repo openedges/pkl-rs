@@ -45,12 +45,9 @@ impl Vm {
             .source
             .as_ref()
             .ok_or_else(|| invalid("reflection location source"))?;
-        let mut raw = if frame.span.start == frame.span.end {
-            let mut sources = crate::source::SourceMap::default();
-            let id = sources.add(source.uri.clone(), source.text.clone());
-            let position = sources
-                .get(id)
-                .unwrap()
+        let index = source.text.index();
+        let raw = if frame.span.start == frame.span.end {
+            let position = index
                 .position(frame.span.start)
                 .ok_or_else(|| invalid("empty declaration location"))?;
             LogFrame {
@@ -63,11 +60,35 @@ impl Vm {
                 end_column: position.column_utf16,
             }
         } else {
-            tracing::source_frame(source, frame.span)?
+            if frame.span.start >= frame.span.end
+                || !source.text.entire().is_boundary(frame.span.end)
+            {
+                return Err(invalid("trace operand source span"));
+            }
+            let start = index
+                .position(frame.span.start)
+                .ok_or_else(|| invalid("trace source start"))?;
+            let (last_byte, last_char) = source
+                .text
+                .entire()
+                .range(..frame.span.end)
+                .characters()
+                .next_back()
+                .ok_or_else(|| invalid("trace source end"))?;
+            let end = index
+                .position(last_byte)
+                .ok_or_else(|| invalid("trace source end"))?;
+            // VmUtils.getDisplayUri passes no member name or source lines.
+            LogFrame {
+                module_uri: source.uri.clone(),
+                member_name: None,
+                source_lines: Arc::from([]),
+                start_line: start.line,
+                start_column: start.column_utf16,
+                end_line: end.line,
+                end_column: end.column_utf16 + last_char.len_utf16() - 1,
+            }
         };
-        // VmUtils.getDisplayUri passes no member name or source lines.
-        raw.member_name = None;
-        raw.source_lines = Arc::from([]);
         // StdLibModule.doLoad uses an isolated context with the default
         // transformer. Its eagerly cached metadata must not invoke the user's
         // callback or retain a user-specific URI in shared standard mirrors.

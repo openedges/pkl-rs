@@ -705,6 +705,29 @@ impl Drop for SharedTypeCheck {
         let Some(node) = self.0.take().and_then(Arc::into_inner) else {
             return;
         };
+        match &node.ty {
+            TypeCheck::Any
+            | TypeCheck::Unknown
+            | TypeCheck::Nothing
+            | TypeCheck::NonNull
+            | TypeCheck::Null
+            | TypeCheck::Boolean
+            | TypeCheck::Int
+            | TypeCheck::Float
+            | TypeCheck::Number
+            | TypeCheck::String
+            | TypeCheck::Duration
+            | TypeCheck::Bytes
+            | TypeCheck::RefDomain
+            | TypeCheck::StringLiteral(_)
+            | TypeCheck::IntegerAlias { .. }
+            | TypeCheck::MetaClass(_)
+            | TypeCheck::Collection(_)
+            | TypeCheck::Class { .. }
+            | TypeCheck::Parameter { .. } => return,
+            TypeCheck::Declared { arguments, .. } if arguments.is_empty() => return,
+            _ => {}
+        }
         let mut pending = vec![node.ty];
         while let Some(ty) = pending.pop() {
             match ty {
@@ -799,6 +822,30 @@ impl TypeCheck {
     /// Check lexical parameters in structural children and constraint actuals.
     /// Shared descendants cache this property so repeated DAG prefixes stay bounded.
     fn requires_substitution(&self) -> bool {
+        match self {
+            Self::Any
+            | Self::Unknown
+            | Self::Nothing
+            | Self::NonNull
+            | Self::Null
+            | Self::Boolean
+            | Self::Int
+            | Self::Float
+            | Self::Number
+            | Self::String
+            | Self::Duration
+            | Self::Bytes
+            | Self::RefDomain
+            | Self::StringLiteral(_)
+            | Self::IntegerAlias { .. }
+            | Self::MetaClass(_)
+            | Self::Collection(_)
+            | Self::Class { .. } => return false,
+            Self::Declared { arguments, .. } if arguments.is_empty() => return false,
+            Self::Parameter { .. } => return true,
+            Self::Shared(node) => return node.node().has_parameters,
+            _ => {}
+        }
         let mut pending = vec![self];
         while let Some(value) = pending.pop() {
             if let Self::Shared(node) = value {

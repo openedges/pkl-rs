@@ -10,6 +10,11 @@ on:
         required: false
         default: false
         type: boolean
+      full_benchmarks:
+        description: Run full M7 performance & peak RSS benchmark suite and release verifier
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -227,6 +232,283 @@ jobs:
           path: |
             target/m2/ci-*
             !target/m2/ci-*/build/**
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
+  m3-stdlib-output:
+    name: M3 stdlib, builtins, renderers, and PklBinary
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.13.1+2'
+      - name: Check M3 manifest and unit tests
+        run: |
+          python3 tools/m3_manifest.py --check
+          PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m3_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Run M3 mechanical 1,781-item coverage probe
+        run: |
+          cargo build --release -p pkl-runtime --example m3_coverage_probe --locked
+          python3 tools/m3_manifest.py --run-probe target/release/examples/m3_coverage_probe --census-out target/m3/ci-census.json
+          python3 tools/m3_manifest.py --verify-coverage target/m3/ci-census.json
+      - name: Run M3 3-lane raw-byte differential gate
+        run: |
+          python3 tools/m3_differential.py --output target/m3/ci-diff
+          python3 tools/m3_differential.py --verify-report target/m3/ci-diff
+          python3 tools/m3_differential.py --verify-strict target/m3/ci-diff
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M3 evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m3-stdlib-evidence
+          path: target/m3/ci-*
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
+  m4-io-packages:
+    name: M4 Host I/O, external readers, projects, and packages
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.13.1+2'
+      - name: Check M4 manifest and unit tests
+        run: |
+          python3 tools/m4_manifest.py --check
+          PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m4_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Run M4 offline differential lanes (Lanes 1-3 on push/PR; all 5 Pantry lanes on full_corpus)
+        run: |
+          if [ "${{ github.event_name == 'workflow_dispatch' && inputs.full_corpus }}" = "true" ]; then
+            python3 tools/m4_differential.py --output target/m4/ci-diff
+            python3 tools/m4_differential.py --verify-strict target/m4/ci-diff
+            python3 tools/m4_manifest.py --verify-coverage target/m4/ci-diff
+          else
+            python3 tools/m4_differential.py --lane host-io-http-security --lane external-readers --lane projects-packages-cache --output target/m4/ci-diff
+            python3 tools/m4_differential.py --verify-strict target/m4/ci-diff
+          fi
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M4 evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m4-io-packages-evidence
+          path: target/m4/ci-*
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
+  m5-product-tools:
+    name: M5 Rust API, CLI, REPL, server, formatter, and pkldoc
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.13.1+2'
+      - name: Check M5 manifest and unit tests
+        run: |
+          python3 tools/m5_manifest.py --check
+          PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m5_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Run M5 5-lane offline differential gate
+        run: |
+          python3 tools/m5_differential.py --output target/m5/ci-diff
+          python3 tools/m5_differential.py --verify-report target/m5/ci-diff
+          python3 tools/m5_differential.py --verify-strict target/m5/ci-diff
+          python3 tools/m5_manifest.py --verify-coverage target/m5/ci-diff
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M5 evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m5-product-tools-evidence
+          path: target/m5/ci-*
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
+  m6-wasm-napi:
+    name: M6 Wasm and N-API product bindings and packaging
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.13.1+2'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - name: Install pinned browser and Wasm tooling
+        run: |
+          rustup target add wasm32-unknown-unknown
+          cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
+          npm ci --prefix tools/platform --ignore-scripts
+          npm exec --prefix tools/platform -- playwright install --with-deps chromium
+      - name: Check M6 manifest, Wasm lint, and unit tests
+        run: |
+          cargo clippy -p pkl-wasm --target wasm32-unknown-unknown --locked -- -D warnings
+          python3 tools/m6_manifest.py --check
+          PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m6_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Run M6 5-lane differential and packaging gate
+        run: |
+          export PATH="$PWD/.cache/m1-tools/bin:$PATH"
+          python3 tools/m6_differential.py --output target/m6/ci-diff
+          python3 tools/m6_differential.py --verify-report target/m6/ci-diff
+          python3 tools/m6_differential.py --verify-strict target/m6/ci-diff
+          python3 tools/m6_manifest.py --verify-coverage target/m6/ci-diff
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M6 evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m6-wasm-napi-evidence
+          path: target/m6/ci-*
+          if-no-files-found: error
+          include-hidden-files: true
+          retention-days: 14
+
+  m7-release-gates:
+    name: M7 release manifest, soak, fuzz, and benchmarks (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 90
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6
+        with:
+          distribution: temurin
+          java-version: '21.0.13.1+2'
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - name: Check all 12 milestone manifests and M7 tooling tests
+        run: |
+          python3 tools/inventory.py --check
+          python3 tools/discover.py --check
+          python3 tools/smoke_manifest.py --check
+          python3 tools/regression_manifest.py --check
+          python3 tools/m2_manifest.py --check
+          python3 tools/m2_module_eval.py --check
+          python3 tools/m2_jvm_classpath.py --check
+          python3 tools/m3_manifest.py --check
+          python3 tools/m4_manifest.py --check
+          python3 tools/m5_manifest.py --check
+          python3 tools/m6_manifest.py --check
+          python3 tools/m7_manifest.py --check
+          python3 tools/m7_benchmark.py --check-contract
+          PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m7_*.py' -v
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
+      - name: Run M7 seeded differential fuzzer
+        run: |
+          PYTHONPATH=tools python3 tools/m7_fuzz.py --output target/m7/ci-fuzz --count 210 --replay-regressions tests/fixtures/m7/fuzz-regressions
+          PYTHONPATH=tools python3 tools/m7_fuzz.py --verify-strict target/m7/ci-fuzz
+      - name: Run M7 long-running memory reclamation soak (native)
+        run: |
+          PYTHONPATH=tools python3 tools/m7_memory_soak.py --target native --profile quick --record-only --output target/m7/ci-soak-native
+          PYTHONPATH=tools python3 tools/m7_memory_soak.py --verify-report target/m7/ci-soak-native
+          python3 - <<'PY'
+          import json, pathlib, sys
+          rep = json.loads(pathlib.Path("target/m7/ci-soak-native/report.json").read_bytes())
+          if rep.get("error_count", 1) != 0 or rep.get("leak_detected_count", 1) != 0 or rep.get("bounded_count", 0) != 6:
+              print("Native quick soak failed:", rep.get("verdict_counts"), file=sys.stderr)
+              sys.exit(1)
+          print("Native quick soak clean:", rep.get("verdict_counts"))
+          PY
+      - name: Run full M7 performance and peak RSS benchmark suite
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.full_benchmarks }}
+        shell: bash
+        run: |
+          rustup target add wasm32-unknown-unknown
+          cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
+          npm ci --prefix tools/platform --ignore-scripts
+          if [ "${{ runner.os }}" = "Linux" ]; then
+            npm exec --prefix tools/platform -- playwright install --with-deps chromium
+          else
+            npm exec --prefix tools/platform -- playwright install chromium
+          fi
+          export PATH="$PWD/.cache/m1-tools/bin:$PATH"
+          node packages/pkl-wasm/scripts/build.mjs
+          node packages/pkl-napi/scripts/build.mjs
+          PYTHONPATH=tools python3 tools/m7_memory_soak.py --profile standard --output target/m7/ci-soak-full
+          PYTHONPATH=tools python3 tools/m7_benchmark.py --profile full --output target/m7/ci-bench-full
+          PYTHONPATH=tools python3 tools/m7_benchmark.py --verify-report target/m7/ci-bench-full
+          PYTHONPATH=tools python3 tools/m7_manifest.py --benchmark-dir target/m7/ci-bench-full --soak-dir target/m7/ci-soak-full --fuzz-dir target/m7/ci-fuzz --local-checkpoint
+      - name: Confirm reference checkouts remain clean
+        if: ${{ always() }}
+        run: cargo xtask verify
+      - name: Retain M7 evidence
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: m7-release-evidence-${{ matrix.os }}
+          path: target/m7/ci-*
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 14

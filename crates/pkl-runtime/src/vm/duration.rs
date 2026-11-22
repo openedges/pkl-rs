@@ -45,6 +45,7 @@ pub(super) fn unit_type() -> (TypeCheck, Span) {
     )
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

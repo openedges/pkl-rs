@@ -74,16 +74,11 @@ fn key_with_offset<'a>(frame: &'a RenderFrame<'_>, offset_utf16: usize) -> Optio
     } else {
         (start.line, start.column_utf16)
     };
-    let source_lines = frame
-        .source
-        .text()
-        .lines()
-        .skip(start.line - 1)
-        .take(end_line - start.line + 1)
-        .map(crate::source::SourceSlice::to_pkl_string)
-        .collect::<Vec<_>>();
-    if source_lines.len() != end_line - start.line + 1 {
-        return None;
+    let line_count = end_line - start.line + 1;
+    let mut source_lines = Vec::with_capacity(line_count);
+    for line_no in start.line..=end_line {
+        let slice = frame.source.line_slice(line_no)?;
+        source_lines.push(slice.to_pkl_string());
     }
     Some(FrameKey {
         uri: &frame.uri,

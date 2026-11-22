@@ -38,7 +38,11 @@ impl CodeArena {
                     .as_ref()
                     .is_some_and(|source| source.uri == "repl:text"))
         );
-        if self.units.contains(&0) {
+        if self.units.contains(&0)
+            || program
+                .module_template
+                .is_some_and(|template| self.objects.contains(&template))
+        {
             program.initial_module_members = Vec::new();
             program.module_name = "".into();
             program.module_template = None;
@@ -58,6 +62,9 @@ impl CodeArena {
         program
             .declaration_sources
             .retain(|block, _| !self.blocks.contains(block));
+        program
+            .extra_declaration_sources
+            .retain(|(range, _)| range.end <= self.blocks.start || range.start >= self.blocks.end);
         program
             .reflection_annotations
             .retain(|_, block| !self.blocks.contains(block));
@@ -139,6 +146,7 @@ impl Vm {
         )
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn declaration_code_roots(&mut self, roots: &mut Vec<Value>) {
         let small = self.code_arenas.len() <= 8;
         let recipes = if small || self.resolved_declarations.is_empty() {
@@ -200,13 +208,13 @@ impl Vm {
             };
             retain(index, value.clone());
         }
-        for (block, owner) in &self.executable_roots {
+        for (block, owner) in self.executable_roots.iter() {
             let index = if small {
                 self.code_arenas
                     .iter()
-                    .position(|arena| arena.blocks.contains(block))
+                    .position(|arena| arena.blocks.contains(&block))
             } else {
-                blocks.get(*block)
+                blocks.get(block)
             };
             retain(index, owner.root());
         }
@@ -251,7 +259,9 @@ impl Vm {
         self.declaration_roots_lens = self.declaration_root_counts();
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn retire_unreachable_code(&mut self) {
+        let mut retired_arena_blocks: Vec<Range<usize>> = Vec::new();
         for index in (0..self.code_arenas.len()).rev() {
             if self.heap.executable_is_live(self.code_arenas[index].owner) {
                 continue;
@@ -262,14 +272,29 @@ impl Vm {
                 .retain(|(recipe, _), _| !arena.recipes.contains(recipe));
             self.type_parent_defaults
                 .retain(|(block, _), _| !arena.blocks.contains(block));
-            self.executable_roots
-                .retain(|block, _| !arena.blocks.contains(block));
+            if !arena.blocks.is_empty() {
+                retired_arena_blocks.push(arena.blocks.clone());
+            }
             self.class_singletons
                 .retain(|template, _| !arena.objects.contains(template));
             self.alias_singletons
                 .retain(|declaration, _| !arena.aliases.contains(declaration));
             arena.retire(Arc::make_mut(&mut self.program));
         }
+        if !retired_arena_blocks.is_empty() {
+            self.executable_roots.retain(|block, _| {
+                !retired_arena_blocks
+                    .iter()
+                    .any(|range| range.contains(block))
+            });
+        } else {
+            self.executable_roots.compact();
+        }
+        if !self.query_cache.is_empty() {
+            self.query_cache
+                .retain(|cached| self.heap.executable_is_live(cached.owner));
+        }
+        let mut retired_public_entries: Vec<usize> = Vec::new();
         if !self.public_operation_entries.is_empty() {
             let active: BTreeSet<_> = self
                 .frames
@@ -285,6 +310,9 @@ impl Vm {
                 .collect();
             for entry in finished.into_iter().rev() {
                 self.public_operation_entries.remove(&entry);
+                if !self.fast_int_cache.is_empty() {
+                    retired_public_entries.push(entry);
+                }
                 let program = Arc::make_mut(&mut self.program);
                 program.blocks.retire(entry..entry + 1);
                 program.metadata.retire(entry..entry + 1);
@@ -293,6 +321,14 @@ impl Vm {
                     .reflection_annotations
                     .retain(|_, block| *block != entry);
             }
+        }
+        if !retired_arena_blocks.is_empty() || !retired_public_entries.is_empty() {
+            self.fast_int_cache.retain(|block_id| {
+                !retired_arena_blocks
+                    .iter()
+                    .any(|range| range.contains(&block_id))
+                    && !retired_public_entries.contains(&block_id)
+            });
         }
     }
 }
@@ -304,6 +340,55 @@ mod tests {
         ModuleCompletion, ModuleHostError, ModuleKey, ModuleKeyKind, ModuleRequest,
         ModuleRequestKind, ModuleSource, ModuleSourceSpec, ResolutionPhase, ResolvedModule,
     };
+
+    #[test]
+    fn cyclic_ephemeral_modules_keep_executable_roots_and_fast_int_cache_bounded() {
+        let mut session = crate::evaluation::session::SourceSession::module_evaluator(
+            crate::evaluation::session::SourceSessionOptions::default(),
+        );
+        for step in 0..200usize {
+            let pad = format!("seg_{step}_abcdefghij");
+            let src = format!(
+                "class Node {{\n  id: Int\n  payload: String\n  next: Node\n}}\n\
+                 local a {{ tag = \"a-{step}\"; payload = \"{pad}\"; peer = b }}\n\
+                 local b {{ tag = \"b-{step}\"; payload = \"{pad}\"; peer = a }}\n\
+                 local n0: Node = new Node {{ id = {i0}; payload = \"{pad}\"; next = n1 }}\n\
+                 local n1: Node = new Node {{ id = {i1}; payload = \"{pad}\"; next = n0 }}\n\
+                 local f = (k) -> if (k <= 0) n0.id else g.apply(k - 1) + 1\n\
+                 local g = (k) -> if (k <= 0) n1.id else f.apply(k - 1) + 2\n\
+                 summary = \"\\(a.peer.peer.tag)|\\(n0.next.next.id)|\\(f.apply(6))\"\n",
+                i0 = step,
+                i1 = step + 1,
+            );
+            let spec = ModuleSourceSpec {
+                uri: "repl:text".into(),
+                contents: Some(src.into()),
+            };
+            session.start_evaluation(spec, "summary", 0, None).unwrap();
+            loop {
+                match session.poll(0, 100_000) {
+                    crate::host::HostPoll::Yielded => {}
+                    crate::host::HostPoll::Ready(Ok(_)) => break,
+                    crate::host::HostPoll::Module { token, request } => {
+                        let comp = crate::modules::default_completion(&request).unwrap();
+                        session.complete_module(&token, comp, 0).unwrap();
+                    }
+                    other => panic!("unexpected {other:?}"),
+                }
+            }
+        }
+        let vm = session.vm_mut();
+        assert!(
+            vm.executable_roots.local_capacity() <= 512,
+            "executable_roots local table must stay O(live), got cap={}",
+            vm.executable_roots.local_capacity()
+        );
+        assert!(
+            vm.fast_int_cache.capacity() <= 512,
+            "fast_int_cache must stay O(live), got cap={}",
+            vm.fast_int_cache.capacity()
+        );
+    }
 
     #[test]
     fn arena_range_index_keeps_first_membership_across_overlaps_gaps_and_empty_ranges() {

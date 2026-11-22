@@ -44,6 +44,7 @@ pub(super) fn is_base_mixin_alias(
     declaration == MIXIN_ID || base_mixin_declaration == Some(declaration)
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

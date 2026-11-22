@@ -106,7 +106,16 @@ impl Lexer<'_> {
                     let mut consumed_end = self.cursor;
                     let result = self.finish_string(frame, &mut consumed_end);
                     if frames.is_empty() {
-                        return result;
+                        return match result {
+                            Err(error)
+                                if !constant
+                                    && error.provenance.disposition
+                                        != crate::diagnostic::FailureDisposition::LimitExceeded =>
+                            {
+                                Ok(Kind::StringError(Box::new(error)))
+                            }
+                            other => other,
+                        };
                     }
                     if let Err(error) = result {
                         self.remember_string_error_through(start, consumed_end, error);
@@ -157,7 +166,16 @@ impl Lexer<'_> {
             };
             let frame = frames.pop().expect("failed string scan");
             if frames.is_empty() {
-                return result;
+                return match result {
+                    Err(error)
+                        if !constant
+                            && error.provenance.disposition
+                                != crate::diagnostic::FailureDisposition::LimitExceeded =>
+                    {
+                        Ok(Kind::StringError(Box::new(error)))
+                    }
+                    other => other,
+                };
             }
             self.remember_string_error(frame.start, result.expect_err("failed string scan"));
         }

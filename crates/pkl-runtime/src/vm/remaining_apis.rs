@@ -11,6 +11,7 @@ pub enum Operation {
     SetRest,
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -223,6 +224,8 @@ impl Vm {
                 let total_len = obj.length;
                 let value = if index < 0 || index as u64 >= total_len as u64 {
                     Value::Null
+                } else if let Some(elems) = &obj.list_elements {
+                    elems.get(index as usize).cloned().unwrap_or(Value::Null)
                 } else {
                     let idx = index as usize;
                     let member = if idx < obj.collection_members.len() {

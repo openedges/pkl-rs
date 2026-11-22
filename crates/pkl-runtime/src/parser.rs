@@ -124,6 +124,7 @@ enum Kind {
     Operator(&'static str),
     String(crate::value::PklString),
     StringTemplate(Vec<StringPart>),
+    StringError(Box<Diagnostic>),
     DocComment,
     LineComment,
     BlockComment,
@@ -304,9 +305,18 @@ impl Lexer<'_> {
         } else if ch == '"' || ch == '#' {
             if let Some((end, error)) = self.cached_string_error(start) {
                 self.cursor = end;
-                return Err(error);
-            }
-            if string_start_only {
+                let has_opener = ch == '"'
+                    || self.source.range(start..).bytes().find(|&b| b != b'#') == Some(b'"');
+                if !string_start_only
+                    && has_opener
+                    && error.provenance.disposition
+                        != crate::diagnostic::FailureDisposition::LimitExceeded
+                {
+                    Kind::StringError(Box::new(error))
+                } else {
+                    return Err(error);
+                }
+            } else if string_start_only {
                 Kind::StringStart(ch)
             } else {
                 self.string(start, ch)?
@@ -713,7 +723,10 @@ impl<'a> Parser<'a> {
     }
 
     fn diagnostic_token_span(&self) -> Span {
-        if matches!(self.token.kind, Kind::String(_) | Kind::StringTemplate(_)) {
+        if matches!(
+            self.token.kind,
+            Kind::String(_) | Kind::StringTemplate(_) | Kind::StringError(_)
+        ) {
             let text = &self
                 .lexer
                 .source
@@ -876,6 +889,7 @@ impl<'a> Parser<'a> {
     fn string_constant(&mut self) -> Result<(PklString, Span), Diagnostic> {
         match self.token.kind.clone() {
             Kind::String(text) => Ok((text, self.advance()?.span)),
+            Kind::StringError(error) => Err(*error),
             Kind::StringTemplate(parts) => {
                 let span = parts
                     .iter()
@@ -2699,6 +2713,7 @@ impl<'a> Parser<'a> {
                 self.advance()?;
                 ExprKind::String(text)
             }
+            Kind::StringError(error) => return Err(*error),
             Kind::Name(name) if name == "true" || name == "false" => {
                 self.advance()?;
                 ExprKind::Bool(name == "true")

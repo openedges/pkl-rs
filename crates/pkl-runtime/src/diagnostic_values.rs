@@ -790,7 +790,8 @@ mod tests {
                 member("z", false),
                 member("private", true),
                 member("a", false),
-            ],
+            ]
+            .into(),
             ..Object::default()
         });
         let class = heap.allocate(Object {
@@ -803,12 +804,12 @@ mod tests {
                 abstract_: false,
             }),
             parent: Some(base),
-            members: vec![member("m", false)],
+            members: vec![member("m", false)].into(),
             ..Object::default()
         });
         let object = heap.allocate(Object {
             parent: Some(class),
-            members: vec![member("a", false)],
+            members: vec![member("a", false)].into(),
             ..Object::default()
         });
         let value = Value::Object(object);
@@ -838,7 +839,7 @@ mod tests {
     fn cached_cycles_stop_at_the_same_length_limit_and_stale_handles_fail() {
         let mut heap = Heap::new();
         let object = heap.allocate(Object {
-            members: vec![member("self", false)],
+            members: vec![member("self", false)].into(),
             ..Object::default()
         });
         heap.get_mut(object).unwrap().cache.insert(

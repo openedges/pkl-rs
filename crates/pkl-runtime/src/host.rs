@@ -144,6 +144,67 @@ impl HostSession {
         }
     }
 
+    pub(crate) fn with_base_snapshot(context: EvaluationContext) -> Self {
+        let identity = NEXT_SESSION
+            .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |n| n.checked_add(1))
+            .expect("Host session identity exhausted");
+        Self {
+            vm: Vm::from_base_snapshot(context),
+            identity,
+            last_clock: 0,
+            contexts: Vec::new(),
+            next_context: 1,
+            cancelled_reads: Vec::new(),
+            cancelled_modules: Vec::new(),
+            cancelled_globs: Vec::new(),
+            terminal: None,
+            active: false,
+            intermediate_result: None,
+        }
+    }
+
+    #[inline]
+    pub(crate) fn has_warm_cached_module(&self, uri: &crate::value::PklString) -> bool {
+        !self.active && self.open().is_ok() && self.vm.has_warm_cached_module(uri)
+    }
+
+    #[inline]
+    pub(crate) fn try_pack_warm_expression_columnar(
+        &mut self,
+        uri: &crate::value::PklString,
+        expression: &str,
+        out: &mut crate::vm::columnar_value::ColumnarValueBuffer,
+    ) -> bool {
+        !self.active
+            && self.open().is_ok()
+            && self
+                .vm
+                .try_pack_warm_expression_columnar(uri, expression, out)
+    }
+
+    pub(crate) fn try_start_warm_cached_public_op(
+        &mut self,
+        uri: &crate::value::PklString,
+        op: crate::vm::WarmPublicOp<'_>,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<bool, RuntimeError> {
+        self.open()?;
+        self.admit_new()?;
+        self.clock(now_ms)?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        let context = self.context(now_ms, timeout_ms)?;
+        if !self.vm.try_start_warm_cached_public_op(uri, op)? {
+            return Ok(false);
+        }
+        self.intermediate_result = None;
+        self.contexts.push(context);
+        self.active = true;
+        Ok(true)
+    }
+
     pub(crate) fn append_public_operation(
         &mut self,
         source: crate::modules::ModuleSourceSpec,
@@ -675,6 +736,20 @@ impl HostSession {
         self.vm.heap_stats()
     }
 
+    pub(crate) fn enable_auto_gc(&mut self) {
+        self.vm.enable_auto_gc();
+    }
+
+    pub(crate) fn set_session_root(&mut self, root: Option<Value>) {
+        self.vm.set_session_root(root);
+    }
+
+    pub(crate) fn maybe_auto_gc_between_operations(&mut self) {
+        if !self.active && self.contexts.is_empty() && self.intermediate_result.is_none() {
+            self.vm.maybe_auto_gc_between_operations();
+        }
+    }
+
     /// Adapters must abort these outstanding operations on their own platform.
     /// Each terminal transition queues every pending read once, ancestors first.
     pub fn drain_cancelled_reads(&mut self) -> Vec<String> {
@@ -696,34 +771,52 @@ impl HostSession {
         }
     }
 
+    pub(crate) fn set_pure_standard_host(&mut self, enabled: bool) {
+        self.vm.set_pure_standard_host(enabled);
+    }
+
+    pub(crate) fn public_primary_id(&self) -> Option<crate::value::ObjectId> {
+        self.vm.public_primary_id()
+    }
+
     fn token(&self, context: u64, request: u64) -> String {
-        format!("{}:{context}:{request}", self.identity)
+        fn write_u64(buf: &mut [u8; 64], pos: &mut usize, mut v: u64) {
+            if v == 0 {
+                *pos -= 1;
+                buf[*pos] = b'0';
+                return;
+            }
+            while v > 0 {
+                *pos -= 1;
+                buf[*pos] = b'0' + (v % 10) as u8;
+                v /= 10;
+            }
+        }
+        let mut buf = [0u8; 64];
+        let mut pos = buf.len();
+        write_u64(&mut buf, &mut pos, request);
+        pos -= 1;
+        buf[pos] = b':';
+        write_u64(&mut buf, &mut pos, context);
+        pos -= 1;
+        buf[pos] = b':';
+        write_u64(&mut buf, &mut pos, self.identity);
+        std::str::from_utf8(&buf[pos..])
+            .expect("ASCII token")
+            .to_owned()
     }
 
     fn request_id(&self, token: &str) -> Result<u64, RuntimeError> {
         let mut parts = token.split(':');
-        let session: u64 = parts
-            .next()
-            .ok_or_else(stale)?
-            .parse()
-            .map_err(|_| stale())?;
-        let context: u64 = parts
-            .next()
-            .ok_or_else(stale)?
-            .parse()
-            .map_err(|_| stale())?;
-        let request: u64 = parts
-            .next()
-            .ok_or_else(stale)?
-            .parse()
-            .map_err(|_| stale())?;
+        let session = parse_canonical_u64(parts.next().ok_or_else(stale)?).ok_or_else(stale)?;
+        let context = parse_canonical_u64(parts.next().ok_or_else(stale)?).ok_or_else(stale)?;
+        let request = parse_canonical_u64(parts.next().ok_or_else(stale)?).ok_or_else(stale)?;
         if parts.next().is_some()
             || session != self.identity
             || self
                 .contexts
                 .last()
                 .is_none_or(|current| current.id != context)
-            || token != self.token(context, request)
         {
             return Err(stale());
         }
@@ -763,7 +856,7 @@ impl HostSession {
             Ok(())
         }
     }
-    pub(crate) fn last_clock(&self) -> u64 {
+    pub fn last_clock(&self) -> u64 {
         self.last_clock
     }
 
@@ -838,6 +931,20 @@ impl HostSession {
             self.terminal = Some(error(kind, message));
         }
     }
+}
+fn parse_canonical_u64(s: &str) -> Option<u64> {
+    let bytes = s.as_bytes();
+    if bytes.is_empty() || (bytes.len() > 1 && bytes[0] == b'0') {
+        return None;
+    }
+    let mut acc = 0u64;
+    for &b in bytes {
+        if !b.is_ascii_digit() {
+            return None;
+        }
+        acc = acc.checked_mul(10)?.checked_add(u64::from(b - b'0'))?;
+    }
+    Some(acc)
 }
 fn error(kind: ErrorKind, message: &str) -> RuntimeError {
     RuntimeError::new(kind, message)

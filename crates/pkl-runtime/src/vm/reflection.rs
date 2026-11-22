@@ -187,7 +187,7 @@ impl Operation {
             _ => return None,
         })
     }
-    fn arity(self) -> usize {
+    pub(super) fn arity(self) -> usize {
         match self {
             Self::FunctionType => 2,
             Self::ModuleType | Self::UnknownType | Self::NothingType | Self::Nullable => 0,
@@ -256,6 +256,7 @@ impl Payload {
     }
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn builtin_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -441,6 +442,38 @@ impl Vm {
             .checked_sub(arity)
             .ok_or_else(|| invalid("reflection argument frame"))?;
         let arguments = frame.environment.locals[start..].to_vec();
+        match operation {
+            Operation::Module => {
+                if let Some(id) = arguments.first().and_then(Value::heap_id)
+                    && let Ok(obj) = self.heap.get(id)
+                    && obj.module_unit.is_some()
+                    && let Some(cached) = obj.module_mirror
+                {
+                    self.stack.push(Value::Object(cached));
+                    return Ok(());
+                }
+            }
+            Operation::Class => {
+                if let Some(Value::Class(id)) = arguments.first()
+                    && let Ok(cls) = self.heap.get_class(*id)
+                    && let Ok(proto) = self.heap.get(cls.prototype)
+                    && let Some(cached) = proto.declaration_mirror
+                {
+                    self.stack.push(Value::Object(cached));
+                    return Ok(());
+                }
+            }
+            Operation::TypeAlias => {
+                if let Some(Value::TypeAlias(id)) = arguments.first()
+                    && let Ok(obj) = self.heap.get(*id)
+                    && let Some(cached) = obj.declaration_mirror
+                {
+                    self.stack.push(Value::Object(cached));
+                    return Ok(());
+                }
+            }
+            _ => {}
+        }
         let receiver = self.this_receiver()?;
         self.frames.last_mut().unwrap().reflection = Some(Box::new(Run::new(Task::Call(
             operation, receiver, arguments,
@@ -572,7 +605,8 @@ impl Vm {
                     parent: Some(prototype),
                     instance_class: Some(class),
                     members: self.program.builtin_members[&(FACTORY_BASE - payload.kind as usize)]
-                        .clone(),
+                        .clone()
+                        .into(),
                     mirror: Some(Box::new(payload.clone())),
                     ..Object::default()
                 });
@@ -674,15 +708,10 @@ impl Vm {
                     .pop()
                     .and_then(|value| value.heap_id())
                     .ok_or_else(|| invalid("builtin annotation module"))?;
-                if let Some(block) = self
-                    .program
-                    .reflection_annotations
-                    .get(&(
-                        declaration.source.uri.clone(),
-                        declaration.syntax.header_span,
-                    ))
-                    .copied()
-                {
+                if let Some(block) = self.program.reflection_annotation(&(
+                    declaration.source.uri.clone(),
+                    declaration.syntax.header_span,
+                )) {
                     let mut environment = self.heap.get(module)?.environment.clone();
                     environment.this_value = Some(Value::Object(module));
                     environment.scopes.insert(
@@ -739,11 +768,15 @@ impl Vm {
                 let mut values = Vec::new();
                 for list in lists {
                     let id = list.heap_id().ok_or_else(|| invalid("annotation list"))?;
-                    for member in collections::ordered_members(&self.heap, id)? {
-                        values.push(
-                            collections::cached_render_value(&self.heap, id, &member)?
-                                .ok_or_else(|| invalid("strict annotation list value"))?,
-                        );
+                    if let Some(elems) = &self.heap.get(id)?.list_elements {
+                        values.extend(elems.iter().cloned());
+                    } else {
+                        for member in collections::ordered_members(&self.heap, id)? {
+                            values.push(
+                                collections::cached_render_value(&self.heap, id, &member)?
+                                    .ok_or_else(|| invalid("strict annotation list value"))?,
+                            );
+                        }
                     }
                 }
                 let length = values.len();
@@ -981,7 +1014,7 @@ impl Vm {
             Data::TypeAlias(id) => self.heap.get(id)?.declaration_code,
             _ => return Err(invalid("type declaration payload kind")),
         };
-        let declaration = code.and_then(|code| self.program.declaration_sources.get(&code));
+        let declaration = code.and_then(|code| self.program.declaration_source(code));
         match declaration.map(|declaration| &declaration.recipe) {
             Some(crate::syntax::DeclarationRecipe::Class {
                 type_parameters, ..

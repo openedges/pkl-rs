@@ -1,6 +1,5 @@
 //! List range/replacement and index-search operations in ordinary resumable frames.
 use super::*;
-use crate::heap::CollectionKind;
 
 #[derive(Clone, Copy, Debug)]
 pub enum Kind {
@@ -95,6 +94,7 @@ pub enum Operation {
     Step,
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -250,6 +250,10 @@ impl Run {
     }
 }
 fn values(vm: &Vm, source: ObjectId) -> Result<Vec<Value>, RuntimeError> {
+    let object = vm.heap.get(source)?;
+    if let Some(elems) = &object.list_elements {
+        return Ok(elems.clone());
+    }
     collections::ordered_members(&vm.heap, source)?
         .iter()
         .map(|m| {
@@ -364,14 +368,11 @@ impl Vm {
             } else {
                 selected = input;
             }
-            let builder = if kind.search() {
-                None
-            } else {
-                Some(self.heap.allocate(Object {
-                    collection_kind: CollectionKind::List,
-                    ..Default::default()
-                }))
-            };
+            if !kind.search() {
+                let built = self.build_strict_list(selected);
+                return self.list_ops_return(step, Value::Object(built));
+            }
+            let builder = None;
             self.frames.last_mut().unwrap().list_ops = Some(Box::new(Run {
                 kind,
                 source,

@@ -12,6 +12,7 @@ pub enum Property {
     Bytes,
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn builtin_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -187,7 +188,7 @@ impl Vm {
             parent: Some(parent),
             instance_class: Some(class),
             resource: Some(Arc::new(resource)),
-            members: self.program.builtin_members[&FACTORY].clone(),
+            members: self.program.builtin_members[&FACTORY].clone().into(),
             ..Default::default()
         };
         Value::Object(self.heap.allocate(object))

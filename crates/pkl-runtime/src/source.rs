@@ -61,6 +61,10 @@ impl Source {
     pub fn slice(&self, span: Span) -> Option<SourceSlice<'_>> {
         self.text.slice(span)
     }
+
+    pub fn line_slice(&self, line_1based: usize) -> Option<SourceSlice<'_>> {
+        self.positions.line_slice(line_1based)
+    }
 }
 
 #[derive(Clone, Debug, Default)]

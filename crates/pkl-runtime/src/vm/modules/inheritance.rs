@@ -116,7 +116,7 @@ impl Vm {
                 module.instance_class = class;
                 module.is_module = true;
                 module.parent = Some(parent);
-                module.members = members;
+                module.members = members.into();
                 module.published_module_members =
                     module.members.iter().map(|member| member.code).collect();
             }

@@ -1,0 +1,12 @@
+{
+  "category": "collections-units",
+  "differences": [
+    "stdout"
+  ],
+  "format": "pcf",
+  "id": "reg_05_list_constructor_order",
+  "mode": "eval",
+  "notes": "Caught live during M7 optimization wave: List(1, 2, 3) returned elements in reverse order List(3, 2, 1).",
+  "seed": "0x4d37504b4c303332",
+  "status": "mismatch"
+}

@@ -46,6 +46,7 @@ pub(crate) fn builtin_name(id: usize) -> Option<&'static str> {
         .and_then(|index| NAMES.get(index).copied())
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn builtin_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

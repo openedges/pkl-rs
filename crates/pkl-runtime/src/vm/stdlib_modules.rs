@@ -137,6 +137,141 @@ impl Vm {
     }
 }
 
+fn cached_parsed_stdlib(
+    uri: &str,
+    source: &crate::value::RuntimeSource,
+) -> Result<Arc<crate::syntax::Module>, RuntimeError> {
+    use std::sync::OnceLock;
+    macro_rules! cached_cell {
+        ($src:expr) => {{
+            static CELL: OnceLock<Arc<crate::syntax::Module>> = OnceLock::new();
+            Ok(CELL
+                .get_or_init(|| {
+                    Arc::new(
+                        crate::parser::parse_module(&$src.text)
+                            .expect("bundled standard-library module parses cleanly"),
+                    )
+                })
+                .clone())
+        }};
+    }
+    match uri {
+        "pkl:base" => cached_cell!(source),
+        "pkl:test" => cached_cell!(source),
+        "pkl:ref" => cached_cell!(source),
+        "pkl:analyze" => cached_cell!(source),
+        "pkl:reflect" => cached_cell!(source),
+        "pkl:semver" => cached_cell!(source),
+        "pkl:EvaluatorSettings" => cached_cell!(source),
+        "pkl:Project" | "pkl:project" => cached_cell!(source),
+        "pkl:platform" => cached_cell!(source),
+        "pkl:release" => cached_cell!(source),
+        "pkl:shell" => cached_cell!(source),
+        "pkl:protobuf" => cached_cell!(source),
+        "pkl:xml" => cached_cell!(source),
+        "pkl:jsonnet" => cached_cell!(source),
+        "pkl:pklbinary" => cached_cell!(source),
+        "pkl:json" => cached_cell!(source),
+        "pkl:yaml" => cached_cell!(source),
+        "pkl:math" => cached_cell!(source),
+        "pkl:Benchmark" => cached_cell!(source),
+        "pkl:Command" => cached_cell!(source),
+        "pkl:DocPackageInfo" => cached_cell!(source),
+        "pkl:DocsiteInfo" => cached_cell!(source),
+        "pkl:settings" => cached_cell!(source),
+        _ => crate::parser::parse_module(&source.text)
+            .map(Arc::new)
+            .map_err(|error| {
+                RuntimeError::new(
+                    ErrorKind::Unsupported,
+                    PklString::from("Standard-library declaration parsing: ")
+                        .concat(&error.message),
+                )
+            }),
+    }
+}
+
+fn cached_resolved_stdlib(
+    uri: &str,
+    parsed: &crate::syntax::Module,
+) -> Result<Arc<crate::resolver::ResolvedModule>, RuntimeError> {
+    use std::sync::OnceLock;
+    macro_rules! cached_cell {
+        ($parsed:expr) => {{
+            static CELL: OnceLock<Arc<crate::resolver::ResolvedModule>> = OnceLock::new();
+            Ok(CELL
+                .get_or_init(|| {
+                    Arc::new(
+                        crate::resolver::resolve_stdlib_module($parsed)
+                            .expect("bundled standard-library module resolves cleanly"),
+                    )
+                })
+                .clone())
+        }};
+    }
+    match uri {
+        "pkl:base" => cached_cell!(parsed),
+        "pkl:test" => cached_cell!(parsed),
+        "pkl:ref" => cached_cell!(parsed),
+        "pkl:analyze" => cached_cell!(parsed),
+        "pkl:reflect" => cached_cell!(parsed),
+        "pkl:semver" => cached_cell!(parsed),
+        "pkl:EvaluatorSettings" => cached_cell!(parsed),
+        "pkl:Project" | "pkl:project" => cached_cell!(parsed),
+        "pkl:platform" => cached_cell!(parsed),
+        "pkl:release" => cached_cell!(parsed),
+        "pkl:shell" => cached_cell!(parsed),
+        "pkl:protobuf" => cached_cell!(parsed),
+        "pkl:xml" => cached_cell!(parsed),
+        "pkl:jsonnet" => cached_cell!(parsed),
+        "pkl:pklbinary" => cached_cell!(parsed),
+        "pkl:json" => cached_cell!(parsed),
+        "pkl:yaml" => cached_cell!(parsed),
+        "pkl:math" => cached_cell!(parsed),
+        "pkl:Benchmark" => cached_cell!(parsed),
+        "pkl:Command" => cached_cell!(parsed),
+        "pkl:DocPackageInfo" => cached_cell!(parsed),
+        "pkl:DocsiteInfo" => cached_cell!(parsed),
+        "pkl:settings" => cached_cell!(parsed),
+        _ => crate::resolver::resolve_stdlib_module(parsed)
+            .map(Arc::new)
+            .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message)),
+    }
+}
+
+fn cached_base_header_resolved(
+    parsed: &crate::syntax::Module,
+) -> Arc<crate::resolver::ResolvedModule> {
+    static CELL: std::sync::OnceLock<Arc<crate::resolver::ResolvedModule>> =
+        std::sync::OnceLock::new();
+    CELL.get_or_init(|| {
+        let mut header = parsed.clone();
+        header.members.retain(|member| {
+            matches!(member.expr.kind, ExprKind::Import { .. })
+                || matches!(
+                    member
+                        .name
+                        .as_str()
+                        .expect("pinned bundled declaration name"),
+                    "DataSizeUnit"
+                        | "DurationUnit"
+                        | "Charset"
+                        | "Comparable"
+                        | "Char"
+                        | "Uri"
+                        | "Mixin"
+                        | "TODO"
+                        | "Undefined"
+                )
+        });
+        Arc::new(
+            crate::resolver::resolve_stdlib_module(&header)
+                .expect("bundled pkl:base header resolves cleanly"),
+        )
+    })
+    .clone()
+}
+
 fn append_definition(
     program: &mut Program,
     uri: &str,
@@ -158,12 +293,7 @@ fn append_definition(
     }) {
         return Ok(unit.id);
     }
-    let parsed = crate::parser::parse_module(&source.text).map_err(|error| {
-        RuntimeError::new(
-            ErrorKind::Unsupported,
-            PklString::from("Standard-library declaration parsing: ").concat(&error.message),
-        )
-    })?;
+    let parsed = cached_parsed_stdlib(uri, &source)?;
     let checkpoint = modules::ArenaCheckpoint::new(program);
     let result = append_members(program, uri, source, &parsed, power_assertions).inspect(|unit| {
         let entry = &mut program.units[unit.0 as usize];
@@ -180,7 +310,7 @@ fn append_members(
     program: &mut Program,
     uri: &str,
     source: Arc<crate::value::RuntimeSource>,
-    parsed: &crate::syntax::Module,
+    parsed: &Arc<crate::syntax::Module>,
     power_assertions: bool,
 ) -> Result<UnitId, RuntimeError> {
     let lazy_class_bootstrap = matches!(
@@ -215,8 +345,7 @@ fn append_members(
         // method namespaces. External bodies bind in the shared compiler.
         // Publish the singleton before recursively forcing its constants, as
         // StdLibModule.doLoad does for the JVM's statically shared modules.
-        let resolved = crate::resolver::resolve_stdlib_module(parsed)
-            .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+        let resolved = cached_resolved_stdlib(uri, parsed)?;
         let identity_uri = source.uri.clone();
         let unit = compile_unit_into(
             program,
@@ -244,31 +373,16 @@ fn append_members(
     }
     // Compile the real authored annotation/initialization path. External member
     // bodies are bound below; they are not rewritten into Pkl source strings.
-    let mut header = parsed.clone();
-    // Pure Pkl declarations keep their actual bodies, annotations, class identity
-    // and source owners. Keep `pkl:base`'s import clauses too so reflection
-    // (`reflect.Module(import("pkl:base")).imports`) sees their prepared URIs.
-    header.members.retain(|member| {
-        uri == "pkl:base"
-            && (matches!(member.expr.kind, ExprKind::Import { .. })
-                || matches!(
-                    member
-                        .name
-                        .as_str()
-                        .expect("pinned bundled declaration name"),
-                    "DataSizeUnit"
-                        | "DurationUnit"
-                        | "Charset"
-                        | "Comparable"
-                        | "Char"
-                        | "Uri"
-                        | "Mixin"
-                        | "TODO"
-                        | "Undefined"
-                ))
-    });
-    let resolved = crate::resolver::resolve_stdlib_module(&header)
-        .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+    let resolved = if uri == "pkl:base" {
+        cached_base_header_resolved(parsed)
+    } else {
+        let mut header = (**parsed).clone();
+        header.members.clear();
+        Arc::new(
+            crate::resolver::resolve_stdlib_module(&header)
+                .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?,
+        )
+    };
     let unit = compile_unit_into(
         program,
         &resolved,
@@ -486,7 +600,7 @@ fn append_members(
     let definition = &mut program.units[unit.0 as usize];
     program.objects[definition.template] = members.clone();
     definition.initial_members = members;
-    definition.syntax = Some(Arc::new(parsed.clone()));
+    definition.syntax = Some(Arc::clone(parsed));
     compile_reflection_annotations(program, unit, uri, source, parsed, &synthetic_annotated)?;
     append_bootstrap(program, unit, uri);
     Ok(unit)
@@ -690,8 +804,7 @@ fn compile_reflection_annotations(
     parsed: &crate::syntax::Module,
     synthetic_annotated: &[(usize, usize, bool)],
 ) -> Result<(), RuntimeError> {
-    let resolved = crate::resolver::resolve_stdlib_module(parsed)
-        .map_err(|error| RuntimeError::new(ErrorKind::Unsupported, error.message))?;
+    let resolved = cached_resolved_stdlib(uri, parsed)?;
     let declaration_base = program.next_declaration;
     program.next_declaration = declaration_base
         .checked_add(source.text.len_bytes() + 2)
@@ -713,7 +826,7 @@ fn compile_reflection_annotations(
         super_method_allowed: false,
         module_annotation: false,
         let_members: Vec::new(),
-        type_scopes: vec![resolved.module.members.clone()],
+        type_scopes: vec![extract_type_scope(&resolved.module.members)],
         runtime_type_owner: true,
         runtime_type_fallback: None,
         modifiers: Vec::new(),

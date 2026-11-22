@@ -84,6 +84,7 @@ impl Transform {
     }
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -288,6 +289,7 @@ pub(super) fn blocks(
     })
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn projection_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -409,6 +411,7 @@ pub(super) struct TransformRun {
     source: ObjectId,
     callback: Option<Value>,
     members: Vec<CollectionMember>,
+    strict_list_len: Option<usize>,
     next: usize,
     current: Option<(Value, Value)>,
     matched: i64,
@@ -450,6 +453,366 @@ impl TransformRun {
             roots.extend([key.clone(), value.clone()]);
         }
     }
+
+    /// General bulk fast-path for `StrictList.map` when the 1-arg lambda is a pure
+    /// 1-or-2-hop cached member projection `(x) -> x.m1` or `(x) -> x.m1.m2` (e.g.
+    /// `(c) -> c.properties.length` or `(u) -> u.name`). Stops cleanly at the first
+    /// element that requires lazy evaluation or non-fast lookup so the normal VM
+    /// finishes the remaining elements with exact semantics.
+    #[inline]
+    pub(super) fn try_fast_member_chain_bulk(
+        &mut self,
+        heap: &mut Heap,
+        builder: Option<ObjectId>,
+        program: &Program,
+        executable_roots: &ExecutableRoots,
+        max_steps: usize,
+    ) -> Option<(usize, bool)> {
+        let len = self.strict_list_len?;
+        if !matches!(self.operation, Operation::Callback(Transform::Map))
+            || self.lazy.is_some()
+            || self.distinct.is_some()
+            || self.next >= len
+        {
+            return None;
+        }
+        let target = builder?;
+        let Some(Value::Function(fn_id)) = self.callback else {
+            return None;
+        };
+        let cb_obj = heap.get(fn_id).ok()?;
+        if cb_obj.native_function.is_some() || cb_obj.amendment.is_some() {
+            return None;
+        }
+        let func = cb_obj.function.as_ref()?;
+        if func.arity != 1 {
+            return None;
+        }
+        let cb_block = func.block;
+        let code = program.blocks.get(cb_block)?;
+        #[inline(always)]
+        fn skip_observe(code: &[Instruction], i: &mut usize) {
+            while matches!(
+                code.get(*i),
+                Some(Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. })
+            ) {
+                *i += 1;
+            }
+        }
+        let mut i = 0usize;
+        skip_observe(code, &mut i);
+        // Match the 1-arg lambda parameter prologue:
+        // `LoadLocal(0); BindLocal { depth: Some(0), ty }` (standard compiler output)
+        // or direct `BindLocal { depth: None, ty }`.
+        let mut bind_pc = None;
+        if let Some(Instruction::LoadLocal(0)) = code.get(i) {
+            let mut j = i + 1;
+            skip_observe(code, &mut j);
+            if let Some(Instruction::BindLocal { depth: Some(0), ty }) = code.get(j) {
+                if !matches!(ty.resolved(), TypeCheck::Any | TypeCheck::Unknown) {
+                    return None;
+                }
+                bind_pc = Some(j);
+                i = j + 1;
+            }
+        } else if let Some(Instruction::BindLocal { depth: None, ty }) = code.get(i) {
+            if !matches!(ty.resolved(), TypeCheck::Any | TypeCheck::Unknown) {
+                return None;
+            }
+            bind_pc = Some(i);
+            i += 1;
+        }
+        skip_observe(code, &mut i);
+        if !matches!(code.get(i), Some(Instruction::LoadLocal(0))) {
+            return None;
+        }
+        i += 1;
+        skip_observe(code, &mut i);
+        let Some(Instruction::GetMember(m1)) = code.get(i) else {
+            return None;
+        };
+        i += 1;
+        skip_observe(code, &mut i);
+        let m2 = if let Some(Instruction::GetMember(m2)) = code.get(i) {
+            i += 1;
+            Some(m2)
+        } else {
+            None
+        };
+        skip_observe(code, &mut i);
+        if let Some(Instruction::CheckType(ty)) = code.get(i) {
+            if !matches!(ty.resolved(), TypeCheck::Any | TypeCheck::Unknown) {
+                return None;
+            }
+            i += 1;
+            skip_observe(code, &mut i);
+        }
+        if !matches!(code.get(i), Some(Instruction::Return)) {
+            return None;
+        }
+        if let Some(bpc) = bind_pc {
+            let owner = cb_obj
+                .environment
+                .executable_owner
+                .or_else(|| executable_roots.get(&cb_block).copied())?;
+            if heap.local_kind(owner, (cb_block, bpc)).ok().flatten()
+                != Some(identity::SlotKind::Object)
+            {
+                return None;
+            }
+        }
+        #[inline(always)]
+        fn fast_lookup_hint<'a>(
+            obj: &'a Object,
+            name: &PklString,
+            hint: &mut usize,
+        ) -> Option<&'a Value> {
+            let slots = &obj.cache_slots;
+            if let Some(slot) = slots.get(*hint)
+                && !slot.key.entry
+                && !slot.key.method
+                && slot.key.owner.is_none()
+                && slot.key.name == *name
+            {
+                return Some(&slot.value);
+            }
+            if slots.len() <= 16 {
+                for (idx, slot) in slots.iter().enumerate() {
+                    if !slot.key.entry
+                        && !slot.key.method
+                        && slot.key.owner.is_none()
+                        && slot.key.name == *name
+                    {
+                        *hint = idx;
+                        return Some(&slot.value);
+                    }
+                }
+                return None;
+            }
+            super::fast_lookup_cached(obj, None, name, false)
+        }
+        #[inline(always)]
+        fn fast_hop_val(
+            heap: &Heap,
+            oid: ObjectId,
+            name: &PklString,
+            is_length: bool,
+            hint: &mut usize,
+        ) -> Option<Value> {
+            let obj = heap.get_fast(oid)?;
+            if is_length
+                && matches!(
+                    obj.collection_kind,
+                    CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                )
+                && obj.parent.is_none()
+            {
+                return Some(Value::Int(
+                    crate::value_identity::Number::from(obj.length as i64).boxed(),
+                ));
+            }
+            if obj.collection_kind == CollectionKind::Dynamic
+                && obj.reference.is_none()
+                && obj.pair.is_none()
+                && obj.function.is_none()
+                && obj.native_function.is_none()
+                && (obj.class_definition.is_none() || obj.is_module)
+                && obj.member_deprecations.is_empty()
+            {
+                return fast_lookup_hint(obj, name, hint).cloned();
+            }
+            None
+        }
+        #[inline(always)]
+        fn fast_hop_obj(
+            heap: &Heap,
+            oid: ObjectId,
+            name: &PklString,
+            hint: &mut usize,
+        ) -> Option<ObjectId> {
+            let obj = heap.get_fast(oid)?;
+            if obj.collection_kind == CollectionKind::Dynamic
+                && obj.reference.is_none()
+                && obj.pair.is_none()
+                && obj.function.is_none()
+                && obj.native_function.is_none()
+                && (obj.class_definition.is_none() || obj.is_module)
+                && obj.member_deprecations.is_empty()
+                && let Value::Object(next) = *fast_lookup_hint(obj, name, hint)?
+            {
+                return Some(next);
+            }
+            None
+        }
+        let src_obj = heap.get_fast(self.source)?;
+        let src_elems = src_obj.list_elements.as_ref()?;
+        let end = len.min(src_elems.len());
+        let remaining = end.saturating_sub(self.next);
+        let step_cost = if m2.is_some() { 6usize } else { 5usize };
+        let max_elems = (max_steps / step_cost).min(remaining);
+        if max_elems == 0 {
+            return None;
+        }
+        let m1_is_length = m1 == "length";
+        let m2_is_length = m2.is_some_and(|m| m == "length");
+        let mut hint1 = 0usize;
+        let mut hint2 = 0usize;
+        let mut extra_bytes = 0usize;
+        let slice = &src_elems[self.next..self.next + max_elems];
+        let done = if max_elems <= 64 {
+            let mut buf = [const { Value::Null }; 64];
+            let mut count = 0usize;
+            for elem in slice {
+                let Value::Object(oid1) = *elem else {
+                    break;
+                };
+                let out = if let Some(m2) = m2 {
+                    let Some(oid2) = fast_hop_obj(heap, oid1, m1, &mut hint1) else {
+                        break;
+                    };
+                    let Some(v2) = fast_hop_val(heap, oid2, m2, m2_is_length, &mut hint2) else {
+                        break;
+                    };
+                    v2
+                } else {
+                    let Some(v1) = fast_hop_val(heap, oid1, m1, m1_is_length, &mut hint1) else {
+                        break;
+                    };
+                    v1
+                };
+                if let Value::String(s) = &out {
+                    extra_bytes = extra_bytes.saturating_add(s.as_str().map_or(16, str::len));
+                }
+                buf[count] = out;
+                count += 1;
+            }
+            if count == 0 {
+                return None;
+            }
+            {
+                let out_obj = heap.get_mut(target).ok()?;
+                let elems = out_obj.list_elements.as_mut()?;
+                elems.reserve(count);
+                for slot in buf.iter_mut().take(count) {
+                    elems.push(std::mem::replace(slot, Value::Null));
+                }
+                out_obj.length += count;
+            }
+            count
+        } else {
+            let mut results = Vec::with_capacity(max_elems);
+            for elem in slice {
+                let Value::Object(oid1) = *elem else {
+                    break;
+                };
+                let out = if let Some(m2) = m2 {
+                    let Some(oid2) = fast_hop_obj(heap, oid1, m1, &mut hint1) else {
+                        break;
+                    };
+                    let Some(v2) = fast_hop_val(heap, oid2, m2, m2_is_length, &mut hint2) else {
+                        break;
+                    };
+                    v2
+                } else {
+                    let Some(v1) = fast_hop_val(heap, oid1, m1, m1_is_length, &mut hint1) else {
+                        break;
+                    };
+                    v1
+                };
+                if let Value::String(s) = &out {
+                    extra_bytes = extra_bytes.saturating_add(s.as_str().map_or(16, str::len));
+                }
+                results.push(out);
+            }
+            let count = results.len();
+            if count == 0 {
+                return None;
+            }
+            {
+                let out_obj = heap.get_mut(target).ok()?;
+                let elems = out_obj.list_elements.as_mut()?;
+                elems.extend(results);
+                out_obj.length += count;
+            }
+            count
+        };
+        heap.note_external_allocation(
+            done.saturating_mul(std::mem::size_of::<Value>())
+                .saturating_add(extra_bytes),
+        );
+        self.next += done;
+        let finished = self.next >= len;
+        if finished {
+            self.current = None;
+        }
+        Some((done.saturating_mul(step_cost).max(1), finished))
+    }
+
+    #[inline]
+    pub(super) fn try_fast_map_next(
+        &mut self,
+        heap: &Heap,
+        stack: &mut identity::OperandStack,
+    ) -> Option<bool> {
+        let len = self.strict_list_len?;
+        if !matches!(self.operation, Operation::Callback(Transform::Map))
+            || self.lazy.is_some()
+            || self.distinct.is_some()
+        {
+            return None;
+        }
+        if self.next >= len {
+            self.current = None;
+            return Some(false);
+        }
+        let idx = self.next;
+        let obj = heap.get(self.source).ok()?;
+        let val = obj.list_elements.as_ref()?.get(idx)?.clone();
+        let cb = self.callback.as_ref()?.clone();
+        self.current = Some((Value::Int((idx as i64).into()), val.clone()));
+        stack.push_raw(cb);
+        stack.push_raw(val);
+        self.next = idx + 1;
+        Some(true)
+    }
+
+    #[inline]
+    pub(super) fn try_inplace_map_accept_and_next(
+        &mut self,
+        heap: &mut Heap,
+        builder: Option<ObjectId>,
+        result: Value,
+    ) -> Option<Option<Value>> {
+        let len = self.strict_list_len?;
+        if !matches!(self.operation, Operation::Callback(Transform::Map))
+            || self.lazy.is_some()
+            || self.distinct.is_some()
+        {
+            return None;
+        }
+        let target = builder?;
+        let extra = match &result {
+            Value::String(s) => s.as_str().map_or(16, str::len),
+            _ => 0,
+        };
+        {
+            let out_obj = heap.get_mut(target).ok()?;
+            let elems = out_obj.list_elements.as_mut()?;
+            elems.push(result);
+            out_obj.length += 1;
+        }
+        heap.note_external_allocation(std::mem::size_of::<Value>().saturating_add(extra));
+        if self.next >= len {
+            self.current = None;
+            return Some(None);
+        }
+        let idx = self.next;
+        let src_obj = heap.get(self.source).ok()?;
+        let next_val = src_obj.list_elements.as_ref()?.get(idx)?.clone();
+        self.current = Some((Value::Int((idx as i64).into()), next_val.clone()));
+        self.next = idx + 1;
+        Some(Some(next_val))
+    }
 }
 
 impl Vm {
@@ -462,6 +825,76 @@ impl Vm {
         let Some(name) = name.as_str() else {
             return Ok(false);
         };
+        if !method
+            && name == "values"
+            && self.is_map(&receiver)
+            && let Ok(id) = receiver.as_object()
+        {
+            let obj = self.heap.get(id)?;
+            if obj.parent.is_none() {
+                // Ultra-fast O(N) path when leading cache_slots align 1:1 with insertion_order
+                // and all keys are pure scalars (zero ordered_members alloc, zero BTreeMap lookup).
+                if obj.map_key_order.is_none()
+                    && obj.cache_slots.len() >= obj.collection_members.len()
+                {
+                    let order = obj.map_index().insertion_order();
+                    let mut values = Vec::with_capacity(order.len());
+                    let mut fast_ok = true;
+                    for &idx in order {
+                        let member = &obj.collection_members[idx];
+                        let slot = &obj.cache_slots[idx];
+                        if matches!(
+                            member.key,
+                            Value::String(_) | Value::Int(_) | Value::Float(_) | Value::Bool(_)
+                        ) && slot.key.entry
+                            && slot.key.owner.is_none()
+                            && !slot.key.method
+                            && slot.key.name == member.name
+                        {
+                            values.push(slot.value.clone());
+                        } else {
+                            fast_ok = false;
+                            break;
+                        }
+                    }
+                    if fast_ok {
+                        let list_id = self.build_strict_list(values);
+                        self.stack.push(Value::Object(list_id));
+                        return Ok(true);
+                    }
+                }
+                let members = collections::ordered_members(&self.heap, id)?;
+                let all_pure_scalars = members.iter().all(|m| {
+                    matches!(
+                        m.key,
+                        Value::String(_) | Value::Int(_) | Value::Float(_) | Value::Bool(_)
+                    )
+                });
+                if all_pure_scalars {
+                    let mut values = Vec::with_capacity(members.len());
+                    let mut ok = true;
+                    for member in &members {
+                        let key = CacheKey {
+                            owner: None,
+                            name: member.name.clone(),
+                            method: false,
+                            entry: true,
+                        };
+                        if let Some(LazyState::Completed(val)) = obj.cache.get(&key) {
+                            values.push(val.clone());
+                        } else {
+                            ok = false;
+                            break;
+                        }
+                    }
+                    if ok {
+                        let list_id = self.build_strict_list(values);
+                        self.stack.push(Value::Object(list_id));
+                        return Ok(true);
+                    }
+                }
+            }
+        }
         let index = match (method, name) {
             (true, "toList") if self.is_list(&receiver) => 0,
             (true, "toSet") if self.is_list(&receiver) => 1,
@@ -547,15 +980,16 @@ impl Vm {
             (4, "flatMapIndexed") => 20,
             _ => return false,
         };
-        let id = self.heap.allocate(Object {
-            function: Some(Function {
+        let id = self.heap.allocate_function(
+            Function {
                 block: self.program.collection_transform_blocks[offset + index],
                 arity: if offset == 8 && name == "fold" { 2 } else { 1 },
                 method: true,
                 captured_this: Some(receiver),
-            }),
-            ..Object::default()
-        });
+            },
+            None,
+            Environment::default(),
+        );
         self.stack.push(Value::Function(id));
         true
     }
@@ -586,7 +1020,25 @@ impl Vm {
             .and_then(|frame| frame.environment.this_value.clone())
             .ok_or_else(|| invalid("transform receiver"))?
             .as_object()?;
-        let mut members = if matches!(
+        let reverse = matches!(
+            operation,
+            Operation::Projection(Projection::Reverse)
+                | Operation::Callback(Transform::FindLast | Transform::FindLastOrNull)
+        );
+        let strict_list_len = {
+            let src_obj = self.heap.get(source)?;
+            if !reverse
+                && src_obj.collection_kind == CollectionKind::List
+                && src_obj.parent.is_none()
+            {
+                src_obj.list_elements.as_ref().map(Vec::len)
+            } else {
+                None
+            }
+        };
+        let mut members = if strict_list_len.is_some() {
+            Vec::new()
+        } else if matches!(
             operation,
             Operation::Projection(Projection::KeysHash | Projection::MapContainsValue)
         ) {
@@ -594,11 +1046,7 @@ impl Vm {
         } else {
             collections::ordered_members(&self.heap, source)?
         };
-        if matches!(
-            operation,
-            Operation::Projection(Projection::Reverse)
-                | Operation::Callback(Transform::FindLast | Transform::FindLastOrNull)
-        ) {
+        if reverse {
             members.reverse();
         }
         // A strict result must not capture the method's source/callback scope.
@@ -622,17 +1070,33 @@ impl Vm {
         ) {
             None
         } else {
-            Some(self.heap.allocate(Object {
-                collection_kind: match operation {
-                    Operation::Every => unreachable!("every has no result builder"),
-                    Operation::Callback(_) => self.heap.get(source)?.collection_kind,
-                    Operation::Projection(Projection::ToSet | Projection::KeysHash) => {
-                        CollectionKind::Set
-                    }
-                    Operation::Projection(_) => CollectionKind::List,
-                },
-                ..Object::default()
-            }))
+            let out_kind = match operation {
+                Operation::Every => unreachable!("every has no result builder"),
+                Operation::Callback(_) => self.heap.get(source)?.collection_kind,
+                Operation::Projection(Projection::ToSet | Projection::KeysHash) => {
+                    CollectionKind::Set
+                }
+                Operation::Projection(_) => CollectionKind::List,
+            };
+            if out_kind == CollectionKind::List {
+                let cap = strict_list_len.unwrap_or(members.len());
+                let elems = if matches!(
+                    operation,
+                    Operation::Callback(Transform::Map | Transform::Indexed)
+                        | Operation::Projection(Projection::ToList | Projection::Reverse)
+                ) {
+                    Vec::with_capacity(cap)
+                } else {
+                    Vec::new()
+                };
+                Some(self.heap.allocate_strict_list(elems))
+            } else {
+                Some(self.heap.allocate(Object {
+                    collection_kind: out_kind,
+                    list_elements: None,
+                    ..Object::default()
+                }))
+            }
         };
         let frame = self.frames.last_mut().expect("transform frame");
         if let Some(builder) = builder {
@@ -643,6 +1107,7 @@ impl Vm {
             source,
             callback,
             members,
+            strict_list_len,
             next: 0,
             current: None,
             matched: 0,
@@ -730,6 +1195,40 @@ impl Vm {
             .last()
             .and_then(|frame| frame.collection_transform.as_ref())
             .ok_or_else(|| invalid("transform cursor"))?;
+        if let Some(len) = run.strict_list_len {
+            if run.next >= len {
+                return self.jump(end);
+            }
+            let idx = run.next;
+            let source = run.source;
+            let value = self
+                .heap
+                .get(source)?
+                .list_elements
+                .as_ref()
+                .and_then(|elems| elems.get(idx))
+                .cloned()
+                .ok_or_else(|| invalid("uncached strict list transform element"))?;
+            let run = self
+                .frames
+                .last_mut()
+                .and_then(|frame| frame.collection_transform.as_mut())
+                .expect("transform cursor");
+            if matches!(run.operation, Operation::Every | Operation::Callback(_)) {
+                self.stack
+                    .push(run.callback.clone().expect("transform callback"));
+                if let Some(accumulator) = &run.accumulator {
+                    self.stack.push(accumulator.clone());
+                }
+                if matches!(run.operation, Operation::Callback(operation) if operation.indexed()) {
+                    self.stack.push(Value::Int((idx as i64).into()));
+                }
+                run.current = Some((Value::Int((idx as i64).into()), value.clone()));
+            }
+            self.stack.push(value);
+            run.next += 1;
+            return Ok(());
+        }
         let Some(member) = run.members.get(run.next).cloned() else {
             return self.jump(end);
         };
@@ -1025,9 +1524,71 @@ impl Vm {
         self.stack.push(value);
         Ok(())
     }
+}
+
+#[inline]
+pub(super) fn format_list_element_name(target_index: usize, idx: usize) -> PklString {
+    use std::io::Write;
+    let mut buf = [0u8; 48];
+    let len = {
+        let mut cursor = std::io::Cursor::new(&mut buf[..]);
+        write!(cursor, "\0{target_index}:{idx}").expect("list element key fits 48 bytes");
+        cursor.position() as usize
+    };
+    let s = std::str::from_utf8(&buf[..len]).expect("ASCII list element key");
+    PklString::from(s)
+}
+
+impl Vm {
+    /// Build a strict immutable `List` directly from precomputed elements using compact dense storage.
+    pub(super) fn build_strict_list(&mut self, values: Vec<Value>) -> ObjectId {
+        let len = values.len();
+        if len == 0 {
+            return self.empty_strict_collection(CollectionKind::List);
+        }
+        let mut approx_bytes = len.saturating_mul(std::mem::size_of::<Value>());
+        for v in &values {
+            if let Value::String(s) = v {
+                approx_bytes = approx_bytes.saturating_add(s.as_str().map_or(16, str::len));
+            }
+        }
+        self.heap.note_external_allocation(approx_bytes);
+        self.heap.allocate(Object {
+            collection_kind: CollectionKind::List,
+            length: len,
+            list_elements: Some(values),
+            ..Default::default()
+        })
+    }
 
     pub(super) fn append_strict_element(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
+        let target = self.builder()?;
+        let is_fast_list = {
+            let object = self.heap.get(target)?;
+            object.collection_kind == CollectionKind::List
+                && object.parent.is_none()
+                && (object.list_elements.is_some()
+                    || (object.length == 0
+                        && object.collection_members.is_empty()
+                        && object.members.is_empty()
+                        && object.cache_slots.is_empty()))
+        };
+        if is_fast_list {
+            let extra = match &value {
+                Value::String(s) => s.as_str().map_or(16, str::len),
+                _ => 0,
+            };
+            self.heap
+                .note_external_allocation(std::mem::size_of::<Value>().saturating_add(extra));
+            let object = self.heap.get_mut(target)?;
+            object
+                .list_elements
+                .get_or_insert_with(Vec::new)
+                .push(value);
+            object.length += 1;
+            return Ok(());
+        }
         self.add_collection_member(
             Member {
                 flags: 0,
@@ -1144,6 +1705,7 @@ fn listing_endpoint(name: &str) -> bool {
     )
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn endpoint_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -1258,22 +1820,33 @@ impl Vm {
                     ),
                 ));
             }
-            let mem = if last {
-                if obj.length > obj.collection_members.len() && !obj.collection_members.is_empty() {
-                    let base_len = obj
-                        .repeat_base_len
-                        .unwrap_or(obj.collection_members.len())
-                        .max(1);
-                    let resolved_idx = (obj.length - 1) % base_len;
-                    Some(obj.collection_members[resolved_idx].clone())
-                } else {
-                    obj.collection_members.last().cloned()
+            if let Some(elems) = &obj.list_elements {
+                let picked = if last { elems.last() } else { elems.first() };
+                if let Some(value) = picked {
+                    self.stack.push(value.clone());
+                    return Ok(());
                 }
+                (None, true)
             } else {
-                obj.collection_members.first().cloned()
-            };
-            let empty = obj.length == 0;
-            (mem, empty)
+                let mem = if last {
+                    if obj.length > obj.collection_members.len()
+                        && !obj.collection_members.is_empty()
+                    {
+                        let base_len = obj
+                            .repeat_base_len
+                            .unwrap_or(obj.collection_members.len())
+                            .max(1);
+                        let resolved_idx = (obj.length - 1) % base_len;
+                        Some(obj.collection_members[resolved_idx].clone())
+                    } else {
+                        obj.collection_members.last().cloned()
+                    }
+                } else {
+                    obj.collection_members.first().cloned()
+                };
+                let empty = obj.length == 0;
+                (mem, empty)
+            }
         } else {
             let members = collections::ordered_members(&self.heap, id)?;
             if single && members.len() != 1 {
@@ -1334,6 +1907,7 @@ impl Vm {
 }
 
 /// Predicate calls have no result builder and do not eagerly force lazy values.
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn every_blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -1459,6 +2033,7 @@ impl Vm {
             source,
             callback: Some(callback),
             members,
+            strict_list_len: None,
             next: 0,
             current: None,
             matched: 0,

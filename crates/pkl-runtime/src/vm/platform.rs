@@ -152,7 +152,7 @@ impl Vm {
         let parent = self.canonical_builtin_class(classes::BuiltinClass::Typed);
         self.heap.link_superclass(class_id, Some(parent))?;
         if let Some(members) = self.program.objects.get(template) {
-            self.heap.get_mut(id)?.members = members.clone();
+            self.heap.get_mut(id)?.members = members.clone().into();
         }
         self.heap.get_mut(id)?.class_initializing = false;
         self.class_singletons.insert(template, class_id);

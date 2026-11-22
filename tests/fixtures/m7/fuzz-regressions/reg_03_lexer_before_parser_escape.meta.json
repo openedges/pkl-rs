@@ -1,0 +1,12 @@
+{
+  "category": "multi-format-rendering",
+  "differences": [
+    "stderr"
+  ],
+  "format": "yaml",
+  "id": "reg_03_lexer_before_parser_escape",
+  "mode": "eval",
+  "notes": "Java 0.32.0 reports earlier parser error at `and` before lexing later string; Rust eager lexer reports invalid escape `\\ `.",
+  "seed": "0x4d37504b4c303332",
+  "status": "mismatch"
+}

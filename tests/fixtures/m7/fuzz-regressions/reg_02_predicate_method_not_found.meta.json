@@ -1,0 +1,12 @@
+{
+  "category": "objects-amendments-generators",
+  "differences": [
+    "stderr"
+  ],
+  "format": "pcf",
+  "id": "reg_02_predicate_method_not_found",
+  "mode": "eval",
+  "notes": "Java 0.32.0: 'Cannot find method `startsWith`.' vs Rust: 'Cannot find method `startsWith` in class `Dynamic`.' + Available methods list.",
+  "seed": "0x4d37504b4c303332",
+  "status": "mismatch"
+}

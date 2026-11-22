@@ -1,7 +1,6 @@
 //! Trace evaluation uses the shared forcing and renderer continuations.
 use super::*;
 use crate::logging::{LogEvent, LogFrame, LogLevel, TraceMode};
-use crate::source::SourceMap;
 use crate::value::RuntimeSource;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -140,10 +139,8 @@ pub(super) fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFram
     if span.start >= span.end || !source.text.entire().is_boundary(span.end) {
         return Err(invalid("trace operand source span"));
     }
-    let mut sources = SourceMap::default();
-    let id = sources.add(source.uri.clone(), source.text.clone());
-    let mapped = sources.get(id).expect("source inserted");
-    let start = mapped
+    let index = source.text.index();
+    let start = index
         .position(span.start)
         .ok_or_else(|| invalid("trace source start"))?;
     let (last_byte, last_char) = source
@@ -153,33 +150,20 @@ pub(super) fn source_frame(source: &RuntimeSource, span: Span) -> Result<LogFram
         .characters()
         .next_back()
         .ok_or_else(|| invalid("trace source end"))?;
-    let end = mapped
+    let end = index
         .position(last_byte)
         .ok_or_else(|| invalid("trace source end"))?;
-    let mut lines = Vec::new();
-    let mut line_start = 0;
-    let mut cursor = 0;
-    let bytes = source.text.as_bytes();
-    while cursor < bytes.len() {
-        if matches!(bytes[cursor], b'\r' | b'\n') {
-            lines.push(PklString::from(
-                &source.text.entire().range(line_start..cursor),
-            ));
-            if bytes[cursor] == b'\r' && bytes.get(cursor + 1) == Some(&b'\n') {
-                cursor += 1;
-            }
-            line_start = cursor + 1;
-        }
-        cursor += 1;
+    let mut lines = Vec::with_capacity(end.line.saturating_sub(start.line) + 1);
+    for line_no in start.line..=end.line {
+        let slice = index
+            .line_slice(line_no)
+            .ok_or_else(|| invalid("trace source lines"))?;
+        lines.push(slice.to_pkl_string());
     }
-    lines.push(PklString::from(&source.text.entire().range(line_start..)));
-    let lines = lines
-        .get(start.line - 1..end.line)
-        .ok_or_else(|| invalid("trace source lines"))?;
     Ok(LogFrame {
         module_uri: source.uri.clone(),
         member_name: None,
-        source_lines: lines.to_vec().into(),
+        source_lines: lines.into(),
         start_line: start.line,
         start_column: start.column_utf16,
         end_line: end.line,

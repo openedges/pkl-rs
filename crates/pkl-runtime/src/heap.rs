@@ -14,16 +14,271 @@ pub struct Scope {
     pub owner: ObjectId,
 }
 
+/// Copy-on-write lexical scope stack: empty and single-scope are zero-allocation;
+/// larger stacks share via `Arc` bump.
+#[derive(Clone, Debug, Default)]
+pub enum ScopeList {
+    #[default]
+    Empty,
+    Single([Scope; 1]),
+    Many(Arc<Vec<Scope>>),
+}
+
+impl ScopeList {
+    #[inline]
+    pub fn from_single(scope: Scope) -> Self {
+        Self::Single([scope])
+    }
+
+    #[inline]
+    pub fn as_slice(&self) -> &[Scope] {
+        match self {
+            Self::Empty => &[],
+            Self::Single(s) => s,
+            Self::Many(arc) => arc.as_slice(),
+        }
+    }
+
+    #[inline]
+    pub fn push(&mut self, scope: Scope) {
+        match self {
+            Self::Empty => *self = Self::Single([scope]),
+            Self::Single([first]) => {
+                let first = *first;
+                *self = Self::Many(Arc::new(vec![first, scope]));
+            }
+            Self::Many(arc) => Arc::make_mut(arc).push(scope),
+        }
+    }
+
+    #[inline]
+    pub fn insert(&mut self, index: usize, scope: Scope) {
+        match self {
+            Self::Empty => {
+                assert_eq!(index, 0);
+                *self = Self::Single([scope]);
+            }
+            Self::Single([first]) => {
+                let first = *first;
+                let mut vec = Vec::with_capacity(2);
+                vec.push(first);
+                vec.insert(index, scope);
+                *self = Self::Many(Arc::new(vec));
+            }
+            Self::Many(arc) => Arc::make_mut(arc).insert(index, scope),
+        }
+    }
+
+    #[inline]
+    pub fn set_first_receiver(&mut self, receiver: ObjectId) -> bool {
+        match self {
+            Self::Empty => false,
+            Self::Single([first]) => {
+                first.receiver = receiver;
+                true
+            }
+            Self::Many(arc) => {
+                let Some(first) = arc.first() else {
+                    return false;
+                };
+                if first.receiver != receiver {
+                    Arc::make_mut(arc)[0].receiver = receiver;
+                }
+                true
+            }
+        }
+    }
+}
+
+impl std::ops::Deref for ScopeList {
+    type Target = [Scope];
+    #[inline]
+    fn deref(&self) -> &[Scope] {
+        self.as_slice()
+    }
+}
+
+impl<'a> IntoIterator for &'a ScopeList {
+    type Item = &'a Scope;
+    type IntoIter = std::slice::Iter<'a, Scope>;
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.as_slice().iter()
+    }
+}
+
+pub type LocalOwnerEntry = (ExecutableOwnerId, (usize, usize));
+
+/// Small inline-first map for lexical slot owners (zero-alloc for <= 8 locals).
+#[derive(Debug, Default)]
+pub struct LocalOwners {
+    mask: u8,
+    inline: [Option<LocalOwnerEntry>; 8],
+    // Keep `Environment` compact (8 bytes instead of 24) for the common <= 8-local fast path.
+    #[allow(clippy::box_collection)]
+    overflow: Option<Box<BTreeMap<usize, LocalOwnerEntry>>>,
+}
+
+impl Clone for LocalOwners {
+    #[inline]
+    fn clone(&self) -> Self {
+        if self.mask == 0 && self.overflow.is_none() {
+            return Self::default();
+        }
+        Self {
+            mask: self.mask,
+            inline: self.inline,
+            overflow: self.overflow.clone(),
+        }
+    }
+}
+
+impl LocalOwners {
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.mask == 0 && self.overflow.as_ref().is_none_or(|m| m.is_empty())
+    }
+
+    #[inline]
+    pub fn insert(&mut self, index: usize, value: LocalOwnerEntry) {
+        if index < 8 {
+            self.inline[index] = Some(value);
+            self.mask |= 1u8 << index;
+        } else {
+            self.overflow
+                .get_or_insert_with(|| Box::new(BTreeMap::new()))
+                .insert(index, value);
+        }
+    }
+
+    #[inline]
+    pub fn get(&self, index: &usize) -> Option<&LocalOwnerEntry> {
+        let idx = *index;
+        if idx < 8 {
+            if (self.mask & (1u8 << idx)) != 0 {
+                self.inline[idx].as_ref()
+            } else {
+                None
+            }
+        } else {
+            self.overflow.as_ref().and_then(|map| map.get(&idx))
+        }
+    }
+
+    #[inline]
+    pub fn remove(&mut self, index: &usize) {
+        let idx = *index;
+        if idx < 8 {
+            self.inline[idx] = None;
+            self.mask &= !(1u8 << idx);
+        } else if let Some(map) = &mut self.overflow {
+            map.remove(&idx);
+        }
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        if self.mask != 0 {
+            self.inline = [None; 8];
+            self.mask = 0;
+        }
+        if let Some(map) = &mut self.overflow {
+            map.clear();
+        }
+    }
+
+    #[inline]
+    pub fn truncate_from(&mut self, start: usize) {
+        if start < 8 {
+            let keep_mask = ((1u16 << start) - 1) as u8;
+            let mut drop_bits = self.mask & !keep_mask;
+            while drop_bits != 0 {
+                let idx = drop_bits.trailing_zeros() as usize;
+                self.inline[idx] = None;
+                drop_bits &= drop_bits - 1;
+            }
+            self.mask &= keep_mask;
+        }
+        if let Some(map) = &mut self.overflow {
+            map.retain(|&k, _| k < start);
+        }
+    }
+
+    pub fn values(&self) -> impl Iterator<Item = &LocalOwnerEntry> + '_ {
+        self.inline
+            .iter()
+            .flatten()
+            .chain(self.overflow.iter().flat_map(|map| map.values()))
+    }
+}
+
+/// Inline bitset for copied lexical slots (zero-alloc for indices < 64).
+#[derive(Clone, Debug, Default)]
+pub struct CopyLocals {
+    inline_mask: u64,
+    // Keep `Environment` compact (8 bytes instead of 24) for the common < 64-local fast path.
+    #[allow(clippy::box_collection)]
+    overflow: Option<Box<BTreeSet<usize>>>,
+}
+
+impl CopyLocals {
+    #[inline]
+    pub fn insert(&mut self, index: usize) {
+        if index < 64 {
+            self.inline_mask |= 1u64 << index;
+        } else {
+            self.overflow
+                .get_or_insert_with(|| Box::new(BTreeSet::new()))
+                .insert(index);
+        }
+    }
+
+    #[inline]
+    pub fn remove(&mut self, index: &usize) {
+        let idx = *index;
+        if idx < 64 {
+            self.inline_mask &= !(1u64 << idx);
+        } else if let Some(set) = &mut self.overflow {
+            set.remove(&idx);
+        }
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.inline_mask = 0;
+        if let Some(set) = &mut self.overflow {
+            set.clear();
+        }
+    }
+
+    pub fn iter(&self) -> impl Iterator<Item = usize> + '_ {
+        struct MaskIter(u64);
+        impl Iterator for MaskIter {
+            type Item = usize;
+            #[inline]
+            fn next(&mut self) -> Option<usize> {
+                if self.0 == 0 {
+                    return None;
+                }
+                let bit = self.0.trailing_zeros() as usize;
+                self.0 &= self.0 - 1;
+                Some(bit)
+            }
+        }
+        MaskIter(self.inline_mask).chain(self.overflow.iter().flat_map(|s| s.iter().copied()))
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Environment {
     pub locals: Vec<Value>,
     /// Source descriptor for materialized physical slots retained by closures.
     #[doc(hidden)]
-    pub local_owners: BTreeMap<usize, (ExecutableOwnerId, (usize, usize))>,
+    pub local_owners: LocalOwners,
     /// Parameters, let bindings and generator bindings in the current lexical
     /// frame. Enclosing function captures are not copied into a new descriptor.
     #[doc(hidden)]
-    pub copy_locals: BTreeSet<usize>,
+    pub copy_locals: CopyLocals,
     /// Generated members restore their saved generator activation on forcing.
     #[doc(hidden)]
     pub restore_for_bindings: bool,
@@ -42,7 +297,7 @@ pub struct Environment {
     /// Source sections follow actual arguments without participating in type identity.
     pub type_argument_sources: BTreeMap<(usize, PklString), crate::vm::TypeArgumentSource>,
     /// Innermost first; immutable captured lexical object scopes.
-    pub scopes: Vec<Scope>,
+    pub scopes: ScopeList,
 }
 
 #[derive(Clone, Debug)]
@@ -223,6 +478,110 @@ pub struct CacheSlot {
     pub value: Value,
 }
 
+/// Copy-on-write member list: empty is zero-allocation, cloning is an `Arc` bump.
+/// Eliminates cloning hundreds of `Member` / `TypeCheck` entries on `BaseSnapshot`
+/// instantiation and factory/collection copies.
+#[derive(Clone, Debug, Default)]
+pub struct MemberList(Option<Arc<Vec<Member>>>);
+
+impl MemberList {
+    #[inline]
+    pub fn as_slice(&self) -> &[Member] {
+        self.0.as_deref().map_or(&[], Vec::as_slice)
+    }
+
+    #[inline]
+    pub fn push(&mut self, member: Member) {
+        Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new()))).push(member);
+    }
+
+    #[inline]
+    pub fn extend<I: IntoIterator<Item = Member>>(&mut self, iter: I) {
+        let mut iter = iter.into_iter();
+        if let Some(first) = iter.next() {
+            let vec = Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new())));
+            vec.push(first);
+            vec.extend(iter);
+        }
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.0 = None;
+    }
+
+    #[inline]
+    pub fn retain<F: FnMut(&Member) -> bool>(&mut self, f: F) {
+        if let Some(arc) = self.0.as_mut() {
+            Arc::make_mut(arc).retain(f);
+        }
+    }
+
+    #[inline]
+    pub fn iter_mut(&mut self) -> std::slice::IterMut<'_, Member> {
+        match self.0.as_mut() {
+            Some(arc) => Arc::make_mut(arc).iter_mut(),
+            None => [].iter_mut(),
+        }
+    }
+
+    #[inline]
+    pub fn reserve(&mut self, additional: usize) {
+        if additional > 0 {
+            Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new()))).reserve(additional);
+        }
+    }
+
+    #[inline]
+    pub fn set(&mut self, index: usize, member: Member) {
+        Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new())))[index] = member;
+    }
+
+    #[inline]
+    pub fn from_arc(arc: Arc<Vec<Member>>) -> Self {
+        if arc.is_empty() {
+            Self(None)
+        } else {
+            Self(Some(arc))
+        }
+    }
+}
+
+impl From<Vec<Member>> for MemberList {
+    #[inline]
+    fn from(v: Vec<Member>) -> Self {
+        if v.is_empty() {
+            Self(None)
+        } else {
+            Self(Some(Arc::new(v)))
+        }
+    }
+}
+
+impl FromIterator<Member> for MemberList {
+    #[inline]
+    fn from_iter<I: IntoIterator<Item = Member>>(iter: I) -> Self {
+        Self::from(iter.into_iter().collect::<Vec<_>>())
+    }
+}
+
+impl std::ops::Deref for MemberList {
+    type Target = [Member];
+    #[inline]
+    fn deref(&self) -> &[Member] {
+        self.as_slice()
+    }
+}
+
+impl<'a> IntoIterator for &'a MemberList {
+    type Item = &'a Member;
+    type IntoIter = std::slice::Iter<'a, Member>;
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.as_slice().iter()
+    }
+}
+
 #[derive(Clone, Debug, Default)]
 pub struct Object {
     /// Lazy mirror factory payload. Edges are traced independently of the
@@ -298,7 +657,7 @@ pub struct Object {
     /// whose initialized superclass is absent.
     pub class_superclass_initialized: bool,
     pub parent: Option<ObjectId>,
-    pub members: Vec<Member>,
+    pub members: MemberList,
     pub environment: Environment,
     pub cache: BTreeMap<CacheKey, LazyState>,
     /// Successful cache publication order, matching VmObject.cachedValues.
@@ -317,6 +676,9 @@ pub struct Object {
     pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
     pub declaration_hashes: Vec<i32>,
     pub length: usize,
+    /// Compact dense storage for strict immutable `List` values (`0..length`),
+    /// avoiding per-element `BTreeMap` / `PklString` / `Member` overhead.
+    pub list_elements: Option<Vec<Value>>,
     pub mapping_length: Option<usize>,
     pub repeat_base_len: Option<usize>,
     /// VmMapping.getAllKeys caches its own persistent Set wrapper.
@@ -393,7 +755,7 @@ pub(crate) enum ExecutionSite {
     Member(usize),
 }
 
-#[derive(Default)]
+#[derive(Clone, Default)]
 struct ExecutableState {
     code_roots: Vec<Value>,
     children: BTreeMap<ExecutionSite, ExecutableOwnerId>,
@@ -403,12 +765,12 @@ struct ExecutableState {
     // ReadAmbiguousLocalityPropertyNode replaces itself on its first execution.
     // The choice belongs to this executable clone, never to a receiver object.
     ambiguous_localities: BTreeMap<(usize, usize), bool>,
-    local_kinds: BTreeMap<(usize, usize), crate::vm::identity::SlotKind>,
+    local_kinds: Vec<((usize, usize), crate::vm::identity::SlotKind)>,
     // ImportNode caches its successful result, not the importing receiver or
     // activation. Distinct executable clones retain distinct node state.
     imported_modules: BTreeMap<(usize, usize), ObjectId>,
     glob_mappings: BTreeMap<(usize, usize, crate::value::PklString), ObjectId>,
-    method_calls: BTreeMap<(usize, usize), crate::vm::deprecation::CallCache>,
+    method_calls: Vec<((usize, usize), crate::vm::deprecation::CallCache)>,
     regex_constructor: crate::pkl_regex::ConstructorCache,
 }
 
@@ -418,6 +780,7 @@ impl ExecutableOwnerId {
     }
 }
 
+#[derive(Clone)]
 enum Entry {
     Object(Box<Object>),
     Class(ClassRecord),
@@ -426,6 +789,7 @@ enum Entry {
     Executable(Box<ExecutableState>),
 }
 
+#[derive(Clone)]
 struct Slot {
     generation: u64,
     entry: Option<Entry>,
@@ -452,8 +816,30 @@ pub struct HeapStats {
     pub reclaimed: usize,
 }
 
+/// Frozen immutable `pkl:base` heap prefix shared via copy-on-write across fresh evaluators.
+pub(crate) struct FrozenBaseHeap {
+    identity: u64,
+    slots: Arc<[Slot]>,
+    stats: HeapStats,
+    structural_keys: BTreeMap<crate::vm::equality::StructuralKey, u64>,
+    next_structural_key: u64,
+    key_equalities: std::collections::BTreeSet<(ObjectId, ObjectId)>,
+    bytes_lists: BytesListMap,
+    has_structural_keys: bool,
+}
+
 pub struct Heap {
     identity: u64,
+    /// Optional shared frozen `pkl:base` prefix (`0..base_len`, owned by `base_id`).
+    base_slots: Option<Arc<[Slot]>>,
+    base_len: usize,
+    base_id: u64,
+    base_has_structural_keys: bool,
+    /// Sparse copy-on-write overrides for mutated slots in `0..base_len`.
+    base_overrides: Vec<(usize, Slot)>,
+    /// Lazy O(1) index (`pos + 1`, `0` = not overridden) allocated once `base_overrides.len() >= 4`.
+    base_override_index: Option<Box<[u32]>>,
+    /// User-allocated slots (`index = base_len + local_idx`, owned by `identity`).
     slots: Vec<Slot>,
     free: Vec<usize>,
     stats: HeapStats,
@@ -468,6 +854,8 @@ pub struct Heap {
     // Heap-local VmBytes.vmList backlinks never put evaluator handles in code constants.
     pub(crate) bytes_lists:
         BTreeMap<crate::value_identity::Token, (std::sync::Weak<()>, ObjectId, bool)>,
+    allocations_since_gc: usize,
+    external_bytes_since_gc: usize,
 }
 
 impl Default for Heap {
@@ -480,6 +868,12 @@ impl Heap {
     pub fn new() -> Self {
         Self {
             identity: NEXT_HEAP.fetch_add(1, Ordering::Relaxed),
+            base_slots: None,
+            base_len: 0,
+            base_id: 0,
+            base_has_structural_keys: false,
+            base_overrides: Vec::new(),
+            base_override_index: None,
             slots: Vec::new(),
             free: Vec::new(),
             stats: HeapStats::default(),
@@ -492,13 +886,175 @@ impl Heap {
             next_structural_key: 1,
             key_equalities: std::collections::BTreeSet::new(),
             bytes_lists: BTreeMap::new(),
+            allocations_since_gc: 0,
+            external_bytes_since_gc: 0,
         }
+    }
+
+    /// Freeze a freshly bootstrapped `pkl:base` heap into a shared immutable CoW prefix.
+    pub(crate) fn freeze_base(self) -> FrozenBaseHeap {
+        debug_assert!(self.base_slots.is_none());
+        let has_structural_keys = self
+            .slots
+            .iter()
+            .any(|slot| slot.object().is_some_and(|o| o.structural_key.is_some()));
+        let slots: Arc<[Slot]> = Arc::from(self.slots);
+        let mut stats = self.stats;
+        stats.collections = 0;
+        stats.reclaimed = 0;
+        stats.slots = slots.len();
+        FrozenBaseHeap {
+            identity: self.identity,
+            slots,
+            stats,
+            structural_keys: self.structural_keys,
+            next_structural_key: self.next_structural_key,
+            key_equalities: self.key_equalities,
+            bytes_lists: self.bytes_lists,
+            has_structural_keys,
+        }
+    }
+
+    /// O(1) fresh heap sharing the frozen `pkl:base` prefix via copy-on-write.
+    pub(crate) fn from_frozen_base(frozen: &FrozenBaseHeap) -> Self {
+        Self {
+            identity: NEXT_HEAP.fetch_add(1, Ordering::Relaxed),
+            base_slots: Some(Arc::clone(&frozen.slots)),
+            base_len: frozen.slots.len(),
+            base_id: frozen.identity,
+            base_has_structural_keys: frozen.has_structural_keys,
+            base_overrides: Vec::new(),
+            base_override_index: None,
+            slots: Vec::new(),
+            free: Vec::new(),
+            stats: frozen.stats,
+            mark_scratch: Vec::new(),
+            pending_scratch: Vec::new(),
+            structural_keys_dirty: false,
+            last_retained_structural_keys_len: frozen.structural_keys.len(),
+            last_retained_key_equalities_len: frozen.key_equalities.len(),
+            structural_keys: frozen.structural_keys.clone(),
+            next_structural_key: frozen.next_structural_key,
+            key_equalities: frozen.key_equalities.clone(),
+            bytes_lists: frozen.bytes_lists.clone(),
+            allocations_since_gc: 0,
+            external_bytes_since_gc: 0,
+        }
+    }
+
+    #[inline]
+    fn owner(&self) -> HeapOwner {
+        HeapOwner {
+            identity: self.identity,
+            base_id: self.base_id,
+            base_len: self.base_len,
+        }
+    }
+
+    #[inline]
+    fn base_override_pos(&self, index: usize) -> Option<usize> {
+        if self.base_overrides.is_empty() {
+            return None;
+        }
+        if let Some(table) = self.base_override_index.as_deref() {
+            let entry = table[index];
+            return if entry != 0 {
+                Some((entry - 1) as usize)
+            } else {
+                None
+            };
+        }
+        for (pos, (ov_idx, _)) in self.base_overrides.iter().enumerate() {
+            if *ov_idx == index {
+                return Some(pos);
+            }
+        }
+        None
+    }
+
+    #[inline]
+    fn slot_ref(&self, index: usize) -> Option<&Slot> {
+        if index >= self.base_len {
+            self.slots.get(index - self.base_len)
+        } else {
+            if let Some(pos) = self.base_override_pos(index) {
+                return Some(&self.base_overrides[pos].1);
+            }
+            self.base_slots.as_deref()?.get(index)
+        }
+    }
+
+    #[inline]
+    fn slot_mut(&mut self, index: usize) -> &mut Slot {
+        if index >= self.base_len {
+            &mut self.slots[index - self.base_len]
+        } else {
+            if let Some(pos) = self.base_override_pos(index) {
+                return &mut self.base_overrides[pos].1;
+            }
+            let cloned = self.base_slots.as_deref().expect("base slot")[index].clone();
+            let pos = self.base_overrides.len();
+            self.base_overrides.push((index, cloned));
+            if let Some(table) = self.base_override_index.as_deref_mut() {
+                table[index] = (pos + 1) as u32;
+            } else if self.base_overrides.len() >= 4 {
+                let mut table = vec![0u32; self.base_len].into_boxed_slice();
+                for (p, &(ov_idx, _)) in self.base_overrides.iter().enumerate() {
+                    table[ov_idx] = (p + 1) as u32;
+                }
+                self.base_override_index = Some(table);
+            }
+            &mut self.base_overrides[pos].1
+        }
+    }
+
+    #[inline]
+    pub(crate) fn allocations_since_gc(&self) -> usize {
+        self.allocations_since_gc
+    }
+
+    #[inline]
+    pub(crate) fn external_bytes_since_gc(&self) -> usize {
+        self.external_bytes_since_gc
+    }
+
+    #[inline]
+    pub(crate) fn note_external_allocation(&mut self, bytes: usize) {
+        self.external_bytes_since_gc = self.external_bytes_since_gc.saturating_add(bytes);
     }
 
     pub fn allocate(&mut self, mut object: Object) -> ObjectId {
         object.forced = false;
         object.dynamic_regular_member_count = None;
         self.allocate_entry(Entry::Object(Box::new(object)))
+    }
+
+    /// Allocates a strict dense `List` directly into a heap `Box<Object>` without a
+    /// stack-to-heap `Object` copy.
+    #[inline]
+    pub(crate) fn allocate_strict_list(&mut self, elements: Vec<Value>) -> ObjectId {
+        let len = elements.len();
+        let mut boxed = Box::<Object>::default();
+        boxed.collection_kind = CollectionKind::List;
+        boxed.length = len;
+        boxed.list_elements = Some(elements);
+        self.allocate_entry(Entry::Object(boxed))
+    }
+
+    /// Allocates a `Function` object directly into a heap `Box<Object>` without a
+    /// stack-to-heap `Object` copy.
+    #[inline]
+    pub(crate) fn allocate_function(
+        &mut self,
+        function: Function,
+        method_declaration: Option<(ObjectId, usize)>,
+        environment: Environment,
+    ) -> ObjectId {
+        let mut boxed = Box::<Object>::default();
+        boxed.function = Some(function);
+        boxed.method_declaration = method_declaration;
+        boxed.environment = environment;
+        self.allocate_entry(Entry::Object(boxed))
     }
 
     pub(crate) fn allocate_class(&mut self, prototype: ObjectId) -> ObjectId {
@@ -531,9 +1087,10 @@ impl Heap {
         let parent = superclass
             .map(|class| self.get_class(class).map(|c| c.prototype))
             .transpose()?;
-        if let Some(Entry::Class(class)) = &mut self.slots[id.index].entry {
+        let slot = self.slot_mut(id.index);
+        if let Some(Entry::Class(class)) = &mut slot.entry {
             class.superclass = superclass;
-            self.slots[id.index].edges_valid = false;
+            slot.edges_valid = false;
         }
         let prototype = self.get_mut(prototype)?;
         prototype.parent = parent;
@@ -592,10 +1149,27 @@ impl Heap {
     }
 
     pub(crate) fn object_class(&self, mut id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
-        let mut visited = BTreeSet::new();
+        let mut inline_seen = [ObjectId {
+            heap: 0,
+            index: 0,
+            generation: 0,
+        }; 8];
+        let mut inline_len = 0usize;
+        let mut overflow: Option<BTreeSet<ObjectId>> = None;
         loop {
-            if !visited.insert(id) {
+            if let Some(visited) = &mut overflow {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+            } else if inline_seen[..inline_len].contains(&id) {
                 return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            } else if inline_len < inline_seen.len() {
+                inline_seen[inline_len] = id;
+                inline_len += 1;
+            } else {
+                let mut set: BTreeSet<ObjectId> = inline_seen.into_iter().collect();
+                set.insert(id);
+                overflow = Some(set);
             }
             let object = self.get(id)?;
             if let Some(class) = object.instance_class {
@@ -611,17 +1185,76 @@ impl Heap {
 
     pub(crate) fn is_subclass(&self, class: ObjectId, expected: ObjectId) -> bool {
         let mut current = Some(class);
-        let mut seen = BTreeSet::new();
+        let mut inline_seen = [ObjectId {
+            heap: 0,
+            index: 0,
+            generation: 0,
+        }; 8];
+        let mut inline_len = 0usize;
+        let mut overflow: Option<BTreeSet<ObjectId>> = None;
         while let Some(class) = current {
             if class == expected {
                 return true;
             }
-            if !seen.insert(class) {
+            if let Some(seen) = &mut overflow {
+                if !seen.insert(class) {
+                    return false;
+                }
+            } else if inline_seen[..inline_len].contains(&class) {
                 return false;
+            } else if inline_len < inline_seen.len() {
+                inline_seen[inline_len] = class;
+                inline_len += 1;
+            } else {
+                let mut set: BTreeSet<ObjectId> = inline_seen.into_iter().collect();
+                set.insert(class);
+                overflow = Some(set);
             }
             let Ok(record) = self.get_class(class) else {
                 return false;
             };
+            current = record.superclass;
+        }
+        false
+    }
+
+    /// O(depth) subclass check against a class definition ID, avoiding an O(heap) `find_class` scan.
+    #[inline]
+    pub(crate) fn class_has_ancestor_id(&self, class: ObjectId, target_id: usize) -> bool {
+        let mut current = Some(class);
+        let mut inline_seen = [ObjectId {
+            heap: 0,
+            index: 0,
+            generation: 0,
+        }; 8];
+        let mut inline_len = 0usize;
+        let mut overflow: Option<BTreeSet<ObjectId>> = None;
+        while let Some(cls) = current {
+            let Ok(record) = self.get_class(cls) else {
+                return false;
+            };
+            if self
+                .get(record.prototype)
+                .ok()
+                .and_then(|obj| obj.class_definition.as_ref())
+                .is_some_and(|def| def.id == target_id)
+            {
+                return true;
+            }
+            if let Some(seen) = &mut overflow {
+                if !seen.insert(cls) {
+                    return false;
+                }
+            } else if inline_seen[..inline_len].contains(&cls) {
+                return false;
+            } else if inline_len < inline_seen.len() {
+                inline_seen[inline_len] = cls;
+                inline_len += 1;
+            } else {
+                let mut set: BTreeSet<ObjectId> = inline_seen.into_iter().collect();
+                set.insert(cls);
+                overflow = Some(set);
+            }
             current = record.superclass;
         }
         false
@@ -674,8 +1307,9 @@ impl Heap {
         value: Option<Value>,
     ) -> Result<(), RuntimeError> {
         self.custom_this(slot)?;
-        self.slots[slot.0.index].entry = Some(Entry::CustomThis(value));
-        self.slots[slot.0.index].edges_valid = false;
+        let s = self.slot_mut(slot.0.index);
+        s.entry = Some(Entry::CustomThis(value));
+        s.edges_valid = false;
         Ok(())
     }
 
@@ -723,8 +1357,9 @@ impl Heap {
         owner: ExecutableOwnerId,
     ) -> Result<&mut ExecutableState, RuntimeError> {
         self.executable(owner)?;
-        self.slots[owner.0.index].edges_valid = false;
-        match self.slots[owner.0.index].entry.as_mut() {
+        let slot = self.slot_mut(owner.0.index);
+        slot.edges_valid = false;
+        match slot.entry.as_mut() {
             Some(Entry::Executable(state)) => Ok(state),
             _ => unreachable!("validated executable owner"),
         }
@@ -743,12 +1378,19 @@ impl Heap {
         Ok(child)
     }
 
+    #[inline]
     pub(crate) fn existing_method_call_cache(
         &self,
         owner: ExecutableOwnerId,
         site: (usize, usize),
     ) -> Result<Option<&crate::vm::deprecation::CallCache>, RuntimeError> {
-        Ok(self.executable(owner)?.method_calls.get(&site))
+        let calls = &self.executable(owner)?.method_calls;
+        for (k, v) in calls {
+            if *k == site {
+                return Ok(Some(v));
+            }
+        }
+        Ok(None)
     }
 
     pub(crate) fn method_call_cache(
@@ -756,19 +1398,27 @@ impl Heap {
         owner: ExecutableOwnerId,
         site: (usize, usize),
     ) -> Result<&mut crate::vm::deprecation::CallCache, RuntimeError> {
-        Ok(self
-            .executable_mut(owner)?
-            .method_calls
-            .entry(site)
-            .or_default())
+        let calls = &mut self.executable_mut(owner)?.method_calls;
+        if let Some(pos) = calls.iter().position(|(k, _)| *k == site) {
+            return Ok(&mut calls[pos].1);
+        }
+        calls.push((site, crate::vm::deprecation::CallCache::default()));
+        Ok(&mut calls.last_mut().unwrap().1)
     }
 
+    #[inline]
     pub(crate) fn local_kind(
         &self,
         owner: ExecutableOwnerId,
         slot: (usize, usize),
     ) -> Result<Option<crate::vm::identity::SlotKind>, RuntimeError> {
-        Ok(self.executable(owner)?.local_kinds.get(&slot).copied())
+        let kinds = &self.executable(owner)?.local_kinds;
+        for &(k, v) in kinds {
+            if k == slot {
+                return Ok(Some(v));
+            }
+        }
+        Ok(None)
     }
 
     pub(crate) fn glob_mapping(
@@ -825,7 +1475,14 @@ impl Heap {
         slot: (usize, usize),
         kind: crate::vm::identity::SlotKind,
     ) -> Result<(), RuntimeError> {
-        self.executable_mut(owner)?.local_kinds.insert(slot, kind);
+        let kinds = &mut self.executable_mut(owner)?.local_kinds;
+        for (k, v) in kinds.iter_mut() {
+            if *k == slot {
+                *v = kind;
+                return Ok(());
+            }
+        }
+        kinds.push((slot, kind));
         Ok(())
     }
 
@@ -879,9 +1536,10 @@ impl Heap {
             self.structural_keys_dirty = true;
         }
         let index = if let Some(index) = self.free.pop() {
-            self.slots[index].entry = Some(entry);
-            self.slots[index].edges.clear();
-            self.slots[index].edges_valid = false;
+            let local = index - self.base_len;
+            self.slots[local].entry = Some(entry);
+            self.slots[local].edges.clear();
+            self.slots[local].edges_valid = false;
             index
         } else {
             self.slots.push(Slot {
@@ -890,43 +1548,80 @@ impl Heap {
                 edges: Vec::new(),
                 edges_valid: false,
             });
-            self.slots.len() - 1
+            self.base_len + self.slots.len() - 1
         };
         self.stats.live += 1;
-        self.stats.slots = self.slots.len();
+        self.stats.slots = self.base_len + self.slots.len();
+        self.allocations_since_gc = self.allocations_since_gc.saturating_add(1);
         ObjectId {
             heap: self.identity,
             index,
-            generation: self.slots[index].generation,
+            generation: self.slots[index - self.base_len].generation,
         }
     }
 
     pub(crate) fn find_type_alias(&self, name: &PklString) -> Option<ObjectId> {
-        self.slots.iter().enumerate().find_map(|(index, slot)| {
+        if let Some(found) = self.slots.iter().enumerate().find_map(|(local, slot)| {
             slot.object()
                 .filter(|o| o.type_alias.as_ref() == Some(name))
                 .map(|_| ObjectId {
                     heap: self.identity,
-                    index,
+                    index: self.base_len + local,
                     generation: slot.generation,
                 })
-        })
+        }) {
+            return Some(found);
+        }
+        if self.base_len > 0 {
+            for index in 0..self.base_len {
+                if let Some(slot) = self.slot_ref(index)
+                    && slot
+                        .object()
+                        .is_some_and(|o| o.type_alias.as_ref() == Some(name))
+                {
+                    return Some(ObjectId {
+                        heap: self.base_id,
+                        index,
+                        generation: slot.generation,
+                    });
+                }
+            }
+        }
+        None
     }
 
     pub(crate) fn find_module(&self, unit: crate::modules::UnitId) -> Option<ObjectId> {
-        self.slots.iter().enumerate().find_map(|(index, slot)| {
+        if let Some(found) = self.slots.iter().enumerate().find_map(|(local, slot)| {
             slot.object()
                 .filter(|object| object.module_unit == Some(unit))
                 .map(|_| ObjectId {
                     heap: self.identity,
-                    index,
+                    index: self.base_len + local,
                     generation: slot.generation,
                 })
-        })
+        }) {
+            return Some(found);
+        }
+        if self.base_len > 0 {
+            for index in 0..self.base_len {
+                if let Some(slot) = self.slot_ref(index)
+                    && slot
+                        .object()
+                        .is_some_and(|object| object.module_unit == Some(unit))
+                {
+                    return Some(ObjectId {
+                        heap: self.base_id,
+                        index,
+                        generation: slot.generation,
+                    });
+                }
+            }
+        }
+        None
     }
 
     pub(crate) fn find_class(&self, class_id: usize) -> Option<ObjectId> {
-        self.slots.iter().find_map(|slot| {
+        if let Some(found) = self.slots.iter().find_map(|slot| {
             slot.object()
                 .filter(|object| {
                     object
@@ -935,12 +1630,33 @@ impl Heap {
                         .is_some_and(|class| class.id == class_id)
                 })
                 .and_then(|object| object.instance_class)
-        })
+        }) {
+            return Some(found);
+        }
+        if self.base_len > 0 {
+            for index in 0..self.base_len {
+                if let Some(slot) = self.slot_ref(index)
+                    && let Some(class) = slot
+                        .object()
+                        .filter(|object| {
+                            object
+                                .class_definition
+                                .as_ref()
+                                .is_some_and(|class| class.id == class_id)
+                        })
+                        .and_then(|object| object.instance_class)
+                {
+                    return Some(class);
+                }
+            }
+        }
+        None
     }
 
+    #[inline]
     fn entry(&self, id: ObjectId) -> Result<&Entry, RuntimeError> {
-        if id.heap == self.identity
-            && let Some(slot) = self.slots.get(id.index)
+        if self.owner().owns(id)
+            && let Some(slot) = self.slot_ref(id.index)
             && slot.generation == id.generation
             && let Some(entry) = &slot.entry
         {
@@ -952,6 +1668,7 @@ impl Heap {
         ))
     }
 
+    #[inline]
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
@@ -965,13 +1682,48 @@ impl Heap {
         }
     }
 
+    /// Tight inlined lookup for verified hot loops that bail cleanly on `None`.
+    #[inline(always)]
+    pub(crate) fn get_fast(&self, id: ObjectId) -> Option<&Object> {
+        if !self.owner().owns(id) {
+            return None;
+        }
+        let slot = self.slot_ref(id.index)?;
+        if slot.generation != id.generation {
+            return None;
+        }
+        match slot.entry.as_ref()? {
+            Entry::Object(object) => Some(object),
+            _ => None,
+        }
+    }
+
     pub fn get_mut(&mut self, id: ObjectId) -> Result<&mut Object, RuntimeError> {
         self.get(id)?;
         self.structural_keys_dirty = true;
-        self.slots[id.index].edges_valid = false;
-        match self.slots[id.index].entry.as_mut() {
+        let slot = self.slot_mut(id.index);
+        slot.edges_valid = false;
+        match slot.entry.as_mut() {
             Some(Entry::Object(object)) => Ok(object),
             _ => unreachable!("validated object slot"),
+        }
+    }
+}
+
+#[derive(Clone, Copy)]
+struct HeapOwner {
+    identity: u64,
+    base_id: u64,
+    base_len: usize,
+}
+
+impl HeapOwner {
+    #[inline]
+    fn owns(self, id: ObjectId) -> bool {
+        if id.index >= self.base_len {
+            id.heap == self.identity
+        } else {
+            id.heap == self.base_id
         }
     }
 }
@@ -990,59 +1742,67 @@ fn resolve_traced_id(bytes_lists: &BytesListMap, value: &Value) -> Option<Object
     }
 }
 
-fn push_id(identity: u64, out: &mut Vec<ObjectId>, id: ObjectId) {
-    if id.heap == identity {
+#[inline]
+fn push_id(owner: HeapOwner, out: &mut Vec<ObjectId>, id: ObjectId) {
+    if owner.owns(id) {
         out.push(id);
     }
 }
 
-fn push_value(identity: u64, bytes_lists: &BytesListMap, out: &mut Vec<ObjectId>, value: &Value) {
+#[inline]
+fn push_value(
+    owner: HeapOwner,
+    bytes_lists: &BytesListMap,
+    out: &mut Vec<ObjectId>,
+    value: &Value,
+) {
     if let Some(id) = resolve_traced_id(bytes_lists, value)
-        && id.heap == identity
+        && owner.owns(id)
     {
         out.push(id);
     }
 }
 
 fn trace_environment_edges(
-    identity: u64,
+    owner: HeapOwner,
     bytes_lists: &BytesListMap,
     environment: &Environment,
     out: &mut Vec<ObjectId>,
 ) {
     if let Some(slot) = environment.custom_this {
-        push_id(identity, out, slot.0);
+        push_id(owner, out, slot.0);
     }
-    if let Some(owner) = environment.executable_owner {
-        push_id(identity, out, owner.0);
+    if let Some(exec) = environment.executable_owner {
+        push_id(owner, out, exec.0);
     }
-    if let Some(owner) = environment.code_owner {
-        push_id(identity, out, owner.0);
+    if let Some(exec) = environment.code_owner {
+        push_id(owner, out, exec.0);
     }
-    for &(owner, _) in environment.local_owners.values() {
-        push_id(identity, out, owner.0);
+    for &(exec, _) in environment.local_owners.values() {
+        push_id(owner, out, exec.0);
     }
     for scope in &environment.scopes {
-        push_id(identity, out, scope.receiver);
-        push_id(identity, out, scope.owner);
+        push_id(owner, out, scope.receiver);
+        push_id(owner, out, scope.owner);
     }
     for value in &environment.locals {
-        push_value(identity, bytes_lists, out, value);
+        push_value(owner, bytes_lists, out, value);
     }
     if let Some(value) = &environment.this_value {
-        push_value(identity, bytes_lists, out, value);
+        push_value(owner, bytes_lists, out, value);
     }
     if let Some(value) = &environment.outer_value {
-        push_value(identity, bytes_lists, out, value);
+        push_value(owner, bytes_lists, out, value);
     }
 }
 
 fn trace_entry_edges(
-    identity: u64,
+    owner: HeapOwner,
     bytes_lists: &BytesListMap,
     entry: &Entry,
     out: &mut Vec<ObjectId>,
 ) {
+    let identity = owner;
     let object = match entry {
         Entry::Class(class) => {
             push_id(identity, out, class.prototype);
@@ -1068,7 +1828,7 @@ fn trace_entry_edges(
             for &id in state.glob_mappings.values() {
                 push_id(identity, out, id);
             }
-            for cache in state.method_calls.values() {
+            for (_, cache) in &state.method_calls {
                 cache.trace(out);
             }
             return;
@@ -1150,6 +1910,11 @@ fn trace_entry_edges(
     for member in &object.collection_members {
         push_value(identity, bytes_lists, out, &member.key);
     }
+    if let Some(elements) = &object.list_elements {
+        for value in elements {
+            push_value(identity, bytes_lists, out, value);
+        }
+    }
     if let Some(iterator) = &object.iterator {
         push_id(identity, out, iterator.source);
         for member in iterator.members.iter().chain(&iterator.force_members) {
@@ -1228,9 +1993,11 @@ impl Heap {
 
     /// Trace all object edges, including lazy captures and completed values, iteratively.
     /// The caller must include every externally retained handle in `roots`.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub fn collect(&mut self, roots: &[Value]) -> HeapStats {
-        let identity = self.identity;
-        let slot_count = self.slots.len();
+        let owner = self.owner();
+        let base_len = self.base_len;
+        let slot_count = base_len + self.slots.len();
         let mut marked = std::mem::take(&mut self.mark_scratch);
         marked.clear();
         marked.resize(slot_count, false);
@@ -1240,11 +2007,22 @@ impl Heap {
             pending.reserve(slot_count.max(roots.len()) - pending.capacity());
         }
         for value in roots {
-            push_value(identity, &self.bytes_lists, &mut pending, value);
+            push_value(owner, &self.bytes_lists, &mut pending, value);
+        }
+        // Any copy-on-write override on the immutable `pkl:base` prefix may hold
+        // newly attached edges into user slots (`>= base_len`), e.g. cached mirrors.
+        for (ov_idx, ov_slot) in &self.base_overrides {
+            if ov_slot.entry.is_some() {
+                pending.push(ObjectId {
+                    heap: self.base_id,
+                    index: *ov_idx,
+                    generation: ov_slot.generation,
+                });
+            }
         }
         if !self.bytes_lists.is_empty() {
             for (lifetime, id, constant) in self.bytes_lists.values() {
-                if *constant && lifetime.strong_count() != 0 && id.heap == identity {
+                if *constant && lifetime.strong_count() != 0 && owner.owns(*id) {
                     pending.push(*id);
                 }
             }
@@ -1253,47 +2031,109 @@ impl Heap {
         // empty, so Value::Bytes backlink insertions can never make cached edges stale.
         let cache_edges = self.bytes_lists.is_empty();
         while let Some(id) = pending.pop() {
-            if id.heap != identity || id.index >= slot_count || marked[id.index] {
+            if !owner.owns(id) || id.index >= slot_count || marked[id.index] {
                 continue;
             }
-            let slot = &self.slots[id.index];
+            if id.index < base_len {
+                let ov_pos = if let Some(table) = self.base_override_index.as_deref() {
+                    let e = table[id.index];
+                    if e != 0 { Some((e - 1) as usize) } else { None }
+                } else {
+                    self.base_overrides.iter().position(|(i, _)| *i == id.index)
+                };
+                if let Some(pos) = ov_pos {
+                    let slot = &self.base_overrides[pos].1;
+                    if slot.generation != id.generation || slot.entry.is_none() {
+                        continue;
+                    }
+                    marked[id.index] = true;
+                    if cache_edges {
+                        if !self.base_overrides[pos].1.edges_valid {
+                            let mut edges = std::mem::take(&mut self.base_overrides[pos].1.edges);
+                            edges.clear();
+                            trace_entry_edges(
+                                owner,
+                                &self.bytes_lists,
+                                self.base_overrides[pos]
+                                    .1
+                                    .entry
+                                    .as_ref()
+                                    .expect("live entry"),
+                                &mut edges,
+                            );
+                            if edges.len() > 1 {
+                                edges.sort_unstable_by_key(|edge| (edge.index, edge.generation));
+                                edges.dedup();
+                            }
+                            self.base_overrides[pos].1.edges = edges;
+                            self.base_overrides[pos].1.edges_valid = true;
+                        }
+                        for &edge in &self.base_overrides[pos].1.edges {
+                            if edge.index < slot_count && !marked[edge.index] {
+                                pending.push(edge);
+                            }
+                        }
+                    } else {
+                        trace_entry_edges(
+                            owner,
+                            &self.bytes_lists,
+                            self.base_overrides[pos]
+                                .1
+                                .entry
+                                .as_ref()
+                                .expect("live entry"),
+                            &mut pending,
+                        );
+                    }
+                } else if let Some(base) = self.base_slots.as_deref()
+                    && base[id.index].generation == id.generation
+                    && base[id.index].entry.is_some()
+                {
+                    // Unmodified `base_slots` entries only reference `< base_len`.
+                    marked[id.index] = true;
+                }
+                continue;
+            }
+            let local = id.index - base_len;
+            let slot = &self.slots[local];
             if slot.generation != id.generation || slot.entry.is_none() {
                 continue;
             }
             marked[id.index] = true;
             if cache_edges {
-                if !self.slots[id.index].edges_valid {
-                    let mut edges = std::mem::take(&mut self.slots[id.index].edges);
+                if !self.slots[local].edges_valid {
+                    let mut edges = std::mem::take(&mut self.slots[local].edges);
                     edges.clear();
                     trace_entry_edges(
-                        identity,
+                        owner,
                         &self.bytes_lists,
-                        self.slots[id.index].entry.as_ref().expect("live entry"),
+                        self.slots[local].entry.as_ref().expect("live entry"),
                         &mut edges,
                     );
                     if edges.len() > 1 {
                         edges.sort_unstable_by_key(|edge| (edge.index, edge.generation));
                         edges.dedup();
                     }
-                    self.slots[id.index].edges = edges;
-                    self.slots[id.index].edges_valid = true;
+                    self.slots[local].edges = edges;
+                    self.slots[local].edges_valid = true;
                 }
-                for &edge in &self.slots[id.index].edges {
+                for &edge in &self.slots[local].edges {
                     if edge.index < slot_count && !marked[edge.index] {
                         pending.push(edge);
                     }
                 }
             } else {
                 trace_entry_edges(
-                    identity,
+                    owner,
                     &self.bytes_lists,
-                    self.slots[id.index].entry.as_ref().expect("live entry"),
+                    self.slots[local].entry.as_ref().expect("live entry"),
                     &mut pending,
                 );
             }
         }
         let mut reclaimed_this_pass = 0usize;
-        for (index, slot) in self.slots.iter_mut().enumerate() {
+        for (local, slot) in self.slots.iter_mut().enumerate() {
+            let index = base_len + local;
             if !marked[index]
                 && let Some(entry) = slot.entry.take()
             {
@@ -1310,14 +2150,39 @@ impl Heap {
                 }
             }
         }
+        let slot_live_object = |base_slots: Option<&[Slot]>,
+                                base_overrides: &[(usize, Slot)],
+                                base_override_index: Option<&[u32]>,
+                                slots: &[Slot],
+                                id: ObjectId|
+         -> bool {
+            if !owner.owns(id) {
+                return false;
+            }
+            let slot = if id.index >= base_len {
+                slots.get(id.index - base_len)
+            } else if let Some(table) = base_override_index {
+                let e = table[id.index];
+                if e != 0 {
+                    Some(&base_overrides[(e - 1) as usize].1)
+                } else {
+                    base_slots.and_then(|b| b.get(id.index))
+                }
+            } else if let Some((_, ov)) = base_overrides.iter().find(|(i, _)| *i == id.index) {
+                Some(ov)
+            } else {
+                base_slots.and_then(|b| b.get(id.index))
+            };
+            slot.is_some_and(|s| s.generation == id.generation && s.object().is_some())
+        };
         if !self.bytes_lists.is_empty() {
+            let base_slots = self.base_slots.as_deref();
+            let base_overrides = &self.base_overrides;
+            let base_override_index = self.base_override_index.as_deref();
             let slots = &self.slots;
             self.bytes_lists.retain(|_, (lifetime, id, _)| {
                 lifetime.strong_count() != 0
-                    && id.heap == identity
-                    && slots.get(id.index).is_some_and(|slot| {
-                        slot.generation == id.generation && slot.object().is_some()
-                    })
+                    && slot_live_object(base_slots, base_overrides, base_override_index, slots, *id)
             });
         }
         if self.key_equalities.is_empty() {
@@ -1325,16 +2190,13 @@ impl Heap {
         } else if reclaimed_this_pass > 0
             || self.key_equalities.len() != self.last_retained_key_equalities_len
         {
+            let base_slots = self.base_slots.as_deref();
+            let base_overrides = &self.base_overrides;
+            let base_override_index = self.base_override_index.as_deref();
             let slots = &self.slots;
             self.key_equalities.retain(|(a, b)| {
-                a.heap == identity
-                    && b.heap == identity
-                    && slots.get(a.index).is_some_and(|slot| {
-                        slot.generation == a.generation && slot.object().is_some()
-                    })
-                    && slots.get(b.index).is_some_and(|slot| {
-                        slot.generation == b.generation && slot.object().is_some()
-                    })
+                slot_live_object(base_slots, base_overrides, base_override_index, slots, *a)
+                    && slot_live_object(base_slots, base_overrides, base_override_index, slots, *b)
             });
             self.last_retained_key_equalities_len = self.key_equalities.len();
         }
@@ -1357,6 +2219,20 @@ impl Heap {
                 .iter()
                 .filter_map(|slot| slot.object().and_then(|o| o.structural_key))
                 .collect();
+            for (_, ov_slot) in &self.base_overrides {
+                if let Some(key) = ov_slot.object().and_then(|o| o.structural_key) {
+                    key_pending.push(key);
+                }
+            }
+            if self.base_has_structural_keys
+                && let Some(base) = self.base_slots.as_deref()
+            {
+                for slot in base {
+                    if let Some(key) = slot.object().and_then(|o| o.structural_key) {
+                        key_pending.push(key);
+                    }
+                }
+            }
             let mut retained = std::collections::BTreeSet::new();
             while let Some(id) = key_pending.pop() {
                 if retained.insert(id)
@@ -1372,6 +2248,8 @@ impl Heap {
         self.mark_scratch = marked;
         self.pending_scratch = pending;
         self.stats.collections += 1;
+        self.allocations_since_gc = 0;
+        self.external_bytes_since_gc = 0;
         self.stats
     }
 
@@ -1386,6 +2264,14 @@ impl Heap {
         self.stats.executable_live = 0;
         self.stats.slots = 0;
         self.stats.collections += 1;
+        self.allocations_since_gc = 0;
+        self.external_bytes_since_gc = 0;
+        self.base_slots = None;
+        self.base_len = 0;
+        self.base_id = 0;
+        self.base_has_structural_keys = false;
+        self.base_overrides = Vec::new();
+        self.base_override_index = None;
         self.slots = Vec::new();
         self.free = Vec::new();
         self.mark_scratch = Vec::new();

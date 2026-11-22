@@ -82,6 +82,7 @@ pub(super) fn method_arity(name: &str) -> Option<usize> {
         _ => return None,
     })
 }
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -277,6 +278,10 @@ impl Run {
     }
 }
 fn values(vm: &Vm, id: ObjectId) -> Result<Vec<Value>, RuntimeError> {
+    let object = vm.heap.get(id)?;
+    if let Some(elems) = &object.list_elements {
+        return Ok(elems.clone());
+    }
     collections::ordered_members(&vm.heap, id)?
         .iter()
         .map(|m| {
@@ -407,6 +412,12 @@ impl Vm {
                         return Err(RuntimeError::new(ErrorKind::Arithmetic,PklString::join(&[format!("Element index `{}` is out of range `0`..`{}`.\nCollection: ",strings::diagnostic_integer(n),strings::diagnostic_integer(len)).into(),crate::diagnostic_values::render_string(&receiver,&self.heap,&self.program.module_name,80)?],"")));
                     }
                     split = n as usize;
+                    if collection_kind == CollectionKind::List {
+                        let left = self.build_strict_list(input[..split].to_vec());
+                        let right = self.build_strict_list(input[split..].to_vec());
+                        let pair = self.make_pair(Value::Object(left), Value::Object(right));
+                        return self.set_sequence_return(step, pair);
+                    }
                     selection = input.clone();
                     stage = Stage::Emit;
                 } else if matches!(kind, Repeat) {
@@ -462,6 +473,10 @@ impl Vm {
                         DropLast => input[..input.len() - n].to_vec(),
                         _ => unreachable!(),
                     };
+                    if collection_kind == CollectionKind::List {
+                        let built = self.build_strict_list(selection);
+                        return self.set_sequence_return(step, Value::Object(built));
+                    }
                     stage = Stage::Emit;
                 }
             }
@@ -612,6 +627,7 @@ impl Vm {
                             self.heap.allocate(Object {
                                 collection_kind: CollectionKind::List,
                                 length: source.length,
+                                list_elements: source.list_elements.clone(),
                                 members: source.members.clone(),
                                 collection_members: source.collection_members.clone(),
                                 member_values: source.member_values.clone(),

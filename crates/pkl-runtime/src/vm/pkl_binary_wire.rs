@@ -15,6 +15,12 @@ pub(super) struct BinaryWire {
 }
 
 impl BinaryWire {
+    pub(super) fn with_capacity(cap: usize) -> Self {
+        Self {
+            bytes: Vec::with_capacity(cap),
+        }
+    }
+
     fn put(&mut self, bytes: &[u8]) -> Result<(), WireError> {
         self.bytes
             .try_reserve(bytes.len())
@@ -107,10 +113,7 @@ impl BinaryWire {
         }
     }
 
-    pub(super) fn string(&mut self, value: &PklString) -> Result<(), WireError> {
-        // Java UTF-8 replacement and MessagePack string behavior require actual
-        // oracle verification, including isolated UTF-16 surrogate controls.
-        let value = value.to_java_utf8();
+    pub(super) fn str_bytes(&mut self, value: &str) -> Result<(), WireError> {
         let bytes = value.as_bytes();
         let length = Self::len32(bytes.len())?;
         if length <= 31 {
@@ -125,6 +128,16 @@ impl BinaryWire {
             self.put(&length.to_be_bytes())?;
         }
         self.put(bytes)
+    }
+
+    pub(super) fn string(&mut self, value: &PklString) -> Result<(), WireError> {
+        // Java UTF-8 replacement and MessagePack string behavior require actual
+        // oracle verification, including isolated UTF-16 surrogate controls.
+        if let Some(s) = value.as_str() {
+            return self.str_bytes(s);
+        }
+        let owned = value.to_java_utf8();
+        self.str_bytes(&owned)
     }
 
     pub(super) fn binary(&mut self, bytes: &[u8]) -> Result<(), WireError> {

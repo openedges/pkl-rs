@@ -5,19 +5,41 @@
 //! This representation never rewrites a token, quotes source, or substitutes a
 //! private-use character. Rendering uses the retained original code units.
 use std::ops::{Bound, RangeBounds};
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 use crate::value::PklString;
 
 use super::{Position, Span};
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+const INDEX_CACHE_THRESHOLD_BYTES: usize = 256;
+
+#[derive(Clone)]
 pub struct SourceText {
     original: PklString,
     // None keeps the existing scalar UTF-8 representation without a second
     // encoding/allocation. Some is canonical WTF-8, derived only from UTF-16.
     wtf8: Option<Arc<[u8]>>,
+    // Lazily cached compact line index for non-trivial source files.
+    // Never stores a back-reference to this cache, so there is no Arc cycle.
+    index_cache: Option<Arc<OnceLock<SourceTextIndex>>>,
 }
+
+impl std::fmt::Debug for SourceText {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("SourceText")
+            .field("original", &self.original)
+            .field("wtf8", &self.wtf8)
+            .finish()
+    }
+}
+
+impl PartialEq for SourceText {
+    fn eq(&self, other: &Self) -> bool {
+        self.original == other.original && self.wtf8 == other.wtf8
+    }
+}
+
+impl Eq for SourceText {}
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum SourceCharacter {
@@ -73,7 +95,7 @@ impl From<&PklString> for SourceText {
 
 impl From<PklString> for SourceText {
     fn from(original: PklString) -> Self {
-        let wtf8 = if original.as_str().is_some() {
+        let wtf8: Option<Arc<[u8]>> = if original.as_str().is_some() {
             None
         } else {
             let mut bytes = Vec::new();
@@ -95,7 +117,17 @@ impl From<PklString> for SourceText {
             }
             Some(bytes.into())
         };
-        Self { original, wtf8 }
+        let len_bytes = match &wtf8 {
+            Some(bytes) => bytes.len(),
+            None => original.as_str().expect("scalar source invariant").len(),
+        };
+        let index_cache =
+            (len_bytes >= INDEX_CACHE_THRESHOLD_BYTES).then(|| Arc::new(OnceLock::new()));
+        Self {
+            original,
+            wtf8,
+            index_cache,
+        }
     }
 }
 
@@ -187,9 +219,15 @@ impl SourceText {
     }
 
     pub fn find(&self, pattern: &str) -> Option<usize> {
+        if let Some(text) = self.as_str() {
+            return text.find(pattern);
+        }
         self.entire().find(pattern)
     }
     pub fn rfind(&self, pattern: &str) -> Option<usize> {
+        if let Some(text) = self.as_str() {
+            return text.rfind(pattern);
+        }
         self.entire().rfind(pattern)
     }
 
@@ -206,31 +244,61 @@ impl SourceText {
     }
 
     pub fn index(&self) -> SourceTextIndex {
-        let mut position = Position {
+        if let Some(cache) = &self.index_cache {
+            return cache.get_or_init(|| self.build_index()).clone();
+        }
+        self.build_index()
+    }
+
+    fn build_index(&self) -> SourceTextIndex {
+        let bytes = self.as_bytes();
+        let mut lines = Vec::with_capacity((bytes.len() / 48).max(4));
+        lines.push(LineEntry {
             byte: 0,
             utf16: 0,
             codepoint: 0,
-            line: 1,
-            column_utf16: 1,
-        };
-        let mut positions = vec![position];
-        for (_, character) in self.characters() {
-            position.byte += character.len_bytes();
-            position.utf16 += character.len_utf16();
-            position.codepoint += 1;
-            if character == SourceCharacter::Scalar('\n')
-                || (character == SourceCharacter::Scalar('\r')
-                    && self.as_bytes().get(position.byte) != Some(&b'\n'))
-            {
-                position.line += 1;
-                position.column_utf16 = 1;
+            ascii: true,
+        });
+        let mut i = 0;
+        let mut utf16 = 0usize;
+        let mut codepoint = 0usize;
+        let mut line_ascii = true;
+        while i < bytes.len() {
+            let b = bytes[i];
+            if b < 0x80 {
+                i += 1;
+                utf16 += 1;
+                codepoint += 1;
+                if b == b'\n' || (b == b'\r' && bytes.get(i) != Some(&b'\n')) {
+                    lines.last_mut().unwrap().ascii = line_ascii;
+                    line_ascii = true;
+                    lines.push(LineEntry {
+                        byte: i,
+                        utf16,
+                        codepoint,
+                        ascii: true,
+                    });
+                }
             } else {
-                position.column_utf16 += character.len_utf16();
+                line_ascii = false;
+                let count = if b < 0xe0 {
+                    2
+                } else if b < 0xf0 {
+                    3
+                } else {
+                    4
+                };
+                i += count;
+                utf16 += if count == 4 { 2 } else { 1 };
+                codepoint += 1;
             }
-            positions.push(position);
         }
+        lines.last_mut().unwrap().ascii = line_ascii;
         SourceTextIndex {
-            positions: positions.into(),
+            original: self.original.clone(),
+            wtf8: self.wtf8.clone(),
+            lines: lines.into(),
+            total_utf16: utf16,
         }
     }
 
@@ -340,21 +408,55 @@ impl<'a> SourceSlice<'a> {
     }
 
     pub fn find(self, pattern: &str) -> Option<usize> {
-        if pattern.is_empty() {
+        let needle = pattern.as_bytes();
+        let nlen = needle.len();
+        if nlen == 0 {
             return Some(0);
         }
-        self.bytes
-            .windows(pattern.len())
-            .position(|bytes| bytes == pattern.as_bytes())
+        let haystack = self.bytes;
+        if nlen > haystack.len() {
+            return None;
+        }
+        let first = needle[0];
+        if nlen == 1 {
+            return haystack.iter().position(|&b| b == first);
+        }
+        let last_start = haystack.len() - nlen;
+        let mut i = 0;
+        while i <= last_start {
+            let offset = haystack[i..=last_start].iter().position(|&b| b == first)?;
+            let pos = i + offset;
+            if &haystack[pos..pos + nlen] == needle {
+                return Some(pos);
+            }
+            i = pos + 1;
+        }
+        None
     }
 
     pub(crate) fn rfind(self, pattern: &str) -> Option<usize> {
-        if pattern.is_empty() {
+        let needle = pattern.as_bytes();
+        let nlen = needle.len();
+        if nlen == 0 {
             return Some(self.len_bytes());
         }
-        self.bytes
-            .windows(pattern.len())
-            .rposition(|bytes| bytes == pattern.as_bytes())
+        let haystack = self.bytes;
+        if nlen > haystack.len() {
+            return None;
+        }
+        let first = needle[0];
+        if nlen == 1 {
+            return haystack.iter().rposition(|&b| b == first);
+        }
+        let mut end = haystack.len() - nlen + 1;
+        while end > 0 {
+            let pos = haystack[..end].iter().rposition(|&b| b == first)?;
+            if &haystack[pos..pos + nlen] == needle {
+                return Some(pos);
+            }
+            end = pos;
+        }
+        None
     }
 
     pub(crate) fn split_once(self, pattern: &str) -> Option<(Self, Self)> {
@@ -534,30 +636,149 @@ impl DoubleEndedIterator for SourceCharacters<'_> {
 
 impl std::iter::FusedIterator for SourceCharacters<'_> {}
 
+#[derive(Clone, Copy, Debug)]
+struct LineEntry {
+    byte: usize,
+    utf16: usize,
+    codepoint: usize,
+    ascii: bool,
+}
+
 #[derive(Clone, Debug)]
 pub struct SourceTextIndex {
-    positions: Arc<[Position]>,
+    original: PklString,
+    wtf8: Option<Arc<[u8]>>,
+    lines: Arc<[LineEntry]>,
+    total_utf16: usize,
 }
 
 impl SourceTextIndex {
+    fn as_bytes(&self) -> &[u8] {
+        match &self.wtf8 {
+            Some(bytes) => bytes,
+            None => self
+                .original
+                .as_str()
+                .expect("scalar source invariant")
+                .as_bytes(),
+        }
+    }
+
     pub fn position(&self, byte: usize) -> Option<Position> {
-        self.positions
-            .binary_search_by_key(&byte, |position| position.byte)
-            .ok()
-            .map(|index| self.positions[index])
+        let bytes = self.as_bytes();
+        if byte > bytes.len() || !(SourceSlice { bytes }).is_boundary(byte) {
+            return None;
+        }
+        let line_idx = self.lines.partition_point(|entry| entry.byte <= byte) - 1;
+        let entry = self.lines[line_idx];
+        if entry.ascii {
+            let delta = byte - entry.byte;
+            return Some(Position {
+                byte,
+                utf16: entry.utf16 + delta,
+                codepoint: entry.codepoint + delta,
+                line: line_idx + 1,
+                column_utf16: 1 + delta,
+            });
+        }
+        let mut i = entry.byte;
+        let mut utf16 = entry.utf16;
+        let mut codepoint = entry.codepoint;
+        let mut column_utf16 = 1usize;
+        while i < byte {
+            let b = bytes[i];
+            let (count, u16_len) = if b < 0x80 {
+                (1, 1)
+            } else if b < 0xe0 {
+                (2, 1)
+            } else if b < 0xf0 {
+                (3, 1)
+            } else {
+                (4, 2)
+            };
+            i += count;
+            utf16 += u16_len;
+            codepoint += 1;
+            column_utf16 += u16_len;
+        }
+        Some(Position {
+            byte,
+            utf16,
+            codepoint,
+            line: line_idx + 1,
+            column_utf16,
+        })
     }
 
     pub fn byte_from_utf16(&self, utf16: usize) -> Option<usize> {
-        self.positions
-            .binary_search_by_key(&utf16, |position| position.utf16)
-            .ok()
-            .map(|index| self.positions[index].byte)
+        if utf16 > self.total_utf16 {
+            return None;
+        }
+        let line_idx = self.lines.partition_point(|entry| entry.utf16 <= utf16) - 1;
+        let entry = self.lines[line_idx];
+        if entry.ascii {
+            return Some(entry.byte + (utf16 - entry.utf16));
+        }
+        let bytes = self.as_bytes();
+        let line_end = self
+            .lines
+            .get(line_idx + 1)
+            .map_or(bytes.len(), |next| next.byte);
+        let mut i = entry.byte;
+        let mut cur_utf16 = entry.utf16;
+        while i < line_end {
+            if cur_utf16 == utf16 {
+                return Some(i);
+            }
+            if cur_utf16 > utf16 {
+                return None;
+            }
+            let b = bytes[i];
+            let (count, u16_len) = if b < 0x80 {
+                (1, 1)
+            } else if b < 0xe0 {
+                (2, 1)
+            } else if b < 0xf0 {
+                (3, 1)
+            } else {
+                (4, 2)
+            };
+            i += count;
+            cur_utf16 += u16_len;
+        }
+        (cur_utf16 == utf16).then_some(i)
     }
 
     pub fn utf16_span(&self, span: Span) -> Option<(usize, usize)> {
         let start = self.position(span.start)?.utf16;
         let end = self.position(span.end)?.utf16;
         end.checked_sub(start).map(|length| (start, length))
+    }
+
+    /// Exact 1-based line contents, excluding CR, LF, or CRLF terminators.
+    pub fn line_slice(&self, line_1based: usize) -> Option<SourceSlice<'_>> {
+        let idx = line_1based.checked_sub(1)?;
+        let start = self.lines.get(idx)?.byte;
+        let bytes = self.as_bytes();
+        let end = if let Some(next) = self.lines.get(idx + 1) {
+            let next_byte = next.byte;
+            if next_byte > start && bytes[next_byte - 1] == b'\n' {
+                if next_byte >= start + 2 && bytes[next_byte - 2] == b'\r' {
+                    next_byte - 2
+                } else {
+                    next_byte - 1
+                }
+            } else if next_byte > start && bytes[next_byte - 1] == b'\r' {
+                next_byte - 1
+            } else {
+                next_byte
+            }
+        } else {
+            bytes.len()
+        };
+        Some(SourceSlice {
+            bytes: &bytes[start..end],
+        })
     }
 }
 

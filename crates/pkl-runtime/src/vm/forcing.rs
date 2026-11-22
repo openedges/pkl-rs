@@ -157,65 +157,21 @@ impl Vm {
             .ok_or_else(|| invalid("force outside frame"))?
             .environment
             .clone();
-        self.frames.push(Frame {
-            guest_catch: None,
-            block: usize::MAX,
-            pc: 0,
-            base: self.stack.len(),
-            environment,
-            force: None,
-            lambda: false,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: None,
-            amendment_arguments: None,
-            amendment_end: None,
-            warning: None,
-            method_call_site: None,
-            deep_force: Some(ForceRun {
-                pending_render_key: None,
-                pending_render_comparison: None,
-                root: root.clone(),
-                allow_undefined: false,
-                recurse,
-                finish: FinishAction::ReturnValue,
-                renderer: None,
-                tasks: vec![Task::Value(root)],
-                active: Vec::new(),
-                incomplete: BTreeSet::new(),
-                awaiting: None,
-            }),
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: false,
-            diagnostic_member: None,
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: None,
+        let mut frame = self.alloc_frame(usize::MAX, 0, self.stack.len(), environment);
+        frame.deep_force = Some(ForceRun {
+            pending_render_key: None,
+            pending_render_comparison: None,
+            root: root.clone(),
+            allow_undefined: false,
+            recurse,
+            finish: FinishAction::ReturnValue,
+            renderer: None,
+            tasks: vec![Task::Value(root)],
+            active: Vec::new(),
+            incomplete: BTreeSet::new(),
+            awaiting: None,
         });
+        self.frames.push(frame);
         Ok(())
     }
     pub(super) fn step_deep_force(&mut self) -> Result<(), RuntimeError> {
@@ -327,22 +283,28 @@ impl Vm {
                         kind,
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
-                        for member in collections::ordered_members(&self.heap, id)?
-                            .into_iter()
-                            .rev()
-                        {
-                            let key = CacheKey {
-                                entry: true,
-                                owner: None,
-                                name: member.name,
-                                method: false,
-                            };
-                            let value = self
-                                .cached_slot(id, &key)?
-                                .ok_or_else(|| invalid("strict collection value is not cached"))?;
-                            run.tasks.push(Task::Value(value));
-                            if kind == CollectionKind::Map {
-                                run.tasks.push(Task::Value(member.key));
+                        if let Some(elems) = &self.heap.get(id)?.list_elements {
+                            for value in elems.iter().rev().cloned() {
+                                run.tasks.push(Task::Value(value));
+                            }
+                        } else {
+                            for member in collections::ordered_members(&self.heap, id)?
+                                .into_iter()
+                                .rev()
+                            {
+                                let key = CacheKey {
+                                    entry: true,
+                                    owner: None,
+                                    name: member.name,
+                                    method: false,
+                                };
+                                let value = self.cached_slot(id, &key)?.ok_or_else(|| {
+                                    invalid("strict collection value is not cached")
+                                })?;
+                                run.tasks.push(Task::Value(value));
+                                if kind == CollectionKind::Map {
+                                    run.tasks.push(Task::Value(member.key));
+                                }
                             }
                         }
                     } else {

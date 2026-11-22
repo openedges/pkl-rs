@@ -2,6 +2,7 @@
 use super::*;
 use crate::diagnostic::{PowerAssertionValue, TypeDiagnostic};
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn repeat_block(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

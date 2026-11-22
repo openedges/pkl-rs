@@ -220,7 +220,7 @@ impl Vm {
                 // Upstream RendererNodes.resolveType calls getVmTypeAlias().getTypeNode(),
                 // normalizing the unparameterized alias body where TypeVariableNode leaves
                 // unbound type parameters as Unknown (getVmClass() == null).
-                if let Some(metadata) = self.program.alias_definitions.get(declaration).cloned()
+                if let Some(metadata) = self.program.alias_definition(*declaration).cloned()
                     && !metadata.parameters.is_empty()
                 {
                     let mut lexical = self

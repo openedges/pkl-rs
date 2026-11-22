@@ -50,6 +50,7 @@ enum ActiveOperation {
 pub struct WasmEvaluator {
     core: WasmHostCore,
     session: SourceSession,
+    columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer,
     active: Option<ActiveOperation>,
     active_timeout_ms: Option<u64>,
     pending_suspend: Option<WasmSuspendRequest>,
@@ -78,14 +79,27 @@ impl WasmEvaluator {
         };
         let use_color = config.use_color;
         let platform_metadata = config.platform_metadata.clone();
+        let pure_standard_host = config.allowed_modules.is_none()
+            && config.allowed_resources.is_none()
+            && config.root_dir.is_none()
+            && !config.has_custom_logger
+            && !config.has_custom_frame_transformer
+            && !config.has_custom_security_check_import
+            && !config.has_custom_security_check_read
+            && !config.has_custom_security_check_resolve
+            && config.custom_module_readers.is_empty()
+            && config.custom_resource_readers.is_empty();
         let core = WasmHostCore::new(config)?;
-        let mut session = SourceSession::module_evaluator(session_opts).with_color(use_color);
+        let mut session = SourceSession::module_evaluator(session_opts)
+            .with_color(use_color)
+            .with_pure_standard_host(pure_standard_host);
         if let Some(meta) = platform_metadata {
             session.set_platform_metadata(Some(meta));
         }
         Ok(Self {
             core,
             session,
+            columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer::new(),
             active: None,
             active_timeout_ms: None,
             pending_suspend: None,
@@ -619,11 +633,55 @@ impl WasmEvaluator {
         if !self.closed {
             self.closed = true;
             self.core.close();
+            self.columnar_buf.clear_and_release();
             self.pending_suspend = None;
             self.pending_capability_error = None;
             self.active = None;
             self.session.close();
         }
+    }
+
+    #[wasm_bindgen(js_name = tryEvaluateExpressionColumnarFast)]
+    pub fn try_evaluate_expression_columnar_fast(
+        &mut self,
+        uri: &str,
+        has_contents: bool,
+        expression: &str,
+    ) -> u32 {
+        if self.closed
+            || self.active.is_some()
+            || self.pending_suspend.is_some()
+            || self.pending_capability_error.is_some()
+            || self.force_suspend_logs
+            || (has_contents && uri == "repl:text")
+        {
+            return 0;
+        }
+        let uri_pkl = PklString::from(uri);
+        if self.session.try_pack_warm_expression_columnar(
+            &uri_pkl,
+            expression,
+            &mut self.columnar_buf,
+        ) {
+            1
+        } else {
+            0
+        }
+    }
+
+    #[wasm_bindgen(js_name = fastColumnarPtr)]
+    pub fn fast_columnar_ptr(&self) -> usize {
+        self.columnar_buf.as_ptr_usize()
+    }
+
+    #[wasm_bindgen(js_name = fastColumnarLen)]
+    pub fn fast_columnar_len(&self) -> usize {
+        self.columnar_buf.byte_len()
+    }
+
+    #[wasm_bindgen(js_name = releaseOversizedColumnar)]
+    pub fn release_oversized_columnar(&mut self) {
+        self.columnar_buf.shrink_if_oversized();
     }
 
     #[wasm_bindgen(js_name = drainCancelledOperations)]
@@ -671,6 +729,7 @@ impl WasmEvaluator {
         let now_ms = parse_u64_js(&now)?;
         let timeout = parse_opt_u64_js(&timeout_ms)?;
         self.core.reset_call_flags();
+        self.core.staged_sources.clear();
         self.active_timeout_ms = timeout;
         self.pending_suspend = None;
         self.pending_capability_error = None;

@@ -332,6 +332,27 @@ pub(crate) fn stdlib_kind(uri: &PklString) -> Option<StdlibKind> {
     if !uri.starts_with("pkl:") {
         return None;
     }
+    if let Some(s) = uri.as_str() {
+        match s {
+            "pkl:analyze" => return Some(StdlibKind::Singleton("pkl:analyze")),
+            "pkl:base" => return Some(StdlibKind::Singleton("pkl:base")),
+            "pkl:Benchmark" => return Some(StdlibKind::Singleton("pkl:Benchmark")),
+            "pkl:Command" => return Some(StdlibKind::Singleton("pkl:Command")),
+            "pkl:jsonnet" => return Some(StdlibKind::Singleton("pkl:jsonnet")),
+            "pkl:math" => return Some(StdlibKind::Singleton("pkl:math")),
+            "pkl:pklbinary" => return Some(StdlibKind::Singleton("pkl:pklbinary")),
+            "pkl:platform" => return Some(StdlibKind::Singleton("pkl:platform")),
+            "pkl:project" => return Some(StdlibKind::Singleton("pkl:project")),
+            "pkl:ref" => return Some(StdlibKind::Singleton("pkl:ref")),
+            "pkl:reflect" => return Some(StdlibKind::Singleton("pkl:reflect")),
+            "pkl:release" => return Some(StdlibKind::Singleton("pkl:release")),
+            "pkl:semver" => return Some(StdlibKind::Singleton("pkl:semver")),
+            "pkl:settings" => return Some(StdlibKind::Singleton("pkl:settings")),
+            "pkl:test" => return Some(StdlibKind::Singleton("pkl:test")),
+            "pkl:xml" => return Some(StdlibKind::Singleton("pkl:xml")),
+            _ => {}
+        }
+    }
     let name = crate::host::resources::decoded_scheme_specific_part(uri);
     let canonical = [
         "pkl:analyze",

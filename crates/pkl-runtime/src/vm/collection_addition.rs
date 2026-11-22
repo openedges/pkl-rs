@@ -58,12 +58,24 @@ impl Vm {
             self.stack.push(Value::Object(*left));
             return Ok(true);
         }
+        if kind == CollectionKind::List
+            && let Some(left_elems) = &source.list_elements
+            && let Some(right_elems) = &self.heap.get(*right)?.list_elements
+        {
+            let mut combined = Vec::with_capacity(left_elems.len() + right_elems.len());
+            combined.extend_from_slice(left_elems);
+            combined.extend_from_slice(right_elems);
+            let built = self.build_strict_list(combined);
+            self.stack.push(Value::Object(built));
+            return Ok(true);
+        }
         // Copy persistent strict storage, not the producer's environment,
         // executable owner, generic cast, default, or structural/hash caches.
         // Rebuilding the left prefix would rehash keys that Java does not visit.
         let builder = self.heap.allocate(Object {
             collection_kind: kind,
             length: source.length,
+            list_elements: source.list_elements.clone(),
             members: source.members.clone(),
             collection_members: source.collection_members.clone(),
             member_values: source.member_values.clone(),

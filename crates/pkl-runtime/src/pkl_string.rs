@@ -9,8 +9,13 @@ use std::{cmp::Ordering, fmt, sync::Arc};
 pub struct PklString(Repr, crate::value_identity::Token);
 
 impl PartialEq for PklString {
+    #[inline(always)]
     fn eq(&self, other: &Self) -> bool {
-        self.0 == other.0
+        match (&self.0, &other.0) {
+            (Repr::Utf8(a), Repr::Utf8(b)) => Arc::ptr_eq(a, b) || a.as_bytes() == b.as_bytes(),
+            (Repr::Utf16(a), Repr::Utf16(b)) => Arc::ptr_eq(a, b) || a.as_ref() == b.as_ref(),
+            _ => false,
+        }
     }
 }
 impl Eq for PklString {}
@@ -227,6 +232,32 @@ impl PklString {
     }
 
     pub fn concat(&self, other: &Self) -> Self {
+        if let (Repr::Utf8(a), Repr::Utf8(b)) = (&self.0, &other.0) {
+            if a.is_empty() {
+                return Self(
+                    Repr::Utf8(Arc::clone(b)),
+                    crate::value_identity::Token::fresh(),
+                );
+            }
+            if b.is_empty() {
+                return Self(
+                    Repr::Utf8(Arc::clone(a)),
+                    crate::value_identity::Token::fresh(),
+                );
+            }
+            let total = a.len() + b.len();
+            if total <= 256 {
+                let mut buf = [0u8; 256];
+                buf[..a.len()].copy_from_slice(a.as_bytes());
+                buf[a.len()..total].copy_from_slice(b.as_bytes());
+                let s = std::str::from_utf8(&buf[..total]).expect("valid UTF-8 concat");
+                return Self::from(s);
+            }
+            let mut out = String::with_capacity(total);
+            out.push_str(a);
+            out.push_str(b);
+            return Self::from(out);
+        }
         let mut builder = PklStringBuilder::default();
         builder.push_value(self);
         builder.push_value(other);
@@ -259,7 +290,7 @@ impl PklString {
     /// ASCII `?`. Call only when leaving the lossless language-value boundary.
     pub fn to_java_utf8(&self) -> String {
         match &self.0 {
-            Repr::Utf8(text) => text.to_string(),
+            Repr::Utf8(text) => (**text).to_owned(),
             Repr::Utf16(units) => char::decode_utf16(units.iter().copied())
                 .map(|unit| unit.unwrap_or('?'))
                 .collect(),
@@ -316,7 +347,33 @@ impl From<Arc<str>> for PklString {
 }
 
 impl Ord for PklString {
+    #[inline]
     fn cmp(&self, other: &Self) -> Ordering {
+        if let (Repr::Utf8(a), Repr::Utf8(b)) = (&self.0, &other.0) {
+            let ab = a.as_bytes();
+            let bb = b.as_bytes();
+            if std::ptr::eq(ab.as_ptr(), bb.as_ptr()) && ab.len() == bb.len() {
+                return Ordering::Equal;
+            }
+            let min_len = ab.len().min(bb.len());
+            let mut i = 0;
+            while i + 8 <= min_len && ab[i..i + 8] == bb[i..i + 8] {
+                i += 8;
+            }
+            while i < min_len && ab[i] == bb[i] {
+                i += 1;
+            }
+            if i == min_len {
+                return ab.len().cmp(&bb.len());
+            }
+            if ab[i] < 0x80 && bb[i] < 0x80 {
+                return ab[i].cmp(&bb[i]);
+            }
+            while i > 0 && (ab[i] & 0xc0) == 0x80 {
+                i -= 1;
+            }
+            return a[i..].encode_utf16().cmp(b[i..].encode_utf16());
+        }
         self.encode_utf16().cmp(other.encode_utf16())
     }
 }
@@ -434,31 +491,51 @@ impl fmt::Write for PklStringBuilder {
 }
 
 impl PartialEq<str> for PklString {
+    #[inline]
     fn eq(&self, other: &str) -> bool {
-        self.encode_utf16().eq(other.encode_utf16())
+        // Canonical invariant: `Repr::Utf16` always contains at least one
+        // unmatched surrogate, whereas a valid Rust `&str` never does.
+        match &self.0 {
+            Repr::Utf8(text) => text.as_bytes() == other.as_bytes(),
+            Repr::Utf16(_) => false,
+        }
     }
 }
 impl PartialEq<&str> for PklString {
+    #[inline]
     fn eq(&self, other: &&str) -> bool {
         self == *other
     }
 }
 impl PartialEq<String> for PklString {
+    #[inline]
     fn eq(&self, other: &String) -> bool {
         self == other.as_str()
     }
 }
 impl PklString {
+    #[inline]
     pub fn starts_with(&self, prefix: &str) -> bool {
+        if let Repr::Utf8(text) = &self.0 {
+            return text.starts_with(prefix);
+        }
         let mut units = self.encode_utf16();
         prefix.encode_utf16().all(|unit| units.next() == Some(unit))
     }
+    #[inline]
     pub fn ends_with(&self, suffix: &str) -> bool {
+        if let Repr::Utf8(text) = &self.0 {
+            return text.ends_with(suffix);
+        }
         self.encode_utf16()
             .collect::<Vec<_>>()
             .ends_with(&suffix.encode_utf16().collect::<Vec<_>>())
     }
+    #[inline]
     pub fn contains(&self, needle: &str) -> bool {
+        if let Repr::Utf8(text) = &self.0 {
+            return text.contains(needle);
+        }
         let needle: Vec<_> = needle.encode_utf16().collect();
         needle.is_empty()
             || self

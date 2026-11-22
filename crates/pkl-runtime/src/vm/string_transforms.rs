@@ -39,6 +39,7 @@ fn op(operation: Operation) -> Instruction {
     Instruction::Primitive(primitives::Operation::StringTransform(operation))
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

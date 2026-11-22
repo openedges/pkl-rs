@@ -1784,6 +1784,7 @@ fn constructor_error(message: impl Into<PklString>, fragment: &str) -> RuntimeEr
 }
 
 /// Ordinary bytecode backs Access defaults, computed flags, and its property constraint.
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn access_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

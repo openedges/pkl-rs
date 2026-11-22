@@ -81,7 +81,7 @@ impl Resolution {
     }
 }
 impl Program {
-    fn update_import_uris<'a>(
+    pub(super) fn update_import_uris<'a>(
         &mut self,
         unit: UnitId,
         prepared: impl Fn(Span) -> Option<&'a (PklString, PklString)>,
@@ -89,10 +89,21 @@ impl Program {
         // Preparation can update earlier shell/body instructions. Find those
         // logical IDs read-only before requesting any segment's mutable COW
         // view; unrelated prepared code and other owners stay shared.
+        let start = self
+            .units
+            .get(unit.0 as usize)
+            .map_or(0, |info| info.blocks_start);
         let blocks: Vec<_> = self
             .blocks
-            .iter_with_ids()
+            .iter_with_ids_from(start)
             .filter_map(|(id, code)| {
+                if self
+                    .metadata
+                    .get(id)
+                    .is_some_and(|meta| meta.unit.is_some() && meta.unit != Some(unit))
+                {
+                    return None;
+                }
                 code.iter()
                     .any(|instruction| {
                         let spec = match instruction {
@@ -611,10 +622,20 @@ impl Vm {
             .build
             .as_mut()
             .ok_or_else(|| invalid("missing module build continuation"))?;
-        let member = build.module.members.iter_mut().find(|member| matches!(&member.expr.kind,
-            crate::syntax::ExprKind::Import { uri_span, clause_alias: Some(_), .. } if *uri_span == current.spec.span))
+        let member_idx = build
+            .module
+            .members
+            .iter()
+            .position(|member| {
+                matches!(&member.expr.kind,
+                    crate::syntax::ExprKind::Import { uri_span, clause_alias: Some(_), .. } if *uri_span == current.spec.span)
+            })
             .ok_or_else(|| invalid("missing import member"))?;
-        member.name = name;
+        if build.module.members[member_idx].name != name {
+            Arc::make_mut(&mut build.module).members[member_idx].name = name;
+            build.name_changed = true;
+            build.resolved = None;
+        }
         build.prepared.insert(
             current.spec.span,
             (
@@ -637,13 +658,16 @@ impl Vm {
         let Some(build) = declaration.build else {
             return Ok(());
         };
-        let mut resolved = crate::resolver::resolve_module_for_evaluation(&build.module);
-        resolved.preparation.retain(|step| {
-            !matches!(
-                step,
-                crate::resolver::AstPreparation::Import { clause: true, .. }
-            )
-        });
+        let cached_syntax = Some(Arc::clone(&build.module));
+        let resolved_owned;
+        let resolved: &crate::resolver::ResolvedModule = if !build.name_changed
+            && let Some(cached) = build.resolved.as_ref()
+        {
+            cached
+        } else {
+            resolved_owned = crate::resolver::resolve_module_for_evaluation(&build.module);
+            &resolved_owned
+        };
         let code_owner = self
             .frames
             .last()
@@ -662,23 +686,28 @@ impl Vm {
             }
             shell.preparation.clear();
             shell.preparation_failure = None;
-            compile_unit_body_at(
+            compile_unit_body_at_with_syntax(
                 Some(unit),
                 program,
                 &shell,
+                None,
+                true,
                 build.options,
                 build.instrument,
                 declaration.source.clone(),
                 declaration.identity.clone(),
             )
             .inspect(|_| {
-                program.units[unit.0 as usize].import_order = module_import_order(&resolved)
+                program.units[unit.0 as usize].import_order =
+                    module_import_order_filtered(resolved, true)
             })
         } else {
-            compile_unit_body_at(
+            compile_unit_body_at_with_syntax(
                 Some(unit),
                 program,
-                &resolved,
+                resolved,
+                cached_syntax,
+                true,
                 build.options,
                 build.instrument,
                 declaration.source.clone(),
@@ -819,9 +848,23 @@ impl Vm {
 pub(super) fn module_import_order(
     resolved: &crate::resolver::ResolvedModule,
 ) -> Vec<PreparationStep> {
+    module_import_order_filtered(resolved, false)
+}
+
+pub(super) fn module_import_order_filtered(
+    resolved: &crate::resolver::ResolvedModule,
+    skip_import_clauses: bool,
+) -> Vec<PreparationStep> {
     let mut steps = resolved
         .preparation
         .iter()
+        .filter(|step| {
+            !skip_import_clauses
+                || !matches!(
+                    step,
+                    crate::resolver::AstPreparation::Import { clause: true, .. }
+                )
+        })
         .map(|step| match step {
             crate::resolver::AstPreparation::Import {
                 uri,

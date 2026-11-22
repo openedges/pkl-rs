@@ -112,27 +112,61 @@ pub struct DecodedClassInfo {
     pub is_dynamic: bool,
 }
 
+fn cached_pkl_base_module() -> PklString {
+    static S: std::sync::OnceLock<PklString> = std::sync::OnceLock::new();
+    S.get_or_init(|| PklString::from("pkl.base")).clone()
+}
+
+fn cached_dynamic_class() -> PklString {
+    static S: std::sync::OnceLock<PklString> = std::sync::OnceLock::new();
+    S.get_or_init(|| PklString::from("Dynamic")).clone()
+}
+
+fn cached_module_class() -> PklString {
+    static S: std::sync::OnceLock<PklString> = std::sync::OnceLock::new();
+    S.get_or_init(|| PklString::from("ModuleClass")).clone()
+}
+
 impl DecodedClassInfo {
     pub fn from_wire(class_name: &PklString, module_uri: &PklString) -> Self {
-        if module_uri == "pkl:base" {
-            if class_name == "Dynamic" {
+        if module_uri.as_str() == Some("pkl:base") {
+            if class_name.as_str() == Some("Dynamic") {
                 return Self {
-                    module_name: "pkl.base".into(),
-                    simple_name: "Dynamic".into(),
+                    module_name: cached_pkl_base_module(),
+                    simple_name: cached_dynamic_class(),
                     module_uri: module_uri.clone(),
                     is_module: false,
                     is_dynamic: true,
                 };
             }
-            if class_name != "pkl.base" {
+            if class_name.as_str() != Some("pkl.base") {
                 return Self {
-                    module_name: "pkl.base".into(),
+                    module_name: cached_pkl_base_module(),
                     simple_name: class_name.clone(),
                     module_uri: module_uri.clone(),
                     is_module: false,
                     is_dynamic: false,
                 };
             }
+        }
+
+        if let Some(s) = class_name.as_str() {
+            if let Some(hash_index) = s.rfind('#') {
+                return Self {
+                    module_name: PklString::from(&s[..hash_index]),
+                    simple_name: PklString::from(&s[hash_index + 1..]),
+                    module_uri: module_uri.clone(),
+                    is_module: false,
+                    is_dynamic: false,
+                };
+            }
+            return Self {
+                module_name: class_name.clone(),
+                simple_name: cached_module_class(),
+                module_uri: module_uri.clone(),
+                is_module: true,
+                is_dynamic: false,
+            };
         }
 
         let units: Vec<u16> = class_name.encode_utf16().collect();
@@ -1013,10 +1047,28 @@ impl Frame {
     }
 }
 
+enum PathSegment {
+    Static(&'static str),
+    Index(usize),
+    Int(i64),
+    Owned(PklString),
+}
+
+impl PathSegment {
+    fn to_pkl_string(&self) -> PklString {
+        match self {
+            Self::Static(s) => PklString::from(*s),
+            Self::Index(i) => PklString::from(i.to_string()),
+            Self::Int(i) => PklString::from(i.to_string()),
+            Self::Owned(s) => s.clone(),
+        }
+    }
+}
+
 struct Decoder<'a> {
     unpacker: Unpacker<'a>,
     options: DecodeOptions,
-    curr_path: Vec<PklString>,
+    curr_path: Vec<PathSegment>,
     frames: Vec<Frame>,
 }
 
@@ -1048,8 +1100,12 @@ impl<'a> Decoder<'a> {
         }
         // AbstractPklBinaryDecoder reverses bottom-to-top into top-to-bottom
         // (innermost first, outermost last).
-        let mut path = self.curr_path.clone();
-        path.reverse();
+        let path: Vec<PklString> = self
+            .curr_path
+            .iter()
+            .rev()
+            .map(PathSegment::to_pkl_string)
+            .collect();
         let offset = self.unpacker.offset();
         let message = if raw.wrapped {
             let joined = path
@@ -1089,7 +1145,8 @@ impl<'a> Decoder<'a> {
                         iter_active: _,
                     } => match step {
                         ObjectMemberStep::EntryKey => {
-                            self.curr_path.push(value.to_java_key_string());
+                            self.curr_path
+                                .push(PathSegment::Owned(value.to_java_key_string()));
                             self.frames.push(Frame::Object {
                                 class_name,
                                 module_uri,
@@ -1145,7 +1202,8 @@ impl<'a> Decoder<'a> {
                         iter_active: _,
                     } => match step {
                         MapStep::Key => {
-                            self.curr_path.push(value.to_java_key_string());
+                            self.curr_path
+                                .push(PathSegment::Owned(value.to_java_key_string()));
                             self.frames.push(Frame::Map {
                                 kind,
                                 total,
@@ -1163,7 +1221,7 @@ impl<'a> Decoder<'a> {
                             entries.push((key, value));
                             let next_idx = idx + 1;
                             if next_idx < total {
-                                self.curr_path.push(next_idx.to_string().into());
+                                self.curr_path.push(PathSegment::Index(next_idx));
                                 self.frames.push(Frame::Map {
                                     kind,
                                     total,
@@ -1196,7 +1254,7 @@ impl<'a> Decoder<'a> {
                         items.push(value);
                         let next_idx = idx + 1;
                         if next_idx < total {
-                            self.curr_path.push(next_idx.to_string().into());
+                            self.curr_path.push(PathSegment::Index(next_idx));
                             self.frames.push(Frame::Collection {
                                 kind,
                                 total,
@@ -1226,7 +1284,7 @@ impl<'a> Decoder<'a> {
                     Frame::Pair { extra_slots, step } => match step {
                         PairStep::First => {
                             self.curr_path.pop(); // "'first"
-                            self.curr_path.push("'second".into());
+                            self.curr_path.push(PathSegment::Static("'second"));
                             self.frames.push(Frame::Pair {
                                 extra_slots,
                                 step: PairStep::Second(value),
@@ -1247,7 +1305,7 @@ impl<'a> Decoder<'a> {
                     } => match step {
                         ReferenceStep::Domain => {
                             self.curr_path.pop(); // "'domain"
-                            self.curr_path.push("'data".into());
+                            self.curr_path.push(PathSegment::Static("'data"));
                             self.frames.push(Frame::Reference {
                                 extra_slots,
                                 step: ReferenceStep::Data(Box::new(value)),
@@ -1257,7 +1315,7 @@ impl<'a> Decoder<'a> {
                         }
                         ReferenceStep::Data(domain) => {
                             self.curr_path.pop(); // "'data"
-                            self.curr_path.push("'path".into());
+                            self.curr_path.push(PathSegment::Static("'path"));
                             let total = self.unpacker.unpack_array_header()?;
                             let data = Box::new(value);
                             if total == 0 {
@@ -1270,7 +1328,7 @@ impl<'a> Decoder<'a> {
                                     path: Vec::new(),
                                 }));
                             } else {
-                                self.curr_path.push("0".into());
+                                self.curr_path.push(PathSegment::Index(0));
                                 self.frames.push(Frame::Reference {
                                     extra_slots,
                                     step: ReferenceStep::Path {
@@ -1293,7 +1351,7 @@ impl<'a> Decoder<'a> {
                             self.curr_path.pop(); // idx
                             items.push(value);
                             if items.len() < total {
-                                self.curr_path.push(items.len().to_string().into());
+                                self.curr_path.push(PathSegment::Index(items.len()));
                                 self.frames.push(Frame::Reference {
                                     extra_slots,
                                     step: ReferenceStep::Path {
@@ -1432,7 +1490,7 @@ impl<'a> Decoder<'a> {
 
     fn start_object(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
         self.assert_length(PklBinaryCode::Object, len, 3)?;
-        self.curr_path.push("'object".into());
+        self.curr_path.push(PathSegment::Static("'object"));
 
         let class_name = self.unpacker.unpack_string()?;
         if is_java_blank(&class_name) {
@@ -1487,7 +1545,7 @@ impl<'a> Decoder<'a> {
         extra_slots: usize,
         members: Vec<DecodedObjectMember>,
     ) -> Result<(), RawError> {
-        self.curr_path.push(idx.to_string().into());
+        self.curr_path.push(PathSegment::Index(idx));
         // Push an active iterator frame before unpacking the member header so
         // any error during header/code unpacking mirrors DecodeIterator.next()'s
         // `finally { currPath.pop(); }`.
@@ -1520,7 +1578,8 @@ impl<'a> Decoder<'a> {
         let next_step = match member_code {
             PklBinaryCode::Property => {
                 let property_name = self.unpacker.unpack_string()?;
-                self.curr_path.push(property_name.clone());
+                self.curr_path
+                    .push(PathSegment::Owned(property_name.clone()));
                 ObjectMemberStep::Value {
                     kind: ObjectMemberKind::Property,
                     key: DecodedValue::String(property_name),
@@ -1529,7 +1588,7 @@ impl<'a> Decoder<'a> {
             PklBinaryCode::Entry => ObjectMemberStep::EntryKey,
             PklBinaryCode::Element => {
                 let element_index = self.unpacker.unpack_long()?;
-                self.curr_path.push(element_index.to_string().into());
+                self.curr_path.push(PathSegment::Int(element_index));
                 ObjectMemberStep::Value {
                     kind: ObjectMemberKind::Element,
                     key: DecodedValue::Int(element_index),
@@ -1557,7 +1616,7 @@ impl<'a> Decoder<'a> {
         len: usize,
     ) -> Result<Option<DecodedValue>, RawError> {
         self.assert_length(code, len, 1)?;
-        self.curr_path.push(path_label.into());
+        self.curr_path.push(PathSegment::Static(path_label));
         let total = self.unpacker.unpack_map_header()?;
         let extra_slots = len.saturating_sub(2);
         if total == 0 {
@@ -1568,7 +1627,7 @@ impl<'a> Decoder<'a> {
                 MapKind::Mapping => DecodedValue::Mapping(Vec::new()),
             }));
         }
-        self.curr_path.push("0".into());
+        self.curr_path.push(PathSegment::Index(0));
         self.frames.push(Frame::Map {
             kind,
             total,
@@ -1589,7 +1648,7 @@ impl<'a> Decoder<'a> {
         len: usize,
     ) -> Result<Option<DecodedValue>, RawError> {
         self.assert_length(code, len, 1)?;
-        self.curr_path.push(path_label.into());
+        self.curr_path.push(PathSegment::Static(path_label));
         let total = self.unpacker.unpack_array_header()?;
         let extra_slots = len.saturating_sub(2);
         if total == 0 {
@@ -1606,7 +1665,7 @@ impl<'a> Decoder<'a> {
                 CollectionKind::Set => DecodedValue::Set(Vec::new()),
             }));
         }
-        self.curr_path.push("0".into());
+        self.curr_path.push(PathSegment::Index(0));
         self.frames.push(Frame::Collection {
             kind,
             total,
@@ -1620,8 +1679,8 @@ impl<'a> Decoder<'a> {
 
     fn start_pair(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
         self.assert_length(PklBinaryCode::Pair, len, 2)?;
-        self.curr_path.push("'pair".into());
-        self.curr_path.push("'first".into());
+        self.curr_path.push(PathSegment::Static("'pair"));
+        self.curr_path.push(PathSegment::Static("'first"));
         self.frames.push(Frame::Pair {
             extra_slots: len.saturating_sub(3),
             step: PairStep::First,
@@ -1631,8 +1690,8 @@ impl<'a> Decoder<'a> {
 
     fn start_reference(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
         self.assert_length(PklBinaryCode::Reference, len, 3)?;
-        self.curr_path.push("'reference".into());
-        self.curr_path.push("'domain".into());
+        self.curr_path.push(PathSegment::Static("'reference"));
+        self.curr_path.push(PathSegment::Static("'domain"));
         self.frames.push(Frame::Reference {
             extra_slots: len.saturating_sub(4),
             step: ReferenceStep::Domain,
@@ -1643,7 +1702,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_duration(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::Duration, len, 2)?;
-        self.curr_path.push("'duration".into());
+        self.curr_path.push(PathSegment::Static("'duration"));
         let value = self.unpacker.unpack_double()?;
         let raw_unit = self.unpacker.unpack_string()?;
         let Some(unit) = raw_unit.as_str().and_then(DurationUnit::parse) else {
@@ -1659,7 +1718,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_data_size(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::DataSize, len, 2)?;
-        self.curr_path.push("'datasize".into());
+        self.curr_path.push(PathSegment::Static("'datasize"));
         let value = self.unpacker.unpack_double()?;
         let raw_unit = self.unpacker.unpack_string()?;
         let Some(unit) = raw_unit.as_str().and_then(DataSizeUnit::parse) else {
@@ -1675,7 +1734,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_int_seq(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::IntSeq, len, 3)?;
-        self.curr_path.push("'intseq".into());
+        self.curr_path.push(PathSegment::Static("'intseq"));
         let start = self.unpacker.unpack_long()?;
         let end = self.unpacker.unpack_long()?;
         let step = self.unpacker.unpack_long()?;
@@ -1692,7 +1751,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_regex(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::Regex, len, 1)?;
-        self.curr_path.push("'regex".into());
+        self.curr_path.push(PathSegment::Static("'regex"));
         let pattern = self.unpacker.unpack_string()?;
         if self.options.validate_regex {
             let units: Vec<u16> = pattern.encode_utf16().collect();
@@ -1710,7 +1769,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_class(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::Class, len, 2)?;
-        self.curr_path.push("'class".into());
+        self.curr_path.push(PathSegment::Static("'class"));
         let name = self.unpacker.unpack_string()?;
         if is_java_blank(&name) {
             return Err(RawError::decode(
@@ -1744,7 +1803,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_type_alias(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::TypeAlias, len, 2)?;
-        self.curr_path.push("'typealias".into());
+        self.curr_path.push(PathSegment::Static("'typealias"));
         let name = self.unpacker.unpack_string()?;
         if is_java_blank(&name) {
             return Err(RawError::decode(
@@ -1778,7 +1837,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_function(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::Function, len, 0)?;
-        self.curr_path.push("'function".into());
+        self.curr_path.push(PathSegment::Static("'function"));
         if !self.options.allow_function {
             return Err(RawError::decode(
                 DecodeErrorKind::UnsupportedType,
@@ -1792,7 +1851,7 @@ impl<'a> Decoder<'a> {
 
     fn decode_bytes(&mut self, len: usize) -> Result<DecodedValue, RawError> {
         self.assert_length(PklBinaryCode::Bytes, len, 1)?;
-        self.curr_path.push("'bytes".into());
+        self.curr_path.push(PathSegment::Static("'bytes"));
         let byte_len = self.unpacker.unpack_binary_header()?;
         let bytes = self.unpacker.read_slice(byte_len)?.to_vec();
         self.unpacker.skip_values(len.saturating_sub(2))?;
@@ -1880,6 +1939,24 @@ fn decode_java_utf8_replace(bytes: &[u8]) -> String {
 
 /// Matches Java `String.isBlank()` (`Character.isWhitespace(int codePoint)`).
 fn is_java_blank(text: &PklString) -> bool {
+    if let Some(s) = text.as_str() {
+        for &b in s.as_bytes() {
+            if b > 0x20 && b < 0x7f {
+                return false;
+            }
+            if b >= 0x80 {
+                break;
+            }
+        }
+        if s.is_ascii() {
+            return s.bytes().all(|b| {
+                matches!(
+                    b,
+                    0x09..=0x0d | 0x1c..=0x20
+                )
+            });
+        }
+    }
     let mut iter = text.encode_utf16().peekable();
     while let Some(u) = iter.next() {
         let cp = if (0xd800..=0xdbff).contains(&u)
@@ -1902,6 +1979,9 @@ fn is_java_blank(text: &PklString) -> bool {
 }
 
 fn validate_java_uri(uri: &PklString) -> Result<(), RawError> {
+    if uri.as_str() == Some("pkl:base") {
+        return Ok(());
+    }
     if let Err(err) = crate::host::resources::glob::validate_opaque_list_uri(uri) {
         let message = if let Some(cause) = err.uri_create_cause.as_ref() {
             match cause.index_utf16 {

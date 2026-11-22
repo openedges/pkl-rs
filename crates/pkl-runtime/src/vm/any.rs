@@ -1,6 +1,7 @@
 //! Any methods share the ordinary call, argument-check and continuation paths.
 use super::*;
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

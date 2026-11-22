@@ -175,7 +175,7 @@ impl PklRegex {
 /// Exact generated BaseNodesFactory.RegexNodeGen cache transition. Compilation
 /// failure below the three-pattern limit does not publish an entry; a miss at
 /// the limit disables caching before attempting the generic compilation.
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub(crate) struct ConstructorCache {
     patterns: Vec<PklRegex>,
     generic: bool,

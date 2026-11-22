@@ -342,27 +342,31 @@ pub enum NativeStreamingOutputFilesOutcome<E> {
 
 /// Cancellable wall-clock watchdog that aborts blocking HTTP / external-reader I/O
 /// when `--timeout` elapses and joins immediately when evaluation completes early.
-struct TimeoutWatchdog {
+struct ActiveWatchdog {
     state: Arc<(Mutex<bool>, Condvar)>,
     timed_out: Arc<AtomicBool>,
     handle: Option<JoinHandle<()>>,
 }
 
+struct TimeoutWatchdog {
+    active: Option<ActiveWatchdog>,
+}
+
 impl TimeoutWatchdog {
+    fn none() -> Self {
+        Self { active: None }
+    }
+
     fn start(
         timeout_ms: Option<u64>,
         cancel_flag: Arc<CancelFlag>,
         external_readers: Arc<ExternalReaderRegistry>,
     ) -> Self {
+        let Some(ms) = timeout_ms else {
+            return Self { active: None };
+        };
         let state = Arc::new((Mutex::new(false), Condvar::new()));
         let timed_out = Arc::new(AtomicBool::new(false));
-        let Some(ms) = timeout_ms else {
-            return Self {
-                state,
-                timed_out,
-                handle: None,
-            };
-        };
         let state_bg = Arc::clone(&state);
         let timed_out_bg = Arc::clone(&timed_out);
         let handle = thread::Builder::new()
@@ -395,14 +399,18 @@ impl TimeoutWatchdog {
             })
             .ok();
         Self {
-            state,
-            timed_out,
-            handle,
+            active: Some(ActiveWatchdog {
+                state,
+                timed_out,
+                handle,
+            }),
         }
     }
 
     fn triggered(&self) -> bool {
-        self.timed_out.load(Ordering::SeqCst)
+        self.active
+            .as_ref()
+            .is_some_and(|w| w.timed_out.load(Ordering::SeqCst))
     }
 
     fn stop(mut self) -> bool {
@@ -411,13 +419,16 @@ impl TimeoutWatchdog {
     }
 
     fn finish_inner(&mut self) {
-        let (lock, cvar) = &*self.state;
+        let Some(active) = &mut self.active else {
+            return;
+        };
+        let (lock, cvar) = &*active.state;
         {
             let mut done = lock.lock().unwrap_or_else(|e| e.into_inner());
             *done = true;
         }
         cvar.notify_all();
-        if let Some(handle) = self.handle.take() {
+        if let Some(handle) = active.handle.take() {
             let _ = handle.join();
         }
     }
@@ -457,6 +468,10 @@ pub struct NativeHost {
     custom_resource_readers: Vec<Arc<dyn CustomResourceReader>>,
     /// Loaded module bytes staged between `Resolve`/`ResolveKey` and `LoadSource`.
     staged_sources: Mutex<BTreeMap<PklString, Vec<u8>>>,
+    /// Canonical filesystem paths staged between `Resolve`/`ResolveKey` and `LoadSource`
+    /// so `file:` modules are only opened and read on cache miss (`LoadSource`), matching
+    /// upstream `ModuleKeys.File.resolve` vs `ResolvedModuleKeys.File.loadSource`.
+    resolved_file_paths: Mutex<Vec<(PklString, PathBuf)>>,
     /// Loaded custom module sources staged between `Resolve`/`ResolveKey` and `LoadSource`.
     staged_custom_sources: Mutex<BTreeMap<PklString, ModuleSource>>,
 }
@@ -536,27 +551,35 @@ impl NativeHost {
             ),
         };
 
-        let req_timeout = config.timeout_ms.map(Duration::from_millis);
-        let mut registry = ExternalReaderRegistry::new(0);
-        for (scheme, reader_cfg) in config.external_module_readers {
-            registry.register_module_reader_with(scheme, reader_cfg, |cfg| {
-                Arc::new(NativeExternalReaderProcess::with_timeouts(
-                    cfg.clone(),
-                    DEFAULT_CLOSE_TIMEOUT,
-                    req_timeout,
-                ))
-            });
-        }
-        for (scheme, reader_cfg) in config.external_resource_readers {
-            registry.register_resource_reader_with(scheme, reader_cfg, |cfg| {
-                Arc::new(NativeExternalReaderProcess::with_timeouts(
-                    cfg.clone(),
-                    DEFAULT_CLOSE_TIMEOUT,
-                    req_timeout,
-                ))
-            });
-        }
-        let external_readers = Arc::new(registry);
+        let external_readers = if config.external_module_readers.is_empty()
+            && config.external_resource_readers.is_empty()
+        {
+            static EMPTY_READERS: std::sync::OnceLock<Arc<ExternalReaderRegistry>> =
+                std::sync::OnceLock::new();
+            Arc::clone(EMPTY_READERS.get_or_init(|| Arc::new(ExternalReaderRegistry::new(0))))
+        } else {
+            let req_timeout = config.timeout_ms.map(Duration::from_millis);
+            let mut registry = ExternalReaderRegistry::new(0);
+            for (scheme, reader_cfg) in config.external_module_readers {
+                registry.register_module_reader_with(scheme, reader_cfg, |cfg| {
+                    Arc::new(NativeExternalReaderProcess::with_timeouts(
+                        cfg.clone(),
+                        DEFAULT_CLOSE_TIMEOUT,
+                        req_timeout,
+                    ))
+                });
+            }
+            for (scheme, reader_cfg) in config.external_resource_readers {
+                registry.register_resource_reader_with(scheme, reader_cfg, |cfg| {
+                    Arc::new(NativeExternalReaderProcess::with_timeouts(
+                        cfg.clone(),
+                        DEFAULT_CLOSE_TIMEOUT,
+                        req_timeout,
+                    ))
+                });
+            }
+            Arc::new(registry)
+        };
 
         let pkg_transport: Arc<dyn PackageTransport> = Arc::new(NativePackageTransport::new(
             http.clone(),
@@ -606,6 +629,7 @@ impl NativeHost {
             custom_module_readers: ext.custom_module_readers,
             custom_resource_readers: ext.custom_resource_readers,
             staged_sources: Mutex::new(BTreeMap::new()),
+            resolved_file_paths: Mutex::new(Vec::new()),
             staged_custom_sources: Mutex::new(BTreeMap::new()),
         })
     }
@@ -684,6 +708,11 @@ impl NativeHost {
             .lock()
             .unwrap_or_else(|e| e.into_inner());
         staged.clear();
+        let mut resolved_paths = self
+            .resolved_file_paths
+            .lock()
+            .unwrap_or_else(|e| e.into_inner());
+        resolved_paths.clear();
         let mut custom_staged = self
             .staged_custom_sources
             .lock()
@@ -835,8 +864,12 @@ impl NativeHost {
     /// Creates a reusable public `SourceSession` (shared module cache across calls)
     /// configured with this host's evaluation, tracing, color, and frame-transformer settings.
     pub fn new_public_session(&self, diagnostic_profile: DiagnosticProfile) -> SourceSession {
+        let pure_standard = self.custom_security.is_none()
+            && self.custom_module_readers.is_empty()
+            && self.external_readers.is_empty();
         SourceSession::module_evaluator(self.session_options(diagnostic_profile))
             .with_color(self.use_color)
+            .with_pure_standard_host(pure_standard)
     }
 
     /// Normalizes a top-level [`ModuleSourceSpec`], expanding `@dep/...` URIs when
@@ -866,9 +899,12 @@ impl NativeHost {
         session: &mut SourceSession,
         stderr: &mut Vec<u8>,
     ) -> Result<Value, RuntimeError> {
-        let eval_cancel = CancelFlag::new();
-        let watchdog =
-            TimeoutWatchdog::start(self.timeout_ms, eval_cancel, self.external_readers.clone());
+        let watchdog = if self.timeout_ms.is_some() {
+            let eval_cancel = CancelFlag::new();
+            TimeoutWatchdog::start(self.timeout_ms, eval_cancel, self.external_readers.clone())
+        } else {
+            TimeoutWatchdog::none()
+        };
         let now_ms = || self.clock_ms();
         let result = self.drive_source_session(session, &now_ms, &watchdog, stderr);
         let timed_out = watchdog.stop();
@@ -1811,18 +1847,20 @@ impl NativeHost {
         stderr: &mut Vec<u8>,
     ) -> Result<Value, RuntimeError> {
         let has_timeout = self.timeout_ms.is_some();
-        let step_budget = if has_timeout { 4096 } else { 32_768 };
+        let step_budget = if has_timeout { 4096 } else { 1_048_576 };
+        let base_clock = session.host_session().last_clock();
+        let current_ms = || if has_timeout { now_ms() } else { base_clock };
         loop {
             if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                 session.cancel();
             }
-            match session.poll(now_ms(), step_budget) {
+            match session.poll(current_ms(), step_budget) {
                 HostPoll::Ready(result) => return result,
                 HostPoll::Yielded => {}
                 HostPoll::Read { token, .. } => {
                     let req = session.read_request(&token)?;
                     let result = self.handle_read(&req.uri, req.module_uri.as_ref());
-                    let t = now_ms();
+                    let t = current_ms();
                     if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                         session.cancel();
                     }
@@ -1830,7 +1868,7 @@ impl NativeHost {
                 }
                 HostPoll::Module { token, request } => {
                     let completion = self.handle_module_request(&request);
-                    let t = now_ms();
+                    let t = current_ms();
                     if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                         session.cancel();
                     }
@@ -1838,7 +1876,7 @@ impl NativeHost {
                 }
                 HostPoll::Glob { token, request } => {
                     let completion = self.handle_glob_request(&request);
-                    let t = now_ms();
+                    let t = current_ms();
                     if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                         session.cancel();
                     }
@@ -1846,11 +1884,11 @@ impl NativeHost {
                 }
                 HostPoll::TransformFrame { token, frame } => {
                     let transformed = self.transform_log_frame((*frame).clone());
-                    session.complete_frame_transform(&token, Ok(transformed), now_ms())?;
+                    session.complete_frame_transform(&token, Ok(transformed), current_ms())?;
                 }
                 HostPoll::Log { token, event } => {
                     self.emit_log_event(&event, stderr);
-                    session.acknowledge_log(&token, Ok(()), now_ms())?;
+                    session.acknowledge_log(&token, Ok(()), current_ms())?;
                 }
             }
         }
@@ -2411,15 +2449,17 @@ impl NativeHost {
                 {
                     return None;
                 }
-                let staged = self
+                let mut staged = self
                     .staged_custom_sources
                     .lock()
                     .unwrap_or_else(|e| e.into_inner());
-                if let Some(src) = staged
-                    .get(&resolved.resolved_uri)
-                    .or_else(|| staged.get(&resolved.original_uri))
-                    .cloned()
-                {
+                let from_resolved = staged.remove(&resolved.resolved_uri);
+                let from_original = if resolved.original_uri != resolved.resolved_uri {
+                    staged.remove(&resolved.original_uri)
+                } else {
+                    None
+                };
+                if let Some(src) = from_resolved.or(from_original) {
                     return Some(ModuleCompletion::Source(Ok(src)));
                 }
                 drop(staged);
@@ -3040,8 +3080,16 @@ impl NativeHost {
             if self.custom_security.is_some() && resolved.resolved_uri != key.uri {
                 self.check_resolve_module(&resolved.resolved_uri)?;
             }
-            let bytes = self.fs.read_file_module_bytes(&real_path)?;
-            self.stage_source(&resolved.resolved_uri, bytes);
+            let mut paths = self
+                .resolved_file_paths
+                .lock()
+                .unwrap_or_else(|e| e.into_inner());
+            if let Some((_, existing)) = paths.iter_mut().find(|(k, _)| *k == resolved.resolved_uri)
+            {
+                *existing = real_path;
+            } else {
+                paths.push((resolved.resolved_uri.clone(), real_path));
+            }
             return Ok(resolved);
         }
 
@@ -3100,20 +3148,44 @@ impl NativeHost {
         &self,
         resolved: &ResolvedModule,
     ) -> Result<ModuleSource, ModuleHostError> {
+        if resolved.resolved_uri.starts_with("file:") {
+            let staged_path = {
+                let mut paths = self
+                    .resolved_file_paths
+                    .lock()
+                    .unwrap_or_else(|e| e.into_inner());
+                paths
+                    .iter()
+                    .position(|(k, _)| *k == resolved.resolved_uri)
+                    .map(|idx| paths.swap_remove(idx).1)
+            };
+            if let Some(real_path) = staged_path {
+                let bytes = self.fs.read_file_module_bytes(&real_path)?;
+                let text = String::from_utf8(bytes)
+                    .map_err(|err| ModuleHostError::Io(IoFailure::from(err.to_string())))?;
+                return Ok(ModuleSource {
+                    text: SourceText::from(text),
+                    inferred_name: PklString::default(),
+                });
+            }
+        }
         let bytes_opt = {
-            let staged = self
+            let mut staged = self
                 .staged_sources
                 .lock()
                 .unwrap_or_else(|e| e.into_inner());
-            staged
-                .get(&resolved.resolved_uri)
-                .or_else(|| staged.get(&resolved.original_uri))
-                .cloned()
+            let from_resolved = staged.remove(&resolved.resolved_uri);
+            let from_original = if resolved.original_uri != resolved.resolved_uri {
+                staged.remove(&resolved.original_uri)
+            } else {
+                None
+            };
+            from_resolved.or(from_original)
         };
         let bytes = match bytes_opt {
             Some(b) => b,
             None if resolved.resolved_uri.starts_with("file:") => {
-                let (_, real_path) = self.fs.resolve_file_module(&resolved.resolved_uri)?;
+                let real_path = self.fs.resolve_file_module(&resolved.resolved_uri)?.1;
                 self.fs.read_file_module_bytes(&real_path)?
             }
             None => return Err(ModuleHostError::NotFound),

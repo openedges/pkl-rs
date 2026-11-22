@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "baseline": {
+    "version": "0.32.0",
+    "revision": "e51fb2f91774265666f94980ec630db794a4db2d"
+  },
+  "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (Rust/Java <= 1.00 per workload), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
+  "excluded_by_scope_2026_11_20": [
+    {
+      "id": "jvm-adapter",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: JVM public API compatibility adapter is excluded from required product scope (java_api=8239, kotlin_api=597, jvm_spi=2 retained as census only)."
+    },
+    {
+      "id": "pkl-codegen-java",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Java code generator CLI command/options excluded from required product scope."
+    },
+    {
+      "id": "pkl-codegen-kotlin",
+      "reason": "Explicit 2026-11-20 scope decision in INTENT.md and PLAN.md: Kotlin code generator CLI command/options excluded from required product scope."
+    }
+  ],
+  "unpinned_optional_references": [
+    {
+      "id": "native-image-reference",
+      "status": "unverified-not-pinned",
+      "reason": "Official upstream Pkl native-image binary is not pinned in oracle.lock.json (which pins pkl-tools-0.32.0.jar, Temurin 21.0.13.1+2-LTS, and GraalVM CE 25.0.1). Never replaces warm JVM reference."
+    }
+  ],
+  "platform_matrix": [
+    {"id": "darwin-arm64", "category": "native-os", "required_for_release": true},
+    {"id": "darwin-x64", "category": "native-os", "required_for_release": true},
+    {"id": "linux-x64-gnu", "category": "native-os", "required_for_release": true},
+    {"id": "linux-arm64-gnu", "category": "native-os", "required_for_release": true},
+    {"id": "win32-x64-msvc", "category": "native-os", "required_for_release": true},
+    {"id": "browser-chromium", "category": "wasm-browser", "required_for_release": true},
+    {"id": "browser-firefox", "category": "wasm-browser", "required_for_release": true},
+    {"id": "browser-webkit", "category": "wasm-browser", "required_for_release": true},
+    {"id": "hosted-ci", "category": "ci-provenance", "required_for_release": true}
+  ],
+  "prior_milestones": [
+    {
+      "milestone": "M0",
+      "manifest": "compatibility/inventory.json",
+      "description": "Pinned Pkl 0.32.0 source, corpus, smoke, regressions, and M0 GraalVM CE 25.0.1 baseline"
+    },
+    {
+      "milestone": "M2",
+      "manifest": "compatibility/m2-language.json",
+      "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory"
+    },
+    {
+      "milestone": "M3",
+      "manifest": "compatibility/m3-stdlib-output.json",
+      "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases"
+    },
+    {
+      "milestone": "M4",
+      "manifest": "compatibility/m4-io-packages.json",
+      "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages"
+    },
+    {
+      "milestone": "M5",
+      "manifest": "compatibility/m5-product-tools.json",
+      "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases"
+    },
+    {
+      "milestone": "M6",
+      "manifest": "compatibility/m6-wasm-napi.json",
+      "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases"
+    }
+  ],
+  "requirements": {
+    "m7:perf:core-6-cold-cli": {
+      "track": "benchmark",
+      "description": "Core 6 workloads cold CLI execution time and os.wait4 peak RSS <= 1.00x Java (Temurin 21 live + M0 GraalVM 25 reference)",
+      "workload_ids": [
+        "scalar:cold-cli",
+        "stdlib-collections:cold-cli",
+        "recursive-compute:cold-cli",
+        "large-output:cold-cli",
+        "failure-diagnostics:cold-cli",
+        "import-graph:cold-cli"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_cold_cli_pair"},
+        {"path": "tools/m7_benchmark.py", "symbol": "evaluate_ratio_verdict"}
+      ]
+    },
+    "m7:perf:core-6-persistent": {
+      "track": "benchmark",
+      "description": "Core 6 workloads warmed resident persistent evaluator op time and os.wait4 peak RSS <= 1.00x Java",
+      "workload_ids": [
+        "scalar:persistent",
+        "stdlib-collections:persistent",
+        "recursive-compute:persistent",
+        "large-output:persistent",
+        "failure-diagnostics:persistent",
+        "import-graph:persistent"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "crates/pkl/examples/m7_bench_probe.rs", "symbol": "run_window"},
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_api_probe_pair"},
+        {"path": "crates/pkl-runtime/src/vm/fast_int.rs", "symbol": "FastIntOp"}
+      ]
+    },
+    "m7:perf:core-6-fresh-evaluator": {
+      "track": "benchmark",
+      "description": "Core 6 workloads fresh-evaluator-per-request op time and os.wait4 peak RSS <= 1.00x Java",
+      "workload_ids": [
+        "scalar:fresh-evaluator",
+        "stdlib-collections:fresh-evaluator",
+        "recursive-compute:fresh-evaluator",
+        "large-output:fresh-evaluator",
+        "failure-diagnostics:fresh-evaluator",
+        "import-graph:fresh-evaluator"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "crates/pkl/examples/m7_bench_probe.rs", "symbol": "invoke"},
+        {"path": "tools/m7_benchmark.py", "symbol": "parse_probe_series"},
+        {"path": "crates/pkl-runtime/src/vm/base_snapshot.rs", "symbol": "BaseSnapshot"}
+      ]
+    },
+    "m7:perf:reflection-stdlib": {
+      "track": "benchmark",
+      "description": "import \"pkl:reflect\" stdlib reflection cold CLI and persistent evaluator time & peak RSS <= 1.00x Java",
+      "workload_ids": [
+        "reflection-stdlib:cold-cli",
+        "reflection-stdlib:persistent"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "run_suite"},
+        {"path": "crates/pkl/examples/m7_bench_probe.rs", "symbol": "call_eval"}
+      ]
+    },
+    "m7:perf:renderers-files-binary": {
+      "track": "benchmark",
+      "description": "Multi-renderer output.files (7 text renderers) and pkl-binary MessagePack encoding time & peak RSS <= 1.00x Java",
+      "workload_ids": [
+        "renderers-files:cold-cli",
+        "renderers-binary:cold-cli"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_output_files_workload"},
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_cold_cli_pair"}
+      ]
+    },
+    "m7:perf:packages-http-cache": {
+      "track": "benchmark",
+      "description": "Warm package-2 cache and cold HTTPS mirror download + localhost HTTP resource read via M4FixtureServers",
+      "workload_ids": [
+        "packages-http-warm:cold-cli",
+        "packages-http-cold:cold-cli"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_packages_http_workload"}
+      ]
+    },
+    "m7:perf:repl-server-formatter-pkldoc": {
+      "track": "benchmark",
+      "description": "Product tools: REPL piped session, MessagePack 0x20-0x25 server steady throughput, formatter, and pkldoc site generation",
+      "workload_ids": [
+        "repl-session:cold-cli",
+        "server-session:steady-server",
+        "formatter-large:cold-cli",
+        "pkldoc-single-package:cold-cli"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_server_workload"},
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_pkldoc_workload"}
+      ]
+    },
+    "m7:perf:napi-and-wasm-bindings": {
+      "track": "benchmark",
+      "description": "Node N-API, Wasm Node, and real Playwright Chromium Wasm init/compile, warm eval, BigInt/Uint8Array conversion, and host process RSS",
+      "workload_ids": [
+        "napi-eval-text:napi",
+        "napi-typed-conversion:napi",
+        "wasm-node-eval-text:wasm-node",
+        "wasm-node-typed-conversion:wasm-node",
+        "wasm-browser-eval-text:wasm-browser",
+        "wasm-browser-typed-conversion:wasm-browser"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_benchmark.py", "symbol": "_run_js_binding_workload"},
+        {"path": "benchmarks/m7_fixtures/bench_napi.mjs", "symbol": "verifyTypedValue"},
+        {"path": "benchmarks/m7_fixtures/bench_wasm_node.mjs", "symbol": "verifyTypedValue"},
+        {"path": "benchmarks/m7_fixtures/bench_wasm_browser.mjs", "symbol": "sampleDescendantTreeRssBytes"},
+        {"path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs", "symbol": "try_fast_encode_pkl_binary"},
+        {"path": "crates/pkl-runtime/src/vm/columnar_value.rs", "symbol": "ColumnarValueBuffer"},
+        {"path": "packages/pkl-wasm/src/values.mjs", "symbol": "tryDecodePklBinaryFast"},
+        {"path": "packages/pkl-napi/src/runtime.cjs", "symbol": "tryDecodePklBinaryFast"}
+      ]
+    },
+    "m7:soak:native-memory-reclamation": {
+      "track": "soak",
+      "description": "All 6 long-running memory reclamation scenarios bounded on native Rust evaluator (zero RSS/FD/PID leaks)",
+      "soak_pairs": [
+        "native/repeated-success",
+        "native/repeated-failure",
+        "native/unique-sources-churn",
+        "native/cyclic-graphs",
+        "native/lifecycle-cancel-timeout-close",
+        "native/cache-churn"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_memory_soak.py", "symbol": "verify_report"},
+        {"path": "crates/pkl/examples/m7_memory_soak_probe.rs", "symbol": "main"},
+        {"path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs", "symbol": "eval_single"}
+      ]
+    },
+    "m7:soak:napi-and-wasm-memory-reclamation": {
+      "track": "soak",
+      "description": "All 6 long-running memory reclamation scenarios bounded on @pkl-rs/napi and @pkl-rs/wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
+      "soak_pairs": [
+        "napi-node/repeated-success",
+        "napi-node/repeated-failure",
+        "napi-node/unique-sources-churn",
+        "napi-node/cyclic-graphs",
+        "napi-node/lifecycle-cancel-timeout-close",
+        "napi-node/cache-churn",
+        "wasm-node/repeated-success",
+        "wasm-node/repeated-failure",
+        "wasm-node/unique-sources-churn",
+        "wasm-node/cyclic-graphs",
+        "wasm-node/lifecycle-cancel-timeout-close",
+        "wasm-node/cache-churn"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_memory_soak.py", "symbol": "analyze_series"},
+        {"path": "tests/fixtures/m7/soak/run_napi_soak.mjs", "symbol": "runScenario"},
+        {"path": "tests/fixtures/m7/soak/run_wasm_soak.mjs", "symbol": "runScenario"},
+        {"path": "packages/pkl-wasm/src/index.mjs", "symbol": "_disposeWasmIfClosed"}
+      ]
+    },
+    "m7:fuzz:seeded-differential-corpus": {
+      "track": "fuzz",
+      "description": "Deterministic seeded differential fuzzing across all 7 language/renderer/formatter categories with automatic delta shrinking and 0 raw-byte mismatches",
+      "fuzz_categories": [
+        "expressions-numerics",
+        "strings-regex-glob",
+        "objects-amendments-generators",
+        "collections-units",
+        "types-closures",
+        "multi-format-rendering",
+        "formatter-fuzz"
+      ],
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_fuzz.py", "symbol": "verify_report"},
+        {"path": "tools/m7_fuzz.py", "symbol": "classify_fuzz_case"},
+        {"path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs", "symbol": "eval_single"}
+      ]
+    },
+    "m7:release:ci-and-platform-matrix": {
+      "track": "release-matrix",
+      "description": "CI workflow covering M0-M7 verification gates and honest platform/browser/hosted-CI matrix reporting",
+      "implementation_status": "linked",
+      "implementation_links": [
+        {"path": "tools/m7_manifest.py", "symbol": "verify_release"},
+        {"path": ".github/workflows/ci.yml", "symbol": "compatibility-tooling"}
+      ]
+    }
+  }
+}

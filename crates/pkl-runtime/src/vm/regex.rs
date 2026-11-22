@@ -29,6 +29,7 @@ pub(super) fn string(regex: &PklRegex) -> PklString {
     )
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -82,6 +83,7 @@ pub(super) fn blocks(
     methods
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn builtin_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -252,7 +254,7 @@ impl Vm {
             parent: Some(parent),
             instance_class: Some(class),
             regex_match: Some(Arc::new(matched)),
-            members: self.program.builtin_members[&MATCH_FACTORY].clone(),
+            members: self.program.builtin_members[&MATCH_FACTORY].clone().into(),
             ..Default::default()
         }))
     }

@@ -188,7 +188,6 @@ fn gc_traces_closure_cycles_and_invalidates_reclaimed_function_handles() {
     });
     object.environment = Environment {
         locals: vec![Value::Object(parent)],
-        scopes: vec![],
         ..Environment::default()
     };
     let closure = heap.allocate(object);

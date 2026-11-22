@@ -230,6 +230,7 @@ impl Parser<'_> {
                         self.advance()?;
                         TypeKind::String(value)
                     }
+                    Kind::StringError(error) => return Err(*error),
                     Kind::Symbol('(') => {
                         self.advance()?;
                         let empty = self.is_symbol(')');

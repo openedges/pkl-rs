@@ -600,22 +600,53 @@ fn frame_line(frame: &crate::logging::LogFrame) -> Result<FrameLine, PklString> 
         .source_lines
         .first()
         .ok_or_else(|| PklString::from("Index 0 out of bounds for length 0"))?;
-    let units: Vec<_> = original.encode_utf16().collect();
-    let whitespace = |unit: &u16| char::from_u32(u32::from(*unit)).is_some_and(java_whitespace);
-    let leading = units.iter().take_while(|unit| whitespace(unit)).count();
-    let trailing = units[leading..]
-        .iter()
-        .rev()
-        .take_while(|unit| whitespace(unit))
-        .count();
-    let stripped = &units[leading..units.len() - trailing];
+    let (stripped_pkl, leading, stripped_len) = if let Some(s) = original.as_str()
+        && s.is_ascii()
+    {
+        let bytes = s.as_bytes();
+        let is_ws = |b: u8| matches!(b, b' ' | b'\t' | b'\n' | b'\r' | 0x0b | 0x0c | 0x1c..=0x1f);
+        let leading = bytes.iter().take_while(|&&b| is_ws(b)).count();
+        let trailing = bytes[leading..]
+            .iter()
+            .rev()
+            .take_while(|&&b| is_ws(b))
+            .count();
+        let trimmed = &s[leading..s.len() - trailing];
+        let pkl = if leading == 0 && trailing == 0 {
+            original.clone()
+        } else {
+            PklString::from(trimmed)
+        };
+        (pkl, leading, trimmed.len())
+    } else {
+        let units: Vec<_> = original.encode_utf16().collect();
+        let whitespace = |unit: &u16| char::from_u32(u32::from(*unit)).is_some_and(java_whitespace);
+        let leading = units.iter().take_while(|unit| whitespace(unit)).count();
+        let trailing = units[leading..]
+            .iter()
+            .rev()
+            .take_while(|unit| whitespace(unit))
+            .count();
+        let stripped = &units[leading..units.len() - trailing];
+        (
+            PklString::from_utf16(stripped.to_vec()),
+            leading,
+            stripped.len(),
+        )
+    };
     let start = frame.start_column as i128 - leading as i128;
     let end = if frame.start_line == frame.end_line {
         frame.end_column as i128 - leading as i128
     } else {
-        stripped.len() as i128
+        stripped_len as i128
     };
-    let padding = format!("{} | ", frame.start_line).len() as i128 + start - 1;
+    let mut line_digits = 1usize;
+    let mut n = frame.start_line;
+    while n >= 10 {
+        n /= 10;
+        line_digits += 1;
+    }
+    let padding = (line_digits + 3) as i128 + start - 1;
     let width = end - start + 1;
     // String.repeat checks its space repetition before its caret repetition.
     for count in [padding, width] {
@@ -624,7 +655,7 @@ fn frame_line(frame: &crate::logging::LogFrame) -> Result<FrameLine, PklString> 
         }
     }
     Ok(FrameLine {
-        stripped: PklString::from_utf16(stripped.to_vec()),
+        stripped: stripped_pkl,
         padding: padding as usize,
         width: width as usize,
     })

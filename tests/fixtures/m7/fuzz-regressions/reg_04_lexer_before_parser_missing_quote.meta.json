@@ -1,0 +1,12 @@
+{
+  "category": "multi-format-rendering",
+  "differences": [
+    "stderr"
+  ],
+  "format": "xml",
+  "id": "reg_04_lexer_before_parser_missing_quote",
+  "mode": "eval",
+  "notes": "Java 0.32.0 reports earlier parser error at `chars`; Rust eager lexer reports later missing `\"` delimiter at EOL.",
+  "seed": "0x4d37504b4c303332",
+  "status": "mismatch"
+}

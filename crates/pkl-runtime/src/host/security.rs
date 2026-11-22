@@ -10,7 +10,7 @@ use crate::host::resources::{decoded_scheme_specific_part, module_trust_level};
 use crate::modules::ModuleHostError;
 use crate::value::PklString;
 use java_regex::utf16::{Limits, Utf16Regex};
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 /// Default module URI allowlist (`SecurityManagers.defaultAllowedModules`).
 pub const DEFAULT_ALLOWED_MODULES: &[&str] = &[
@@ -39,7 +39,30 @@ pub const DEFAULT_ALLOWED_RESOURCES: &[&str] = &[
 #[derive(Clone, Debug)]
 struct CompiledPattern {
     raw: String,
+    literal_prefix: Option<String>,
     regex: Arc<Utf16Regex>,
+}
+
+fn is_plain_literal_pattern(pattern: &str) -> bool {
+    !pattern.bytes().any(|b| {
+        matches!(
+            b,
+            b'\\'
+                | b'.'
+                | b'^'
+                | b'$'
+                | b'*'
+                | b'+'
+                | b'?'
+                | b'('
+                | b')'
+                | b'['
+                | b']'
+                | b'{'
+                | b'}'
+                | b'|'
+        )
+    })
 }
 
 impl CompiledPattern {
@@ -51,18 +74,51 @@ impl CompiledPattern {
                 err.message
             )
         })?;
+        let literal_prefix = is_plain_literal_pattern(pattern).then(|| pattern.to_string());
         Ok(Self {
             raw: pattern.to_string(),
+            literal_prefix,
             regex: Arc::new(regex),
         })
     }
 
     fn looking_at(&self, input: &PklString) -> bool {
+        if let Some(prefix) = &self.literal_prefix
+            && let Some(text) = input.as_str()
+        {
+            return text.starts_with(prefix.as_str());
+        }
         let units: Vec<u16> = input.encode_utf16().collect();
         self.regex
             .looking_at(&units, Limits::default())
             .is_ok_and(|matched| matched.is_some())
     }
+}
+
+fn default_module_patterns() -> Arc<[CompiledPattern]> {
+    static CACHE: OnceLock<Arc<[CompiledPattern]>> = OnceLock::new();
+    CACHE
+        .get_or_init(|| {
+            DEFAULT_ALLOWED_MODULES
+                .iter()
+                .map(|p| CompiledPattern::compile(p).expect("builtin module pattern"))
+                .collect::<Vec<_>>()
+                .into()
+        })
+        .clone()
+}
+
+fn default_resource_patterns() -> Arc<[CompiledPattern]> {
+    static CACHE: OnceLock<Arc<[CompiledPattern]>> = OnceLock::new();
+    CACHE
+        .get_or_init(|| {
+            DEFAULT_ALLOWED_RESOURCES
+                .iter()
+                .map(|p| CompiledPattern::compile(p).expect("builtin resource pattern"))
+                .collect::<Vec<_>>()
+                .into()
+        })
+        .clone()
 }
 
 /// Escapes regex metacharacters in a literal string (equivalent to Java `Pattern.quote`).
@@ -130,8 +186,8 @@ pub fn is_path_under_root(candidate: &str, root: &str) -> bool {
 /// Configurable security policy mirroring `org.pkl.core.SecurityManagers.Standard`.
 #[derive(Clone, Debug)]
 pub struct SecurityPolicy {
-    allowed_modules: Vec<CompiledPattern>,
-    allowed_resources: Vec<CompiledPattern>,
+    allowed_modules: Arc<[CompiledPattern]>,
+    allowed_resources: Arc<[CompiledPattern]>,
     root_dir: Option<String>,
     custom_allowed_modules: bool,
     custom_allowed_resources: bool,
@@ -147,14 +203,8 @@ impl SecurityPolicy {
     /// Standard default policy (`SecurityManagers.defaultManager`).
     pub fn default_standard() -> Self {
         Self {
-            allowed_modules: DEFAULT_ALLOWED_MODULES
-                .iter()
-                .map(|p| CompiledPattern::compile(p).expect("builtin module pattern"))
-                .collect(),
-            allowed_resources: DEFAULT_ALLOWED_RESOURCES
-                .iter()
-                .map(|p| CompiledPattern::compile(p).expect("builtin resource pattern"))
-                .collect(),
+            allowed_modules: default_module_patterns(),
+            allowed_resources: default_resource_patterns(),
             root_dir: None,
             custom_allowed_modules: false,
             custom_allowed_resources: false,
@@ -172,32 +222,22 @@ impl SecurityPolicy {
                 patterns
                     .iter()
                     .map(|p| CompiledPattern::compile(p))
-                    .collect::<Result<Vec<_>, _>>()?,
+                    .collect::<Result<Vec<_>, _>>()?
+                    .into(),
                 true,
             ),
-            None => (
-                DEFAULT_ALLOWED_MODULES
-                    .iter()
-                    .map(|p| CompiledPattern::compile(p).expect("builtin module pattern"))
-                    .collect(),
-                false,
-            ),
+            None => (default_module_patterns(), false),
         };
         let (res, custom_res) = match allowed_resources {
             Some(patterns) => (
                 patterns
                     .iter()
                     .map(|p| CompiledPattern::compile(p))
-                    .collect::<Result<Vec<_>, _>>()?,
+                    .collect::<Result<Vec<_>, _>>()?
+                    .into(),
                 true,
             ),
-            None => (
-                DEFAULT_ALLOWED_RESOURCES
-                    .iter()
-                    .map(|p| CompiledPattern::compile(p).expect("builtin resource pattern"))
-                    .collect(),
-                false,
-            ),
+            None => (default_resource_patterns(), false),
         };
         Ok(Self {
             allowed_modules: mods,
@@ -217,14 +257,15 @@ impl SecurityPolicy {
     /// Appends external module reader schemes (`Pattern.quote("<scheme>:")`) when
     /// `allowed_modules` was NOT explicitly overridden (`CliCommand.kt:116-128`).
     pub fn with_external_module_schemes(mut self, schemes: &[String]) -> Result<Self, String> {
-        if !self.custom_allowed_modules {
+        if !self.custom_allowed_modules && !schemes.is_empty() {
+            let mut mods = self.allowed_modules.to_vec();
             for scheme in schemes {
                 let pattern = format!("{}:", escape_regex_literal(scheme));
-                if !self.allowed_modules.iter().any(|p| p.raw == pattern) {
-                    self.allowed_modules
-                        .push(CompiledPattern::compile(&pattern)?);
+                if !mods.iter().any(|p| p.raw == pattern) {
+                    mods.push(CompiledPattern::compile(&pattern)?);
                 }
             }
+            self.allowed_modules = mods.into();
         }
         Ok(self)
     }
@@ -232,14 +273,15 @@ impl SecurityPolicy {
     /// Appends external resource reader schemes (`Pattern.quote("<scheme>:")`) when
     /// `allowed_resources` was NOT explicitly overridden (`CliCommand.kt:116-128`).
     pub fn with_external_resource_schemes(mut self, schemes: &[String]) -> Result<Self, String> {
-        if !self.custom_allowed_resources {
+        if !self.custom_allowed_resources && !schemes.is_empty() {
+            let mut res = self.allowed_resources.to_vec();
             for scheme in schemes {
                 let pattern = format!("{}:", escape_regex_literal(scheme));
-                if !self.allowed_resources.iter().any(|p| p.raw == pattern) {
-                    self.allowed_resources
-                        .push(CompiledPattern::compile(&pattern)?);
+                if !res.iter().any(|p| p.raw == pattern) {
+                    res.push(CompiledPattern::compile(&pattern)?);
                 }
             }
+            self.allowed_resources = res.into();
         }
         Ok(self)
     }

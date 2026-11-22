@@ -298,7 +298,7 @@ enum Task {
     CollectionKeyResult(CollectionState),
     CollectionValueReady(CollectionState),
     CollectionValueResult(CollectionState),
-    RestoreEnvironment(Environment),
+    RestoreEnvironment(Box<Environment>),
     RestoreTypeNode(Option<TypeNodeId>),
     AfterBase {
         constraints: Vec<ConstraintCode>,
@@ -363,6 +363,10 @@ pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value
     }
 }
 impl TypeRun {
+    pub(super) fn has_tracker(&self) -> bool {
+        self.tracker.is_some()
+    }
+
     pub(super) fn is_protobuf_alternative(&self) -> bool {
         matches!(self.destination, TypeDestination::ProtobufAlternative)
     }
@@ -426,13 +430,15 @@ impl TypeRun {
             }
         }
     }
-    fn mismatch(&mut self, span: Span, body_span: Span, value: Value) {
+    fn mismatch(&mut self, span: Span, body_span: Span, value: Value) -> bool {
+        let observations = self.tracker.take();
+        let had_tracker = observations.is_some();
         let mismatch = Mismatch::Constraint {
             source: self.constraint_source.clone(),
             span,
             value,
             body_span,
-            observations: self.tracker.take(),
+            observations,
         };
         self.outcome = Some(Err(match &self.constraint_section {
             Some(section) => Mismatch::SourceSection {
@@ -441,6 +447,7 @@ impl TypeRun {
             },
             None => mismatch,
         }));
+        had_tracker
     }
 }
 // Function parameter/result and Reference referent types are metadata; they do
@@ -470,7 +477,7 @@ fn module_environment(environment: &Environment) -> Result<Environment, RuntimeE
         .scopes
         .last()
         .ok_or_else(|| invalid("missing alias module"))?;
-    result.scopes = vec![scope];
+    result.scopes = crate::heap::ScopeList::from_single(scope);
     // TypeAliasTypeNode swaps receiver and owner in the original frame, preserving locals.
     result.this_value = Some(Value::Object(scope.receiver));
     result.outer_value = None;
@@ -480,6 +487,29 @@ fn module_environment(environment: &Environment) -> Result<Environment, RuntimeE
 /// Lazy collection cast roots have identity even when their value type does
 /// not need a custom-this cell. Keep these two allocation policies separate.
 pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
+    match ty.resolved() {
+        TypeCheck::Any
+        | TypeCheck::Unknown
+        | TypeCheck::Nothing
+        | TypeCheck::NonNull
+        | TypeCheck::Null
+        | TypeCheck::Boolean
+        | TypeCheck::Int
+        | TypeCheck::Float
+        | TypeCheck::Number
+        | TypeCheck::String
+        | TypeCheck::Duration
+        | TypeCheck::Bytes
+        | TypeCheck::RefDomain
+        | TypeCheck::StringLiteral(_)
+        | TypeCheck::IntegerAlias { .. }
+        | TypeCheck::MetaClass(_)
+        | TypeCheck::Collection(_)
+        | TypeCheck::Class { .. }
+        | TypeCheck::Parameter { .. }
+        | TypeCheck::Function { .. } => return false,
+        _ => {}
+    }
     if needs_custom_this(ty) {
         return true;
     }
@@ -505,14 +535,166 @@ pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
     false
 }
 
+/// Fast synchronous check for leaf primitive types that never substitute type
+/// variables, never allocate type-node identity or custom-this cells, never
+/// run constraints, and never transform/cast the checked value.
+#[inline]
+pub(super) fn try_fast_leaf_type(ty: &TypeCheck, value: &Value) -> Option<bool> {
+    match ty.resolved() {
+        TypeCheck::Any | TypeCheck::Unknown => Some(true),
+        TypeCheck::Int => Some(matches!(value, Value::Int(_))),
+        TypeCheck::Float => Some(matches!(value, Value::Float(_))),
+        TypeCheck::Number => Some(matches!(value, Value::Int(_) | Value::Float(_))),
+        TypeCheck::Boolean => Some(matches!(value, Value::Bool(_))),
+        TypeCheck::String => Some(matches!(value, Value::String(_))),
+        TypeCheck::NonNull => Some(!value.is_null()),
+        TypeCheck::Null => Some(value.is_null()),
+        TypeCheck::Duration => Some(matches!(value, Value::Duration(_))),
+        TypeCheck::Bytes => Some(matches!(value, Value::Bytes(_))),
+        TypeCheck::IntegerAlias { min, max, .. } => {
+            Some(matches!(value, Value::Int(i) if i.get() >= *min && i.get() <= *max))
+        }
+        TypeCheck::StringLiteral(expected) => {
+            Some(matches!(value, Value::String(actual) if actual == expected))
+        }
+        TypeCheck::Alias(inner)
+        | TypeCheck::GenericAlias(inner)
+        | TypeCheck::NamedAlias {
+            expanded: inner, ..
+        } => try_fast_leaf_type(inner, value),
+        TypeCheck::Nullable(inner) => {
+            if value.is_null() {
+                try_fast_leaf_type(inner, value).map(|_| true)
+            } else {
+                try_fast_leaf_type(inner, value)
+            }
+        }
+        _ => None,
+    }
+}
+
+#[inline]
+fn is_fast_leaf_type(ty: &TypeCheck) -> bool {
+    match ty.resolved() {
+        TypeCheck::Any
+        | TypeCheck::Unknown
+        | TypeCheck::Int
+        | TypeCheck::Float
+        | TypeCheck::Number
+        | TypeCheck::Boolean
+        | TypeCheck::String
+        | TypeCheck::NonNull
+        | TypeCheck::Null
+        | TypeCheck::Duration
+        | TypeCheck::Bytes
+        | TypeCheck::IntegerAlias { .. }
+        | TypeCheck::StringLiteral(_) => true,
+        TypeCheck::Alias(inner)
+        | TypeCheck::GenericAlias(inner)
+        | TypeCheck::NamedAlias {
+            expanded: inner, ..
+        }
+        | TypeCheck::Nullable(inner) => is_fast_leaf_type(inner),
+        _ => false,
+    }
+}
+
+#[inline]
+fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+    let elem_noop = elem_ty.noop();
+    if !elem_noop && !is_fast_leaf_type(elem_ty) {
+        return None;
+    }
+    let Value::Object(id) = value else {
+        return Some(false);
+    };
+    let object = heap.get(*id).ok()?;
+    if object.collection_kind != crate::heap::CollectionKind::List
+        || object.foreign_map_entry.is_some()
+        || object.is_module
+        || object.reference.is_some()
+        || object.ref_module
+    {
+        return Some(false);
+    }
+    if object.parent.is_some() || object.instance_class.is_some() {
+        return None;
+    }
+    let Some(elems) = &object.list_elements else {
+        return None;
+    };
+    if elems.len() != object.length {
+        return None;
+    }
+    if elem_noop {
+        return Some(true);
+    }
+    if elems
+        .iter()
+        .all(|val| try_fast_leaf_type(elem_ty, val) == Some(true))
+    {
+        Some(true)
+    } else {
+        Some(false)
+    }
+}
+
+fn try_fast_type_with_heap(ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+    if let Some(matched) = try_fast_leaf_type(ty, value) {
+        return Some(matched);
+    }
+    match ty.resolved() {
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::List,
+            arguments,
+        } if arguments.len() == 1 => try_fast_strict_list_check(&arguments[0].0, value, heap),
+        TypeCheck::Nullable(inner) => {
+            if value.is_null() {
+                try_fast_type_with_heap(inner, value, heap).map(|_| true)
+            } else {
+                try_fast_type_with_heap(inner, value, heap)
+            }
+        }
+        TypeCheck::Alias(inner)
+        | TypeCheck::GenericAlias(inner)
+        | TypeCheck::NamedAlias {
+            expanded: inner, ..
+        } => try_fast_type_with_heap(inner, value, heap),
+        TypeCheck::Union {
+            types,
+            string_literals: false,
+            ..
+        } if !types.is_empty() => {
+            for alt in types {
+                match try_fast_type_with_heap(alt, value, heap) {
+                    Some(true) => return Some(true),
+                    Some(false) => continue,
+                    None => return None,
+                }
+            }
+            Some(false)
+        }
+        _ => None,
+    }
+}
+
 impl Vm {
     pub(super) fn observe(&mut self, span: Span, value: Value) {
+        if self.active_type_trackers == 0 || !self.power_assertions {
+            return;
+        }
         self.observe_value(span, ObservedValue::Runtime(value));
     }
     pub(super) fn observe_native_literal(&mut self, span: Span, rendered: PklString) {
+        if self.active_type_trackers == 0 || !self.power_assertions {
+            return;
+        }
         self.observe_value(span, ObservedValue::NativeLiteral(rendered));
     }
     fn observe_value(&mut self, span: Span, value: ObservedValue) {
+        if self.active_type_trackers == 0 || !self.power_assertions {
+            return;
+        }
         for frame in &mut self.frames {
             if let Some(run) = &mut frame.type_run
                 && let Some(trace) = &mut run.tracker
@@ -531,12 +713,7 @@ impl Vm {
         }
     }
     fn active_tracker(&self) -> bool {
-        self.frames.iter().any(|frame| {
-            frame
-                .type_run
-                .as_ref()
-                .is_some_and(|run| run.tracker.is_some())
-        })
+        self.active_type_trackers > 0
     }
     pub(super) fn begin_type(
         &mut self,
@@ -545,6 +722,27 @@ impl Vm {
         destination: TypeDestination,
         frames: Vec<RuntimeFrame>,
     ) -> Result<(), RuntimeError> {
+        if let Some(matched) = try_fast_type_with_heap(&ty, &value, &self.heap) {
+            match (matched, destination) {
+                (true, TypeDestination::Stack) => {
+                    self.stack.push(value);
+                    return Ok(());
+                }
+                (true, TypeDestination::Local { depth, policy }) => {
+                    return self.bind_local(depth, policy, value);
+                }
+                (true, TypeDestination::Return) => {
+                    self.stack.push(value);
+                    self.frames.last_mut().expect("type frame").pc -= 1;
+                    return Ok(());
+                }
+                (matched, TypeDestination::Test | TypeDestination::ProtobufAlternative) => {
+                    self.stack.push(Value::Bool(matched));
+                    return Ok(());
+                }
+                (false, _) => {}
+            }
+        }
         let ty = ty.substituted(
             &self
                 .frames
@@ -692,10 +890,10 @@ impl Vm {
                 && unit.entry != usize::MAX
                 && let Some(module) = self.heap.find_module(unit.id)
             {
-                environment.scopes = vec![Scope {
+                environment.scopes = crate::heap::ScopeList::from_single(Scope {
                     receiver: module,
                     owner: module,
-                }];
+                });
             }
             module_environment(&environment)?
         } else {
@@ -786,53 +984,10 @@ impl Vm {
             .and_then(|metadata| metadata.source.clone());
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
-        self.frames.push(Frame {
-            guest_catch: None,
-            block: constraint.block,
-            pc: 0,
-            base: self.stack.len(),
-            environment,
-            force: None,
-            lambda: false,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            deep_force: None,
-            warning: None,
-            method_call_site: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: None,
-            amendment_arguments: None,
-            amendment_end: None,
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: true,
-            diagnostic_member: Some(member),
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: None,
-        });
+        let mut frame = self.alloc_frame(constraint.block, 0, self.stack.len(), environment);
+        frame.return_to_type = true;
+        frame.diagnostic_member = Some(member);
+        self.frames.push(frame);
         Ok(())
     }
     fn launch_predicate(
@@ -890,6 +1045,9 @@ impl Vm {
         let should_trace = self.power_assertions
             && (!run.in_type_test || self.active_tracker() || run.tracker.is_some());
         let Some(task) = run.tasks.pop() else {
+            if run.tracker.take().is_some() {
+                self.active_type_trackers = self.active_type_trackers.saturating_sub(1);
+            }
             let outcome = run
                 .outcome
                 .take()
@@ -1212,10 +1370,11 @@ impl Vm {
                 }
                 TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
                     let environment = module_environment(&run.environment)?;
-                    run.tasks.push(Task::RestoreEnvironment(std::mem::replace(
-                        &mut run.environment,
-                        environment,
-                    )));
+                    run.tasks
+                        .push(Task::RestoreEnvironment(Box::new(std::mem::replace(
+                            &mut run.environment,
+                            environment,
+                        ))));
                     self.push_type_child(&mut run, *inner, span, 0)?;
                 }
                 TypeCheck::Nullable(inner) if !run.value.is_null() => {
@@ -1267,6 +1426,15 @@ impl Vm {
                 TypeCheck::ParameterizedCollection { kind, arguments }
                     if TypeCheck::Collection(kind).accepts(&run.value, &self.heap) =>
                 {
+                    if kind == crate::heap::CollectionKind::List
+                        && arguments.len() == 1
+                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap)
+                            == Some(true)
+                    {
+                        run.outcome = Some(Ok(run.value.clone()));
+                        self.frames.last_mut().expect("type frame").type_run = Some(run);
+                        return Ok(());
+                    }
                     let Value::Object(id) = run.value else {
                         unreachable!()
                     };
@@ -1284,7 +1452,9 @@ impl Vm {
                         while let Some(owner) = current {
                             let object = self.heap.get(owner)?;
                             let ordered;
-                            let members = if kind == crate::heap::CollectionKind::Map {
+                            let members = if kind == crate::heap::CollectionKind::Map
+                                || object.list_elements.is_some()
+                            {
                                 ordered = collections::ordered_members(&self.heap, owner)?;
                                 &ordered
                             } else {
@@ -1365,17 +1535,17 @@ impl Vm {
                     });
                 }
                 TypeCheck::IntegerAlias { name, min, max } => {
-                    let source = crate::stdlib_sources::base();
-                    let declaration = source
-                        .text
-                        .find(&format!("typealias {name} = Int("))
-                        .expect("pinned integer alias");
-                    let start = declaration + format!("typealias {name} = ").len();
-                    let end = start + source.text.entire().range(start..).find("\n").unwrap();
                     let accepted = matches!(&run.value, Value::Int(value) if (min..=max).contains(&value.get()));
                     run.outcome = Some(if accepted {
                         Ok(run.value.clone())
                     } else {
+                        let source = crate::stdlib_sources::base();
+                        let declaration = source
+                            .text
+                            .find(&format!("typealias {name} = Int("))
+                            .expect("pinned integer alias");
+                        let start = declaration + format!("typealias {name} = ").len();
+                        let end = start + source.text.entire().range(start..).find("\n").unwrap();
                         let mismatch = if matches!(&run.value, Value::Int(_)) {
                             let predicate = Span::new(start + 4, end - 1);
                             let mut observations = Trace::new();
@@ -1532,7 +1702,7 @@ impl Vm {
                     restore_collection(&mut run, &state);
                 }
             }
-            Task::RestoreEnvironment(environment) => run.environment = environment,
+            Task::RestoreEnvironment(environment) => run.environment = *environment,
             Task::RestoreTypeNode(node) => run.node = node,
             Task::AfterBase {
                 constraints,
@@ -1576,6 +1746,9 @@ impl Vm {
                         index: index + 1,
                     }),
                     Value::Bool(false) if should_trace => {
+                        if run.tracker.is_none() {
+                            self.active_type_trackers += 1;
+                        }
                         run.tracker = Some(BTreeMap::new());
                         run.tasks.push(Task::TraceResult {
                             span: constraint.span,
@@ -1586,7 +1759,9 @@ impl Vm {
                     }
                     Value::Bool(false) => {
                         let value = self.constraint_value(&run.environment)?;
-                        run.mismatch(constraint.span, constraint.span, value);
+                        if run.mismatch(constraint.span, constraint.span, value) {
+                            self.active_type_trackers = self.active_type_trackers.saturating_sub(1);
+                        }
                     }
                     Value::Function(function) => {
                         let body_span = self
@@ -1658,6 +1833,9 @@ crate::diagnostic_values::render(
                         });
                     }
                     Value::Bool(false) if should_trace => {
+                        if run.tracker.is_none() {
+                            self.active_type_trackers += 1;
+                        }
                         run.tracker = Some(BTreeMap::new());
                         run.tasks.push(Task::TraceResult {
                             span: constraints[index].span,
@@ -1668,7 +1846,9 @@ crate::diagnostic_values::render(
                     }
                     Value::Bool(false) => {
                         self.frames.last_mut().expect("type frame").callsite_hidden = false;
-                        run.mismatch(constraints[index].span, body_span, predicate_value);
+                        if run.mismatch(constraints[index].span, body_span, predicate_value) {
+                            self.active_type_trackers = self.active_type_trackers.saturating_sub(1);
+                        }
                     }
                     value => {
                         let error = type_error(
@@ -1695,7 +1875,9 @@ crate::diagnostic_values::render(
                     Some(value) => value,
                     None => self.constraint_value(&run.environment)?,
                 };
-                run.mismatch(span, body_span, value);
+                if run.mismatch(span, body_span, value) {
+                    self.active_type_trackers = self.active_type_trackers.saturating_sub(1);
+                }
             }
             Task::UnionResult(mut state) => {
                 let outcome = run
@@ -1826,6 +2008,22 @@ impl Vm {
             unreachable!()
         };
         let item = state.items[state.index].clone();
+        if let Some(elems) = &self.heap.get(receiver)?.list_elements {
+            let idx = match &item.member.key {
+                Value::Int(i) if i.get() >= 0 => i.get() as usize,
+                _ => return Err(invalid("compact List element key")),
+            };
+            let value = elems
+                .get(idx)
+                .cloned()
+                .ok_or_else(|| invalid("compact List element out of bounds"))?;
+            let mut run = run;
+            run.eager = state.eager;
+            run.tasks.push(Task::CollectionValueReady(state));
+            run.returned = Some(value);
+            self.frames.last_mut().expect("type frame").type_run = Some(run);
+            return Ok(());
+        }
         let mut run = run;
         run.eager = state.eager || state.kind == crate::heap::CollectionKind::Set;
         run.tasks.push(Task::CollectionValueReady(state));
@@ -1888,15 +2086,28 @@ impl Vm {
                 let mut object = self.heap.get(id)?.clone();
                 object.structural_key = None;
                 object.java_hash = None;
-                for (name, value) in state.replacements {
-                    let key = CacheKey {
-                        entry: true,
-                        owner: None,
-                        name,
-                        method: false,
-                    };
-                    object.member_values.insert(key.clone(), value.clone());
-                    object.complete_cache(key, value);
+                if let Some(elems) = &mut object.list_elements {
+                    for (name, value) in state.replacements {
+                        if let Some(idx) = name
+                            .as_str()
+                            .and_then(|s| s.rsplit_once(':'))
+                            .and_then(|(_, i)| i.parse::<usize>().ok())
+                            && idx < elems.len()
+                        {
+                            elems[idx] = value;
+                        }
+                    }
+                } else {
+                    for (name, value) in state.replacements {
+                        let key = CacheKey {
+                            entry: true,
+                            owner: None,
+                            name,
+                            method: false,
+                        };
+                        object.member_values.insert(key.clone(), value.clone());
+                        object.complete_cache(key, value);
+                    }
                 }
                 Value::Object(self.heap.allocate(object))
             }

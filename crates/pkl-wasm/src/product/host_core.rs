@@ -586,6 +586,12 @@ impl WasmHostCore {
         self.cancel_pending();
         self.packages.clear();
         self.staged_sources.clear();
+        self.properties = Vec::new();
+        self.environment = Vec::new();
+        self.config = WasmHostConfig::default();
+        if let Ok(empty_policy) = SecurityPolicy::new(Some(&[]), Some(&[]), None) {
+            self.policy = empty_policy;
+        }
     }
 
     pub fn has_package_transport(&self) -> bool {
@@ -798,12 +804,13 @@ impl WasmHostCore {
                 self.handle_resolve_import_uri(token, key.clone(), authored_uri.clone())
             }
             ModuleRequestKind::LoadSource { resolved, .. } => {
-                if let Some(src) = self
-                    .staged_sources
-                    .get(&resolved.resolved_uri)
-                    .or_else(|| self.staged_sources.get(&resolved.original_uri))
-                    .cloned()
-                {
+                let from_resolved = self.staged_sources.remove(&resolved.resolved_uri);
+                let from_original = if resolved.original_uri != resolved.resolved_uri {
+                    self.staged_sources.remove(&resolved.original_uri)
+                } else {
+                    None
+                };
+                if let Some(src) = from_resolved.or(from_original) {
                     return WasmHostOutcome::CompleteModule(ModuleCompletion::Source(Ok(src)));
                 }
                 WasmHostOutcome::CompleteModule(ModuleCompletion::Source(Err(

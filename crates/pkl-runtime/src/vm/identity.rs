@@ -10,8 +10,13 @@ impl OperandStack {
     pub(super) fn split_off(&mut self, at: usize) -> Vec<Value> {
         self.0.split_off(at)
     }
+    #[inline]
     pub(super) fn push(&mut self, value: Value) {
         self.0.push(value.boxed());
+    }
+    #[inline]
+    pub(super) fn push_raw(&mut self, value: Value) {
+        self.0.push(value);
     }
     pub(super) fn extend(&mut self, values: impl IntoIterator<Item = Value>) {
         self.0.extend(values.into_iter().map(Value::boxed));
@@ -47,8 +52,8 @@ pub(crate) enum SlotPolicy {
 /// descriptor. Saved outer activations remain roots while a child suspends.
 pub(super) struct GeneratorScope {
     locals: Vec<Value>,
-    local_owners: BTreeMap<usize, (ExecutableOwnerId, (usize, usize))>,
-    copy_locals: BTreeSet<usize>,
+    local_owners: crate::heap::LocalOwners,
+    copy_locals: crate::heap::CopyLocals,
     descriptor: ExecutableOwnerId,
     bindings: std::ops::Range<usize>,
 }
@@ -60,6 +65,7 @@ impl GeneratorScope {
     }
 }
 impl SlotPolicy {
+    #[inline]
     pub(super) fn from_type(mut ty: &TypeCheck) -> Self {
         loop {
             ty = match ty.unaliased() {
@@ -126,7 +132,9 @@ impl Vm {
                 }
             }
         };
-        self.heap.set_local_kind(owner, site, kind)?;
+        if self.heap.local_kind(owner, site)? != Some(kind) {
+            self.heap.set_local_kind(owner, site, kind)?;
+        }
         let value = match (kind, value) {
             (SlotKind::Long, Value::Int(value)) => Value::Int(value.unboxed()),
             (SlotKind::Double, Value::Float(value)) => Value::Float(value.unboxed()),
@@ -151,7 +159,7 @@ impl Vm {
         environment: &mut Environment,
         target: ExecutableOwnerId,
     ) -> Result<(), RuntimeError> {
-        for &index in &environment.copy_locals {
+        for index in environment.copy_locals.iter() {
             let &(owner, slot) = environment
                 .local_owners
                 .get(&index)

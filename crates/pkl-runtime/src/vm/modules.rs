@@ -30,6 +30,7 @@ pub(crate) struct ModuleUnit {
     pub name: PklString,
     pub template: usize,
     pub entry: usize,
+    pub blocks_start: usize,
     pub initial_members: Vec<Member>,
     pub(super) import_order: Vec<uri_resolution::PreparationStep>,
     pub class_id: usize,
@@ -39,7 +40,9 @@ pub(crate) struct ModuleUnit {
 
 #[derive(Clone, Debug)]
 pub(crate) struct ModuleBuild {
-    pub module: crate::syntax::Module,
+    pub module: Arc<crate::syntax::Module>,
+    pub resolved: Option<Arc<crate::resolver::ResolvedModule>>,
+    pub name_changed: bool,
     pub options: CompileOptions,
     pub instrument: bool,
     pub prepared: BTreeMap<Span, (PklString, PklString)>,
@@ -125,29 +128,154 @@ pub(super) enum CachedModule {
     Failed(RuntimeError),
 }
 
+#[inline(always)]
+fn is_clean_cache_uri(uri: &PklString) -> bool {
+    uri.as_str().is_some_and(|s| {
+        crate::host::resources::is_clean_file_uri(s)
+            || (s.starts_with("pkl:")
+                && s.is_ascii()
+                && !s.bytes().any(|b| matches!(b, b'%' | b'?' | b'#' | b'\\')))
+    })
+}
+
 /// Module URI equality shares the Java URI.equals rules already used by resources.
-#[derive(Default)]
-pub(super) struct ModuleCache(BTreeMap<crate::host::resources::CacheKey, CachedModule>);
+/// For small sets of clean `file:///` and `pkl:` URIs (already canonical ASCII),
+/// stores entries inline in a flat `Vec` with zero `BTreeMap` or `CacheKey` overhead.
+#[derive(Clone)]
+pub(super) struct ModuleCache {
+    small: Vec<(PklString, CachedModule)>,
+    all_clean: bool,
+    entries: BTreeMap<crate::host::resources::CacheKey, CachedModule>,
+    exact: BTreeMap<PklString, CachedModule>,
+    last: Option<(PklString, CachedModule)>,
+}
+impl Default for ModuleCache {
+    fn default() -> Self {
+        Self {
+            small: Vec::new(),
+            all_clean: true,
+            entries: BTreeMap::new(),
+            exact: BTreeMap::new(),
+            last: None,
+        }
+    }
+}
 impl ModuleCache {
+    fn promote_to_maps(&mut self) {
+        if !self.small.is_empty() {
+            for (u, v) in self.small.drain(..) {
+                let key = crate::host::resources::cache_key(&u);
+                self.entries.insert(key, v.clone());
+                self.exact.insert(u, v);
+            }
+        }
+        self.all_clean = false;
+    }
+
+    #[inline]
     pub fn get(&self, uri: impl Into<PklString>) -> Option<&CachedModule> {
-        self.0.get(&crate::host::resources::cache_key(&uri.into()))
+        let uri = uri.into();
+        self.get_ref(&uri)
+    }
+    #[inline]
+    pub fn get_ref(&self, uri: &PklString) -> Option<&CachedModule> {
+        if self.all_clean {
+            for (u, v) in self.small.iter().rev() {
+                if u == uri {
+                    return Some(v);
+                }
+            }
+            if is_clean_cache_uri(uri) {
+                return None;
+            }
+            let target = crate::host::resources::cache_key(uri);
+            for (u, v) in &self.small {
+                if crate::host::resources::cache_key(u) == target {
+                    return Some(v);
+                }
+            }
+            return None;
+        }
+        if let Some((last_uri, last_val)) = &self.last
+            && last_uri == uri
+        {
+            return Some(last_val);
+        }
+        if let Some(v) = self.exact.get(uri) {
+            return Some(v);
+        }
+        self.entries.get(&crate::host::resources::cache_key(uri))
     }
     pub fn insert(&mut self, uri: PklString, value: CachedModule) {
-        self.0
-            .insert(crate::host::resources::cache_key(&uri), value);
+        if self.all_clean {
+            if is_clean_cache_uri(&uri) {
+                for (u, v) in &mut self.small {
+                    if *u == uri {
+                        *v = value;
+                        return;
+                    }
+                }
+                if self.small.len() < 8 {
+                    self.small.push((uri, value));
+                    return;
+                }
+            }
+            self.promote_to_maps();
+        }
+        let key = crate::host::resources::cache_key(&uri);
+        self.entries.insert(key, value.clone());
+        self.exact.insert(uri.clone(), value.clone());
+        self.last = Some((uri, value));
     }
     pub fn remove(&mut self, uri: impl Into<PklString>) -> Option<CachedModule> {
-        self.0
-            .remove(&crate::host::resources::cache_key(&uri.into()))
+        let uri = uri.into();
+        if self.all_clean {
+            if let Some(pos) = self.small.iter().position(|(u, _)| *u == uri) {
+                return Some(self.small.swap_remove(pos).1);
+            }
+            if is_clean_cache_uri(&uri) {
+                return None;
+            }
+            let target = crate::host::resources::cache_key(&uri);
+            if let Some(pos) = self
+                .small
+                .iter()
+                .position(|(u, _)| crate::host::resources::cache_key(u) == target)
+            {
+                return Some(self.small.swap_remove(pos).1);
+            }
+            return None;
+        }
+        let key = crate::host::resources::cache_key(&uri);
+        self.exact
+            .retain(|k, _| crate::host::resources::cache_key(k) != key);
+        if let Some((last_uri, _)) = &self.last
+            && crate::host::resources::cache_key(last_uri) == key
+        {
+            self.last = None;
+        }
+        self.entries.remove(&key)
     }
     pub fn clear(&mut self) {
-        self.0.clear();
+        self.small.clear();
+        self.all_clean = true;
+        self.entries.clear();
+        self.exact.clear();
+        self.last = None;
     }
     pub fn values(&self) -> impl Iterator<Item = &CachedModule> {
-        self.0.values()
+        self.small
+            .iter()
+            .map(|(_, v)| v)
+            .chain(self.entries.values())
     }
     pub fn values_mut(&mut self) -> impl Iterator<Item = &mut CachedModule> {
-        self.0.values_mut()
+        self.exact.clear();
+        self.last = None;
+        self.small
+            .iter_mut()
+            .map(|(_, v)| v)
+            .chain(self.entries.values_mut())
     }
 }
 
@@ -166,8 +294,168 @@ pub(super) fn next_failure_id() -> u64 {
     next_key_id().expect("cached exception identity exhausted")
 }
 
+enum ParsedOrResolved {
+    Parsed(Box<crate::syntax::Module>),
+    Resolved(
+        Arc<crate::resolver::ResolvedModule>,
+        Arc<crate::syntax::Module>,
+    ),
+}
+
+impl ParsedOrResolved {
+    fn module(&self) -> &crate::syntax::Module {
+        match self {
+            Self::Parsed(module) => module,
+            Self::Resolved(resolved, _) => &resolved.module,
+        }
+    }
+}
+
 type ParsedModule =
-    Result<crate::syntax::Module, Box<(crate::parser::ModuleParseFailure, Option<PklString>)>>;
+    Result<ParsedOrResolved, Box<(crate::parser::ModuleParseFailure, Option<PklString>)>>;
+
+struct CachedFrontendEntry {
+    hash: u64,
+    text: SourceText,
+    resolved: Arc<crate::resolver::ResolvedModule>,
+    syntax: Arc<crate::syntax::Module>,
+}
+
+pub(super) fn source_text_hash(text: &SourceText) -> u64 {
+    let mut hash: u64 = 0xcbf29ce484222325;
+    if let Some(s) = text.as_str() {
+        for &b in s.as_bytes() {
+            hash ^= u64::from(b);
+            hash = hash.wrapping_mul(0x100000001b3);
+        }
+    } else {
+        for u in text.original().encode_utf16() {
+            hash ^= u64::from(u);
+            hash = hash.wrapping_mul(0x100000001b3);
+        }
+    }
+    hash
+}
+
+fn frontend_cache() -> &'static std::sync::Mutex<Vec<CachedFrontendEntry>> {
+    static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedFrontendEntry>>> =
+        std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
+}
+
+fn cached_user_resolved(
+    text: &SourceText,
+) -> Option<(
+    Arc<crate::resolver::ResolvedModule>,
+    Arc<crate::syntax::Module>,
+)> {
+    // Only cache reasonably sized modules (avoid pinning huge generated text).
+    if text.len_bytes() > 256 * 1024 {
+        return None;
+    }
+    let hash = source_text_hash(text);
+    let cache = frontend_cache().lock().ok()?;
+    cache
+        .iter()
+        .rev()
+        .find(|entry| entry.hash == hash && entry.text == *text)
+        .map(|entry| (Arc::clone(&entry.resolved), Arc::clone(&entry.syntax)))
+}
+
+fn store_user_resolved(
+    text: &SourceText,
+    resolved: Arc<crate::resolver::ResolvedModule>,
+    syntax: Arc<crate::syntax::Module>,
+) {
+    if text.len_bytes() > 256 * 1024 {
+        return;
+    }
+    let hash = source_text_hash(text);
+    if let Ok(mut cache) = frontend_cache().lock() {
+        if cache
+            .iter()
+            .any(|entry| entry.hash == hash && entry.text == *text)
+        {
+            return;
+        }
+        if cache.len() >= 32 {
+            cache.remove(0);
+        }
+        cache.push(CachedFrontendEntry {
+            hash,
+            text: text.clone(),
+            resolved,
+            syntax,
+        });
+    }
+}
+
+type ConstraintOriginsVec = Vec<(usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>))>;
+
+struct CachedCompiledUnit {
+    hash: u64,
+    text: SourceText,
+    source_uri: PklString,
+    module_name: PklString,
+    original_uri: PklString,
+    resolved_uri: PklString,
+    power_assertions: bool,
+    pure_standard_host: bool,
+    is_primary_root: bool,
+    blocks_start: usize,
+    objects_start: usize,
+    recipes_start: usize,
+    unit_id: u32,
+    declaration_base: usize,
+    next_declaration_after: usize,
+    blocks: Arc<Vec<Vec<Instruction>>>,
+    metadata: Arc<Vec<BlockMetadata>>,
+    objects: Arc<Vec<Vec<Member>>>,
+    type_recipes: Arc<Vec<type_resolution::TypeRecipe>>,
+    unit: ModuleUnit,
+    declaration_sources: Arc<[(usize, crate::syntax::DeclarationSource)]>,
+    reflection_annotations: Vec<((PklString, Span), usize)>,
+    alias_definitions: Vec<(usize, type_resolution::AliasDefinition)>,
+    constraint_origins: ConstraintOriginsVec,
+}
+
+fn compiled_unit_cache() -> &'static std::sync::Mutex<Vec<CachedCompiledUnit>> {
+    static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedCompiledUnit>>> =
+        std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
+}
+
+struct CachedCompiledQuery {
+    expr_hash: u64,
+    expr_text: SourceText,
+    module_text_hash: u64,
+    module_text: SourceText,
+    module_uri: PklString,
+    module_name: PklString,
+    raw_value: bool,
+    power_assertions: bool,
+    unit_id: u32,
+    blocks_start: usize,
+    objects_start: usize,
+    recipes_start: usize,
+    declaration_base: usize,
+    next_declaration_after: usize,
+    entry: usize,
+    blocks: Arc<Vec<Vec<Instruction>>>,
+    metadata: Arc<Vec<BlockMetadata>>,
+    objects: Arc<Vec<Vec<Member>>>,
+    type_recipes: Arc<Vec<type_resolution::TypeRecipe>>,
+    declaration_sources: Arc<[(usize, crate::syntax::DeclarationSource)]>,
+    reflection_annotations: Vec<((PklString, Span), usize)>,
+    alias_definitions: Vec<(usize, type_resolution::AliasDefinition)>,
+    constraint_origins: ConstraintOriginsVec,
+}
+
+fn compiled_query_cache() -> &'static std::sync::Mutex<Vec<CachedCompiledQuery>> {
+    static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedCompiledQuery>>> =
+        std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(16)))
+}
 
 pub(super) struct ModuleRun {
     pub spec: ImportSpec,
@@ -179,7 +467,7 @@ pub(super) struct ModuleRun {
     key: Option<ModuleKey>,
     delegate_key: Option<ModuleKey>,
     resolved_key: Option<ResolvedModuleKey>,
-    cached: bool,
+    pub(super) cached: bool,
     pub resolved: Option<ResolvedModule>,
     pub receiver: Option<ObjectId>,
     pub initializing: bool,
@@ -361,6 +649,37 @@ impl Vm {
         source: Arc<crate::modules::ModuleSourceSpec>,
     ) -> Result<(), RuntimeError> {
         self.public_primary = None;
+        if self.pure_standard_host
+            && source.contents.is_none()
+            && source
+                .uri
+                .as_str()
+                .is_some_and(crate::host::resources::is_clean_file_uri)
+        {
+            if let Some(cached) = self.modules_original.get_ref(&source.uri).cloned() {
+                let value = self.module_cached(cached)?;
+                let receiver = value.as_object()?;
+                self.public_primary = Some(receiver);
+                self.stack.push(value);
+                self.state = State::Running;
+                return Ok(());
+            }
+            let key = ModuleKey {
+                id: ModuleKeyId(next_key_id()?),
+                uri: source.uri.clone(),
+                kind: ModuleKeyKind::StandardFile,
+                handle: PklString::default(),
+            };
+            let mut run = self.fresh_module_run(source.uri.clone(), ModulePurpose::Primary, None);
+            run.key = Some(key.clone());
+            run.phase = ModulePhase::Resolve;
+            self.frames.last_mut().unwrap().module_load = Some(run);
+            return self.wait_module(ModuleRequestKind::ResolveKey {
+                key,
+                resolved_key_id: ResolvedKeyId(next_key_id()?),
+                phase: crate::modules::ResolutionPhase::Primary,
+            });
+        }
         let (_, normalized) = crate::host::resources::prepare_module_uri(&source.uri, None)?;
         let mut run = self.fresh_module_run(
             source.uri.clone(),
@@ -438,59 +757,255 @@ impl Vm {
             .get(receiver)?
             .module_unit
             .ok_or_else(|| invalid("query receiver has no module unit"))?;
+        let expression = run
+            .supplied
+            .ok_or_else(|| invalid("missing query source"))?;
+        let power_assertions = self.power_assertions;
+        if let Some(pos) = self.query_cache.iter().position(|cached| {
+            cached.unit == unit
+                && cached.raw_value == raw_value
+                && cached.power_assertions == power_assertions
+                && cached.expression == *expression.original()
+                && self.heap.executable_is_live(cached.owner)
+        }) {
+            let cached = self.query_cache[pos].clone();
+            self.push_module_initializer(cached.entry, None);
+            let frame = self.frames.last_mut().unwrap();
+            frame.environment.executable_owner = Some(cached.owner);
+            frame.environment.code_owner = Some(cached.owner);
+            frame.environment.scopes = crate::heap::ScopeList::from_single(Scope {
+                receiver,
+                owner: receiver,
+            });
+            self.state = State::Running;
+            return Ok(());
+        }
         let declaration = self.program.units[unit.0 as usize].clone();
         let source = declaration
             .source
             .ok_or_else(|| invalid("query module has no source"))?;
-        let module = declaration
-            .syntax
-            .map_or_else(
-                || crate::parser::parse_module_for_evaluation(&source.text),
-                |syntax| Ok((*syntax).clone()),
-            )
-            .map_err(|failure| {
-                self.module_parse_error(*failure, source.clone(), Some("".into()))
-            })?;
-        let expression = run
-            .supplied
-            .ok_or_else(|| invalid("missing query source"))?;
         let program = Arc::make_mut(&mut self.program);
+        program.align_metadata()?;
         let arena = query_lifecycle::CodeArena::begin(program);
-        let entry = if raw_value {
-            session_expressions::compile_session_expression_value_for_unit(
-                program,
-                &module,
-                &expression,
-                CompileOptions {
-                    fuse_constant_add: true,
-                },
-                self.power_assertions,
-                unit,
-            )
+        let blocks_start = program.blocks.next_id();
+        let objects_start = program.objects.next_id();
+        let recipes_start = program.type_recipes.next_id();
+        let units_start = program.units.next_id();
+        let declaration_base = program.next_declaration;
+        let cacheable_query =
+            expression.len_bytes() <= 16 * 1024 && source.text.len_bytes() <= 256 * 1024;
+        let expr_hash = if cacheable_query {
+            source_text_hash(&expression)
         } else {
-            session_expressions::compile_session_expression_for_unit(
-                program,
-                &module,
-                &expression,
-                CompileOptions {
-                    fuse_constant_add: true,
-                },
-                self.power_assertions,
-                unit,
-            )
-        }
-        .map_err(|failure| match failure {
-            SessionExpressionError::Frontend(error) => imported_diagnostic(
-                *error,
-                Arc::new(RuntimeSource {
-                    text: expression.clone(),
-                    uri: "repl:text".into(),
-                    module_name: "".into(),
-                }),
-                "repl:text".into(),
-            ),
-            SessionExpressionError::Runtime(error) => *error,
-        })?;
+            0
+        };
+        let mod_hash = if cacheable_query {
+            source_text_hash(&source.text)
+        } else {
+            0
+        };
+
+        let cached_hit = if cacheable_query
+            && let Ok(cache) = compiled_query_cache().lock()
+            && let Some(cached) = cache.iter().rev().find(|e| {
+                e.expr_hash == expr_hash
+                    && e.module_text_hash == mod_hash
+                    && e.unit_id == unit.0
+                    && e.raw_value == raw_value
+                    && e.power_assertions == power_assertions
+                    && e.blocks_start == blocks_start
+                    && e.objects_start == objects_start
+                    && e.recipes_start == recipes_start
+                    && e.declaration_base == declaration_base
+                    && e.module_uri == source.uri
+                    && e.module_name == source.module_name
+                    && e.expr_text == expression
+                    && e.module_text == source.text
+            }) {
+            Some((
+                cached.entry,
+                cached.next_declaration_after,
+                Arc::clone(&cached.blocks),
+                Arc::clone(&cached.metadata),
+                Arc::clone(&cached.objects),
+                Arc::clone(&cached.type_recipes),
+                Arc::clone(&cached.declaration_sources),
+                cached.reflection_annotations.clone(),
+                cached.alias_definitions.clone(),
+                cached.constraint_origins.clone(),
+            ))
+        } else {
+            None
+        };
+
+        let entry = if let Some((
+            entry,
+            next_decl_after,
+            blocks_seg,
+            metadata_seg,
+            objects_seg,
+            recipes_seg,
+            decl_sources,
+            refl_annots,
+            alias_defs,
+            constr_origins,
+        )) = cached_hit
+        {
+            let blocks_end = blocks_start + blocks_seg.len();
+            program.blocks.push_sealed_segment(blocks_seg)?;
+            program.metadata.push_sealed_segment(metadata_seg)?;
+            program.objects.push_sealed_segment(objects_seg)?;
+            program.type_recipes.push_sealed_segment(recipes_seg)?;
+            program.next_declaration = next_decl_after;
+            if !decl_sources.is_empty() {
+                program
+                    .extra_declaration_sources
+                    .push((blocks_start..blocks_end, decl_sources));
+            }
+            if !refl_annots.is_empty() {
+                program.reflection_annotations.extend(refl_annots);
+            }
+            if !alias_defs.is_empty() {
+                program.alias_definitions.extend(alias_defs);
+            }
+            if !constr_origins.is_empty() {
+                program.constraint_origins.extend(constr_origins);
+            }
+            entry
+        } else {
+            let parsed_owned;
+            let module: &crate::syntax::Module = match &declaration.syntax {
+                Some(syntax) => syntax,
+                None => {
+                    parsed_owned = crate::parser::parse_module_for_evaluation(&source.text)
+                        .map_err(|failure| {
+                            self.module_parse_error(*failure, source.clone(), Some("".into()))
+                        })?;
+                    &parsed_owned
+                }
+            };
+            let program = Arc::make_mut(&mut self.program);
+            let before_decl_len = program.declaration_sources.len();
+            let before_refl_len = program.reflection_annotations.len();
+            let before_alias_len = program.alias_definitions.len();
+            let before_constr_len = program.constraint_origins.len();
+            let before_base_mixin = program.base_mixin_declaration;
+            let entry = if raw_value {
+                session_expressions::compile_session_expression_value_for_unit(
+                    program,
+                    module,
+                    &expression,
+                    CompileOptions {
+                        fuse_constant_add: true,
+                    },
+                    power_assertions,
+                    unit,
+                )
+            } else {
+                session_expressions::compile_session_expression_for_unit(
+                    program,
+                    module,
+                    &expression,
+                    CompileOptions {
+                        fuse_constant_add: true,
+                    },
+                    power_assertions,
+                    unit,
+                )
+            }
+            .map_err(|failure| match failure {
+                SessionExpressionError::Frontend(error) => imported_diagnostic(
+                    *error,
+                    Arc::new(RuntimeSource {
+                        text: expression.clone(),
+                        uri: "repl:text".into(),
+                        module_name: "".into(),
+                    }),
+                    "repl:text".into(),
+                ),
+                SessionExpressionError::Runtime(error) => *error,
+            })?;
+            let blocks_end = program.blocks.next_id();
+            let objects_end = program.objects.next_id();
+            let recipes_end = program.type_recipes.next_id();
+            if cacheable_query
+                && program.units.next_id() == units_start
+                && blocks_end.saturating_sub(blocks_start) <= 128
+                && program.base_mixin_declaration == before_base_mixin
+                && program.metadata.next_id() == blocks_end
+            {
+                let decl_delta: Vec<_> = program
+                    .declaration_sources
+                    .range(blocks_start..blocks_end)
+                    .map(|(&k, v)| (k, v.clone()))
+                    .collect();
+                let refl_delta: Vec<_> = program
+                    .reflection_annotations
+                    .iter()
+                    .filter(|(_, block)| **block >= blocks_start && **block < blocks_end)
+                    .map(|(k, &v)| (k.clone(), v))
+                    .collect();
+                let alias_delta: Vec<_> = program
+                    .alias_definitions
+                    .range(declaration_base..program.next_declaration)
+                    .map(|(&k, v)| (k, v.clone()))
+                    .collect();
+                let constr_delta: Vec<_> = program
+                    .constraint_origins
+                    .range(blocks_start..blocks_end)
+                    .map(|(&k, v)| (k, v.clone()))
+                    .collect();
+                if program.declaration_sources.len() == before_decl_len + decl_delta.len()
+                    && program.reflection_annotations.len() == before_refl_len + refl_delta.len()
+                    && program.alias_definitions.len() == before_alias_len + alias_delta.len()
+                    && program.constraint_origins.len() == before_constr_len + constr_delta.len()
+                    && let (
+                        Some(blocks_seg),
+                        Some(metadata_seg),
+                        Some(objects_seg),
+                        Some(recipes_seg),
+                    ) = (
+                        program.blocks.slice_segment(blocks_start, blocks_end),
+                        program.metadata.slice_segment(blocks_start, blocks_end),
+                        program.objects.slice_segment(objects_start, objects_end),
+                        program
+                            .type_recipes
+                            .slice_segment(recipes_start, recipes_end),
+                    )
+                    && let Ok(mut cache) = compiled_query_cache().lock()
+                {
+                    if cache.len() >= 16 {
+                        cache.remove(0);
+                    }
+                    cache.push(CachedCompiledQuery {
+                        expr_hash,
+                        expr_text: expression.clone(),
+                        module_text_hash: mod_hash,
+                        module_text: source.text.clone(),
+                        module_uri: source.uri.clone(),
+                        module_name: source.module_name.clone(),
+                        raw_value,
+                        power_assertions,
+                        unit_id: unit.0,
+                        blocks_start,
+                        objects_start,
+                        recipes_start,
+                        declaration_base,
+                        next_declaration_after: program.next_declaration,
+                        entry,
+                        blocks: blocks_seg,
+                        metadata: metadata_seg,
+                        objects: objects_seg,
+                        type_recipes: recipes_seg,
+                        declaration_sources: Arc::from(decl_delta),
+                        reflection_annotations: refl_delta,
+                        alias_definitions: alias_delta,
+                        constraint_origins: constr_delta,
+                    });
+                }
+            }
+            entry
+        };
         self.push_module_initializer(entry, None);
         // The synthetic query owns its executable state for this operation.
         // Frames and escaped environments trace this owner; the evaluator's
@@ -499,17 +1014,24 @@ impl Vm {
         self.code_arenas
             .push(arena.finish(Arc::make_mut(&mut self.program), owner, true));
         self.declaration_roots_dirty = true;
-        self.frames.last_mut().unwrap().environment.executable_owner = Some(owner);
-        self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
-        self.frames
-            .last_mut()
-            .unwrap()
-            .environment
-            .scopes
-            .push(Scope {
-                receiver,
-                owner: receiver,
-            });
+        if self.query_cache.len() >= 64 {
+            self.query_cache.remove(0);
+        }
+        self.query_cache.push(CachedQuery {
+            unit,
+            expression: expression.original().clone(),
+            raw_value,
+            power_assertions,
+            entry,
+            owner,
+        });
+        let frame = self.frames.last_mut().unwrap();
+        frame.environment.executable_owner = Some(owner);
+        frame.environment.code_owner = Some(owner);
+        frame.environment.scopes = crate::heap::ScopeList::from_single(Scope {
+            receiver,
+            owner: receiver,
+        });
         self.state = State::Running;
         Ok(())
     }
@@ -572,6 +1094,58 @@ impl Vm {
                     "Module imports require a registered declaration ModuleKey.",
                 )
             })?;
+        if self.pure_standard_host
+            && spec
+                .original_uri
+                .as_str()
+                .is_some_and(crate::host::resources::is_clean_file_uri)
+            && let Ok(from) = crate::host::resources::module_trust_level(&importer.original_uri)
+            && let Ok(to) = crate::host::resources::module_trust_level(&spec.absolute_uri)
+            && from >= to
+        {
+            if let Some(cached) = self.modules_original.get_ref(&spec.original_uri).cloned() {
+                let value = self.module_cached(cached)?;
+                let receiver = value.as_object()?;
+                if cache_node {
+                    self.heap.publish_imported_module(owner, site, receiver)?;
+                }
+                self.stack.push(value);
+                self.state = State::Running;
+                return Ok(());
+            }
+            let key = ModuleKey {
+                id: ModuleKeyId(next_key_id()?),
+                uri: spec.original_uri.clone(),
+                kind: ModuleKeyKind::StandardFile,
+                handle: PklString::default(),
+            };
+            let import_uri = spec.absolute_uri.clone();
+            let original_uri = spec.original_uri.clone();
+            self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
+                site: cache_node.then_some((owner, site.0, site.1)),
+                purpose: ModulePurpose::Import,
+                supplied: None,
+                internal_key: false,
+                phase: ModulePhase::Resolve,
+                key: Some(key.clone()),
+                delegate_key: None,
+                resolved_key: None,
+                cached: true,
+                spec,
+                resolved: None,
+                receiver: None,
+                initializing: false,
+                parsed: None,
+                source: None,
+            });
+            return self.wait_module(ModuleRequestKind::Resolve {
+                key,
+                resolved_key_id: ResolvedKeyId(next_key_id()?),
+                importer,
+                import_uri,
+                original_uri,
+            });
+        }
         let request = ModuleRequestKind::CheckImport {
             importer,
             import_uri: spec.absolute_uri.clone(),
@@ -783,12 +1357,148 @@ impl Vm {
     }
 
     pub(super) fn wait_module(&mut self, kind: ModuleRequestKind) -> Result<(), RuntimeError> {
+        if self.pure_standard_host
+            && self.inline_module_depth < 16
+            && !self.frames.last().is_some_and(|frame| {
+                frame.glob.is_some()
+                    || frame
+                        .analysis
+                        .as_ref()
+                        .is_some_and(|run| run.awaiting_host())
+            })
+            && let Some(result) = self.try_inline_standard_module_request(&kind)
+        {
+            return result;
+        }
         let id = self.next_request;
         self.next_request = id
             .checked_add(1)
             .ok_or_else(|| invalid("Host request identity exhausted"))?;
         self.state = State::Waiting(PendingRequest::Module(ModuleRequest { id, kind }));
         Ok(())
+    }
+
+    fn try_inline_standard_module_request(
+        &mut self,
+        kind: &ModuleRequestKind,
+    ) -> Option<Result<(), RuntimeError>> {
+        match kind {
+            ModuleRequestKind::SelectKey { id, uri, phase } => {
+                let selected_kind = if uri
+                    .as_str()
+                    .is_some_and(crate::host::resources::is_clean_file_uri)
+                {
+                    ModuleKeyKind::StandardFile
+                } else if uri.starts_with("pkl:")
+                    && crate::host::resources::validate_module_key_uri(uri).is_ok()
+                {
+                    ModuleKeyKind::StandardLibrary
+                } else {
+                    return None;
+                };
+                let key = ModuleKey {
+                    id: *id,
+                    uri: uri.clone(),
+                    kind: selected_kind,
+                    handle: PklString::default(),
+                };
+                self.inline_module_depth += 1;
+                let res = if *phase == SelectionPhase::ClausePreparation {
+                    self.selected_clause_key(Ok(key))
+                } else {
+                    self.selected_module_key(Ok(key))
+                };
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            ModuleRequestKind::QueryCachePolicy { key }
+                if matches!(
+                    key.kind,
+                    ModuleKeyKind::StandardLibrary
+                        | ModuleKeyKind::StandardFile
+                        | ModuleKeyKind::StandardHttp
+                        | ModuleKeyKind::StandardGenericUrl
+                ) || key.handle == "builtin:modulepath" =>
+            {
+                self.inline_module_depth += 1;
+                let res = self.queried_module_cache_policy(Ok(true));
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            ModuleRequestKind::QueryFragmentPaths { key }
+                if matches!(
+                    key.kind,
+                    ModuleKeyKind::StandardLibrary
+                        | ModuleKeyKind::StandardFile
+                        | ModuleKeyKind::StandardHttp
+                        | ModuleKeyKind::StandardGenericUrl
+                ) || key.handle == "builtin:modulepath" =>
+            {
+                let has_fragment =
+                    key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:");
+                let is_name_phase = self
+                    .frames
+                    .last()
+                    .and_then(|frame| frame.module_load.as_ref())
+                    .is_some_and(|run| run.phase == ModulePhase::Name);
+                self.inline_module_depth += 1;
+                let res = if is_name_phase {
+                    self.resolved_module_name(Ok(has_fragment))
+                } else {
+                    self.resolved_name_fragment_paths(Ok(has_fragment))
+                };
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            ModuleRequestKind::Capabilities { key, module }
+                if key
+                    .as_ref()
+                    .is_some_and(|k| k.kind == ModuleKeyKind::StandardFile)
+                    || (key.is_none()
+                        && module
+                            .original_uri
+                            .as_str()
+                            .is_some_and(crate::host::resources::is_clean_file_uri)) =>
+            {
+                self.inline_module_depth += 1;
+                let res = self.resolved_capabilities(Ok(crate::modules::ModuleCapabilities {
+                    local: true,
+                    hierarchical: true,
+                    fragment_paths: false,
+                }));
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            ModuleRequestKind::ResolveImportUri { key, authored_uri }
+                if !authored_uri.starts_with("@")
+                    && !key.uri.starts_with("package:")
+                    && !key.uri.starts_with("projectpackage:") =>
+            {
+                let resolved_uri =
+                    crate::host::resources::resolve_module_key_uri(authored_uri, &key.uri).ok()?;
+                crate::host::resources::validate_module_key_uri(&resolved_uri).ok()?;
+                self.inline_module_depth += 1;
+                let res = self.resolved_import_uri(Ok(resolved_uri));
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            ModuleRequestKind::CheckImport {
+                importer,
+                import_uri,
+            } => {
+                let from =
+                    crate::host::resources::module_trust_level(&importer.original_uri).ok()?;
+                let to = crate::host::resources::module_trust_level(import_uri).ok()?;
+                if from < to {
+                    return None;
+                }
+                self.inline_module_depth += 1;
+                let res = self.checked_import(Ok(()));
+                self.inline_module_depth -= 1;
+                Some(res)
+            }
+            _ => None,
+        }
     }
 
     pub fn complete_module(
@@ -1091,10 +1801,16 @@ impl Vm {
         let receiver = run
             .receiver
             .ok_or_else(|| invalid("missing empty module"))?;
+        let cached = run.cached;
         self.modules_original
             .insert(resolved.original_uri.clone(), CachedModule::Value(receiver));
         self.modules_resolved
             .insert(resolved.resolved_uri.clone(), CachedModule::Value(receiver));
+        if cached {
+            self.record_cached_module_uris(&resolved.original_uri, &resolved.resolved_uri);
+        } else {
+            self.record_uncached_module_uris(&resolved.original_uri, &resolved.resolved_uri);
+        }
         let mut source = Arc::new(RuntimeSource {
             text: input.text.clone(),
             uri: resolved.source_uri.clone(),
@@ -1117,12 +1833,18 @@ impl Vm {
             });
         // VmLanguage infers the selected key's module name even when parsing
         // fails. Keep the original diagnostic while its name getter suspends.
-        let parsed = crate::parser::parse_module_for_evaluation(&input.text)
-            .map_err(|failure| Box::new((*failure, import_member)));
+        let parsed =
+            if let Some((cached_resolved, cached_syntax)) = cached_user_resolved(&input.text) {
+                Ok(ParsedOrResolved::Resolved(cached_resolved, cached_syntax))
+            } else {
+                crate::parser::parse_module_for_evaluation(&input.text)
+                    .map(|m| ParsedOrResolved::Parsed(Box::new(m)))
+                    .map_err(|failure| Box::new((*failure, import_member)))
+            };
         if let Some(name) = parsed
             .as_ref()
             .ok()
-            .and_then(|parsed| parsed.declaration.as_ref())
+            .and_then(|parsed| parsed.module().declaration.as_ref())
             .and_then(|d| d.name.as_ref())
         {
             Arc::make_mut(&mut source).module_name = PklString::join(name, ".");
@@ -1139,7 +1861,15 @@ impl Vm {
             .key
             .clone()
             .ok_or_else(|| invalid("missing loaded ModuleKey"))?;
-        if !crate::host::resources::module_name_needs_fragment_paths(&key.uri) {
+        let skip_fragment_query = (self.pure_standard_host
+            && matches!(
+                key.kind,
+                ModuleKeyKind::StandardFile
+                    | ModuleKeyKind::StandardLibrary
+                    | ModuleKeyKind::StandardHttp
+            ))
+            || !crate::host::resources::module_name_needs_fragment_paths(&key.uri);
+        if skip_fragment_query {
             Arc::make_mut(&mut source).module_name =
                 crate::host::resources::infer_module_name(&key.uri, false)?;
             return self.finish_loaded_parse(parsed, source, receiver);
@@ -1237,7 +1967,7 @@ impl Vm {
 
     fn compile_loaded_module(
         &mut self,
-        parsed: crate::syntax::Module,
+        parsed: ParsedOrResolved,
         source: Arc<RuntimeSource>,
         receiver: ObjectId,
     ) -> Result<(), RuntimeError> {
@@ -1251,21 +1981,159 @@ impl Vm {
             .resolved
             .clone()
             .ok_or_else(|| invalid("missing resolved module"))?;
-        let resolved_ast = crate::resolver::resolve_module_for_evaluation(&parsed);
+        let (resolved_ast, cached_syntax) = match parsed {
+            ParsedOrResolved::Resolved(cached, syntax) => (cached, Some(syntax)),
+            ParsedOrResolved::Parsed(parsed) => {
+                let resolved_ast =
+                    Arc::new(crate::resolver::resolve_module_for_evaluation(&parsed));
+                let syntax = Arc::new(*parsed);
+                store_user_resolved(&source.text, Arc::clone(&resolved_ast), Arc::clone(&syntax));
+                (resolved_ast, Some(syntax))
+            }
+        };
         // The evaluator owns one append-only code arena. Clone only while an
         // external prepared-program snapshot shares it; subsequent modules
         // append in place. Failed compilation retracts only its uncommitted tail.
+        let power_assertions = self.power_assertions;
+        let pure_standard_host = self.pure_standard_host;
+        let module_key = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_load.as_ref())
+            .and_then(|run| run.key.clone());
+        let delegate_key = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_load.as_ref())
+            .and_then(|run| run.delegate_key.clone());
         let program = Arc::make_mut(&mut self.program);
-        let checkpoint = ArenaCheckpoint::new(program);
+        program.align_metadata()?;
         let arena = query_lifecycle::CodeArena::begin(program);
-        let compiled = compile_unit_into(program, &resolved_ast, CompileOptions { fuse_constant_add: true }, self.power_assertions,
-            Some(source.clone()), Some(ModuleIdentity { original_uri: resolved.original_uri, resolved_uri: resolved.resolved_uri }))
-            .and_then(|unit| {
-                if program.blocks.iter_from(checkpoint.blocks).flatten().any(|instruction|
-                    matches!(instruction, Instruction::Constant(value) if value.heap_id().is_some())) {
-                    Err(invalid("object constants cannot be stored in compiled code"))
-                } else { Ok(unit) }
-            });
+        let blocks_start = program.blocks.next_id();
+        let objects_start = program.objects.next_id();
+        let recipes_start = program.type_recipes.next_id();
+        let unit_id_usize = program.units.next_id();
+        let declaration_base = program.next_declaration;
+        let is_base_module =
+            resolved.original_uri == "pkl:base" || resolved.resolved_uri == "pkl:base";
+        let is_primary_root = !is_base_module && program.module_template.is_none();
+        let cacheable_text = source.text.len_bytes() <= 256 * 1024;
+        let text_hash = if cacheable_text {
+            source_text_hash(&source.text)
+        } else {
+            0
+        };
+
+        // Compiled-unit segment cache: replay pre-compiled sealed `CodeStorage`
+        // segments via O(1) `Arc::clone` when source, URIs, and starting offsets match.
+        if cacheable_text
+            && let Ok(unit_id_u32) = u32::try_from(unit_id_usize)
+            && let Ok(cache) = compiled_unit_cache().lock()
+            && let Some(cached) = cache.iter().rev().find(|e| {
+                e.hash == text_hash
+                    && e.blocks_start == blocks_start
+                    && e.objects_start == objects_start
+                    && e.recipes_start == recipes_start
+                    && e.unit_id == unit_id_u32
+                    && e.declaration_base == declaration_base
+                    && e.power_assertions == power_assertions
+                    && e.pure_standard_host == pure_standard_host
+                    && e.is_primary_root == is_primary_root
+                    && e.original_uri == resolved.original_uri
+                    && e.resolved_uri == resolved.resolved_uri
+                    && e.source_uri == source.uri
+                    && e.module_name == source.module_name
+                    && e.text == source.text
+            })
+        {
+            let blocks_seg = Arc::clone(&cached.blocks);
+            let metadata_seg = Arc::clone(&cached.metadata);
+            let objects_seg = Arc::clone(&cached.objects);
+            let recipes_seg = Arc::clone(&cached.type_recipes);
+            let next_decl_after = cached.next_declaration_after;
+            let mut unit_clone = cached.unit.clone();
+            let decl_sources = Arc::clone(&cached.declaration_sources);
+            let refl_annots = cached.reflection_annotations.clone();
+            let alias_defs = cached.alias_definitions.clone();
+            let constr_origins = cached.constraint_origins.clone();
+            drop(cache);
+
+            let blocks_end = blocks_start + blocks_seg.len();
+            program.blocks.push_sealed_segment(blocks_seg)?;
+            program.metadata.push_sealed_segment(metadata_seg)?;
+            program.objects.push_sealed_segment(objects_seg)?;
+            program.type_recipes.push_sealed_segment(recipes_seg)?;
+            program.next_declaration = next_decl_after;
+            if !decl_sources.is_empty() {
+                program
+                    .extra_declaration_sources
+                    .push((blocks_start..blocks_end, decl_sources));
+            }
+            if !refl_annots.is_empty() {
+                program.reflection_annotations.extend(refl_annots);
+            }
+            if !alias_defs.is_empty() {
+                program.alias_definitions.extend(alias_defs);
+            }
+            if !constr_origins.is_empty() {
+                program.constraint_origins.extend(constr_origins);
+            }
+            if is_primary_root {
+                program.module_template = Some(unit_clone.template);
+                program.module_name = unit_clone.name.clone();
+                program.entry = unit_clone.entry;
+                program.initial_module_members = unit_clone.initial_members.clone();
+            }
+            unit_clone.key = module_key;
+            unit_clone.delegate_key = delegate_key;
+            let entry = unit_clone.entry;
+            program.units.try_push(unit_clone)?;
+            let owner = self.heap.allocate_executable();
+            self.code_arenas.push(arena.finish(program, owner, false));
+            self.declaration_roots_dirty = true;
+            self.heap.get_mut(receiver)?.environment.code_owner = Some(owner);
+            self.state = State::Running;
+            self.push_module_initializer(entry, Some(receiver));
+            self.frames.last_mut().unwrap().environment.code_owner = Some(owner);
+            return Ok(());
+        }
+
+        let checkpoint = ArenaCheckpoint::new(program);
+        let before_decl_len = program.declaration_sources.len();
+        let before_refl_len = program.reflection_annotations.len();
+        let before_alias_len = program.alias_definitions.len();
+        let before_constr_len = program.constraint_origins.len();
+        let before_base_mixin = program.base_mixin_declaration;
+        let compiled = compile_unit_into_with_syntax(
+            program,
+            &resolved_ast,
+            Some(Arc::clone(&resolved_ast)),
+            cached_syntax,
+            CompileOptions {
+                fuse_constant_add: true,
+            },
+            power_assertions,
+            Some(source.clone()),
+            Some(ModuleIdentity {
+                original_uri: resolved.original_uri.clone(),
+                resolved_uri: resolved.resolved_uri.clone(),
+            }),
+            pure_standard_host,
+        )
+        .and_then(|unit| {
+            if program
+                .blocks
+                .iter_from(checkpoint.blocks)
+                .flatten()
+                .any(|instruction| {
+                    matches!(instruction, Instruction::Constant(value) if value.heap_id().is_some())
+                })
+            {
+                Err(invalid("object constants cannot be stored in compiled code"))
+            } else {
+                Ok(unit)
+            }
+        });
         let unit = match compiled {
             Ok(unit) => unit,
             Err(mut error) => {
@@ -1284,16 +2152,84 @@ impl Vm {
                 return Err(error);
             }
         };
-        program.units[unit.0 as usize].key = self
-            .frames
-            .last()
-            .and_then(|frame| frame.module_load.as_ref())
-            .and_then(|run| run.key.clone());
-        program.units[unit.0 as usize].delegate_key = self
-            .frames
-            .last()
-            .and_then(|frame| frame.module_load.as_ref())
-            .and_then(|run| run.delegate_key.clone());
+        let blocks_end = program.blocks.next_id();
+        let objects_end = program.objects.next_id();
+        let recipes_end = program.type_recipes.next_id();
+        if cacheable_text
+            && program.units[unit.0 as usize].build.is_none()
+            && program.units.next_id() == unit_id_usize + 1
+            && blocks_end.saturating_sub(blocks_start) <= 256
+            && program.base_mixin_declaration == before_base_mixin
+            && program.metadata.next_id() == blocks_end
+        {
+            let decl_delta: Vec<_> = program
+                .declaration_sources
+                .range(blocks_start..blocks_end)
+                .map(|(&k, v)| (k, v.clone()))
+                .collect();
+            let refl_delta: Vec<_> = program
+                .reflection_annotations
+                .iter()
+                .filter(|(_, block)| **block >= blocks_start && **block < blocks_end)
+                .map(|(k, &v)| (k.clone(), v))
+                .collect();
+            let alias_delta: Vec<_> = program
+                .alias_definitions
+                .range(declaration_base..program.next_declaration)
+                .map(|(&k, v)| (k, v.clone()))
+                .collect();
+            let constr_delta: Vec<_> = program
+                .constraint_origins
+                .range(blocks_start..blocks_end)
+                .map(|(&k, v)| (k, v.clone()))
+                .collect();
+            if program.declaration_sources.len() == before_decl_len + decl_delta.len()
+                && program.reflection_annotations.len() == before_refl_len + refl_delta.len()
+                && program.alias_definitions.len() == before_alias_len + alias_delta.len()
+                && program.constraint_origins.len() == before_constr_len + constr_delta.len()
+                && let (Some(blocks_seg), Some(metadata_seg), Some(objects_seg), Some(recipes_seg)) = (
+                    program.blocks.slice_segment(blocks_start, blocks_end),
+                    program.metadata.slice_segment(blocks_start, blocks_end),
+                    program.objects.slice_segment(objects_start, objects_end),
+                    program
+                        .type_recipes
+                        .slice_segment(recipes_start, recipes_end),
+                )
+                && let Ok(mut cache) = compiled_unit_cache().lock()
+            {
+                if cache.len() >= 32 {
+                    cache.remove(0);
+                }
+                cache.push(CachedCompiledUnit {
+                    hash: text_hash,
+                    text: source.text.clone(),
+                    source_uri: source.uri.clone(),
+                    module_name: source.module_name.clone(),
+                    original_uri: resolved.original_uri,
+                    resolved_uri: resolved.resolved_uri,
+                    power_assertions,
+                    pure_standard_host,
+                    is_primary_root,
+                    blocks_start,
+                    objects_start,
+                    recipes_start,
+                    unit_id: unit.0,
+                    declaration_base,
+                    next_declaration_after: program.next_declaration,
+                    blocks: blocks_seg,
+                    metadata: metadata_seg,
+                    objects: objects_seg,
+                    type_recipes: recipes_seg,
+                    unit: program.units[unit.0 as usize].clone(),
+                    declaration_sources: Arc::from(decl_delta),
+                    reflection_annotations: refl_delta,
+                    alias_definitions: alias_delta,
+                    constraint_origins: constr_delta,
+                });
+            }
+        }
+        program.units[unit.0 as usize].key = module_key;
+        program.units[unit.0 as usize].delegate_key = delegate_key;
         let entry = program.units[unit.0 as usize].entry;
         let owner = self.heap.allocate_executable();
         self.code_arenas.push(arena.finish(program, owner, false));
@@ -1306,53 +2242,9 @@ impl Vm {
     }
 
     pub(super) fn push_module_initializer(&mut self, entry: usize, receiver: Option<ObjectId>) {
-        self.frames.push(Frame {
-            guest_catch: None,
-            block: entry,
-            pc: 0,
-            base: self.stack.len(),
-            environment: Environment::default(),
-            force: None,
-            lambda: false,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            deep_force: None,
-            warning: None,
-            method_call_site: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: None,
-            amendment_arguments: None,
-            amendment_end: None,
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: false,
-            diagnostic_member: None,
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: receiver,
-        });
+        let mut frame = self.alloc_frame(entry, 0, self.stack.len(), Environment::default());
+        frame.module_receiver = receiver;
+        self.frames.push(frame);
     }
 
     /// Break cyclic module-import reads while a cached import's module

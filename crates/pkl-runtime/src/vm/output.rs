@@ -302,6 +302,7 @@ impl Definitions<'_> {
     }
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn builtin_members(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,

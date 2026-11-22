@@ -735,8 +735,8 @@ fn check_builtin_decl_ann(
     }
     if vm
         .program
-        .reflection_annotations
-        .contains_key(&(decl.source.uri.clone(), decl.syntax.header_span))
+        .reflection_annotation(&(decl.source.uri.clone(), decl.syntax.header_span))
+        .is_some()
     {
         needed.insert(BuiltinAnnKey {
             owner: decl.owner,
@@ -1076,10 +1076,9 @@ fn build_builtin_annotations_block(
     let mut inputs = Vec::new();
 
     for key in keys {
-        let Some(&block) = vm
+        let Some(block) = vm
             .program
-            .reflection_annotations
-            .get(&(key.source_uri.clone(), key.header_span))
+            .reflection_annotation(&(key.source_uri.clone(), key.header_span))
         else {
             code.push(Instruction::Constant(Value::Null));
             continue;
@@ -1204,8 +1203,7 @@ fn pinned_module(
 fn declaration_from_code(vm: &Vm, owner: ObjectId, code: usize) -> Result<DeclInfo, RuntimeError> {
     let syntax = vm
         .program
-        .declaration_sources
-        .get(&code)
+        .declaration_source(code)
         .ok_or_else(|| invalid("missing original declaration recipe"))?
         .clone();
     let source = vm

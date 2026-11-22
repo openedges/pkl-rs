@@ -19,7 +19,7 @@ use crate::resources::ReadResult;
 use crate::source::{SourceMap, SourceText};
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, RuntimeSource, Value};
 use crate::vm::repl::CompiledReplMember;
-use crate::vm::{Instruction, Program, ReadRequest};
+use crate::vm::{Program, ReadRequest};
 use std::collections::{BTreeSet, VecDeque};
 use std::sync::Arc;
 
@@ -172,7 +172,7 @@ impl ReplSession {
         if !working_dir_uri.ends_with('/') {
             working_dir_uri.push('/');
         }
-        let program = Arc::new(Program::new(vec![vec![Instruction::Return]]));
+        let program = Program::session_shared();
         let mut host = HostSession::with_context(
             program,
             EvaluationContext {

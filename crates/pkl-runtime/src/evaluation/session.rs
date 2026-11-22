@@ -88,28 +88,35 @@ pub struct SourceSession {
     last_completed_call: Option<Call>,
     last_expression: Option<usize>,
     use_color: bool,
+    pure_standard_host: bool,
+    query_repl_resolved_ok: bool,
+    awaiting_query_resolve: bool,
+    primary_source_cache: Option<Arc<RuntimeSource>>,
+    primary_source_id: Option<crate::value::ObjectId>,
 }
 
 impl SourceSession {
     /// Configure an evaluator without parsing a module, selecting a key, or doing I/O.
     pub fn module_evaluator(options: SourceSessionOptions) -> Self {
-        let mut sources = SourceMap::default();
-        let id = sources.add("repl:text", "");
-        let source = sources.get(id).unwrap().clone();
-        let program = Arc::new(Program::new(vec![vec![Instruction::Return]]));
-        let mut host = HostSession::with_context(
-            program,
-            EvaluationContext {
-                primary_source: None,
-                trace_mode: options.trace_mode,
-                log_delivery: options.log_delivery,
-                frame_transformer: options.frame_transformer,
-                platform_metadata: options
-                    .platform_data
-                    .then(crate::logging::PlatformMetadata::default),
-            },
-        );
+        static EMPTY_REPL_SOURCE: std::sync::OnceLock<Source> = std::sync::OnceLock::new();
+        let source = EMPTY_REPL_SOURCE
+            .get_or_init(|| {
+                let mut sources = SourceMap::default();
+                let id = sources.add("repl:text", "");
+                sources.get(id).unwrap().clone()
+            })
+            .clone();
+        let mut host = HostSession::with_base_snapshot(EvaluationContext {
+            primary_source: None,
+            trace_mode: options.trace_mode,
+            log_delivery: options.log_delivery,
+            frame_transformer: options.frame_transformer,
+            platform_metadata: options
+                .platform_data
+                .then(crate::logging::PlatformMetadata::default),
+        });
         host.set_power_assertions(options.evaluation.power_assertions);
+        host.enable_auto_gc();
         Self {
             host,
             public_lifecycle: true,
@@ -134,7 +141,72 @@ impl SourceSession {
             last_completed_call: None,
             last_expression: None,
             use_color: false,
+            pure_standard_host: false,
+            query_repl_resolved_ok: false,
+            awaiting_query_resolve: false,
+            primary_source_cache: None,
+            primary_source_id: None,
         }
+    }
+
+    /// Marks whether the driving Host uses pure, immutable standard module resolution
+    /// (no custom security manager, no custom/external module readers), allowing warm
+    /// cached-module public operations to bypass redundant Host roundtrips.
+    pub fn set_pure_standard_host(&mut self, enabled: bool) {
+        self.pure_standard_host = enabled;
+        self.host.set_pure_standard_host(enabled);
+    }
+
+    /// Builder-style helper for [`Self::set_pure_standard_host`].
+    pub fn with_pure_standard_host(mut self, enabled: bool) -> Self {
+        self.pure_standard_host = enabled;
+        self.host.set_pure_standard_host(enabled);
+        self
+    }
+
+    fn sync_primary_source(&mut self) {
+        let id = self.host.public_primary_id();
+        if id.is_some() && self.primary_source_id == id {
+            return;
+        }
+        if let Some(source) = self.host.public_primary_source() {
+            if self
+                .primary_source_cache
+                .as_ref()
+                .is_some_and(|prev| Arc::ptr_eq(prev, &source))
+            {
+                self.primary_source_id = id;
+                return;
+            }
+            let mut sources = SourceMap::default();
+            let src_id = sources.add(source.uri.clone(), source.text.clone());
+            self.source = sources.get(src_id).unwrap().clone();
+            self.uri = source.uri.clone();
+            self.name = source.module_name.clone();
+            self.primary_source_cache = Some(source);
+            self.primary_source_id = id;
+        }
+    }
+
+    fn reset_provisional_source(&mut self, source: &crate::modules::ModuleSourceSpec) {
+        if source.contents.is_none()
+            && self
+                .primary_source_cache
+                .as_ref()
+                .is_some_and(|cached| cached.uri == source.uri)
+        {
+            return;
+        }
+        let mut sources = SourceMap::default();
+        let id = sources.add(
+            source.uri.clone(),
+            source.contents.clone().unwrap_or_else(|| "".into()),
+        );
+        self.source = sources.get(id).unwrap().clone();
+        self.uri = source.uri.clone();
+        self.name = PklString::default();
+        self.primary_source_cache = None;
+        self.primary_source_id = None;
     }
 
     /// Enables or disables ANSI color rendering for diagnostics emitted by this session.
@@ -151,6 +223,35 @@ impl SourceSession {
     /// Returns whether ANSI color rendering is enabled on this session.
     pub fn use_color(&self) -> bool {
         self.use_color
+    }
+
+    /// Returns `true` when `uri` is already warm-cached in this evaluator on a pure
+    /// standard host and no evaluation is currently active.
+    #[inline]
+    pub fn has_warm_cached_module(&self, uri: &PklString) -> bool {
+        self.pure_standard_host
+            && self.public_lifecycle
+            && self.calls.is_empty()
+            && self.host.has_warm_cached_module(uri)
+    }
+
+    /// Attempts to pack an already-warm-cached module's `"module"` or `"output.value"`
+    /// directly into a compact columnar buffer with zero VM execution or MessagePack
+    /// encoding. Returns `false` when full evaluation/fallback is required.
+    #[inline]
+    pub fn try_pack_warm_expression_columnar(
+        &mut self,
+        uri: &PklString,
+        expression: &str,
+        out: &mut crate::vm::columnar_value::ColumnarValueBuffer,
+    ) -> bool {
+        self.pure_standard_host
+            && self.public_lifecycle
+            && self.calls.is_empty()
+            && self.open().is_ok()
+            && self
+                .host
+                .try_pack_warm_expression_columnar(uri, expression, out)
     }
 
     /// Read-only access to the underlying cooperative `HostSession`.
@@ -190,19 +291,45 @@ impl SourceSession {
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
-        let entry = self
-            .host
-            .append_public_pkl_binary_operation(source.clone(), expression.clone())?;
-        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        if self.calls.is_empty() {
+            self.module = None;
+            self.host.set_session_root(None);
+            self.host.maybe_auto_gc_between_operations();
+        }
+        let warm_op = match expression.original().as_str() {
+            Some("module") => Some(crate::vm::WarmPublicOp::PklBinaryModule),
+            Some("output.text") => Some(crate::vm::WarmPublicOp::PklBinaryOutputText),
+            Some("output.value") => Some(crate::vm::WarmPublicOp::PklBinaryOutputValue),
+            Some("output.bytes") => Some(crate::vm::WarmPublicOp::PklBinaryOutputBytes),
+            _ if self.query_repl_resolved_ok => Some(crate::vm::WarmPublicOp::Query {
+                expression: &expression,
+                raw_value: true,
+                encode_pkl_binary: true,
+            }),
+            _ => None,
+        };
+        let mut started_warm = false;
+        if self.pure_standard_host
+            && self.calls.is_empty()
+            && (source.contents.is_none() || source.uri != "repl:text")
+            && let Some(op) = warm_op
+        {
+            started_warm =
+                self.host
+                    .try_start_warm_cached_public_op(&source.uri, op, now_ms, timeout_ms)?;
+        }
+        if !started_warm {
+            let entry = self
+                .host
+                .append_public_pkl_binary_operation(source.clone(), expression.clone())?;
+            self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        }
         self.retain_active_query_text();
-        let mut sources = SourceMap::default();
-        let id = sources.add(
-            source.uri.clone(),
-            source.contents.clone().unwrap_or_else(|| "".into()),
-        );
-        self.source = sources.get(id).unwrap().clone();
-        self.uri = source.uri.clone();
-        self.name = PklString::default();
+        if started_warm {
+            self.sync_primary_source();
+        } else {
+            self.reset_provisional_source(&source);
+        }
         let index = self.paths.len();
         self.paths.push(expression.clone());
         let call = match expression.original().as_str() {
@@ -210,9 +337,14 @@ impl SourceSession {
             Some("output.bytes" | "module" | "output.value") => Call::OutputBytes,
             _ => Call::Path(index),
         };
+        let query_slot = if started_warm {
+            call.expression()
+        } else {
+            None
+        };
         self.calls.push(call);
-        self.public_queries.push(None);
-        self.last_expression = None;
+        self.public_queries.push(query_slot);
+        self.last_expression = query_slot;
         Ok(())
     }
 
@@ -229,19 +361,35 @@ impl SourceSession {
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
-        let entry = self
-            .host
-            .append_public_output_bytes_operation(source.clone())?;
-        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        if self.calls.is_empty() {
+            self.module = None;
+            self.host.set_session_root(None);
+            self.host.maybe_auto_gc_between_operations();
+        }
+        let mut started_warm = false;
+        if self.pure_standard_host
+            && self.calls.is_empty()
+            && (source.contents.is_none() || source.uri != "repl:text")
+        {
+            started_warm = self.host.try_start_warm_cached_public_op(
+                &source.uri,
+                crate::vm::WarmPublicOp::OutputBytes,
+                now_ms,
+                timeout_ms,
+            )?;
+        }
+        if !started_warm {
+            let entry = self
+                .host
+                .append_public_output_bytes_operation(source.clone())?;
+            self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        }
         self.retain_active_query_text();
-        let mut sources = SourceMap::default();
-        let id = sources.add(
-            source.uri.clone(),
-            source.contents.clone().unwrap_or_else(|| "".into()),
-        );
-        self.source = sources.get(id).unwrap().clone();
-        self.uri = source.uri.clone();
-        self.name = PklString::default();
+        if started_warm {
+            self.sync_primary_source();
+        } else {
+            self.reset_provisional_source(&source);
+        }
         self.calls.push(Call::OutputBytes);
         self.public_queries.push(None);
         self.last_expression = None;
@@ -261,19 +409,35 @@ impl SourceSession {
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
-        let entry = self
-            .host
-            .append_public_load_module_operation(source.clone())?;
-        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        if self.calls.is_empty() {
+            self.module = None;
+            self.host.set_session_root(None);
+            self.host.maybe_auto_gc_between_operations();
+        }
+        let mut started_warm = false;
+        if self.pure_standard_host
+            && self.calls.is_empty()
+            && (source.contents.is_none() || source.uri != "repl:text")
+        {
+            started_warm = self.host.try_start_warm_cached_public_op(
+                &source.uri,
+                crate::vm::WarmPublicOp::LoadModule,
+                now_ms,
+                timeout_ms,
+            )?;
+        }
+        if !started_warm {
+            let entry = self
+                .host
+                .append_public_load_module_operation(source.clone())?;
+            self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        }
         self.retain_active_query_text();
-        let mut sources = SourceMap::default();
-        let id = sources.add(
-            source.uri.clone(),
-            source.contents.clone().unwrap_or_else(|| "".into()),
-        );
-        self.source = sources.get(id).unwrap().clone();
-        self.uri = source.uri.clone();
-        self.name = PklString::default();
+        if started_warm {
+            self.sync_primary_source();
+        } else {
+            self.reset_provisional_source(&source);
+        }
         self.calls.push(Call::Module);
         self.public_queries.push(None);
         self.last_expression = None;
@@ -294,28 +458,58 @@ impl SourceSession {
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
-        let entry = self
-            .host
-            .append_public_operation(source.clone(), expression.clone())?;
-        self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        if self.calls.is_empty() {
+            self.module = None;
+            self.host.set_session_root(None);
+            self.host.maybe_auto_gc_between_operations();
+        }
+        let is_output_text = expression.original() == "output.text";
+        let mut started_warm = false;
+        if self.pure_standard_host
+            && self.calls.is_empty()
+            && (source.contents.is_none() || source.uri != "repl:text")
+            && (is_output_text || self.query_repl_resolved_ok)
+        {
+            let op = if is_output_text {
+                crate::vm::WarmPublicOp::OutputText
+            } else {
+                crate::vm::WarmPublicOp::Query {
+                    expression: &expression,
+                    raw_value: false,
+                    encode_pkl_binary: false,
+                }
+            };
+            started_warm =
+                self.host
+                    .try_start_warm_cached_public_op(&source.uri, op, now_ms, timeout_ms)?;
+        }
+        if !started_warm {
+            let entry = self
+                .host
+                .append_public_operation(source.clone(), expression.clone())?;
+            self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
+        }
         self.retain_active_query_text();
-        let mut sources = SourceMap::default();
-        let id = sources.add(
-            source.uri.clone(),
-            source.contents.clone().unwrap_or_else(|| "".into()),
-        );
-        self.source = sources.get(id).unwrap().clone();
-        self.uri = source.uri.clone();
-        self.name = PklString::default();
+        if started_warm {
+            self.sync_primary_source();
+        } else {
+            self.reset_provisional_source(&source);
+        }
         let index = self.paths.len();
-        self.paths.push(expression.clone());
-        self.calls.push(if expression.original() == "output.text" {
+        self.paths.push(expression);
+        let call = if is_output_text {
             Call::OutputText
         } else {
             Call::Path(index)
-        });
-        self.public_queries.push(None);
-        self.last_expression = None;
+        };
+        let query_slot = if started_warm {
+            call.expression()
+        } else {
+            None
+        };
+        self.calls.push(call);
+        self.public_queries.push(query_slot);
+        self.last_expression = query_slot;
         Ok(())
     }
 
@@ -798,6 +992,9 @@ impl SourceSession {
             .map_err(|failure| runtime_error_text(&source, &uri, &name, "", failure, None))?;
         let mut host = HostSession::with_context(program, context);
         host.set_power_assertions(options.evaluation.power_assertions);
+        if output_profile.is_some() {
+            host.enable_auto_gc();
+        }
         Ok(Self {
             host,
             public_lifecycle: false,
@@ -822,6 +1019,11 @@ impl SourceSession {
             last_completed_call: None,
             last_expression: None,
             use_color: false,
+            pure_standard_host: false,
+            query_repl_resolved_ok: false,
+            awaiting_query_resolve: false,
+            primary_source_cache: None,
+            primary_source_id: None,
         })
     }
 
@@ -1053,16 +1255,11 @@ impl SourceSession {
         let previous_depth = self.host.context_depth();
         let event = self.host.poll(now_ms, budget);
         if self.public_lifecycle {
-            if let Some(source) = self.host.public_primary_source() {
-                let mut sources = SourceMap::default();
-                let id = sources.add(source.uri.clone(), source.text.clone());
-                self.source = sources.get(id).unwrap().clone();
-                self.uri = source.uri.clone();
-                self.name = source.module_name.clone();
-            }
+            self.sync_primary_source();
             if matches!(&event, HostPoll::Module { request, .. } if matches!(request.kind,
                 crate::modules::ModuleRequestKind::ResolveKey { phase: crate::modules::ResolutionPhase::Query, .. }))
             {
+                self.awaiting_query_resolve = true;
                 self.last_expression = self.calls.last().copied().and_then(Call::expression);
                 if let Some(active) = self.public_queries.last_mut() {
                     *active = self.last_expression;
@@ -1072,6 +1269,7 @@ impl SourceSession {
         if let Some(result) = self.host.take_intermediate_result() {
             match result {
                 Ok(module) => {
+                    self.host.set_session_root(Some(module.clone()));
                     self.module = Some(module);
                     self.last_expression = self.calls.last().and_then(|call| match call {
                         Call::InitialPath(index) => Some(*index),
@@ -1098,7 +1296,10 @@ impl SourceSession {
                     Call::Module => {
                         self.last_expression = None;
                         match result {
-                            Ok(module) => self.module = Some(module.clone()),
+                            Ok(module) => {
+                                self.host.set_session_root(Some(module.clone()));
+                                self.module = Some(module.clone());
+                            }
                             Err(error) => {
                                 if !matches!(
                                     error.kind,
@@ -1273,7 +1474,17 @@ impl SourceSession {
         completion: ModuleCompletion,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_module(token, completion, now_ms)
+        let query_ok = self.awaiting_query_resolve
+            && matches!(
+                &completion,
+                ModuleCompletion::KeyResolved(Ok(_)) | ModuleCompletion::Resolved(Ok(_))
+            );
+        self.awaiting_query_resolve = false;
+        let res = self.host.complete_module(token, completion, now_ms);
+        if res.is_ok() && query_ok {
+            self.query_repl_resolved_ok = true;
+        }
+        res
     }
 
     pub fn complete_default_module(
@@ -1445,11 +1656,15 @@ impl SourceSession {
     }
     fn release_module(&mut self) {
         self.module = None;
+        self.host.set_session_root(None);
         self.calls.clear();
         self.public_queries.clear();
         self.setup_failure = None;
         self.last_completed_call = None;
         self.last_expression = None;
+        self.awaiting_query_resolve = false;
+        self.primary_source_cache = None;
+        self.primary_source_id = None;
         if self.public_lifecycle {
             self.paths.clear();
         }

@@ -65,6 +65,51 @@ pub(super) fn compile_session_expression_value_for_unit(
     )
 }
 
+struct CachedParsedExpression {
+    hash: u64,
+    source: crate::source::SourceText,
+    parsed: Arc<crate::parser::ParsedExpression>,
+}
+
+fn parsed_expression_cache() -> &'static std::sync::Mutex<Vec<CachedParsedExpression>> {
+    static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedParsedExpression>>> =
+        std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(16)))
+}
+
+fn parse_expression_cached(
+    source: &crate::source::SourceText,
+) -> Result<Arc<crate::parser::ParsedExpression>, crate::diagnostic::Diagnostic> {
+    if source.len_bytes() <= 16 * 1024 {
+        let hash = modules::source_text_hash(source);
+        if let Ok(cache) = parsed_expression_cache().lock()
+            && let Some(entry) = cache
+                .iter()
+                .rev()
+                .find(|entry| entry.hash == hash && entry.source == *source)
+        {
+            return Ok(Arc::clone(&entry.parsed));
+        }
+        let parsed = Arc::new(crate::parser::parse_expression_for_evaluation(source)?);
+        if let Ok(mut cache) = parsed_expression_cache().lock()
+            && !cache
+                .iter()
+                .any(|entry| entry.hash == hash && entry.source == *source)
+        {
+            if cache.len() >= 16 {
+                cache.remove(0);
+            }
+            cache.push(CachedParsedExpression {
+                hash,
+                source: source.clone(),
+                parsed: Arc::clone(&parsed),
+            });
+        }
+        return Ok(parsed);
+    }
+    crate::parser::parse_expression_for_evaluation(source).map(Arc::new)
+}
+
 fn compile_session_expression_inner(
     program: &mut Program,
     module: &crate::syntax::Module,
@@ -75,7 +120,7 @@ fn compile_session_expression_inner(
     stringify: bool,
 ) -> Result<usize, SessionExpressionError> {
     let expression_source = expression_source.into();
-    let parsed = crate::parser::parse_expression_for_evaluation(&expression_source)
+    let parsed = parse_expression_cached(&expression_source)
         .map_err(|error| SessionExpressionError::Frontend(Box::new(error)))?;
     let resolved =
         crate::resolver::resolve_session_expression(module, expression_source.entire(), &parsed)
@@ -221,6 +266,7 @@ fn append(
         name: "".into(),
         template: primary.template,
         entry: usize::MAX,
+        blocks_start: 0,
         initial_members: Vec::new(),
         import_order: uri_resolution::module_import_order(resolved),
         class_id: primary.class_id,

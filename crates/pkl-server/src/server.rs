@@ -17,10 +17,12 @@ use std::sync::{Arc, Condvar, Mutex, mpsc};
 use std::thread;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-fn debug_log(msg: &str) {
-    if std::env::var_os("PKL_DEBUG").as_deref() == Some(OsStr::new("1")) {
-        eprintln!("[pkl-server] {msg}");
-    }
+fn debug_enabled() -> bool {
+    std::env::var_os("PKL_DEBUG").as_deref() == Some(OsStr::new("1"))
+}
+
+fn debug_log(args: std::fmt::Arguments<'_>) {
+    eprintln!("[pkl-server] {args}");
 }
 
 // ============================================================================
@@ -58,7 +60,9 @@ impl<W: Write + Send + 'static> OutboundSink for StreamWriter<W> {
         let Some(writer) = guard.as_mut() else {
             return Err(ExternalReaderError::Closed);
         };
-        debug_log(&format!("Sending message: {msg:?}"));
+        if debug_enabled() {
+            debug_log(format_args!("Sending message: {msg:?}"));
+        }
         codec::write_message(writer, msg)
     }
 }
@@ -348,7 +352,9 @@ pub fn run_stream_server<R: Read + Send + 'static, W: Write + Send + 'static>(
             }
         };
 
-        debug_log(&format!("Received message: {msg:?}"));
+        if debug_enabled() {
+            debug_log(format_args!("Received message: {msg:?}"));
+        }
 
         match msg {
             ServerMessage::CreateEvaluatorRequest {
@@ -439,9 +445,11 @@ pub fn run_stream_server<R: Read + Send + 'static, W: Write + Send + 'static>(
                 if let Some(evaluator) = evaluators.remove(&evaluator_id) {
                     evaluator.close();
                 } else {
-                    debug_log(&format!(
-                        "Ignoring close request for unknown evaluator ID `{evaluator_id}`."
-                    ));
+                    if debug_enabled() {
+                        debug_log(format_args!(
+                            "Ignoring close request for unknown evaluator ID `{evaluator_id}`."
+                        ));
+                    }
                 }
             }
             ServerMessage::EvaluateRequest {

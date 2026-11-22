@@ -157,11 +157,11 @@ pub struct EvaluatorBuilder {
     ca_certs: CaCertSource,
     http_client: Option<HttpClient>,
     properties: Vec<(String, String)>,
-    environment: Vec<(String, String)>,
+    environment: Option<Vec<(String, String)>>,
     timeout: Option<Duration>,
     external_module_readers: BTreeMap<String, ExternalReaderConfig>,
     external_resource_readers: BTreeMap<String, ExternalReaderConfig>,
-    module_cache_dir: Option<PathBuf>,
+    module_cache_dir: Option<Option<PathBuf>>,
     project_dependencies: Option<ProjectDependenciesManager>,
     output_format: Option<String>,
     test_mode: bool,
@@ -191,11 +191,11 @@ impl EvaluatorBuilder {
             ca_certs: CaCertSource::bundled_default(),
             http_client: None,
             properties: Vec::new(),
-            environment: std::env::vars().collect(),
+            environment: None,
             timeout: None,
             external_module_readers: BTreeMap::new(),
             external_resource_readers: BTreeMap::new(),
-            module_cache_dir: default_module_cache_dir(),
+            module_cache_dir: None,
             project_dependencies: None,
             output_format: None,
             test_mode: false,
@@ -224,11 +224,11 @@ impl EvaluatorBuilder {
             ca_certs: CaCertSource::bundled_default(),
             http_client: None,
             properties: Vec::new(),
-            environment: Vec::new(),
+            environment: Some(Vec::new()),
             timeout: None,
             external_module_readers: BTreeMap::new(),
             external_resource_readers: BTreeMap::new(),
-            module_cache_dir: None,
+            module_cache_dir: Some(None),
             project_dependencies: None,
             output_format: None,
             test_mode: false,
@@ -315,7 +315,7 @@ impl EvaluatorBuilder {
         mut self,
         env: impl IntoIterator<Item = (String, String)>,
     ) -> Self {
-        self.environment = env.into_iter().collect();
+        self.environment = Some(env.into_iter().collect());
         self
     }
 
@@ -326,10 +326,13 @@ impl EvaluatorBuilder {
     ) -> Self {
         let k = key.into();
         let v = value.into();
-        if let Some(entry) = self.environment.iter_mut().find(|(ek, _)| *ek == k) {
+        let env = self
+            .environment
+            .get_or_insert_with(|| std::env::vars().collect());
+        if let Some(entry) = env.iter_mut().find(|(ek, _)| *ek == k) {
             entry.1 = v;
         } else {
-            self.environment.push((k, v));
+            env.push((k, v));
         }
         self
     }
@@ -340,7 +343,7 @@ impl EvaluatorBuilder {
     }
 
     pub fn with_module_cache_dir(mut self, dir: Option<PathBuf>) -> Self {
-        self.module_cache_dir = dir;
+        self.module_cache_dir = Some(dir);
         self
     }
 
@@ -443,7 +446,7 @@ impl EvaluatorBuilder {
             self.properties = settings.external_properties.clone();
         }
         if settings.env_is_set {
-            self.environment = settings.env.clone();
+            self.environment = Some(settings.env.clone());
         }
         if let Some(ref paths) = settings.module_path {
             self.module_paths = paths.clone();
@@ -452,9 +455,9 @@ impl EvaluatorBuilder {
             self.root_dir = Some(root.clone());
         }
         if settings.no_cache == Some(true) {
-            self.module_cache_dir = None;
+            self.module_cache_dir = Some(None);
         } else if let Some(ref cache_dir) = settings.module_cache_dir {
-            self.module_cache_dir = Some(cache_dir.clone());
+            self.module_cache_dir = Some(Some(cache_dir.clone()));
         }
         if let Some(nanos) = settings.timeout_nanos {
             self.timeout = Some(Duration::from_nanos(nanos));
@@ -527,13 +530,19 @@ impl EvaluatorBuilder {
             .timeout
             .map(|d| d.as_millis().min(u64::MAX as u128) as u64);
 
-        let security_for_readers: Arc<dyn SecurityManager> = match &self.security_manager {
-            Some(sec) => sec.clone(),
-            None => Arc::new(StandardSecurityManager::new(
-                self.allowed_modules.as_deref(),
-                self.allowed_resources.as_deref(),
-                self.root_dir.clone(),
-            )?),
+        let needs_reader_security =
+            !self.custom_module_factories.is_empty() || !self.custom_resource_readers.is_empty();
+        let security_for_readers: Option<Arc<dyn SecurityManager>> = if needs_reader_security {
+            Some(match &self.security_manager {
+                Some(sec) => sec.clone(),
+                None => Arc::new(StandardSecurityManager::new(
+                    self.allowed_modules.as_deref(),
+                    self.allowed_resources.as_deref(),
+                    self.root_dir.clone(),
+                )?),
+            })
+        } else {
+            None
         };
 
         let test_logger = Arc::new(TestCapturingLogger::new(self.logger));
@@ -548,13 +557,17 @@ impl EvaluatorBuilder {
             http: self.http_config,
             ca_certs: self.ca_certs,
             properties: self.properties,
-            environment: self.environment,
+            environment: self
+                .environment
+                .unwrap_or_else(|| std::env::vars().collect()),
             timeout_ms,
             external_module_schemes: Vec::new(),
             external_resource_schemes: Vec::new(),
             external_module_readers: self.external_module_readers,
             external_resource_readers: self.external_resource_readers,
-            module_cache_dir: self.module_cache_dir,
+            module_cache_dir: self
+                .module_cache_dir
+                .unwrap_or_else(default_module_cache_dir),
             project_dependencies: self.project_dependencies,
             test_mode: self.test_mode,
             trace_mode: self.trace_mode,
@@ -578,17 +591,19 @@ impl EvaluatorBuilder {
         if let Some(http) = self.http_client {
             ext = ext.with_http_client(http.inner());
         }
-        for factory in self.custom_module_factories {
-            ext = ext.with_custom_module_reader(Arc::new(ModuleKeyFactoryAdapter {
-                factory,
-                security: security_for_readers.clone(),
-            }));
-        }
-        for reader in self.custom_resource_readers {
-            ext = ext.with_custom_resource_reader(Arc::new(ResourceReaderAdapter {
-                reader,
-                security: security_for_readers.clone(),
-            }));
+        if let Some(ref security_for_readers) = security_for_readers {
+            for factory in self.custom_module_factories {
+                ext = ext.with_custom_module_reader(Arc::new(ModuleKeyFactoryAdapter {
+                    factory,
+                    security: security_for_readers.clone(),
+                }));
+            }
+            for reader in self.custom_resource_readers {
+                ext = ext.with_custom_resource_reader(Arc::new(ResourceReaderAdapter {
+                    reader,
+                    security: security_for_readers.clone(),
+                }));
+            }
         }
 
         let host = NativeHost::with_extensions(config, ext).map_err(PklError::configuration)?;
@@ -678,8 +693,12 @@ impl Evaluator {
     ) -> Result<T> {
         self.ensure_open()?;
         let mut stderr = Vec::new();
-        let now = self.host.clock_ms();
         let timeout_ms = self.host.timeout_ms();
+        let now = if timeout_ms.is_some() {
+            self.host.clock_ms()
+        } else {
+            self.session.host_session().last_clock()
+        };
         let res = (|| -> std::result::Result<T, RuntimeError> {
             start(&mut self.session, now, timeout_ms)?;
             let val = self

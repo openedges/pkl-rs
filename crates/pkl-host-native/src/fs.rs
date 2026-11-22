@@ -48,6 +48,13 @@ pub fn path_to_file_uri(path: &Path) -> PklString {
 /// Converts a `file:` URI into a local filesystem `PathBuf`, applying NFC normalization
 /// matching JDK 21's Unix path encoding.
 pub fn file_uri_to_path(uri: &PklString) -> Result<PathBuf, PklString> {
+    if let Some(s) = uri.as_str()
+        && s.starts_with("file:///")
+        && s.is_ascii()
+        && !s.bytes().any(|b| matches!(b, b'%' | b'?' | b'#'))
+    {
+        return Ok(PathBuf::from(&s[7..]));
+    }
     let info = extract_file_uri_for_root_dir(uri)
         .filter(|i| !i.from_jar)
         .ok_or_else(|| PklString::from(format!("Expected `file:` URI, got `{uri}`.")))?;
@@ -55,6 +62,9 @@ pub fn file_uri_to_path(uri: &PklString) -> Result<PathBuf, PklString> {
         return Err(PklString::from(format!(
             "Unsupported remote authority in file URI `{uri}`."
         )));
+    }
+    if info.decoded_path.is_ascii() {
+        return Ok(PathBuf::from(info.decoded_path));
     }
     let normalized = info.decoded_path.nfc().collect::<String>();
     Ok(PathBuf::from(normalized))
@@ -255,15 +265,28 @@ impl NativeFs {
             Err(err) => return Err(ModuleHostError::Io(IoFailure::from(err.to_string()))),
         };
 
-        let resolved_uri = path_to_file_uri(&real_path);
+        let same_canonical_uri = cfg!(unix)
+            && real_path == path
+            && uri.as_str().is_some_and(|raw| {
+                raw.strip_prefix("file://")
+                    .is_some_and(|rest| rest == real_path.to_str().unwrap_or(""))
+            });
+        let resolved_uri = if same_canonical_uri {
+            uri.clone()
+        } else {
+            path_to_file_uri(&real_path)
+        };
 
         // Post-resolve check catches symlinks pointing to disallowed or outside-rootDir paths.
-        if let Err(msg) = self.policy.check_allowlist_only(&resolved_uri, false) {
+        if !same_canonical_uri
+            && let Err(msg) = self.policy.check_allowlist_only(&resolved_uri, false)
+        {
             return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
         }
-        if let Err(msg) =
-            self.policy
-                .check_real_path_under_root_dir(uri, &real_path.to_string_lossy(), false)
+        if self.policy.root_dir().is_some()
+            && let Err(msg) =
+                self.policy
+                    .check_real_path_under_root_dir(uri, &real_path.to_string_lossy(), false)
         {
             return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
         }
@@ -292,10 +315,27 @@ impl NativeFs {
                 ModuleHostError::Io(IoFailure::from(err.to_string()))
             }
         })?;
-        let mut bytes = Vec::new();
-        file.read_to_end(&mut bytes)
-            .map_err(|err| ModuleHostError::Io(IoFailure::from(err.to_string())))?;
-        Ok(bytes)
+        // Fast path for typical small Pkl modules (< 8 KiB): avoids `fstat` + `lseek`
+        // syscalls that `File::read_to_end` issues before reading.
+        let mut stack_buf = [0u8; 8192];
+        let mut total = 0usize;
+        loop {
+            match file.read(&mut stack_buf[total..]) {
+                Ok(0) => return Ok(stack_buf[..total].to_vec()),
+                Ok(n) => {
+                    total += n;
+                    if total == stack_buf.len() {
+                        let mut bytes = Vec::with_capacity(16384);
+                        bytes.extend_from_slice(&stack_buf);
+                        file.read_to_end(&mut bytes)
+                            .map_err(|err| ModuleHostError::Io(IoFailure::from(err.to_string())))?;
+                        return Ok(bytes);
+                    }
+                }
+                Err(err) if err.kind() == std::io::ErrorKind::Interrupted => continue,
+                Err(err) => return Err(ModuleHostError::Io(IoFailure::from(err.to_string()))),
+            }
+        }
     }
 
     /// Reads a `file:` resource (`ResourceReaders.FileResource.read`), returning `Ok(None)`

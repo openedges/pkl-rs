@@ -3,7 +3,7 @@ import { fileUriToPath, pathToFileUri } from './vfs.mjs';
 
 const U64_MAX = 18446744073709551615n;
 const MAX_TIMER_DELAY_MS = 2_147_483_647n;
-const DEFAULT_POLL_BUDGET = 4096;
+const DEFAULT_POLL_BUDGET = 65536;
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder('utf-8', { fatal: true });
 

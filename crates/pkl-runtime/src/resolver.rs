@@ -1749,6 +1749,7 @@ impl<'a> Resolver<'a> {
     /// The pinned AST builder installs entries before evaluation only when the
     /// whole specialized body has constant keys. A generator or dynamic key
     /// leaves duplicate detection to the runtime.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn constant_entries(&self, members: &[ObjectMember]) -> Result<(), Diagnostic> {
         let mut keys = Vec::new();
         for member in members {
@@ -1841,6 +1842,7 @@ impl<'a> Resolver<'a> {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn validate_member(
         &mut self,
         member: &Member,
@@ -2139,6 +2141,7 @@ impl<'a> Resolver<'a> {
         error
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn leaf_expression(&mut self, expression: &'a Expr) -> Result<(), Diagnostic> {
         match &expression.kind {
             ExprKind::Name(name) => {
@@ -2259,6 +2262,7 @@ impl<'a> Resolver<'a> {
     }
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn validate_modifiers(
     modifiers: &[Modifier],
     valid: &[ModifierKind],

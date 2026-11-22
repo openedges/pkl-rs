@@ -1,0 +1,5 @@
+import "package://localhost:0/alpha@1.0.0::sha256:de20d7d5924559bfb7df4fdd129e3b365418161fdc27f7798d8f297fabe15327#/Alpha.pkl"
+
+packageVer = Alpha.ver
+httpBody = read("http://127.0.0.1:{http_port}/resources/data.txt").text
+summary = "\(packageVer):\(httpBody)"

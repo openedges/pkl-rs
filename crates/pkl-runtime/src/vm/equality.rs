@@ -107,6 +107,44 @@ fn string_hash(value: impl Into<PklString>) -> i32 {
     })
 }
 
+pub(crate) const fn int_java_hash(value: i64) -> i32 {
+    ((value as u64) ^ ((value as u64) >> 32)) as i32
+}
+
+pub(crate) fn java_hash_on_heap(heap: &Heap, value: &Value) -> Result<Option<i32>, RuntimeError> {
+    Ok(match value {
+        Value::Null | Value::NullWithDefault(_) => Some(0),
+        Value::Bool(value) => Some(if *value { 1231 } else { 1237 }),
+        Value::Int(value) => Some(int_java_hash(value.get())),
+        Value::Float(value) => {
+            let bits = if value.is_nan() {
+                0x7ff8000000000000
+            } else {
+                value.to_bits()
+            };
+            Some((bits ^ (bits >> 32)) as i32)
+        }
+        Value::Duration(value) => Some(value.java_hash()),
+        Value::IntSeq(value) => Some(value.java_hash()),
+        Value::Regex(value) => Some(value.java_hash()),
+        Value::DataSize(value) => Some(value.java_hash()),
+        Value::String(value) => Some(string_hash(value)),
+        Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
+            hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
+        })),
+        Value::Function(_) => None,
+        Value::TypeAlias(id) => heap.get(*id)?.type_alias.as_ref().map(|name| {
+            if name.contains("#") {
+                string_hash(name)
+            } else {
+                string_hash(PklString::from("pkl.base#").concat(name))
+            }
+        }),
+        Value::Class(id) => Some(string_hash(&heap.class_qualified_name(*id)?)),
+        Value::Object(id) => heap.get(*id)?.java_hash.flatten(),
+    })
+}
+
 impl Vm {
     fn needs_key_hash(&self, id: ObjectId) -> Result<bool, RuntimeError> {
         let object = self.heap.get(id)?;
@@ -118,39 +156,7 @@ impl Vm {
     }
 
     pub(super) fn java_hash(&self, value: &Value) -> Result<Option<i32>, RuntimeError> {
-        Ok(match value {
-            Value::Null | Value::NullWithDefault(_) => Some(0),
-            Value::Bool(value) => Some(if *value { 1231 } else { 1237 }),
-            Value::Int(value) => Some((value.get() as u64 ^ ((value.get() as u64) >> 32)) as i32),
-            Value::Float(value) => {
-                let bits = if value.is_nan() {
-                    0x7ff8000000000000
-                } else {
-                    value.to_bits()
-                };
-                Some((bits ^ (bits >> 32)) as i32)
-            }
-            Value::Duration(value) => Some(value.java_hash()),
-            Value::IntSeq(value) => Some(value.java_hash()),
-            Value::Regex(value) => Some(value.java_hash()),
-            Value::DataSize(value) => Some(value.java_hash()),
-            Value::String(value) => Some(value.encode_utf16().fold(0i32, |hash, unit| {
-                hash.wrapping_mul(31).wrapping_add(i32::from(unit))
-            })),
-            Value::Bytes(value) => Some(value.iter().fold(1i32, |hash, byte| {
-                hash.wrapping_mul(31).wrapping_add(i32::from(*byte as i8))
-            })),
-            Value::Function(_) => None,
-            Value::TypeAlias(id) => self.heap.get(*id)?.type_alias.as_ref().map(|name| {
-                if name.contains("#") {
-                    string_hash(name)
-                } else {
-                    string_hash(PklString::from("pkl.base#").concat(name))
-                }
-            }),
-            Value::Class(id) => Some(string_hash(&self.heap.class_qualified_name(*id)?)),
-            Value::Object(id) => self.heap.get(*id)?.java_hash.flatten(),
-        })
+        java_hash_on_heap(&self.heap, value)
     }
 }
 
@@ -395,6 +401,24 @@ impl Vm {
         receiver: ObjectId,
         key: &CacheKey,
     ) -> Result<Option<Value>, RuntimeError> {
+        if !key.entry {
+            let object = self.heap.get(receiver)?;
+            return Ok(match object.cache.get(key) {
+                Some(LazyState::Completed(value)) => Some(value.clone()),
+                _ => None,
+            });
+        }
+        if !key.method
+            && key.owner.is_none()
+            && let Some(elems) = &self.heap.get(receiver)?.list_elements
+            && let Some(name_str) = key.name.as_str()
+            && let Some(rest) = name_str.strip_prefix('\0')
+            && let Some((_, idx_str)) = rest.split_once(':')
+            && let Ok(idx) = idx_str.parse::<usize>()
+            && let Some(val) = elems.get(idx)
+        {
+            return Ok(Some(val.clone()));
+        }
         let probe = self.cache_value_key(receiver, key)?;
         self.cached_slot_probe(receiver, key, probe.as_ref())
     }
@@ -406,6 +430,16 @@ impl Vm {
         probe: Option<&Value>,
     ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(receiver)?;
+        if key.entry
+            && !key.method
+            && key.owner.is_none()
+            && let Some(elems) = &object.list_elements
+            && let Some(Value::Int(index)) = probe
+            && index.get() >= 0
+            && let Some(val) = elems.get(index.get() as usize)
+        {
+            return Ok(Some(val.clone()));
+        }
         let hash = if let Some(probe) = probe {
             self.java_hash(probe)?.unwrap_or(0)
         } else {
@@ -694,6 +728,18 @@ impl Vm {
         id: ObjectId,
         member: CollectionMember,
     ) -> Result<(), RuntimeError> {
+        if let Some(elems) = &self.heap.get(id)?.list_elements
+            && member.kind == CollectionMemberKind::Element
+            && let Value::Int(idx) = &member.key
+            && idx.get() >= 0
+        {
+            let value = elems
+                .get(idx.get() as usize)
+                .cloned()
+                .ok_or_else(|| invalid("missing effective collection member"))?;
+            self.stack.push(value);
+            return Ok(());
+        }
         let candidates = collections::forcing_members(&self.heap, id)?;
         let probe = member.key.clone();
         self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
@@ -1006,6 +1052,9 @@ impl Vm {
                 .collect();
         }
         if typed || object.collection_kind == CollectionKind::List {
+            if let Some(elems) = &object.list_elements {
+                return Ok(elems.iter().map(|v| (None, v.clone())).collect());
+            }
             let members = if object.collection_kind == CollectionKind::List {
                 collections::ordered_members(&self.heap, id)?
             } else {
@@ -1075,6 +1124,76 @@ impl Vm {
             }
             return Ok(());
         };
+        match task {
+            Task::Reject => {
+                run.reject();
+                self.frames[frame_index].equality_run = Some(run);
+                Ok(())
+            }
+            Task::MapRemoveHash(..)
+            | Task::MapRemoveLookup(..)
+            | Task::MapRemoveCompare(..)
+            | Task::MapRemoveMatched(..)
+            | Task::MapRemoveConfirmed(..)
+            | Task::MapRemoveAbsent(..)
+            | Task::MapRemoveOrder(..)
+            | Task::MapRemoveFinish(..)
+            | Task::SetRestHash(..)
+            | Task::SetRestLookup(..)
+            | Task::SetRestCompare(..)
+            | Task::SetRestMatched(..)
+            | Task::SetRestConfirmed(..)
+            | Task::SetRestFinish(..)
+            | Task::SetRestAppend(..)
+            | Task::SuggestionVisit(..)
+            | Task::SuggestionHashed(..)
+            | Task::SuggestionLookup(..)
+            | Task::SuggestionMatched(..)
+            | Task::SuggestionCache(..)
+            | Task::SuggestionCollect(..)
+            | Task::CountKey(..)
+            | Task::CountReady(..)
+            | Task::CountKeys(..)
+            | Task::CountMatched(..) => self.step_equality_collection_ops(frame_index, run, task),
+            Task::ResumeForce(..)
+            | Task::ReadCache(..)
+            | Task::ReadCacheMatch(..)
+            | Task::ForceCached(..)
+            | Task::ForceCachedMatch(..)
+            | Task::PublishCache(..)
+            | Task::PublishProbe(..)
+            | Task::PublishMatch(..)
+            | Task::AppendCache(..)
+            | Task::CacheRebuild(..)
+            | Task::CacheLink(..) => self.step_equality_cache_ops(frame_index, run, task),
+            Task::Compare(..)
+            | Task::SetNext(..)
+            | Task::SetLookup(..)
+            | Task::MapNext(..)
+            | Task::MapLookup(..)
+            | Task::CompareTypedMember(..)
+            | Task::CompareMembers(..)
+            | Task::Match(..)
+            | Task::Matched(..) => self.step_equality_compare(frame_index, run, task),
+            Task::Deep(..)
+            | Task::DiscardForcedValue
+            | Task::Prepare(..)
+            | Task::HashMembers(..)
+            | Task::Resolve(..)
+            | Task::Resolved(..)
+            | Task::Read(..)
+            | Task::Await(..)
+            | Task::Build(..) => self.step_equality_hash_and_build(frame_index, run, task),
+        }
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_equality_collection_ops(
+        &mut self,
+        frame_index: usize,
+        mut run: EqualityRun,
+        task: Task,
+    ) -> Result<(), RuntimeError> {
         match task {
             Task::MapRemoveHash(source, key, removing) => {
                 // A second hash must recompute zero/uncached structural hashes
@@ -1515,7 +1634,20 @@ impl Vm {
                 }
                 run.tasks.push(Task::CountKey(id, keys, position + 1, seen));
             }
-            Task::Reject => run.reject(),
+            _ => unreachable!("equality collection op"),
+        }
+        self.frames[frame_index].equality_run = Some(run);
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_equality_cache_ops(
+        &mut self,
+        frame_index: usize,
+        mut run: EqualityRun,
+        task: Task,
+    ) -> Result<(), RuntimeError> {
+        match task {
             Task::ResumeForce(request) => {
                 let object = self.heap.get(request.receiver)?;
                 let indices = if object.cache_index.has_hash() {
@@ -1767,12 +1899,10 @@ impl Vm {
                 // Warming local slots or publishing duplicate slots can change
                 // directional object equality, including that of enclosing keys.
                 if key.owner.is_some()
-                    || self
-                        .heap
-                        .get(id)?
-                        .cache_slots
-                        .iter()
-                        .any(|slot| slot.key == key)
+                    || matches!(
+                        self.heap.get(id)?.cache.get(&key),
+                        Some(LazyState::Completed(_))
+                    )
                 {
                     self.heap.key_equalities.clear();
                 }
@@ -1824,6 +1954,20 @@ impl Vm {
                     run.tasks.push(Task::CacheRebuild(id, 0));
                 }
             }
+            _ => unreachable!("equality cache op"),
+        }
+        self.frames[frame_index].equality_run = Some(run);
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_equality_compare(
+        &mut self,
+        frame_index: usize,
+        mut run: EqualityRun,
+        task: Task,
+    ) -> Result<(), RuntimeError> {
+        match task {
             Task::Compare(left, right, semantic) => {
                 // EqualNode only dispatches same-class objects through VmValue.
                 // Two foreign Map.Entry values therefore reach its unsupported
@@ -2007,13 +2151,20 @@ impl Vm {
                                 run.tasks.push(Task::MapNext(*a, *b, 0));
                                 None
                             } else if x.collection_kind == CollectionKind::List {
-                                let lhs = collections::ordered_members(&self.heap, *a)?;
-                                let rhs = collections::ordered_members(&self.heap, *b)?;
-                                for (l, r) in lhs.iter().zip(&rhs).rev() {
-                                    let l = self.cached_equality_member(*a, l)?;
-                                    let r = self.cached_equality_member(*b, r)?;
-                                    run.roots.extend([l.clone(), r.clone()]);
-                                    run.tasks.push(Task::Compare(l, r, false));
+                                if let (Some(lx), Some(ry)) = (&x.list_elements, &y.list_elements) {
+                                    for (l, r) in lx.iter().zip(ry.iter()).rev() {
+                                        run.roots.extend([l.clone(), r.clone()]);
+                                        run.tasks.push(Task::Compare(l.clone(), r.clone(), false));
+                                    }
+                                } else {
+                                    let lhs = collections::ordered_members(&self.heap, *a)?;
+                                    let rhs = collections::ordered_members(&self.heap, *b)?;
+                                    for (l, r) in lhs.iter().zip(&rhs).rev() {
+                                        let l = self.cached_equality_member(*a, l)?;
+                                        let r = self.cached_equality_member(*b, r)?;
+                                        run.roots.extend([l.clone(), r.clone()]);
+                                        run.tasks.push(Task::Compare(l, r, false));
+                                    }
                                 }
                                 None
                             } else {
@@ -2243,6 +2394,20 @@ impl Vm {
                 }
                 run.tasks.push(Task::Compare(value, other_value, false));
             }
+            _ => unreachable!("equality compare op"),
+        }
+        self.frames[frame_index].equality_run = Some(run);
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_equality_hash_and_build(
+        &mut self,
+        frame_index: usize,
+        mut run: EqualityRun,
+        task: Task,
+    ) -> Result<(), RuntimeError> {
+        match task {
             Task::Deep(value) => {
                 if let Value::Object(id) = value
                     && run.forced.insert(id)
@@ -2351,6 +2516,19 @@ impl Vm {
             Task::Read(id, member, prepare, probe) => {
                 if let Some(prepare) = prepare {
                     run.tasks.push(Task::Await(prepare));
+                }
+                if let Some(elems) = &self.heap.get(id)?.list_elements
+                    && member.kind == CollectionMemberKind::Element
+                    && let Value::Int(idx) = &member.key
+                    && idx.get() >= 0
+                {
+                    let value = elems
+                        .get(idx.get() as usize)
+                        .cloned()
+                        .ok_or_else(|| invalid("missing effective collection member"))?;
+                    self.stack.push(value);
+                    self.frames[frame_index].equality_run = Some(run);
+                    return Ok(());
                 }
                 let hide_callsite = run.hide_callsite;
                 self.frames[frame_index].equality_run = Some(run);
@@ -2559,6 +2737,7 @@ impl Vm {
                 self.heap.get_mut(id)?.structural_key = Some(value);
                 run.active.remove(&id);
             }
+            _ => unreachable!("equality hash/build op"),
         }
         self.frames[frame_index].equality_run = Some(run);
         Ok(())

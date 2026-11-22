@@ -118,6 +118,7 @@ pub(super) fn charset_type() -> (TypeCheck, Span) {
     )
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -282,29 +283,12 @@ impl Vm {
         if let Some((_, id, _)) = self.heap.bytes_lists.get(&bytes.reference()) {
             return Ok(*id);
         }
-        let id = if bytes.is_empty() {
-            self.empty_strict_collection(crate::heap::CollectionKind::List)
-        } else {
-            let builder = self.heap.allocate(Object {
-                collection_kind: crate::heap::CollectionKind::List,
-                ..Default::default()
-            });
-            self.frames
-                .last_mut()
-                .expect("Bytes.toList frame")
-                .builders
-                .push(builder);
-            for byte in bytes.iter() {
-                self.stack.push(Value::Int(i64::from(*byte).into()));
-                self.append_strict_element()?;
-            }
-            self.frames
-                .last_mut()
-                .expect("Bytes.toList frame")
-                .builders
-                .pop();
-            builder
-        };
+        let id = self.build_strict_list(
+            bytes
+                .iter()
+                .map(|byte| Value::Int(i64::from(*byte).into()))
+                .collect(),
+        );
         // Constant carriers live with the immutable code, independently of VM frames.
         let code_constant = self.program.blocks.iter().flatten().any(|instruction| {
             matches!(instruction, Instruction::Constant(Value::Bytes(value)) if value.reference() == bytes.reference())

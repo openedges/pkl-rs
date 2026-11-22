@@ -1,0 +1,2 @@
+xs = List(1, 2, 3)
+zipped = IntSeq(0, 4).step(2).toList().zip(List("a", "b", "c"))

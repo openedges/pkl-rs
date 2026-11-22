@@ -1,0 +1,82 @@
+/// Benchmark fixture for `pkl format`: substantial unformatted Pkl 0.32.0 module.
+module benchmark.FormatLarge
+
+import   "pkl:json"
+import "pkl:yaml"
+
+/// Service description with multiple members and constraints.
+open  class   Service {
+  name:   String(!isEmpty)
+    port : Int(isBetween(1,65535))  =   8080
+  tls:Boolean=true
+    endpoints:Listing<String>
+  labels:Mapping<String,String>
+
+    function   describe( prefix : String ) : String =
+      "\(prefix):\(name)@\(port)/\(tls)"
+}
+
+class   ClusterService   extends   Service {
+  replicas:Int(isPositive)=3
+    regions : List<String> = List( "us-east-1" , "eu-west-1" , "ap-northeast-2" )
+  weights:Map<String,Float> = Map("us-east-1",0.5,"eu-west-1",0.3,"ap-northeast-2",0.2)
+
+  function   totalCapacity( perReplica : Int ) : Int =
+    replicas*perReplica+regions.length
+}
+
+local  function   makeService( idx : Int ) : ClusterService =   new   ClusterService {
+    name = "svc-\(idx)"
+  port=9000+idx
+    tls = idx%2==0
+  replicas = (idx%5)+1
+  endpoints {
+      "https://svc-\(idx).internal/health"
+    "https://svc-\(idx).internal/metrics"
+    when (idx%2==0) {
+      "https://svc-\(idx).internal/admin"
+    }
+  }
+  labels {
+    ["app"]="svc-\(idx)"
+      ["tier"] = if (idx%3==0) "core" else "edge"
+    ["unicode"] = "한글-\(idx)"
+  }
+}
+
+services : Listing<ClusterService> = new {
+  for (i in IntSeq(1,40)) {
+      makeService(i)
+  }
+}
+
+summary {
+  count = services.length
+    ports = services.map((s) -> s.port)
+  descriptions = services.map((s) -> s.describe("prod"))
+    firstCapacity = services[0].totalCapacity(100)
+  banner = """
+      Pkl 0.32.0 Formatter Benchmark
+      Line two with interpolation: \(services.length)
+      Unicode: 한글 😀
+      """
+}
+
+local   nestedCheck =   let ( xs = IntSeq(1,20) )
+  xs.filter((x)->x%2==0).map((x)->x*x+1).fold(0,(acc,v)->acc+v)
+
+diagnostics = new Dynamic {
+  sum = nestedCheck
+    jsonRenderer = new json.Renderer { omitNullProperties = true }
+  yamlRenderer = new yaml.Renderer { isStream = false }
+  pairs = List(Pair("a",1),Pair("b",2),Pair("c",3),Pair("d",4))
+    mapping {
+      for (k,v in Map("alpha",10,"beta",20,"gamma",30,"delta",40)) {
+        [k] = v*2+1
+      }
+    }
+  when (nestedCheck > 0) {
+    status = "ok"
+      detail = "verified"
+  }
+}

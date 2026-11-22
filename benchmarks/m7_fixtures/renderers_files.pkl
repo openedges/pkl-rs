@@ -1,0 +1,36 @@
+import "pkl:xml"
+import "pkl:jsonnet"
+
+local items = IntSeq(1, 150).map((i) -> new Dynamic {
+  id = i
+  name = "service-\(i)"
+  label = "항목-\(i)"
+  enabled = i % 2 == 0
+  ratio = i / 10.0
+  tags = List("tier-\(i % 4)", "zone-\(i % 3)")
+})
+
+local payload = new Dynamic {
+  version = "0.32.0"
+  count = items.length
+  entries = items
+}
+
+local flatProps = new Dynamic {
+  for (i in IntSeq(1, 150)) {
+    ["service_\(i)_name"] = "service-\(i)"
+    ["service_\(i)_port"] = "\(8000 + i)"
+  }
+}
+
+output {
+  files {
+    ["out.pcf"] { value = payload; renderer = new PcfRenderer {} }
+    ["out.json"] { value = payload; renderer = new JsonRenderer {} }
+    ["out.yaml"] { value = payload; renderer = new YamlRenderer {} }
+    ["out.xml"] { value = payload; renderer = new xml.Renderer {} }
+    ["out.properties"] { value = flatProps; renderer = new PropertiesRenderer {} }
+    ["out.plist"] { value = payload; renderer = new PListRenderer {} }
+    ["out.jsonnet"] { value = payload; renderer = new jsonnet.Renderer {} }
+  }
+}

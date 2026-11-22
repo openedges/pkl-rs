@@ -304,6 +304,7 @@ impl Vm {
                         name: PklString::default(),
                         template: usize::MAX,
                         entry: usize::MAX,
+                        blocks_start: 0,
                         initial_members: Vec::new(),
                         import_order: Vec::new(),
                         class_id: usize::MAX,

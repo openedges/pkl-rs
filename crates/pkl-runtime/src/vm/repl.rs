@@ -101,7 +101,7 @@ impl Vm {
         };
         self.alloc_repl_module_from(
             Some(parent_obj),
-            Vec::new(),
+            crate::heap::MemberList::default(),
             BTreeMap::new(),
             BTreeMap::new(),
             BTreeSet::new(),
@@ -170,7 +170,7 @@ impl Vm {
     fn alloc_repl_module_from(
         &mut self,
         parent: Option<ObjectId>,
-        members: Vec<Member>,
+        members: crate::heap::MemberList,
         member_annotations: BTreeMap<usize, Vec<Value>>,
         member_deprecations: BTreeMap<usize, PklString>,
         published_module_members: BTreeSet<usize>,
@@ -214,6 +214,7 @@ impl Vm {
             name: "repl".into(),
             template,
             entry: usize::MAX,
+            blocks_start: 0,
             initial_members: Vec::new(),
             import_order: Vec::new(),
             class_id,
@@ -679,6 +680,7 @@ fn compile_repl_expr_into(
         name: PklString::default(),
         template,
         entry: usize::MAX,
+        blocks_start: 0,
         initial_members: Vec::new(),
         import_order: uri_resolution::module_import_order(resolved),
         class_id,
@@ -741,6 +743,7 @@ fn compile_repl_member_into(
             name: "repl".into(),
             template,
             entry: usize::MAX,
+            blocks_start: 0,
             initial_members: Vec::new(),
             import_order: uri_resolution::module_import_order(resolved),
             class_id,
@@ -773,7 +776,7 @@ fn compile_repl_member_into(
         .first()
         .ok_or_else(|| invalid("missing synthesized REPL member"))?;
     let single = std::slice::from_ref(target_member);
-    compiler.type_scopes.push(single.to_vec());
+    compiler.type_scopes.push(extract_type_scope(single));
     let template = compiler.object_template(single, false, false)?;
     let compiled = compiler.program.objects[template][0].clone();
 
@@ -840,6 +843,7 @@ fn compile_repl_member_into(
         name: "repl".into(),
         template,
         entry: usize::MAX,
+        blocks_start: 0,
         initial_members: Vec::new(),
         import_order: uri_resolution::module_import_order(resolved),
         class_id,

@@ -98,10 +98,10 @@ fn lexical_receiver_is_used_only_when_no_explicit_receiver_exists() {
             ..Default::default()
         });
         let environment = Environment {
-            scopes: vec![Scope {
+            scopes: crate::heap::ScopeList::from_single(Scope {
                 receiver: lexical,
                 owner: lexical,
-            }],
+            }),
             ..Default::default()
         };
         let expected = expected.unwrap_or(Value::Object(lexical));

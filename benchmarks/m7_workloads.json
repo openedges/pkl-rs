@@ -1,0 +1,240 @@
+{
+  "schema_version": 1,
+  "baseline": "0.32.0",
+  "target_ratios": {
+    "execution_time_max": 1.0,
+    "peak_rss_max": 1.0
+  },
+  "profiles": {
+    "full": {
+      "cold_samples": 5,
+      "samples": 9,
+      "sample_seconds": 0.25,
+      "minimum_warmup_seconds": 10.0,
+      "maximum_warmup_seconds": 45.0,
+      "convergence_windows": 8,
+      "maximum_relative_spread": 0.2,
+      "independent_api_forks": 2,
+      "server_steady_requests": 100,
+      "strict_eligible": true
+    },
+    "quick": {
+      "cold_samples": 3,
+      "samples": 5,
+      "sample_seconds": 0.2,
+      "minimum_warmup_seconds": 10.0,
+      "maximum_warmup_seconds": 25.0,
+      "convergence_windows": 4,
+      "maximum_relative_spread": 0.25,
+      "independent_api_forks": 1,
+      "server_steady_requests": 50,
+      "strict_eligible": false
+    }
+  },
+  "js_sampling": {
+    "full": {
+      "samples": 9,
+      "sample_seconds": 0.25,
+      "minimum_warmup_seconds": 3.0,
+      "maximum_warmup_seconds": 20.0,
+      "convergence_windows": 8,
+      "maximum_relative_spread": 0.2
+    },
+    "quick": {
+      "samples": 5,
+      "sample_seconds": 0.2,
+      "minimum_warmup_seconds": 1.5,
+      "maximum_warmup_seconds": 10.0,
+      "convergence_windows": 4,
+      "maximum_relative_spread": 0.25
+    }
+  },
+  "m0_graalvm_reference": "reports/m0/benchmarks.json",
+  "core_workloads": [
+    {
+      "id": "scalar",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/scalar.pkl",
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "scalar"
+    },
+    {
+      "id": "stdlib-collections",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/collections.pkl",
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "stdlib-collections"
+    },
+    {
+      "id": "recursive-compute",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/recursive.pkl",
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "recursive-compute"
+    },
+    {
+      "id": "large-output",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/large-output.pkl",
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "large-output"
+    },
+    {
+      "id": "failure-diagnostics",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/failure.pkl",
+      "expected_error": true,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "failure-diagnostics"
+    },
+    {
+      "id": "import-graph",
+      "family": "core-6",
+      "module": "benchmarks/fixtures/import-graph.pkl",
+      "resources": [
+        "benchmarks/fixtures/graph/left.pkl",
+        "benchmarks/fixtures/graph/right.pkl",
+        "benchmarks/fixtures/graph/shared.pkl"
+      ],
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent", "fresh-evaluator"],
+      "m0_graalvm_id": "import-graph"
+    }
+  ],
+  "product_workloads": [
+    {
+      "id": "reflection-stdlib",
+      "family": "reflection-stdlib",
+      "kind": "eval_cold_and_persistent",
+      "module": "benchmarks/m7_fixtures/reflection_stdlib.pkl",
+      "expected_error": false,
+      "modes": ["cold-cli", "persistent"],
+      "description": "import \"pkl:reflect\" with class/module reflection (previously flagged ~5.2s bottleneck)"
+    },
+    {
+      "id": "renderers-files",
+      "family": "renderers-files-binary",
+      "kind": "cli_output_files",
+      "module": "benchmarks/m7_fixtures/renderers_files.pkl",
+      "expected_error": false,
+      "description": "output.files multi-renderer generation (PCF, JSON, YAML, XML, Properties, Plist, Jsonnet)"
+    },
+    {
+      "id": "renderers-binary",
+      "family": "renderers-files-binary",
+      "kind": "cli_eval_format",
+      "module": "benchmarks/m7_fixtures/renderers_binary.pkl",
+      "output_format": "pkl-binary",
+      "expected_error": false,
+      "description": "pkl-binary MessagePack rendering of rich nested values"
+    },
+    {
+      "id": "packages-http-warm",
+      "family": "packages-http-cache",
+      "kind": "packages_http",
+      "template": "benchmarks/m7_fixtures/packages_http_module.pkl.tmpl",
+      "cache_mode": "warm",
+      "description": "Warm package-2 disk cache import + localhost HTTP resource read via M4FixtureServers"
+    },
+    {
+      "id": "packages-http-cold",
+      "family": "packages-http-cache",
+      "kind": "packages_http",
+      "template": "benchmarks/m7_fixtures/packages_http_module.pkl.tmpl",
+      "cache_mode": "cold",
+      "description": "Cold empty cache HTTPS package download + SHA-256 verification + localhost HTTP read"
+    },
+    {
+      "id": "repl-session",
+      "family": "repl",
+      "kind": "repl_pipe",
+      "session_file": "benchmarks/m7_fixtures/repl_session.txt",
+      "description": "pkl repl startup and deterministic piped session evaluation"
+    },
+    {
+      "id": "server-session",
+      "family": "server",
+      "kind": "server_msgpack",
+      "module": "benchmarks/fixtures/collections.pkl",
+      "description": "pkl server MessagePack 0x20-0x25 initialization + steady EvaluateRequest throughput"
+    },
+    {
+      "id": "formatter-large",
+      "family": "formatter",
+      "kind": "formatter_stdin",
+      "input_file": "benchmarks/m7_fixtures/format_large.pkl",
+      "description": "pkl format CST formatting of substantial unformatted Pkl 0.32.0 module"
+    },
+    {
+      "id": "pkldoc-single-package",
+      "family": "pkldoc",
+      "kind": "pkldoc_site",
+      "input_dir": "external/pkl/pkl-doc/src/test/files/SinglePackageTest/input",
+      "description": "pkldoc SinglePackageTest HTML/JSON documentation site generation"
+    },
+    {
+      "id": "napi-eval-text",
+      "family": "napi",
+      "kind": "js_binding",
+      "target": "napi",
+      "op_mode": "eval-expression",
+      "module": "benchmarks/fixtures/collections.pkl",
+      "java_reference_workload": "stdlib-collections",
+      "description": "@pkl-rs/napi Node startup, warm persistent eval-expression throughput, and Node wait4 RSS"
+    },
+    {
+      "id": "napi-typed-conversion",
+      "family": "napi",
+      "kind": "js_binding",
+      "target": "napi",
+      "op_mode": "typed-conversion",
+      "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
+      "java_reference_workload": "js-boundary-payload",
+      "description": "@pkl-rs/napi BigInt/Uint8Array/UTF-16 typed value conversion throughput and Node wait4 RSS"
+    },
+    {
+      "id": "wasm-node-eval-text",
+      "family": "wasm-node",
+      "kind": "js_binding",
+      "target": "wasm-node",
+      "op_mode": "eval-expression",
+      "module": "benchmarks/fixtures/collections.pkl",
+      "java_reference_workload": "stdlib-collections",
+      "description": "@pkl-rs/wasm Node init/compile, warm persistent eval-expression throughput, and Node wait4 RSS"
+    },
+    {
+      "id": "wasm-node-typed-conversion",
+      "family": "wasm-node",
+      "kind": "js_binding",
+      "target": "wasm-node",
+      "op_mode": "typed-conversion",
+      "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
+      "java_reference_workload": "js-boundary-payload",
+      "description": "@pkl-rs/wasm Node BigInt/Uint8Array/UTF-16 typed conversion throughput and Node wait4 RSS"
+    },
+    {
+      "id": "wasm-browser-eval-text",
+      "family": "wasm-browser",
+      "kind": "js_binding",
+      "target": "wasm-browser",
+      "op_mode": "eval-expression",
+      "module": "benchmarks/fixtures/collections.pkl",
+      "java_reference_workload": "stdlib-collections",
+      "description": "@pkl-rs/wasm Playwright Chromium 1.64.1 init/compile, warm eval throughput, and browser process-tree RSS"
+    },
+    {
+      "id": "wasm-browser-typed-conversion",
+      "family": "wasm-browser",
+      "kind": "js_binding",
+      "target": "wasm-browser",
+      "op_mode": "typed-conversion",
+      "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
+      "java_reference_workload": "js-boundary-payload",
+      "description": "@pkl-rs/wasm Playwright Chromium 1.64.1 BigInt/Uint8Array typed conversion and browser process-tree RSS"
+    }
+  ]
+}

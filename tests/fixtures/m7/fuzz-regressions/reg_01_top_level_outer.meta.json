@@ -1,0 +1,12 @@
+{
+  "category": "objects-amendments-generators",
+  "differences": [
+    "stderr"
+  ],
+  "format": "pcf",
+  "id": "reg_01_top_level_outer",
+  "mode": "eval",
+  "notes": "Java 0.32.0: 'Top-level scope does not have an outer scope.' vs Rust: 'No outer scope is available.'",
+  "seed": "0x4d37504b4c303332",
+  "status": "mismatch"
+}

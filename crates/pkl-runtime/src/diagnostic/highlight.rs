@@ -63,6 +63,17 @@ pub(super) fn uncolored_text(source: &crate::value::PklString) -> crate::value::
 }
 
 pub(crate) fn write_to(out: &mut AnsiStringBuilder, source: &crate::value::PklString) {
+    // When color is off, replay differs from raw `source` ONLY if a string interpolation
+    // (`\(` or `\#(` etc.) triggers the two direct `lexer.next()` whitespace-omission paths.
+    // If `source` has no `\` or no `(`, no `Token::Interpolation` can exist, so the exact
+    // uncolored output is unconditionally identical to `source`.
+    if !out.using_color()
+        && let Some(s) = source.as_str()
+        && (!s.contains('\\') || !s.contains('('))
+    {
+        out.append_str(s);
+        return;
+    }
     let units: Vec<_> = source.encode_utf16().collect();
     let mut lexer = Lexer {
         source: &units,

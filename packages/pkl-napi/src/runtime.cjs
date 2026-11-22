@@ -26,6 +26,13 @@ const PKL_VERSION = native.productPklVersion ? native.productPklVersion() : "0.3
 const MAX_U64 = (1n << 64n) - 1n;
 const MIN_I64 = -(1n << 63n);
 const MAX_I64 = (1n << 63n) - 1n;
+const FAST_UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
+const VALID_DURATION_UNITS = new Set(["ns", "us", "ms", "s", "min", "h", "d"]);
+const VALID_DATA_SIZE_UNITS = new Set([
+  "b", "kb", "mb", "gb", "tb", "pb", "kib", "mib", "gib", "tib", "pib",
+]);
+const BLANK_OR_CTRL_RE = /^[\s\x00-\x20]*$/;
+const DECODE_FALLBACK = Symbol("pkl.decode.fallback");
 
 class PklError extends Error {
   constructor(message, kind = "evaluation", capability = undefined) {
@@ -1083,6 +1090,22 @@ class Evaluator {
 
   async evaluateOutputText(source, callOptions = undefined) {
     const { uri, contents } = normalizeSource(source);
+    if (
+      !this.isClosed &&
+      !this._signal?.aborted &&
+      !callOptions?.signal &&
+      callOptions?.timeoutMs === undefined
+    ) {
+      const fast = this._native.tryEvaluateOutputTextFast(uri, contents);
+      if (fast !== null && fast !== undefined) {
+        if (fast.__continueAsync) {
+          return this._runAsync(callOptions, (t, id) =>
+            this._native.continuePendingFast(false, t, id),
+          );
+        }
+        return unwrapOutcome(fast);
+      }
+    }
     return this._runAsync(callOptions, (t, id) =>
       this._native.evaluateOutputText(uri, contents, t, id),
     );
@@ -1134,25 +1157,34 @@ class Evaluator {
   }
 
   async evaluateOutputValue(source, callOptions = undefined) {
-    const { uri, contents } = normalizeSource(source);
-    const raw = await this._runAsync(callOptions, (t, id) =>
-      this._native.evaluateOutputValue(uri, contents, t, id),
-    );
-    return hydrateValue(raw);
+    return this.evaluateExpressionValue(source, "output.value", callOptions);
   }
 
   evaluateOutputValueSync(source, callOptions = undefined) {
-    const { uri, contents } = normalizeSource(source);
-    const raw = this._runSync(callOptions, (t) =>
-      this._native.evaluateOutputValueSync(uri, contents, t),
-    );
-    return hydrateValue(raw);
+    const bytes = this.evaluateExpressionPklBinarySync(source, "output.value", callOptions);
+    return decodePklBinary(bytes);
   }
 
   async evaluateExpression(source, expr, callOptions = undefined) {
     const { uri, contents } = normalizeSource(source);
     if (typeof expr !== "string") {
       throw new PklError("Expression must be a string.", "invalid-argument");
+    }
+    if (
+      !this.isClosed &&
+      !this._signal?.aborted &&
+      !callOptions?.signal &&
+      callOptions?.timeoutMs === undefined
+    ) {
+      const fast = this._native.tryEvaluateExpressionFast(uri, contents, expr);
+      if (fast !== null && fast !== undefined) {
+        if (fast.__continueAsync) {
+          return this._runAsync(callOptions, (t, id) =>
+            this._native.continuePendingFast(false, t, id),
+          );
+        }
+        return unwrapOutcome(fast);
+      }
     }
     return this._runAsync(callOptions, (t, id) =>
       this._native.evaluateExpression(uri, contents, expr, t, id),
@@ -1174,27 +1206,64 @@ class Evaluator {
     if (typeof expr !== "string") {
       throw new PklError("Expression must be a string.", "invalid-argument");
     }
-    const raw = await this._runAsync(callOptions, (t, id) =>
-      this._native.evaluateExpressionValue(uri, contents, expr, t, id),
+    if (
+      !this.isClosed &&
+      !this._signal?.aborted &&
+      !callOptions?.signal &&
+      callOptions?.timeoutMs === undefined
+    ) {
+      if (expr === "module" || expr === "output.value") {
+        const colBuf = this._native.tryEvaluateExpressionColumnarFast(uri, contents, expr);
+        if (colBuf !== null && colBuf !== undefined) {
+          const unpacked = unpackColumnarBuffer(colBuf);
+          if (unpacked !== DECODE_FALLBACK) {
+            return unpacked;
+          }
+        }
+      }
+      const fast = this._native.tryEvaluateExpressionPklBinaryFast(uri, contents, expr);
+      if (fast !== null && fast !== undefined) {
+        if (fast.__continueAsync) {
+          const bytes = await this._runAsync(callOptions, (t, id) =>
+            this._native.continuePendingFast(true, t, id),
+          );
+          return decodePklBinary(bytes);
+        }
+        return decodePklBinary(unwrapOutcome(fast));
+      }
+    }
+    const bytes = await this._runAsync(callOptions, (t, id) =>
+      this._native.evaluateExpressionPklBinary(uri, contents, expr, t, id),
     );
-    return hydrateValue(raw);
+    return decodePklBinary(bytes);
   }
 
   evaluateExpressionValueSync(source, expr, callOptions = undefined) {
-    const { uri, contents } = normalizeSource(source);
-    if (typeof expr !== "string") {
-      throw new PklError("Expression must be a string.", "invalid-argument");
-    }
-    const raw = this._runSync(callOptions, (t) =>
-      this._native.evaluateExpressionValueSync(uri, contents, expr, t),
-    );
-    return hydrateValue(raw);
+    const bytes = this.evaluateExpressionPklBinarySync(source, expr, callOptions);
+    return decodePklBinary(bytes);
   }
 
   async evaluateExpressionPklBinary(source, expr, callOptions = undefined) {
     const { uri, contents } = normalizeSource(source);
     if (typeof expr !== "string") {
       throw new PklError("Expression must be a string.", "invalid-argument");
+    }
+    if (
+      !this.isClosed &&
+      !this._signal?.aborted &&
+      !callOptions?.signal &&
+      callOptions?.timeoutMs === undefined
+    ) {
+      const fast = this._native.tryEvaluateExpressionPklBinaryFast(uri, contents, expr);
+      if (fast !== null && fast !== undefined) {
+        if (fast.__continueAsync) {
+          return this._runAsync(callOptions, (t, id) =>
+            this._native.continuePendingFast(true, t, id),
+          );
+        }
+        const buf = unwrapOutcome(fast);
+        return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+      }
     }
     return this._runAsync(callOptions, (t, id) =>
       this._native.evaluateExpressionPklBinary(uri, contents, expr, t, id),
@@ -1407,9 +1476,930 @@ function format(source, options = undefined) {
   return unwrapOutcome(native.productFormat(source, grammarVersion));
 }
 
+const DECODE_STATE = new Int32Array(1);
+const INTERN_OFF = new Int32Array(64);
+const INTERN_LEN = new Int32Array(64);
+const INTERN_STR = new Array(64);
+const KEY_CACHE = new Map();
+
+function internPropKey(s) {
+  let k = KEY_CACHE.get(s);
+  if (k !== undefined) return k;
+  const tmp = { [s]: 0 };
+  k = Object.keys(tmp)[0];
+  if (KEY_CACHE.size < 256) KEY_CACHE.set(k, k);
+  return k;
+}
+
+function fastReadStr(bytes, view, len, pos, asKey) {
+  if (pos >= len) return DECODE_FALLBACK;
+  const b = bytes[pos++];
+  let n;
+  if (b >= 0xa0 && b <= 0xbf) {
+    n = b & 0x1f;
+  } else if (b === 0xd9) {
+    if (pos >= len) return DECODE_FALLBACK;
+    n = bytes[pos++];
+  } else if (b === 0xda) {
+    if (pos + 2 > len) return DECODE_FALLBACK;
+    n = view.getUint16(pos, false);
+    pos += 2;
+  } else if (b === 0xdb) {
+    if (pos + 4 > len) return DECODE_FALLBACK;
+    n = view.getUint32(pos, false);
+    pos += 4;
+  } else {
+    return DECODE_FALLBACK;
+  }
+  const end = pos + n;
+  if (end > len) return DECODE_FALLBACK;
+  DECODE_STATE[0] = end;
+  if (n === 0) return "";
+  if (n <= 24) {
+    const slot = (bytes[pos] * 31 + bytes[end - 1] * 17 + n * 7) & 63;
+    if (INTERN_LEN[slot] === n) {
+      const prev = INTERN_OFF[slot];
+      let eq = true;
+      for (let k = 0; k < n; k += 1) {
+        if (bytes[prev + k] !== bytes[pos + k]) {
+          eq = false;
+          break;
+        }
+      }
+      if (eq) return INTERN_STR[slot];
+    }
+    let ascii = true;
+    for (let i = pos; i < end; i += 1) {
+      if (bytes[i] >= 0x80) {
+        ascii = false;
+        break;
+      }
+    }
+    if (ascii) {
+      let s;
+      if (n === 1) s = String.fromCharCode(bytes[pos]);
+      else if (n === 2) s = String.fromCharCode(bytes[pos], bytes[pos + 1]);
+      else if (n === 3) s = String.fromCharCode(bytes[pos], bytes[pos + 1], bytes[pos + 2]);
+      else if (n === 4) {
+        s = String.fromCharCode(bytes[pos], bytes[pos + 1], bytes[pos + 2], bytes[pos + 3]);
+      } else if (n === 5) {
+        s = String.fromCharCode(
+          bytes[pos],
+          bytes[pos + 1],
+          bytes[pos + 2],
+          bytes[pos + 3],
+          bytes[pos + 4],
+        );
+      } else if (n === 6) {
+        s = String.fromCharCode(
+          bytes[pos],
+          bytes[pos + 1],
+          bytes[pos + 2],
+          bytes[pos + 3],
+          bytes[pos + 4],
+          bytes[pos + 5],
+        );
+      } else if (n === 7) {
+        s = String.fromCharCode(
+          bytes[pos],
+          bytes[pos + 1],
+          bytes[pos + 2],
+          bytes[pos + 3],
+          bytes[pos + 4],
+          bytes[pos + 5],
+          bytes[pos + 6],
+        );
+      } else if (n === 8) {
+        s = String.fromCharCode(
+          bytes[pos],
+          bytes[pos + 1],
+          bytes[pos + 2],
+          bytes[pos + 3],
+          bytes[pos + 4],
+          bytes[pos + 5],
+          bytes[pos + 6],
+          bytes[pos + 7],
+        );
+      } else {
+        s = "";
+        for (let i = pos; i < end; i += 1) s += String.fromCharCode(bytes[i]);
+      }
+      if (asKey) s = internPropKey(s);
+      INTERN_OFF[slot] = pos;
+      INTERN_LEN[slot] = n;
+      INTERN_STR[slot] = s;
+      return s;
+    }
+  }
+  try {
+    return FAST_UTF8_DECODER.decode(bytes.subarray(pos, end));
+  } catch {
+    return DECODE_FALLBACK;
+  }
+}
+
+function fastReadArrayLen(bytes, view, len, pos) {
+  if (pos >= len) return -1;
+  const b = bytes[pos++];
+  if (b >= 0x90 && b <= 0x9f) {
+    DECODE_STATE[0] = pos;
+    return b & 0x0f;
+  }
+  if (b === 0xdc) {
+    if (pos + 2 > len) return -1;
+    DECODE_STATE[0] = pos + 2;
+    return view.getUint16(pos, false);
+  }
+  if (b === 0xdd) {
+    if (pos + 4 > len) return -1;
+    DECODE_STATE[0] = pos + 4;
+    return view.getUint32(pos, false);
+  }
+  return -1;
+}
+
+function fastReadMapLen(bytes, view, len, pos) {
+  if (pos >= len) return -1;
+  const b = bytes[pos++];
+  if (b >= 0x80 && b <= 0x8f) {
+    DECODE_STATE[0] = pos;
+    return b & 0x0f;
+  }
+  if (b === 0xde) {
+    if (pos + 2 > len) return -1;
+    DECODE_STATE[0] = pos + 2;
+    return view.getUint16(pos, false);
+  }
+  if (b === 0xdf) {
+    if (pos + 4 > len) return -1;
+    DECODE_STATE[0] = pos + 4;
+    return view.getUint32(pos, false);
+  }
+  return -1;
+}
+
+function fastReadInt64(bytes, view, len, pos) {
+  if (pos >= len) return DECODE_FALLBACK;
+  const b = bytes[pos++];
+  if (b <= 0x7f) {
+    DECODE_STATE[0] = pos;
+    return BigInt(b);
+  }
+  if (b >= 0xe0) {
+    DECODE_STATE[0] = pos;
+    return BigInt(b - 256);
+  }
+  if (b === 0xcc) {
+    if (pos >= len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 1;
+    return BigInt(bytes[pos]);
+  }
+  if (b === 0xcd) {
+    if (pos + 2 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 2;
+    return BigInt(view.getUint16(pos, false));
+  }
+  if (b === 0xce) {
+    if (pos + 4 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 4;
+    return BigInt(view.getUint32(pos, false));
+  }
+  if (b === 0xcf) {
+    if (pos + 8 > len) return DECODE_FALLBACK;
+    const v = view.getBigUint64(pos, false);
+    if (v > MAX_I64) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 8;
+    return v;
+  }
+  if (b === 0xd0) {
+    if (pos >= len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 1;
+    return BigInt(view.getInt8(pos));
+  }
+  if (b === 0xd1) {
+    if (pos + 2 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 2;
+    return BigInt(view.getInt16(pos, false));
+  }
+  if (b === 0xd2) {
+    if (pos + 4 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 4;
+    return BigInt(view.getInt32(pos, false));
+  }
+  if (b === 0xd3) {
+    if (pos + 8 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 8;
+    return view.getBigInt64(pos, false);
+  }
+  return DECODE_FALLBACK;
+}
+
+function fastReadFloat(bytes, view, len, pos) {
+  if (pos >= len) return DECODE_FALLBACK;
+  const b = bytes[pos++];
+  if (b === 0xca) {
+    if (pos + 4 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 4;
+    return view.getFloat32(pos, false);
+  }
+  if (b === 0xcb) {
+    if (pos + 8 > len) return DECODE_FALLBACK;
+    DECODE_STATE[0] = pos + 8;
+    return view.getFloat64(pos, false);
+  }
+  return DECODE_FALLBACK;
+}
+
+function fastDecodeVal(bytes, view, len, depth) {
+  let pos = DECODE_STATE[0];
+  if (depth > 64 || pos >= len) return DECODE_FALLBACK;
+  const b = bytes[pos];
+  if (b <= 0x7f) {
+    DECODE_STATE[0] = pos + 1;
+    return BigInt(b);
+  }
+  if (b >= 0xe0) {
+    DECODE_STATE[0] = pos + 1;
+    return BigInt(b - 256);
+  }
+  if (b >= 0xa0 && b <= 0xbf) {
+    return fastReadStr(bytes, view, len, pos, false);
+  }
+  if (b === 0xc0) {
+    DECODE_STATE[0] = pos + 1;
+    return null;
+  }
+  if (b === 0xc2) {
+    DECODE_STATE[0] = pos + 1;
+    return false;
+  }
+  if (b === 0xc3) {
+    DECODE_STATE[0] = pos + 1;
+    return true;
+  }
+  if (b === 0xca || b === 0xcb) {
+    return fastReadFloat(bytes, view, len, pos);
+  }
+  if (b >= 0xcc && b <= 0xd3) {
+    return fastReadInt64(bytes, view, len, pos);
+  }
+  if (b === 0xd9 || b === 0xda || b === 0xdb) {
+    return fastReadStr(bytes, view, len, pos, false);
+  }
+  if ((b >= 0x90 && b <= 0x9f) || b === 0xdc || b === 0xdd) {
+    const alen = fastReadArrayLen(bytes, view, len, pos);
+    pos = DECODE_STATE[0];
+    if (alen < 1 || pos >= len) return DECODE_FALLBACK;
+    const code = bytes[pos++];
+    if (code > 0x7f) return DECODE_FALLBACK;
+
+    if (code === 0x01) {
+      if (alen !== 4) return DECODE_FALLBACK;
+      const className = fastReadStr(bytes, view, len, pos, false);
+      if (
+        className === DECODE_FALLBACK ||
+        className.length === 0 ||
+        (className.charCodeAt(0) <= 0x20 && BLANK_OR_CTRL_RE.test(className))
+      ) {
+        return DECODE_FALLBACK;
+      }
+      pos = DECODE_STATE[0];
+      const moduleUri = fastReadStr(bytes, view, len, pos, false);
+      if (
+        moduleUri === DECODE_FALLBACK ||
+        moduleUri.length === 0 ||
+        (moduleUri.charCodeAt(0) <= 0x20 && BLANK_OR_CTRL_RE.test(moduleUri))
+      ) {
+        return DECODE_FALLBACK;
+      }
+      pos = DECODE_STATE[0];
+      const mcount = fastReadArrayLen(bytes, view, len, pos);
+      if (mcount < 0) return DECODE_FALLBACK;
+      pos = DECODE_STATE[0];
+      const props = {};
+      const entries = new Map();
+      const elements = [];
+      const nextDepth = depth + 1;
+      for (let i = 0; i < mcount; i += 1) {
+        if (pos + 2 > len) return DECODE_FALLBACK;
+        if (bytes[pos++] !== 0x93) return DECODE_FALLBACK;
+        const mcode = bytes[pos++];
+        if (mcode === 0x10) {
+          const k = fastReadStr(bytes, view, len, pos, true);
+          if (k === DECODE_FALLBACK) return DECODE_FALLBACK;
+          pos = DECODE_STATE[0];
+          if (pos >= len) return DECODE_FALLBACK;
+          const vb = bytes[pos];
+          let v;
+          if (vb === 0xd3) {
+            if (pos + 9 > len) return DECODE_FALLBACK;
+            v = view.getBigInt64(pos + 1, false);
+            pos += 9;
+          } else if (vb === 0xcf) {
+            if (pos + 9 > len) return DECODE_FALLBACK;
+            v = view.getBigUint64(pos + 1, false);
+            if (v > MAX_I64) return DECODE_FALLBACK;
+            pos += 9;
+          } else if (vb === 0xc2) {
+            v = false;
+            pos += 1;
+          } else if (vb === 0xc3) {
+            v = true;
+            pos += 1;
+          } else if (vb === 0xc0) {
+            v = null;
+            pos += 1;
+          } else if (vb <= 0x7f) {
+            v = BigInt(vb);
+            pos += 1;
+          } else if (vb >= 0xe0) {
+            v = BigInt(vb - 256);
+            pos += 1;
+          } else if (vb >= 0xa0 && vb <= 0xbf) {
+            v = fastReadStr(bytes, view, len, pos, false);
+            if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+            pos = DECODE_STATE[0];
+          } else if (
+            pos + 4 <= len &&
+            vb === 0x92 &&
+            bytes[pos + 1] === 0x0f &&
+            bytes[pos + 2] === 0xc4
+          ) {
+            const blen = bytes[pos + 3];
+            const p = pos + 4;
+            if (p + blen > len) return DECODE_FALLBACK;
+            if (blen <= 16) {
+              v = new Uint8Array(blen);
+              for (let j = 0; j < blen; j += 1) v[j] = bytes[p + j];
+            } else {
+              v = bytes.slice(p, p + blen);
+            }
+            pos = p + blen;
+          } else {
+            DECODE_STATE[0] = pos;
+            v = fastDecodeVal(bytes, view, len, nextDepth);
+            if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+            pos = DECODE_STATE[0];
+          }
+          if (k === "__proto__") {
+            Object.defineProperty(props, k, {
+              value: v,
+              enumerable: true,
+              writable: true,
+              configurable: true,
+            });
+          } else {
+            props[k] = v;
+          }
+        } else if (mcode === 0x11) {
+          DECODE_STATE[0] = pos;
+          const k = fastDecodeVal(bytes, view, len, nextDepth);
+          if (k === DECODE_FALLBACK) return DECODE_FALLBACK;
+          const v = fastDecodeVal(bytes, view, len, nextDepth);
+          if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+          pos = DECODE_STATE[0];
+          entries.set(k, v);
+        } else if (mcode === 0x12) {
+          const idx = fastReadInt64(bytes, view, len, pos);
+          if (idx === DECODE_FALLBACK) return DECODE_FALLBACK;
+          const v = fastDecodeVal(bytes, view, len, nextDepth);
+          if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+          pos = DECODE_STATE[0];
+          elements.push(v);
+        } else {
+          return DECODE_FALLBACK;
+        }
+      }
+      DECODE_STATE[0] = pos;
+      return new PklObject(className, moduleUri, props, entries, elements);
+    }
+
+    if (code === 0x04 || code === 0x05) {
+      if (alen !== 2) return DECODE_FALLBACK;
+      const count = fastReadArrayLen(bytes, view, len, pos);
+      if (count < 0) return DECODE_FALLBACK;
+      const out = new Array(count);
+      const nextDepth = depth + 1;
+      for (let i = 0; i < count; i += 1) {
+        const item = fastDecodeVal(bytes, view, len, nextDepth);
+        if (item === DECODE_FALLBACK) return DECODE_FALLBACK;
+        out[i] = item;
+      }
+      return out;
+    }
+
+    if (code === 0x02 || code === 0x03) {
+      if (alen !== 2) return DECODE_FALLBACK;
+      const count = fastReadMapLen(bytes, view, len, pos);
+      if (count < 0) return DECODE_FALLBACK;
+      const out = new Map();
+      const nextDepth = depth + 1;
+      for (let i = 0; i < count; i += 1) {
+        const k = fastDecodeVal(bytes, view, len, nextDepth);
+        if (k === DECODE_FALLBACK) return DECODE_FALLBACK;
+        const v = fastDecodeVal(bytes, view, len, nextDepth);
+        if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+        out.set(k, v);
+      }
+      return out;
+    }
+
+    if (code === 0x06) {
+      if (alen !== 2) return DECODE_FALLBACK;
+      const count = fastReadArrayLen(bytes, view, len, pos);
+      if (count < 0) return DECODE_FALLBACK;
+      const out = new Set();
+      const nextDepth = depth + 1;
+      for (let i = 0; i < count; i += 1) {
+        const item = fastDecodeVal(bytes, view, len, nextDepth);
+        if (item === DECODE_FALLBACK) return DECODE_FALLBACK;
+        out.add(item);
+      }
+      return out;
+    }
+
+    if (code === 0x0f) {
+      if (alen !== 2 || pos >= len) return DECODE_FALLBACK;
+      const bb = bytes[pos++];
+      let blen;
+      if (bb === 0xc4) {
+        if (pos >= len) return DECODE_FALLBACK;
+        blen = bytes[pos++];
+      } else if (bb === 0xc5) {
+        if (pos + 2 > len) return DECODE_FALLBACK;
+        blen = view.getUint16(pos, false);
+        pos += 2;
+      } else if (bb === 0xc6) {
+        if (pos + 4 > len) return DECODE_FALLBACK;
+        blen = view.getUint32(pos, false);
+        pos += 4;
+      } else {
+        return DECODE_FALLBACK;
+      }
+      if (pos + blen > len) return DECODE_FALLBACK;
+      let owned;
+      if (blen <= 16) {
+        owned = new Uint8Array(blen);
+        for (let j = 0; j < blen; j += 1) owned[j] = bytes[pos + j];
+      } else {
+        owned = bytes.slice(pos, pos + blen);
+      }
+      DECODE_STATE[0] = pos + blen;
+      return owned;
+    }
+
+    if (code === 0x07) {
+      if (alen !== 3) return DECODE_FALLBACK;
+      const val = fastReadFloat(bytes, view, len, pos);
+      if (val === DECODE_FALLBACK) return DECODE_FALLBACK;
+      const unit = fastReadStr(bytes, view, len, DECODE_STATE[0], false);
+      if (unit === DECODE_FALLBACK || !VALID_DURATION_UNITS.has(unit)) {
+        return DECODE_FALLBACK;
+      }
+      return new PklDuration(val, unit);
+    }
+
+    if (code === 0x08) {
+      if (alen !== 3) return DECODE_FALLBACK;
+      const val = fastReadFloat(bytes, view, len, pos);
+      if (val === DECODE_FALLBACK) return DECODE_FALLBACK;
+      const unit = fastReadStr(bytes, view, len, DECODE_STATE[0], false);
+      if (unit === DECODE_FALLBACK || !VALID_DATA_SIZE_UNITS.has(unit)) {
+        return DECODE_FALLBACK;
+      }
+      return new PklDataSize(val, unit);
+    }
+
+    if (code === 0x09) {
+      if (alen !== 3) return DECODE_FALLBACK;
+      DECODE_STATE[0] = pos;
+      const nextDepth = depth + 1;
+      const first = fastDecodeVal(bytes, view, len, nextDepth);
+      if (first === DECODE_FALLBACK) return DECODE_FALLBACK;
+      const second = fastDecodeVal(bytes, view, len, nextDepth);
+      if (second === DECODE_FALLBACK) return DECODE_FALLBACK;
+      return new PklPair(first, second);
+    }
+
+    return DECODE_FALLBACK;
+  }
+  return DECODE_FALLBACK;
+}
+
+function tryDecodePklBinaryFast(bytes) {
+  if (!(bytes instanceof Uint8Array) || bytes.byteLength === 0) {
+    return DECODE_FALLBACK;
+  }
+  const len = bytes.byteLength;
+  const view = new DataView(bytes.buffer, bytes.byteOffset, len);
+  DECODE_STATE[0] = 0;
+  INTERN_LEN.fill(-1);
+  const out = fastDecodeVal(bytes, view, len, 0);
+  if (out === DECODE_FALLBACK || DECODE_STATE[0] !== len) {
+    return DECODE_FALLBACK;
+  }
+  return out;
+}
+
+const COLUMNAR_MAGIC = 0x504b4c01;
+const IS_LITTLE_ENDIAN = new Uint8Array(new Uint32Array([1]).buffer)[0] === 1;
+let canUseNewFunction = true;
+const SHAPE_PROPS_FACTORIES = new Map();
+const COLUMNAR_TABLE_READERS = new Map();
+let columnarAlignBuf = null;
+const COL_STATE = new Int32Array(7);
+
+function getShapePropsFactory(keys) {
+  if (!canUseNewFunction || keys.length === 0 || keys.length > 32) return null;
+  for (let i = 0; i < keys.length; i += 1) {
+    if (keys[i] === "__proto__") return null;
+  }
+  const sig = keys.join("\0");
+  let fn = SHAPE_PROPS_FACTORIES.get(sig);
+  if (fn !== undefined) return fn;
+  try {
+    const params = new Array(keys.length);
+    const fields = new Array(keys.length);
+    for (let i = 0; i < keys.length; i += 1) {
+      params[i] = `v${i}`;
+      fields[i] = `${JSON.stringify(keys[i])}:v${i}`;
+    }
+    fn = new Function(params.join(","), `return {${fields.join(",")}};`);
+  } catch {
+    canUseNewFunction = false;
+    return null;
+  }
+  if (SHAPE_PROPS_FACTORIES.size < 256) SHAPE_PROPS_FACTORIES.set(sig, fn);
+  return fn;
+}
+
+function getColumnarTableReader(keys, colTypes) {
+  if (!canUseNewFunction || keys.length === 0 || keys.length > 32) return null;
+  for (let i = 0; i < keys.length; i += 1) {
+    if (keys[i] === "__proto__") return null;
+  }
+  const sig = `${keys.join("\0")}|${colTypes.join(",")}`;
+  let fn = COLUMNAR_TABLE_READERS.get(sig);
+  if (fn !== undefined) return fn;
+  try {
+    const lines = [
+      "const out = new Array(count);",
+      "let bi = st[0], si = st[1], soff = st[2], bo = st[3], bli = st[4], fli = st[5], bbi = st[6];",
+      "for (let i = 0; i < count; i += 1) {",
+    ];
+    const propExprs = new Array(keys.length);
+    for (let c = 0; c < keys.length; c += 1) {
+      const t = colTypes[c];
+      const k = JSON.stringify(keys[c]);
+      if (t === 1) {
+        propExprs[c] = `${k}: bigs[bi++]`;
+      } else if (t === 2) {
+        propExprs[c] = `${k}: bools[bbi++] !== 0`;
+      } else if (t === 3) {
+        lines.push(
+          `  const l${c} = lens[si++]; const s${c} = bigStr.slice(soff, soff + l${c}); soff += l${c};`,
+        );
+        propExprs[c] = `${k}: s${c}`;
+      } else if (t === 4) {
+        lines.push(
+          `  const bn${c} = binLens[bli++]; let u${c}; if (bn${c} <= 16) { u${c} = new Uint8Array(bn${c}); for (let j = 0; j < bn${c}; j += 1) u${c}[j] = bins[bo + j]; } else { u${c} = bins.slice(bo, bo + bn${c}); } bo += bn${c};`,
+        );
+        propExprs[c] = `${k}: u${c}`;
+      } else if (t === 5) {
+        propExprs[c] = `${k}: floats[fli++]`;
+      } else if (t === 6) {
+        propExprs[c] = `${k}: null`;
+      } else {
+        return null;
+      }
+    }
+    lines.push(
+      `  out[i] = new PklObject(cls, uri, {${propExprs.join(",")}}, new Map(), []);`,
+    );
+    lines.push("}");
+    lines.push(
+      "st[0] = bi; st[1] = si; st[2] = soff; st[3] = bo; st[4] = bli; st[5] = fli; st[6] = bbi;",
+    );
+    lines.push("return out;");
+    fn = new Function(
+      "PklObject",
+      "cls",
+      "uri",
+      "count",
+      "bigs",
+      "bools",
+      "floats",
+      "lens",
+      "bigStr",
+      "bins",
+      "binLens",
+      "st",
+      lines.join("\n"),
+    );
+  } catch {
+    canUseNewFunction = false;
+    return null;
+  }
+  if (COLUMNAR_TABLE_READERS.size < 256) COLUMNAR_TABLE_READERS.set(sig, fn);
+  return fn;
+}
+
+function unpackColumnarBuffer(bytes) {
+  if (!IS_LITTLE_ENDIAN || !(bytes instanceof Uint8Array) || bytes.byteLength < 80) {
+    return DECODE_FALLBACK;
+  }
+  let src = bytes;
+  let alignedCopyOversized = false;
+  if ((bytes.byteOffset & 7) !== 0) {
+    const need = bytes.byteLength;
+    if (columnarAlignBuf === null || columnarAlignBuf.byteLength < need) {
+      columnarAlignBuf = new Uint8Array(Math.max(need, 4096));
+    }
+    columnarAlignBuf.set(bytes, 0);
+    src = columnarAlignBuf.subarray(0, need);
+    alignedCopyOversized = columnarAlignBuf.byteLength > 262144;
+  }
+  const ab = src.buffer;
+  const base = src.byteOffset;
+  const header = new Uint32Array(ab, base, 20);
+  if (header[0] !== COLUMNAR_MAGIC) {
+    return DECODE_FALLBACK;
+  }
+  const ops = new Int32Array(ab, base + header[1], header[2]);
+  const bigs = new BigInt64Array(ab, base + header[3], header[4]);
+  const floats = new Float64Array(ab, base + header[5], header[6]);
+  const bools = new Uint8Array(ab, base + header[7], header[8]);
+  const strLens = new Uint32Array(ab, base + header[9], header[10]);
+  const strUtf8 = new Uint8Array(ab, base + header[11], header[12]);
+  const binLens = new Uint32Array(ab, base + header[13], header[14]);
+  const binBytes = new Uint8Array(ab, base + header[15], header[16]);
+  const shapeCount = header[17];
+  const shapeStrCount = header[18];
+
+  let bigStr;
+  if (strUtf8.byteLength === 0) {
+    bigStr = "";
+  } else {
+    try {
+      bigStr = FAST_UTF8_DECODER.decode(strUtf8);
+    } catch {
+      return DECODE_FALLBACK;
+    }
+  }
+
+  let soff = 0;
+  const shapeStrs = new Array(shapeStrCount);
+  for (let i = 0; i < shapeStrCount; i += 1) {
+    const l = strLens[i];
+    shapeStrs[i] = bigStr.slice(soff, soff + l);
+    soff += l;
+  }
+
+  let op = 0;
+  const shapes = new Array(shapeCount);
+  for (let s = 0; s < shapeCount; s += 1) {
+    const cls = shapeStrs[ops[op++]];
+    const uri = shapeStrs[ops[op++]];
+    const klen = ops[op++];
+    const keys = new Array(klen);
+    for (let k = 0; k < klen; k += 1) {
+      keys[k] = shapeStrs[ops[op++]];
+    }
+    shapes[s] = { cls, uri, keys, fn: getShapePropsFactory(keys) };
+  }
+
+  let bi = 0;
+  let fli = 0;
+  let bbi = 0;
+  let si = shapeStrCount;
+  let bli = 0;
+  let bo = 0;
+
+  function readVal() {
+    const tag = ops[op++];
+    if (tag === 0) return null;
+    if (tag === 1) return bigs[bi++];
+    if (tag === 2) return floats[fli++];
+    if (tag === 3) return false;
+    if (tag === 4) return true;
+    if (tag === 5) {
+      const l = strLens[si++];
+      const s = bigStr.slice(soff, soff + l);
+      soff += l;
+      return s;
+    }
+    if (tag === 6) {
+      const n = binLens[bli++];
+      let owned;
+      if (n <= 16) {
+        owned = new Uint8Array(n);
+        for (let j = 0; j < n; j += 1) owned[j] = binBytes[bo + j];
+      } else {
+        owned = binBytes.slice(bo, bo + n);
+      }
+      bo += n;
+      return owned;
+    }
+    if (tag === 7) {
+      const n = ops[op++];
+      const arr = new Array(n);
+      for (let i = 0; i < n; i += 1) {
+        const item = readVal();
+        if (item === DECODE_FALLBACK) return DECODE_FALLBACK;
+        arr[i] = item;
+      }
+      return arr;
+    }
+    if (tag === 10) {
+      const sh = shapes[ops[op++]];
+      const keys = sh.keys;
+      const klen = keys.length;
+      let props;
+      if (sh.fn !== null) {
+        if (klen === 4) {
+          const a0 = readVal();
+          const a1 = readVal();
+          const a2 = readVal();
+          const a3 = readVal();
+          if (
+            a0 === DECODE_FALLBACK ||
+            a1 === DECODE_FALLBACK ||
+            a2 === DECODE_FALLBACK ||
+            a3 === DECODE_FALLBACK
+          ) {
+            return DECODE_FALLBACK;
+          }
+          props = sh.fn(a0, a1, a2, a3);
+        } else if (klen === 5) {
+          const a0 = readVal();
+          const a1 = readVal();
+          const a2 = readVal();
+          const a3 = readVal();
+          const a4 = readVal();
+          if (
+            a0 === DECODE_FALLBACK ||
+            a1 === DECODE_FALLBACK ||
+            a2 === DECODE_FALLBACK ||
+            a3 === DECODE_FALLBACK ||
+            a4 === DECODE_FALLBACK
+          ) {
+            return DECODE_FALLBACK;
+          }
+          props = sh.fn(a0, a1, a2, a3, a4);
+        } else {
+          const vals = new Array(klen);
+          for (let i = 0; i < klen; i += 1) {
+            const v = readVal();
+            if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+            vals[i] = v;
+          }
+          props = sh.fn.apply(null, vals);
+        }
+      } else {
+        props = {};
+        for (let i = 0; i < klen; i += 1) {
+          const v = readVal();
+          if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
+          const k = keys[i];
+          if (k === "__proto__") {
+            definePropSafe(props, k, v);
+          } else {
+            props[k] = v;
+          }
+        }
+      }
+      return new PklObject(sh.cls, sh.uri, props, new Map(), []);
+    }
+    if (tag === 12) {
+      const sh = shapes[ops[op++]];
+      const count = ops[op++];
+      const keys = sh.keys;
+      const klen = keys.length;
+      const colTypes = new Array(klen);
+      for (let c = 0; c < klen; c += 1) colTypes[c] = ops[op++];
+      const reader = getColumnarTableReader(keys, colTypes);
+      if (reader !== null) {
+        COL_STATE[0] = bi;
+        COL_STATE[1] = si;
+        COL_STATE[2] = soff;
+        COL_STATE[3] = bo;
+        COL_STATE[4] = bli;
+        COL_STATE[5] = fli;
+        COL_STATE[6] = bbi;
+        const out = reader(
+          PklObject,
+          sh.cls,
+          sh.uri,
+          count,
+          bigs,
+          bools,
+          floats,
+          strLens,
+          bigStr,
+          binBytes,
+          binLens,
+          COL_STATE,
+        );
+        bi = COL_STATE[0];
+        si = COL_STATE[1];
+        soff = COL_STATE[2];
+        bo = COL_STATE[3];
+        bli = COL_STATE[4];
+        fli = COL_STATE[5];
+        bbi = COL_STATE[6];
+        return out;
+      }
+      const out = new Array(count);
+      for (let i = 0; i < count; i += 1) {
+        const props = {};
+        for (let c = 0; c < klen; c += 1) {
+          const t = colTypes[c];
+          let v;
+          if (t === 1) v = bigs[bi++];
+          else if (t === 2) v = bools[bbi++] !== 0;
+          else if (t === 3) {
+            const l = strLens[si++];
+            v = bigStr.slice(soff, soff + l);
+            soff += l;
+          } else if (t === 4) {
+            const bn = binLens[bli++];
+            if (bn <= 16) {
+              v = new Uint8Array(bn);
+              for (let j = 0; j < bn; j += 1) v[j] = binBytes[bo + j];
+            } else {
+              v = binBytes.slice(bo, bo + bn);
+            }
+            bo += bn;
+          } else if (t === 5) v = floats[fli++];
+          else if (t === 6) v = null;
+          else return DECODE_FALLBACK;
+          const k = keys[c];
+          if (k === "__proto__") {
+            definePropSafe(props, k, v);
+          } else {
+            props[k] = v;
+          }
+        }
+        out[i] = new PklObject(sh.cls, sh.uri, props, new Map(), []);
+      }
+      return out;
+    }
+    if (tag === 13) {
+      const val = floats[fli++];
+      const l = strLens[si++];
+      const unit = bigStr.slice(soff, soff + l);
+      soff += l;
+      return new PklDuration(val, unit);
+    }
+    if (tag === 14) {
+      const val = floats[fli++];
+      const l = strLens[si++];
+      const unit = bigStr.slice(soff, soff + l);
+      soff += l;
+      return new PklDataSize(val, unit);
+    }
+    if (tag === 15) {
+      const first = readVal();
+      if (first === DECODE_FALLBACK) return DECODE_FALLBACK;
+      const second = readVal();
+      if (second === DECODE_FALLBACK) return DECODE_FALLBACK;
+      return new PklPair(first, second);
+    }
+    if (tag === 16) {
+      const l = strLens[si++];
+      const pat = bigStr.slice(soff, soff + l);
+      soff += l;
+      return new PklRegex(pat);
+    }
+    if (tag === 17) {
+      const start = bigs[bi++];
+      const end = bigs[bi++];
+      const step = bigs[bi++];
+      return new PklIntSeq(start, end, step);
+    }
+    if (tag === 18) {
+      return new PklFunction();
+    }
+    return DECODE_FALLBACK;
+  }
+
+  const root = readVal();
+  if (alignedCopyOversized) {
+    columnarAlignBuf = null;
+  }
+  if (root === DECODE_FALLBACK || op !== ops.length) {
+    return DECODE_FALLBACK;
+  }
+  return root;
+}
+
 function decodePklBinary(bytes) {
   if (!(bytes instanceof Uint8Array)) {
     throw new PklError("decodePklBinary expects a Uint8Array.", "invalid-argument");
+  }
+  const fast = tryDecodePklBinaryFast(bytes);
+  if (fast !== DECODE_FALLBACK) {
+    return fast;
   }
   const raw = unwrapOutcome(
     native.productDecodePklBinary(new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength)),

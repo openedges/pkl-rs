@@ -230,6 +230,19 @@ impl ResourceUri {
     }
 
     pub(super) fn parse(text: &PklString) -> Result<Self, ParseError> {
+        if let Some(s) = text.as_str()
+            && super::is_clean_file_uri(s)
+        {
+            return Ok(Self {
+                text: text.clone(),
+                scheme: Some("file".to_owned()),
+                authority: Some(PklString::default()),
+                path: PklString::from(&s[7..]),
+                query: None,
+                fragment: None,
+                opaque: false,
+            });
+        }
         let source = SourceText::from(text.clone());
         let view = source.entire();
         let (body, fragment) = view

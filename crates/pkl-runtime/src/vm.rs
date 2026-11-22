@@ -4,8 +4,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 use crate::heap::{
-    CacheKey, Class, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap, HeapStats,
-    LazyState, Member, Object, Scope, TypeNodeId,
+    CacheKey, Class, CollectionKind, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap,
+    HeapStats, LazyState, Member, Object, Scope, TypeNodeId,
 };
 use crate::logging::{EvaluationContext, FrameTransformRequest, LogRequest, LoggerFailure};
 use crate::source::Span;
@@ -14,6 +14,7 @@ pub(crate) mod amendment;
 mod analyze;
 pub(crate) mod annotations;
 mod any;
+mod base_snapshot;
 pub(crate) mod builtins;
 mod bytes;
 pub(crate) mod classes;
@@ -22,9 +23,11 @@ mod collection_addition;
 pub(crate) mod collection_conversions;
 mod collection_transforms;
 pub mod collections;
+pub mod columnar_value;
 mod data_size;
 pub(crate) mod deprecation;
 mod duration;
+mod fast_int;
 mod int_seq;
 mod lazy_collections;
 mod list_ops;
@@ -290,6 +293,11 @@ pub enum Instruction {
         operand_span: Span,
     },
     ToString,
+    /// Validates/stringifies an interpolated expression left-to-right, deferring
+    /// pure `String`/`Int` formatting to `FinishInterpolation` for zero-temp concat.
+    CheckInterpolate,
+    /// Concatenates the top `count` checked interpolation parts into one `PklString`.
+    FinishInterpolation(usize),
     /// Internal Java Object.toString conversion used by collection/foreign values.
     JavaValueString,
     StringRepeat,
@@ -387,6 +395,8 @@ pub enum Instruction {
     GetMethod(PklString),
     GetImplicitProperty(PklString),
     GetImplicitMethod(PklString),
+    GetImplicitCustomProperty(PklString),
+    GetImplicitCustomMethod(PklString),
     GetConstMember(PklString),
     GetConstMethod(PklString),
     RequireConstProperty {
@@ -828,6 +838,26 @@ impl TypeCheck {
         }
     }
     fn accepts(&self, value: &Value, heap: &Heap) -> bool {
+        match self.resolved() {
+            Self::Any | Self::Unknown => return true,
+            Self::Int => return matches!(value, Value::Int(_)),
+            Self::Float => return matches!(value, Value::Float(_)),
+            Self::Number => return matches!(value, Value::Int(_) | Value::Float(_)),
+            Self::Boolean => return matches!(value, Value::Bool(_)),
+            Self::String => return matches!(value, Value::String(_)),
+            Self::NonNull => return !value.is_null(),
+            Self::Null => return value.is_null(),
+            Self::Duration => return matches!(value, Value::Duration(_)),
+            Self::Bytes => return matches!(value, Value::Bytes(_)),
+            Self::IntegerAlias { min, max, .. } => {
+                return matches!(value, Value::Int(i) if i >= min && i <= max);
+            }
+            Self::StringLiteral(expected) => {
+                return matches!(value, Value::String(actual) if actual == expected);
+            }
+            Self::Nothing | Self::VarArgs { .. } => return false,
+            _ => {}
+        }
         enum Work<'a> {
             Check(&'a TypeCheck, &'a Value),
             Union(&'a [TypeCheck], &'a Value),
@@ -992,16 +1022,27 @@ pub(crate) struct LetScope {
     writes_slot: bool,
 }
 
+type ExtraDeclarationSources = Vec<(
+    std::ops::Range<usize>,
+    Arc<[(usize, crate::syntax::DeclarationSource)]>,
+)>;
+type ConversionBlocksMap = BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>;
+type PrimitiveMethodsMap = BTreeMap<(Arc<str>, Arc<str>), usize>;
+
 #[derive(Clone, Debug)]
 pub struct Program {
     /// Immutable declaration source descriptors keyed by compiled member body.
     /// ModuleUnit.syntax retains type/annotation recipes without forcing values.
     pub declaration_sources: BTreeMap<usize, crate::syntax::DeclarationSource>,
+    base_declaration_sources: Option<Arc<BTreeMap<usize, crate::syntax::DeclarationSource>>>,
+    extra_declaration_sources: ExtraDeclarationSources,
     reflection_annotations: BTreeMap<(PklString, Span), usize>,
+    base_reflection_annotations: Option<Arc<BTreeMap<(PklString, Span), usize>>>,
     pub(crate) units: CodeStorage<modules::ModuleUnit>,
     next_declaration: usize,
     type_recipes: CodeStorage<type_resolution::TypeRecipe>,
     alias_definitions: BTreeMap<usize, type_resolution::AliasDefinition>,
+    base_alias_definitions: Option<Arc<BTreeMap<usize, type_resolution::AliasDefinition>>>,
     pub module_name: PklString,
     pub module_template: Option<usize>,
     /// Imports, classes and aliases exist before module annotation evaluation.
@@ -1009,7 +1050,8 @@ pub struct Program {
     pub blocks: CodeStorage<Vec<Instruction>>,
     pub metadata: CodeStorage<BlockMetadata>,
     pub objects: CodeStorage<Vec<Member>>,
-    builtin_objects: Vec<Vec<Member>>,
+    builtin_objects: Arc<Vec<Vec<Member>>>,
+    builtin_block_range: std::ops::Range<usize>,
     pub entry: usize,
     pub(crate) reference_render_block: usize,
     pub(crate) typed_string_block: usize,
@@ -1018,24 +1060,89 @@ pub struct Program {
     collection_every_blocks: [usize; 5],
     collection_transform_blocks: [usize; 37],
     collection_projection_blocks: [usize; 16],
-    conversion_blocks: BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>,
+    conversion_blocks: Arc<ConversionBlocksMap>,
     conversion_delegate_block: usize,
     object_default_block: usize,
     object_default_property_blocks: [usize; 3],
     null_constructor_block: usize,
     pub(crate) string_encode_block: usize,
     pub(crate) pair_constructor_block: usize,
-    primitive_methods: BTreeMap<(Arc<str>, Arc<str>), usize>,
+    primitive_methods: Arc<PrimitiveMethodsMap>,
+    pub(crate) list_fold_block: usize,
     pub(crate) amended_function_block: usize,
     pub(crate) identity_mixin_block: usize,
+    pub(crate) public_warm_blocks: [usize; 8],
     pub(crate) base_mixin_declaration: Option<usize>,
-    pub(crate) access_members: Vec<Member>,
-    pub(crate) builtin_members: BTreeMap<usize, Vec<Member>>,
+    pub(crate) access_members: Arc<Vec<Member>>,
+    pub(crate) builtin_members: Arc<BTreeMap<usize, Vec<Member>>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
 }
 
 impl Program {
-    pub fn new(mut blocks: Vec<Vec<Instruction>>) -> Self {
+    #[inline]
+    pub(crate) fn declaration_source(
+        &self,
+        code: usize,
+    ) -> Option<&crate::syntax::DeclarationSource> {
+        if let Some(found) = self.declaration_sources.get(&code) {
+            return Some(found);
+        }
+        for (range, entries) in &self.extra_declaration_sources {
+            if range.contains(&code)
+                && let Ok(idx) = entries.binary_search_by_key(&code, |(k, _)| *k)
+            {
+                return Some(&entries[idx].1);
+            }
+        }
+        self.base_declaration_sources
+            .as_ref()
+            .and_then(|base| base.get(&code))
+    }
+
+    #[inline]
+    pub(crate) fn reflection_annotation(&self, key: &(PklString, Span)) -> Option<usize> {
+        self.reflection_annotations.get(key).copied().or_else(|| {
+            self.base_reflection_annotations
+                .as_ref()
+                .and_then(|base| base.get(key).copied())
+        })
+    }
+
+    #[inline]
+    fn alias_definition(&self, id: usize) -> Option<&type_resolution::AliasDefinition> {
+        self.alias_definitions.get(&id).or_else(|| {
+            self.base_alias_definitions
+                .as_ref()
+                .and_then(|base| base.get(&id))
+        })
+    }
+
+    /// Cached immutable baseline `Program` built with no initial user blocks.
+    pub(crate) fn empty_shared() -> Arc<Self> {
+        static EMPTY: std::sync::OnceLock<Arc<Program>> = std::sync::OnceLock::new();
+        EMPTY
+            .get_or_init(|| Arc::new(Self::build_uncached(Vec::new())))
+            .clone()
+    }
+
+    /// Cached baseline `Program` for `SourceSession::module_evaluator` and `ReplSession::new`
+    /// (`vec![vec![Instruction::Return]]`).
+    pub(crate) fn session_shared() -> Arc<Self> {
+        static SESSION: std::sync::OnceLock<Arc<Program>> = std::sync::OnceLock::new();
+        SESSION
+            .get_or_init(|| Arc::new(Self::build_uncached(vec![vec![Instruction::Return]])))
+            .clone()
+    }
+
+    pub fn new(blocks: Vec<Vec<Instruction>>) -> Self {
+        if blocks.is_empty() {
+            return (*Self::empty_shared()).clone();
+        }
+        Self::build_uncached(blocks)
+    }
+
+    fn build_uncached(mut blocks: Vec<Vec<Instruction>>) -> Self {
+        let builtin_start = blocks.len();
         let reference_render_block = blocks.len();
         blocks.push(vec![
             Instruction::LoadLocal(0),
@@ -1143,20 +1250,91 @@ impl Program {
             amendment::blocks(&mut blocks, &mut metadata);
         let collection_every_blocks =
             collection_transforms::every_blocks(&mut blocks, &mut metadata);
+        let mut push_warm_block = |code: Vec<Instruction>| {
+            let id = blocks.len();
+            let len = code.len();
+            blocks.push(code);
+            metadata.push(BlockMetadata {
+                spans: vec![None; len],
+                ..Default::default()
+            });
+            id
+        };
+        let public_warm_blocks = [
+            // 0: output.text
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("text".into()),
+                Instruction::Return,
+            ]),
+            // 1: output.bytes
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("bytes".into()),
+                Instruction::Return,
+            ]),
+            // 2: load module
+            push_warm_block(vec![Instruction::Input(0), Instruction::Return]),
+            // 3: pkl-binary module
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::EncodePklBinary,
+                Instruction::Return,
+            ]),
+            // 4: pkl-binary output.text
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("text".into()),
+                Instruction::EncodePklBinary,
+                Instruction::Return,
+            ]),
+            // 5: pkl-binary output.value
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("value".into()),
+                Instruction::EncodePklBinary,
+                Instruction::Return,
+            ]),
+            // 6: pkl-binary output.bytes
+            push_warm_block(vec![
+                Instruction::Input(0),
+                Instruction::GetMember("output".into()),
+                Instruction::CheckModuleOutput,
+                Instruction::GetMember("bytes".into()),
+                Instruction::EncodePklBinary,
+                Instruction::Return,
+            ]),
+            // 7: encode already-pushed query value
+            push_warm_block(vec![Instruction::EncodePklBinary, Instruction::Return]),
+        ];
+        let builtin_end = blocks.len();
         Self {
             units: CodeStorage::default(),
             declaration_sources: BTreeMap::new(),
+            base_declaration_sources: None,
+            extra_declaration_sources: Vec::new(),
             reflection_annotations: BTreeMap::new(),
+            base_reflection_annotations: None,
             next_declaration: 0,
             type_recipes: CodeStorage::default(),
             alias_definitions: BTreeMap::new(),
+            base_alias_definitions: None,
             module_name: PklString::default(),
             module_template: None,
             initial_module_members: Vec::new(),
             metadata: metadata.into(),
             blocks: blocks.into(),
             objects: CodeStorage::default(),
-            builtin_objects: objects,
+            builtin_objects: Arc::new(objects),
+            builtin_block_range: builtin_start..builtin_end,
             entry: 0,
             reference_render_block,
             typed_string_block,
@@ -1165,19 +1343,23 @@ impl Program {
             collection_every_blocks,
             collection_transform_blocks,
             collection_projection_blocks,
-            conversion_blocks,
+            conversion_blocks: Arc::new(conversion_blocks),
             conversion_delegate_block,
             object_default_block,
             object_default_property_blocks,
             null_constructor_block,
             string_encode_block,
             pair_constructor_block,
-            primitive_methods,
+            list_fold_block: *primitive_methods
+                .get(&(Arc::from("List"), Arc::from("fold")))
+                .expect("List.fold primitive block"),
+            primitive_methods: Arc::new(primitive_methods),
             amended_function_block,
             identity_mixin_block,
+            public_warm_blocks,
             base_mixin_declaration: None,
-            access_members,
-            builtin_members,
+            access_members: Arc::new(access_members),
+            builtin_members: Arc::new(builtin_members),
             constraint_origins: BTreeMap::new(),
         }
     }
@@ -1315,6 +1497,8 @@ struct Frame {
     return_to_type: bool,
     diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
+    fast_call_frame: bool,
+    captured_locals_len: usize,
     builders: Vec<ObjectId>,
     generator_scopes: Vec<identity::GeneratorScope>,
     module_load: Option<modules::ModuleRun>,
@@ -1324,6 +1508,196 @@ struct Frame {
 }
 
 impl Frame {
+    fn new_empty(block: usize, pc: usize, base: usize, environment: Environment) -> Box<Self> {
+        Box::new(Self {
+            guest_catch: None,
+            block,
+            pc,
+            base,
+            environment,
+            force: None,
+            lambda: false,
+            type_run: None,
+            type_resolution: None,
+            generic_default: None,
+            equality_run: None,
+            deep_force: None,
+            warning: None,
+            method_call_site: None,
+            pcf_render: None,
+            json_parse: None,
+            yaml_parse: None,
+            collection_join: None,
+            collection_transform: None,
+            set_order: None,
+            set_sequence: None,
+            list_ops: None,
+            string_transform: None,
+            int_seq_run: None,
+            lazy_collection_run: None,
+            mapping_lookup: None,
+            mapping_keys: None,
+            reflection: None,
+            analysis: None,
+            conversion_run: None,
+            collection_addition: None,
+            function_owner: None,
+            amendment_arguments: None,
+            amendment_end: None,
+            prepared_hashes: None,
+            key_search: None,
+            return_to_type: false,
+            diagnostic_member: None,
+            callsite_hidden: false,
+            fast_call_frame: false,
+            captured_locals_len: 0,
+            builders: Vec::new(),
+            generator_scopes: Vec::new(),
+            module_load: None,
+            uri_resolution: None,
+            glob: None,
+            module_receiver: None,
+        })
+    }
+
+    #[inline]
+    fn has_pending_run(&self) -> bool {
+        self.glob.is_some()
+            || self.guest_catch.is_some()
+            || self.type_resolution.is_some()
+            || self.module_load.is_some()
+            || self.generic_default.is_some()
+            || self.equality_run.is_some()
+            || self.type_run.is_some()
+            || self.reflection.is_some()
+            || self.analysis.is_some()
+            || self.deep_force.is_some()
+            || self.yaml_parse.is_some()
+            || self.json_parse.is_some()
+            || self.pcf_render.is_some()
+            || self.collection_join.is_some()
+            || self
+                .force
+                .as_ref()
+                .is_some_and(|force| force.stolen_cast.is_some())
+    }
+
+    #[inline]
+    fn is_fast_returnable(&self) -> bool {
+        self.force.is_none()
+            && !self.return_to_type
+            && self.amendment_arguments.is_none()
+            && self.builders.is_empty()
+            && self.generator_scopes.is_empty()
+            && self.warning.is_none()
+            && self.method_call_site.is_none()
+            && self.diagnostic_member.is_none()
+            && self.uri_resolution.is_none()
+            && self.module_receiver.is_none()
+            && self.key_search.is_none()
+            && self.collection_transform.is_none()
+            && self.set_order.is_none()
+            && self.set_sequence.is_none()
+            && self.list_ops.is_none()
+            && self.string_transform.is_none()
+            && self.int_seq_run.is_none()
+            && self.lazy_collection_run.is_none()
+            && self.mapping_lookup.is_none()
+            && self.mapping_keys.is_none()
+            && self.conversion_run.is_none()
+            && self.collection_addition.is_none()
+    }
+
+    #[inline]
+    fn fast_reset_for_pool(&mut self) {
+        self.environment.locals.clear();
+        self.environment.local_owners.clear();
+        self.environment.copy_locals.clear();
+        self.environment.restore_for_bindings = false;
+        self.environment.this_value = None;
+        self.environment.outer_value = None;
+        self.environment.custom_this = None;
+        self.environment.executable_owner = None;
+        self.environment.code_owner = None;
+        if !self.environment.type_arguments.is_empty() {
+            self.environment.type_arguments.clear();
+        }
+        if !self.environment.type_argument_sources.is_empty() {
+            self.environment.type_argument_sources.clear();
+        }
+        self.environment.scopes = crate::heap::ScopeList::default();
+        self.lambda = false;
+        self.function_owner = None;
+        self.amendment_end = None;
+        self.callsite_hidden = false;
+        self.fast_call_frame = false;
+        self.captured_locals_len = 0;
+        debug_assert!(
+            !self.has_pending_run() && self.is_fast_returnable() && self.prepared_hashes.is_none()
+        );
+    }
+
+    fn reset_for_pool(&mut self) {
+        self.guest_catch = None;
+        self.block = 0;
+        self.pc = 0;
+        self.base = 0;
+        self.environment.locals.clear();
+        self.environment.local_owners.clear();
+        self.environment.copy_locals.clear();
+        self.environment.restore_for_bindings = false;
+        self.environment.this_value = None;
+        self.environment.outer_value = None;
+        self.environment.custom_this = None;
+        self.environment.executable_owner = None;
+        self.environment.code_owner = None;
+        self.environment.type_arguments.clear();
+        self.environment.type_argument_sources.clear();
+        self.environment.scopes = crate::heap::ScopeList::default();
+        self.force = None;
+        self.lambda = false;
+        self.type_run = None;
+        self.type_resolution = None;
+        self.generic_default = None;
+        self.equality_run = None;
+        self.deep_force = None;
+        self.warning = None;
+        self.method_call_site = None;
+        self.pcf_render = None;
+        self.json_parse = None;
+        self.yaml_parse = None;
+        self.collection_join = None;
+        self.collection_transform = None;
+        self.set_order = None;
+        self.set_sequence = None;
+        self.list_ops = None;
+        self.string_transform = None;
+        self.int_seq_run = None;
+        self.lazy_collection_run = None;
+        self.mapping_lookup = None;
+        self.mapping_keys = None;
+        self.reflection = None;
+        self.analysis = None;
+        self.conversion_run = None;
+        self.collection_addition = None;
+        self.function_owner = None;
+        self.amendment_arguments = None;
+        self.amendment_end = None;
+        self.prepared_hashes = None;
+        self.key_search = None;
+        self.return_to_type = false;
+        self.diagnostic_member = None;
+        self.callsite_hidden = false;
+        self.fast_call_frame = false;
+        self.captured_locals_len = 0;
+        self.builders.clear();
+        self.generator_scopes.clear();
+        self.module_load = None;
+        self.uri_resolution = None;
+        self.glob = None;
+        self.module_receiver = None;
+    }
+
     fn hides_callsite(&self) -> bool {
         self.callsite_hidden
             || self.force.as_ref().is_some_and(|force| force.stolen_cache_value)
@@ -1377,24 +1751,454 @@ enum State {
     Closed,
 }
 
+#[derive(Clone)]
+struct CachedQuery {
+    unit: crate::modules::UnitId,
+    expression: PklString,
+    raw_value: bool,
+    power_assertions: bool,
+    entry: usize,
+    owner: ExecutableOwnerId,
+}
+
+pub(crate) enum WarmPublicOp<'a> {
+    OutputText,
+    OutputBytes,
+    LoadModule,
+    PklBinaryModule,
+    PklBinaryOutputText,
+    PklBinaryOutputValue,
+    PklBinaryOutputBytes,
+    Query {
+        expression: &'a crate::source::SourceText,
+        raw_value: bool,
+        encode_pkl_binary: bool,
+    },
+}
+
 struct SuspendedContext {
     public_primary: Option<ObjectId>,
     /// Caller locations captured at the Host boundary, innermost first. The
     /// pending reader has no language call node for a callback evaluation.
     diagnostic_callers: Vec<RuntimeFrame>,
-    frames: Vec<Frame>,
+    frames: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
     state: State,
 }
 
+#[inline]
+fn block_hash_slot(block: usize, shift: u32) -> usize {
+    #[cfg(target_pointer_width = "64")]
+    const MULT: usize = 0x9E37_79B9_7F4A_7C15;
+    #[cfg(not(target_pointer_width = "64"))]
+    const MULT: usize = 0x9E37_79B9;
+    block.wrapping_mul(MULT) >> shift
+}
+
+/// Block-ID-indexed table of static executable owners (`O(1)` lookup on hot paths),
+/// with a copy-on-write frozen dense `pkl:base` prefix shared across fresh evaluators
+/// and a compact Fibonacci-hashed open-addressed local table whose memory stays `O(live)`
+/// even when dynamic block IDs advance monotonically across long-lived sessions.
+#[derive(Clone, Default)]
+pub(super) struct ExecutableRoots {
+    base: Option<Arc<[Option<ExecutableOwnerId>]>>,
+    base_len: usize,
+    base_count: usize,
+    base_overrides: Vec<(usize, ExecutableOwnerId)>,
+    local_slots: Vec<Option<(usize, ExecutableOwnerId)>>,
+    local_count: usize,
+}
+
+impl ExecutableRoots {
+    #[inline]
+    pub(super) fn new() -> Self {
+        Self::default()
+    }
+    pub(super) fn freeze_base(&mut self) {
+        if self.base.is_none() && self.local_count > 0 {
+            let max_block = self
+                .local_slots
+                .iter()
+                .flatten()
+                .map(|(block, _)| *block)
+                .max()
+                .unwrap_or(0);
+            let mut dense = vec![None; max_block + 1];
+            for &(block, owner) in self.local_slots.iter().flatten() {
+                dense[block] = Some(owner);
+            }
+            self.base_len = dense.len();
+            self.base_count = self.local_count;
+            self.base = Some(Arc::from(dense));
+            self.base_overrides.clear();
+            self.local_slots = Vec::new();
+            self.local_count = 0;
+        }
+    }
+    #[inline]
+    pub(super) fn get(&self, block: &usize) -> Option<&ExecutableOwnerId> {
+        let block = *block;
+        if block < self.base_len {
+            if let Some(owner) = self.base.as_deref()?.get(block).and_then(Option::as_ref) {
+                return Some(owner);
+            }
+            for (b, owner) in &self.base_overrides {
+                if *b == block {
+                    return Some(owner);
+                }
+            }
+            None
+        } else {
+            let cap = self.local_slots.len();
+            if cap == 0 {
+                return None;
+            }
+            let mask = cap - 1;
+            let shift = usize::BITS - cap.trailing_zeros();
+            let mut idx = block_hash_slot(block, shift);
+            loop {
+                match &self.local_slots[idx] {
+                    Some((k, owner)) if *k == block => return Some(owner),
+                    None => return None,
+                    Some(_) => idx = (idx + 1) & mask,
+                }
+            }
+        }
+    }
+    fn rehash_local(&mut self, new_cap: usize) {
+        if new_cap == 0 {
+            self.local_slots = Vec::new();
+            self.local_count = 0;
+            return;
+        }
+        let cap = new_cap.next_power_of_two().max(16);
+        let old = std::mem::replace(&mut self.local_slots, vec![None; cap]);
+        self.local_count = 0;
+        let mask = cap - 1;
+        let shift = usize::BITS - cap.trailing_zeros();
+        for (block, owner) in old.into_iter().flatten() {
+            let mut idx = block_hash_slot(block, shift);
+            loop {
+                if self.local_slots[idx].is_none() {
+                    self.local_slots[idx] = Some((block, owner));
+                    self.local_count += 1;
+                    break;
+                }
+                idx = (idx + 1) & mask;
+            }
+        }
+    }
+    fn insert_local(&mut self, block: usize, owner: ExecutableOwnerId) {
+        if (self.local_count + 1).saturating_mul(2) > self.local_slots.len() {
+            let new_cap = self.local_slots.len().saturating_mul(2).max(16);
+            self.rehash_local(new_cap);
+        }
+        let cap = self.local_slots.len();
+        let mask = cap - 1;
+        let shift = usize::BITS - cap.trailing_zeros();
+        let mut idx = block_hash_slot(block, shift);
+        loop {
+            match &mut self.local_slots[idx] {
+                Some((k, existing)) if *k == block => {
+                    *existing = owner;
+                    return;
+                }
+                None => {
+                    self.local_slots[idx] = Some((block, owner));
+                    self.local_count += 1;
+                    return;
+                }
+                Some(_) => idx = (idx + 1) & mask,
+            }
+        }
+    }
+    fn unfreeze_base(&mut self) {
+        let base = self.base.take();
+        let overrides = std::mem::take(&mut self.base_overrides);
+        let total_needed = self.base_count + overrides.len() + self.local_count;
+        self.base_len = 0;
+        self.base_count = 0;
+        if total_needed.saturating_mul(2) > self.local_slots.len() {
+            self.rehash_local(total_needed.saturating_mul(2).max(16));
+        }
+        if let Some(base) = base {
+            for (block, slot) in base.iter().enumerate() {
+                if let Some(owner) = *slot {
+                    self.insert_local(block, owner);
+                }
+            }
+        }
+        for (block, owner) in overrides {
+            self.insert_local(block, owner);
+        }
+    }
+    #[inline]
+    pub(super) fn insert(&mut self, block: usize, owner: ExecutableOwnerId) {
+        if block < self.base_len {
+            match self
+                .base
+                .as_deref()
+                .and_then(|b| b.get(block))
+                .copied()
+                .flatten()
+            {
+                None => {
+                    for (b, existing) in &mut self.base_overrides {
+                        if *b == block {
+                            *existing = owner;
+                            return;
+                        }
+                    }
+                    self.base_overrides.push((block, owner));
+                    return;
+                }
+                Some(existing) if existing == owner => return,
+                Some(_) => self.unfreeze_base(),
+            }
+        }
+        self.insert_local(block, owner);
+    }
+    pub(super) fn compact(&mut self) {
+        if self.local_count == 0 {
+            if !self.local_slots.is_empty() {
+                self.local_slots = Vec::new();
+            }
+        } else if self.local_slots.len() > 64
+            && self.local_count.saturating_mul(4) < self.local_slots.len()
+        {
+            let target = self
+                .local_count
+                .saturating_mul(2)
+                .next_power_of_two()
+                .max(16);
+            self.rehash_local(target);
+        }
+    }
+    #[inline]
+    pub(super) fn clear(&mut self) {
+        self.base = None;
+        self.base_len = 0;
+        self.base_count = 0;
+        self.base_overrides = Vec::new();
+        self.local_slots = Vec::new();
+        self.local_count = 0;
+    }
+    #[inline]
+    pub(super) fn len(&self) -> usize {
+        self.base_count + self.base_overrides.len() + self.local_count
+    }
+    #[inline]
+    pub(super) fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+    #[cfg(test)]
+    pub(super) fn local_capacity(&self) -> usize {
+        self.local_slots.capacity()
+    }
+    pub(super) fn retain(&mut self, mut f: impl FnMut(&usize, &mut ExecutableOwnerId) -> bool) {
+        if let Some(base) = self.base.as_deref() {
+            let mut needs_unfreeze = false;
+            for (block, slot) in base.iter().enumerate() {
+                if let Some(mut copy) = *slot
+                    && (!f(&block, &mut copy) || copy != slot.unwrap())
+                {
+                    needs_unfreeze = true;
+                    break;
+                }
+            }
+            if needs_unfreeze {
+                self.unfreeze_base();
+            }
+        }
+        if !self.base_overrides.is_empty() {
+            self.base_overrides
+                .retain_mut(|(block, owner)| f(block, owner));
+        }
+        if self.local_count > 0 {
+            let mut removed = false;
+            let mut kept = 0usize;
+            for slot in &mut self.local_slots {
+                if let Some((block, owner)) = slot {
+                    if f(block, owner) {
+                        kept += 1;
+                    } else {
+                        *slot = None;
+                        removed = true;
+                    }
+                }
+            }
+            if removed {
+                if kept == 0 {
+                    self.rehash_local(0);
+                } else {
+                    let target = kept.saturating_mul(2).next_power_of_two().max(16);
+                    self.rehash_local(target);
+                }
+            }
+        }
+        self.compact();
+    }
+    pub(super) fn iter(&self) -> impl Iterator<Item = (usize, ExecutableOwnerId)> + '_ {
+        let base_slice: &[Option<ExecutableOwnerId>] = self.base.as_deref().unwrap_or(&[]);
+        base_slice
+            .iter()
+            .enumerate()
+            .filter_map(|(block, slot)| slot.map(|owner| (block, owner)))
+            .chain(self.base_overrides.iter().copied())
+            .chain(self.local_slots.iter().flatten().copied())
+    }
+}
+
+/// Compact Fibonacci-hashed open-addressed cache of compiled `FastIntBlock` entries keyed
+/// by bytecode block ID. Memory stays `O(live)` regardless of monotonic block IDs.
+#[derive(Default)]
+struct FastIntCache {
+    slots: Vec<Option<(usize, Option<Box<fast_int::FastIntBlock>>)>>,
+    count: usize,
+}
+
+impl FastIntCache {
+    #[inline]
+    fn is_empty(&self) -> bool {
+        self.count == 0
+    }
+    #[cfg(test)]
+    fn capacity(&self) -> usize {
+        self.slots.capacity()
+    }
+    #[inline]
+    fn clear(&mut self) {
+        self.slots = Vec::new();
+        self.count = 0;
+    }
+    #[inline]
+    fn get_or_compile(
+        &mut self,
+        block_id: usize,
+        builtin_end: usize,
+        compile: impl FnOnce() -> Option<Box<fast_int::FastIntBlock>>,
+    ) -> Option<&fast_int::FastIntBlock> {
+        if block_id < builtin_end {
+            return None;
+        }
+        let cap = self.slots.len();
+        if cap > 0 {
+            let mask = cap - 1;
+            let shift = usize::BITS - cap.trailing_zeros();
+            let mut idx = block_hash_slot(block_id, shift);
+            let mut hit = None;
+            loop {
+                match self.slots[idx] {
+                    Some((k, _)) if k == block_id => {
+                        hit = Some(idx);
+                        break;
+                    }
+                    None => break,
+                    Some(_) => idx = (idx + 1) & mask,
+                }
+            }
+            if let Some(found) = hit {
+                return self.slots[found].as_ref().and_then(|(_, v)| v.as_deref());
+            }
+        }
+        self.insert_slow(block_id, compile())
+    }
+    #[cold]
+    fn insert_slow(
+        &mut self,
+        block_id: usize,
+        compiled: Option<Box<fast_int::FastIntBlock>>,
+    ) -> Option<&fast_int::FastIntBlock> {
+        if (self.count + 1).saturating_mul(2) > self.slots.len() {
+            let new_cap = self.slots.len().saturating_mul(2).max(16);
+            self.rehash(new_cap);
+        }
+        let cap = self.slots.len();
+        let mask = cap - 1;
+        let shift = usize::BITS - cap.trailing_zeros();
+        let mut idx = block_hash_slot(block_id, shift);
+        loop {
+            match &mut self.slots[idx] {
+                Some((k, existing)) if *k == block_id => {
+                    *existing = compiled;
+                    break;
+                }
+                None => {
+                    self.slots[idx] = Some((block_id, compiled));
+                    self.count += 1;
+                    break;
+                }
+                Some(_) => idx = (idx + 1) & mask,
+            }
+        }
+        self.slots[idx].as_ref().and_then(|(_, v)| v.as_deref())
+    }
+    fn rehash(&mut self, new_cap: usize) {
+        if new_cap == 0 {
+            self.slots = Vec::new();
+            self.count = 0;
+            return;
+        }
+        let cap = new_cap.next_power_of_two().max(16);
+        let old = std::mem::replace(&mut self.slots, vec![None; cap]);
+        self.count = 0;
+        let mask = cap - 1;
+        let shift = usize::BITS - cap.trailing_zeros();
+        for (block_id, entry) in old.into_iter().flatten() {
+            let mut idx = block_hash_slot(block_id, shift);
+            loop {
+                if self.slots[idx].is_none() {
+                    self.slots[idx] = Some((block_id, entry));
+                    self.count += 1;
+                    break;
+                }
+                idx = (idx + 1) & mask;
+            }
+        }
+    }
+    fn retain(&mut self, mut keep: impl FnMut(usize) -> bool) {
+        if self.count == 0 {
+            if !self.slots.is_empty() {
+                self.slots = Vec::new();
+            }
+            return;
+        }
+        let mut removed = false;
+        let mut kept = 0usize;
+        for slot in &mut self.slots {
+            if let Some((block_id, _)) = slot {
+                if keep(*block_id) {
+                    kept += 1;
+                } else {
+                    *slot = None;
+                    removed = true;
+                }
+            }
+        }
+        if removed {
+            if kept == 0 {
+                self.rehash(0);
+            } else {
+                let target = kept.saturating_mul(2).next_power_of_two().max(16);
+                self.rehash(target);
+            }
+        } else if self.slots.len() > 64 && self.count.saturating_mul(4) < self.slots.len() {
+            let target = self.count.saturating_mul(2).next_power_of_two().max(16);
+            self.rehash(target);
+        }
+    }
+}
+
+/// Static call targets own code state, never captured receivers/environments.
 pub struct Vm {
     program: Arc<Program>,
     context: EvaluationContext,
     callback_closing: bool,
     log_buffer: Vec<u16>,
     heap: Heap,
-    frames: Vec<Frame>,
+    frames: Vec<Box<Frame>>,
+    frame_pool: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
     state: State,
@@ -1404,6 +2208,9 @@ pub struct Vm {
     member_evaluations: u64,
     code_validation: Result<(), RuntimeError>,
     power_assertions: bool,
+    pure_standard_host: bool,
+    inline_module_depth: u8,
+    active_type_trackers: usize,
     /// Keys belong to this immutable Program; values belong only to this evaluator.
     /// Reentering or restarting a declaration retains its first captured environment.
     public_primary: Option<ObjectId>,
@@ -1422,12 +2229,28 @@ pub struct Vm {
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     type_parent_defaults: BTreeMap<(usize, usize), Value>,
     /// Static call targets own code state, never captured receivers/environments.
-    executable_roots: BTreeMap<usize, ExecutableOwnerId>,
+    executable_roots: ExecutableRoots,
     code_arenas: Vec<query_lifecycle::CodeArena>,
     declaration_roots_dirty: bool,
     declaration_roots_lens: (usize, usize, usize, usize, usize, usize),
     unowned_declaration_roots: Vec<Value>,
     public_operation_entries: BTreeSet<usize>,
+    query_cache: Vec<CachedQuery>,
+    auto_gc: bool,
+    gc_threshold: usize,
+    last_gc_arenas: usize,
+    gc_epoch: u64,
+    session_root: Option<Value>,
+    uncached_module_uris: std::collections::VecDeque<(PklString, PklString)>,
+    cached_module_uris: BTreeSet<PklString>,
+    /// 1-entry MRU cache for warm persistent public operations (bypasses BTreeMap URI compares).
+    last_warm_module: Option<(PklString, ObjectId)>,
+    fast_int_cache: FastIntCache,
+    fast_int_captured: Vec<i64>,
+    fast_int_vals: Vec<i64>,
+    fast_int_locals: Vec<i64>,
+    fast_int_calls: Vec<(u32, u32)>,
+    scratch_utf8: String,
     pub(crate) platform_metadata: Option<crate::logging::PlatformMetadata>,
     pub(crate) monotonic_clock: Option<crate::logging::MonotonicClock>,
 }
@@ -1458,11 +2281,13 @@ impl Vm {
             Ok(())
         };
         // Compiled caches cannot retain evaluator-owned handles. Validate once,
-        // independently of repeated evaluation state creation.
+        // independently of repeated evaluation state creation. Builtin blocks
+        // emitted by Program::new contain no heap object constants.
         let code_validation = if program
             .blocks
-            .iter()
-            .flatten()
+            .iter_with_ids()
+            .filter(|(id, _)| !program.builtin_block_range.contains(id))
+            .flat_map(|(_, block)| block.iter())
             .any(|instruction| matches!(instruction, Instruction::Constant(value) if value.heap_id().is_some()))
         {
             Err(invalid(
@@ -1479,6 +2304,7 @@ impl Vm {
             log_buffer: Vec::new(),
             heap: Heap::new(),
             frames: Vec::new(),
+            frame_pool: Vec::new(),
             stack: identity::OperandStack::default(),
             inputs: Vec::new(),
             state: State::Idle,
@@ -1488,6 +2314,9 @@ impl Vm {
             member_evaluations: 0,
             code_validation: registration.and(code_validation),
             power_assertions: false,
+            pure_standard_host: false,
+            inline_module_depth: 0,
+            active_type_trackers: 0,
             public_primary: None,
             modules_original: modules::ModuleCache::default(),
             modules_stdlib: modules::ModuleCache::default(),
@@ -1501,12 +2330,27 @@ impl Vm {
             empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
             type_parent_defaults: BTreeMap::new(),
-            executable_roots: BTreeMap::new(),
+            executable_roots: ExecutableRoots::new(),
             code_arenas: Vec::new(),
             declaration_roots_dirty: true,
             declaration_roots_lens: (0, 0, 0, 0, 0, 0),
             unowned_declaration_roots: Vec::new(),
             public_operation_entries: BTreeSet::new(),
+            query_cache: Vec::new(),
+            auto_gc: false,
+            gc_threshold: 8192,
+            last_gc_arenas: 0,
+            gc_epoch: 1,
+            session_root: None,
+            uncached_module_uris: std::collections::VecDeque::new(),
+            cached_module_uris: BTreeSet::new(),
+            last_warm_module: None,
+            fast_int_cache: FastIntCache::default(),
+            fast_int_captured: Vec::new(),
+            fast_int_vals: Vec::new(),
+            fast_int_locals: Vec::new(),
+            fast_int_calls: Vec::new(),
+            scratch_utf8: String::with_capacity(256),
             platform_metadata,
             monotonic_clock: None,
         }
@@ -1522,6 +2366,15 @@ impl Vm {
 
     pub fn set_power_assertions(&mut self, enabled: bool) {
         self.power_assertions = enabled;
+    }
+
+    pub(crate) fn set_pure_standard_host(&mut self, enabled: bool) {
+        self.pure_standard_host = enabled;
+    }
+
+    #[inline]
+    pub(crate) fn public_primary_id(&self) -> Option<ObjectId> {
+        self.public_primary
     }
 
     fn available(&self) -> Result<(), RuntimeError> {
@@ -1554,6 +2407,33 @@ impl Vm {
             self.state = State::Finished(Err(error.clone()));
         }
         result
+    }
+
+    #[inline]
+    fn alloc_frame(
+        &mut self,
+        block: usize,
+        pc: usize,
+        base: usize,
+        environment: Environment,
+    ) -> Box<Frame> {
+        if let Some(mut frame) = self.frame_pool.pop() {
+            frame.block = block;
+            frame.pc = pc;
+            frame.base = base;
+            frame.environment = environment;
+            frame
+        } else {
+            Frame::new_empty(block, pc, base, environment)
+        }
+    }
+
+    #[inline]
+    fn recycle_frame(&mut self, mut frame: Box<Frame>) {
+        if self.frame_pool.len() < 64 {
+            frame.reset_for_pool();
+            self.frame_pool.push(frame);
+        }
     }
 
     fn start_entry(
@@ -1591,55 +2471,129 @@ impl Vm {
         }
         self.stack.clear();
         self.inputs = inputs;
-        self.frames.push(Frame {
-            guest_catch: None,
-            block: entry,
-            pc: 0,
-            base: 0,
-            environment,
-            force: None,
-            lambda: false,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            deep_force: None,
-            warning: None,
-            method_call_site: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: None,
-            amendment_arguments: None,
-            amendment_end: None,
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: false,
-            diagnostic_member: None,
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: None,
-        });
+        let frame = self.alloc_frame(entry, 0, 0, environment);
+        self.frames.push(frame);
         self.state = State::Running;
         Ok(())
+    }
+
+    #[inline]
+    pub(crate) fn has_warm_cached_module(&self, uri: &PklString) -> bool {
+        if self.code_validation.is_err() || self.available().is_err() {
+            return false;
+        }
+        if let Some((last_uri, _)) = &self.last_warm_module
+            && last_uri == uri
+        {
+            return true;
+        }
+        self.cached_module_uris.contains(uri) && self.modules_original.get_ref(uri).is_some()
+    }
+
+    pub(crate) fn try_start_warm_cached_public_op(
+        &mut self,
+        uri: &PklString,
+        op: WarmPublicOp<'_>,
+    ) -> Result<bool, RuntimeError> {
+        self.available()?;
+        if let Err(err) = &self.code_validation {
+            return Err(err.clone());
+        }
+        let receiver = if let Some((last_uri, receiver)) = &self.last_warm_module
+            && last_uri == uri
+        {
+            *receiver
+        } else {
+            if !self.cached_module_uris.contains(uri) {
+                return Ok(false);
+            }
+            let Some(cached) = self.modules_original.get_ref(uri) else {
+                return Ok(false);
+            };
+            match cached {
+                modules::CachedModule::Failed(error) => {
+                    let error = error.clone();
+                    self.start_failed(error)?;
+                    return Ok(true);
+                }
+                modules::CachedModule::Value(receiver) => {
+                    let receiver = *receiver;
+                    self.last_warm_module = Some((uri.clone(), receiver));
+                    receiver
+                }
+            }
+        };
+        match op {
+            WarmPublicOp::OutputText
+            | WarmPublicOp::OutputBytes
+            | WarmPublicOp::LoadModule
+            | WarmPublicOp::PklBinaryModule
+            | WarmPublicOp::PklBinaryOutputText
+            | WarmPublicOp::PklBinaryOutputValue
+            | WarmPublicOp::PklBinaryOutputBytes => {
+                let slot = match op {
+                    WarmPublicOp::OutputText => 0,
+                    WarmPublicOp::OutputBytes => 1,
+                    WarmPublicOp::LoadModule => 2,
+                    WarmPublicOp::PklBinaryModule => 3,
+                    WarmPublicOp::PklBinaryOutputText => 4,
+                    WarmPublicOp::PklBinaryOutputValue => 5,
+                    WarmPublicOp::PklBinaryOutputBytes => 6,
+                    WarmPublicOp::Query { .. } => unreachable!(),
+                };
+                let entry = self.program.public_warm_blocks[slot];
+                self.public_primary = Some(receiver);
+                self.start_entry(entry, vec![Value::Object(receiver)], true)?;
+                Ok(true)
+            }
+            WarmPublicOp::Query {
+                expression,
+                raw_value,
+                encode_pkl_binary,
+            } => {
+                let Some(unit) = self.heap.get(receiver)?.module_unit else {
+                    return Ok(false);
+                };
+                let power_assertions = self.power_assertions;
+                let expr_orig = expression.original();
+                let Some((owner, entry)) = self.query_cache.iter().find_map(|cached| {
+                    (cached.unit == unit
+                        && cached.raw_value == raw_value
+                        && cached.power_assertions == power_assertions
+                        && cached.expression == *expr_orig
+                        && self.heap.executable_is_live(cached.owner))
+                    .then_some((cached.owner, cached.entry))
+                }) else {
+                    return Ok(false);
+                };
+                self.public_primary = Some(receiver);
+                self.log_buffer.clear();
+                self.stack.clear();
+                self.inputs.clear();
+                if encode_pkl_binary {
+                    let encode_block = self.program.public_warm_blocks[7];
+                    let wrapper = self.alloc_frame(encode_block, 0, 0, Environment::default());
+                    self.frames.push(wrapper);
+                }
+                let mut frame = if let Some(mut pooled) = self.frame_pool.pop() {
+                    pooled.block = entry;
+                    pooled.pc = 0;
+                    pooled.base = 0;
+                    pooled
+                } else {
+                    Frame::new_empty(entry, 0, 0, Environment::default())
+                };
+                frame.environment.executable_owner = Some(owner);
+                frame.environment.code_owner = Some(owner);
+                frame.environment.scopes = crate::heap::ScopeList::from_single(Scope {
+                    receiver,
+                    owner: receiver,
+                });
+                self.frames.push(frame);
+                self.state = State::Running;
+                Ok(true)
+            }
+        }
     }
 
     pub(crate) fn start_failed(&mut self, error: RuntimeError) -> Result<(), RuntimeError> {
@@ -1722,6 +2676,7 @@ impl Vm {
             self.restore_context();
             return Err(error);
         }
+        self.active_type_trackers = 0;
         Ok(())
     }
 
@@ -1732,6 +2687,14 @@ impl Vm {
         }
     }
 
+    fn recompute_active_type_trackers(&mut self) {
+        self.active_type_trackers = self
+            .frames
+            .iter()
+            .filter(|frame| frame.type_run.as_ref().is_some_and(TypeRun::has_tracker))
+            .count();
+    }
+
     fn restore_context(&mut self) {
         if let Some(context) = self.suspended.pop() {
             self.public_primary = context.public_primary;
@@ -1739,6 +2702,7 @@ impl Vm {
             self.stack = context.stack;
             self.inputs = context.inputs;
             self.state = context.state;
+            self.recompute_active_type_trackers();
         }
     }
 
@@ -1783,7 +2747,8 @@ impl Vm {
     }
 
     pub fn poll(&mut self, budget: usize) -> VmPoll {
-        for _ in 0..budget {
+        let mut remaining = budget;
+        while remaining > 0 {
             match &self.state {
                 State::Waiting(request) => return request.poll(),
                 State::Finished(result) => return VmPoll::Ready(result.clone()),
@@ -1798,7 +2763,18 @@ impl Vm {
                 }
                 State::Running => {}
             }
+            if self.auto_gc && self.heap.allocations_since_gc() >= self.gc_threshold {
+                let stats = self.collect(&[]);
+                self.gc_threshold = stats.live.saturating_mul(2).max(8192);
+                self.last_gc_arenas = self.code_arenas.len();
+            }
+            let fast = self.poll_fast_run(remaining);
+            if fast > 0 {
+                remaining = remaining.saturating_sub(fast);
+                continue;
+            }
             self.instructions += 1;
+            remaining -= 1;
             if let Err(error) = self.step() {
                 self.fail(error);
             }
@@ -1812,6 +2788,1569 @@ impl Vm {
             ))),
             _ => VmPoll::Yielded,
         }
+    }
+
+    fn poll_fast_run(&mut self, max_steps: usize) -> usize {
+        let Some(top) = self.frames.last() else {
+            return 0;
+        };
+        if top.has_pending_run() || top.prepared_hashes.is_some() {
+            return 0;
+        }
+        let mut block = top.block;
+        let Some(mut code) = self.program.blocks.get(block).map(Vec::as_slice) else {
+            return 0;
+        };
+        let mut pc = top.pc;
+        let mut base = top.base;
+
+        let program = &*self.program;
+        let frames = &mut self.frames;
+        let frame_pool = &mut self.frame_pool;
+        let stack = &mut self.stack;
+        let heap = &mut self.heap;
+        let executable_roots = &self.executable_roots;
+        let resolved_declarations = &self.resolved_declarations;
+        let active_type_trackers = self.active_type_trackers;
+        let fast_int_cache = &mut self.fast_int_cache;
+        let fast_int_captured = &mut self.fast_int_captured;
+        let fast_int_vals = &mut self.fast_int_vals;
+        let fast_int_locals = &mut self.fast_int_locals;
+        let fast_int_calls = &mut self.fast_int_calls;
+        let scratch_utf8 = &mut self.scratch_utf8;
+        let mut finished_top_result: Option<Value> = None;
+        // Cached in-place loop shape: (callee_block, caller_block, caller_pc, end_target, is_transform_map)
+        let mut inplace_loop_cache: (usize, usize, usize, usize, bool) =
+            (usize::MAX, usize::MAX, usize::MAX, 0, false);
+
+        // Per-run inline caches: nothing inside `poll_fast_run` mutates
+        // `executable_roots`, `local_kind`, `obj.cache`, or `method_call_caches`.
+        let mut cur_exec_block: usize = usize::MAX;
+        let mut cur_exec_root: Option<ExecutableOwnerId> = None;
+        let mut last_bind_ok: Option<(ExecutableOwnerId, usize, usize, identity::SlotKind)> = None;
+        let mut method_cache: [(usize, usize, ObjectId, ObjectId); 2] = [(
+            usize::MAX,
+            usize::MAX,
+            ObjectId {
+                heap: 0,
+                index: 0,
+                generation: 0,
+            },
+            ObjectId {
+                heap: 0,
+                index: 0,
+                generation: 0,
+            },
+        ); 2];
+        let mut method_cache_next: usize = 0;
+        let mut prep_method_cache: [Option<(ExecutableOwnerId, usize, usize, ObjectId)>; 4] =
+            [None; 4];
+        let mut prep_method_next: usize = 0;
+
+        let mut consumed = 0usize;
+        while consumed < max_steps {
+            let Some(instruction) = code.get(pc) else {
+                break;
+            };
+            match instruction {
+                Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. }
+                    if active_type_trackers == 0 =>
+                {
+                    pc += 1;
+                }
+                Instruction::PrepareModuleImports(unit) => {
+                    if program
+                        .units
+                        .get(unit.0 as usize)
+                        .is_some_and(|u| u.import_order.is_empty())
+                    {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::LoadLocal(depth) => {
+                    let locals = &frames.last().unwrap().environment.locals;
+                    let Some(offset) = depth.checked_add(1) else {
+                        break;
+                    };
+                    let Some(index) = locals.len().checked_sub(offset) else {
+                        break;
+                    };
+                    match &locals[index] {
+                        Value::Int(n) => stack.push_raw(Value::Int(n.boxed())),
+                        Value::Bool(b) => stack.push_raw(Value::Bool(*b)),
+                        Value::Float(f) => stack.push_raw(Value::Float(f.boxed())),
+                        Value::Null => stack.push_raw(Value::Null),
+                        other => stack.push_raw(other.clone()),
+                    }
+                    pc += 1;
+                }
+                Instruction::StoreLocal(depth) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let locals = &mut frames.last_mut().unwrap().environment.locals;
+                    let Some(offset) = depth.checked_add(1) else {
+                        break;
+                    };
+                    let Some(index) = locals.len().checked_sub(offset) else {
+                        break;
+                    };
+                    locals[index] = stack.pop().unwrap();
+                    pc += 1;
+                }
+                Instruction::Constant(value) => {
+                    match value {
+                        Value::Int(n) => stack.push_raw(Value::Int(n.boxed())),
+                        Value::Bool(b) => stack.push_raw(Value::Bool(*b)),
+                        Value::Float(f) => stack.push_raw(Value::Float(f.boxed())),
+                        Value::Null => stack.push_raw(Value::Null),
+                        other => stack.push_raw(other.clone()),
+                    }
+                    pc += 1;
+                }
+                Instruction::Pop => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    stack.pop();
+                    pc += 1;
+                }
+                Instruction::Duplicate => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let value = stack.last().unwrap().clone();
+                    stack.push_raw(value);
+                    pc += 1;
+                }
+                Instruction::Swap => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    stack.swap(len - 1, len - 2);
+                    pc += 1;
+                }
+                Instruction::Jump(target) => {
+                    if *target >= code.len() {
+                        break;
+                    }
+                    pc = *target;
+                }
+                Instruction::JumpIfFalse(target) => {
+                    if stack.len() <= base || *target >= code.len() {
+                        break;
+                    }
+                    if matches!(stack.last(), Some(Value::Bool(_))) {
+                        let Some(Value::Bool(cond)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        pc = if cond { pc + 1 } else { *target };
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::JumpIfNull(target) => {
+                    if stack.len() <= base || *target >= code.len() {
+                        break;
+                    }
+                    let is_null = stack.pop().unwrap().is_null();
+                    pc = if is_null { *target } else { pc + 1 };
+                }
+                Instruction::JumpIfNotNull(target) => {
+                    if stack.len() <= base || *target >= code.len() {
+                        break;
+                    }
+                    let is_null = stack.pop().unwrap().is_null();
+                    pc = if !is_null { *target } else { pc + 1 };
+                }
+                Instruction::AddIntConstant(right) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if let Some(Value::Int(left)) = stack.last_mut() {
+                        let Some(sum) = left.get().checked_add(*right) else {
+                            break;
+                        };
+                        *left = crate::value_identity::Number::from(sum).boxed();
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Add => {
+                    if stack.len() < base + 2
+                        || frames.last().unwrap().collection_addition.is_some()
+                    {
+                        break;
+                    }
+                    let len = stack.len();
+                    match (&stack[len - 2], &stack[len - 1]) {
+                        (Value::Int(l), Value::Int(r)) => {
+                            let Some(sum) = l.get().checked_add(r.get()) else {
+                                break;
+                            };
+                            let Some(Value::Int(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            if let Some(Value::Int(slot)) = stack.last_mut() {
+                                *slot = crate::value_identity::Number::from(sum).boxed();
+                            }
+                            pc += 1;
+                        }
+                        (Value::String(_), Value::String(_)) => {
+                            let Some(Value::String(r)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            let Some(Value::String(l)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            stack.push_raw(Value::string(l.concat(&r)));
+                            pc += 1;
+                        }
+                        _ => break,
+                    }
+                }
+                Instruction::Subtract => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    if let (Value::Int(l), Value::Int(r)) = (&stack[len - 2], &stack[len - 1]) {
+                        let Some(diff) = l.get().checked_sub(r.get()) else {
+                            break;
+                        };
+                        let Some(Value::Int(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        if let Some(Value::Int(slot)) = stack.last_mut() {
+                            *slot = crate::value_identity::Number::from(diff).boxed();
+                        }
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Multiply => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    if let (Value::Int(l), Value::Int(r)) = (&stack[len - 2], &stack[len - 1]) {
+                        let Some(prod) = l.get().checked_mul(r.get()) else {
+                            break;
+                        };
+                        let Some(Value::Int(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        if let Some(Value::Int(slot)) = stack.last_mut() {
+                            *slot = crate::value_identity::Number::from(prod).boxed();
+                        }
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Less
+                | Instruction::LessEqual
+                | Instruction::Greater
+                | Instruction::GreaterEqual
+                | Instruction::Equal
+                | Instruction::NotEqual => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    if let (Value::Int(l), Value::Int(r)) = (&stack[len - 2], &stack[len - 1]) {
+                        let (lv, rv) = (l.get(), r.get());
+                        let res = match instruction {
+                            Instruction::Less => lv < rv,
+                            Instruction::LessEqual => lv <= rv,
+                            Instruction::Greater => lv > rv,
+                            Instruction::GreaterEqual => lv >= rv,
+                            Instruction::Equal => lv == rv,
+                            Instruction::NotEqual => lv != rv,
+                            _ => unreachable!(),
+                        };
+                        let Some(Value::Int(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        let Some(Value::Int(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        stack.push_raw(Value::Bool(res));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::CheckInterpolate => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if matches!(stack.last(), Some(Value::String(_) | Value::Int(_))) {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::FinishInterpolation(count) => {
+                    if stack.len() < base + *count {
+                        break;
+                    }
+                    if finish_interpolation_on_stack(stack, *count, scratch_utf8).is_ok() {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::ToString => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    match stack.last() {
+                        Some(Value::Int(n)) => {
+                            let s = format_i64_pkl_string(n.get());
+                            let Some(Value::Int(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            stack.push_raw(Value::String(s));
+                            pc += 1;
+                        }
+                        Some(Value::String(_)) => {
+                            pc += 1;
+                        }
+                        _ => break,
+                    }
+                }
+                Instruction::GetMember(name) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let Some(&Value::Object(recv_id)) = stack.last() else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(recv_id) else {
+                        break;
+                    };
+                    if name == "length"
+                        && matches!(
+                            obj.collection_kind,
+                            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                        )
+                        && obj.parent.is_none()
+                    {
+                        let len = obj.length as i64;
+                        let Some(Value::Object(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        stack
+                            .push_raw(Value::Int(crate::value_identity::Number::from(len).boxed()));
+                        pc += 1;
+                    } else if name == "values"
+                        && obj.collection_kind == CollectionKind::Map
+                        && obj.parent.is_none()
+                        && obj.map_key_order.is_none()
+                        && obj.cache_slots.len() >= obj.collection_members.len()
+                        && !obj.collection_members.is_empty()
+                    {
+                        let order = obj.map_index().insertion_order();
+                        if order.is_empty() {
+                            break;
+                        }
+                        let mut values = Vec::with_capacity(order.len());
+                        let mut approx_bytes =
+                            order.len().saturating_mul(std::mem::size_of::<Value>());
+                        let mut fast_ok = true;
+                        for &idx in order {
+                            let member = &obj.collection_members[idx];
+                            let slot = &obj.cache_slots[idx];
+                            if matches!(
+                                member.key,
+                                Value::String(_) | Value::Int(_) | Value::Float(_) | Value::Bool(_)
+                            ) && slot.key.entry
+                                && slot.key.owner.is_none()
+                                && !slot.key.method
+                                && slot.key.name == member.name
+                            {
+                                if let Value::String(s) = &slot.value {
+                                    approx_bytes = approx_bytes
+                                        .saturating_add(s.as_str().map_or(16, str::len));
+                                }
+                                values.push(slot.value.clone());
+                            } else {
+                                fast_ok = false;
+                                break;
+                            }
+                        }
+                        if !fast_ok {
+                            break;
+                        }
+                        heap.note_external_allocation(approx_bytes);
+                        let list_id = heap.allocate_strict_list(values);
+                        let Some(Value::Object(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        stack.push_raw(Value::Object(list_id));
+                        pc += 1;
+                    } else if obj.collection_kind == CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        let Some(val) = fast_lookup_cached(obj, None, name, false) else {
+                            break;
+                        };
+                        let cloned = val.clone();
+                        let Some(Value::Object(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        stack.push_raw(cloned);
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::GetProperty {
+                    name,
+                    owner_depth,
+                    local,
+                } => {
+                    let frame = frames.last().unwrap();
+                    let Some(&scope) = frame.environment.scopes.get(*owner_depth) else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(scope.receiver) else {
+                        break;
+                    };
+                    if obj.collection_kind == CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        let Some(val) =
+                            fast_lookup_cached(obj, local.then_some(scope.owner), name, false)
+                        else {
+                            break;
+                        };
+                        stack.push_raw(val.clone());
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::GetImplicitMethod(name) => {
+                    let frame = frames.last().unwrap();
+                    if frame.method_call_site.is_some() {
+                        break;
+                    }
+                    let Some(&scope) = frame.environment.scopes.first() else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(scope.receiver) else {
+                        break;
+                    };
+                    if obj.collection_kind == CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        let Some(val) = fast_lookup_cached(obj, None, name, true) else {
+                            break;
+                        };
+                        stack.push_raw(val.clone());
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::GetMethod(name) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if name == "toString"
+                        && active_type_trackers == 0
+                        && let Some(Value::Int(n)) = stack.last()
+                    {
+                        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                            (
+                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
+                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
+                                Some(Instruction::Call { arity: 0, .. }),
+                            ) => 4,
+                            (
+                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
+                                Some(Instruction::Call { arity: 0, .. }),
+                                _,
+                            ) => 3,
+                            (Some(Instruction::Call { arity: 0, .. }), _, _) => 2,
+                            _ => 0,
+                        };
+                        if skip > 0 && consumed + skip <= max_steps {
+                            let s = if let (
+                                Some(Instruction::Constant(Value::String(suffix))),
+                                Some(Instruction::Add),
+                            ) = (code.get(pc + skip), code.get(pc + skip + 1))
+                                && consumed + skip + 2 <= max_steps
+                                && let Some(sfx) = suffix.as_str()
+                                && sfx.is_ascii()
+                                && sfx.len() <= 16
+                            {
+                                let mut ibuf = [0u8; 24];
+                                let num_str = format_i64_buf(n.get(), &mut ibuf);
+                                let mut out = [0u8; 40];
+                                let nlen = num_str.len();
+                                let slen = sfx.len();
+                                out[..nlen].copy_from_slice(num_str.as_bytes());
+                                out[nlen..nlen + slen].copy_from_slice(sfx.as_bytes());
+                                let combined = PklString::from(
+                                    std::str::from_utf8(&out[..nlen + slen])
+                                        .expect("ASCII integer + suffix"),
+                                );
+                                let Some(Value::Int(_)) = stack.pop() else {
+                                    unreachable!()
+                                };
+                                stack.push_raw(Value::String(combined));
+                                pc += skip + 2;
+                                consumed += skip + 2;
+                                continue;
+                            } else {
+                                format_i64_pkl_string(n.get())
+                            };
+                            let Some(Value::Int(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            stack.push_raw(Value::String(s));
+                            pc += skip;
+                            consumed += skip;
+                            continue;
+                        }
+                        break;
+                    }
+                    let Some(&Value::Object(recv_id)) = stack.last() else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(recv_id) else {
+                        break;
+                    };
+                    if obj.collection_kind == CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        let Some(val) = fast_lookup_cached(obj, None, name, true) else {
+                            break;
+                        };
+                        let cloned = val.clone();
+                        let Some(Value::Object(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        stack.push_raw(cloned);
+                        pc += 1;
+                    } else if obj.collection_kind == CollectionKind::List
+                        && obj.parent.is_none()
+                        && obj.instance_class.is_none()
+                        && obj.pair.is_none()
+                        && obj.reference.is_none()
+                        && obj.foreign_map_entry.is_none()
+                        && (name == "map" || name == "fold")
+                    {
+                        let frame = frames.last().unwrap();
+                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                            Some(o)
+                        } else {
+                            if cur_exec_block != block {
+                                cur_exec_block = block;
+                                cur_exec_root = executable_roots.get(&block).copied();
+                            }
+                            cur_exec_root
+                        };
+                        if let Some(owner) = exec_owner
+                            && heap
+                                .existing_method_call_cache(owner, (block, pc))
+                                .ok()
+                                .flatten()
+                                .is_some_and(|c| {
+                                    c.contains_builtin_class(classes::BuiltinClass::List)
+                                })
+                        {
+                            let (fn_block, arity) = if name == "map" {
+                                (program.collection_transform_blocks[0], 1)
+                            } else {
+                                (program.list_fold_block, 2)
+                            };
+                            let id = heap.allocate_function(
+                                Function {
+                                    block: fn_block,
+                                    arity,
+                                    method: true,
+                                    captured_this: Some(Value::Object(recv_id)),
+                                },
+                                None,
+                                Environment::default(),
+                            );
+                            let Some(Value::Object(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            stack.push_raw(Value::Function(id));
+                            pc += 1;
+                        } else {
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::MakeFunction {
+                    block: fn_block,
+                    arity,
+                    method,
+                    capture_custom_this,
+                } => {
+                    if *method || *capture_custom_this {
+                        break;
+                    }
+                    let Some(fn_code) = program.blocks.get(*fn_block) else {
+                        break;
+                    };
+                    let frame = frames.last().unwrap();
+                    if frame.environment.executable_owner.is_some() {
+                        break;
+                    }
+                    let environment = if is_non_capturing_lambda(fn_code, *arity) {
+                        Environment {
+                            code_owner: frame.environment.code_owner,
+                            ..Environment::default()
+                        }
+                    } else {
+                        frame.environment.clone()
+                    };
+                    let id = heap.allocate_function(
+                        Function {
+                            block: *fn_block,
+                            arity: *arity,
+                            method: false,
+                            captured_this: None,
+                        },
+                        None,
+                        environment,
+                    );
+                    stack.push_raw(Value::Function(id));
+                    pc += 1;
+                }
+                Instruction::CheckType(ty) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let val = stack.last().unwrap();
+                    if fast_check_type_in_poll(
+                        ty,
+                        val,
+                        frames.last().unwrap(),
+                        heap,
+                        resolved_declarations,
+                    ) {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::ReflectCall(operation) => {
+                    let locals = &frames.last().unwrap().environment.locals;
+                    let arity = operation.arity();
+                    let Some(arg) = locals.len().checked_sub(arity).and_then(|s| locals.get(s))
+                    else {
+                        break;
+                    };
+                    let cached = match operation {
+                        reflection::Operation::Module => arg
+                            .heap_id()
+                            .and_then(|id| heap.get(id).ok())
+                            .filter(|obj| obj.module_unit.is_some())
+                            .and_then(|obj| obj.module_mirror),
+                        reflection::Operation::Class => match arg {
+                            Value::Class(id) => heap
+                                .get_class(*id)
+                                .ok()
+                                .and_then(|cls| heap.get(cls.prototype).ok())
+                                .and_then(|proto| proto.declaration_mirror),
+                            _ => None,
+                        },
+                        reflection::Operation::TypeAlias => match arg {
+                            Value::TypeAlias(id) => {
+                                heap.get(*id).ok().and_then(|obj| obj.declaration_mirror)
+                            }
+                            _ => None,
+                        },
+                        _ => None,
+                    };
+                    if let Some(mirror_id) = cached {
+                        stack.push_raw(Value::Object(mirror_id));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::BindLocal { depth, ty } => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let frame = frames.last().unwrap();
+                    if !frame.generator_scopes.is_empty() {
+                        break;
+                    }
+                    let owner = if let Some(o) = frame.environment.executable_owner {
+                        o
+                    } else {
+                        if cur_exec_block != block {
+                            cur_exec_block = block;
+                            cur_exec_root = executable_roots.get(&block).copied();
+                        }
+                        let Some(o) = cur_exec_root else {
+                            break;
+                        };
+                        o
+                    };
+                    let site = (block, pc);
+                    // Ultra-fast repeat hit for hot loop/lambda Int bindings.
+                    if let Some((co, cb, cp, identity::SlotKind::Long)) = last_bind_ok
+                        && co == owner
+                        && cb == block
+                        && cp == pc
+                        && let Some(Value::Int(v)) = stack.last()
+                    {
+                        let unboxed = v.unboxed();
+                        let index = match depth {
+                            Some(d) => match frame.environment.locals.len().checked_sub(d + 1) {
+                                Some(i) => i,
+                                None => break,
+                            },
+                            None => frame.environment.locals.len(),
+                        };
+                        let Some(Value::Int(_)) = stack.pop() else {
+                            unreachable!()
+                        };
+                        let env = &mut frames.last_mut().unwrap().environment;
+                        if depth.is_some() {
+                            if let Value::Int(slot) = &mut env.locals[index] {
+                                *slot = unboxed;
+                            } else {
+                                env.locals[index] = Value::Int(unboxed);
+                            }
+                        } else {
+                            env.locals.push(Value::Int(unboxed));
+                        }
+                        env.local_owners.insert(index, (owner, site));
+                        env.copy_locals.insert(index);
+                        pc += 1;
+                        consumed += 1;
+                        continue;
+                    }
+                    let top_val = stack.last().unwrap();
+                    if !fast_check_type_in_poll(ty, top_val, frame, heap, resolved_declarations) {
+                        break;
+                    }
+                    let index = match depth {
+                        Some(d) => match frame.environment.locals.len().checked_sub(d + 1) {
+                            Some(i) => i,
+                            None => break,
+                        },
+                        None => frame.environment.locals.len(),
+                    };
+                    let policy = identity::SlotPolicy::from_type(ty);
+                    let kind = match policy {
+                        identity::SlotPolicy::Fixed(k) => k,
+                        identity::SlotPolicy::Adaptive => {
+                            let actual = match top_val {
+                                Value::Int(_) => identity::SlotKind::Long,
+                                Value::Float(_) => identity::SlotKind::Double,
+                                Value::Bool(_) => identity::SlotKind::Boolean,
+                                _ => identity::SlotKind::Object,
+                            };
+                            if let Some((co, cb, cp, ck)) = last_bind_ok
+                                && co == owner
+                                && cb == block
+                                && cp == pc
+                                && (ck == actual || ck == identity::SlotKind::Object)
+                            {
+                                ck
+                            } else {
+                                match heap.local_kind(owner, site) {
+                                    Ok(Some(prev)) if prev == actual => actual,
+                                    Ok(Some(identity::SlotKind::Object)) => {
+                                        identity::SlotKind::Object
+                                    }
+                                    _ => break,
+                                }
+                            }
+                        }
+                    };
+                    if last_bind_ok != Some((owner, block, pc, kind)) {
+                        if !matches!(heap.local_kind(owner, site), Ok(Some(existing)) if existing == kind)
+                        {
+                            break;
+                        }
+                        last_bind_ok = Some((owner, block, pc, kind));
+                    }
+                    let stored = match (kind, stack.last().unwrap()) {
+                        (identity::SlotKind::Long, Value::Int(v)) => {
+                            let unboxed = v.unboxed();
+                            let Some(Value::Int(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            Value::Int(unboxed)
+                        }
+                        (identity::SlotKind::Double, Value::Float(v)) => {
+                            let unboxed = v.unboxed();
+                            let Some(Value::Float(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            Value::Float(unboxed)
+                        }
+                        _ => stack.pop().unwrap().boxed(),
+                    };
+                    let env = &mut frames.last_mut().unwrap().environment;
+                    if depth.is_some() {
+                        env.locals[index] = stored;
+                    } else {
+                        env.locals.push(stored);
+                    }
+                    env.local_owners.insert(index, (owner, site));
+                    env.copy_locals.insert(index);
+                    pc += 1;
+                }
+                Instruction::GetMethodProperty {
+                    name,
+                    owner_depth,
+                    local,
+                } => {
+                    let frame = frames.last().unwrap();
+                    if frame.method_call_site.is_some() {
+                        break;
+                    }
+                    let Some(&scope) = frame.environment.scopes.get(*owner_depth) else {
+                        break;
+                    };
+                    if !*local {
+                        if method_cache[0].0 == block
+                            && method_cache[0].1 == pc
+                            && method_cache[0].2 == scope.receiver
+                        {
+                            stack.push_raw(Value::Function(method_cache[0].3));
+                            pc += 1;
+                            consumed += 1;
+                            continue;
+                        }
+                        if method_cache[1].0 == block
+                            && method_cache[1].1 == pc
+                            && method_cache[1].2 == scope.receiver
+                        {
+                            stack.push_raw(Value::Function(method_cache[1].3));
+                            pc += 1;
+                            consumed += 1;
+                            continue;
+                        }
+                    }
+                    let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                        Some(o)
+                    } else {
+                        if cur_exec_block != block {
+                            cur_exec_block = block;
+                            cur_exec_root = executable_roots.get(&block).copied();
+                        }
+                        cur_exec_root
+                    };
+                    if let Some(owner) = exec_owner {
+                        match heap.existing_method_call_cache(owner, (block, pc)) {
+                            Ok(Some(cache)) if cache.is_saturated() => {
+                                break;
+                            }
+                            Err(_) => break,
+                            _ => {}
+                        }
+                    }
+                    let Ok(obj) = heap.get(scope.receiver) else {
+                        break;
+                    };
+                    let Some(val) =
+                        fast_lookup_cached(obj, local.then_some(scope.owner), name, true)
+                    else {
+                        break;
+                    };
+                    if !*local && let Value::Function(fn_id) = val {
+                        method_cache[method_cache_next] = (block, pc, scope.receiver, *fn_id);
+                        method_cache_next ^= 1;
+                    }
+                    stack.push_raw(val.clone());
+                    pc += 1;
+                }
+                Instruction::PrepareMethodCall {
+                    lookup,
+                    arity,
+                    after_arguments,
+                } => {
+                    if stack.len() <= *arity {
+                        break;
+                    }
+                    let Some(Value::Function(function_id)) = stack.get(stack.len() - arity - 1)
+                    else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(*function_id) else {
+                        break;
+                    };
+                    let has_method = obj.function.as_ref().is_none_or(|f| f.method);
+                    if !has_method {
+                        pc += 1;
+                        consumed += 1;
+                        continue;
+                    }
+                    let has_receiver = obj.native_function.is_some()
+                        || obj
+                            .function
+                            .as_ref()
+                            .is_some_and(|f| f.captured_this.is_some())
+                        || obj.environment.this_value.is_some();
+                    if !has_receiver {
+                        pc += 1;
+                        consumed += 1;
+                        continue;
+                    }
+                    match code.get(*lookup) {
+                        Some(Instruction::GetMethodProperty {
+                            owner_depth, local, ..
+                        }) => {
+                            let Some(&scope) =
+                                frames.last().unwrap().environment.scopes.get(*owner_depth)
+                            else {
+                                break;
+                            };
+                            let Ok(owner_obj) = heap.get(scope.owner) else {
+                                break;
+                            };
+                            let Some(class) = owner_obj.class_definition.as_ref() else {
+                                pc += 1;
+                                consumed += 1;
+                                continue;
+                            };
+                            let direct = *local || !(class.open || class.abstract_);
+                            if !direct {
+                                break;
+                            }
+                            if !*after_arguments {
+                                pc += 1;
+                                consumed += 1;
+                                continue;
+                            }
+                            if let Some((decl_owner, decl_code)) = obj.method_declaration
+                                && heap
+                                    .get(decl_owner)
+                                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
+                            {
+                                break;
+                            }
+                            pc += 1;
+                        }
+                        Some(Instruction::GetMethod(_) | Instruction::GetImplicitMethod(_)) => {
+                            // Virtual calls have `(direct, lexical) == (false, false)`:
+                            // `after_arguments == true` is an unconditional no-op.
+                            if *after_arguments {
+                                pc += 1;
+                                consumed += 1;
+                                continue;
+                            }
+                            let frame = frames.last().unwrap();
+                            if frame.method_call_site.is_some() {
+                                break;
+                            }
+                            if let Some((decl_owner, decl_code)) = obj.method_declaration
+                                && heap
+                                    .get(decl_owner)
+                                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
+                            {
+                                break;
+                            }
+                            let recv_val = obj
+                                .function
+                                .as_ref()
+                                .and_then(|f| f.captured_this.as_ref())
+                                .or(obj.environment.this_value.as_ref());
+                            let Some(Value::Object(recv_id)) = recv_val else {
+                                break;
+                            };
+                            let Ok(recv_obj) = heap.get(*recv_id) else {
+                                break;
+                            };
+                            let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                                Some(o)
+                            } else {
+                                if cur_exec_block != block {
+                                    cur_exec_block = block;
+                                    cur_exec_root = executable_roots.get(&block).copied();
+                                }
+                                cur_exec_root
+                            };
+                            let Some(owner) = exec_owner else {
+                                break;
+                            };
+                            if let Some(recv_cls) = recv_obj.instance_class {
+                                let key = Some((owner, block, *lookup, recv_cls));
+                                if prep_method_cache[0] == key
+                                    || prep_method_cache[1] == key
+                                    || prep_method_cache[2] == key
+                                    || prep_method_cache[3] == key
+                                {
+                                    pc += 1;
+                                    consumed += 1;
+                                    continue;
+                                }
+                                if heap
+                                    .existing_method_call_cache(owner, (block, *lookup))
+                                    .ok()
+                                    .flatten()
+                                    .is_some_and(|c| c.contains_declared_class(recv_cls))
+                                {
+                                    prep_method_cache[prep_method_next] = key;
+                                    prep_method_next = (prep_method_next + 1) & 3;
+                                    pc += 1;
+                                } else {
+                                    break;
+                                }
+                            } else if recv_obj.parent.is_none()
+                                && recv_obj.pair.is_none()
+                                && recv_obj.reference.is_none()
+                                && recv_obj.foreign_map_entry.is_none()
+                                && let Some(builtin_cls) = match recv_obj.collection_kind {
+                                    CollectionKind::List => Some(classes::BuiltinClass::List),
+                                    CollectionKind::Map => Some(classes::BuiltinClass::Map),
+                                    CollectionKind::Set => Some(classes::BuiltinClass::Set),
+                                    _ => None,
+                                }
+                            {
+                                if heap
+                                    .existing_method_call_cache(owner, (block, *lookup))
+                                    .ok()
+                                    .flatten()
+                                    .is_some_and(|c| c.contains_builtin_class(builtin_cls))
+                                {
+                                    pc += 1;
+                                } else {
+                                    break;
+                                }
+                            } else {
+                                break;
+                            }
+                        }
+                        _ => break,
+                    }
+                }
+                Instruction::CollectionTransformNext { end } => {
+                    if *end >= code.len() {
+                        break;
+                    }
+                    if active_type_trackers == 0 {
+                        let frame = frames.last_mut().unwrap();
+                        let builder = frame.builders.last().copied();
+                        if let Some(run) = frame.collection_transform.as_mut()
+                            && let Some((steps, finished)) = run.try_fast_member_chain_bulk(
+                                heap,
+                                builder,
+                                program,
+                                executable_roots,
+                                max_steps.saturating_sub(consumed),
+                            )
+                        {
+                            consumed = consumed.saturating_add(steps);
+                            if finished {
+                                pc = *end;
+                                continue;
+                            }
+                            if consumed >= max_steps {
+                                break;
+                            }
+                        }
+                    }
+                    let Some(run) = frames.last_mut().unwrap().collection_transform.as_mut() else {
+                        break;
+                    };
+                    match run.try_fast_map_next(heap, stack) {
+                        Some(true) => pc += 1,
+                        Some(false) => pc = *end,
+                        None => break,
+                    }
+                }
+                Instruction::IntSeqNext { end } => {
+                    if *end >= code.len() {
+                        break;
+                    }
+                    // Fast bulk pure-i64 loop for IntSeq.map / List.fold when callback is a FastIntBlock.
+                    if active_type_trackers == 0 {
+                        let cb_fn_id = frames
+                            .last()
+                            .and_then(|f| f.int_seq_run.as_ref())
+                            .and_then(|r| r.callback_function_id());
+                        if let Some(fn_id) = cb_fn_id
+                            && let Ok(cb_obj) = heap.get(fn_id)
+                            && cb_obj.native_function.is_none()
+                            && cb_obj.amendment.is_none()
+                            && let Some(func) = cb_obj.function.as_ref()
+                        {
+                            let cb_block = func.block;
+                            let cb_arity = func.arity;
+                            if let Some(fast_block) = fast_int_cache.get_or_compile(
+                                cb_block,
+                                program.builtin_block_range.end,
+                                || {
+                                    program
+                                        .blocks
+                                        .get(cb_block)
+                                        .and_then(|c| fast_int::FastIntBlock::compile(c, cb_arity))
+                                        .map(Box::new)
+                                },
+                            ) && fast_int::verify_fast_int_invocation(
+                                fast_block,
+                                cb_block,
+                                fn_id,
+                                cb_obj,
+                                heap,
+                                executable_roots,
+                                fast_int_captured,
+                            ) {
+                                let frame = frames.last_mut().unwrap();
+                                let builder = frame.builders.last().copied();
+                                let run = frame.int_seq_run.as_mut().unwrap();
+                                let budget = max_steps.saturating_sub(consumed);
+                                if let Some(steps) = run.try_fast_int_bulk(
+                                    heap,
+                                    builder,
+                                    fast_block,
+                                    fast_int_captured,
+                                    budget,
+                                    fast_int_vals,
+                                    fast_int_locals,
+                                    fast_int_calls,
+                                ) {
+                                    consumed = consumed.saturating_add(steps);
+                                    pc = *end;
+                                    continue;
+                                }
+                            }
+                        }
+                    }
+                    let Some(run) = frames.last_mut().unwrap().int_seq_run.as_mut() else {
+                        break;
+                    };
+                    match run.try_fast_next(heap, stack) {
+                        Some(true) => pc += 1,
+                        Some(false) => pc = *end,
+                        None => break,
+                    }
+                }
+                Instruction::IntSeqAccept => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let frame = frames.last_mut().unwrap();
+                    let builder = frame.builders.last().copied();
+                    let Some(run) = frame.int_seq_run.as_mut() else {
+                        break;
+                    };
+                    if run.try_fast_accept(heap, builder, stack) {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Call { arity, method } => {
+                    if stack.len() < base + arity + 1 || frames.len() >= 4096 {
+                        break;
+                    }
+                    let fn_idx = stack.len() - arity - 1;
+                    let Value::Function(id) = stack[fn_idx] else {
+                        break;
+                    };
+                    let Ok(object) = heap.get(id) else {
+                        break;
+                    };
+                    if object.native_function.is_some() || object.amendment.is_some() {
+                        break;
+                    }
+                    let Some(function) = object.function.as_ref() else {
+                        break;
+                    };
+                    if (!function.method && *method) || function.arity != *arity {
+                        break;
+                    }
+                    let target_block = function.block;
+                    // Speculative pure-i64 FastIntBlock path for hot recursive / arithmetic functions.
+                    if active_type_trackers == 0
+                        && *arity <= 4
+                        && stack[fn_idx + 1..]
+                            .iter()
+                            .all(|v| matches!(v, Value::Int(_)))
+                        && let Some(fast_block) = fast_int_cache.get_or_compile(
+                            target_block,
+                            program.builtin_block_range.end,
+                            || {
+                                program
+                                    .blocks
+                                    .get(target_block)
+                                    .and_then(|c| fast_int::FastIntBlock::compile(c, *arity))
+                                    .map(Box::new)
+                            },
+                        )
+                        && fast_int::verify_fast_int_invocation(
+                            fast_block,
+                            target_block,
+                            id,
+                            object,
+                            heap,
+                            executable_roots,
+                            fast_int_captured,
+                        )
+                    {
+                        let mut int_args = [0i64; 4];
+                        for (i, val) in stack[fn_idx + 1..].iter().enumerate() {
+                            if let Value::Int(n) = val {
+                                int_args[i] = n.get();
+                            }
+                        }
+                        let budget = max_steps.saturating_sub(consumed);
+                        if let Some((res, steps)) = fast_block.execute(
+                            fast_int_captured,
+                            &int_args[..*arity],
+                            budget,
+                            fast_int_vals,
+                            fast_int_locals,
+                            fast_int_calls,
+                        ) {
+                            stack.truncate(fn_idx);
+                            let out = if fast_block.returns_int {
+                                Value::Int(crate::value_identity::Number::from(res).boxed())
+                            } else {
+                                Value::Bool(res != 0)
+                            };
+                            stack.push_raw(out);
+                            pc += 1;
+                            consumed = consumed.saturating_add(steps.max(1));
+                            continue;
+                        }
+                    }
+                    let target_code = if target_block == block {
+                        code
+                    } else {
+                        let Some(c) = program.blocks.get(target_block).map(Vec::as_slice) else {
+                            break;
+                        };
+                        c
+                    };
+                    frames.last_mut().unwrap().pc = pc + 1;
+                    let mut next_frame = frame_pool
+                        .pop()
+                        .unwrap_or_else(|| Frame::new_empty(0, 0, 0, Environment::default()));
+                    let env = &mut next_frame.environment;
+                    env.locals.clear();
+                    let captured_len = object.environment.locals.len();
+                    if captured_len > 0 {
+                        env.locals.extend_from_slice(&object.environment.locals);
+                    }
+                    match *arity {
+                        0 => {
+                            let Some(Value::Function(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                        }
+                        1 => {
+                            let a0 = stack.pop().unwrap();
+                            let Some(Value::Function(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            env.locals.push(a0);
+                        }
+                        2 => {
+                            let a1 = stack.pop().unwrap();
+                            let a0 = stack.pop().unwrap();
+                            let Some(Value::Function(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                            env.locals.push(a0);
+                            env.locals.push(a1);
+                        }
+                        _ => {
+                            env.locals.extend(stack.drain(fn_idx + 1..));
+                            let Some(Value::Function(_)) = stack.pop() else {
+                                unreachable!()
+                            };
+                        }
+                    }
+                    if !object.environment.local_owners.is_empty() {
+                        env.local_owners = object.environment.local_owners.clone();
+                    }
+                    env.copy_locals.clear();
+                    env.restore_for_bindings = false;
+                    env.outer_value = object.environment.this_value.clone();
+                    env.this_value = function
+                        .captured_this
+                        .clone()
+                        .or_else(|| object.environment.this_value.clone());
+                    env.custom_this = None;
+                    env.executable_owner = object.environment.executable_owner;
+                    env.code_owner = object.environment.code_owner;
+                    if !object.environment.type_arguments.is_empty() {
+                        env.type_arguments = object.environment.type_arguments.clone();
+                    }
+                    if !object.environment.type_argument_sources.is_empty() {
+                        env.type_argument_sources =
+                            object.environment.type_argument_sources.clone();
+                    }
+                    env.scopes = object.environment.scopes.clone();
+                    let next_base = stack.len();
+                    next_frame.block = target_block;
+                    next_frame.pc = 0;
+                    next_frame.base = next_base;
+                    next_frame.lambda = !function.method;
+                    next_frame.function_owner = Some(id);
+                    next_frame.fast_call_frame = true;
+                    next_frame.captured_locals_len = captured_len;
+                    frames.push(next_frame);
+                    block = target_block;
+                    code = target_code;
+                    pc = 0;
+                    base = next_base;
+                }
+                Instruction::Return => {
+                    if stack.len() != base + 1 {
+                        break;
+                    }
+                    let top_frame = frames.last().unwrap();
+                    if !top_frame.fast_call_frame && !top_frame.is_fast_returnable() {
+                        break;
+                    }
+                    // Fast top-level completion (eliminates Vm::step + finish_return on warm queries).
+                    if frames.len() == 1 && base == 0 {
+                        let result = stack.pop().unwrap();
+                        let mut finished = frames.pop().unwrap();
+                        if frame_pool.len() < 64 {
+                            finished.fast_reset_for_pool();
+                            frame_pool.push(finished);
+                        }
+                        finished_top_result = Some(result);
+                        consumed += 1;
+                        break;
+                    }
+                    // In-place lambda frame reuse for hot IntSeq.map / List.fold / List.map loops!
+                    let n_frames = frames.len();
+                    if top_frame.fast_call_frame && consumed + 5 <= max_steps {
+                        let caller_block = frames[n_frames - 2].block;
+                        let caller_pc = frames[n_frames - 2].pc;
+                        let cached_hit = inplace_loop_cache.0 == block
+                            && inplace_loop_cache.1 == caller_block
+                            && inplace_loop_cache.2 == caller_pc;
+                        let loop_info = if cached_hit {
+                            Some((inplace_loop_cache.3, inplace_loop_cache.4))
+                        } else if !frames[n_frames - 2].has_pending_run()
+                            && frames[n_frames - 2].prepared_hashes.is_none()
+                        {
+                            if frames[n_frames - 2].int_seq_run.is_some()
+                                && let Some(caller_code) = program.blocks.get(caller_block)
+                                && matches!(
+                                    caller_code.get(caller_pc),
+                                    Some(Instruction::IntSeqAccept)
+                                )
+                                && let Some(Instruction::Jump(next_pc)) =
+                                    caller_code.get(caller_pc + 1)
+                                && let Some(Instruction::IntSeqNext { end }) =
+                                    caller_code.get(*next_pc)
+                                && matches!(
+                                    caller_code.get(next_pc + 1),
+                                    Some(Instruction::Call { method: false, .. })
+                                )
+                            {
+                                inplace_loop_cache = (block, caller_block, caller_pc, *end, false);
+                                Some((*end, false))
+                            } else if frames[n_frames - 2].collection_transform.is_some()
+                                && let Some(caller_code) = program.blocks.get(caller_block)
+                                && let Some(Instruction::CollectionTransformProject { next }) =
+                                    caller_code.get(caller_pc)
+                                && matches!(
+                                    caller_code.get(caller_pc + 1),
+                                    Some(Instruction::AppendStrictElement)
+                                )
+                                && matches!(
+                                    caller_code.get(caller_pc + 2),
+                                    Some(Instruction::Jump(j)) if j == next
+                                )
+                                && let Some(Instruction::CollectionTransformNext { end }) =
+                                    caller_code.get(*next)
+                                && matches!(
+                                    caller_code.get(*next + 1),
+                                    Some(Instruction::Call {
+                                        arity: 1,
+                                        method: false
+                                    })
+                                )
+                            {
+                                inplace_loop_cache = (block, caller_block, caller_pc, *end, true);
+                                Some((*end, true))
+                            } else {
+                                None
+                            }
+                        } else {
+                            None
+                        };
+                        if let Some((end_target, is_transform_map)) = loop_info {
+                            let result = stack.pop().unwrap();
+                            let builder = frames[n_frames - 2].builders.last().copied();
+                            if !is_transform_map {
+                                let inplace = frames[n_frames - 2]
+                                    .int_seq_run
+                                    .as_mut()
+                                    .unwrap()
+                                    .try_inplace_accept_and_next(heap, builder, result.clone());
+                                match inplace {
+                                    Some(Some((a0, opt_a1))) => {
+                                        let f = frames.last_mut().unwrap();
+                                        let cap = f.captured_locals_len;
+                                        if opt_a1.is_none() && f.environment.locals.len() == cap + 1
+                                        {
+                                            if let (Value::Int(dst), Value::Int(src)) =
+                                                (&mut f.environment.locals[cap], &a0)
+                                            {
+                                                *dst = *src;
+                                            } else {
+                                                f.environment.locals[cap] = a0;
+                                            }
+                                        } else {
+                                            f.environment.locals.truncate(cap);
+                                            f.environment.locals.push(a0);
+                                            if let Some(a1) = opt_a1 {
+                                                f.environment.locals.push(a1);
+                                            }
+                                        }
+                                        f.environment.local_owners.truncate_from(cap);
+                                        f.environment.copy_locals.clear();
+                                        pc = 0;
+                                        consumed += 4;
+                                        continue;
+                                    }
+                                    Some(None) => {
+                                        let mut finished = frames.pop().unwrap();
+                                        if frame_pool.len() < 64 {
+                                            finished.fast_reset_for_pool();
+                                            frame_pool.push(finished);
+                                        }
+                                        let caller = frames.last_mut().unwrap();
+                                        caller.callsite_hidden = false;
+                                        caller.pc = end_target;
+                                        pc = end_target;
+                                        base = caller.base;
+                                        block = caller_block;
+                                        code = program.blocks.get(caller_block).unwrap().as_slice();
+                                        consumed += 4;
+                                        continue;
+                                    }
+                                    None => {
+                                        stack.push_raw(result);
+                                    }
+                                }
+                            } else {
+                                let inplace = frames[n_frames - 2]
+                                    .collection_transform
+                                    .as_mut()
+                                    .unwrap()
+                                    .try_inplace_map_accept_and_next(heap, builder, result.clone());
+                                match inplace {
+                                    Some(Some(a0)) => {
+                                        let f = frames.last_mut().unwrap();
+                                        let cap = f.captured_locals_len;
+                                        if f.environment.locals.len() == cap + 1 {
+                                            f.environment.locals[cap] = a0;
+                                        } else {
+                                            f.environment.locals.truncate(cap);
+                                            f.environment.locals.push(a0);
+                                        }
+                                        f.environment.local_owners.truncate_from(cap);
+                                        f.environment.copy_locals.clear();
+                                        pc = 0;
+                                        consumed += 5;
+                                        continue;
+                                    }
+                                    Some(None) => {
+                                        let mut finished = frames.pop().unwrap();
+                                        if frame_pool.len() < 64 {
+                                            finished.fast_reset_for_pool();
+                                            frame_pool.push(finished);
+                                        }
+                                        let caller = frames.last_mut().unwrap();
+                                        caller.callsite_hidden = false;
+                                        caller.pc = end_target;
+                                        pc = end_target;
+                                        base = caller.base;
+                                        block = caller_block;
+                                        code = program.blocks.get(caller_block).unwrap().as_slice();
+                                        consumed += 5;
+                                        continue;
+                                    }
+                                    None => {
+                                        stack.push_raw(result);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    let mut finished = frames.pop().unwrap();
+                    if frame_pool.len() < 64 {
+                        finished.fast_reset_for_pool();
+                        frame_pool.push(finished);
+                    }
+                    let caller = frames.last_mut().unwrap();
+                    caller.callsite_hidden = false;
+                    let caller_block = caller.block;
+                    pc = caller.pc;
+                    base = caller.base;
+                    consumed += 1;
+                    if !caller.fast_call_frame
+                        && (caller.has_pending_run() || caller.prepared_hashes.is_some())
+                    {
+                        break;
+                    }
+                    if caller_block != block {
+                        let Some(caller_code) = program.blocks.get(caller_block).map(Vec::as_slice)
+                        else {
+                            break;
+                        };
+                        block = caller_block;
+                        code = caller_code;
+                    }
+                    continue;
+                }
+                _ => break,
+            }
+            consumed += 1;
+        }
+        if let Some(frame) = frames.last_mut() {
+            frame.pc = pc;
+        }
+        self.instructions += consumed as u64;
+        if let Some(result) = finished_top_result {
+            self.inputs.clear();
+            self.state = State::Finished(Ok(result));
+        }
+        consumed
     }
 
     pub fn resume(
@@ -1884,6 +4423,15 @@ impl Vm {
 
     /// The actual module receiver, including one whose initialization is suspended.
     pub fn primary_module(&self) -> Option<Value> {
+        let is_primary_unit = |unit: crate::modules::UnitId| {
+            self.program.units.get(unit.0 as usize).is_some_and(|info| {
+                !info.standard_library
+                    && match self.program.module_template {
+                        Some(template) => info.template == template,
+                        None => unit == crate::modules::UnitId(0),
+                    }
+            })
+        };
         self.suspended
             .iter()
             .flat_map(|context| &context.frames)
@@ -1893,14 +4441,15 @@ impl Vm {
             .find(|id| {
                 self.heap
                     .get(*id)
-                    .is_ok_and(|object| object.module_unit == Some(crate::modules::UnitId(0)))
+                    .is_ok_and(|object| object.module_unit.is_some_and(is_primary_unit))
             })
             .map(Value::Object)
             .or_else(|| match &self.state {
                 State::Finished(Ok(Value::Object(id)))
-                    if self.heap.get(*id).is_ok_and(|object| {
-                        object.module_unit == Some(crate::modules::UnitId(0))
-                    }) =>
+                    if self
+                        .heap
+                        .get(*id)
+                        .is_ok_and(|object| object.module_unit.is_some_and(is_primary_unit)) =>
                 {
                     Some(Value::Object(*id))
                 }
@@ -1935,6 +4484,7 @@ impl Vm {
     pub fn close(&mut self) {
         self.suspended = Vec::new();
         self.frames = Vec::new();
+        self.frame_pool = Vec::new();
         self.stack = identity::OperandStack::default();
         self.inputs = Vec::new();
         self.state = State::Closed;
@@ -1953,13 +4503,28 @@ impl Vm {
         self.resolved_declarations.clear();
         self.type_parent_defaults.clear();
         self.executable_roots.clear();
-        self.code_arenas.clear();
+        self.code_arenas = Vec::new();
         self.declaration_roots_dirty = true;
         self.declaration_roots_lens = (0, 0, 0, 0, 0, 0);
-        self.unowned_declaration_roots.clear();
+        self.unowned_declaration_roots = Vec::new();
         self.public_operation_entries.clear();
+        self.query_cache = Vec::new();
+        self.active_type_trackers = 0;
+        self.session_root = None;
+        self.uncached_module_uris.clear();
+        self.cached_module_uris.clear();
+        self.last_warm_module = None;
+        self.fast_int_cache.clear();
+        self.fast_int_captured = Vec::new();
+        self.fast_int_vals = Vec::new();
+        self.fast_int_locals = Vec::new();
+        self.fast_int_calls = Vec::new();
+        self.scratch_utf8 = String::new();
+        self.gc_threshold = 8192;
+        self.last_gc_arenas = 0;
+        self.gc_epoch = self.gc_epoch.wrapping_add(1);
         self.heap.release();
-        self.program = Arc::new(Program::new(Vec::new()));
+        self.program = Program::empty_shared();
     }
 
     pub fn is_closed(&self) -> bool {
@@ -1983,6 +4548,86 @@ impl Vm {
 
     pub fn heap_stats(&self) -> HeapStats {
         self.heap.stats()
+    }
+
+    pub(crate) fn enable_auto_gc(&mut self) {
+        self.auto_gc = true;
+    }
+
+    pub(crate) fn set_session_root(&mut self, root: Option<Value>) {
+        self.session_root = root;
+    }
+
+    pub(crate) fn maybe_auto_gc_between_operations(&mut self) {
+        if !self.auto_gc || !self.frames.is_empty() || !self.suspended.is_empty() {
+            return;
+        }
+        const EXTERNAL_GC_THRESHOLD_BYTES: usize = 8 * 1024 * 1024;
+        if self.heap.allocations_since_gc() < self.gc_threshold
+            && self.heap.external_bytes_since_gc() < EXTERNAL_GC_THRESHOLD_BYTES
+            && self.code_arenas.len() < self.last_gc_arenas.saturating_add(64)
+            && self.public_operation_entries.len() < 64
+        {
+            return;
+        }
+        self.public_primary = None;
+        if matches!(self.state, State::Finished(_)) {
+            self.state = State::Idle;
+        }
+        // Keep up to 8 warm query executables for currently cached modules alive across
+        // automatic inter-operation GC so hot persistent queries don't constantly recompile.
+        let mut keep_roots: Vec<Value> = Vec::new();
+        if !self.query_cache.is_empty() && !self.cached_module_uris.is_empty() {
+            let mut cached_units: BTreeSet<crate::modules::UnitId> = BTreeSet::new();
+            for uri in &self.cached_module_uris {
+                if let Some(modules::CachedModule::Value(id)) = self.modules_original.get_ref(uri)
+                    && let Ok(obj) = self.heap.get(*id)
+                    && let Some(unit) = obj.module_unit
+                {
+                    cached_units.insert(unit);
+                }
+            }
+            for cached in self.query_cache.iter().rev() {
+                if cached_units.contains(&cached.unit) && self.heap.executable_is_live(cached.owner)
+                {
+                    keep_roots.push(cached.owner.root());
+                    if keep_roots.len() >= 8 {
+                        break;
+                    }
+                }
+            }
+        }
+        let stats = self.collect(&keep_roots);
+        self.gc_threshold = stats.live.saturating_mul(2).max(8192);
+        self.last_gc_arenas = self.code_arenas.len();
+    }
+
+    pub(super) fn record_cached_module_uris(&mut self, orig: &PklString, res: &PklString) {
+        self.cached_module_uris.insert(orig.clone());
+        self.cached_module_uris.insert(res.clone());
+    }
+
+    pub(super) fn record_uncached_module_uris(&mut self, orig: &PklString, res: &PklString) {
+        const MAX_UNCACHED_ALIASES: usize = 8;
+        if !self
+            .uncached_module_uris
+            .iter()
+            .any(|(o, r)| o == orig && r == res)
+        {
+            self.uncached_module_uris
+                .push_back((orig.clone(), res.clone()));
+        }
+        while self.uncached_module_uris.len() > MAX_UNCACHED_ALIASES {
+            if let Some((old_orig, old_res)) = self.uncached_module_uris.pop_front() {
+                if !self.cached_module_uris.contains(&old_orig) {
+                    self.modules_original.remove(old_orig);
+                    self.last_warm_module = None;
+                }
+                if !self.cached_module_uris.contains(&old_res) {
+                    self.modules_resolved.remove(old_res);
+                }
+            }
+        }
     }
     pub fn instructions_executed(&self) -> u64 {
         self.instructions
@@ -2014,8 +4659,10 @@ impl Vm {
 
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
+        self.gc_epoch = self.gc_epoch.wrapping_add(1);
         let mut roots = Vec::with_capacity(external_roots.len() + 64);
         roots.extend_from_slice(external_roots);
+        roots.extend(self.session_root.iter().cloned());
         roots.extend(self.resources.values().filter_map(Clone::clone));
         roots.extend(self.public_primary.map(Value::Object));
         roots.extend(
@@ -2091,154 +4738,157 @@ impl Vm {
                 _ => (),
             }
             for frame in frames {
-                roots.extend(frame.module_receiver.map(Value::Object));
-                roots.extend(
-                    frame
-                        .module_load
-                        .as_ref()
-                        .and_then(|run| run.receiver)
-                        .map(Value::Object),
-                );
-                if let Some(run) = &frame.glob {
-                    run.roots(&mut roots);
-                }
-                roots.extend(frame.builders.iter().copied().map(Value::Object));
-                for scope in &frame.generator_scopes {
-                    scope.roots(&mut roots);
-                }
-                roots.extend(frame.prepared_hashes.iter().flatten().cloned());
-                roots.extend(
-                    frame
-                        .environment
-                        .locals
-                        .iter()
-                        .filter(|value| {
-                            value.heap_id().is_some() || matches!(value, Value::Bytes(_))
-                        })
-                        .cloned(),
-                );
-                roots.extend(frame.environment.this_value.iter().cloned());
-                roots.extend(frame.environment.outer_value.iter().cloned());
-                roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
-                roots.extend(frame.environment.executable_owner.map(|owner| owner.root()));
-                roots.extend(frame.environment.code_owner.map(|owner| owner.root()));
-                roots.extend(
-                    frame
-                        .environment
-                        .local_owners
-                        .values()
-                        .map(|(owner, _)| owner.root()),
-                );
-                if let Some(run) = &frame.key_search {
-                    run.roots(&mut roots);
-                }
-                roots.extend(frame.function_owner.map(Value::Function));
-                roots.extend(frame.amendment_arguments.iter().flatten().cloned());
-                if let Some(run) = &frame.collection_join {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.mapping_lookup {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.analysis {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.reflection {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.mapping_keys {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.lazy_collection_run {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.int_seq_run {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.collection_addition {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.conversion_run {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.collection_transform {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.set_order {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.set_sequence {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.list_ops {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.string_transform {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.yaml_parse {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.json_parse {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.pcf_render {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.deep_force {
-                    run.roots(&mut roots);
-                }
-                roots.extend(
-                    frame
-                        .method_call_site
-                        .as_ref()
-                        .map(|site| site.executable.root()),
-                );
-                if let Some(warning) = &frame.warning {
-                    warning.roots(&mut roots);
-                }
-                if let Some(run) = &frame.equality_run {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.type_resolution {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.generic_default {
-                    run.roots(&mut roots);
-                }
-                if let Some(run) = &frame.type_run {
-                    run.roots(&mut roots);
-                }
-                for scope in &frame.environment.scopes {
-                    roots.push(Value::Object(scope.receiver));
-                    roots.push(Value::Object(scope.owner));
-                }
-                if let Some(force) = &frame.force {
-                    roots.push(Value::Object(force.receiver));
-                    roots.push(Value::Object(force.owner));
-                    roots.extend(force.entry_probe.iter().cloned());
-                    if let Some(handler) = &force.stolen_cast {
-                        handler.roots(&mut roots);
-                    }
-                    if let Some(copy) = &force.const_receiver {
-                        roots.push(Value::Object(copy.0));
-                    }
-                    for cast in &force.collection_casts {
-                        typecheck::environment_roots(&cast.environment, &mut roots);
-                        roots.extend(cast.node.map(|node| node.0.root()));
-                    }
-                    roots.extend(
-                        force
-                            .inherited_types
-                            .iter()
-                            .map(|(_, _, _, owner)| Value::Object(*owner)),
-                    );
-                }
+                Self::collect_frame_roots(frame, &mut roots);
             }
         }
         let stats = self.heap.collect(&roots);
         self.retire_unreachable_code();
         stats
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn collect_frame_roots(frame: &Frame, roots: &mut Vec<Value>) {
+        roots.extend(frame.module_receiver.map(Value::Object));
+        roots.extend(
+            frame
+                .module_load
+                .as_ref()
+                .and_then(|run| run.receiver)
+                .map(Value::Object),
+        );
+        if let Some(run) = &frame.glob {
+            run.roots(roots);
+        }
+        roots.extend(frame.builders.iter().copied().map(Value::Object));
+        for scope in &frame.generator_scopes {
+            scope.roots(roots);
+        }
+        roots.extend(frame.prepared_hashes.iter().flatten().cloned());
+        roots.extend(
+            frame
+                .environment
+                .locals
+                .iter()
+                .filter(|value| value.heap_id().is_some() || matches!(value, Value::Bytes(_)))
+                .cloned(),
+        );
+        roots.extend(frame.environment.this_value.iter().cloned());
+        roots.extend(frame.environment.outer_value.iter().cloned());
+        roots.extend(frame.environment.custom_this.map(|slot| slot.root()));
+        roots.extend(frame.environment.executable_owner.map(|owner| owner.root()));
+        roots.extend(frame.environment.code_owner.map(|owner| owner.root()));
+        roots.extend(
+            frame
+                .environment
+                .local_owners
+                .values()
+                .map(|(owner, _)| owner.root()),
+        );
+        if let Some(run) = &frame.key_search {
+            run.roots(roots);
+        }
+        roots.extend(frame.function_owner.map(Value::Function));
+        roots.extend(frame.amendment_arguments.iter().flatten().cloned());
+        if let Some(run) = &frame.collection_join {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.mapping_lookup {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.analysis {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.reflection {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.mapping_keys {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.lazy_collection_run {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.int_seq_run {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.collection_addition {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.conversion_run {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.collection_transform {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.set_order {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.set_sequence {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.list_ops {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.string_transform {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.yaml_parse {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.json_parse {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.pcf_render {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.deep_force {
+            run.roots(roots);
+        }
+        roots.extend(
+            frame
+                .method_call_site
+                .as_ref()
+                .map(|site| site.executable.root()),
+        );
+        if let Some(warning) = &frame.warning {
+            warning.roots(roots);
+        }
+        if let Some(run) = &frame.equality_run {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.type_resolution {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.generic_default {
+            run.roots(roots);
+        }
+        if let Some(run) = &frame.type_run {
+            run.roots(roots);
+        }
+        for scope in &frame.environment.scopes {
+            roots.push(Value::Object(scope.receiver));
+            roots.push(Value::Object(scope.owner));
+        }
+        if let Some(force) = &frame.force {
+            roots.push(Value::Object(force.receiver));
+            roots.push(Value::Object(force.owner));
+            roots.extend(force.entry_probe.iter().cloned());
+            if let Some(handler) = &force.stolen_cast {
+                handler.roots(roots);
+            }
+            if let Some(copy) = &force.const_receiver {
+                roots.push(Value::Object(copy.0));
+            }
+            for cast in &force.collection_casts {
+                typecheck::environment_roots(&cast.environment, roots);
+                roots.extend(cast.node.map(|node| node.0.root()));
+            }
+            roots.extend(
+                force
+                    .inherited_types
+                    .iter()
+                    .map(|(_, _, _, owner)| Value::Object(*owner)),
+            );
+        }
     }
 
     fn fail(&mut self, mut error: RuntimeError) {
@@ -2548,7 +5198,8 @@ impl Vm {
             && let Some(
                 Instruction::GetProperty { name, .. }
                 | Instruction::GetAmbiguousProperty { name, .. }
-                | Instruction::GetImplicitProperty(name),
+                | Instruction::GetImplicitProperty(name)
+                | Instruction::GetImplicitCustomProperty(name),
             ) = self
                 .program
                 .blocks
@@ -2563,7 +5214,9 @@ impl Vm {
         if error.kind == ErrorKind::MissingMember
             && let Some(frame) = self.frames.last()
             && let Some(
-                Instruction::GetMethodProperty { name, .. } | Instruction::GetImplicitMethod(name),
+                Instruction::GetMethodProperty { name, .. }
+                | Instruction::GetImplicitMethod(name)
+                | Instruction::GetImplicitCustomMethod(name),
             ) = self
                 .program
                 .blocks
@@ -2819,6 +5472,7 @@ impl Vm {
                 }
             }
         }
+        let mut failed_uncached = Vec::new();
         for frame in &self.frames[cleanup_start..] {
             if let Some(receiver) = frame.module_receiver
                 && self
@@ -2846,6 +5500,7 @@ impl Vm {
                         identity.original_uri.clone(),
                         modules::CachedModule::Failed(error.clone()),
                     );
+                    self.last_warm_module = None;
                     self.modules_resolved.insert(
                         identity.resolved_uri.clone(),
                         modules::CachedModule::Failed(error.clone()),
@@ -2870,17 +5525,27 @@ impl Vm {
                         resolved.original_uri.clone(),
                         modules::CachedModule::Failed(error.clone()),
                     );
+                    self.last_warm_module = None;
                     self.modules_resolved.insert(
                         resolved.resolved_uri.clone(),
                         modules::CachedModule::Failed(error.clone()),
                     );
+                    if !run.cached {
+                        failed_uncached
+                            .push((resolved.original_uri.clone(), resolved.resolved_uri.clone()));
+                    }
                 }
             }
         }
+        for (orig, res) in failed_uncached {
+            self.record_uncached_module_uris(&orig, &res);
+        }
         if let Some(index) = catch_boundary.filter(|index| Some(*index) == yaml_boundary) {
             self.catch_yaml_constructor(index, error);
+            self.recompute_active_type_trackers();
         } else if let Some(index) = catch_boundary.filter(|index| Some(*index) == cast_boundary) {
             self.catch_mapping_cast(index, error);
+            self.recompute_active_type_trackers();
         } else if let Some(index) = catch_boundary {
             let value = self.render_caught_exception(&error);
             let handler = self.frames[index]
@@ -2890,9 +5555,11 @@ impl Vm {
             self.frames.truncate(index + 1);
             self.stack.truncate(handler.stack);
             self.stack.push(Value::String(value));
+            self.recompute_active_type_trackers();
             self.state = State::Running;
         } else {
             self.frames.clear();
+            self.active_type_trackers = 0;
             self.stack.clear();
             self.inputs.clear();
             self.finish_error(error);
@@ -3164,6 +5831,28 @@ impl Vm {
         entry_probe: Option<Value>,
         stolen_value: Option<Value>,
     ) -> Result<(), RuntimeError> {
+        if entry
+            && !method
+            && !local
+            && let Some(elems) = &self.heap.get(receiver)?.list_elements
+        {
+            let idx = if let Some(Value::Int(index)) = &entry_probe {
+                (index.get() >= 0).then_some(index.get() as usize)
+            } else if let Some(name_str) = name.as_str()
+                && let Some(rest) = name_str.strip_prefix('\0')
+                && let Some((_, idx_str)) = rest.split_once(':')
+            {
+                idx_str.parse::<usize>().ok()
+            } else {
+                None
+            };
+            if let Some(idx) = idx
+                && let Some(val) = elems.get(idx)
+            {
+                self.stack.push(val.clone());
+                return Ok(());
+            }
+        }
         let entry_probe = if entry && entry_probe.is_none() {
             collections::cache_entry_key(
                 &self.heap,
@@ -3312,12 +6001,12 @@ impl Vm {
                     && force.method == method
             })
         };
-        let active_here = self.frames.iter().any(same_attempt);
+        let active_here = self.frames.iter().any(|f| same_attempt(f));
         let suspended_attempt = self
             .suspended
             .iter()
             .flat_map(|context| &context.frames)
-            .any(same_attempt);
+            .any(|f| same_attempt(f));
         let active = active_here || suspended_attempt;
         // A Host callback owns a distinct evaluation attempt. It can publish a
         // value before its suspended caller returns; ordinary cycles in this
@@ -3589,68 +6278,24 @@ impl Vm {
         } else {
             (member.code, 0)
         };
-        self.frames.push(Frame {
-            guest_catch: None,
-            block,
-            pc,
-            base,
-            environment,
-            lambda: false,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            deep_force: None,
-            warning: None,
-            method_call_site: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: None,
-            amendment_arguments: None,
-            amendment_end: None,
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: false,
-            diagnostic_member: None,
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: None,
-            force: Some(Box::new(Force {
-                entry,
-                entry_probe,
-                publishing_cache: false,
-                stolen_cache_value: stolen_value.is_some(),
-                stolen_cast: None,
-                receiver,
-                owner,
-                name,
-                cache: memoize.then_some(key),
-                const_receiver: None,
-                method,
-                inherited_types,
-                collection_casts,
-                skip_typecheck: !memoize && !method,
-            })),
-        });
+        let mut frame = self.alloc_frame(block, pc, base, environment);
+        frame.force = Some(Box::new(Force {
+            entry,
+            entry_probe,
+            publishing_cache: false,
+            stolen_cache_value: stolen_value.is_some(),
+            stolen_cast: None,
+            receiver,
+            owner,
+            name,
+            cache: memoize.then_some(key),
+            const_receiver: None,
+            method,
+            inherited_types,
+            collection_casts,
+            skip_typecheck: !memoize && !method,
+        }));
+        self.frames.push(frame);
         Ok(())
     }
 
@@ -3776,12 +6421,29 @@ impl Vm {
                     arity: *arity,
                 }),
         );
-        let receiver = frame
-            .environment
-            .this_value
-            .as_ref()
-            .and_then(|value| value.as_object().ok())
-            .or_else(|| frame.environment.scopes.first().map(|scope| scope.receiver));
+        let is_custom_this = matches!(
+            self.program
+                .blocks
+                .get(frame.block)
+                .and_then(|code| code.get(frame.pc.saturating_sub(1))),
+            Some(
+                Instruction::GetImplicitCustomProperty(_) | Instruction::GetImplicitCustomMethod(_)
+            )
+        );
+        let receiver = if is_custom_this {
+            frame
+                .environment
+                .custom_this
+                .and_then(|slot| self.heap.custom_this(slot).ok().flatten())
+                .and_then(|value| value.as_object().ok())
+        } else {
+            frame
+                .environment
+                .this_value
+                .as_ref()
+                .and_then(|value| value.as_object().ok())
+                .or_else(|| frame.environment.scopes.first().map(|scope| scope.receiver))
+        };
         let mut current = receiver;
         let mut visited = BTreeSet::new();
         let mut receiver_methods = Vec::new();
@@ -4696,57 +7358,21 @@ impl Vm {
         environment
             .locals
             .extend(arguments.into_iter().map(Value::boxed));
-        self.frames.push(Frame {
-            guest_catch: None,
-            block: function.block,
-            pc: 0,
-            base: self.stack.len(),
-            environment,
-            force: None,
-            lambda: !function.method,
-            type_run: None,
-            type_resolution: None,
-            generic_default: None,
-            equality_run: None,
-            deep_force: None,
-            warning: None,
-            method_call_site: None,
-            pcf_render: None,
-            json_parse: None,
-            yaml_parse: None,
-            collection_join: None,
-            collection_transform: None,
-            set_order: None,
-            set_sequence: None,
-            list_ops: None,
-            string_transform: None,
-            int_seq_run: None,
-            lazy_collection_run: None,
-            mapping_lookup: None,
-            mapping_keys: None,
-            reflection: None,
-            analysis: None,
-            conversion_run: None,
-            collection_addition: None,
-            function_owner: Some(id),
-            amendment_arguments,
-            amendment_end: None,
-            prepared_hashes: None,
-            key_search: None,
-            return_to_type: false,
-            diagnostic_member: None,
-            callsite_hidden: false,
-            builders: Vec::new(),
-            generator_scopes: Vec::new(),
-            module_load: None,
-            uri_resolution: None,
-            glob: None,
-            module_receiver: None,
-        });
+        let block = function.block;
+        let lambda = !function.method;
+        let base = self.stack.len();
+        let mut frame = self.alloc_frame(block, 0, base, environment);
+        frame.lambda = lambda;
+        frame.function_owner = Some(id);
+        frame.amendment_arguments = amendment_arguments;
+        self.frames.push(frame);
         Ok(())
     }
 
     fn step(&mut self) -> Result<(), RuntimeError> {
+        if let Some(frame) = self.frames.last_mut() {
+            frame.fast_call_frame = false;
+        }
         if self.frames.last().is_some_and(|frame| frame.glob.is_some()) {
             return self.step_glob();
         }
@@ -4941,6 +7567,8 @@ impl Vm {
             &instruction,
             Instruction::GetMember(_)
                 | Instruction::GetMethod(_)
+                | Instruction::GetImplicitCustomProperty(_)
+                | Instruction::GetImplicitCustomMethod(_)
                 | Instruction::GetConstMember(_)
                 | Instruction::GetConstMethod(_)
                 | Instruction::GetAmbiguousProperty { .. }
@@ -4974,11 +7602,15 @@ impl Vm {
         match instruction {
             Instruction::GetMember(ref name)
             | Instruction::GetMethod(ref name)
+            | Instruction::GetImplicitCustomProperty(ref name)
+            | Instruction::GetImplicitCustomMethod(ref name)
             | Instruction::GetConstMember(ref name)
             | Instruction::GetConstMethod(ref name) => {
                 let method = matches!(
                     instruction,
-                    Instruction::GetMethod(_) | Instruction::GetConstMethod(_)
+                    Instruction::GetMethod(_)
+                        | Instruction::GetImplicitCustomMethod(_)
+                        | Instruction::GetConstMethod(_)
                 );
                 let needs_const = matches!(
                     instruction,
@@ -5713,7 +8345,10 @@ impl Vm {
                 }
                 let depth = usize::from(!frame.lambda);
                 let scope = frame.environment.scopes.get(depth).ok_or_else(|| {
-                    RuntimeError::new(ErrorKind::MissingMember, "No outer scope is available.")
+                    RuntimeError::new(
+                        ErrorKind::MissingMember,
+                        "Top-level scope does not have an outer scope.",
+                    )
                 })?;
                 self.stack.push(Value::Object(scope.receiver));
             }
@@ -5726,9 +8361,14 @@ impl Vm {
                 self.stack.push(Value::Object(scope.receiver));
             }
             Instruction::ObserveNativeLiteral { span, rendered } => {
-                self.observe_native_literal(span, rendered)
+                if self.active_type_trackers != 0 {
+                    self.observe_native_literal(span, rendered);
+                }
             }
             Instruction::Observe(span) => {
+                if self.active_type_trackers == 0 {
+                    return Ok(());
+                }
                 let value = self
                     .stack
                     .last()
@@ -5870,7 +8510,12 @@ impl Vm {
                 let value = self.pop()?;
                 self.java_value_string(value)?;
             }
-            Instruction::ToString => {
+            Instruction::CheckInterpolate
+                if matches!(self.stack.last(), Some(Value::String(_) | Value::Int(_))) => {}
+            Instruction::FinishInterpolation(count) => {
+                finish_interpolation_on_stack(&mut self.stack, count, &mut self.scratch_utf8)?;
+            }
+            Instruction::CheckInterpolate | Instruction::ToString => {
                 let value = self.pop()?;
                 if let Value::Object(id) = value
                     && self.heap.get(id)?.reference.is_some()
@@ -5982,6 +8627,8 @@ impl Vm {
             }
             Instruction::GetMember(_)
             | Instruction::GetMethod(_)
+            | Instruction::GetImplicitCustomProperty(_)
+            | Instruction::GetImplicitCustomMethod(_)
             | Instruction::GetConstMember(_)
             | Instruction::GetConstMethod(_)
             | Instruction::GetAmbiguousProperty { .. }
@@ -6218,7 +8865,7 @@ impl Vm {
                 let id = self.heap.allocate(Object {
                     parent: Some(parent),
                     instance_class: Some(class_id),
-                    members,
+                    members: members.into(),
                     environment,
                     ..Object::default()
                 });
@@ -6359,7 +9006,7 @@ impl Vm {
                         BTreeSet::new()
                     },
                     parent,
-                    members,
+                    members: members.into(),
                     environment,
                     ..Object::default()
                 };
@@ -6398,6 +9045,7 @@ impl Vm {
                                 identity.original_uri.clone(),
                                 modules::CachedModule::Value(object),
                             );
+                            self.last_warm_module = None;
                             self.modules_resolved.insert(
                                 identity.resolved_uri.clone(),
                                 modules::CachedModule::Value(object),
@@ -6426,12 +9074,9 @@ impl Vm {
                     .ok_or_else(|| invalid("method signature owner"))?
                     .owner;
                 frame.environment.this_value = Some(Value::Object(owner));
-                frame
-                    .environment
-                    .scopes
-                    .first_mut()
-                    .ok_or_else(|| invalid("method signature scope"))?
-                    .receiver = owner;
+                if !frame.environment.scopes.set_first_receiver(owner) {
+                    return Err(invalid("method signature scope"));
+                }
             }
             Instruction::EndObjectMethodSignature => {
                 let frame = self.frames.last_mut().expect("method member frame");
@@ -6441,12 +9086,9 @@ impl Vm {
                     .ok_or_else(|| invalid("method signature receiver"))?
                     .receiver;
                 frame.environment.this_value = Some(Value::Object(receiver));
-                frame
-                    .environment
-                    .scopes
-                    .first_mut()
-                    .ok_or_else(|| invalid("method signature scope"))?
-                    .receiver = receiver;
+                if !frame.environment.scopes.set_first_receiver(receiver) {
+                    return Err(invalid("method signature scope"));
+                }
             }
             Instruction::MakeFunction {
                 block,
@@ -6489,17 +9131,16 @@ impl Vm {
                         })
                     })
                     .flatten();
-                let id = self.heap.allocate(Object {
-                    function: Some(Function {
+                let id = self.heap.allocate_function(
+                    Function {
                         block,
                         arity,
                         method,
                         captured_this,
-                    }),
+                    },
                     method_declaration,
                     environment,
-                    ..Object::default()
-                });
+                );
                 self.stack.push(Value::Function(id));
             }
             Instruction::ApplyEntryDefault => {
@@ -6818,7 +9459,9 @@ impl Vm {
                             // primary compiled block's declaration provenance.
                             // Its old unit ID must not override that source.
                             .filter(|unit| match (&metadata.source, &unit.source) {
-                                (None, _) => unit.id == crate::modules::UnitId(0),
+                                (None, _) => {
+                                    unit.id == crate::modules::UnitId(0) && !unit.standard_library
+                                }
                                 (Some(source), Some(unit_source)) => {
                                     Arc::ptr_eq(source, unit_source)
                                 }
@@ -7043,7 +9686,9 @@ impl Vm {
             return Ok(());
         }
         let frame = self.frames.pop().expect("active frame");
-        if frame.return_to_type {
+        let return_to_type = frame.return_to_type;
+        self.recycle_frame(frame);
+        if return_to_type {
             self.frames
                 .last_mut()
                 .and_then(|frame| frame.type_run.as_mut())
@@ -7072,6 +9717,290 @@ impl Vm {
         frame.pc = target;
         Ok(())
     }
+}
+
+#[inline(always)]
+fn fast_check_type_in_poll(
+    ty: &TypeCheck,
+    val: &Value,
+    frame: &Frame,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+) -> bool {
+    if typecheck::try_fast_leaf_type(ty, val) == Some(true) {
+        return true;
+    }
+    match ty.resolved() {
+        TypeCheck::MetaClass(name) => {
+            if name == "Class" {
+                matches!(val, Value::Class(_))
+            } else if name == "TypeAlias" {
+                matches!(val, Value::TypeAlias(_))
+            } else {
+                false
+            }
+        }
+        TypeCheck::Class { id, .. } if *id != classes::TYPED => {
+            if let Value::Object(val_id) = val
+                && let Ok(obj) = heap.get(*val_id)
+                && obj.foreign_map_entry.is_none()
+                && obj.pair.is_none()
+                && obj.reference.is_none()
+                && let Some(cls) = obj.instance_class
+            {
+                heap.class_has_ancestor_id(cls, *id)
+            } else {
+                false
+            }
+        }
+        TypeCheck::Function {
+            parameters, result, ..
+        } if matches!(result.resolved(), TypeCheck::Any | TypeCheck::Unknown)
+            && parameters.as_ref().is_none_or(|ps| {
+                ps.iter()
+                    .all(|p| matches!(p.resolved(), TypeCheck::Any | TypeCheck::Unknown))
+            }) =>
+        {
+            if let Value::Function(fid) = val
+                && let Ok(obj) = heap.get(*fid)
+                && obj.amendment.is_none()
+                && obj.native_function.is_none()
+                && let Some(f) = obj.function.as_ref()
+            {
+                parameters.as_ref().is_none_or(|ps| f.arity == ps.len())
+            } else {
+                false
+            }
+        }
+        TypeCheck::Declared { recipe, arguments } if arguments.is_empty() => {
+            let Some(scope) = frame.environment.scopes.last() else {
+                return false;
+            };
+            if !heap.get(scope.owner).is_ok_and(|o| o.is_module) {
+                return false;
+            }
+            match resolved_declarations.get(&(*recipe, scope.owner)) {
+                Some(type_resolution::DeclarationValue::Value(Value::Class(target_cls))) => {
+                    match val {
+                        Value::Object(val_id) => {
+                            if let Ok(obj) = heap.get(*val_id)
+                                && obj.foreign_map_entry.is_none()
+                                && obj.pair.is_none()
+                                && obj.reference.is_none()
+                                && let Some(mut cur_cls) = obj.instance_class
+                            {
+                                if cur_cls == *target_cls {
+                                    return true;
+                                }
+                                for _ in 0..4 {
+                                    let Some(sup) =
+                                        heap.get_class(cur_cls).ok().and_then(|c| c.superclass)
+                                    else {
+                                        break;
+                                    };
+                                    if sup == *target_cls {
+                                        return true;
+                                    }
+                                    cur_cls = sup;
+                                }
+                            }
+                            false
+                        }
+                        Value::Class(_) => heap
+                            .get_class(*target_cls)
+                            .ok()
+                            .and_then(|c| heap.get(c.prototype).ok())
+                            .and_then(|p| p.builtin_type.as_ref())
+                            .is_some_and(
+                                |bt| matches!(bt.resolved(), TypeCheck::MetaClass(n) if n == "Class"),
+                            ),
+                        Value::TypeAlias(_) => heap
+                            .get_class(*target_cls)
+                            .ok()
+                            .and_then(|c| heap.get(c.prototype).ok())
+                            .and_then(|p| p.builtin_type.as_ref())
+                            .is_some_and(
+                                |bt| matches!(bt.resolved(), TypeCheck::MetaClass(n) if n == "TypeAlias"),
+                            ),
+                        _ => false,
+                    }
+                }
+                Some(type_resolution::DeclarationValue::Builtin(bty)) => {
+                    fast_check_type_in_poll(bty, val, frame, heap, resolved_declarations)
+                }
+                _ => false,
+            }
+        }
+        _ => false,
+    }
+}
+
+#[inline]
+fn is_non_capturing_lambda(code: &[Instruction], arity: usize) -> bool {
+    if code.is_empty() || code.len() > 32 {
+        return false;
+    }
+    for ins in code {
+        match ins {
+            Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. } => {}
+            Instruction::LoadLocal(d) if *d < arity => {}
+            Instruction::BindLocal { depth: Some(d), ty }
+                if *d < arity
+                    && matches!(
+                        ty.resolved(),
+                        TypeCheck::Any
+                            | TypeCheck::Unknown
+                            | TypeCheck::Int
+                            | TypeCheck::Float
+                            | TypeCheck::Boolean
+                            | TypeCheck::String
+                            | TypeCheck::Number
+                            | TypeCheck::NonNull
+                    ) => {}
+            Instruction::Constant(
+                Value::Null | Value::Bool(_) | Value::Int(_) | Value::Float(_) | Value::String(_),
+            )
+            | Instruction::GetMember(_)
+            | Instruction::Add
+            | Instruction::AddIntConstant(_)
+            | Instruction::Subtract
+            | Instruction::Multiply
+            | Instruction::Divide
+            | Instruction::IntegerDivide
+            | Instruction::Remainder
+            | Instruction::Less
+            | Instruction::LessEqual
+            | Instruction::Greater
+            | Instruction::GreaterEqual
+            | Instruction::Equal
+            | Instruction::NotEqual
+            | Instruction::Negate
+            | Instruction::Not
+            | Instruction::Return => {}
+            Instruction::CheckType(ty)
+                if matches!(
+                    ty.resolved(),
+                    TypeCheck::Any
+                        | TypeCheck::Unknown
+                        | TypeCheck::Int
+                        | TypeCheck::Float
+                        | TypeCheck::Boolean
+                        | TypeCheck::String
+                        | TypeCheck::Number
+                        | TypeCheck::NonNull
+                ) => {}
+            _ => return false,
+        }
+    }
+    true
+}
+
+#[inline(always)]
+fn fast_lookup_cached<'a>(
+    obj: &'a Object,
+    owner: Option<ObjectId>,
+    name: &PklString,
+    method: bool,
+) -> Option<&'a Value> {
+    if obj.cache_slots.len() <= 16 {
+        for slot in &obj.cache_slots {
+            if !slot.key.entry
+                && slot.key.method == method
+                && slot.key.owner == owner
+                && slot.key.name == *name
+            {
+                return Some(&slot.value);
+            }
+        }
+        return None;
+    }
+    let key = CacheKey {
+        entry: false,
+        owner,
+        name: name.clone(),
+        method,
+    };
+    match obj.cache.get(&key) {
+        Some(LazyState::Completed(val)) => Some(val),
+        _ => None,
+    }
+}
+
+#[inline]
+fn format_i64_buf(n: i64, buf: &mut [u8; 24]) -> &str {
+    if n == 0 {
+        return "0";
+    }
+    let mut pos = buf.len();
+    let neg = n < 0;
+    let mut mag: u64 = if neg {
+        n.wrapping_neg() as u64
+    } else {
+        n as u64
+    };
+    while mag > 0 {
+        pos -= 1;
+        buf[pos] = b'0' + (mag % 10) as u8;
+        mag /= 10;
+    }
+    if neg {
+        pos -= 1;
+        buf[pos] = b'-';
+    }
+    std::str::from_utf8(&buf[pos..]).expect("ASCII decimal integer")
+}
+
+#[inline]
+fn format_i64_pkl_string(n: i64) -> PklString {
+    let mut buf = [0u8; 24];
+    PklString::from(format_i64_buf(n, &mut buf))
+}
+
+#[inline]
+fn finish_interpolation_on_stack(
+    stack: &mut identity::OperandStack,
+    count: usize,
+    scratch: &mut String,
+) -> Result<(), RuntimeError> {
+    if count == 0 {
+        stack.push_raw(Value::string(""));
+        return Ok(());
+    }
+    let start = stack
+        .len()
+        .checked_sub(count)
+        .ok_or_else(|| invalid("interpolation stack underflow"))?;
+    let all_utf8 = stack[start..].iter().all(|v| match v {
+        Value::String(s) => s.as_str().is_some(),
+        Value::Int(_) => true,
+        _ => false,
+    });
+    if all_utf8 {
+        scratch.clear();
+        let mut num_buf = [0u8; 24];
+        for v in &stack[start..] {
+            match v {
+                Value::String(s) => scratch.push_str(s.as_str().unwrap()),
+                Value::Int(n) => scratch.push_str(format_i64_buf(n.get(), &mut num_buf)),
+                _ => unreachable!(),
+            }
+        }
+        let result = PklString::from(scratch.as_str());
+        stack.truncate(start);
+        stack.push_raw(Value::String(result));
+        return Ok(());
+    }
+    let mut builder = crate::pkl_string::PklStringBuilder::default();
+    for v in &stack[start..] {
+        match v {
+            Value::String(s) => builder.push_value(s),
+            Value::Int(n) => builder.push_value(&format_i64_pkl_string(n.get())),
+            _ => return Err(invalid("unchecked interpolation part")),
+        }
+    }
+    stack.truncate(start);
+    stack.push_raw(Value::String(builder.finish()));
+    Ok(())
 }
 
 fn invalid_supertype(label: &PklString) -> RuntimeError {
@@ -7330,6 +10259,125 @@ fn compile_unit_into(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    compile_unit_into_with_syntax(
+        program, resolved, None, None, options, instrument, source, identity, false,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+fn compile_unit_into_with_syntax(
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    cached_resolved: Option<Arc<crate::resolver::ResolvedModule>>,
+    cached_syntax: Option<Arc<crate::syntax::Module>>,
+    options: CompileOptions,
+    instrument: bool,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
+    pure_standard_host: bool,
+) -> Result<crate::modules::UnitId, RuntimeError> {
+    // Fast single-pass path for pure standard Hosts when every import step in
+    // `resolved.preparation` is a clean, non-glob, non-triple-dot, non-package
+    // `file:///` or `pkl:` URI whose inferred clause name matches the parsed member name.
+    if pure_standard_host
+        && resolved.preparation_is_evaluation
+        && resolved.preparation_failure.is_none()
+        && !resolved.preparation.is_empty()
+        && let Some(id) = identity.as_ref()
+        && id
+            .original_uri
+            .as_str()
+            .is_some_and(crate::host::resources::is_clean_file_uri)
+    {
+        let mut prepared: BTreeMap<Span, (PklString, PklString)> = BTreeMap::new();
+        let mut all_clean = true;
+        for step in &resolved.preparation {
+            let crate::resolver::AstPreparation::Import {
+                uri,
+                span,
+                clause,
+                glob,
+                ..
+            } = step;
+            if *glob || uri.starts_with("@") || uri.starts_with("...") {
+                all_clean = false;
+                break;
+            }
+            if !matches!(crate::host::resources::import_triple_path(uri), Ok(None)) {
+                all_clean = false;
+                break;
+            }
+            let Ok(resolved_uri) =
+                crate::host::resources::resolve_module_key_uri(uri, &id.original_uri)
+            else {
+                all_clean = false;
+                break;
+            };
+            let is_clean_target = resolved_uri
+                .as_str()
+                .is_some_and(crate::host::resources::is_clean_file_uri)
+                || (resolved_uri.starts_with("pkl:")
+                    && crate::host::resources::validate_module_key_uri(&resolved_uri).is_ok());
+            if !is_clean_target {
+                all_clean = false;
+                break;
+            }
+            let Ok((abs, orig)) = crate::host::resources::prepare_module_uri(&resolved_uri, None)
+            else {
+                all_clean = false;
+                break;
+            };
+            if *clause {
+                // On `pure_standard_host`, `is_clean_file_uri` (`StandardFile`) and `pkl:`
+                // (`StandardLibrary`) always have `hasFragmentPaths == false`.
+                let Some(member) = resolved.module.members.iter().find(|m| {
+                    matches!(
+                        &m.expr.kind,
+                        crate::syntax::ExprKind::Import {
+                            uri_span,
+                            clause_alias: Some(_),
+                            ..
+                        } if *uri_span == *span
+                    )
+                }) else {
+                    all_clean = false;
+                    break;
+                };
+                if let crate::syntax::ExprKind::Import {
+                    clause_alias: Some(None),
+                    ..
+                } = &member.expr.kind
+                {
+                    let Ok(inferred) = crate::host::resources::infer_module_name(&orig, false)
+                    else {
+                        all_clean = false;
+                        break;
+                    };
+                    if member.name != inferred {
+                        all_clean = false;
+                        break;
+                    }
+                }
+            }
+            prepared.insert(*span, (abs, orig));
+        }
+        if all_clean {
+            let unit = compile_unit_body_at_with_syntax(
+                None,
+                program,
+                resolved,
+                cached_syntax,
+                true,
+                options,
+                instrument,
+                source,
+                identity,
+            )?;
+            program.update_import_uris(unit, |span| prepared.get(&span));
+            program.units[unit.0 as usize].import_order.clear();
+            return Ok(unit);
+        }
+    }
     if resolved.preparation_is_evaluation
         && resolved.preparation.iter().any(|step| {
             matches!(
@@ -7338,24 +10386,47 @@ fn compile_unit_into(
             )
         })
     {
-        let mut shell = resolved.clone();
-        shell.module.members.clear();
-        shell.module.deferred_diagnostics.clear();
-        if let Some(declaration) = &mut shell.module.declaration {
-            declaration.annotations.clear();
-            declaration.parent = None;
-            declaration.modifiers.clear();
-        }
-        shell.preparation.retain(|step| {
-            matches!(
-                step,
-                crate::resolver::AstPreparation::Import { clause: true, .. }
-            )
+        let shell_decl = resolved.module.declaration.as_ref().map(|d| {
+            let mut decl = d.clone();
+            decl.annotations.clear();
+            decl.parent = None;
+            decl.modifiers.clear();
+            decl
         });
-        shell.preparation_failure = None;
+        let shell = crate::resolver::ResolvedModule {
+            module: crate::syntax::Module {
+                source: resolved.module.source.clone(),
+                declaration: shell_decl,
+                members: Vec::new(),
+                deferred_diagnostics: Vec::new(),
+                folded_integer_spans: BTreeMap::new(),
+                interpolation_spans: BTreeMap::new(),
+            },
+            standard_library: resolved.standard_library,
+            preparation: resolved
+                .preparation
+                .iter()
+                .filter(|step| {
+                    matches!(
+                        step,
+                        crate::resolver::AstPreparation::Import { clause: true, .. }
+                    )
+                })
+                .cloned()
+                .collect(),
+            preparation_is_evaluation: resolved.preparation_is_evaluation,
+            function_owners: BTreeMap::new(),
+            preparation_failure: None,
+            names: BTreeMap::new(),
+            const_names: BTreeSet::new(),
+            custom_this: BTreeSet::new(),
+            custom_functions: BTreeSet::new(),
+        };
         let unit = compile_unit_body(program, &shell, options, instrument, source, identity)?;
         program.units[unit.0 as usize].build = Some(modules::ModuleBuild {
-            module: resolved.module.clone(),
+            module: cached_syntax.unwrap_or_else(|| Arc::new(resolved.module.clone())),
+            resolved: cached_resolved,
+            name_changed: false,
             options,
             instrument,
             prepared: BTreeMap::new(),
@@ -7363,7 +10434,17 @@ fn compile_unit_into(
         return Ok(unit);
     }
     if resolved.preparation_failure.is_none() {
-        return compile_unit_body(program, resolved, options, instrument, source, identity);
+        return compile_unit_body_at_with_syntax(
+            None,
+            program,
+            resolved,
+            cached_syntax,
+            false,
+            options,
+            instrument,
+            source,
+            identity,
+        );
     }
     // Rejected ASTs never publish or execute partially resolved guest members.
     // Their initializer only replays the observed construction prefix and fails.
@@ -7404,9 +10485,35 @@ fn compile_unit_body_at(
     source: Option<Arc<crate::value::RuntimeSource>>,
     identity: Option<crate::modules::ModuleIdentity>,
 ) -> Result<crate::modules::UnitId, RuntimeError> {
+    compile_unit_body_at_with_syntax(
+        replacement,
+        program,
+        resolved,
+        None,
+        false,
+        options,
+        instrument,
+        source,
+        identity,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+fn compile_unit_body_at_with_syntax(
+    replacement: Option<crate::modules::UnitId>,
+    program: &mut Program,
+    resolved: &crate::resolver::ResolvedModule,
+    cached_syntax: Option<Arc<crate::syntax::Module>>,
+    skip_import_clauses: bool,
+    options: CompileOptions,
+    instrument: bool,
+    source: Option<Arc<crate::value::RuntimeSource>>,
+    identity: Option<crate::modules::ModuleIdentity>,
+) -> Result<crate::modules::UnitId, RuntimeError> {
     // Raw development blocks may omit provenance, but their logical IDs
     // still share the same address space as compiler-created metadata.
     program.align_metadata()?;
+    let blocks_start = program.blocks.next_id();
     let unit = replacement.unwrap_or(crate::modules::UnitId(
         program
             .units
@@ -7468,7 +10575,9 @@ fn compile_unit_body_at(
     let is_base_module = compiler.identity.as_ref().is_some_and(|identity| {
         identity.original_uri == "pkl:base" || identity.resolved_uri == "pkl:base"
     });
-    let is_primary_root = unit.0 == 0 && !is_base_module;
+    let is_primary_root = !is_base_module
+        && (replacement == Some(crate::modules::UnitId(0))
+            || (replacement.is_none() && compiler.program.module_template.is_none()));
     let template = compiler.object_template(&resolved.module.members, false, false)?;
     if is_primary_root {
         compiler.program.module_template = Some(template);
@@ -7541,7 +10650,9 @@ fn compile_unit_body_at(
         entry.push_at(Instruction::ImportModule(spec), parent.span);
         entry.push_at(Instruction::InitializeModuleParent, parent.span);
     }
-    compiler.type_scopes.push(resolved.module.members.clone());
+    compiler
+        .type_scopes
+        .push(extract_type_scope(&resolved.module.members));
     if let Some(declaration) = &resolved.module.declaration {
         compiler.module_annotation = true;
         let annotations = compiler.annotations(&declaration.annotations, &mut entry);
@@ -7604,13 +10715,14 @@ fn compile_unit_body_at(
         key: None,
         delegate_key: None,
         build: None,
-        syntax: Some(Arc::new(resolved.module.clone())),
+        syntax: Some(cached_syntax.unwrap_or_else(|| Arc::new(resolved.module.clone()))),
         source: compiler.source,
         name: module_name,
         template,
         entry,
+        blocks_start,
         initial_members: initial_module_members,
-        import_order: uri_resolution::module_import_order(resolved),
+        import_order: uri_resolution::module_import_order_filtered(resolved, skip_import_clauses),
         mode,
         modifiers,
         class_id: if is_primary_root {
@@ -7671,6 +10783,30 @@ impl std::ops::DerefMut for Code {
     }
 }
 
+#[derive(Clone)]
+struct TypeScopeClass {
+    name: PklString,
+    expr_span: Span,
+    local: bool,
+    abstract_: bool,
+}
+
+fn extract_type_scope(members: &[crate::syntax::Member]) -> Vec<TypeScopeClass> {
+    let mut out = Vec::new();
+    for m in members {
+        if matches!(m.expr.kind, crate::syntax::ExprKind::Class { .. }) {
+            let flags = crate::syntax::modifier_flags(&m.modifiers);
+            out.push(TypeScopeClass {
+                name: m.name.clone(),
+                expr_span: m.expr.span,
+                local: flags & crate::syntax::ModifierKind::Local.flag() != 0,
+                abstract_: flags & crate::syntax::ModifierKind::Abstract.flag() != 0,
+            });
+        }
+    }
+    out
+}
+
 struct Compiler<'a> {
     resolved: &'a crate::resolver::ResolvedModule,
     program: &'a mut Program,
@@ -7684,7 +10820,7 @@ struct Compiler<'a> {
     super_method_allowed: bool,
     module_annotation: bool,
     let_members: Vec<PklString>,
-    type_scopes: Vec<Vec<crate::syntax::Member>>,
+    type_scopes: Vec<Vec<TypeScopeClass>>,
     modifiers: Vec<crate::syntax::Modifier>,
     constraint_module: bool,
     runtime_type_owner: bool,
@@ -7884,7 +11020,7 @@ impl Compiler<'_> {
         class: bool,
         object_body: bool,
     ) -> Result<usize, RuntimeError> {
-        self.type_scopes.push(members.to_vec());
+        self.type_scopes.push(extract_type_scope(members));
         let mut result = Vec::new();
         for member in members {
             let scope_count = self.type_scopes.len();
@@ -8346,7 +11482,7 @@ impl Compiler<'_> {
                 .iter()
                 .rev()
                 .flatten()
-                .find(|member| member.expr.span == expression.span)
+                .find(|member| member.expr_span == expression.span)
                 .map(|member| member.name.clone())
                 .ok_or_else(|| invalid("missing class declaration name"))?,
             open: crate::syntax::modifier_flags(&self.modifiers)
@@ -8396,7 +11532,7 @@ impl Compiler<'_> {
             output.push(Instruction::SetDefaultClassParent);
         }
         self.declaration_annotations(expression, output)?;
-        self.type_scopes.push(members.to_vec());
+        self.type_scopes.push(extract_type_scope(members));
         // ClassNode initializes properties in declaration order, then methods.
         let compiled = self.program.objects[template].clone();
         for method in [false, true] {
@@ -8795,11 +11931,11 @@ impl Compiler<'_> {
                     Binding::ImplicitThis => output.push(Instruction::GetImplicitProperty(name)),
                     Binding::CustomThis => {
                         output.push(Instruction::LoadCustomThis);
-                        output.push(Instruction::GetMember(name));
+                        output.push(Instruction::GetImplicitCustomProperty(name));
                     }
                     Binding::CustomMethod => {
                         output.push(Instruction::LoadCustomThis);
-                        output.push(Instruction::GetMethod(name));
+                        output.push(Instruction::GetImplicitCustomMethod(name));
                     }
                 }
             }
@@ -10562,17 +13698,15 @@ impl Compiler<'_> {
             return Err(RuntimeError::new(ErrorKind::Type, "Expected a class type."));
         };
         for (index, members) in self.type_scopes.iter().enumerate().rev() {
-            if let Some(member) = members.iter().find(|member| {
-                self.declaration_base + member.expr.span.start == *id
-                    && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
-            }) {
+            if let Some(member) = members
+                .iter()
+                .find(|member| self.declaration_base + member.expr_span.start == *id)
+            {
                 output.push_at(
                     Instruction::GetProperty {
                         name: member.name.clone(),
                         owner_depth: self.type_scopes.len() - 1 - index,
-                        local: crate::syntax::modifier_flags(&member.modifiers)
-                            & crate::syntax::ModifierKind::Local.flag()
-                            != 0,
+                        local: member.local,
                     },
                     span,
                 );
@@ -10734,11 +13868,7 @@ impl Compiler<'_> {
                     return Ok(false);
                 }
                 if self.type_scopes.iter().flatten().any(|member| {
-                    self.declaration_base + member.expr.span.start == *id
-                        && matches!(member.expr.kind, crate::syntax::ExprKind::Class { .. })
-                        && crate::syntax::modifier_flags(&member.modifiers)
-                            & crate::syntax::ModifierKind::Abstract.flag()
-                            != 0
+                    self.declaration_base + member.expr_span.start == *id && member.abstract_
                 }) {
                     return Ok(false);
                 }

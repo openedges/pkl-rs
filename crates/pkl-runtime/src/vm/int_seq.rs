@@ -17,6 +17,7 @@ pub enum Operation {
     GetClass,
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -254,6 +255,11 @@ struct MappingCursor {
 enum Cursor {
     IntSeq(crate::int_seq::Cursor),
     Mapping(Box<MappingCursor>),
+    StrictList {
+        source: ObjectId,
+        len: usize,
+        next: usize,
+    },
     List {
         source: ObjectId,
         members: Vec<crate::heap::CollectionMember>,
@@ -271,7 +277,9 @@ impl Run {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.extend(self.callback.iter().chain(&self.accumulator).cloned());
         match &self.cursor {
-            Cursor::List { source, .. } => roots.push(Value::Object(*source)),
+            Cursor::List { source, .. } | Cursor::StrictList { source, .. } => {
+                roots.push(Value::Object(*source))
+            }
             Cursor::Mapping(cursor) => {
                 roots.push(Value::Object(cursor.source));
                 roots.extend(cursor.members.iter().map(|m| m.descriptor.key.clone()));
@@ -279,6 +287,299 @@ impl Run {
                 roots.extend(cursor.entries.values.iter().cloned());
             }
             Cursor::IntSeq(_) => {}
+        }
+    }
+
+    #[inline]
+    pub(super) fn try_fast_next(
+        &mut self,
+        heap: &Heap,
+        stack: &mut identity::OperandStack,
+    ) -> Option<bool> {
+        if self.shallow || matches!(self.cursor, Cursor::Mapping(_)) {
+            return None;
+        }
+        let value = match &mut self.cursor {
+            Cursor::IntSeq(cursor) => cursor.next().map(|(_, value)| Value::Int(value.into())),
+            Cursor::StrictList { source, len, next } => {
+                let value = if *next < *len {
+                    let obj = heap.get(*source).ok()?;
+                    obj.list_elements.as_ref()?.get(*next).cloned()
+                } else {
+                    None
+                };
+                *next += 1;
+                value
+            }
+            _ => return None,
+        };
+        let Some(value) = value else {
+            return Some(false);
+        };
+        if let Some(callback) = &self.callback {
+            stack.push(callback.clone());
+        }
+        if self.operation == Operation::FoldIndexed {
+            let Cursor::StrictList { next, .. } = &self.cursor else {
+                return None;
+            };
+            stack.push(Value::Int((*next as i64 - 1).into()));
+        }
+        if let Some(accumulator) = &self.accumulator {
+            stack.push(accumulator.clone());
+        }
+        stack.push(value);
+        Some(true)
+    }
+
+    #[inline]
+    pub(super) fn try_fast_accept(
+        &mut self,
+        heap: &mut Heap,
+        builder: Option<ObjectId>,
+        stack: &mut identity::OperandStack,
+    ) -> bool {
+        if matches!(self.operation, Operation::Fold | Operation::FoldIndexed) {
+            if let Some(value) = stack.pop() {
+                self.accumulator = Some(value);
+                return true;
+            }
+            return false;
+        }
+        if let Some(target) = builder
+            && let Ok(object) = heap.get_mut(target)
+            && let Some(elems) = &mut object.list_elements
+            && let Some(value) = stack.pop()
+        {
+            let extra = match &value {
+                Value::String(s) => s.as_str().map_or(16, str::len),
+                _ => 0,
+            };
+            elems.push(value);
+            object.length += 1;
+            heap.note_external_allocation(std::mem::size_of::<Value>().saturating_add(extra));
+            return true;
+        }
+        false
+    }
+
+    /// In-place accept + next for `poll_fast_run` lambda frame reuse:
+    /// Accepts `result`, advances the cursor, and returns:
+    /// - `Some(Some((arg0, opt_arg1)))` if there is a next iteration (for arity 1 or 2)
+    /// - `Some(None)` if the cursor is exhausted
+    /// - `None` if this run is not eligible for in-place reuse
+    #[inline]
+    pub(super) fn try_inplace_accept_and_next(
+        &mut self,
+        heap: &mut Heap,
+        builder: Option<ObjectId>,
+        result: Value,
+    ) -> Option<Option<(Value, Option<Value>)>> {
+        if self.shallow
+            || matches!(self.cursor, Cursor::Mapping(_) | Cursor::List { .. })
+            || !matches!(self.operation, Operation::Map | Operation::Fold)
+        {
+            return None;
+        }
+        // Accept previous result
+        if self.operation == Operation::Fold {
+            self.accumulator = Some(result);
+        } else {
+            let target = builder?;
+            let extra = match &result {
+                Value::String(s) => s.as_str().map_or(16, str::len),
+                _ => 0,
+            };
+            let object = heap.get_mut(target).ok()?;
+            let elems = object.list_elements.as_mut()?;
+            elems.push(result);
+            object.length += 1;
+            heap.note_external_allocation(std::mem::size_of::<Value>().saturating_add(extra));
+        }
+        // Fetch next element
+        let next_elem = match &mut self.cursor {
+            Cursor::IntSeq(cursor) => cursor.next().map(|(_, v)| Value::Int(v.into())),
+            Cursor::StrictList { source, len, next } => {
+                if *next < *len {
+                    let obj = heap.get(*source).ok()?;
+                    let v = obj.list_elements.as_ref()?.get(*next).cloned()?;
+                    *next += 1;
+                    Some(v)
+                } else {
+                    *next += 1;
+                    None
+                }
+            }
+            _ => return None,
+        };
+        let Some(elem) = next_elem else {
+            return Some(None);
+        };
+        if self.operation == Operation::Fold {
+            let acc = self.accumulator.clone()?;
+            Some(Some((acc, Some(elem))))
+        } else {
+            Some(Some((elem, None)))
+        }
+    }
+
+    #[inline]
+    pub(super) fn callback_function_id(&self) -> Option<ObjectId> {
+        match self.callback {
+            Some(Value::Function(id)) => Some(id),
+            _ => None,
+        }
+    }
+
+    /// Executes an entire `IntSeq.map` or `IntSeq`/`StrictList.fold` directly against a verified
+    /// pure-`i64` `FastIntBlock`, respecting `max_steps`.
+    /// Returns `Some(steps_consumed)` if the entire loop completed (cursor exhausted and builder/accumulator updated),
+    /// or `None` if ineligible or bailed out mid-way (leaves cursor/builder untouched on bail-out before committing?
+    /// We commit only on full completion or per-step safely!).
+    #[allow(clippy::too_many_arguments)]
+    pub(super) fn try_fast_int_bulk(
+        &mut self,
+        heap: &mut Heap,
+        builder: Option<ObjectId>,
+        fast_block: &fast_int::FastIntBlock,
+        captured: &[i64],
+        max_steps: usize,
+        val_stack: &mut Vec<i64>,
+        locals_buf: &mut Vec<i64>,
+        call_stack: &mut Vec<(u32, u32)>,
+    ) -> Option<usize> {
+        if self.shallow || !fast_block.returns_int {
+            return None;
+        }
+        let mut total_steps = 0usize;
+        match (&mut self.cursor, self.operation) {
+            (Cursor::IntSeq(cursor), Operation::Map) => {
+                let target = builder?;
+                let mut probe = cursor.clone();
+                let mut results = Vec::new();
+                while let Some((_, v)) = probe.next() {
+                    let rem = max_steps.saturating_sub(total_steps);
+                    if rem == 0 {
+                        return None;
+                    }
+                    let (out, steps) = fast_block.execute(
+                        captured,
+                        &[v],
+                        rem,
+                        val_stack,
+                        locals_buf,
+                        call_stack,
+                    )?;
+                    total_steps = total_steps.saturating_add(steps);
+                    results.push(Value::Int(crate::value_identity::Number::from(out).boxed()));
+                }
+                let object = heap.get_mut(target).ok()?;
+                let elems = object.list_elements.as_mut()?;
+                let added = results.len();
+                elems.extend(results);
+                object.length += added;
+                *cursor = probe;
+                heap.note_external_allocation(added.saturating_mul(std::mem::size_of::<Value>()));
+                Some(total_steps.max(1))
+            }
+            (Cursor::IntSeq(cursor), Operation::Fold) => {
+                let Value::Int(init_acc) = self.accumulator.as_ref()? else {
+                    return None;
+                };
+                let mut acc = init_acc.get();
+                let mut probe = cursor.clone();
+                while let Some((_, v)) = probe.next() {
+                    let rem = max_steps.saturating_sub(total_steps);
+                    if rem == 0 {
+                        return None;
+                    }
+                    let (out, steps) = fast_block.execute(
+                        captured,
+                        &[acc, v],
+                        rem,
+                        val_stack,
+                        locals_buf,
+                        call_stack,
+                    )?;
+                    total_steps = total_steps.saturating_add(steps);
+                    acc = out;
+                }
+                *cursor = probe;
+                self.accumulator =
+                    Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
+                Some(total_steps.max(1))
+            }
+            (Cursor::StrictList { source, len, next }, Operation::Fold) => {
+                let Value::Int(init_acc) = self.accumulator.as_ref()? else {
+                    return None;
+                };
+                let mut acc = init_acc.get();
+                let obj = heap.get(*source).ok()?;
+                let elems = obj.list_elements.as_ref()?;
+                let end = (*len).min(elems.len());
+                if let Some(op_code) = fast_block.try_fold_add_sub_mul(captured) {
+                    let count = end.saturating_sub(*next);
+                    let needed = count.saturating_mul(4);
+                    if needed > max_steps {
+                        return None;
+                    }
+                    match op_code {
+                        0 => {
+                            for elem in &elems[*next..end] {
+                                let Value::Int(v) = elem else {
+                                    return None;
+                                };
+                                acc = acc.checked_add(v.get())?;
+                            }
+                        }
+                        1 => {
+                            for elem in &elems[*next..end] {
+                                let Value::Int(v) = elem else {
+                                    return None;
+                                };
+                                acc = acc.checked_sub(v.get())?;
+                            }
+                        }
+                        2 => {
+                            for elem in &elems[*next..end] {
+                                let Value::Int(v) = elem else {
+                                    return None;
+                                };
+                                acc = acc.checked_mul(v.get())?;
+                            }
+                        }
+                        _ => unreachable!(),
+                    }
+                    *next = end;
+                    self.accumulator =
+                        Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
+                    return Some(needed.max(1));
+                }
+                for elem in &elems[*next..end] {
+                    let Value::Int(v) = elem else {
+                        return None;
+                    };
+                    let rem = max_steps.saturating_sub(total_steps);
+                    if rem == 0 {
+                        return None;
+                    }
+                    let (out, steps) = fast_block.execute(
+                        captured,
+                        &[acc, v.get()],
+                        rem,
+                        val_stack,
+                        locals_buf,
+                        call_stack,
+                    )?;
+                    total_steps = total_steps.saturating_add(steps);
+                    acc = out;
+                }
+                *next = end;
+                self.accumulator =
+                    Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
+                Some(total_steps.max(1))
+            }
+            _ => None,
         }
     }
 }
@@ -365,8 +666,12 @@ impl Vm {
             .last()
             .and_then(|frame| frame.environment.this_value.clone())
             .ok_or_else(|| invalid("sequence loop receiver"))?;
+        let mut list_capacity = 0usize;
         let cursor = match receiver {
-            Value::IntSeq(sequence) => Cursor::IntSeq(sequence.cursor(false)),
+            Value::IntSeq(sequence) => {
+                list_capacity = sequence.len_hint();
+                Cursor::IntSeq(sequence.cursor(false))
+            }
             Value::Object(source)
                 if matches!(operation, Operation::Fold | Operation::FoldIndexed)
                     && matches!(
@@ -374,10 +679,19 @@ impl Vm {
                         CollectionKind::List | CollectionKind::Listing
                     ) =>
             {
-                Cursor::List {
-                    source,
-                    members: collections::ordered_members(&self.heap, source)?,
-                    next: 0,
+                let obj = self.heap.get(source)?;
+                if let Some(elems) = &obj.list_elements {
+                    Cursor::StrictList {
+                        source,
+                        len: elems.len(),
+                        next: 0,
+                    }
+                } else {
+                    Cursor::List {
+                        source,
+                        members: collections::ordered_members(&self.heap, source)?,
+                        next: 0,
+                    }
                 }
             }
             Value::Object(source)
@@ -413,11 +727,17 @@ impl Vm {
             shallow: shallow_source.is_some(),
         }));
         if !matches!(operation, Operation::Fold | Operation::FoldIndexed) {
+            let is_listing = operation == Operation::ToListing;
             let builder = self.heap.allocate(Object {
-                collection_kind: if operation == Operation::ToListing {
+                collection_kind: if is_listing {
                     CollectionKind::Listing
                 } else {
                     CollectionKind::List
+                },
+                list_elements: if is_listing {
+                    None
+                } else {
+                    Some(Vec::with_capacity(list_capacity))
                 },
                 ..Default::default()
             });
@@ -462,6 +782,20 @@ impl Vm {
         let value = match &mut run.cursor {
             Cursor::Mapping(_) => unreachable!("Mapping fold uses its member cursor"),
             Cursor::IntSeq(cursor) => cursor.next().map(|(_, value)| Value::Int(value.into())),
+            Cursor::StrictList { source, len, next } => {
+                let value = if *next < *len {
+                    self.heap
+                        .get(*source)?
+                        .list_elements
+                        .as_ref()
+                        .and_then(|elems| elems.get(*next))
+                        .cloned()
+                } else {
+                    None
+                };
+                *next += 1;
+                value
+            }
             Cursor::List {
                 source,
                 members,
@@ -486,7 +820,7 @@ impl Vm {
             self.stack.push(callback.clone());
         }
         if run.operation == Operation::FoldIndexed {
-            let Cursor::List { next, .. } = &run.cursor else {
+            let (Cursor::List { next, .. } | Cursor::StrictList { next, .. }) = &run.cursor else {
                 return Err(invalid("indexed fold cursor"));
             };
             self.stack.push(Value::Int((*next as i64 - 1).into()));

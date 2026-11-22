@@ -10,9 +10,11 @@ import {
   capabilities,
   ensureInitSync,
   getWasmBindings,
+  getWasmMemory,
   init,
 } from './runtime.mjs';
 import {
+  DECODE_FALLBACK,
   PklClass,
   PklDataSize,
   PklDuration,
@@ -26,6 +28,8 @@ import {
   dehydrateValue,
   hydrateSchema,
   hydrateValue,
+  tryDecodePklBinaryFast,
+  unpackColumnarBuffer,
 } from './values.mjs';
 import { VirtualFileSystem, fileUriToPath, pathToFileUri } from './vfs.mjs';
 
@@ -146,12 +150,19 @@ export function format(source, options = undefined) {
  * @returns {any}
  */
 export function decodePklBinary(bytes, options = undefined) {
-  const wasm = getWasmBindings();
   if (!(bytes instanceof Uint8Array)) {
     throw new PklError('decodePklBinary expects a Uint8Array', 'invalid-argument');
   }
+  const strict = Boolean(options?.strict);
+  if (!strict) {
+    const fast = tryDecodePklBinaryFast(bytes, false);
+    if (fast !== DECODE_FALLBACK) {
+      return fast;
+    }
+  }
+  const wasm = getWasmBindings();
   try {
-    const raw = wasm.wasmDecodePklBinary(bytes, Boolean(options?.strict));
+    const raw = wasm.wasmDecodePklBinary(bytes, strict);
     return hydrateValue(raw);
   } catch (err) {
     throw toPklError(err, 'decode');
@@ -367,6 +378,9 @@ export class Evaluator {
     this._clockState = { last: 0n };
     this._closed = false;
     this._cancelled = false;
+    this._inFlightCount = 0;
+    this._pendingQueueCount = 0;
+    this._colCache = { ab: null, base: -1, len: -1, gen: 0, hdr: null };
     /** @type {Set<(kind: "cancelled" | "closed") => void>} */
     this._activeCancelHooks = new Set();
     /** @type {Promise<any>} */
@@ -385,12 +399,23 @@ export class Evaluator {
     }
   }
 
+  _disposeWasmIfClosed() {
+    if (this._closed && this._inFlightCount === 0 && this._wasm) {
+      const wasm = this._wasm;
+      this._wasm = null;
+      this._colCache = null;
+      if (typeof wasm.free === 'function') {
+        wasm.free();
+      }
+    }
+  }
+
   get isClosed() {
-    return this._closed || this._wasm.isClosed();
+    return this._closed || !this._wasm || this._wasm.isClosed();
   }
 
   cancel() {
-    if (this._cancelled) return;
+    if (this._cancelled || this._closed || !this._wasm) return;
     this._cancelled = true;
     this._wasm.cancel();
     for (const hook of Array.from(this._activeCancelHooks)) {
@@ -404,10 +429,13 @@ export class Evaluator {
     if (this._defaultSignal) {
       this._defaultSignal.removeEventListener('abort', this._onDefaultAbort);
     }
-    this._wasm.close();
+    if (this._wasm) {
+      this._wasm.close();
+    }
     for (const hook of Array.from(this._activeCancelHooks)) {
       hook('closed');
     }
+    this._disposeWasmIfClosed();
   }
 
   /**
@@ -416,7 +444,7 @@ export class Evaluator {
    */
   _runSerialized(callOptions, startFn) {
     const task = async () => {
-      if (this._closed || this._wasm.isClosed()) {
+      if (this._closed || !this._wasm || this._wasm.isClosed()) {
         throw new PklError('Evaluator has been closed.', 'closed');
       }
       if (this._deferredCapabilityError) {
@@ -434,33 +462,42 @@ export class Evaluator {
           ? normalizeTimeoutMs(callOptions.timeoutMs)
           : this._defaultTimeoutMs;
       const now = monotonicNowMs(this._clockState);
+      this._inFlightCount += 1;
       try {
-        startFn(now, timeoutMs);
-      } catch (err) {
-        throw toPklError(err);
+        try {
+          startFn(now, timeoutMs);
+        } catch (err) {
+          throw toPklError(err);
+        }
+        const signals = [];
+        if (this._defaultSignal) signals.push(this._defaultSignal);
+        if (callOptions?.signal) signals.push(callOptions.signal);
+        return await driveWasmSession({
+          wasmObj: this._wasm,
+          hostHooks: this._hostHooks,
+          clockState: this._clockState,
+          timeoutMs,
+          signals,
+          onRegisterCancel: (fn) => {
+            this._activeCancelHooks.add(fn);
+            return () => this._activeCancelHooks.delete(fn);
+          },
+          onCapturedLog: this._testLogBuffer
+            ? (msg) => {
+                if (this._testLogBuffer) this._testLogBuffer.push(msg);
+              }
+            : undefined,
+        });
+      } finally {
+        this._inFlightCount -= 1;
+        this._disposeWasmIfClosed();
       }
-      const signals = [];
-      if (this._defaultSignal) signals.push(this._defaultSignal);
-      if (callOptions?.signal) signals.push(callOptions.signal);
-      return driveWasmSession({
-        wasmObj: this._wasm,
-        hostHooks: this._hostHooks,
-        clockState: this._clockState,
-        timeoutMs,
-        signals,
-        onRegisterCancel: (fn) => {
-          this._activeCancelHooks.add(fn);
-          return () => this._activeCancelHooks.delete(fn);
-        },
-        onCapturedLog: this._testLogBuffer
-          ? (msg) => {
-              if (this._testLogBuffer) this._testLogBuffer.push(msg);
-            }
-          : undefined,
-      });
     };
 
-    const next = this._queue.then(task, task);
+    this._pendingQueueCount += 1;
+    const next = this._queue.then(task, task).finally(() => {
+      this._pendingQueueCount -= 1;
+    });
     this._queue = next.then(
       () => undefined,
       () => undefined,
@@ -529,8 +566,7 @@ export class Evaluator {
    * @returns {Promise<any>}
    */
   async evaluateOutputValue(source, callOptions = undefined) {
-    const bytes = await this.evaluateExpressionPklBinary(source, 'output.value', callOptions);
-    return decodePklBinary(bytes);
+    return this.evaluateExpressionValue(source, 'output.value', callOptions);
   }
 
   /**
@@ -577,6 +613,49 @@ export class Evaluator {
    * @returns {Promise<any>}
    */
   async evaluateExpressionValue(source, expr, callOptions = undefined) {
+    if (typeof expr !== 'string') {
+      throw new PklError('expression must be a string', 'invalid-argument');
+    }
+    if (
+      source &&
+      typeof source === 'object' &&
+      typeof source.uri === 'string' &&
+      !this._closed &&
+      this._wasm &&
+      this._inFlightCount === 0 &&
+      this._pendingQueueCount === 0 &&
+      !this._deferredCapabilityError &&
+      !this._cancelled &&
+      !this._defaultSignal?.aborted &&
+      !callOptions?.signal &&
+      callOptions?.timeoutMs === undefined &&
+      this._defaultTimeoutMs === null &&
+      (expr === 'module' || expr === 'output.value')
+    ) {
+      const status = this._wasm.tryEvaluateExpressionColumnarFast(
+        source.uri,
+        source.contents !== undefined && source.contents !== null,
+        expr,
+      );
+      if (status === 1) {
+        const mem = getWasmMemory();
+        if (mem) {
+          const ptr = this._wasm.fastColumnarPtr();
+          const len = this._wasm.fastColumnarLen();
+          const unpacked = unpackColumnarBuffer(
+            new Uint8Array(mem.buffer, ptr, len),
+            this._colCache,
+          );
+          if (len > 262144) {
+            this._colCache = { ab: null, base: -1, len: -1, gen: 0, hdr: null };
+            this._wasm.releaseOversizedColumnar();
+          }
+          if (unpacked !== DECODE_FALLBACK) {
+            return unpacked;
+          }
+        }
+      }
+    }
     const bytes = await this.evaluateExpressionPklBinary(source, expr, callOptions);
     return decodePklBinary(bytes);
   }
@@ -614,6 +693,7 @@ export class Evaluator {
     const useColor = this._hostHooks.useColor;
 
     this._testLogBuffer = [];
+    this._inFlightCount += 1;
     this._wasm.setCaptureLogs(true);
     try {
       const checkVal = await this.evaluateExpressionValue(source, TEST_CHECK_EXPR, callOptions);
@@ -691,8 +771,12 @@ export class Evaluator {
       const rendered = this._bindings.wasmRenderTestReport(rawResults, reporter, useColor);
       return finalizeTestResults(rawResults, rendered);
     } finally {
-      this._wasm.setCaptureLogs(false);
+      if (this._wasm) {
+        this._wasm.setCaptureLogs(false);
+      }
       this._testLogBuffer = null;
+      this._inFlightCount -= 1;
+      this._disposeWasmIfClosed();
     }
   }
 
@@ -955,10 +1039,13 @@ export class ReplSession {
     this._nextId = 1;
     this._closed = false;
     this._cancelled = false;
+    this._inFlightCount = 0;
+    this._pendingQueueCount = 0;
     this._activeCancelHooks = new Set();
     this._queue = Promise.resolve();
 
     this._onDefaultAbort = () => {
+      if (this._cancelled || this._closed || !this._wasm) return;
       this._cancelled = true;
       this._wasm.cancel();
       for (const hook of Array.from(this._activeCancelHooks)) {
@@ -974,8 +1061,18 @@ export class ReplSession {
     }
   }
 
+  _disposeWasmIfClosed() {
+    if (this._closed && this._inFlightCount === 0 && this._wasm) {
+      const wasm = this._wasm;
+      this._wasm = null;
+      if (typeof wasm.free === 'function') {
+        wasm.free();
+      }
+    }
+  }
+
   get isClosed() {
-    return this._closed || this._wasm.isClosed();
+    return this._closed || !this._wasm || this._wasm.isClosed();
   }
 
   close() {
@@ -984,10 +1081,13 @@ export class ReplSession {
     if (this._defaultSignal) {
       this._defaultSignal.removeEventListener('abort', this._onDefaultAbort);
     }
-    this._wasm.close();
+    if (this._wasm) {
+      this._wasm.close();
+    }
     for (const hook of Array.from(this._activeCancelHooks)) {
       hook('closed');
     }
+    this._disposeWasmIfClosed();
   }
 
   _runRequest(explicitId, startFn) {
@@ -1005,25 +1105,34 @@ export class ReplSession {
       const id =
         typeof explicitId === 'string' && explicitId.length > 0 ? explicitId : `req-${seq}`;
       const now = monotonicNowMs(this._clockState);
+      this._inFlightCount += 1;
       try {
-        startFn(id, now, this._defaultTimeoutMs);
-      } catch (err) {
-        throw toPklError(err);
+        try {
+          startFn(id, now, this._defaultTimeoutMs);
+        } catch (err) {
+          throw toPklError(err);
+        }
+        const res = await driveWasmSession({
+          wasmObj: this._wasm,
+          hostHooks: this._hostHooks,
+          clockState: this._clockState,
+          timeoutMs: this._defaultTimeoutMs,
+          signals: this._defaultSignal ? [this._defaultSignal] : [],
+          onRegisterCancel: (fn) => {
+            this._activeCancelHooks.add(fn);
+            return () => this._activeCancelHooks.delete(fn);
+          },
+        });
+        return res.responses || [];
+      } finally {
+        this._inFlightCount -= 1;
+        this._disposeWasmIfClosed();
       }
-      const res = await driveWasmSession({
-        wasmObj: this._wasm,
-        hostHooks: this._hostHooks,
-        clockState: this._clockState,
-        timeoutMs: this._defaultTimeoutMs,
-        signals: this._defaultSignal ? [this._defaultSignal] : [],
-        onRegisterCancel: (fn) => {
-          this._activeCancelHooks.add(fn);
-          return () => this._activeCancelHooks.delete(fn);
-        },
-      });
-      return res.responses || [];
     };
-    const next = this._queue.then(task, task);
+    this._pendingQueueCount += 1;
+    const next = this._queue.then(task, task).finally(() => {
+      this._pendingQueueCount -= 1;
+    });
     this._queue = next.then(
       () => undefined,
       () => undefined,
@@ -1174,5 +1283,8 @@ export async function analyzeImportGraph(uris, options = {}) {
     };
   } finally {
     analyzer.close();
+    if (typeof analyzer.free === 'function') {
+      analyzer.free();
+    }
   }
 }

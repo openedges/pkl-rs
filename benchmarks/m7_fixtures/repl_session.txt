@@ -1,0 +1,17 @@
+a = 1 + 2 * 3
+b = IntSeq(1, 200).fold(0, (acc, x) -> acc + x)
+b
+function sq(n: Int): Int = n * n
+List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).map(sq)
+cfg { host = "localhost"; port = 8080; tags { "a"; "b"; "c" } }
+cfg.host
+cfg.port + 1
+"한글 😀 \(a) \(b)"
+Map("k1", 10, "k2", 20, "k3", 30).mapValues((k, v) -> v * 2)
+IntSeq(1, 100).filter((x) -> x % 3 == 0).length
+:force cfg
+:reset
+x = 42
+y = IntSeq(1, 150).map((i) -> i * i).fold(0, (s, v) -> s + v)
+x + y
+:quit

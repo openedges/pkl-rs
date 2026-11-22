@@ -181,7 +181,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "9f1bf12a9e5431d8651a7c154efeead77a0db89d26a74ba29040bf11b078c453",
+          "sha256": "9a8c9827053af9b219b209086dd12ba0e47f1297439330148fdd69348a0d2920",
           "symbol": "SourceSession"
         },
         {
@@ -191,17 +191,17 @@
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
           "symbol": "WasmEvaluator"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "createEvaluator"
         },
         {
@@ -233,17 +233,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "EvalAsyncTask"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "EvalCloseTask"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "product_monotonic_clock_ms"
         },
         {
@@ -263,12 +263,12 @@
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
           "symbol": "parseTimeoutMs"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
           "symbol": "measureConversion"
         }
       ],
@@ -303,12 +303,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeEvaluator"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "product_format"
         },
         {
@@ -328,7 +328,7 @@
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
           "symbol": "capabilities"
         },
         {
@@ -386,7 +386,7 @@
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeExternalReaderOption"
         }
       ],
@@ -421,17 +421,17 @@
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeProject"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeHttpOptions"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
           "symbol": "Project"
         }
       ],
@@ -458,7 +458,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "95cd08a4f09f7e37546a4194af85cfa1a7d629f89f23d168de9d90ba2cf65e83",
+          "sha256": "1794908965dea1b5ef3137e3374e354977483b071f08d5415e51fc60beff9b21",
           "symbol": "NativeHost"
         },
         {
@@ -468,17 +468,17 @@
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "NativeAnalyzer"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "cff0af26e89372a3816ed0caeec09ebda2a0a924813f7f35b37159addb41a19f",
+          "sha256": "386925bdd28ad127ce097588df57a981d2bc8f798235aee8d128cab4ae1e877c",
           "symbol": "AnalyzeImportGraphTask"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "9a0acbc0a34efc8239b951cd967ffd67b19f94d61c0031a1855ef1430a9ff819",
+          "sha256": "bce127d37b255388055f389f8333e16ac7ebcbdd566a873d7bfbba7ceaf7a68f",
           "symbol": "buildNativeOptions"
         }
       ],
@@ -585,12 +585,12 @@
       "implementation_links": [
         {
           "path": "packages/pkl-wasm/src/runtime.mjs",
-          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "sha256": "b2adeb0ce5fca7e347f71a6419aef839b986b71c78ca05a8d890dc00875746fb",
           "symbol": "capabilities"
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
           "symbol": "getDeferredWasmCapabilityError"
         },
         {
@@ -600,7 +600,7 @@
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "sha256": "98c926a222fb923f29976ccb4c3600a762e8d01463a87a4728463e8d75441587",
           "symbol": "WasmHostCore"
         }
       ],
@@ -645,22 +645,22 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "9f1bf12a9e5431d8651a7c154efeead77a0db89d26a74ba29040bf11b078c453",
+          "sha256": "9a8c9827053af9b219b209086dd12ba0e47f1297439330148fdd69348a0d2920",
           "symbol": "SourceSession"
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
           "symbol": "WasmEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "createEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "Evaluator"
         },
         {
@@ -690,7 +690,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/pkl_binary_decode.rs",
-          "sha256": "f4ec94812a9d948e35237dc59940201bfa5a584364b64583c76abcf3f8fa1343",
+          "sha256": "4d9c75d2e1bb67b6d4e9e3d9973b56ef7c64298bbaf00ebe8dea2c374e4d33ad",
           "symbol": "DecodedValue"
         },
         {
@@ -710,17 +710,17 @@
         },
         {
           "path": "packages/pkl-wasm/src/values.mjs",
-          "sha256": "baea6d0ffb486348393f9551004766b339d4345e03dd4c8adf8a2a6b42bc1e31",
+          "sha256": "52ed0c84b427d1baa63c5285a1350daca3f250f94956e54a0aefa248f41ff475",
           "symbol": "PklObject"
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
           "symbol": "normalizeTimeoutMs"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "measureConversion"
         }
       ],
@@ -777,12 +777,12 @@
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "createRepl"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "analyzeImportGraph"
         }
       ],
@@ -809,7 +809,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/security.rs",
-          "sha256": "bc1e285e54e1d33ef21e8311b3267da190a5d3716ed0df6e7c9d84d70e786849",
+          "sha256": "a54edb99ed9a96ec11a012b956e00f73d8bd8cbb25513d80e31a8970e24a4f4b",
           "symbol": "SecurityPolicy"
         },
         {
@@ -819,12 +819,12 @@
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "sha256": "98c926a222fb923f29976ccb4c3600a762e8d01463a87a4728463e8d75441587",
           "symbol": "WasmHostCore"
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "61453c7cb90f7fc11fc803efc62fb387619ea5a9a8b10c39a0fe484e67c3aeb9",
+          "sha256": "98c926a222fb923f29976ccb4c3600a762e8d01463a87a4728463e8d75441587",
           "symbol": "WasmPackageCache"
         },
         {
@@ -839,7 +839,7 @@
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "d93b24ebd4961c09fd39e4133720c0501e5d58bcc8e4cd25b79e69191b096e27",
+          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
           "symbol": "driveWasmSession"
         }
       ],
@@ -877,27 +877,27 @@
       "implementation_links": [
         {
           "path": "packages/pkl-wasm/src/runtime.mjs",
-          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "sha256": "b2adeb0ce5fca7e347f71a6419aef839b986b71c78ca05a8d890dc00875746fb",
           "symbol": "init"
         },
         {
           "path": "packages/pkl-wasm/src/runtime.mjs",
-          "sha256": "d37e1536928263f4dc541913662db5d238f94254010108add85b31701a9a8a57",
+          "sha256": "b2adeb0ce5fca7e347f71a6419aef839b986b71c78ca05a8d890dc00875746fb",
           "symbol": "isNodeRuntime"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "format"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "623a22b1779f45afc2864805fd387c681a3165fe75ef4216cc678b1b7a347ce4",
+          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
           "symbol": "decodePklBinary"
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "dec2403008b20c831ab9a0e3f548f947fe76ee51310b3feee4a9c3a8b92a6dc3",
+          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
           "symbol": "WasmEvaluator"
         }
       ],

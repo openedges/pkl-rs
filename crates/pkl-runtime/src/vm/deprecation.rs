@@ -22,7 +22,7 @@ struct Target {
     declaration: Option<ObjectId>,
 }
 
-#[derive(Default)]
+#[derive(Clone, Default)]
 pub(crate) struct CallCache {
     direct: bool,
     megamorphic: bool,
@@ -31,6 +31,31 @@ pub(crate) struct CallCache {
     next_head: u64,
 }
 impl CallCache {
+    #[inline]
+    pub(super) fn is_saturated(&self) -> bool {
+        !self.direct && !self.megamorphic && self.targets.len() == 3
+    }
+
+    #[inline]
+    pub(super) fn contains_declared_class(&self, class: ObjectId) -> bool {
+        !self.direct
+            && !self.megamorphic
+            && self
+                .targets
+                .iter()
+                .any(|t| t.class == Some(ReceiverClass::Declared(class)))
+    }
+
+    #[inline]
+    pub(super) fn contains_builtin_class(&self, class: classes::BuiltinClass) -> bool {
+        !self.direct
+            && !self.megamorphic
+            && self
+                .targets
+                .iter()
+                .any(|t| t.class == Some(ReceiverClass::Builtin(class)))
+    }
+
     pub(crate) fn trace(&self, pending: &mut Vec<ObjectId>) {
         for target in &self.targets {
             pending.extend(target.class.and_then(ReceiverClass::prototype));
@@ -188,11 +213,7 @@ impl Vm {
             .frames
             .last()
             .ok_or_else(|| invalid("method call outside frame"))?;
-        let call_site = frame.method_call_site.as_deref().cloned();
-        let site = call_site
-            .as_ref()
-            .map_or((frame.block, lookup), |site| site.site);
-        let lookup_instruction = self.program.blocks[frame.block][lookup].clone();
+        let frame_block = frame.block;
         let function_index = self
             .stack
             .len()
@@ -202,18 +223,6 @@ impl Vm {
             return Ok(());
         };
         let object = self.heap.get(*function_id)?;
-        let declaration = object.method_declaration;
-        let receiver = object
-            .native_function
-            .as_ref()
-            .map(|native| native.receiver.clone())
-            .or_else(|| {
-                object
-                    .function
-                    .as_ref()
-                    .and_then(|function| function.captured_this.clone())
-            })
-            .or_else(|| object.environment.this_value.clone());
         if object
             .function
             .as_ref()
@@ -222,35 +231,44 @@ impl Vm {
             // Function.apply has a distinct intrinsic specialization and no ClassMethod.
             return Ok(());
         }
-        let Some(receiver) = receiver else {
+        let declaration = object.method_declaration;
+        let has_receiver = object.native_function.is_some()
+            || object
+                .function
+                .as_ref()
+                .is_some_and(|function| function.captured_this.is_some())
+            || object.environment.this_value.is_some();
+        if !has_receiver {
             return Ok(());
-        };
-        let direct = match lookup_instruction {
+        }
+        let lookup_instruction = &self.program.blocks[frame_block][lookup];
+        let (direct, lexical) = match lookup_instruction {
             Instruction::GetMethodProperty {
                 owner_depth, local, ..
             } => {
-                let scope = self.scope(owner_depth)?;
+                let scope = self.scope(*owner_depth)?;
                 let owner = self.heap.get(scope.owner)?;
                 let Some(class) = owner.class_definition.as_ref() else {
                     // Object local methods resolve an ObjectMember, not ClassMethod.
                     return Ok(());
                 };
-                let external = declaration
-                    .and_then(|(owner, code)| {
-                        self.heap
-                            .get(owner)
-                            .ok()?
-                            .members
-                            .iter()
-                            .find(|member| member.code == code)
-                    })
-                    .is_some_and(Member::external);
-                local || external || !(class.open || class.abstract_)
+                let direct = *local
+                    || !(class.open || class.abstract_)
+                    || declaration
+                        .and_then(|(owner, code)| {
+                            self.heap
+                                .get(owner)
+                                .ok()?
+                                .members
+                                .iter()
+                                .find(|member| member.code == code)
+                        })
+                        .is_some_and(Member::external);
+                (direct, direct)
             }
-            Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_) => true,
-            _ => false,
+            Instruction::GetSuperMethod(_) | Instruction::GetConstSuperMethod(_) => (true, false),
+            _ => (false, false),
         };
-        let lexical = matches!(lookup_instruction, Instruction::GetMethodProperty { .. }) && direct;
         if after_arguments != lexical {
             return Ok(());
         }
@@ -268,6 +286,24 @@ impl Vm {
         if direct && message.is_none() {
             return Ok(());
         }
+        let object = self.heap.get(*function_id)?;
+        let receiver = object
+            .native_function
+            .as_ref()
+            .map(|native| native.receiver.clone())
+            .or_else(|| {
+                object
+                    .function
+                    .as_ref()
+                    .and_then(|function| function.captured_this.clone())
+            })
+            .or_else(|| object.environment.this_value.clone())
+            .expect("checked method receiver");
+        let frame = self.frames.last().expect("method call frame");
+        let call_site = frame.method_call_site.as_deref().cloned();
+        let site = call_site
+            .as_ref()
+            .map_or((frame_block, lookup), |site| site.site);
         let class = if direct {
             None
         } else {
@@ -316,6 +352,7 @@ impl Vm {
         if self.callback_closing {
             return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));
         }
+        self.query_cache.clear();
         let metadata = &self.program.metadata[code];
         let module = metadata
             .source

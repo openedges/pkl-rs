@@ -86,6 +86,16 @@ impl IntSeq {
                 .wrapping_add(1)
         }
     }
+    pub(crate) fn len_hint(&self) -> usize {
+        if self.is_empty() {
+            return 0;
+        }
+        let span = self.0.last.abs_diff(self.start());
+        let step = self.step().unsigned_abs();
+        let count = (span / step).saturating_add(1);
+        count.min(1 << 20) as usize
+    }
+
     pub(crate) fn cursor(&self, generator: bool) -> Cursor {
         Cursor {
             next: self.start(),

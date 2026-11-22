@@ -1,0 +1,8 @@
+baseMap: Mapping<String, Dynamic> = new {
+  ["alpha"] { v = 9 }
+}
+amendedMap = (baseMap) {
+  [[startsWith("a")]] {
+    v = 100
+  }
+}

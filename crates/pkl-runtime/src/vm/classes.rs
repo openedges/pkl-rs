@@ -117,9 +117,7 @@ pub(super) fn accepts_nominal(id: usize, value: &Value, heap: &Heap) -> bool {
         return matches!(value, Value::Object(object) if typed_instance(heap, *object).unwrap_or(false));
     }
     match runtime_class(value, heap) {
-        Ok(RuntimeClass::Declared(class)) => heap
-            .find_class(id)
-            .is_some_and(|expected| heap.is_subclass(class, expected)),
+        Ok(RuntimeClass::Declared(class)) => heap.class_has_ancestor_id(class, id),
         Ok(RuntimeClass::Builtin(mut class)) => loop {
             if class.id() == id {
                 return true;
@@ -469,6 +467,9 @@ impl Vm {
     }
 
     pub(super) fn canonical_builtin_class(&mut self, key: BuiltinClass) -> ObjectId {
+        if let Some(&id) = self.builtin_classes.get(&key) {
+            return id;
+        }
         let mut chain = vec![key];
         let mut current = key;
         while let Some(parent) = current.parent() {
@@ -484,13 +485,14 @@ impl Vm {
             }
             let id = key.id();
             let members = if key == BuiltinClass::Access {
-                self.program.access_members.clone()
+                crate::heap::MemberList::from_arc(Arc::clone(&self.program.access_members))
             } else {
                 self.program
                     .builtin_members
                     .get(&id)
                     .cloned()
                     .unwrap_or_default()
+                    .into()
             };
             let prototype = self.heap.allocate(Object {
                 members,
@@ -559,7 +561,7 @@ impl Vm {
             .is_some_and(BuiltinClass::external)
             || prototype
                 .declaration_code
-                .and_then(|code| self.program.declaration_sources.get(&code))
+                .and_then(|code| self.program.declaration_source(code))
                 .is_some_and(|declaration| {
                     crate::syntax::modifier_flags(&declaration.modifiers)
                         & crate::syntax::ModifierKind::External.flag()

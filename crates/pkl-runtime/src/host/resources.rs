@@ -329,7 +329,58 @@ enum AuthorityKey {
     },
 }
 
+#[inline]
+pub(crate) fn is_clean_file_uri(s: &str) -> bool {
+    let bytes = s.as_bytes();
+    if bytes.len() < 8 || !bytes.starts_with(b"file:///") {
+        return false;
+    }
+    bytes[8..].iter().all(|&b| {
+        b.is_ascii_alphanumeric() || matches!(b, b'/' | b'.' | b'-' | b'_' | b'~' | b'+' | b':')
+    })
+}
+
+#[inline]
+pub(crate) fn is_normalized_clean_file_uri(s: &str) -> bool {
+    if !is_clean_file_uri(s) {
+        return false;
+    }
+    let path = &s[7..];
+    !path.contains("//")
+        && !path.contains("/./")
+        && !path.contains("/../")
+        && !path.ends_with("/.")
+        && !path.ends_with("/..")
+}
+
+#[inline]
+pub(crate) fn is_clean_simple_rel_path(s: &str) -> bool {
+    let bytes = s.as_bytes();
+    if bytes.is_empty() || matches!(bytes[0], b'/' | b'.' | b'@') {
+        return false;
+    }
+    if !bytes
+        .iter()
+        .all(|&b| b.is_ascii_alphanumeric() || matches!(b, b'/' | b'.' | b'-' | b'_' | b'~' | b'+'))
+    {
+        return false;
+    }
+    !s.contains("//") && !s.contains("/.")
+}
+
 pub(crate) fn cache_key(uri: &PklString) -> CacheKey {
+    if let Some(s) = uri.as_str()
+        && is_clean_file_uri(s)
+    {
+        return CacheKey {
+            scheme: Some("file".to_string()),
+            opaque: false,
+            authority: None,
+            path: PklString::from(&s[7..]),
+            query: None,
+            fragment: None,
+        };
+    }
     let parsed = ResourceUri::parse(uri).expect("resolved resource URI was parsed");
     CacheKey {
         scheme: parsed.scheme.map(|scheme| scheme.to_ascii_lowercase()),
@@ -345,6 +396,11 @@ pub(crate) fn cache_key(uri: &PklString) -> CacheKey {
 }
 
 pub(crate) fn module_name_needs_fragment_paths(uri: &PklString) -> bool {
+    if let Some(s) = uri.as_str()
+        && is_clean_file_uri(s)
+    {
+        return true;
+    }
     let text = SourceText::from(uri.clone());
     !text
         .entire()
@@ -357,6 +413,15 @@ pub(crate) fn infer_module_name(
     uri: &PklString,
     fragment_paths: bool,
 ) -> Result<PklString, RuntimeError> {
+    if !fragment_paths
+        && let Some(s) = uri.as_str()
+        && is_clean_file_uri(s)
+    {
+        let path = &s[7..];
+        let leaf = path.rsplit_once('/').map_or(path, |(_, leaf)| leaf);
+        let base = leaf.rsplit_once('.').map_or(leaf, |(base, _)| base);
+        return Ok(PklString::from(base));
+    }
     fn basename(path: &PklString) -> PklString {
         let text = SourceText::from(path.clone());
         let path = text.entire();
@@ -403,6 +468,9 @@ pub(crate) fn infer_module_name(
 }
 
 pub(crate) fn validate_module_key_uri(uri: &PklString) -> Result<(), RuntimeError> {
+    if uri.as_str().is_some_and(is_clean_file_uri) {
+        return Ok(());
+    }
     if ResourceUri::parse(uri).is_ok_and(|parsed| parsed.scheme.is_some()) {
         Ok(())
     } else {
@@ -414,6 +482,19 @@ pub(crate) fn validate_module_key_uri(uri: &PklString) -> Result<(), RuntimeErro
 }
 
 pub(crate) fn module_trust_level(uri: &PklString) -> Result<i32, crate::modules::ModuleHostError> {
+    if let Some(s) = uri.as_str() {
+        if is_clean_file_uri(s) {
+            return Ok(30);
+        }
+        if let Some(rest) = s.strip_prefix("pkl:")
+            && !rest.is_empty()
+            && rest
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_'))
+        {
+            return Ok(0);
+        }
+    }
     let mut text = uri.clone();
     loop {
         let parsed = ResourceUri::parse(&text).map_err(|_| {
@@ -472,6 +553,11 @@ pub(crate) fn module_path_has_backslash(uri: &PklString) -> bool {
 }
 
 fn fold_escapes(text: &PklString) -> PklString {
+    if let Some(s) = text.as_str()
+        && !s.as_bytes().contains(&b'%')
+    {
+        return text.clone();
+    }
     let source = SourceText::from(text.clone());
     let mut output = PklStringBuilder::default();
     let mut chars = source.characters();
@@ -666,6 +752,11 @@ fn decode_escapes(text: &PklString) -> PklString {
 // query/fragment getters explicitly pass false. Internal WTF-8 is never input
 // to the UTF-8 decoder.
 fn decode_uri_component(text: &PklString, ignore_percent_in_brackets: bool) -> PklString {
+    if let Some(s) = text.as_str()
+        && !s.as_bytes().contains(&b'%')
+    {
+        return text.clone();
+    }
     let source = SourceText::from(text.clone());
     let view = source.entire();
     let mut output = PklStringBuilder::default();
@@ -802,6 +893,34 @@ pub(crate) fn prepare_module_uri(
     authored: &PklString,
     base: Option<&PklString>,
 ) -> Result<(PklString, PklString), RuntimeError> {
+    if let Some(a) = authored.as_str() {
+        if is_normalized_clean_file_uri(a) {
+            return Ok((authored.clone(), authored.clone()));
+        }
+        if let Some(rest) = a.strip_prefix("pkl:")
+            && !rest.is_empty()
+            && rest
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_'))
+        {
+            return Ok((authored.clone(), authored.clone()));
+        }
+        if is_clean_simple_rel_path(a) {
+            if let Some(b) = base.and_then(PklString::as_str)
+                && is_normalized_clean_file_uri(b)
+                && let Some(slash) = b.rfind('/')
+            {
+                let mut resolved = String::with_capacity(slash + 1 + a.len());
+                resolved.push_str(&b[..=slash]);
+                resolved.push_str(a);
+                let uri = PklString::from(resolved);
+                return Ok((uri.clone(), uri));
+            }
+            if base.is_none() {
+                return Ok((authored.clone(), authored.clone()));
+            }
+        }
+    }
     let text = if is_uri_like(authored) {
         authored.clone()
     } else {
@@ -879,6 +998,28 @@ pub(crate) fn resolve_module_key_uri(
     uri: &PklString,
     base: &PklString,
 ) -> Result<PklString, RuntimeError> {
+    if let (Some(u), Some(b)) = (uri.as_str(), base.as_str()) {
+        if is_normalized_clean_file_uri(u) {
+            return Ok(uri.clone());
+        }
+        if let Some(rest) = u.strip_prefix("pkl:")
+            && !rest.is_empty()
+            && rest
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'_'))
+        {
+            return Ok(uri.clone());
+        }
+        if is_clean_simple_rel_path(u)
+            && is_normalized_clean_file_uri(b)
+            && let Some(slash) = b.rfind('/')
+        {
+            let mut resolved = String::with_capacity(slash + 1 + u.len());
+            resolved.push_str(&b[..=slash]);
+            resolved.push_str(u);
+            return Ok(PklString::from(resolved));
+        }
+    }
     ResourceUri::parse(uri)
         .or_else(|_| ResourceUri::from_authored(uri))
         .map_err(|_| unsupported("Invalid parsed module URI."))?

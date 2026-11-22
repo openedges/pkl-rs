@@ -40,6 +40,7 @@ impl Operation {
     }
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -629,7 +630,7 @@ impl Vm {
         let result = self.heap.allocate(Object {
             parent: Some(parent),
             instance_class: class,
-            members,
+            members: members.into(),
             conversion_delegate: Some(Box::new(Delegate {
                 source,
                 map,

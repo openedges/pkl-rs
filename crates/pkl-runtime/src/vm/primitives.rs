@@ -59,6 +59,7 @@ pub enum Operation {
     BooleanImplies,
 }
 
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
@@ -916,15 +917,16 @@ impl Vm {
                     _ => 0,
                 }
             };
-            let id = self.heap.allocate(Object {
-                function: Some(Function {
+            let id = self.heap.allocate_function(
+                Function {
                     block,
                     arity,
                     method: true,
                     captured_this: Some(receiver.clone()),
-                }),
-                ..Default::default()
-            });
+                },
+                None,
+                Environment::default(),
+            );
             self.stack.push(Value::Function(id));
             return Ok(true);
         }

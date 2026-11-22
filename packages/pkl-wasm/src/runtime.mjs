@@ -12,6 +12,8 @@ const isNode =
 let initialized = false;
 /** @type {Promise<void> | null} */
 let initPromise = null;
+/** @type {WebAssembly.Memory | null} */
+let wasmMemory = null;
 
 /**
  * Returns the exact host capability profile for this Wasm runtime.
@@ -56,7 +58,8 @@ export async function init(input = undefined) {
   const run = async () => {
     try {
       if (input !== undefined) {
-        await wasmBindings.default({ module_or_path: input });
+        const exportsObj = await wasmBindings.default({ module_or_path: input });
+        wasmMemory = exportsObj?.memory ?? null;
         initialized = true;
         return;
       }
@@ -66,7 +69,8 @@ export async function init(input = undefined) {
           const fs = process.getBuiltinModule('node:fs');
           const urlMod = process.getBuiltinModule('node:url');
           const bytes = fs.readFileSync(urlMod.fileURLToPath(wasmUrl));
-          wasmBindings.initSync({ module: bytes });
+          const exportsObj = wasmBindings.initSync({ module: bytes });
+          wasmMemory = exportsObj?.memory ?? null;
           initialized = true;
           return;
         }
@@ -75,11 +79,13 @@ export async function init(input = undefined) {
         const fs = await import(/* @vite-ignore */ fsModuleName);
         const urlMod = await import(/* @vite-ignore */ urlModuleName);
         const bytes = await fs.readFile(urlMod.fileURLToPath(wasmUrl));
-        await wasmBindings.default({ module_or_path: bytes });
+        const exportsObj = await wasmBindings.default({ module_or_path: bytes });
+        wasmMemory = exportsObj?.memory ?? null;
         initialized = true;
         return;
       }
-      await wasmBindings.default({ module_or_path: wasmUrl });
+      const exportsObj = await wasmBindings.default({ module_or_path: wasmUrl });
+      wasmMemory = exportsObj?.memory ?? null;
       initialized = true;
     } catch (err) {
       initPromise = null;
@@ -102,7 +108,8 @@ export function ensureInitSync() {
     const urlMod = process.getBuiltinModule('node:url');
     const wasmUrl = new URL('./wasm/pkl_wasm_bg.wasm', import.meta.url);
     const bytes = fs.readFileSync(urlMod.fileURLToPath(wasmUrl));
-    wasmBindings.initSync({ module: bytes });
+    const exportsObj = wasmBindings.initSync({ module: bytes });
+    wasmMemory = exportsObj?.memory ?? null;
     initialized = true;
     return;
   }
@@ -115,6 +122,11 @@ export function ensureInitSync() {
 export function getWasmBindings() {
   ensureInitSync();
   return wasmBindings;
+}
+
+export function getWasmMemory() {
+  ensureInitSync();
+  return wasmMemory;
 }
 
 export function isNodeRuntime() {

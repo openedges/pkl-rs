@@ -72,6 +72,30 @@ impl DeclaredRun {
 
 impl TypeCheck {
     pub(super) fn has_declared(&self) -> bool {
+        match self {
+            Self::Any
+            | Self::Unknown
+            | Self::Nothing
+            | Self::NonNull
+            | Self::Null
+            | Self::Boolean
+            | Self::Int
+            | Self::Float
+            | Self::Number
+            | Self::String
+            | Self::Duration
+            | Self::Bytes
+            | Self::RefDomain
+            | Self::StringLiteral(_)
+            | Self::IntegerAlias { .. }
+            | Self::MetaClass(_)
+            | Self::Collection(_)
+            | Self::Class { .. }
+            | Self::Parameter { .. } => return false,
+            Self::Declared { .. } => return true,
+            Self::Shared(node) => return node.has_declared(),
+            _ => {}
+        }
         let mut pending = vec![self];
         let mut visited = BTreeSet::new();
         while let Some(ty) = pending.pop() {
@@ -609,8 +633,7 @@ impl Vm {
                         .expect("authored alias declaration");
                     let metadata = self
                         .program
-                        .alias_definitions
-                        .get(&declaration)
+                        .alias_definition(declaration)
                         .ok_or_else(|| invalid("resolved alias recipe missing"))?;
                     if !arguments.is_empty() && arguments.len() != metadata.parameters.len() {
                         return Err(RuntimeError::new(
@@ -1422,10 +1445,10 @@ mod tests {
                 vm.resolved_declarations
                     .insert((0, owner), DeclarationValue::Value(Value::Class(class)));
                 let environment = Environment {
-                    scopes: vec![Scope {
+                    scopes: crate::heap::ScopeList::from_single(Scope {
                         receiver: owner,
                         owner,
-                    }],
+                    }),
                     ..Environment::default()
                 };
                 for shape in [0, 1, 2] {
