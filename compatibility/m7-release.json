@@ -347,7 +347,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "bf8c1912ff3426e637beae9f4c09cad81d89dcaf87a72dffc862356b5efcb7db"
+      "sha256": "7fafae5f1162d921e3096192806a79f80ae67789f7a21ebf42417ce748ad7116"
     }
   ],
   "requirements": {
@@ -482,12 +482,12 @@
         },
         {
           "path": "benchmarks/m7_fixtures/bench_wasm_node.mjs",
-          "sha256": "3dc7dcabfc47b3fe5168f6bad56c0972c790e915bce9a4662b10d7c247240c65",
+          "sha256": "461f5b80e933d8a88bd860362c105ceb5a70802c37a99ae2591042a2c87872cc",
           "symbol": "verifyTypedValue"
         },
         {
           "path": "benchmarks/m7_fixtures/bench_wasm_browser.mjs",
-          "sha256": "7308681d3767a9d1dc536b2111febb3da9b468016108cc2cfcf6033acef8bd7b",
+          "sha256": "2a5f7a3a02bda506d07c573d30bf6a2734b2632bd4259db135e090472e6f54dd",
           "symbol": "sampleDescendantTreeRssBytes"
         },
         {
@@ -613,7 +613,7 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "b95958a6b5b1e23a80b90302df59f537f458fb85a1c020d3c34d5226dba42a1c",
+          "sha256": "001db6b9b737814dd14d242ede8be135976c981361514e21484cbdd32bb307d7",
           "symbol": "compatibility-tooling"
         }
       ],
@@ -701,7 +701,7 @@
     "compatibility/m3-stdlib-output.json": "d5331f3fc114ab53fe28e4597f8fed90dffbc636b4155d26fd6d32b6249a33fa",
     "compatibility/m4-io-packages.json": "3b9d42ea5c83a8277de92d0746126a40d9ededac6bebcf6d2e20ba566a4e0558",
     "compatibility/m5-product-tools.json": "8e95dfe52708b72ed1bc1af7d65ac2ec75649955f58a0333a3b7fac98d9c1c6d",
-    "compatibility/m6-wasm-napi.json": "bf8c1912ff3426e637beae9f4c09cad81d89dcaf87a72dffc862356b5efcb7db",
+    "compatibility/m6-wasm-napi.json": "7fafae5f1162d921e3096192806a79f80ae67789f7a21ebf42417ce748ad7116",
     "compatibility/m7-mappings.json": "6b2a109a4a26523851d0c4db1d24299b6bc506d397161f764e18d021f3efd316",
     "oracle.lock.json": "035fa94a2706344b29d94c8cd3d233d2447007bad0a1a52f8911756e460f0bbc",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

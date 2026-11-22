@@ -15,9 +15,10 @@ import {
   readFileSync,
   rmSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { delimiter, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+const IS_WIN = process.platform === 'win32';
 const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
 const PKG_DIR = resolve(SCRIPT_DIR, '..');
 const REPO_ROOT = resolve(PKG_DIR, '..', '..');
@@ -25,31 +26,38 @@ const SRC_DIR = join(PKG_DIR, 'src');
 const DIST_DIR = join(PKG_DIR, 'dist');
 const WASM_OUT_DIR = join(DIST_DIR, 'wasm');
 const BINDGEN = resolve(
-  process.env.PKL_WASM_BINDGEN || join(REPO_ROOT, '.cache/m1-tools/bin/wasm-bindgen'),
+  process.env.PKL_WASM_BINDGEN ||
+    join(REPO_ROOT, '.cache/m1-tools/bin', IS_WIN ? 'wasm-bindgen.exe' : 'wasm-bindgen'),
 );
 const TARGET_DIR = resolve(REPO_ROOT, process.env.CARGO_TARGET_DIR || 'target');
 const WASM_ARTIFACT = join(TARGET_DIR, 'wasm32-unknown-unknown/release/pkl_wasm.wasm');
 const SKIP_CARGO = process.argv.includes('--skip-cargo');
 
 function resolveExecutable(name, fallbacks = []) {
-  if (name.includes('/')) return name;
-  const dirs = (process.env.PATH || '').split(':').filter(Boolean);
+  if (name.includes('/') || name.includes('\\')) return name;
+  const binName = IS_WIN && !name.endsWith('.exe') ? `${name}.exe` : name;
+  const dirs = (process.env.PATH || '').split(delimiter).filter(Boolean);
   for (const dir of [...dirs, ...fallbacks]) {
-    const candidate = join(dir, name);
+    const candidate = join(dir, binName);
     try {
-      accessSync(candidate, constants.X_OK);
-      return candidate;
+      if (IS_WIN) {
+        if (existsSync(candidate)) return candidate;
+      } else {
+        accessSync(candidate, constants.X_OK);
+        return candidate;
+      }
     } catch {
       // Skip inaccessible or missing directories safely.
     }
   }
-  return name;
+  return binName;
 }
 
 const CARGO =
   process.env.CARGO ||
   resolveExecutable('cargo', [
     process.env.HOME ? join(process.env.HOME, '.cargo/bin') : '',
+    process.env.USERPROFILE ? join(process.env.USERPROFILE, '.cargo/bin') : '',
     '/opt/homebrew/bin',
     '/usr/local/bin',
   ].filter(Boolean));

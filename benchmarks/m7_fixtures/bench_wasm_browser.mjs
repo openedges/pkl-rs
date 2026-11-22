@@ -6,7 +6,7 @@
 import { createRequire } from "node:module";
 import { createServer } from "node:http";
 import { execFileSync } from "node:child_process";
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, stat, writeFile } from "node:fs/promises";
 import { resolve, extname, sep } from "node:path";
 import { createHash } from "node:crypto";
 
@@ -37,8 +37,15 @@ if (
   throw new Error(`Playwright pin mismatch: expected ${pin}, got ${playwrightVersion}/${playwrightCoreVersion}`);
 }
 
-const { chromium } = requireFromPlatform("playwright");
+const playwrightEngines = requireFromPlatform("playwright");
+const browserEngine = plan.browser_engine || "chromium";
+if (!["chromium", "firefox", "webkit"].includes(browserEngine)) {
+  throw new Error(`Unsupported browser_engine: ${browserEngine}`);
+}
+const browserType = playwrightEngines[browserEngine];
+const launchArgs = Array.isArray(plan.launch_args) ? plan.launch_args.map(String) : [];
 const pkgDir = resolve(plan.wasm_pkg_dir);
+const wasmBinaryBytes = (await stat(resolve(pkgDir, "dist/wasm/pkl_wasm_bg.wasm"))).size;
 const moduleSourceText = await readFile(resolve(plan.module_path), "utf8");
 const expectedTextB64 = (await readFile(resolve(plan.expected_text_path))).toString("base64");
 const expectedBinaryB64 = plan.expected_binary_path
@@ -53,20 +60,58 @@ const MIME = {
   ".json": "application/json; charset=utf-8",
 };
 
+function classifyBrowserProcessRole(cmd, ppid, driverPid) {
+  const lower = cmd.toLowerCase();
+  if (
+    lower.includes("--type=renderer") ||
+    lower.includes("-contentproc") ||
+    lower.includes("webcontent") ||
+    lower.includes("webkitwebprocess")
+  ) {
+    return "renderer";
+  }
+  if (
+    lower.includes("--type=gpu-process") ||
+    lower.includes("gpuprocess") ||
+    lower.includes("webkitgpuprocess") ||
+    lower.includes("plugin-container")
+  ) {
+    return "gpu";
+  }
+  if (
+    lower.includes("--type=utility") ||
+    lower.includes("--type=zygote") ||
+    lower.includes("webkitnetworkprocess") ||
+    lower.includes("networking") ||
+    lower.includes("crashpad")
+  ) {
+    return "utility_network";
+  }
+  if (ppid === driverPid || (!lower.includes("--type=") && !lower.includes("helper"))) {
+    return "browser_main";
+  }
+  return "other";
+}
+
 function sampleDescendantTreeRssBytes(parentPid) {
-  const raw = execFileSync("/bin/ps", ["-axo", "pid=,ppid=,rss="], { encoding: "utf8" });
+  const raw = execFileSync("/bin/ps", ["-axo", "pid=,ppid=,rss=,args="], { encoding: "utf8" });
   const children = new Map();
   const rssKib = new Map();
+  const ppidOf = new Map();
+  const cmdOf = new Map();
   for (const line of raw.split("\n")) {
     const trimmed = line.trim();
     if (!trimmed) continue;
-    const parts = trimmed.split(/\s+/);
-    if (parts.length < 3) continue;
-    const pid = Number(parts[0]);
-    const ppid = Number(parts[1]);
-    const rss = Number(parts[2]);
+    const m = /^(\d+)\s+(\d+)\s+(\d+)\s*(.*)$/.exec(trimmed);
+    if (!m) continue;
+    const pid = Number(m[1]);
+    const ppid = Number(m[2]);
+    const rss = Number(m[3]);
+    const cmd = m[4] || "";
     if (!Number.isFinite(pid) || !Number.isFinite(ppid) || !Number.isFinite(rss)) continue;
     rssKib.set(pid, rss);
+    ppidOf.set(pid, ppid);
+    cmdOf.set(pid, cmd);
     if (!children.has(ppid)) children.set(ppid, []);
     children.get(ppid).push(pid);
   }
@@ -83,8 +128,31 @@ function sampleDescendantTreeRssBytes(parentPid) {
     }
   }
   let totalKib = 0;
-  for (const pid of visited) totalKib += rssKib.get(pid) || 0;
-  return { total_bytes: totalKib * 1024, process_count: visited.length, pids: visited };
+  const roleBytes = { browser_main: 0, renderer: 0, gpu: 0, utility_network: 0, other: 0 };
+  const processes = [];
+  for (const pid of visited) {
+    const kib = rssKib.get(pid) || 0;
+    const bytes = kib * 1024;
+    const cmd = cmdOf.get(pid) || "";
+    const role = classifyBrowserProcessRole(cmd, ppidOf.get(pid), parentPid);
+    totalKib += kib;
+    roleBytes[role] = (roleBytes[role] || 0) + bytes;
+    processes.push({
+      pid,
+      ppid: ppidOf.get(pid),
+      rss_bytes: bytes,
+      role,
+      cmd_prefix: cmd.slice(0, 140),
+    });
+  }
+  processes.sort((a, b) => b.rss_bytes - a.rss_bytes);
+  return {
+    total_bytes: totalKib * 1024,
+    process_count: visited.length,
+    pids: visited,
+    role_rss_bytes: roleBytes,
+    processes,
+  };
 }
 
 const ISOLATION_HEADERS = {
@@ -126,9 +194,13 @@ const uiPort = server.address().port;
 
 let browser;
 try {
-  const browserExecutable = chromium.executablePath();
+  const browserExecutable = browserType.executablePath();
   const browserExecutableSha256 = createHash("sha256").update(await readFile(browserExecutable)).digest("hex");
-  browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
+  const launchOpts = { headless: true, executablePath: browserExecutable };
+  if (launchArgs.length > 0 && browserEngine !== "webkit") {
+    launchOpts.args = launchArgs;
+  }
+  browser = await browserType.launch(launchOpts);
   const driverPid = process.pid;
   const rssSamples = [];
   const takeRss = (label) => {
@@ -212,10 +284,20 @@ try {
 
         const initStart = performance.now();
         const api = await import("/pkg/dist/index.mjs");
+        const runtimeApi = await import("/pkg/dist/runtime.mjs");
         await api.init();
         const wasmInitOnlyNs = Math.round((performance.now() - initStart) * 1e6);
+        const readWasmMem = () =>
+          runtimeApi.getWasmMemory ? runtimeApi.getWasmMemory().buffer.byteLength : null;
+        const wasmMemAfterInit = readWasmMem();
+        let wasmMemPeak = wasmMemAfterInit || 0;
+        const updateWasmMemPeak = () => {
+          const cur = readWasmMem();
+          if (typeof cur === "number" && cur > wasmMemPeak) wasmMemPeak = cur;
+        };
         const ev = await api.createEvaluator({ color: false, env: {}, properties: {} });
         const initNs = Math.round((performance.now() - initStart) * 1e6);
+        updateWasmMemPeak();
 
         const source = api.ModuleSource.text(srcText, moduleUri);
         try {
@@ -302,12 +384,26 @@ try {
           const measurementRows = [];
           for (let i = 0; i < sampling.samples; i++) {
             measurementRows.push(await runWindow("measurement", i));
+            updateWasmMemPeak();
           }
+
+          const pm = performance.memory;
+          const jsHeapAfterEval = pm
+            ? {
+                jsHeapSizeLimit: pm.jsHeapSizeLimit,
+                totalJSHeapSize: pm.totalJSHeapSize,
+                usedJSHeapSize: pm.usedJSHeapSize,
+              }
+            : null;
 
           return {
             preflight_raw_byte_verified: true,
             cross_origin_isolated: Boolean(globalThis.crossOriginIsolated),
             final_batch_size: batchSize,
+            wasm_linear_memory_bytes_after_init: wasmMemAfterInit,
+            wasm_linear_memory_bytes_peak: wasmMemPeak > 0 ? wasmMemPeak : null,
+            wasm_linear_memory_pages_peak: wasmMemPeak > 0 ? Math.round(wasmMemPeak / 65536) : null,
+            js_heap_after_eval: jsHeapAfterEval,
             wasm_init_only_ns: wasmInitOnlyNs,
             initialize_ns: initNs,
             first_request_ns: firstNs,
@@ -338,10 +434,17 @@ try {
   }
   takeRss("after-eval");
 
-  const peakChromiumTreeRss = Math.max(...rssSamples.map((s) => s.total_bytes));
+  let peakSample = rssSamples[0];
+  for (const s of rssSamples) {
+    if (s.total_bytes > peakSample.total_bytes) peakSample = s;
+  }
+  const peakChromiumTreeRss = peakSample.total_bytes;
+  const peakRendererRss = Math.max(...rssSamples.map((s) => (s.role_rss_bytes?.renderer || 0)));
   const output = {
     schema_version: 1,
     runtime: "wasm-browser",
+    browser_engine: browserEngine,
+    launch_args: launchArgs,
     op_mode: plan.op_mode,
     node: process.version,
     browser: browser.version(),
@@ -352,15 +455,20 @@ try {
     playwrightPin: pin,
     browserErrors,
     driver_pid: driverPid,
+    wasm_binary_bytes: wasmBinaryBytes,
     chromium_peak_tree_rss_bytes: peakChromiumTreeRss,
-    chromium_rss_samples: rssSamples,
+    peak_tree_rss_bytes: peakChromiumTreeRss,
+    peak_renderer_rss_bytes: peakRendererRss,
+    peak_role_rss_bytes: peakSample.role_rss_bytes || {},
+    peak_process_breakdown: peakSample.processes || [],
+    chromium_rss_samples: rssSamples.map(({ processes: _p, ...rest }) => rest),
     memory_boundary:
-      "Sum of RSS across Chromium browser + renderer + GPU/utility child process tree sampled via /bin/ps, plus separate Node driver wait4 peak RSS",
+      "Sum of RSS across browser + renderer + GPU/utility child process tree sampled via /bin/ps (with per-role breakdown and Wasm linear memory separately recorded), plus separate Node driver wait4 peak RSS",
     ...pageResult,
   };
   await writeFile(resolve(resultPathArg), JSON.stringify(output, null, 2) + "\n", "utf8");
   if (browserErrors.length > 0) {
-    throw new Error(`Chromium reported uncaught page errors: ${browserErrors.join("; ")}`);
+    throw new Error(`${browserEngine} reported uncaught page errors: ${browserErrors.join("; ")}`);
   }
 } finally {
   if (browser) await browser.close();

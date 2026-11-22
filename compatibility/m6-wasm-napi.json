@@ -537,7 +537,7 @@
         },
         {
           "path": "packages/pkl-wasm/scripts/build.mjs",
-          "sha256": "224f650015cfa4905983599a65963b223c72f1ff7a3465c6f745aed84d61f2ba",
+          "sha256": "c3082f3ddd8e2148ceaf3eea7605c1e5ead4976654a62ea3e048a8ac10c548e7",
           "symbol": "resolveExecutable"
         },
         {
@@ -916,7 +916,7 @@
     "tests/fixtures/m6/runners/case_executor.mjs": "ab04f435158482a775790b6c108586cf2d1a37b7f67c0cf70dc2f34dc8eb4143",
     "tests/fixtures/m6/runners/run_napi_node.mjs": "f7b3c3691ec892a93ce30f407debd985357003694ec69ceb20cdc68b91106a80",
     "tests/fixtures/m6/runners/run_packaging_check.mjs": "9351fc526131b56f10bf63bd30aace5a7de9904961201c5e5674a24c8162011a",
-    "tests/fixtures/m6/runners/run_wasm_browser.mjs": "b65d1afa6a03f8b9f1c9649e0996ea68dc1d24fda082e2e7c904685ec69d376d",
+    "tests/fixtures/m6/runners/run_wasm_browser.mjs": "67bbe0c6ea221e38d1296d9b6b4dd35056e82783ea132be87ab8597606a6a22a",
     "tests/fixtures/m6/runners/run_wasm_node.mjs": "cf269be87e33a9b69b2243ac506d38180c5c40ec2b24d02f326563d3573b4f6e",
     "tools/platform/package.json": "803c8d50727edfe67dc349b657824a76157e6dc4b1af0b8ebbe22976ca91d51c"
   }

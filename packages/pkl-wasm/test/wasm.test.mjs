@@ -747,8 +747,9 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
     mkdirSync(packDir);
     mkdirSync(installDir);
 
-    const npmBin = join(dirname(process.execPath), 'npm');
-    const tarBin = '/usr/bin/tar';
+    const isWin = process.platform === 'win32';
+    const npmBin = isWin ? join(dirname(process.execPath), 'npm.cmd') : join(dirname(process.execPath), 'npm');
+    const tarBin = isWin ? 'tar.exe' : '/usr/bin/tar';
     const npmCache = join(workDir, 'npm-cache');
     mkdirSync(npmCache);
 
@@ -758,6 +759,7 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
       {
         cwd: PKG_DIR,
         encoding: 'utf8',
+        shell: isWin,
       },
     )
       .trim()

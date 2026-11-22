@@ -33,7 +33,12 @@ if (
   throw new Error(`Playwright pin mismatch: expected ${pin}, got ${playwrightVersion}/${playwrightCoreVersion}`);
 }
 
-const { chromium } = requireFromPlatform("playwright");
+const playwrightEngines = requireFromPlatform("playwright");
+const browserEngine = plan.browser_engine || "chromium";
+if (!["chromium", "firefox", "webkit"].includes(browserEngine)) {
+  throw new Error(`Unsupported browser_engine: ${browserEngine}`);
+}
+const browserType = playwrightEngines[browserEngine];
 const pkgDir = resolve(plan.installed_wasm_pkg_dir);
 const runnersDir = resolve(repoRoot, "tests/fixtures/m6/runners");
 const m4HttpPort = plan.m4_http_port || 0;
@@ -114,9 +119,9 @@ const uiPort = server.address().port;
 
 let browser;
 try {
-  const browserExecutable = chromium.executablePath();
+  const browserExecutable = browserType.executablePath();
   const browserExecutableSha256 = createHash("sha256").update(await readFile(browserExecutable)).digest("hex");
-  browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
+  browser = await browserType.launch({ headless: true, executablePath: browserExecutable });
   const page = await browser.newPage();
   page.on("pageerror", (err) => browserErrors.push(err.stack || String(err)));
   await page.goto(`http://127.0.0.1:${uiPort}/`);
@@ -166,6 +171,7 @@ try {
   const output = {
     schema_version: 1,
     runtime: "wasm-browser",
+    browser_engine: browserEngine,
     node: process.version,
     browser: browser.version(),
     browserExecutable,
@@ -178,7 +184,7 @@ try {
   };
   await writeFile(resolve(resultPathArg), JSON.stringify(output, null, 2) + "\n", "utf8");
   if (browserErrors.length > 0) {
-    throw new Error(`Chromium reported uncaught page errors: ${browserErrors.join("; ")}`);
+    throw new Error(`${browserEngine} reported uncaught page errors: ${browserErrors.join("; ")}`);
   }
 } finally {
   if (browser) await browser.close();

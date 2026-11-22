@@ -3,7 +3,7 @@
 // Separately measures Wasm load+compile+init, first request, converged warmup,
 // measurement windows (with 100% raw-byte Java preflight verification),
 // Wasm linear memory size, and Node process memoryUsage().
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, stat, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
@@ -14,6 +14,9 @@ if (!resultPathArg) {
 
 const plan = JSON.parse(await readFile(resolve(planPathArg), "utf8"));
 const pkgEntry = resolve(plan.wasm_pkg_dir, "dist/index.mjs");
+const runtimeEntry = resolve(plan.wasm_pkg_dir, "dist/runtime.mjs");
+const wasmBinPath = resolve(plan.wasm_pkg_dir, "dist/wasm/pkl_wasm_bg.wasm");
+const wasmBinaryBytes = (await stat(wasmBinPath)).size;
 const moduleSourceText = await readFile(resolve(plan.module_path), "utf8");
 const moduleUri = plan.module_uri || "repl:bench.pkl";
 const expectedText = await readFile(resolve(plan.expected_text_path));
@@ -68,8 +71,10 @@ function verifyTypedValue(val) {
 
 const initStart = process.hrtime.bigint();
 const api = await import(pathToFileURL(pkgEntry).href);
+const runtimeApi = await import(pathToFileURL(runtimeEntry).href);
 await api.init();
 const wasmInitOnlyNs = Number(process.hrtime.bigint() - initStart);
+const wasmLinearMemAfterInit = runtimeApi.getWasmMemory ? runtimeApi.getWasmMemory().buffer.byteLength : null;
 const ev = await api.createEvaluator({ color: false, env: {}, properties: {} });
 const initNs = Number(process.hrtime.bigint() - initStart);
 
@@ -155,6 +160,7 @@ try {
   }
 
   const mem = process.memoryUsage();
+  const wasmLinearMemAfterEval = runtimeApi.getWasmMemory ? runtimeApi.getWasmMemory().buffer.byteLength : null;
   const report = {
     schema_version: 1,
     runtime: "wasm-node",
@@ -163,6 +169,11 @@ try {
     platform: process.platform,
     arch: process.arch,
     preflight_raw_byte_verified: true,
+    wasm_binary_bytes: wasmBinaryBytes,
+    wasm_linear_memory_bytes_after_init: wasmLinearMemAfterInit,
+    wasm_linear_memory_bytes_after_eval: wasmLinearMemAfterEval,
+    wasm_linear_memory_pages_after_eval:
+      wasmLinearMemAfterEval !== null ? Math.round(wasmLinearMemAfterEval / 65536) : null,
     wasm_init_only_ns: wasmInitOnlyNs,
     initialize_ns: initNs,
     first_request_ns: firstNs,
