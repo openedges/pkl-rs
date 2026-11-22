@@ -1076,6 +1076,8 @@ pub struct Program {
     pub(crate) access_members: Arc<Vec<Member>>,
     pub(crate) builtin_members: Arc<BTreeMap<usize, Vec<Member>>>,
     pub(crate) constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
+    pub(crate) base_full_metadata_loaded: bool,
+    pub(crate) require_base_full_metadata: bool,
 }
 
 impl Program {
@@ -1142,6 +1144,7 @@ impl Program {
     }
 
     fn build_uncached(mut blocks: Vec<Vec<Instruction>>) -> Self {
+        blocks.reserve(520);
         let builtin_start = blocks.len();
         let reference_render_block = blocks.len();
         blocks.push(vec![
@@ -1175,7 +1178,8 @@ impl Program {
             },
             Instruction::Return,
         ]);
-        let mut metadata = vec![BlockMetadata::default(); blocks.len()];
+        let mut metadata = Vec::with_capacity(blocks.len().max(520));
+        metadata.resize_with(blocks.len(), BlockMetadata::default);
         let source = crate::stdlib_sources::reference();
         let expression = "getDomain().renderReference(this)";
         let start = source
@@ -1361,6 +1365,8 @@ impl Program {
             access_members: Arc::new(access_members),
             builtin_members: Arc::new(builtin_members),
             constraint_origins: BTreeMap::new(),
+            base_full_metadata_loaded: false,
+            require_base_full_metadata: false,
         }
     }
 
@@ -10243,11 +10249,11 @@ fn compile_module_configured(
 ) -> Result<Arc<Program>, RuntimeError> {
     let mut program = Program::new(Vec::new());
     compile_unit_into(&mut program, resolved, options, instrument, None, None)?;
-    program.blocks.freeze_prepared_prefix();
-    program.metadata.freeze_prepared_prefix();
-    program.objects.freeze_prepared_prefix();
-    program.units.freeze_prepared_prefix();
-    program.type_recipes.freeze_prepared_prefix();
+    program.blocks.freeze_prepared_segments();
+    program.metadata.freeze_prepared_segments();
+    program.objects.freeze_prepared_segments();
+    program.units.freeze_prepared_segments();
+    program.type_recipes.freeze_prepared_segments();
     Ok(Arc::new(program))
 }
 

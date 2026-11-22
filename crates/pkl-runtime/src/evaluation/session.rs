@@ -409,6 +409,9 @@ impl SourceSession {
                 "ModuleSource operations require the public lifecycle profile",
             ));
         }
+        // `start_load_module` feeds `SchemaExtractor` / `pkldoc` / reflection consumers
+        // that read `pkl:base` unit syntax & reflection annotations immutably via `session.vm()`.
+        self.host.ensure_base_full_metadata()?;
         if self.calls.is_empty() {
             self.module = None;
             self.host.set_session_root(None);
@@ -1041,6 +1044,7 @@ impl SourceSession {
         if self.module_started {
             return Err(error("module setup has already started"));
         }
+        self.host.ensure_base_full_metadata()?;
         self.host
             .start(self.module_entry, Vec::new(), now_ms, timeout_ms)?;
         self.module_started = true;

@@ -102,6 +102,9 @@ impl Vm {
     ) -> Result<bool, RuntimeError> {
         let uri = uri.into();
         let uri = &uri;
+        if uri.as_str() == Some("pkl:reflect") {
+            self.ensure_base_full_metadata()?;
+        }
         let cache = if matches!(
             crate::modules::stdlib_kind(uri),
             Some(crate::modules::StdlibKind::Singleton(_))
@@ -135,6 +138,89 @@ impl Vm {
         let root = self.pop()?;
         self.force_stdlib_frame(root)
     }
+
+    /// Lazily populates full `pkl:base` AST syntax (`ModuleUnit.syntax`),
+    /// complete declaration sources (including doc comments and class members),
+    /// and all reflection annotation blocks when reflection (`pkl:reflect`) or
+    /// schema extraction (`start_load_module` / `start_module`) is requested.
+    pub(crate) fn ensure_base_full_metadata(&mut self) -> Result<(), RuntimeError> {
+        if self.program.base_full_metadata_loaded {
+            return Ok(());
+        }
+        let base_unit = self.program.units.iter().find_map(|unit| {
+            (unit.standard_library && unit.singleton_cache_key == Some("pkl:base"))
+                .then_some(unit.id)
+        });
+        let program = Arc::make_mut(&mut self.program);
+        program.require_base_full_metadata = true;
+        let Some(unit) = base_unit else {
+            return Ok(());
+        };
+        if program.base_full_metadata_loaded {
+            return Ok(());
+        }
+        let source = crate::stdlib_sources::base();
+        let parsed = cached_parsed_stdlib("pkl:base", &source)?;
+        program.seal_code_segment();
+        program.units[unit.0 as usize].syntax = Some(Arc::clone(&parsed));
+        let template_members = program.objects[program.units[unit.0 as usize].template].clone();
+        let mut upgraded_decls = BTreeMap::new();
+        for declaration in &parsed.members {
+            let method = matches!(
+                declaration.expr.kind,
+                ExprKind::Function { method: true, .. }
+            );
+            let is_import = matches!(declaration.expr.kind, ExprKind::Import { .. });
+            if let Some(member) = template_members.iter().find(|member| {
+                member.name == declaration.name
+                    && member.method == method
+                    && member.import() == is_import
+            }) {
+                upgraded_decls.insert(member.code, declaration.declaration_source());
+            }
+        }
+        if let Some(base_decls) = &mut program.base_declaration_sources {
+            Arc::make_mut(base_decls).extend(upgraded_decls);
+        } else {
+            program.declaration_sources.extend(upgraded_decls);
+        }
+        let prev_refl = std::mem::take(&mut program.reflection_annotations);
+        compile_reflection_annotations(program, unit, "pkl:base", source, &parsed, &[])?;
+        let base_refl = std::mem::replace(&mut program.reflection_annotations, prev_refl);
+        if let Some(base_slot) = &mut program.base_reflection_annotations {
+            Arc::make_mut(base_slot).extend(base_refl);
+        } else {
+            program.reflection_annotations.extend(base_refl);
+        }
+        program.seal_code_segment();
+        program.base_full_metadata_loaded = true;
+        Ok(())
+    }
+}
+
+fn cached_base_top_level(source: &crate::value::RuntimeSource) -> Arc<crate::syntax::Module> {
+    static CELL: std::sync::OnceLock<Arc<crate::syntax::Module>> = std::sync::OnceLock::new();
+    CELL.get_or_init(|| {
+        Arc::new(
+            crate::parser::parse_base_top_level(&source.text)
+                .expect("bundled pkl:base top-level parses cleanly"),
+        )
+    })
+    .clone()
+}
+
+fn cached_base_top_level_resolved(
+    parsed: &crate::syntax::Module,
+) -> Arc<crate::resolver::ResolvedModule> {
+    static CELL: std::sync::OnceLock<Arc<crate::resolver::ResolvedModule>> =
+        std::sync::OnceLock::new();
+    CELL.get_or_init(|| {
+        Arc::new(
+            crate::resolver::resolve_stdlib_module(parsed)
+                .expect("bundled pkl:base top-level resolves cleanly"),
+        )
+    })
+    .clone()
 }
 
 fn cached_parsed_stdlib(
@@ -293,7 +379,12 @@ fn append_definition(
     }) {
         return Ok(unit.id);
     }
-    let parsed = cached_parsed_stdlib(uri, &source)?;
+    let fast_base = uri == "pkl:base" && !program.require_base_full_metadata;
+    let parsed = if fast_base {
+        cached_base_top_level(&source)
+    } else {
+        cached_parsed_stdlib(uri, &source)?
+    };
     let checkpoint = modules::ArenaCheckpoint::new(program);
     let result = append_members(program, uri, source, &parsed, power_assertions).inspect(|unit| {
         let entry = &mut program.units[unit.0 as usize];
@@ -321,6 +412,7 @@ fn append_members(
             | "pkl:DocPackageInfo"
             | "pkl:DocsiteInfo"
             | "pkl:Benchmark"
+            | "pkl:reflect"
     );
     if lazy_class_bootstrap
         || matches!(
@@ -328,7 +420,6 @@ fn append_members(
             "pkl:analyze"
                 | "pkl:platform"
                 | "pkl:release"
-                | "pkl:reflect"
                 | "pkl:semver"
                 | "pkl:json"
                 | "pkl:jsonnet"
@@ -368,6 +459,9 @@ fn append_members(
             append_bootstrap(program, unit, uri);
         } else {
             append_class_bootstrap(program, unit, parsed);
+            if uri == "pkl:reflect" {
+                append_reflect_const_bootstrap(program, unit, parsed);
+            }
         }
         return Ok(unit);
     }
@@ -597,11 +691,27 @@ fn append_members(
             fixed: false,
         });
     }
+    let fast_base = uri == "pkl:base" && !program.require_base_full_metadata;
     let definition = &mut program.units[unit.0 as usize];
     program.objects[definition.template] = members.clone();
     definition.initial_members = members;
-    definition.syntax = Some(Arc::clone(parsed));
-    compile_reflection_annotations(program, unit, uri, source, parsed, &synthetic_annotated)?;
+    if !fast_base {
+        definition.syntax = Some(Arc::clone(parsed));
+    }
+    if fast_base {
+        compile_base_synthetic_annotations_only(
+            program,
+            unit,
+            source,
+            parsed,
+            &synthetic_annotated,
+        )?;
+    } else {
+        compile_reflection_annotations(program, unit, uri, source, parsed, &synthetic_annotated)?;
+        if uri == "pkl:base" {
+            program.base_full_metadata_loaded = true;
+        }
+    }
     append_bootstrap(program, unit, uri);
     Ok(unit)
 }
@@ -651,6 +761,58 @@ fn append_class_bootstrap(program: &mut Program, unit: UnitId, parsed: &crate::s
             .spans
             .splice(finish..finish, vec![None; bootstrap.len()]);
         program.blocks[entry].splice(finish..finish, bootstrap);
+    }
+}
+
+/// For `pkl:reflect`, defer forcing each `const ...Type` standard mirror until
+/// that specific property is read instead of eagerly forcing all 27 mirrors on
+/// `import "pkl:reflect"`. When a property is read, run `BootstrapStdlib` on
+/// its own initializer frame with `stdlib_bootstrap = true` so recursive
+/// forcing and `FrameTransformer::Default` isolation match Apple Pkl 0.32.0.
+fn append_reflect_const_bootstrap(
+    program: &mut Program,
+    unit: UnitId,
+    parsed: &crate::syntax::Module,
+) {
+    let template = program.units[unit.0 as usize].template;
+    let const_codes: Vec<usize> = parsed
+        .members
+        .iter()
+        .filter(|decl| {
+            !matches!(
+                decl.expr.kind,
+                ExprKind::Class { .. }
+                    | ExprKind::TypeAlias { .. }
+                    | ExprKind::Function { method: true, .. }
+                    | ExprKind::Import { .. }
+            )
+        })
+        .filter_map(|decl| {
+            program.objects[template]
+                .iter()
+                .find(|member| !member.method && !member.import() && member.name == decl.name)
+                .map(|member| member.code)
+        })
+        .collect();
+    for block in const_codes {
+        let ret = program.blocks[block]
+            .len()
+            .checked_sub(1)
+            .expect("non-empty const property block");
+        assert!(
+            matches!(program.blocks[block][ret], Instruction::Return),
+            "reflect const property block must end with Return"
+        );
+        let bootstrap = [
+            Instruction::Duplicate,
+            Instruction::BootstrapStdlib,
+            Instruction::Pop,
+        ];
+        program.metadata[block].stdlib_bootstrap = true;
+        program.metadata[block]
+            .spans
+            .splice(ret..ret, [None, None, None]);
+        program.blocks[block].splice(ret..ret, bootstrap);
     }
 }
 
@@ -791,6 +953,87 @@ fn unsupported_binding(uri: &str, declaration: &crate::syntax::Member) -> Vec<In
             declaration.name
         ),
     ))]
+}
+
+/// Fast cold-start path for `pkl:base`: compiles only the top-level
+/// `synthetic_annotated` member annotations (e.g. `@Since` on `Bytes(...)`)
+/// against the lightweight 5 KB top-level AST without resolving all 126 KB of
+/// `base.pkl` or compiling the 98 reflection-only annotation collectors.
+fn compile_base_synthetic_annotations_only(
+    program: &mut Program,
+    unit: UnitId,
+    source: Arc<RuntimeSource>,
+    parsed: &crate::syntax::Module,
+    synthetic_annotated: &[(usize, usize, bool)],
+) -> Result<(), RuntimeError> {
+    if synthetic_annotated.is_empty() {
+        return Ok(());
+    }
+    let resolved = cached_base_top_level_resolved(parsed);
+    let declaration_base = program.next_declaration;
+    program.next_declaration = declaration_base
+        .checked_add(source.text.len_bytes() + 2)
+        .ok_or_else(|| invalid("annotation declaration identity limit"))?;
+    let mut compiler = Compiler {
+        resolved: &resolved,
+        program,
+        unit,
+        declaration_base,
+        source: Some(source),
+        identity: Some(ModuleIdentity {
+            original_uri: "pkl:base".into(),
+            resolved_uri: "pkl:base".into(),
+        }),
+        options: CompileOptions {
+            fuse_constant_add: true,
+        },
+        member: PklString::default(),
+        super_method_allowed: false,
+        module_annotation: false,
+        let_members: Vec::new(),
+        type_scopes: vec![extract_type_scope(&resolved.module.members)],
+        runtime_type_owner: true,
+        runtime_type_fallback: None,
+        modifiers: Vec::new(),
+        constraint_module: false,
+        alias_frames: Vec::new(),
+        constraint_origins: BTreeMap::new(),
+        active_constraints: BTreeMap::new(),
+        shared_constraint_roots: BTreeMap::new(),
+        active_type_parameters: BTreeMap::new(),
+        constructor_parameters_bound: false,
+        parameter_spans: BTreeMap::new(),
+        parameter_label_spans: BTreeMap::new(),
+        argument_spans: BTreeMap::new(),
+        function_counts: BTreeMap::new(),
+        entry_counts: BTreeMap::new(),
+        function_names: BTreeMap::new(),
+        instrument: false,
+    };
+    let mut publish = Code::default();
+    for &(index, code, method) in synthetic_annotated {
+        let member = &resolved.module.members[index];
+        compiler.member_annotations(member, &mut publish, false)?;
+        if method {
+            publish.push(Instruction::InitializeDeprecation);
+            publish.push(Instruction::StoreDeprecation);
+        }
+        publish.push(Instruction::PublishMemberAnnotations { code });
+    }
+    let entry = compiler.program.units[unit.0 as usize].entry;
+    let finish = compiler.program.blocks[entry]
+        .iter()
+        .position(|instruction| matches!(instruction, Instruction::FinishModule))
+        .expect("ordinary module initializer");
+    compiler.program.metadata[entry]
+        .spans
+        .splice(finish..finish, publish.spans);
+    compiler.program.blocks[entry].splice(finish..finish, publish.instructions);
+    compiler
+        .program
+        .constraint_origins
+        .extend(compiler.constraint_origins);
+    Ok(())
 }
 
 // Builtin declaration annotations have ordinary executable bodies even when
@@ -972,21 +1215,24 @@ userLocation = reflect.Class(User).location.displayUri
         vm.start(program.entry, vec![]).unwrap();
         let module = ready_reflection(&mut vm).unwrap().as_object().unwrap();
         vm.start_member(module, "reflect").unwrap();
-        // ready() rejects any Host event. In particular, eager standard mirror
-        // displayUri reads must finish with the default transformer.
+        // `pkl:reflect` uses lazy class bootstrap so importing it does not eagerly
+        // force all 24 `const ...Type` standard mirrors. Observable reads of those
+        // standard mirrors must still resolve with the default transformer without
+        // leaking user Host frame-transform callbacks.
         let reflect = ready_reflection(&mut vm).unwrap().as_object().unwrap();
+        assert_eq!(
+            vm.member_state(reflect, "intType").unwrap(),
+            LazyState::Unevaluated,
+            "pkl:reflect const standard mirrors must remain lazy on import"
+        );
         let mut current = reflect;
         for name in ["intType", "referent", "location"] {
-            let LazyState::Completed(Value::Object(next)) = vm.member_state(current, name).unwrap()
-            else {
-                panic!("standard mirror {name} was not eagerly cached")
-            };
-            current = next;
+            vm.start_member(current, name).unwrap();
+            current = ready_reflection(&mut vm).unwrap().as_object().unwrap();
         }
-        let LazyState::Completed(Value::String(uri)) =
-            vm.member_state(current, "displayUri").unwrap()
-        else {
-            panic!("standard declaration location was not eagerly cached")
+        vm.start_member(current, "displayUri").unwrap();
+        let Value::String(uri) = ready_reflection(&mut vm).unwrap() else {
+            panic!("standard declaration location displayUri was not a String")
         };
         assert!(
             uri.as_str()
@@ -1108,6 +1354,112 @@ userLocation = reflect.Class(User).location.displayUri
             vm.collect(&[]);
             assert!(vm.heap.get(annotation).is_ok());
         }
+        vm.close();
+        assert_eq!(vm.heap_stats().slots, 0);
+    }
+
+    #[test]
+    fn parse_base_top_level_matches_full_parse_on_top_level_declarations() {
+        let base = crate::stdlib_sources::base();
+        let full = crate::parser::parse_module(&base.text).unwrap();
+        let fast = crate::parser::parse_base_top_level(&base.text).unwrap();
+        let fast_decl = fast.declaration.as_ref().expect("base module declaration");
+        let mut full_decl = full.declaration.clone().expect("base module declaration");
+        assert!(
+            fast_decl.doc_comment.is_none(),
+            "fast base top-level parse intentionally skips doc comments"
+        );
+        full_decl.doc_comment = None;
+        assert_eq!(*fast_decl, full_decl);
+        assert_eq!(fast.members.len(), full.members.len());
+        for (f, g) in fast.members.iter().zip(&full.members) {
+            assert_eq!(f.name, g.name);
+            assert_eq!(f.name_span, g.name_span, "member {}", g.name);
+            assert_eq!(f.span, g.span, "member {}", g.name);
+            assert_eq!(f.local, g.local, "member {}", g.name);
+            assert_eq!(f.modifiers, g.modifiers, "member {}", g.name);
+            assert_eq!(
+                f.annotations.len(),
+                g.annotations.len(),
+                "member {}",
+                g.name
+            );
+            assert_eq!(
+                f.declaration_source().header_span,
+                g.declaration_source().header_span,
+                "header_span for {}",
+                g.name
+            );
+            match (&f.expr.kind, &g.expr.kind) {
+                (
+                    ExprKind::Function {
+                        method: fm,
+                        parameters: fp,
+                        header_span: fh,
+                        ..
+                    },
+                    ExprKind::Function {
+                        method: gm,
+                        parameters: gp,
+                        header_span: gh,
+                        ..
+                    },
+                ) => {
+                    assert_eq!(fm, gm, "method flag {}", g.name);
+                    assert_eq!(fh, gh, "fn header_span {}", g.name);
+                    assert_eq!(fp.len(), gp.len(), "param count {}", g.name);
+                    for (a, b) in fp.iter().zip(gp) {
+                        assert_eq!(a.name, b.name);
+                        assert_eq!(a.ty.as_ref().map(|t| t.span), b.ty.as_ref().map(|t| t.span));
+                    }
+                }
+                (ExprKind::Class { .. }, ExprKind::Class { .. }) => {}
+                (ExprKind::TypeAlias { .. }, ExprKind::TypeAlias { .. }) => {}
+                (a, b) => assert_eq!(
+                    std::mem::discriminant(a),
+                    std::mem::discriminant(b),
+                    "expr kind mismatch for {}",
+                    g.name
+                ),
+            }
+        }
+    }
+
+    #[test]
+    fn ensure_base_full_metadata_lazily_populates_syntax_and_annotations() {
+        let parsed = crate::parser::parse_module("x = 1\n").unwrap();
+        let program = compile_module(&crate::resolver::resolve_module(&parsed).unwrap()).unwrap();
+        let mut vm = Vm::with_context(program.clone(), EvaluationContext::default());
+        vm.start(program.entry, vec![]).unwrap();
+        let _module = ready(&mut vm).unwrap().as_object().unwrap();
+        assert!(
+            !vm.program.base_full_metadata_loaded,
+            "cold evaluation without reflection/schema must not eagerly load full base.pkl AST"
+        );
+        vm.ensure_base_full_metadata().unwrap();
+        assert!(vm.program.base_full_metadata_loaded);
+        let base_unit = vm
+            .program
+            .units
+            .iter()
+            .find(|u| u.standard_library && u.singleton_cache_key == Some("pkl:base"))
+            .expect("base unit loaded");
+        assert!(base_unit.syntax.is_some());
+        let has_base_annotations = vm
+            .program
+            .reflection_annotations
+            .keys()
+            .chain(
+                vm.program
+                    .base_reflection_annotations
+                    .iter()
+                    .flat_map(|m| m.keys()),
+            )
+            .any(|(uri, _)| uri.as_str() == Some("pkl:base"));
+        assert!(
+            has_base_annotations,
+            "ensure_base_full_metadata must compile pkl:base reflection annotations"
+        );
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);
     }

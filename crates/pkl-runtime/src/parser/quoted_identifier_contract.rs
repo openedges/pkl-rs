@@ -29,6 +29,7 @@ fn actual_java_quoted_tokens_and_terminator_coordinates() {
             source: text.as_str().into(),
             cursor: 0,
             string_errors: Default::default(),
+            skip_doc_comments: false,
         };
         let mut observed = Vec::new();
         let mut failure = None;

@@ -156,6 +156,7 @@ struct Lexer<'a> {
     source: SourceSlice<'a>,
     cursor: usize,
     string_errors: string_lexer::StringErrors,
+    skip_doc_comments: bool,
 }
 
 impl Lexer<'_> {
@@ -168,23 +169,32 @@ impl Lexer<'_> {
         string_start_only: bool,
         comments: bool,
     ) -> Result<Token, Diagnostic> {
+        let bytes = self.source.as_bytes();
         loop {
-            while self
-                .peek()
-                .is_some_and(|ch| matches!(ch, ' ' | '\t' | '\n' | '\r' | '\x0c'))
-            {
-                self.advance();
-            }
-            if self.source.range(self.cursor..).starts_with("//") {
-                let start = self.cursor;
-                let doc = self.source.range(start..).starts_with("///");
-                while self
-                    .peek_character()
-                    .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
-                {
-                    self.advance_character();
+            while let Some(&b) = bytes.get(self.cursor) {
+                if matches!(b, b' ' | b'\t' | b'\n' | b'\r' | 0x0c) {
+                    self.cursor += 1;
+                } else {
+                    break;
                 }
-                if doc || comments {
+            }
+            if bytes.get(self.cursor..self.cursor + 2) == Some(b"//") {
+                let start = self.cursor;
+                let doc = !self.skip_doc_comments && bytes.get(start..start + 3) == Some(b"///");
+                if let Some(rest) = self.source.range(self.cursor..).as_str() {
+                    match rest.find(['\n', '\r']) {
+                        Some(offset) => self.cursor += offset,
+                        None => self.cursor = self.source.len_bytes(),
+                    }
+                } else {
+                    while self
+                        .peek_character()
+                        .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
+                    {
+                        self.advance_character();
+                    }
+                }
+                if doc || (comments && !self.skip_doc_comments) {
                     return Ok(Token {
                         kind: if doc {
                             Kind::DocComment
@@ -194,7 +204,7 @@ impl Lexer<'_> {
                         span: Span::new(start, self.cursor),
                     });
                 }
-            } else if self.source.range(self.cursor..).starts_with("/*") {
+            } else if bytes.get(self.cursor..self.cursor + 2) == Some(b"/*") {
                 let start = self.cursor;
                 self.cursor += 2;
                 let end = self.source.range(self.cursor..).find("*/");
@@ -611,6 +621,7 @@ struct Parser<'a> {
     entry_counts: std::collections::BTreeMap<PklString, usize>,
     folded_integer_spans: std::collections::BTreeMap<Span, Span>,
     interpolation_spans: std::collections::BTreeMap<Span, Span>,
+    skip_class_bodies: bool,
 }
 
 impl<'a> Parser<'a> {
@@ -649,11 +660,20 @@ impl<'a> Parser<'a> {
     }
 
     fn new(source: impl Into<SourceSlice<'a>>) -> Result<Self, Diagnostic> {
+        Self::new_with_options(source, false, false)
+    }
+
+    fn new_with_options(
+        source: impl Into<SourceSlice<'a>>,
+        skip_doc_comments: bool,
+        skip_class_bodies: bool,
+    ) -> Result<Self, Diagnostic> {
         let source = source.into();
         let mut lexer = Lexer {
             source,
             cursor: 0,
             string_errors: Default::default(),
+            skip_doc_comments,
         };
         let (token, gap) = Self::read_token(&mut lexer, false, false)?;
         Ok(Self {
@@ -669,6 +689,7 @@ impl<'a> Parser<'a> {
             entry_counts: std::collections::BTreeMap::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
+            skip_class_bodies,
         })
     }
 
@@ -681,6 +702,7 @@ impl<'a> Parser<'a> {
             source: source.range(..(span.end + 1).min(source.len_bytes())),
             cursor: span.start,
             string_errors,
+            skip_doc_comments: false,
         };
         let (token, gap) = Self::read_token(&mut lexer, false, false)?;
         Ok(Self {
@@ -696,6 +718,7 @@ impl<'a> Parser<'a> {
             entry_counts: std::collections::BTreeMap::new(),
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
+            skip_class_bodies: false,
         })
     }
 
@@ -1181,15 +1204,29 @@ impl<'a> Parser<'a> {
             };
             let header_span = Span::new(start, self.previous_end);
             let class_members = if self.is_symbol('{') {
-                self.advance()?;
-                let members = self.member_list(MemberContext::Class, None)?;
-                if self.token.kind == Kind::Eof {
-                    let mut error = self.unexpected(None);
-                    error.message = "Missing `}` delimiter.".to_owned().into();
-                    return Err(error);
+                if self.skip_class_bodies && context == MemberContext::Module {
+                    let rest = self.lexer.source.range(self.lexer.cursor..);
+                    let offset = rest
+                        .find("\n}")
+                        .expect("pinned base class body closing brace");
+                    let close_end = self.lexer.cursor + offset + 2;
+                    self.previous_end = close_end;
+                    self.lexer.cursor = close_end;
+                    let (next, gap) = Self::read_token(&mut self.lexer, false, false)?;
+                    self.token = next;
+                    self.gap = gap;
+                    Vec::new()
+                } else {
+                    self.advance()?;
+                    let members = self.member_list(MemberContext::Class, None)?;
+                    if self.token.kind == Kind::Eof {
+                        let mut error = self.unexpected(None);
+                        error.message = "Missing `}` delimiter.".to_owned().into();
+                        return Err(error);
+                    }
+                    self.expect('}')?;
+                    members
                 }
-                self.expect('}')?;
-                members
             } else {
                 Vec::new()
             };
@@ -2823,6 +2860,48 @@ pub fn parse_module<'a>(source: impl Into<SourceSlice<'a>>) -> Result<Module, Di
         return Err(error.clone());
     }
     Ok(module)
+}
+
+/// Fast top-level parser for the pinned `pkl:base` module that skips doc comments
+/// and class member bodies (which represent ~96% of `base.pkl` and are only needed
+/// when `pkl:reflect` or `ModuleSchema` extraction inspects `pkl:base`).
+/// Produces identical top-level declarations, spans, modifiers, annotations, and
+/// authored non-class members as `parse_module`.
+pub(crate) fn parse_base_top_level(source: &SourceText) -> Result<Module, Diagnostic> {
+    let mut parser = Parser::new_with_options(source.entire(), true, true)?;
+    let annotations = parser.annotations()?;
+    let modifiers = parser.modifiers()?;
+    let has_declaration =
+        parser.is_name("module") || parser.is_name("extends") || parser.is_name("amends");
+    let (declaration, mut initial) = if has_declaration {
+        (
+            parser.module_declaration(modifiers, annotations, None)?,
+            None,
+        )
+    } else {
+        (None, Some((modifiers, annotations, None)))
+    };
+    let mut members = Vec::new();
+    let has_header = initial
+        .as_ref()
+        .is_some_and(|(modifiers, annotations, documented)| {
+            documented.is_some() || !modifiers.is_empty() || !annotations.is_empty()
+        });
+    if !has_header {
+        while parser.is_name("import") {
+            members.push(parser.import()?);
+            initial = None;
+        }
+    }
+    members.extend(parser.member_list(MemberContext::Module, initial)?);
+    Ok(Module {
+        deferred_diagnostics: parser.pending,
+        source: source.clone(),
+        declaration,
+        members,
+        folded_integer_spans: parser.folded_integer_spans,
+        interpolation_spans: parser.interpolation_spans,
+    })
 }
 
 /// Syntax errors still precede every AST-building effect. Evaluation preserves

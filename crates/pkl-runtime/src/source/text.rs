@@ -13,6 +13,168 @@ use super::{Position, Span};
 
 const INDEX_CACHE_THRESHOLD_BYTES: usize = 256;
 
+#[cfg(not(target_arch = "wasm32"))]
+mod base_index {
+    pub(super) const BASE_PKL: &str = include_str!("../stdlib/base.pkl");
+    const BASE_BYTES: &[u8] = BASE_PKL.as_bytes();
+
+    include!(concat!(env!("OUT_DIR"), "/base_pkl_index.rs"));
+
+    #[inline]
+    fn is_word_byte(b: u8) -> bool {
+        b.is_ascii_alphanumeric() || b == b'_'
+    }
+
+    #[inline]
+    fn word_bytes(entry: (u32, u16, u16, u16)) -> &'static [u8] {
+        let start = entry.0 as usize;
+        &BASE_BYTES[start..start + entry.1 as usize]
+    }
+
+    pub(super) fn find(start: usize, end: usize, pattern: &str) -> Option<usize> {
+        let pat = pattern.as_bytes();
+        let plen = pat.len();
+        if plen == 0 {
+            return Some(0);
+        }
+        let hay_len = end - start;
+        if plen > hay_len {
+            return None;
+        }
+        if hay_len <= 256 {
+            return BASE_PKL[start..end].find(pattern);
+        }
+        if pat == b"\n}" {
+            let idx = BASE_CLOSE_BRACE_OFFSETS.partition_point(|&off| (off as usize) < start);
+            let off = *BASE_CLOSE_BRACE_OFFSETS.get(idx)? as usize;
+            return (off + 2 <= end).then_some(off - start);
+        }
+
+        enum Candidate {
+            Exact {
+                pat_off: usize,
+                post_start: usize,
+                post_len: usize,
+            },
+            Prefix {
+                pat_off: usize,
+                word_lo: usize,
+                word_hi: usize,
+            },
+        }
+
+        let mut best: Option<Candidate> = None;
+        let mut best_cost: usize = usize::MAX;
+        let mut i = 0;
+        while i < plen {
+            if is_word_byte(pat[i]) {
+                let wstart = i;
+                i += 1;
+                while i < plen && is_word_byte(pat[i]) {
+                    i += 1;
+                }
+                let wend = i;
+                if wstart > 0 && wend < plen {
+                    // Exact maximal interior word: bounded by non-word bytes on both sides.
+                    let word = &pat[wstart..wend];
+                    let Ok(idx) = BASE_WORDS.binary_search_by(|&entry| word_bytes(entry).cmp(word))
+                    else {
+                        return None;
+                    };
+                    let (_, _, post_start, post_len) = BASE_WORDS[idx];
+                    let cost = post_len as usize;
+                    if cost < best_cost {
+                        best_cost = cost;
+                        best = Some(Candidate::Exact {
+                            pat_off: wstart,
+                            post_start: post_start as usize,
+                            post_len: cost,
+                        });
+                    }
+                } else if wstart > 0 && wend == plen {
+                    // Left-bounded suffix word: must match the prefix of some maximal word.
+                    let suffix = &pat[wstart..wend];
+                    let lo = BASE_WORDS.partition_point(|&entry| word_bytes(entry) < suffix);
+                    let mut hi = lo;
+                    let mut total_posts = 0usize;
+                    let mut capped = false;
+                    while hi < BASE_WORDS.len() && word_bytes(BASE_WORDS[hi]).starts_with(suffix) {
+                        total_posts += BASE_WORDS[hi].3 as usize;
+                        hi += 1;
+                        if hi - lo > 8 || total_posts >= best_cost {
+                            capped = true;
+                            break;
+                        }
+                    }
+                    if hi == lo {
+                        return None;
+                    }
+                    if !capped && total_posts < best_cost {
+                        best_cost = total_posts;
+                        best = Some(Candidate::Prefix {
+                            pat_off: wstart,
+                            word_lo: lo,
+                            word_hi: hi,
+                        });
+                    }
+                }
+            } else {
+                i += 1;
+            }
+        }
+
+        match best {
+            Some(Candidate::Exact {
+                pat_off,
+                post_start,
+                post_len,
+            }) => {
+                let posts = &BASE_WORD_OFFSETS[post_start..post_start + post_len];
+                let min_off = start + pat_off;
+                let idx = posts.partition_point(|&off| (off as usize) < min_off);
+                for &off in &posts[idx..] {
+                    let cand = (off as usize) - pat_off;
+                    if cand + plen > end {
+                        return None;
+                    }
+                    if &BASE_BYTES[cand..cand + plen] == pat {
+                        return Some(cand - start);
+                    }
+                }
+                None
+            }
+            Some(Candidate::Prefix {
+                pat_off,
+                word_lo,
+                word_hi,
+            }) => {
+                let min_off = start + pat_off;
+                let mut earliest: Option<usize> = None;
+                for &(_, _, post_start, post_len) in &BASE_WORDS[word_lo..word_hi] {
+                    let posts = &BASE_WORD_OFFSETS
+                        [post_start as usize..post_start as usize + post_len as usize];
+                    let idx = posts.partition_point(|&off| (off as usize) < min_off);
+                    for &off in &posts[idx..] {
+                        let cand = (off as usize) - pat_off;
+                        if cand + plen > end {
+                            break;
+                        }
+                        if earliest.is_some_and(|best_pos| cand >= best_pos) {
+                            break;
+                        }
+                        if &BASE_BYTES[cand..cand + plen] == pat {
+                            earliest = Some(cand);
+                            break;
+                        }
+                    }
+                }
+                earliest.map(|cand| cand - start)
+            }
+            None => BASE_PKL[start..end].find(pattern),
+        }
+    }
+}
+
 #[derive(Clone)]
 pub struct SourceText {
     original: PklString,
@@ -22,6 +184,8 @@ pub struct SourceText {
     // Lazily cached compact line index for non-trivial source files.
     // Never stores a back-reference to this cache, so there is no Arc cycle.
     index_cache: Option<Arc<OnceLock<SourceTextIndex>>>,
+    #[cfg(not(target_arch = "wasm32"))]
+    is_base_pkl: bool,
 }
 
 impl std::fmt::Debug for SourceText {
@@ -123,10 +287,16 @@ impl From<PklString> for SourceText {
         };
         let index_cache =
             (len_bytes >= INDEX_CACHE_THRESHOLD_BYTES).then(|| Arc::new(OnceLock::new()));
+        #[cfg(not(target_arch = "wasm32"))]
+        let is_base_pkl = wtf8.is_none()
+            && len_bytes == base_index::BASE_PKL.len()
+            && original.as_str() == Some(base_index::BASE_PKL);
         Self {
             original,
             wtf8,
             index_cache,
+            #[cfg(not(target_arch = "wasm32"))]
+            is_base_pkl,
         }
     }
 }
@@ -213,12 +383,31 @@ impl SourceText {
     }
 
     pub fn entire(&self) -> SourceSlice<'_> {
-        SourceSlice {
-            bytes: self.as_bytes(),
+        match &self.wtf8 {
+            Some(bytes) => SourceSlice {
+                bytes,
+                utf8: None,
+                #[cfg(not(target_arch = "wasm32"))]
+                base_offset: None,
+            },
+            None => SourceSlice {
+                bytes: self
+                    .original
+                    .as_str()
+                    .expect("scalar source invariant")
+                    .as_bytes(),
+                utf8: Some(self.original.as_str().expect("scalar source invariant")),
+                #[cfg(not(target_arch = "wasm32"))]
+                base_offset: self.is_base_pkl.then_some(0),
+            },
         }
     }
 
     pub fn find(&self, pattern: &str) -> Option<usize> {
+        #[cfg(not(target_arch = "wasm32"))]
+        if self.is_base_pkl {
+            return base_index::find(0, base_index::BASE_PKL.len(), pattern);
+        }
         if let Some(text) = self.as_str() {
             return text.find(pattern);
         }
@@ -317,15 +506,29 @@ impl SourceText {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug)]
 pub struct SourceSlice<'a> {
     bytes: &'a [u8],
+    utf8: Option<&'a str>,
+    #[cfg(not(target_arch = "wasm32"))]
+    base_offset: Option<u32>,
 }
+
+impl PartialEq for SourceSlice<'_> {
+    fn eq(&self, other: &Self) -> bool {
+        self.bytes == other.bytes
+    }
+}
+
+impl Eq for SourceSlice<'_> {}
 
 impl<'a> SourceSlice<'a> {
     pub fn from_utf8(text: &'a str) -> Self {
         Self {
             bytes: text.as_bytes(),
+            utf8: Some(text),
+            #[cfg(not(target_arch = "wasm32"))]
+            base_offset: None,
         }
     }
 
@@ -334,6 +537,9 @@ impl<'a> SourceSlice<'a> {
     }
 
     pub fn as_str(self) -> Option<&'a str> {
+        if let Some(text) = self.utf8 {
+            return Some(text);
+        }
         std::str::from_utf8(self.bytes).ok()
     }
 
@@ -354,11 +560,25 @@ impl<'a> SourceSlice<'a> {
     }
 
     pub fn slice(self, span: Span) -> Option<Self> {
+        if let Some(text) = self.utf8 {
+            let sub = text.get(span.start..span.end)?;
+            return Some(Self {
+                bytes: sub.as_bytes(),
+                utf8: Some(sub),
+                #[cfg(not(target_arch = "wasm32"))]
+                base_offset: self
+                    .base_offset
+                    .and_then(|off| off.checked_add(span.start as u32)),
+            });
+        }
         if span.start > span.end || !self.is_boundary(span.start) || !self.is_boundary(span.end) {
             return None;
         }
         Some(Self {
             bytes: self.bytes.get(span.start..span.end)?,
+            utf8: None,
+            #[cfg(not(target_arch = "wasm32"))]
+            base_offset: None,
         })
     }
 
@@ -408,6 +628,14 @@ impl<'a> SourceSlice<'a> {
     }
 
     pub fn find(self, pattern: &str) -> Option<usize> {
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(base_off) = self.base_offset {
+            let start = base_off as usize;
+            return base_index::find(start, start + self.bytes.len(), pattern);
+        }
+        if let Some(text) = self.utf8 {
+            return text.find(pattern);
+        }
         let needle = pattern.as_bytes();
         let nlen = needle.len();
         if nlen == 0 {
@@ -435,6 +663,9 @@ impl<'a> SourceSlice<'a> {
     }
 
     pub(crate) fn rfind(self, pattern: &str) -> Option<usize> {
+        if let Some(text) = self.utf8 {
+            return text.rfind(pattern);
+        }
         let needle = pattern.as_bytes();
         let nlen = needle.len();
         if nlen == 0 {
@@ -666,7 +897,15 @@ impl SourceTextIndex {
 
     pub fn position(&self, byte: usize) -> Option<Position> {
         let bytes = self.as_bytes();
-        if byte > bytes.len() || !(SourceSlice { bytes }).is_boundary(byte) {
+        if byte > bytes.len()
+            || !(SourceSlice {
+                bytes,
+                utf8: None,
+                #[cfg(not(target_arch = "wasm32"))]
+                base_offset: None,
+            })
+            .is_boundary(byte)
+        {
             return None;
         }
         let line_idx = self.lines.partition_point(|entry| entry.byte <= byte) - 1;
@@ -776,8 +1015,16 @@ impl SourceTextIndex {
         } else {
             bytes.len()
         };
-        Some(SourceSlice {
-            bytes: &bytes[start..end],
+        Some(if self.wtf8.is_none() {
+            let text = self.original.as_str().expect("scalar source invariant");
+            SourceSlice::from_utf8(&text[start..end])
+        } else {
+            SourceSlice {
+                bytes: &bytes[start..end],
+                utf8: None,
+                #[cfg(not(target_arch = "wasm32"))]
+                base_offset: None,
+            }
         })
     }
 }
@@ -1009,6 +1256,61 @@ mod tests {
                     .1,
                 1
             );
+        }
+    }
+
+    #[test]
+    fn base_pkl_indexed_find_matches_str_find_across_edge_cases() {
+        let base = crate::stdlib_sources::base();
+        let raw = base.text.as_str().expect("base.pkl is valid UTF-8");
+        let patterns = [
+            "",
+            "\n",
+            "\n}",
+            " -> ",
+            "):",
+            "external class List<",
+            "class String ",
+            "class Typed extends",
+            "class Mapping<",
+            "external function flatMapIndexed<",
+            "external function toList",
+            "external function toMap",
+            "external function xor(other: Boolean): Boolean",
+            "typealias DataSizeUnit =",
+            "typealias UInt = Int(isPositive)",
+            "hidden default: ",
+            "hidden output:",
+            "class JsonRenderer extends",
+            "groups: List<RegexMatch?>",
+            "class RegexMatch {",
+            "ass String ",
+            "Licensed under the Apache License",
+            "external class DoesNotExist<",
+            "external function zzzNotPresent",
+            "predicate: ",
+            ": Int",
+        ];
+        let class_list = raw.find("external class List<").unwrap();
+        let class_string = raw.find("class String ").unwrap();
+        let ranges = [
+            0..raw.len(),
+            class_string..raw.len(),
+            class_list..raw.len(),
+            class_list..(class_list + 200),
+            class_list..(class_list + 19),
+            (raw.len() - 400)..raw.len(),
+        ];
+        for pat in patterns {
+            assert_eq!(base.text.find(pat), raw.find(pat), "full find {pat:?}");
+            for range in &ranges {
+                let slice = base.text.entire().range(range.clone());
+                assert_eq!(
+                    slice.find(pat),
+                    raw[range.clone()].find(pat),
+                    "slice {range:?} find {pat:?}"
+                );
+            }
         }
     }
 }

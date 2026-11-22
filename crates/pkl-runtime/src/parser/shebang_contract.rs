@@ -32,6 +32,7 @@ fn java_shebang_tokens_and_raw_prefix_failures_preserve_utf16() {
             source: source.as_str().into(),
             cursor: 0,
             string_errors: Default::default(),
+            skip_doc_comments: false,
         };
         let mut observed = Vec::new();
         let mut failure = None;

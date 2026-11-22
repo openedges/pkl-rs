@@ -256,6 +256,9 @@ impl HostSession {
     pub(crate) fn vm_mut(&mut self) -> &mut Vm {
         &mut self.vm
     }
+    pub(crate) fn ensure_base_full_metadata(&mut self) -> Result<(), RuntimeError> {
+        self.vm.ensure_base_full_metadata()
+    }
     pub(crate) fn reenter_public_operation(
         &mut self,
         token: &str,

@@ -733,22 +733,8 @@ pub fn build_ca_cert_source(opts: &ParsedCliOptions, working_dir: &Path) -> CaCe
             .collect();
         return CaCertSource::from_files(resolved);
     }
-    if let Some(pkl_home) = pkl_home_dir() {
-        let cacerts_dir = pkl_home.join("cacerts");
-        if cacerts_dir.is_dir()
-            && let Ok(entries) = std::fs::read_dir(&cacerts_dir)
-        {
-            let mut cert_files: Vec<PathBuf> = entries
-                .filter_map(Result::ok)
-                .map(|e| e.path())
-                .filter(|p| p.is_file())
-                .collect();
-            cert_files.sort();
-            if !cert_files.is_empty() {
-                return CaCertSource::from_files(cert_files);
-            }
-        }
-    }
+    // `CaCertSource::bundled_default()` lazily probes `~/.pkl/cacerts/` inside
+    // `build_tls_config()` only when an actual HTTPS request occurs.
     CaCertSource::bundled_default()
 }
 
@@ -788,9 +774,22 @@ pub fn build_native_host_config(
         _ => TraceMode::Compact,
     };
 
+    let default_mods = effective.external_module_readers.is_empty()
+        && effective.allowed_modules.iter().map(String::as_str).eq(
+            pkl_runtime::host::security::DEFAULT_ALLOWED_MODULES
+                .iter()
+                .copied(),
+        );
+    let default_res = effective.external_resource_readers.is_empty()
+        && effective.allowed_resources.iter().map(String::as_str).eq(
+            pkl_runtime::host::security::DEFAULT_ALLOWED_RESOURCES
+                .iter()
+                .copied(),
+        );
+
     Ok(NativeHostConfig {
-        allowed_modules: Some(effective.allowed_modules.clone()),
-        allowed_resources: Some(effective.allowed_resources.clone()),
+        allowed_modules: (!default_mods).then(|| effective.allowed_modules.clone()),
+        allowed_resources: (!default_res).then(|| effective.allowed_resources.clone()),
         root_dir: effective.root_dir.clone(),
         module_paths: effective.module_path.clone(),
         http: http_cfg,

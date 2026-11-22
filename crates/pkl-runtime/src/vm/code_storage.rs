@@ -221,6 +221,35 @@ impl<T: Clone> CodeStorage<T> {
         self.fixed = Arc::new(values);
         self.seal();
     }
+
+    /// Compact appended prepared segments without deep-cloning an already-shared
+    /// `fixed` prefix (such as the static builtin table from `Program::empty_shared`).
+    pub(super) fn freeze_prepared_segments(&mut self) {
+        if self.segments.is_empty() {
+            self.seal();
+            return;
+        }
+        if self.fixed.is_empty() || Arc::strong_count(&self.fixed) == 1 {
+            self.freeze_prepared_prefix();
+            return;
+        }
+        if self.segments.len() == 1 {
+            self.seal();
+            return;
+        }
+        let segs = std::mem::take(&mut self.segments);
+        let first_start = segs[0].0;
+        let total: usize = segs.iter().map(|(_, s)| s.len()).sum();
+        let mut merged = Vec::with_capacity(total);
+        let mut expected = first_start;
+        for (start, segment) in segs {
+            assert_eq!(expected, start, "prepared segments must be dense");
+            expected += segment.len();
+            merged.extend(Arc::unwrap_or_clone(segment));
+        }
+        self.segments.push((first_start, Arc::new(merged)));
+        self.seal();
+    }
     pub fn get_mut(&mut self, id: usize) -> Option<&mut T> {
         if id < self.fixed.len() {
             return Arc::make_mut(&mut self.fixed).get_mut(id);
@@ -409,5 +438,30 @@ mod tests {
         ));
         assert_eq!(snapshot[later], [3]);
         assert_eq!(store[later], [3, 4]);
+    }
+
+    #[test]
+    fn freeze_prepared_segments_preserves_shared_fixed_prefix_without_cloning() {
+        let shared = CodeStorage::from(vec![vec![0_u8; 64], vec![1_u8; 64]]);
+        let mut derived = shared.clone();
+        assert!(Arc::ptr_eq(&shared.fixed, &derived.fixed));
+        let a = derived.try_push(vec![2]).unwrap();
+        derived.seal();
+        let b = derived.try_push(vec![3]).unwrap();
+        derived.freeze_prepared_segments();
+        assert!(
+            Arc::ptr_eq(&shared.fixed, &derived.fixed),
+            "shared fixed prefix must not be cloned when compacting appended segments"
+        );
+        assert_eq!(derived.segments.len(), 1);
+        assert_eq!(derived[0], vec![0_u8; 64]);
+        assert_eq!(derived[a], vec![2]);
+        assert_eq!(derived[b], vec![3]);
+        // Subsequent retirement operates cleanly on newly sealed segments.
+        let c = derived.try_push(vec![4]).unwrap();
+        derived.seal();
+        derived.retire(c..c + 1);
+        assert!(derived.get(c).is_none());
+        assert_eq!(derived[b], vec![3]);
     }
 }

@@ -156,16 +156,8 @@ pub fn cmd_eval(args: &[String]) -> Result<i32, CliError> {
     )?;
 
     let eval_options = ModuleEvalOptions {
-        properties: effective
-            .external_properties
-            .iter()
-            .map(|(k, v)| (k.clone(), v.clone()))
-            .collect(),
-        environment: effective
-            .env
-            .iter()
-            .map(|(k, v)| (k.clone(), v.clone()))
-            .collect(),
+        properties: Vec::new(),
+        environment: Vec::new(),
         no_project: true,
         no_cache: true,
         settings: "pkl:settings".into(),
