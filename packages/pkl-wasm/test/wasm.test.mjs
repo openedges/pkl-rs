@@ -769,9 +769,14 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
     const tgzPath = join(packDir, tgzName);
 
     // Extract tarball directly into node_modules/@pkl-rs/wasm (100% offline clean install)
+    // Use relative POSIX paths with cwd=workDir so GNU tar.exe on Windows does not treat `C:\...` as a remote host.
     const modDir = join(installDir, 'node_modules', '@pkl-rs', 'wasm');
     mkdirSync(modDir, { recursive: true });
-    execFileSync(tarBin, ['-xzf', tgzPath, '--strip-components=1', '-C', modDir]);
+    execFileSync(
+      tarBin,
+      ['-xzf', `pack/${tgzName}`, '--strip-components=1', '-C', 'install/node_modules/@pkl-rs/wasm'],
+      { cwd: workDir },
+    );
 
     writeFileSync(
       join(installDir, 'smoke.mjs'),

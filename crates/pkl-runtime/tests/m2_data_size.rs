@@ -548,7 +548,14 @@ fn payload_bits_preserve_java_widening_conversion_order_and_strict_power() {
         let Value::DataSize(value) = value(expression) else {
             panic!("Java row {id}: DataSize")
         };
-        assert_eq!(value.value().to_bits(), bits, "Java row {id}: {expression}");
+        let actual_bits = if value.value().is_nan() {
+            // Java Double.doubleToLongBits canonicalizes architecture-dependent NaN sign bits
+            // (x86_64 SSE `0.0 / 0.0` produces 0xfff8_0000_0000_0000, ARM64 produces 0x7ff8_0000_0000_0000).
+            0x7ff8_0000_0000_0000u64
+        } else {
+            value.value().to_bits()
+        };
+        assert_eq!(actual_bits, bits, "Java row {id}: {expression}");
         assert_eq!(value.unit().symbol(), unit, "Java row {id}");
     }
 }

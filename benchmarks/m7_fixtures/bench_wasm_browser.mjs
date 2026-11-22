@@ -66,7 +66,8 @@ function classifyBrowserProcessRole(cmd, ppid, driverPid) {
     lower.includes("--type=renderer") ||
     lower.includes("-contentproc") ||
     lower.includes("webcontent") ||
-    lower.includes("webkitwebprocess")
+    lower.includes("webkitwebprocess") ||
+    lower.includes("wpewebprocess")
   ) {
     return "renderer";
   }
@@ -81,9 +82,11 @@ function classifyBrowserProcessRole(cmd, ppid, driverPid) {
   if (
     lower.includes("--type=utility") ||
     lower.includes("--type=zygote") ||
+    lower.includes("--type=crashpad") ||
+    lower.includes("chrome_crashpad_handler") ||
     lower.includes("webkitnetworkprocess") ||
-    lower.includes("networking") ||
-    lower.includes("crashpad")
+    lower.includes("wpenetworkprocess") ||
+    lower.includes("networking")
   ) {
     return "utility_network";
   }
@@ -137,6 +140,7 @@ function sampleDescendantTreeRssBytes(parentPid) {
     const kib = rssKib.get(pid) || 0;
     const bytes = kib * 1024;
     const cmd = cmdOf.get(pid) || "";
+    if (/^(?:\/bin\/)?ps\b/.test(cmd.trim())) continue;
     const role = classifyBrowserProcessRole(cmd, ppidOf.get(pid), parentPid);
     totalKib += kib;
     roleBytes[role] = (roleBytes[role] || 0) + bytes;
@@ -151,8 +155,8 @@ function sampleDescendantTreeRssBytes(parentPid) {
   processes.sort((a, b) => b.rss_bytes - a.rss_bytes);
   return {
     total_bytes: totalKib * 1024,
-    process_count: visited.length,
-    pids: visited,
+    process_count: processes.length,
+    pids: processes.map((p) => p.pid),
     role_rss_bytes: roleBytes,
     processes,
   };

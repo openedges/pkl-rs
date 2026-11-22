@@ -21,10 +21,12 @@ try {
 
   const npmEnv = { ...process.env, npm_config_cache: npmCache };
 
+  const isWin = process.platform === "win32";
   const packStdout = execFileSync(npmBin, ["pack", "--pack-destination", packDir], {
     cwd: pkgDir,
     env: npmEnv,
     encoding: "utf8",
+    shell: isWin,
   }).trim();
   const tarballName = packStdout.split(/\r?\n/).pop().trim();
   const tarballPath = join(packDir, tarballName);
@@ -38,7 +40,7 @@ try {
   execFileSync(
     npmBin,
     ["install", "--offline", "--no-audit", "--no-fund", tarballPath],
-    { cwd: consumerDir, env: npmEnv, stdio: "inherit" },
+    { cwd: consumerDir, env: npmEnv, stdio: "inherit", shell: isWin },
   );
 
   // Verify TypeScript declarations & native addon are packed in installed package

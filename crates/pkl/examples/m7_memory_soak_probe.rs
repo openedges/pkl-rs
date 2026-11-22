@@ -311,7 +311,7 @@ fn make_base_builder() -> EvaluatorBuilder {
 fn make_padding(seed: usize, repeats: usize) -> String {
     let mut out = String::with_capacity(repeats * 32);
     for k in 0..repeats {
-        let _ = write!(&mut out, "seg_{seed}_{k:02}_abcdefghij");
+        let _ = write!(&mut out, "seg_{seed:06}_{k:02}_abcdefghij");
     }
     out
 }
@@ -388,7 +388,7 @@ local f = (x) -> x + base
 mapped = nums.map(f)
 sum = mapped.fold(0, (a, b) -> a + b)
 meta {{
-  tag = "iter-{iter_id}"
+  tag = "iter-{iter_id:06}"
   payload = "{short_pad}"
   entries = new Mapping {{
     for (k in List(1, 2, 3, 4)) {{
@@ -723,12 +723,12 @@ fn cyclic_program(iter_id: usize) -> String {
   next: Node
 }}
 local a {{
-  tag = "a-{iter_id}"
+  tag = "a-{iter_id:06}"
   payload = "{pad}"
   peer = b
 }}
 local b {{
-  tag = "b-{iter_id}"
+  tag = "b-{iter_id:06}"
   payload = "{pad}"
   peer = a
 }}
@@ -800,7 +800,7 @@ fn run_cyclic_heap_probe() -> HeapProbeResult {
             .and_then(pkl_runtime::evaluation::session::SourceSession::result_string);
         match eval_res {
             Ok(val) => {
-                let expected = format!("a-{step}|a-{step}|{step}|{}|a-{step}", step + 9);
+                let expected = format!("a-{step:06}|a-{step:06}|{step}|{}|a-{step:06}", step + 9);
                 if val.to_java_utf8() != expected {
                     assertions_ok = false;
                 }
@@ -848,7 +848,7 @@ fn run_cyclic_graphs(
 
     for step in 0..total_steps {
         let src = cyclic_program(step);
-        let expected = format!("a-{step}|a-{step}|{step}|{}|a-{step}", step + 9);
+        let expected = format!("a-{step:06}|a-{step:06}|{step}|{}|a-{step:06}", step + 9);
         match evaluator.evaluate_expression_string(&ModuleSource::text(src), "summary") {
             Ok(out) if out == expected => assertions_passed += 1,
             Ok(out) => {

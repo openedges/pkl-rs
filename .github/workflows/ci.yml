@@ -299,11 +299,11 @@ jobs:
           else
             python3 tools/m2_language.py --output target/m2/ci-language --workers 4 \
               --adapter language-api-string \
-              --adapter historical-collections \
+              --adapter historical-collections-module-eval \
               --adapter historical-cli-module-eval \
-              --adapter selected-regression \
+              --adapter selected-regression-module-eval \
               --adapter package-project-eval \
-              --adapter jvm-classpath \
+              --adapter language-jvm-classpath-output \
               --record-only
           fi
       - name: Record same-evaluator class initialization sequences
@@ -362,12 +362,12 @@ jobs:
             target
           key: cargo-m3-${{ runner.os }}-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
           restore-keys: cargo-m3-${{ runner.os }}-
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
       - name: Check M3 manifest and unit tests
         run: |
           python3 tools/m3_manifest.py --check
           PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m3_*.py' -v
-      - name: Bootstrap pinned Java oracle
-        run: python3 tools/oracle.py fetch
       - name: Run M3 mechanical 1,781-item coverage probe
         run: |
           cargo build --release -p pkl-runtime --example m3_coverage_probe --locked
@@ -421,12 +421,12 @@ jobs:
             target
           key: cargo-m4-${{ runner.os }}-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
           restore-keys: cargo-m4-${{ runner.os }}-
+      - name: Bootstrap pinned Java oracle
+        run: python3 tools/oracle.py fetch
       - name: Check M4 manifest and unit tests
         run: |
           python3 tools/m4_manifest.py --check
           PYTHONPATH=tools python3 -m unittest discover -s tools/tests -p 'test_m4_*.py' -v
-      - name: Bootstrap pinned Java oracle
-        run: python3 tools/oracle.py fetch
       - name: Run M4 offline differential lanes (Lanes 1-3 on push/PR; all 5 Pantry lanes on full_corpus)
         shell: bash
         run: |

@@ -72,10 +72,10 @@ MIB = 1024 * 1024
 PROFILE_ITERATIONS: dict[str, dict[str, dict[str, tuple[int, int]]]] = {
     "standard": {
         "native": {
-            "repeated-success": (1500, 150),
+            "repeated-success": (1500, 300),
             "repeated-failure": (1500, 150),
             "unique-sources-churn": (500, 50),
-            "cyclic-graphs": (1000, 100),
+            "cyclic-graphs": (1000, 500),
             "lifecycle-cancel-timeout-close": (120, 12),
             "cache-churn": (300, 30),
         },

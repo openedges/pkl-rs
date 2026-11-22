@@ -137,18 +137,22 @@ class M4ServersAndReadersTests(unittest.TestCase):
         self.assertEqual(pkg["module_count"], 206)
 
     def test_m4_http_fixture_server_compiles_with_pinned_jdk(self) -> None:
-        pinned_java = ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/Contents/Home/bin/java"
-        if not pinned_java.is_file():
-            self.fail(f"pinned oracle JDK missing: {pinned_java}")
         prev = os.environ.get("PKL_ORACLE_JAVA")
-        os.environ["PKL_ORACLE_JAVA"] = str(pinned_java)
+        injected = False
+        if not prev:
+            for candidate in (
+                ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/Contents/Home/bin/java",
+                ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/bin/java",
+            ):
+                if candidate.is_file():
+                    os.environ["PKL_ORACLE_JAVA"] = str(candidate)
+                    injected = True
+                    break
         try:
             meta = oracle.ensure_oracle(ROOT, fetch=False)
         finally:
-            if prev is None:
+            if injected:
                 os.environ.pop("PKL_ORACLE_JAVA", None)
-            else:
-                os.environ["PKL_ORACLE_JAVA"] = prev
         self.assertTrue(meta["exact_jdk_lock_match"])
         javac = Path(meta["java"]).with_name("javac")
         with tempfile.TemporaryDirectory() as td:

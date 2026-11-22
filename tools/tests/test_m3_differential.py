@@ -357,10 +357,28 @@ class M3DifferentialTests(unittest.TestCase):
             self.assertEqual(row_esc["differences"], ["files/escaped/escaped.txt"])
 
     def test_java_pklbinary_decode_probe_live_smoke(self) -> None:
-        pinned_java = ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/Contents/Home/bin/java"
         jar = ROOT / ".cache/oracle/pkl-tools-0.32.0.jar"
-        if not pinned_java.is_file() or not jar.is_file():
-            self.skipTest("pinned oracle JDK or pkl-tools-0.32.0.jar not present")
+        if not jar.is_file():
+            self.skipTest("pkl-tools-0.32.0.jar not present")
+        prev = os.environ.get("PKL_ORACLE_JAVA")
+        injected = False
+        if not prev:
+            for candidate in (
+                ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/Contents/Home/bin/java",
+                ROOT / ".cache/oracle/temurin-21.0.13.1+2-LTS/jdk-21.0.13.1+2/bin/java",
+            ):
+                if candidate.is_file():
+                    os.environ["PKL_ORACLE_JAVA"] = str(candidate)
+                    injected = True
+                    break
+        try:
+            meta = oracle.ensure_oracle(ROOT, fetch=False)
+        except oracle.OracleError:
+            self.skipTest("pinned oracle JDK not present")
+        finally:
+            if injected:
+                os.environ.pop("PKL_ORACLE_JAVA", None)
+        pinned_java = Path(meta["java"])
         javac = pinned_java.with_name("javac")
         with tempfile.TemporaryDirectory() as td:
             classes = Path(td)

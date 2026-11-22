@@ -649,6 +649,7 @@ def run_case(
         "output_dir": str(case_gen),
         "work_dir": str(case_work),
         "cache_dir": str(case_cache),
+        "python": sys.executable,
         "reader_bin": str((root / M4_READER_BIN).resolve()),
         "lifecycle_log": str(lifecycle_log),
         "root": str(root),

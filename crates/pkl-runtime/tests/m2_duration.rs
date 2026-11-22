@@ -269,7 +269,14 @@ fn duration_payload_bits_match_separate_java_export_observations() {
         let Value::Duration(value) = ready(&mut vm) else {
             panic!("Java row {id}: expected Duration")
         };
-        assert_eq!(value.value().to_bits(), bits, "Java row {id}: {expression}");
+        let actual_bits = if value.value().is_nan() {
+            // Java Double.doubleToLongBits canonicalizes architecture-dependent NaN sign bits
+            // (x86_64 SSE `0.0 / 0.0` produces 0xfff8_0000_0000_0000, ARM64 produces 0x7ff8_0000_0000_0000).
+            0x7ff8_0000_0000_0000u64
+        } else {
+            value.value().to_bits()
+        };
+        assert_eq!(actual_bits, bits, "Java row {id}: {expression}");
         assert_eq!(value.unit().symbol(), unit, "Java row {id}: {expression}");
         vm.close();
         assert_eq!(vm.heap_stats().slots, 0);

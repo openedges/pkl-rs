@@ -222,14 +222,14 @@ try {
       const vfs = new api.VirtualFileSystem(
         {
           "/app/lib.pkl": "v = 21\n",
-          "/app/main.pkl": 'import "lib.pkl"\nout = lib.v * 2\n',
+          "/app/main.pkl": 'import "lib.pkl"\nres = lib.v * 2\n',
           "/outside.pkl": "secret = 1\n",
         },
         { rootDir: "/app" }
       );
       const ev = await api.createEvaluator({ vfs });
       try {
-        assertEq(await ev.evaluateExpression(api.ModuleSource.path("/app/main.pkl"), "out"), "42", "vfs eval");
+        assertEq(await ev.evaluateExpression(api.ModuleSource.path("/app/main.pkl"), "res"), "42", "vfs eval");
         let denied = false;
         try {
           await ev.evaluateOutputText(api.ModuleSource.text('import "../outside.pkl"\nx = outside.secret\n', "file:///app/e.pkl"));
@@ -707,6 +707,14 @@ def main() -> int:
                     raise ValueError(f"Unsupported browser: {b}")
             rep = run_smoke_browsers(root, browsers, out)
             print(json.dumps({k: v.get("status") for k, v in rep["results"].items()}, sort_keys=True))
+            if not rep["all_passed"]:
+                for k, v in rep["results"].items():
+                    if v.get("status") != "pass":
+                        print(f"=== {k} smoke failure (exit={v.get('exit_code')}) ===", file=sys.stderr)
+                        if v.get("stderr"):
+                            print(v["stderr"], file=sys.stderr)
+                        if v.get("stdout"):
+                            print(v["stdout"], file=sys.stderr)
             return 0 if rep["all_passed"] else 1
 
         browsers = [b.strip() for b in args.browsers.split(",") if b.strip()]

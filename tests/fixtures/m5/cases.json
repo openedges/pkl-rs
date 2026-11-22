@@ -1995,7 +1995,7 @@
               ],
               "externalModuleReaders": {
                 "extmod": {
-                  "executable": "/opt/homebrew/bin/python3.14",
+                  "executable": "{python}",
                   "arguments": [
                     "-B",
                     "{reader_bin}",
@@ -2006,7 +2006,7 @@
               },
               "externalResourceReaders": {
                 "extres": {
-                  "executable": "/opt/homebrew/bin/python3.14",
+                  "executable": "{python}",
                   "arguments": [
                     "-B",
                     "{reader_bin}",
