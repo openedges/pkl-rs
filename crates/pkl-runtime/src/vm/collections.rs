@@ -996,6 +996,48 @@ pub(crate) fn render_members(
     heap: &Heap,
     receiver: ObjectId,
 ) -> Result<Vec<RenderMember>, RuntimeError> {
+    let first = heap.get(receiver)?;
+    if !first.members.is_empty()
+        && is_single_level_leaf_collection(heap, first)
+        && first.collection_members.len() == first.members.len()
+    {
+        let mut result = Vec::with_capacity(first.members.len());
+        for (idx, member) in first.members.iter().enumerate() {
+            if member.local || member.method {
+                continue;
+            }
+            let descriptor = {
+                let direct = &first.collection_members[idx];
+                if direct.name == member.name
+                    && (direct.kind != CollectionMemberKind::Property) == member.entry
+                {
+                    direct.clone()
+                } else if let Some(found) = first.collection_members.iter().find(|d| {
+                    d.name == member.name
+                        && (d.kind != CollectionMemberKind::Property) == member.entry
+                }) {
+                    found.clone()
+                } else if member.entry {
+                    continue;
+                } else {
+                    CollectionMember {
+                        key: Value::string(member.name.clone()),
+                        name: member.name.clone(),
+                        kind: CollectionMemberKind::Property,
+                    }
+                }
+            };
+            result.push(RenderMember {
+                code: Some(member.code),
+                descriptor,
+                skip: member.hidden()
+                    || member.external()
+                    || member.definition()
+                    || (!member.entry && member.name == "default"),
+            });
+        }
+        return Ok(result);
+    }
     let mut chain = Vec::new();
     let mut owner = Some(receiver);
     let mut seen = SmallObjectIdSet::new();
@@ -1006,19 +1048,25 @@ pub(crate) fn render_members(
         chain.push(id);
         owner = heap.get(id)?.parent;
     }
-    let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
+    let typed = typed_class(heap, receiver)?.is_some() || first.is_module;
     let mut result = Vec::new();
     for id in chain.into_iter().rev() {
         let object = heap.get(id)?;
-        for member in &object.members {
+        for (idx, member) in object.members.iter().enumerate() {
             if member.local || member.method {
                 continue;
             }
-            let descriptor = if let Some(descriptor) =
+            let descriptor = if let Some(direct) = object.collection_members.get(idx)
+                && direct.name == member.name
+                && (direct.kind != CollectionMemberKind::Property) == member.entry
+            {
+                direct.clone()
+            } else if let Some(descriptor) =
                 object.collection_members.iter().find(|descriptor| {
                     descriptor.name == member.name
                         && (descriptor.kind != CollectionMemberKind::Property) == member.entry
-                }) {
+                })
+            {
                 descriptor.clone()
             } else if member.entry {
                 continue;
@@ -2487,7 +2535,10 @@ impl Vm {
                     if object.reference.is_some() {
                         return Err(external_amendment_error("pkl.ref#Reference"));
                     }
-                    if let Some(class) = typed_class(&self.heap, id)? {
+                    if object.collection_kind == CollectionKind::Dynamic
+                        && object.builtin_type.is_none()
+                        && let Some(class) = typed_class(&self.heap, id)?
+                    {
                         self.check_class_instantiable(&class)?;
                     }
                     if matches!(

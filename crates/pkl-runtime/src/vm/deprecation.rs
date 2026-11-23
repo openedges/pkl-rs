@@ -37,6 +37,11 @@ impl CallCache {
     }
 
     #[inline]
+    pub(super) fn is_megamorphic(&self) -> bool {
+        self.megamorphic
+    }
+
+    #[inline]
     pub(super) fn contains_declared_class(&self, class: ObjectId) -> bool {
         !self.direct
             && !self.megamorphic
