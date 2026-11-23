@@ -1,6 +1,12 @@
-# Validation Contract
+# Testing & Validation Contract
 
-The goals are behavioral and raw-byte compatibility with **Apple Pkl 0.32.0**, with execution time and peak RSS `<= 1.00x` against the pinned **Official Apple Pkl 0.32.0 `native-image`** executables for all 15 CLI/server/`pkldoc` workloads and against the pinned **Eclipse Adoptium Temurin `21.0.13.1+2-LTS`** JVM (plus the `2026-11-22` browser Wasm contract) for all 19 embedded API and JS/Wasm workloads.
+This document defines the complete test inventory and release validation contract for **Apple Pkl `0.32.0`** compatibility and performance.
+
+- **End users**: See [docs/installation.md](docs/installation.md) for installation and checksum verification, and [README.md](README.md) for quick-start examples.
+- **Milestone history & recorded evidence**: See [docs/development-history.md](docs/development-history.md) and `reports/m0/`–`reports/m7/`.
+- **Release & versioning checklist**: See [docs/versioning.md](docs/versioning.md).
+
+The release goals are behavioral and raw-byte compatibility with **Apple Pkl 0.32.0**, with execution time and peak RSS `<= 1.00x` against the pinned **Official Apple Pkl 0.32.0 `native-image`** executables for all 15 CLI/server/`pkldoc` workloads and against the pinned **Eclipse Adoptium Temurin `21.0.13.1+2-LTS`** JVM (plus the `2026-11-22` browser Wasm contract) for all 19 embedded API and JS/Wasm workloads.
 
 ## Verification architecture & complete test inventory
 

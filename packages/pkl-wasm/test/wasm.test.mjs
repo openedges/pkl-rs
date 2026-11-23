@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import test from 'node:test';
@@ -817,6 +817,9 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
       ['-xzf', `pack/${tgzName}`, '--strip-components=1', '-C', 'install/node_modules/@pkl-rs/wasm'],
       { cwd: workDir },
     );
+    for (const legalFile of ['LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md']) {
+      assert.ok(existsSync(join(modDir, legalFile)), `${legalFile} missing from packed @pkl-rs/wasm tarball`);
+    }
 
     writeFileSync(
       join(installDir, 'smoke.mjs'),

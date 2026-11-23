@@ -48,6 +48,9 @@ try {
   assert.ok(existsSync(join(installedRoot, "dist", "index.d.ts")), "dist/index.d.ts missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.mjs")), "dist/index.mjs missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.cjs")), "dist/index.cjs missing");
+  for (const legalFile of ["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"]) {
+    assert.ok(existsSync(join(installedRoot, legalFile)), `${legalFile} missing from packed @pkl-rs/napi tarball`);
+  }
   const addonCandidates = [
     process.platform === "linux"
       ? join(installedRoot, "native", `pkl_napi.linux-${process.arch}-musl.node`)

@@ -3,6 +3,15 @@
   "version": "0.32.0",
   "description": "WebAssembly bindings for the Apple Pkl 0.32.0 Rust runtime and formatter (browser and Node.js)",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openedges/pkl-rs.git",
+    "directory": "packages/pkl-wasm"
+  },
+  "homepage": "https://github.com/openedges/pkl-rs/tree/main/packages/pkl-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/openedges/pkl-rs/issues"
+  },
   "type": "module",
   "types": "./dist/index.d.ts",
   "exports": {
@@ -13,7 +22,10 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "THIRD-PARTY-NOTICES.md"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

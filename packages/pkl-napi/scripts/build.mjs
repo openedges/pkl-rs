@@ -130,6 +130,10 @@ copyFileSync(resolve(srcDir, "runtime.cjs"), resolve(distDir, "index.cjs"));
 copyFileSync(resolve(srcDir, "index.mjs"), resolve(distDir, "index.mjs"));
 copyFileSync(resolve(srcDir, "index.d.ts"), resolve(distDir, "index.d.ts"));
 
+for (const legalFile of ["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"]) {
+  copyFileSync(resolve(repoRoot, legalFile), resolve(pkgDir, legalFile));
+}
+
 console.log(
   JSON.stringify({
     package: "@pkl-rs/napi",

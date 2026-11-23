@@ -200,10 +200,12 @@ jobs:
           set -euo pipefail
           ARCH="${{ matrix.node_arch }}"
           mkdir -p target/release-stage/cli target/release-stage/napi
-          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkl
-          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkldoc
-          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkl
-          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkldoc
+          cp LICENSE NOTICE THIRD-PARTY-NOTICES.md target/dist-linux-gnu-228/
+          cp LICENSE NOTICE THIRD-PARTY-NOTICES.md target/dist-linux-musl/
+          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkl LICENSE NOTICE THIRD-PARTY-NOTICES.md
+          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkldoc LICENSE NOTICE THIRD-PARTY-NOTICES.md
+          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkl LICENSE NOTICE THIRD-PARTY-NOTICES.md
+          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkldoc LICENSE NOTICE THIRD-PARTY-NOTICES.md
           cp "target/dist-linux-gnu-228/pkl_napi.linux-${ARCH}-gnu.node" target/release-stage/napi/
           cp "target/dist-linux-musl/pkl_napi.linux-${ARCH}-musl.node" target/release-stage/napi/
       - name: Upload Linux packaged artifacts
@@ -284,13 +286,16 @@ jobs:
         run: |
           set -euo pipefail
           LABEL="${{ matrix.target_label }}"
-          mkdir -p target/release-stage/cli target/release-stage/napi
+          mkdir -p target/release-stage/cli target/release-stage/napi target/release-cli-bundle
+          cp LICENSE NOTICE THIRD-PARTY-NOTICES.md target/release-cli-bundle/
           if [ "${{ matrix.archive_ext }}" = "tar.gz" ]; then
-            tar -czf "target/release-stage/cli/pkl-${LABEL}.tar.gz" -C target/release pkl
-            tar -czf "target/release-stage/cli/pkldoc-${LABEL}.tar.gz" -C target/release pkldoc
+            cp target/release/pkl target/release/pkldoc target/release-cli-bundle/
+            tar -czf "target/release-stage/cli/pkl-${LABEL}.tar.gz" -C target/release-cli-bundle pkl LICENSE NOTICE THIRD-PARTY-NOTICES.md
+            tar -czf "target/release-stage/cli/pkldoc-${LABEL}.tar.gz" -C target/release-cli-bundle pkldoc LICENSE NOTICE THIRD-PARTY-NOTICES.md
           else
-            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release/pkl.exe' -DestinationPath 'target/release-stage/cli/pkl-${LABEL}.zip' -Force"
-            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release/pkldoc.exe' -DestinationPath 'target/release-stage/cli/pkldoc-${LABEL}.zip' -Force"
+            cp target/release/pkl.exe target/release/pkldoc.exe target/release-cli-bundle/
+            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release-cli-bundle/pkl.exe','target/release-cli-bundle/LICENSE','target/release-cli-bundle/NOTICE','target/release-cli-bundle/THIRD-PARTY-NOTICES.md' -DestinationPath 'target/release-stage/cli/pkl-${LABEL}.zip' -Force"
+            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release-cli-bundle/pkldoc.exe','target/release-cli-bundle/LICENSE','target/release-cli-bundle/NOTICE','target/release-cli-bundle/THIRD-PARTY-NOTICES.md' -DestinationPath 'target/release-stage/cli/pkldoc-${LABEL}.zip' -Force"
           fi
           cp "packages/pkl-napi/native/${{ matrix.addon_name }}" target/release-stage/napi/
       - name: Upload packaged artifacts
@@ -394,6 +399,7 @@ jobs:
           cp packages/pkl-napi/src/runtime.cjs packages/pkl-napi/dist/index.cjs
           cp packages/pkl-napi/src/index.mjs packages/pkl-napi/dist/index.mjs
           cp packages/pkl-napi/src/index.d.ts packages/pkl-napi/dist/index.d.ts
+          cp LICENSE NOTICE THIRD-PARTY-NOTICES.md packages/pkl-napi/
 
           # Copy all CLI archives and @pkl-rs/wasm tarball into final release-bundle
           find target/downloaded-release -path '*/cli/*' -type f -exec cp {} target/release-bundle/ \;

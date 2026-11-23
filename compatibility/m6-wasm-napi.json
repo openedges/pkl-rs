@@ -532,12 +532,12 @@
       "implementation_links": [
         {
           "path": "packages/pkl-wasm/package.json",
-          "sha256": "9777e4fcbac9032f29efe721fc51fbec1f4f1138f7af113b2956c23100079cc5",
+          "sha256": "eb53101afa72077ac69b18797684f2fa9c610e91b65d5fc29ab06dfffefae57a",
           "symbol": "pklPlatformSupport"
         },
         {
           "path": "packages/pkl-wasm/scripts/build.mjs",
-          "sha256": "475a74d623ab5399d722bd6607b3ed48a6a5922b54b448ceafdb5b2a7027fbbb",
+          "sha256": "d32eaa26ac7467e56173a52501977972ad07bb9deb89ecb88dab3716fc1e3897",
           "symbol": "resolveExecutable"
         },
         {
@@ -547,12 +547,12 @@
         },
         {
           "path": "packages/pkl-napi/package.json",
-          "sha256": "b5be6cacbace930edfcdbefff9ecea306affcec2ceb373e3666a3e31762b39cf",
+          "sha256": "1bee880fdadb9d511e869bf2b1267336e8b4ec3b995ad435e652c9f428161325",
           "symbol": "pklPlatformSupport"
         },
         {
           "path": "packages/pkl-napi/scripts/build.mjs",
-          "sha256": "0956434a842b0ece67be16f7617e1dac61b65ef6c9beb4bbecaa3bda1f1c361c",
+          "sha256": "151afe3c97a5aa38f5d53da8b315a864d6d686baceec0914b5968ca01db24d62",
           "symbol": "platformBinaryName"
         },
         {

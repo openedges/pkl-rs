@@ -1,13 +1,14 @@
 # Contributing
 
-See [README.md](README.md) for the current project status, development environment, and quick-start checks, [TESTING.md](TESTING.md) for the complete verification contract, and [docs/ci.md](docs/ci.md) for the GitHub Actions vs. local verification split.
+See [README.md](README.md) for the product overview, [docs/installation.md](docs/installation.md) for source setup, [docs/versioning.md](docs/versioning.md) for release and versioning rules, [TESTING.md](TESTING.md) for the complete verification contract, [docs/ci.md](docs/ci.md) for the GitHub Actions vs. local verification split, and [docs/development-history.md](docs/development-history.md) for M0–M7 milestone records.
 
 ## Workflow
 
-1. Follow [README.md](README.md) to preserve reference fixture line endings (`core.autocrlf=false`) and initialize the pinned Git submodules under `external/`, then check the reference pins with `cargo xtask verify`.
+1. Follow [docs/installation.md](docs/installation.md) to preserve reference fixture line endings (`core.autocrlf=false`) and initialize the pinned Git submodules under `external/`, then check the reference pins with `cargo xtask verify`.
 2. Review project goals and scope in [INTENT.md](INTENT.md), roadmap and current status in [PLAN.md](PLAN.md), and architecture guidance in [docs/architecture.md](docs/architecture.md). Establish semantics from the pinned `external/pkl` `0.32.0` sources and tests.
 3. Keep changes focused and explain their effects on observable behavior. Do not add placeholders that return success for unimplemented APIs or add Java fallbacks to production Rust evaluation paths.
-4. Run checks appropriate to the changed area (see below) and record exact results, provenance, and any unverified scope.
+4. Update [CHANGELOG.md](CHANGELOG.md) for notable user-facing changes and update [NOTICE](NOTICE) / [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) whenever adding or modifying third-party dependencies or embedded assets.
+5. Run checks appropriate to the changed area (see below) and record exact results, provenance, and any unverified scope. See [SECURITY.md](SECURITY.md) for reporting vulnerabilities privately.
 
 ## Implementation principles
 

@@ -155,6 +155,11 @@ for (const entry of readdirSync(SRC_DIR)) {
   }
 }
 
+// 4b. Sync Apache-2.0 legal and attribution files from repository root for npm packing
+for (const legalFile of ['LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md']) {
+  copyFileSync(join(REPO_ROOT, legalFile), join(PKG_DIR, legalFile));
+}
+
 // 5. Summarize built distribution artifacts
 const summary = {};
 for (const rel of [

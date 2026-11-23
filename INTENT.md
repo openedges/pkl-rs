@@ -4,9 +4,9 @@
 
 Reimplement Pkl **0.32.0** in Rust so that existing Pkl programs and integrations preserve their observable behavior, while execution time and memory usage meet or improve on the Java implementation. Deliver native Rust, WebAssembly, and Node.js N-API products built on one evaluation engine.
 
-This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) contains the milestone overview, implementation order, and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract. The [architecture](docs/architecture.md) describes the intended design.
+This document defines the project's durable goals and scope. [PLAN.md](PLAN.md) contains the milestone overview, implementation order, and milestone gates in Korean; [TESTING.md](TESTING.md) defines the verification contract; [docs/development-history.md](docs/development-history.md) preserves the chronological M0–M7 engineering history and recorded checkpoints; and [docs/architecture.md](docs/architecture.md) describes the design.
 
-The repository currently contains Java baseline verification tooling and a bounded shared Rust evaluator with native, browser, and Node experiments. M2 is expanding language support; the complete evaluator and product interfaces remain unfinished. Selected differential results establish compatibility only for the recorded cases, not the full language or the performance targets below.
+Current release readiness and remaining platform verification gaps are tracked in [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md). Local verification milestones remain distinct from hosted cross-platform release certification until all release criteria below are satisfied.
 
 ## Reference Baseline
 
