@@ -20,6 +20,22 @@ impl PartialEq for PklString {
 }
 impl Eq for PklString {}
 
+impl std::hash::Hash for PklString {
+    #[inline]
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        match &self.0 {
+            Repr::Utf8(s) => {
+                0u8.hash(state);
+                s.as_bytes().hash(state);
+            }
+            Repr::Utf16(u) => {
+                1u8.hash(state);
+                u.as_ref().hash(state);
+            }
+        }
+    }
+}
+
 #[derive(Clone, PartialEq, Eq)]
 enum Repr {
     Utf8(Arc<str>),

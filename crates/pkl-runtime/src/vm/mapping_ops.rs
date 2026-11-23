@@ -307,6 +307,104 @@ impl Vm {
         mode: LookupMode,
     ) -> Result<(), RuntimeError> {
         if self.frames.last().unwrap().mapping_lookup.is_none() {
+            if !matches!(query, Value::Object(_))
+                && matches!(
+                    mode,
+                    LookupMode::Subscript | LookupMode::Null | LookupMode::Contains
+                )
+            {
+                if let Some(value) = self.lookup_non_object_cache_entry(receiver, &query)? {
+                    if mode != LookupMode::Subscript {
+                        let frame = self.frames.last_mut().unwrap();
+                        frame.pc = self.program.blocks[frame.block].len() - 1;
+                    }
+                    self.stack.push(if mode == LookupMode::Contains {
+                        Value::Bool(true)
+                    } else {
+                        value
+                    });
+                    return Ok(());
+                }
+                let recv_obj = self.heap.get(receiver)?;
+                let steal = mode != LookupMode::Contains
+                    && recv_obj.members.is_empty()
+                    && recv_obj.collection_default.is_none()
+                    && matches!(
+                        recv_obj.collection_kind,
+                        CollectionKind::Mapping | CollectionKind::Listing
+                    );
+                if !steal || recv_obj.parent.is_none() {
+                    let hash = equality::java_hash_on_heap(&self.heap, &query)?;
+                    let mut cur = Some(receiver);
+                    let mut visited = SmallObjectIdSet::new();
+                    let mut hit: Option<(ObjectId, PklString)> = None;
+                    while let Some(owner_id) = cur {
+                        if !visited.insert(owner_id) {
+                            return Err(invalid("cyclic Mapping lookup parent chain"));
+                        }
+                        let owner_obj = self.heap.get(owner_id)?;
+                        let matched = if let (Some(index), Some(h)) =
+                            (&owner_obj.declaration_index, hash)
+                            && index.len() == owner_obj.collection_members.len()
+                            && index.has_hash()
+                        {
+                            index.hash_candidates(h).find_map(|pos| {
+                                let m = &owner_obj.collection_members[pos];
+                                (m.kind != CollectionMemberKind::Property
+                                    && equality::same_key(&self.heap, &query, &m.key))
+                                .then_some(&m.name)
+                            })
+                        } else {
+                            owner_obj.collection_members.iter().find_map(|m| {
+                                (m.kind != CollectionMemberKind::Property
+                                    && equality::same_key(&self.heap, &query, &m.key))
+                                .then_some(&m.name)
+                            })
+                        };
+                        if let Some(name) = matched {
+                            hit = Some((owner_id, name.clone()));
+                            break;
+                        }
+                        cur = owner_obj.parent;
+                    }
+                    if let Some((owner_id, name)) = hit {
+                        if mode == LookupMode::Contains {
+                            let frame = self.frames.last_mut().unwrap();
+                            frame.pc = self.program.blocks[frame.block].len() - 1;
+                            self.stack.push(Value::Bool(true));
+                            return Ok(());
+                        }
+                        if mode != LookupMode::Subscript {
+                            let frame = self.frames.last_mut().unwrap();
+                            frame.pc = self.program.blocks[frame.block].len() - 1;
+                        }
+                        return self.force_key_mode_probe(
+                            receiver,
+                            owner_id,
+                            name,
+                            false,
+                            true,
+                            false,
+                            true,
+                            false,
+                            true,
+                            None,
+                            Some(query),
+                        );
+                    }
+                    if mode == LookupMode::Subscript {
+                        return self.fail_missing_key(receiver, query);
+                    }
+                    let frame = self.frames.last_mut().unwrap();
+                    frame.pc = self.program.blocks[frame.block].len() - 1;
+                    self.stack.push(if mode == LookupMode::Contains {
+                        Value::Bool(false)
+                    } else {
+                        Value::Null
+                    });
+                    return Ok(());
+                }
+            }
             self.frames.last_mut().unwrap().mapping_lookup = Some(Box::new(LookupRun {
                 receiver,
                 query: query.clone(),

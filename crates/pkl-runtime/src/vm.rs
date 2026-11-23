@@ -2276,6 +2276,7 @@ pub struct Vm {
     glob_list_threshold: u32,
     class_singletons: BTreeMap<usize, ObjectId>,
     builtin_classes: BTreeMap<classes::BuiltinClass, ObjectId>,
+    builtin_fast_classes: FastBuiltinClasses,
     alias_singletons: BTreeMap<usize, ObjectId>,
     /// Weak handles: live empty strict values share Java's EMPTY identity, but
     /// this lookup does not keep discarded values or producer scopes alive.
@@ -2383,6 +2384,7 @@ impl Vm {
             glob_list_threshold: 16384,
             class_singletons: BTreeMap::new(),
             builtin_classes: BTreeMap::new(),
+            builtin_fast_classes: FastBuiltinClasses::default(),
             alias_singletons: BTreeMap::new(),
             empty_collections: [None; 3],
             empty_objects: [None; 3],
@@ -2963,7 +2965,7 @@ impl Vm {
         let heap = &mut self.heap;
         let executable_roots = &self.executable_roots;
         let resolved_declarations = &self.resolved_declarations;
-        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
+        let builtin_fast_classes = self.builtin_fast_classes;
         let active_type_trackers = self.active_type_trackers;
         let fast_int_cache = &mut self.fast_int_cache;
         let fast_int_captured = &mut self.fast_int_captured;
@@ -4689,6 +4691,7 @@ impl Vm {
         self.resources.clear();
         self.class_singletons.clear();
         self.builtin_classes.clear();
+        self.builtin_fast_classes = FastBuiltinClasses::default();
         self.alias_singletons.clear();
         self.empty_collections = [None; 3];
         self.empty_objects = [None; 3];
@@ -9842,7 +9845,7 @@ impl Vm {
             // A successful cast exits its Java try block before cache publication.
             force.stolen_cast = None;
         }
-        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
+        let builtin_fast_classes = self.builtin_fast_classes;
         while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.inherited_types.is_empty()
@@ -10185,7 +10188,7 @@ fn fast_declaring_module(
     None
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, Default)]
 struct FastBuiltinClasses {
     list: Option<ObjectId>,
     set: Option<ObjectId>,
@@ -10195,12 +10198,13 @@ struct FastBuiltinClasses {
 
 impl FastBuiltinClasses {
     #[inline]
-    fn from_map(map: &BTreeMap<classes::BuiltinClass, ObjectId>) -> Self {
-        Self {
-            list: map.get(&classes::BuiltinClass::List).copied(),
-            set: map.get(&classes::BuiltinClass::Set).copied(),
-            map: map.get(&classes::BuiltinClass::Map).copied(),
-            collection: map.get(&classes::BuiltinClass::Collection).copied(),
+    fn record(&mut self, key: classes::BuiltinClass, id: ObjectId) {
+        match key {
+            classes::BuiltinClass::List => self.list = Some(id),
+            classes::BuiltinClass::Set => self.set = Some(id),
+            classes::BuiltinClass::Map => self.map = Some(id),
+            classes::BuiltinClass::Collection => self.collection = Some(id),
+            _ => {}
         }
     }
 }

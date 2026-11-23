@@ -443,6 +443,25 @@ fn same_member(heap: &Heap, left: &CollectionMember, right: &CollectionMember) -
         && same_key(heap, &left.key, &right.key)
 }
 
+#[inline]
+pub(super) fn is_single_level_leaf_collection(heap: &Heap, object: &Object) -> bool {
+    if object.is_module || object.class_definition.is_some() || !heap.key_equalities.is_empty() {
+        return false;
+    }
+    match object.parent {
+        None => true,
+        Some(parent_id) => heap.get_fast(parent_id).is_some_and(|parent| {
+            parent.parent.is_none()
+                && matches!(parent.builtin_type, Some(TypeCheck::Collection(_)))
+                && parent.collection_members.is_empty()
+                && parent
+                    .members
+                    .iter()
+                    .all(|m| m.local || m.method || m.entry || m.name == "default")
+        }),
+    }
+}
+
 /// Read declaration order without forcing member values. Overrides retain their
 /// inherited position; properties and entries have distinct key namespaces.
 pub fn ordered_members(
@@ -465,19 +484,33 @@ pub fn ordered_members(
         }
         return Ok(first.collection_members.clone());
     }
-    if heap.get(receiver)?.collection_kind == CollectionKind::Map {
-        let object = heap.get(receiver)?;
-        if let Some(order) = &object.map_key_order {
+    if first.collection_kind == CollectionKind::Map {
+        if let Some(order) = &first.map_key_order {
             return Ok(order.clone());
         }
-        return Ok(object
+        return Ok(first
             .map_index()
             .insertion_order()
             .iter()
-            .map(|index| object.collection_members[*index].clone())
+            .map(|index| first.collection_members[*index].clone())
             .collect());
     }
-    let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
+    if !first.collection_members.is_empty() && is_single_level_leaf_collection(heap, first) {
+        let has_default_prop = first
+            .collection_members
+            .iter()
+            .any(|m| m.kind == CollectionMemberKind::Property && m.name == "default");
+        if !has_default_prop {
+            return Ok(first.collection_members.clone());
+        }
+        return Ok(first
+            .collection_members
+            .iter()
+            .filter(|m| !(m.kind == CollectionMemberKind::Property && m.name == "default"))
+            .cloned()
+            .collect());
+    }
+    let typed = typed_class(heap, receiver)?.is_some() || first.is_module;
     let mut chain = Vec::new();
     let mut next = Some(receiver);
     let mut visited = SmallObjectIdSet::new();
@@ -489,6 +522,10 @@ pub fn ordered_members(
         next = heap.get(id)?.parent;
     }
     let mut result: Vec<CollectionMember> = Vec::new();
+    let mut prop_index: Option<std::collections::HashMap<PklString, usize>> = None;
+    let mut str_entry_index: Option<std::collections::HashMap<PklString, usize>> = None;
+    let mut int_entry_index: Option<std::collections::HashMap<i64, usize>> = None;
+    let mut has_other_entry = false;
     for id in chain.into_iter().rev() {
         let object = heap.get(id)?;
         let fallback;
@@ -507,9 +544,89 @@ pub fn ordered_members(
         } else {
             &object.collection_members
         };
+        if result.is_empty() && members.len() > 16 {
+            prop_index = Some(std::collections::HashMap::with_capacity(members.len()));
+            str_entry_index = Some(std::collections::HashMap::with_capacity(members.len()));
+            int_entry_index = Some(std::collections::HashMap::new());
+        }
         for member in members {
             if !typed && member.kind == CollectionMemberKind::Property && member.name == "default" {
                 continue;
+            }
+            if prop_index.is_none() && result.len() >= 16 {
+                let mut pi = std::collections::HashMap::with_capacity(result.len() * 2);
+                let mut si = std::collections::HashMap::with_capacity(result.len() * 2);
+                let mut ii = std::collections::HashMap::new();
+                for (idx, existing) in result.iter().enumerate() {
+                    if existing.kind == CollectionMemberKind::Property {
+                        pi.insert(existing.name.clone(), idx);
+                    } else {
+                        match &existing.key {
+                            Value::String(s) => {
+                                si.insert(s.clone(), idx);
+                            }
+                            Value::Int(i) => {
+                                ii.insert(i.get(), idx);
+                            }
+                            _ => has_other_entry = true,
+                        }
+                    }
+                }
+                prop_index = Some(pi);
+                str_entry_index = Some(si);
+                int_entry_index = Some(ii);
+            }
+            if let (Some(pi), Some(si), Some(ii)) = (
+                prop_index.as_mut(),
+                str_entry_index.as_mut(),
+                int_entry_index.as_mut(),
+            ) {
+                if member.kind == CollectionMemberKind::Property {
+                    if let Some(&idx) = pi.get(&member.name) {
+                        result[idx] = member.clone();
+                    } else {
+                        let idx = result.len();
+                        pi.insert(member.name.clone(), idx);
+                        result.push(member.clone());
+                    }
+                    continue;
+                }
+                match &member.key {
+                    Value::String(s) => {
+                        if let Some(&idx) = si.get(s) {
+                            result[idx] = member.clone();
+                        } else {
+                            let idx = result.len();
+                            si.insert(s.clone(), idx);
+                            result.push(member.clone());
+                        }
+                        continue;
+                    }
+                    Value::Int(i) => {
+                        if let Some(&idx) = ii.get(&i.get()) {
+                            result[idx] = member.clone();
+                        } else {
+                            let idx = result.len();
+                            ii.insert(i.get(), idx);
+                            result.push(member.clone());
+                        }
+                        continue;
+                    }
+                    _ => {
+                        if has_other_entry
+                            && let Some(old) = result.iter_mut().find(|old| {
+                                old.kind != CollectionMemberKind::Property
+                                    && same_member(heap, old, member)
+                            })
+                        {
+                            *old = member.clone();
+                        } else {
+                            has_other_entry = true;
+                            result.push(member.clone());
+                        }
+                        continue;
+                    }
+                }
             }
             if let Some(old) = result.iter_mut().find(|old| same_member(heap, old, member)) {
                 *old = member.clone();
@@ -736,8 +853,33 @@ pub(super) fn forcing_members(
     {
         return ordered_members(heap, receiver);
     }
+    if !receiver_obj.collection_members.is_empty()
+        && is_single_level_leaf_collection(heap, receiver_obj)
+        && receiver_obj.collection_members.len() == receiver_obj.members.len()
+        && !receiver_obj
+            .collection_members
+            .iter()
+            .any(|m| m.kind == CollectionMemberKind::Property && m.name == "default")
+    {
+        return Ok(receiver_obj.collection_members.clone());
+    }
     let effective = ordered_members(heap, receiver)?;
-    let mut result = Vec::new();
+    if effective.is_empty() {
+        return Ok(effective);
+    }
+    let lookup: Option<std::collections::HashMap<(&PklString, bool), usize>> =
+        if effective.len() > 12 {
+            let mut map = std::collections::HashMap::with_capacity(effective.len());
+            for (idx, d) in effective.iter().enumerate() {
+                map.entry((&d.name, d.kind != CollectionMemberKind::Property))
+                    .or_insert(idx);
+            }
+            Some(map)
+        } else {
+            None
+        };
+    let mut emitted = vec![false; effective.len()];
+    let mut result = Vec::with_capacity(effective.len());
     let mut next = Some(receiver);
     let mut visited = SmallObjectIdSet::new();
     while let Some(id) = next {
@@ -749,11 +891,19 @@ pub(super) fn forcing_members(
             if member.local || member.method {
                 continue;
             }
-            if let Some(descriptor) = effective.iter().find(|d| {
-                d.name == member.name && (d.kind != CollectionMemberKind::Property) == member.entry
-            }) && !result.iter().any(|old| same_member(heap, descriptor, old))
+            let idx = if let Some(map) = &lookup {
+                map.get(&(&member.name, member.entry)).copied()
+            } else {
+                effective.iter().position(|d| {
+                    d.name == member.name
+                        && (d.kind != CollectionMemberKind::Property) == member.entry
+                })
+            };
+            if let Some(idx) = idx
+                && !emitted[idx]
             {
-                result.push(descriptor.clone());
+                emitted[idx] = true;
+                result.push(effective[idx].clone());
             }
         }
         next = object.parent;
@@ -2842,6 +2992,7 @@ impl Vm {
                         force_members: Vec::new(),
                         force_position: 0,
                         awaiting_value: false,
+                        members_refreshed: true,
                     })
                 } else {
                     let source = match value.as_object() {
@@ -2942,13 +3093,27 @@ impl Vm {
                         return Err(error);
                     }
                     let members = ordered_members(&self.heap, source)?;
+                    let src_obj = self.heap.get(source)?;
+                    let same_force_order = src_obj.collection_kind == CollectionKind::Map
+                        || (src_obj.collection_kind == CollectionKind::List
+                            && src_obj.list_elements.is_some())
+                        || (!src_obj.collection_members.is_empty()
+                            && is_single_level_leaf_collection(&self.heap, src_obj)
+                            && src_obj.collection_members.len() == src_obj.members.len()
+                            && members.len() == src_obj.collection_members.len());
+                    let force_members = if same_force_order {
+                        members.clone()
+                    } else {
+                        forcing_members(&self.heap, source)?
+                    };
                     Some(CollectionIterator {
                         source,
-                        force_members: forcing_members(&self.heap, source)?,
+                        force_members,
                         members,
                         position: 0,
                         force_position: 0,
                         awaiting_value: false,
+                        members_refreshed: false,
                     })
                 };
                 let id = self.heap.allocate(Object {
@@ -3046,20 +3211,35 @@ impl Vm {
                     }
                     return Ok(());
                 }
-                let source = self
-                    .heap
-                    .get(id)?
-                    .iterator
-                    .as_ref()
-                    .expect("active iterator")
-                    .source;
-                let effective = ordered_members(&self.heap, source)?;
-                self.heap
-                    .get_mut(id)?
-                    .iterator
-                    .as_mut()
-                    .expect("active iterator")
-                    .members = effective;
+                let (source, needs_refresh) = {
+                    let iter = self
+                        .heap
+                        .get(id)?
+                        .iterator
+                        .as_ref()
+                        .expect("active iterator");
+                    (iter.source, !iter.members_refreshed)
+                };
+                if needs_refresh {
+                    if !self.heap.key_equalities.is_empty() {
+                        let effective = ordered_members(&self.heap, source)?;
+                        let iter = self
+                            .heap
+                            .get_mut(id)?
+                            .iterator
+                            .as_mut()
+                            .expect("active iterator");
+                        iter.members = effective;
+                        iter.members_refreshed = true;
+                    } else {
+                        self.heap
+                            .get_mut(id)?
+                            .iterator
+                            .as_mut()
+                            .expect("active iterator")
+                            .members_refreshed = true;
+                    }
+                }
                 let next = self
                     .heap
                     .get_mut(id)?

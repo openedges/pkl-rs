@@ -534,6 +534,7 @@ impl Vm {
             });
             let class = self.heap.allocate_class(prototype);
             self.builtin_classes.insert(key, class);
+            self.builtin_fast_classes.record(key, class);
             let superclass = key
                 .parent()
                 .and_then(|parent| self.builtin_classes.get(&parent).copied());

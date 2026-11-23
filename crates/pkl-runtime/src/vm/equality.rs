@@ -1064,7 +1064,8 @@ impl Vm {
         id: ObjectId,
         member: CollectionMember,
     ) -> Result<(), RuntimeError> {
-        if let Some(elems) = &self.heap.get(id)?.list_elements
+        let obj = self.heap.get(id)?;
+        if let Some(elems) = &obj.list_elements
             && member.kind == CollectionMemberKind::Element
             && let Value::Int(idx) = &member.key
             && idx.get() >= 0
@@ -1075,6 +1076,98 @@ impl Vm {
                 .ok_or_else(|| invalid("missing effective collection member"))?;
             self.stack.push(value);
             return Ok(());
+        }
+        if member.kind == CollectionMemberKind::Property {
+            if let Some(LazyState::Completed(value)) = obj.cache.get(&CacheKey {
+                entry: false,
+                owner: None,
+                name: member.name.clone(),
+                method: false,
+            }) {
+                self.stack.push(value.clone());
+                return Ok(());
+            }
+            let caller = self.frames.len() - 1;
+            self.force_key_mode_probe(
+                id,
+                id,
+                member.name,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                None,
+                None,
+            )?;
+            if self.frames.len() > caller + 1 {
+                self.frames[caller].callsite_hidden = true;
+            }
+            return Ok(());
+        }
+        if !matches!(member.key, Value::Object(_)) {
+            if let Some(value) = self.lookup_non_object_cache_entry(id, &member.key)? {
+                self.stack.push(value);
+                return Ok(());
+            }
+            let hash = java_hash_on_heap(&self.heap, &member.key)?;
+            let mut found_name: Option<PklString> = None;
+            let mut cur = Some(id);
+            let mut visited = SmallObjectIdSet::new();
+            while let Some(owner_id) = cur {
+                if !visited.insert(owner_id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let owner_obj = self.heap.get(owner_id)?;
+                let matched = if let (Some(index), Some(h)) = (&owner_obj.declaration_index, hash)
+                    && index.len() == owner_obj.collection_members.len()
+                    && index.has_hash()
+                {
+                    index.hash_candidates(h).find_map(|pos| {
+                        let cand = &owner_obj.collection_members[pos];
+                        (cand.kind != CollectionMemberKind::Property
+                            && same_key(&self.heap, &member.key, &cand.key))
+                        .then_some(&cand.name)
+                    })
+                } else {
+                    owner_obj.collection_members.iter().find_map(|cand| {
+                        (cand.kind != CollectionMemberKind::Property
+                            && same_key(&self.heap, &member.key, &cand.key))
+                        .then_some(&cand.name)
+                    })
+                };
+                if let Some(name) = matched
+                    && owner_obj
+                        .members
+                        .iter()
+                        .any(|m| !m.local && !m.method && m.entry && &m.name == name)
+                {
+                    found_name = Some(name.clone());
+                    break;
+                }
+                cur = owner_obj.parent;
+            }
+            if let Some(name) = found_name {
+                let caller = self.frames.len() - 1;
+                self.force_key_mode_probe(
+                    id,
+                    id,
+                    name,
+                    false,
+                    true,
+                    false,
+                    true,
+                    false,
+                    true,
+                    None,
+                    Some(member.key),
+                )?;
+                if self.frames.len() > caller + 1 {
+                    self.frames[caller].callsite_hidden = true;
+                }
+                return Ok(());
+            }
         }
         let candidates = collections::forcing_members(&self.heap, id)?;
         let probe = member.key.clone();

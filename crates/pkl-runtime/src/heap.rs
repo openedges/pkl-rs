@@ -448,6 +448,7 @@ pub struct CollectionIterator {
     pub force_members: Vec<CollectionMember>,
     pub force_position: usize,
     pub awaiting_value: bool,
+    pub members_refreshed: bool,
 }
 
 #[derive(Clone, Debug)]
