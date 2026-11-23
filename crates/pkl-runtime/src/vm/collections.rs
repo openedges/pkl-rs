@@ -693,18 +693,20 @@ pub fn ordered_members(
 
 #[inline]
 fn environments_match(a: &Environment, b: &Environment) -> bool {
-    a.restore_for_bindings == b.restore_for_bindings
+    a.locals.len() == b.locals.len()
+        && a.scopes.len() == b.scopes.len()
+        && a.restore_for_bindings == b.restore_for_bindings
         && a.executable_owner == b.executable_owner
         && a.code_owner == b.code_owner
-        && a.this_value == b.this_value
-        && a.outer_value == b.outer_value
-        && a.custom_this.map(|s| s.root()) == b.custom_this.map(|s| s.root())
-        && a.scopes.as_slice() == b.scopes.as_slice()
-        && a.locals == b.locals
         && a.type_arguments.is_empty()
         && b.type_arguments.is_empty()
         && a.type_argument_sources.is_empty()
         && b.type_argument_sources.is_empty()
+        && a.custom_this.map(|s| s.root()) == b.custom_this.map(|s| s.root())
+        && a.this_value == b.this_value
+        && a.outer_value == b.outer_value
+        && a.scopes.as_slice() == b.scopes.as_slice()
+        && a.locals == b.locals
         && a.copy_locals.fast_eq(&b.copy_locals)
         && a.local_owners.fast_eq(&b.local_owners)
 }
@@ -2387,6 +2389,58 @@ impl Vm {
         }
         let need_decl_index =
             kind != CollectionMemberKind::Property || object.declaration_index.is_some();
+        let mut decl_index_done = false;
+        if need_decl_index && value.is_none() {
+            if object.members.len() <= 4 {
+                decl_index_done = true;
+            } else if object.collection_members.len() != object.members.len() {
+                object.declaration_index = None;
+                object.declaration_hashes.clear();
+                decl_index_done = true;
+            } else if object.declaration_index.is_some()
+                && object.declaration_hashes.len() + 1 == object.collection_members.len()
+            {
+                let last_member = &object.collection_members[object.declaration_hashes.len()];
+                if last_member.kind == CollectionMemberKind::Property {
+                    object.declaration_index = None;
+                    object.declaration_hashes.clear();
+                    decl_index_done = true;
+                } else {
+                    let fast_hash = match &last_member.key {
+                        Value::String(s) => Some(equality::string_hash(s)),
+                        Value::Int(i) => {
+                            let v = i.get();
+                            Some((v ^ (v >> 32)) as i32)
+                        }
+                        Value::Bool(b) => Some(if *b { 1231 } else { 1237 }),
+                        _ => None,
+                    };
+                    if let Some(hash) = fast_hash {
+                        let index = object.declaration_index.as_mut().unwrap();
+                        if index.len() < object.collection_members.len() {
+                            if index.grow_before_append() {
+                                for old in index.start_rehash() {
+                                    let old_hash = object.declaration_hashes[old];
+                                    index.put_hash(old, old_hash, false);
+                                }
+                            }
+                            let slot = index.push();
+                            object.declaration_hashes.push(hash);
+                            if (!index.has_hash() && index.len() > 4)
+                                || (index.has_hash()
+                                    && index.put_hash(slot, hash, index.should_rehash()))
+                            {
+                                for old in index.start_rehash() {
+                                    let old_hash = object.declaration_hashes[old];
+                                    index.put_hash(old, old_hash, false);
+                                }
+                            }
+                        }
+                        decl_index_done = true;
+                    }
+                }
+            }
+        }
         if let Some(value) = value {
             let cache_key = cache_key.unwrap();
             // Defer caching synthetic `default` properties on Dynamic/Listing/Mapping
@@ -2412,7 +2466,7 @@ impl Vm {
                 )?;
             }
         }
-        if need_decl_index {
+        if need_decl_index && !decl_index_done {
             self.update_declaration_index(target)?;
         }
         Ok(())
@@ -3510,10 +3564,7 @@ impl Vm {
                 let target = self.builder()?;
                 let object = self.heap.get(target)?;
                 let is_typed = is_typed_class(&self.heap, target)?;
-                if object.is_module
-                    || is_typed
-                    || object.collection_kind == CollectionKind::List
-                {
+                if object.is_module || is_typed || object.collection_kind == CollectionKind::List {
                     let label = typed_class_ref(&self.heap, target)?.map_or_else(
                         || {
                             if object.is_module {

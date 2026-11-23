@@ -101,7 +101,7 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
     })
 }
 #[inline]
-fn string_hash(value: &PklString) -> i32 {
+pub(super) fn string_hash(value: &PklString) -> i32 {
     if let Some(s) = value.as_str()
         && s.is_ascii()
     {
@@ -675,12 +675,84 @@ impl Vm {
             None => !key.entry || key.owner.is_some(),
         };
         if sync_probe {
-            let (has_hash, already_completed, slots_empty) = {
+            // Fast single-lookup path when no duplicate probe scan or table grow is needed.
+            let scalar_probe_hash: Option<i32> = match &probe {
+                None => None,
+                Some(Value::String(s)) => Some(string_hash(s)),
+                Some(Value::Int(i)) => {
+                    let v = i.get();
+                    Some((v ^ (v >> 32)) as i32)
+                }
+                Some(Value::Bool(b)) => Some(if *b { 1231 } else { 1237 }),
+                Some(other) => java_hash_on_heap(&self.heap, other)?,
+            };
+            let can_fast_insert = {
                 let object = self.heap.get_mut(receiver)?;
                 while object.cache_index.len() < object.cache_slots.len() {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
+                let already_completed = !known_new
+                    && !object.cache.is_empty()
+                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                if (known_new
+                    || object.cache_slots.is_empty()
+                    || (probe.is_none() && !already_completed))
+                    && !object.cache_index.grow_before_append()
+                {
+                    Some(already_completed)
+                } else {
+                    None
+                }
+            };
+            if let Some(already_completed) = can_fast_insert {
+                let clear_eq = key.owner.is_some() || already_completed;
+                let need_rehash = {
+                    let object = self.heap.get_mut(receiver)?;
+                    let hash = if object.cache_index.has_hash() {
+                        if let Some(h) = scalar_probe_hash {
+                            h
+                        } else if probe.is_some() {
+                            0
+                        } else {
+                            string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                        }
+                    } else {
+                        0
+                    };
+                    let index = object.cache_index.push();
+                    let need_rehash = if object.cache_index.has_hash() {
+                        let should = object.cache_index.should_rehash();
+                        object.cache_index.put_hash(index, hash, should)
+                    } else {
+                        object.cache_index.len() > 4
+                    };
+                    object.cache_slots.push(crate::heap::CacheSlot {
+                        key: key.clone(),
+                        entry_key: probe,
+                        value: value.clone(),
+                    });
+                    object.cache.insert(key, LazyState::Completed(value));
+                    need_rehash
+                };
+                if clear_eq && !self.heap.key_equalities.is_empty() {
+                    self.heap.key_equalities.clear();
+                }
+                if need_rehash {
+                    if self.all_cache_slots_non_object(receiver)? {
+                        self.rebuild_cache_index_sync(receiver)?;
+                    } else {
+                        self.heap.get_mut(receiver)?.cache_index.start_rehash();
+                        self.schedule_tasks(
+                            vec![Task::CacheRebuild(receiver, 0)],
+                            vec![Value::Object(receiver)],
+                        );
+                    }
+                }
+                return Ok(());
+            }
+            let (has_hash, already_completed, slots_empty) = {
+                let object = self.heap.get_mut(receiver)?;
                 let already_completed = !known_new
                     && !object.cache.is_empty()
                     && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
@@ -691,8 +763,10 @@ impl Vm {
                 )
             };
             let hash = if has_hash {
-                if let Some(ref probe_val) = probe {
-                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                if let Some(h) = scalar_probe_hash {
+                    h
+                } else if probe.is_some() {
+                    0
                 } else {
                     string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
                 }

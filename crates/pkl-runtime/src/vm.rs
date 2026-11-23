@@ -1663,8 +1663,12 @@ impl Frame {
 
     #[inline]
     fn is_fast_returnable(&self) -> bool {
-        self.force.is_none()
-            && !self.return_to_type
+        self.force.is_none() && self.is_fast_returnable_common()
+    }
+
+    #[inline]
+    fn is_fast_returnable_common(&self) -> bool {
+        !self.return_to_type
             && self.amendment_arguments.is_none()
             && self.builders.is_empty()
             && self.generator_scopes.is_empty()
@@ -3816,46 +3820,44 @@ impl Vm {
                         && let Some(Value::String(text)) = stack.last()
                     {
                         if name == "toString" {
-                            let skip =
-                                match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
-                                    (
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup,
-                                            arity: 0,
-                                            after_arguments: false,
-                                        }),
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup: l2,
-                                            arity: 0,
-                                            after_arguments: true,
-                                        }),
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                    ) if *lookup == pc && *l2 == pc => 4,
-                                    (
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup,
-                                            arity: 0,
-                                            ..
-                                        }),
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                        _,
-                                    ) if *lookup == pc => 3,
-                                    (
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                        _,
-                                        _,
-                                    ) => 2,
-                                    _ => 0,
-                                };
+                            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3))
+                            {
+                                (
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup,
+                                        arity: 0,
+                                        after_arguments: false,
+                                    }),
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup: l2,
+                                        arity: 0,
+                                        after_arguments: true,
+                                    }),
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                ) if *lookup == pc && *l2 == pc => 4,
+                                (
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup, arity: 0, ..
+                                    }),
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                    _,
+                                ) if *lookup == pc => 3,
+                                (
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                    _,
+                                    _,
+                                ) => 2,
+                                _ => 0,
+                            };
                             if skip > 0 && consumed + skip <= max_steps {
                                 let frame = frames.last().unwrap();
                                 let exec_owner = if let Some(o) = frame.environment.executable_owner
@@ -4018,46 +4020,44 @@ impl Vm {
                             break;
                         }
                         if name == "toList" && active_type_trackers == 0 {
-                            let skip =
-                                match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
-                                    (
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup,
-                                            arity: 0,
-                                            after_arguments: false,
-                                        }),
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup: l2,
-                                            arity: 0,
-                                            after_arguments: true,
-                                        }),
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                    ) if *lookup == pc && *l2 == pc => 4,
-                                    (
-                                        Some(Instruction::PrepareMethodCall {
-                                            lookup,
-                                            arity: 0,
-                                            ..
-                                        }),
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                        _,
-                                    ) if *lookup == pc => 3,
-                                    (
-                                        Some(Instruction::Call {
-                                            arity: 0,
-                                            method: true,
-                                        }),
-                                        _,
-                                        _,
-                                    ) => 2,
-                                    _ => 0,
-                                };
+                            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3))
+                            {
+                                (
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup,
+                                        arity: 0,
+                                        after_arguments: false,
+                                    }),
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup: l2,
+                                        arity: 0,
+                                        after_arguments: true,
+                                    }),
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                ) if *lookup == pc && *l2 == pc => 4,
+                                (
+                                    Some(Instruction::PrepareMethodCall {
+                                        lookup, arity: 0, ..
+                                    }),
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                    _,
+                                ) if *lookup == pc => 3,
+                                (
+                                    Some(Instruction::Call {
+                                        arity: 0,
+                                        method: true,
+                                    }),
+                                    _,
+                                    _,
+                                ) => 2,
+                                _ => 0,
+                            };
                             if skip > 0 && consumed + skip <= max_steps {
                                 pc += skip;
                                 consumed += skip;
@@ -4104,7 +4104,10 @@ impl Vm {
                                 _ => None,
                             };
                             if let Some(needle) = arg_ref
-                                && matches!(needle, Value::String(_) | Value::Int(_) | Value::Bool(_))
+                                && matches!(
+                                    needle,
+                                    Value::String(_) | Value::Int(_) | Value::Bool(_)
+                                )
                                 && elems.iter().all(|e| !matches!(e, Value::Object(_)))
                             {
                                 let found =
@@ -4286,9 +4289,7 @@ impl Vm {
                             ) if *lookup == pc && *l2 == pc => 4,
                             (
                                 Some(Instruction::PrepareMethodCall {
-                                    lookup,
-                                    arity: 0,
-                                    ..
+                                    lookup, arity: 0, ..
                                 }),
                                 Some(Instruction::Call {
                                     arity: 0,
@@ -5045,6 +5046,23 @@ impl Vm {
                         break;
                     }
                 }
+                Instruction::EndCollection => {
+                    let frame = frames.last_mut().unwrap();
+                    if let Some(&id) = frame.builders.last()
+                        && let Ok(obj) = heap.get(id)
+                        && !obj.members.is_empty()
+                        && !matches!(
+                            obj.collection_kind,
+                            CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+                        )
+                    {
+                        frame.builders.pop();
+                        stack.push_raw(Value::Object(id));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
                 Instruction::Call { arity, method } => {
                     if stack.len() < base + arity + 1 || frames.len() >= 4096 {
                         break;
@@ -5208,13 +5226,90 @@ impl Vm {
                     }
                     let top_frame = frames.last().unwrap();
                     if !top_frame.fast_call_frame && !top_frame.is_fast_returnable() {
-                        break;
+                        // Fast property-force return path: publish cache slot inline and stay in
+                        // `poll_fast_run` without exiting to `Vm::step` / `finish_return`.
+                        let can_fast_force = frames.len() > 1
+                            && !top_frame.has_pending_run()
+                            && top_frame.is_fast_returnable_common()
+                            && top_frame.force.as_ref().is_some_and(|f| {
+                                f.inherited_types.is_empty()
+                                    && f.collection_casts.is_empty()
+                                    && !f.publishing_cache
+                                    && f.const_receiver.is_none()
+                                    && f.stolen_cast.is_none()
+                            });
+                        if !can_fast_force {
+                            break;
+                        }
+                        let force = top_frame.force.as_ref().unwrap();
+                        if let Some(key) = &force.cache {
+                            if force.entry_probe.is_some()
+                                || (key.entry && key.owner.is_none())
+                                || (key.owner.is_some() && !heap.key_equalities.is_empty())
+                            {
+                                break;
+                            }
+                            let Ok(obj) = heap.get_mut(force.receiver) else {
+                                break;
+                            };
+                            if obj.cache_index.len() != obj.cache_slots.len()
+                                || !obj.cache_index.can_fast_append_no_rehash()
+                                || (!obj.cache.is_empty()
+                                    && matches!(obj.cache.get(key), Some(LazyState::Completed(_))))
+                            {
+                                break;
+                            }
+                            let val = stack.last().unwrap().clone();
+                            let _ = obj.cache_index.grow_before_append();
+                            let index = obj.cache_index.push();
+                            if obj.cache_index.has_hash() {
+                                let hash = equality::string_hash(&key.name)
+                                    ^ key.owner.map_or(0, |owner| owner.index as i32);
+                                let _ = obj.cache_index.put_hash(index, hash, false);
+                            }
+                            obj.cache_slots.push(crate::heap::CacheSlot {
+                                key: key.clone(),
+                                entry_key: None,
+                                value: val.clone(),
+                            });
+                            obj.cache.insert(key.clone(), LazyState::Completed(val));
+                        }
+                        let mut finished = frames.pop().unwrap();
+                        if frame_pool.len() < 64 {
+                            finished.force = None;
+                            finished.prepared_hashes = None;
+                            finished.fast_reset_for_pool();
+                            frame_pool.push(finished);
+                        }
+                        let caller = frames.last_mut().unwrap();
+                        caller.callsite_hidden = false;
+                        let caller_block = caller.block;
+                        pc = caller.pc;
+                        base = caller.base;
+                        consumed += 1;
+                        if !caller.fast_call_frame
+                            && (caller.has_pending_run() || caller.prepared_hashes.is_some())
+                        {
+                            break;
+                        }
+                        if caller_block != block {
+                            let Some(caller_code) =
+                                program.blocks.get(caller_block).map(Vec::as_slice)
+                            else {
+                                break;
+                            };
+                            block = caller_block;
+                            code = caller_code;
+                        }
+                        continue;
                     }
                     // Fast top-level completion (eliminates Vm::step + finish_return on warm queries).
                     if frames.len() == 1 && base == 0 {
                         let result = stack.pop().unwrap();
                         let mut finished = frames.pop().unwrap();
                         if frame_pool.len() < 64 {
+                            finished.force = None;
+                            finished.prepared_hashes = None;
                             finished.fast_reset_for_pool();
                             frame_pool.push(finished);
                         }
@@ -7075,7 +7170,8 @@ impl Vm {
                                     owner = receiver;
                                     break member;
                                 }
-                                if method && self.conversion_method(Value::Object(receiver), &name)?
+                                if method
+                                    && self.conversion_method(Value::Object(receiver), &name)?
                                 {
                                     return Ok(());
                                 }
@@ -7096,10 +7192,7 @@ impl Vm {
                             }
                         };
                         if !visited.insert(owner) {
-                            return Err(RuntimeError::new(
-                                ErrorKind::Cycle,
-                                "cyclic parent chain",
-                            ));
+                            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
                         }
                         current_obj = self.heap.get(owner)?;
                         if let Some(member) = current_obj.members.iter().find(|member| {
@@ -8337,13 +8430,45 @@ impl Vm {
         let mut class_parent = None;
         let mut class_initializing = false;
         let mut has_class_name = false;
-        let mut visited = SmallObjectIdSet::new();
         let mut ancestor = Some(parent);
         if let [single] = members {
-            let mut found_decl = single.local;
+            if single.local {
+                // Still check for cycle along parent chain only when needed — actually
+                // a non-cyclic parent chain returns Ok(()) directly.
+                let mut cur = Some(parent);
+                let mut hops = 0u32;
+                let mut visited = SmallObjectIdSet::new();
+                while let Some(id) = cur {
+                    hops += 1;
+                    if hops > 4 && !visited.insert(id) {
+                        return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                    }
+                    cur = self.heap.get(id)?.parent;
+                }
+                return Ok(());
+            }
+            // Fast unrolled walk: skip SmallObjectIdSet init for chains <= 4 hops (99%+ of objects).
+            let mut visited_inline = [parent; 4];
+            let mut visited_len = 0usize;
+            let mut visited_overflow: Option<SmallObjectIdSet> = None;
+            let mut found_decl = false;
             while let Some(id) = ancestor {
-                if !visited.insert(id) {
+                if let Some(set) = &mut visited_overflow {
+                    if !set.insert(id) {
+                        return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                    }
+                } else if visited_inline[..visited_len].contains(&id) {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                } else if visited_len < visited_inline.len() {
+                    visited_inline[visited_len] = id;
+                    visited_len += 1;
+                } else {
+                    let mut set = SmallObjectIdSet::new();
+                    for prev in visited_inline {
+                        set.insert(prev);
+                    }
+                    set.insert(id);
+                    visited_overflow = Some(set);
                 }
                 let object = self.heap.get(id)?;
                 if !has_class_name && object.class_definition.is_some() {
@@ -8360,9 +8485,6 @@ impl Vm {
                 }
                 ancestor = object.parent;
             }
-            if single.local {
-                return Ok(());
-            }
             if !has_class_name {
                 return self.validate_object_override(parent, single);
             }
@@ -8370,6 +8492,7 @@ impl Vm {
                 return self.validate_object_override(class_parent.unwrap_or(parent), single);
             }
         } else {
+            let mut visited = SmallObjectIdSet::new();
             let mut all_found = true;
             let mut chain_inline = [parent; 8];
             let mut chain_len = 0usize;
@@ -8939,8 +9062,8 @@ impl Vm {
             Done(Result<(), RuntimeError>),
             Slow(Instruction),
         }
-        let dispatched = match *instr_ref {
-            Instruction::BeginCollection {
+        let dispatched = match instr_ref {
+            &Instruction::BeginCollection {
                 kind,
                 has_parent,
                 specialized,
@@ -8952,7 +9075,67 @@ impl Vm {
             Instruction::EndCollection => {
                 FastDispatch::Done(self.collection_instruction(Instruction::EndCollection))
             }
-            Instruction::Subscript { key_span } => {
+            Instruction::AddCollectionProperty(member) => FastDispatch::Done(
+                self.collection_instruction(Instruction::AddCollectionProperty(member.clone())),
+            ),
+            Instruction::AddCollectionElement(member) => FastDispatch::Done(
+                self.collection_instruction(Instruction::AddCollectionElement(member.clone())),
+            ),
+            Instruction::AddCollectionEntry {
+                member,
+                check_index,
+                span,
+            } => FastDispatch::Done(
+                self.collection_instruction(Instruction::AddCollectionEntry {
+                    member: member.clone(),
+                    check_index: *check_index,
+                    span: *span,
+                }),
+            ),
+            Instruction::GetMember(name) => FastDispatch::Done(
+                self.member_access_instruction(Instruction::GetMember(name.clone())),
+            ),
+            Instruction::GetMethod(name) => FastDispatch::Done(
+                self.member_access_instruction(Instruction::GetMethod(name.clone())),
+            ),
+            Instruction::GetProperty {
+                name,
+                owner_depth,
+                local,
+            } => FastDispatch::Done(self.member_access_instruction(Instruction::GetProperty {
+                name: name.clone(),
+                owner_depth: *owner_depth,
+                local: *local,
+            })),
+            Instruction::GetMethodProperty {
+                name,
+                owner_depth,
+                local,
+            } => FastDispatch::Done(self.member_access_instruction(
+                Instruction::GetMethodProperty {
+                    name: name.clone(),
+                    owner_depth: *owner_depth,
+                    local: *local,
+                },
+            )),
+            Instruction::GetImplicitProperty(name) => FastDispatch::Done(
+                self.member_access_instruction(Instruction::GetImplicitProperty(name.clone())),
+            ),
+            Instruction::GetImplicitMethod(name) => FastDispatch::Done(
+                self.member_access_instruction(Instruction::GetImplicitMethod(name.clone())),
+            ),
+            &Instruction::Return => FastDispatch::Done(self.finish_return()),
+            &Instruction::MakeInstance { template } => {
+                FastDispatch::Done(self.step_instruction(Instruction::MakeInstance { template }))
+            }
+            &Instruction::MakeObject {
+                template,
+                has_parent,
+            } => FastDispatch::Done(self.step_instruction(Instruction::MakeObject {
+                template,
+                has_parent,
+            })),
+            &Instruction::Subscript { key_span } => {
                 FastDispatch::Done(self.collection_instruction(Instruction::Subscript { key_span }))
             }
             Instruction::PrepareMapEntry => {
@@ -8961,16 +9144,16 @@ impl Vm {
             Instruction::AddMapEntry => {
                 FastDispatch::Done(self.collection_instruction(Instruction::AddMapEntry))
             }
-            Instruction::MakeList { length } => {
+            &Instruction::MakeList { length } => {
                 FastDispatch::Done(self.collection_instruction(Instruction::MakeList { length }))
             }
-            Instruction::OpenIterator { nullable, spread } => FastDispatch::Done(
+            &Instruction::OpenIterator { nullable, spread } => FastDispatch::Done(
                 self.collection_instruction(Instruction::OpenIterator { nullable, spread }),
             ),
-            Instruction::IteratorNext { end } => {
+            &Instruction::IteratorNext { end } => {
                 FastDispatch::Done(self.collection_instruction(Instruction::IteratorNext { end }))
             }
-            Instruction::EnterForScope { bindings } => FastDispatch::Done(
+            &Instruction::EnterForScope { bindings } => FastDispatch::Done(
                 self.collection_instruction(Instruction::EnterForScope { bindings }),
             ),
             Instruction::LeaveForScope => {
@@ -8979,32 +9162,32 @@ impl Vm {
             Instruction::SpreadMember => {
                 FastDispatch::Done(self.collection_instruction(Instruction::SpreadMember))
             }
-            Instruction::Call { arity, method } => {
+            &Instruction::Call { arity, method } => {
                 FastDispatch::Done(self.step_instruction(Instruction::Call { arity, method }))
             }
-            Instruction::PrepareMethodCall {
+            &Instruction::PrepareMethodCall {
                 lookup,
                 arity,
                 after_arguments,
             } => FastDispatch::Done(self.prepare_method_call(lookup, arity, after_arguments)),
-            Instruction::BeginConversion(op) => FastDispatch::Done(self.begin_conversion(op)),
-            Instruction::ConversionNext { end } => FastDispatch::Done(self.conversion_next(end)),
+            &Instruction::BeginConversion(op) => FastDispatch::Done(self.begin_conversion(op)),
+            &Instruction::ConversionNext { end } => FastDispatch::Done(self.conversion_next(end)),
             Instruction::AppendConvertedMember => {
                 FastDispatch::Done(self.append_converted_member())
             }
             Instruction::EndConversion => FastDispatch::Done(self.end_conversion()),
-            Instruction::CollectionTransformNext { end } => {
+            &Instruction::CollectionTransformNext { end } => {
                 FastDispatch::Done(self.collection_transform_next(end))
             }
-            Instruction::CollectionTransformProject { next } => {
+            &Instruction::CollectionTransformProject { next } => {
                 FastDispatch::Done(self.collection_transform_project(next))
             }
             Instruction::AppendStrictElement => FastDispatch::Done(self.append_strict_element()),
             Instruction::EndCollectionTransform => {
                 FastDispatch::Done(self.end_collection_transform())
             }
-            Instruction::ObjectLookup(op) => FastDispatch::Done(self.object_lookup(op)),
-            Instruction::Primitive(op) => FastDispatch::Done(self.primitive(op)),
+            &Instruction::ObjectLookup(op) => FastDispatch::Done(self.object_lookup(op)),
+            &Instruction::Primitive(op) => FastDispatch::Done(self.primitive(op)),
             _ => FastDispatch::Slow(instr_ref.clone()),
         };
         let instruction = match dispatched {
@@ -10090,8 +10273,7 @@ impl Vm {
                     )?;
                     self.stack.push(Value::string(text));
                 } else if let Value::Object(id) = value {
-                    if collections::is_typed_class(&self.heap, id)?
-                        || self.heap.get(id)?.is_module
+                    if collections::is_typed_class(&self.heap, id)? || self.heap.get(id)?.is_module
                     {
                         // Pkl interpolation virtually invokes Typed.toString; user
                         // overrides can avoid forcing the receiver altogether.

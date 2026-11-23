@@ -136,6 +136,21 @@ impl EconomicMapIndex {
             .as_ref()
             .is_some_and(|buckets| buckets.len() < self.len() + self.len() / 2)
     }
+
+    /// True if appending one more slot cannot trigger a capacity-threshold or
+    /// load-factor rehash (`grow_before_append()` and `put_hash(..., should_rehash())`
+    /// are both guaranteed false).
+    #[inline]
+    pub(crate) fn can_fast_append_no_rehash(&self) -> bool {
+        let next_len = self.links.len() + 1;
+        if next_len > self.capacity && self.capacity >= 160 {
+            return false;
+        }
+        match &self.buckets {
+            None => next_len <= 4,
+            Some(buckets) => buckets.len() >= next_len + next_len / 2,
+        }
+    }
 }
 
 fn bucket(hash: i32, count: usize) -> usize {

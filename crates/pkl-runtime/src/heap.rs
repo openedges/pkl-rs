@@ -497,6 +497,12 @@ pub struct Class {
 pub struct ClassRecord {
     pub prototype: ObjectId,
     pub superclass: Option<ObjectId>,
+    pub(crate) class_id: Option<usize>,
+    /// Inline ancestor `Class::id` chain (self first, up to root) populated once
+    /// `link_superclass` completes over an already-linked superclass chain.
+    /// `ancestors_len == u8::MAX` indicates uncached / deeper than 8.
+    pub(crate) ancestors: [usize; 8],
+    pub(crate) ancestors_len: u8,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -1170,9 +1176,16 @@ impl Heap {
     }
 
     pub(crate) fn allocate_class(&mut self, prototype: ObjectId) -> ObjectId {
+        let class_id = self
+            .get(prototype)
+            .ok()
+            .and_then(|obj| obj.class_definition.as_ref().map(|c| c.id));
         let id = self.allocate_entry(Entry::Class(ClassRecord {
             prototype,
             superclass: None,
+            class_id,
+            ancestors: [0; 8],
+            ancestors_len: u8::MAX,
         }));
         self.get_mut(prototype)
             .expect("new class prototype")
@@ -1225,12 +1238,43 @@ impl Heap {
         superclass: Option<ObjectId>,
     ) -> Result<(), RuntimeError> {
         let prototype = self.get_class(id)?.prototype;
-        let parent = superclass
-            .map(|class| self.get_class(class).map(|c| c.prototype))
-            .transpose()?;
+        let self_class_id = self.get(prototype)?.class_definition.as_ref().map(|c| c.id);
+        let (parent, ancestors, ancestors_len) = match superclass {
+            Some(sup) => {
+                let sup_rec = self.get_class(sup)?;
+                let parent = Some(sup_rec.prototype);
+                let mut ancestors = [0usize; 8];
+                let ancestors_len = if sup != id
+                    && sup_rec.ancestors_len != u8::MAX
+                    && (sup_rec.ancestors_len as usize) < ancestors.len()
+                    && let Some(cid) = self_class_id
+                {
+                    let len = sup_rec.ancestors_len as usize;
+                    ancestors[0] = cid;
+                    ancestors[1..1 + len].copy_from_slice(&sup_rec.ancestors[..len]);
+                    (1 + len) as u8
+                } else {
+                    u8::MAX
+                };
+                (parent, ancestors, ancestors_len)
+            }
+            None => {
+                let mut ancestors = [0usize; 8];
+                let ancestors_len = if let Some(cid) = self_class_id {
+                    ancestors[0] = cid;
+                    1
+                } else {
+                    u8::MAX
+                };
+                (None, ancestors, ancestors_len)
+            }
+        };
         let slot = self.slot_mut(id.index);
         if let Some(Entry::Class(class)) = &mut slot.entry {
             class.superclass = superclass;
+            class.class_id = self_class_id;
+            class.ancestors = ancestors;
+            class.ancestors_len = ancestors_len;
             slot.edges_valid = false;
         }
         let prototype = self.get_mut(prototype)?;
@@ -1398,10 +1442,15 @@ impl Heap {
         let Ok(rec0) = self.get_class(class) else {
             return false;
         };
-        if self
-            .get_fast(rec0.prototype)
-            .and_then(|obj| obj.class_definition.as_ref())
-            .is_some_and(|def| def.id == target_id)
+        if rec0.ancestors_len != u8::MAX {
+            return rec0.ancestors[..rec0.ancestors_len as usize].contains(&target_id);
+        }
+        if rec0.class_id == Some(target_id)
+            || (rec0.class_id.is_none()
+                && self
+                    .get_fast(rec0.prototype)
+                    .and_then(|obj| obj.class_definition.as_ref())
+                    .is_some_and(|def| def.id == target_id))
         {
             return true;
         }
@@ -1414,10 +1463,15 @@ impl Heap {
         let Ok(rec1) = self.get_class(c1) else {
             return false;
         };
-        if self
-            .get_fast(rec1.prototype)
-            .and_then(|obj| obj.class_definition.as_ref())
-            .is_some_and(|def| def.id == target_id)
+        if rec1.ancestors_len != u8::MAX {
+            return rec1.ancestors[..rec1.ancestors_len as usize].contains(&target_id);
+        }
+        if rec1.class_id == Some(target_id)
+            || (rec1.class_id.is_none()
+                && self
+                    .get_fast(rec1.prototype)
+                    .and_then(|obj| obj.class_definition.as_ref())
+                    .is_some_and(|def| def.id == target_id))
         {
             return true;
         }

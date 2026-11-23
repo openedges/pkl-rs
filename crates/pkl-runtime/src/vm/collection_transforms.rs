@@ -1051,7 +1051,9 @@ impl Vm {
                     && let Some(elems) = self.heap.get(source)?.list_elements.as_deref()
                     && elems.iter().all(|e| !matches!(e, Value::Object(_)))
                 {
-                    let found = elems.iter().any(|e| equality::same_key(&self.heap, e, query));
+                    let found = elems
+                        .iter()
+                        .any(|e| equality::same_key(&self.heap, e, query));
                     Some(Value::Bool(found))
                 } else {
                     None
@@ -1071,8 +1073,8 @@ impl Vm {
                         for e in elems {
                             let Value::String(s) = e else { unreachable!() };
                             if seen.insert(s.clone(), ()).is_none() {
-                                approx_bytes = approx_bytes
-                                    .saturating_add(s.as_str().map_or(16, str::len));
+                                approx_bytes =
+                                    approx_bytes.saturating_add(s.as_str().map_or(16, str::len));
                                 unique.push(e.clone());
                             }
                         }
@@ -1143,9 +1145,7 @@ impl Vm {
                     None
                 }
             }
-            Operation::Projection(Projection::Add)
-                if strict_list_len.is_some_and(|n| n <= 512) =>
-            {
+            Operation::Projection(Projection::Add) if strict_list_len.is_some_and(|n| n <= 512) => {
                 let extra = self
                     .frames
                     .last()
