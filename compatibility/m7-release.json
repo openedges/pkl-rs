@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "77a0b26ea2d6603f786819e3ef27352f37ab115351875a4c80c613082bf36824"
+      "sha256": "c03609b314a9ad30e24d085e565b0a5336f27e2fe87f5ebbef3fe3b94af5aa4f"
     },
     {
       "bytes": 111079,
@@ -277,7 +277,7 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "7dc3fda352fc5cd84bb9d113fc259b0e3114d9a9808d8b0e7f8a199b58c4b11f"
+      "sha256": "fbb73dab3dff7447867afb86bcffd67ed17f876993443b18c4a441777477584e"
     },
     {
       "bytes": 41462,
@@ -398,7 +398,7 @@
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "02ffcbdd4776faecae19050e0b5aee6e99e858b81245ecdd3567e83080af981f"
+      "sha256": "1b3dcef11b6cc867ebe2d6c7c202ffc08c1ea0d957d89a4ac626e8ad8d15613a"
     },
     {
       "bytes": 37108,
@@ -514,7 +514,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/base_snapshot.rs",
-          "sha256": "eac0ec0e40389e2d2995c55625dca2bae4e37785f51705eb426f4186727c714f",
+          "sha256": "3ebd45ec62f9d64473f1d1eca262acf3f32d434b877c2c24f2c26f2d2767cc19",
           "symbol": "BaseSnapshot"
         }
       ],
@@ -584,7 +584,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
-          "sha256": "33b5c27dbad2344ef55141affc351180db0eb1e257201a4aa0babe1a3540d758",
+          "sha256": "bcd3b1b8e0eb5ff276c3db74cafbcffdf09d17f678ad9f27730e61caf84d0ca9",
           "symbol": "try_fast_encode_pkl_binary"
         },
         {
@@ -804,10 +804,10 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "77a0b26ea2d6603f786819e3ef27352f37ab115351875a4c80c613082bf36824",
-    "compatibility/m3-stdlib-output.json": "7dc3fda352fc5cd84bb9d113fc259b0e3114d9a9808d8b0e7f8a199b58c4b11f",
+    "compatibility/m2-language.json": "c03609b314a9ad30e24d085e565b0a5336f27e2fe87f5ebbef3fe3b94af5aa4f",
+    "compatibility/m3-stdlib-output.json": "fbb73dab3dff7447867afb86bcffd67ed17f876993443b18c4a441777477584e",
     "compatibility/m4-io-packages.json": "7b99737adcbcaebea49e92f2b3b62140e2c7fcf3cc9633a90db8833cfc2e1a27",
-    "compatibility/m5-product-tools.json": "02ffcbdd4776faecae19050e0b5aee6e99e858b81245ecdd3567e83080af981f",
+    "compatibility/m5-product-tools.json": "1b3dcef11b6cc867ebe2d6c7c202ffc08c1ea0d957d89a4ac626e8ad8d15613a",
     "compatibility/m6-wasm-napi.json": "93fe74413a71fe89f4b6a502dfa89a7b5f99777e22e4efc42e2c5691477f47c5",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
