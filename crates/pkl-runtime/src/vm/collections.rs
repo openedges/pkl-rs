@@ -316,7 +316,7 @@ impl Vm {
         self.frames
             .last_mut()
             .expect("active join frame")
-            .collection_join = Some(JoinRun {
+            .collection_join = Some(Box::new(JoinRun {
             source: receiver,
             shallow,
             values,
@@ -324,7 +324,7 @@ impl Vm {
             next: 0,
             awaiting: false,
             output: crate::pkl_string::PklStringBuilder::default(),
-        });
+        }));
         if shallow {
             self.force_shallow_frame(Value::Object(receiver))?;
         }
@@ -480,7 +480,7 @@ pub fn ordered_members(
     let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
     let mut chain = Vec::new();
     let mut next = Some(receiver);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(id) = next {
         if !visited.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -604,14 +604,22 @@ pub(crate) fn cache_entry_key(
             {
                 return Ok(Some(Value::Int((idx as i64).into())));
             }
-            if let Some(member) = object.collection_members.get(idx)
-                && member.name == key.name
-                && member.kind != CollectionMemberKind::Property
+            let limit = (idx + 1).min(object.collection_members.len());
+            if let Some(member) = object.collection_members[..limit]
+                .iter()
+                .rev()
+                .find(|member| {
+                    member.name == key.name && member.kind != CollectionMemberKind::Property
+                })
             {
                 return Ok(Some(member.key.clone()));
             }
-        }
-        if let Some(member) = object
+            if let Some(member) = object.collection_members[limit..].iter().find(|member| {
+                member.name == key.name && member.kind != CollectionMemberKind::Property
+            }) {
+                return Ok(Some(member.key.clone()));
+            }
+        } else if let Some(member) = object
             .collection_members
             .iter()
             .find(|member| member.name == key.name && member.kind != CollectionMemberKind::Property)
@@ -731,7 +739,7 @@ pub(super) fn forcing_members(
     let effective = ordered_members(heap, receiver)?;
     let mut result = Vec::new();
     let mut next = Some(receiver);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(id) = next {
         if !visited.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -820,7 +828,7 @@ pub(crate) fn render_members(
 ) -> Result<Vec<RenderMember>, RuntimeError> {
     let mut chain = Vec::new();
     let mut owner = Some(receiver);
-    let mut seen = BTreeSet::new();
+    let mut seen = SmallObjectIdSet::new();
     while let Some(id) = owner {
         if !seen.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -874,7 +882,7 @@ fn predicate_members(
     let mut result = Vec::new();
     let mut seen = Vec::new();
     let mut next = Some(source);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(owner) = next {
         if !visited.insert(owner) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -1117,19 +1125,12 @@ impl Vm {
             if !old.is_empty() && self.prepare_keys(old)? {
                 return Ok(true);
             }
-            let mut hashes = self
-                .heap
-                .get(id)?
-                .set_entries
-                .iter()
-                .map(|value| self.java_hash(value))
-                .collect::<Result<Vec<_>, _>>()?;
-            hashes.push(value_hash);
+            let mut map_index = self.heap.get_mut(id)?.map_index.take().unwrap_or_default();
+            map_index.insert_lazy(value_hash, true, |slot| {
+                self.java_hash(&self.heap.get(id)?.set_entries[slot])
+            })?;
             let object = self.heap.get_mut(id)?;
-            object
-                .map_index
-                .get_or_insert_with(Box::default)
-                .insert(hashes, true);
+            object.map_index = Some(map_index);
             object.set_entries.push(value.clone());
         }
         Ok(false)
@@ -1334,19 +1335,15 @@ impl Vm {
             }
             Some(order)
         };
-        let object = self.heap.get(id)?;
-        let mut hashes = object
-            .collection_members
-            .iter()
-            .map(|member| self.java_hash(&member.key))
-            .collect::<Result<Vec<_>, RuntimeError>>()?;
-        hashes.push(self.java_hash(&key)?);
-        let object = self.heap.get_mut(id)?;
+        let key_for_cache = key.clone();
         if replacing.is_none() {
-            object
-                .map_index
-                .get_or_insert_with(Box::default)
-                .insert(hashes, append_order);
+            let key_hash = self.java_hash(&key)?;
+            let mut map_index = self.heap.get_mut(id)?.map_index.take().unwrap_or_default();
+            map_index.insert_lazy(key_hash, append_order, |slot| {
+                self.java_hash(&self.heap.get(id)?.collection_members[slot].key)
+            })?;
+            let object = self.heap.get_mut(id)?;
+            object.map_index = Some(map_index);
             object.collection_members.push(CollectionMember {
                 key,
                 name: name.clone(),
@@ -1366,6 +1363,7 @@ impl Vm {
             });
             object.length = object.map_index().insertion_order().len();
         }
+        let object = self.heap.get_mut(id)?;
         if let Some(order) = explicit_order {
             object.length = order.len();
             object.map_key_order = Some(order);
@@ -1377,7 +1375,7 @@ impl Vm {
             entry: true,
         };
         object.member_values.insert(cache.clone(), value.clone());
-        object.complete_cache(cache, value);
+        object.complete_cache_with_key(cache, Some(key_for_cache), value);
         Ok(())
     }
 
@@ -1961,10 +1959,17 @@ impl Vm {
             (&object.declaration_index, self.java_hash(&descriptor.key)?)
             && index.len() == object.collection_members.len()
         {
-            index.candidates(Some(hash)).into_iter().find(|&pos| {
-                let old = &object.collection_members[pos];
-                same_member(&self.heap, &descriptor, old)
-            })
+            if index.has_hash() {
+                index.hash_candidates(hash).find(|&pos| {
+                    let old = &object.collection_members[pos];
+                    same_member(&self.heap, &descriptor, old)
+                })
+            } else {
+                (0..index.len()).find(|&pos| {
+                    let old = &object.collection_members[pos];
+                    same_member(&self.heap, &descriptor, old)
+                })
+            }
         } else {
             let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
             object.collection_members.iter().position(|old| {
@@ -2373,8 +2378,9 @@ impl Vm {
                     self.frames
                         .last_mut()
                         .expect("active frame")
-                        .generic_default =
-                        Some(generics::GenericDefaultRun::new(target, ty, origin));
+                        .generic_default = Some(Box::new(generics::GenericDefaultRun::new(
+                        target, ty, origin,
+                    )));
                 }
             }
             Instruction::GenericConstructorParent { ty, source, cache } => {
@@ -2407,9 +2413,9 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("active frame")
-                    .generic_default = Some(generics::GenericDefaultRun::constructor(
+                    .generic_default = Some(Box::new(generics::GenericDefaultRun::constructor(
                     ty, source, origin, cache,
-                ));
+                )));
             }
 
             Instruction::EndCollection => self.end_collection()?,
@@ -3719,6 +3725,8 @@ impl Compiler<'_> {
             function_counts: self.function_counts.clone(),
             entry_counts: self.entry_counts.clone(),
             function_names: self.function_names.clone(),
+            declared_recipes: self.declared_recipes.clone(),
+            module_recipes: self.module_recipes.clone(),
             instrument: self.instrument,
         }
     }

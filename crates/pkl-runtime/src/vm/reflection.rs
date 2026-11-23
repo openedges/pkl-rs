@@ -866,7 +866,7 @@ impl Vm {
                     run.tasks.push(Task::AfterDefault(declaration));
                     run.waiting = true;
                     self.frames[index].generic_default =
-                        Some(generics::GenericDefaultRun::probe(ty));
+                        Some(Box::new(generics::GenericDefaultRun::probe(ty)));
                 } else {
                     run.values.push(Value::Null);
                 }

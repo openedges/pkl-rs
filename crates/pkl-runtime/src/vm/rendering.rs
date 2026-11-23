@@ -334,8 +334,73 @@ impl RenderRun {
     }
     fn json_newline(&mut self, depth: usize) {
         if !self.indent.is_empty() {
-            self.append("\n");
-            self.output.push_value(&self.indentation(depth));
+            self.output.push_str("\n");
+            for _ in 0..depth {
+                self.output.push_value(&self.indent);
+            }
+        }
+    }
+    fn append_json_string(&mut self, value: &PklString) {
+        if let Some(s) = value.as_str() {
+            self.output.push('"');
+            let bytes = s.as_bytes();
+            let mut start = 0usize;
+            let mut i = 0usize;
+            while i < bytes.len() {
+                let b = bytes[i];
+                if b < 0x20 || b == b'"' || b == b'\\' {
+                    if i > start {
+                        self.output.push_str(&s[start..i]);
+                    }
+                    match b {
+                        b'"' => self.output.push_str("\\\""),
+                        b'\\' => self.output.push_str("\\\\"),
+                        8 => self.output.push_str("\\b"),
+                        9 => self.output.push_str("\\t"),
+                        10 => self.output.push_str("\\n"),
+                        12 => self.output.push_str("\\f"),
+                        13 => self.output.push_str("\\r"),
+                        _ => {
+                            const HEX: &[u8; 16] = b"0123456789abcdef";
+                            let esc = [
+                                b'\\',
+                                b'u',
+                                b'0',
+                                b'0',
+                                HEX[(b >> 4) as usize],
+                                HEX[(b & 0xf) as usize],
+                            ];
+                            self.output.push_str(std::str::from_utf8(&esc).unwrap());
+                        }
+                    }
+                    i += 1;
+                    start = i;
+                } else if b == 0xe2
+                    && i + 2 < bytes.len()
+                    && bytes[i + 1] == 0x80
+                    && (bytes[i + 2] == 0xa8 || bytes[i + 2] == 0xa9)
+                {
+                    if i > start {
+                        self.output.push_str(&s[start..i]);
+                    }
+                    self.output.push_str(if bytes[i + 2] == 0xa8 {
+                        "\\u2028"
+                    } else {
+                        "\\u2029"
+                    });
+                    i += 3;
+                    start = i;
+                } else {
+                    i += 1;
+                }
+            }
+            if start < bytes.len() {
+                self.output.push_str(&s[start..]);
+            }
+            self.output.push('"');
+        } else {
+            let rendered = json_string(value);
+            self.output.push_value(&rendered);
         }
     }
     fn plist_key(&mut self, text: &PklString, depth: usize) {
@@ -604,7 +669,7 @@ impl Vm {
                 return Ok(());
             }
         }
-        self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
+        self.frames.last_mut().expect("renderer frame").pcf_render = Some(Box::new(RenderRun {
             receiver,
             root,
             document_original: None,
@@ -630,7 +695,7 @@ impl Vm {
             has_value_converters: true,
             converters: Converters::default(),
             source: None,
-        });
+        }));
         Ok(())
     }
     pub(super) fn step_pcf(&mut self) -> Result<(), RuntimeError> {
@@ -1472,17 +1537,21 @@ impl Vm {
                 }
                 run.append(&value.to_string());
             }
-            Value::String(value) => run.append_value(&if run.format == Format::Jsonnet {
-                super::jsonnet::string(&value, &run.indent, &run.indentation(depth))
-            } else if run.format == Format::Json {
-                json_string(&value)
-            } else {
-                super::pcf_format::string(
-                    &value,
-                    &run.indentation(depth + usize::from(!string_element)),
-                    run.custom,
-                )
-            }),
+            Value::String(value) => {
+                if run.format == Format::Json {
+                    run.append_json_string(&value);
+                } else {
+                    run.append_value(&if run.format == Format::Jsonnet {
+                        super::jsonnet::string(&value, &run.indent, &run.indentation(depth))
+                    } else {
+                        super::pcf_format::string(
+                            &value,
+                            &run.indentation(depth + usize::from(!string_element)),
+                            run.custom,
+                        )
+                    });
+                }
+            }
             Value::Bytes(value) => {
                 if matches!(run.format, Format::Json | Format::Jsonnet) {
                     return self.pcf_unrenderable(run, &Value::Bytes(value));
@@ -1681,6 +1750,13 @@ impl Vm {
                         path,
                     }));
                 } else {
+                    if !run.has_value_converters
+                        && run.format != Format::Protobuf
+                        && self.try_fast_render_open_object(run, id, depth, standalone, root, &path)
+                    {
+                        run.active.remove(&id);
+                        return Ok(false);
+                    }
                     run.tasks.push(Task::OpenObject {
                         receiver: id,
                         depth,
@@ -1878,84 +1954,95 @@ impl Vm {
         run: &mut RenderRun,
         mut m: Members,
     ) -> Result<bool, RuntimeError> {
-        if m.next == m.members.len() {
-            if m.xml.is_some() {
+        let needs_key_dedup = !(matches!(
+            run.format,
+            Format::Properties
+                | Format::Jsonnet
+                | Format::Yaml
+                | Format::Plist
+                | Format::Xml
+                | Format::PklBinary
+                | Format::Protobuf
+        ) && m.strict);
+        let item = loop {
+            if m.next == m.members.len() {
+                if m.xml.is_some() {
+                    return Ok(false);
+                }
+                run.tasks.push(Task::Close {
+                    receiver: m.receiver,
+                    depth: m.depth,
+                    document_root: m.document_root,
+                    emitted: m.emitted
+                        || (matches!(
+                            run.format,
+                            Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
+                        ) && m.strict
+                            && !m.array
+                            && !m.members.is_empty()),
+                    strict: m.strict,
+                    array: m.array,
+                    stream: m.stream,
+                });
                 return Ok(false);
             }
-            run.tasks.push(Task::Close {
-                receiver: m.receiver,
-                depth: m.depth,
-                document_root: m.document_root,
-                emitted: m.emitted
-                    || (matches!(
-                        run.format,
-                        Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
-                    ) && m.strict
-                        && !m.array
-                        && !m.members.is_empty()),
-                strict: m.strict,
-                array: m.array,
-                stream: m.stream,
-            });
-            return Ok(false);
-        }
-        let item = m.members[m.next].clone();
-        let descriptor = &item.descriptor;
-        if !(matches!(
-            run.format,
-            Format::Properties
-                | Format::Jsonnet
-                | Format::Yaml
-                | Format::Plist
-                | Format::Xml
-                | Format::PklBinary
-                | Format::Protobuf
-        ) && m.strict)
-            && !m.prepared
-        {
-            m.prepared = true;
-            let key = descriptor.key.clone();
-            run.tasks.push(Task::Members(m));
-            self.prepare_render_key(key);
-            return Ok(false);
-        }
-        if !(matches!(
-            run.format,
-            Format::Properties
-                | Format::Jsonnet
-                | Format::Yaml
-                | Format::Plist
-                | Format::Xml
-                | Format::PklBinary
-                | Format::Protobuf
-        ) && m.strict)
-        {
-            m.hash = self.java_hash(&descriptor.key)?;
-            while m.compare < m.seen.len() {
-                let (seen, hash) = &m.seen[m.compare];
-                m.compare += 1;
-                if (seen.kind == CollectionMemberKind::Property)
-                    != (descriptor.kind == CollectionMemberKind::Property)
-                    || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
-                {
+            let item = &m.members[m.next];
+            let descriptor = &item.descriptor;
+            if needs_key_dedup && !m.prepared && matches!(descriptor.key, Value::Object(_)) {
+                m.prepared = true;
+                let key = descriptor.key.clone();
+                run.tasks.push(Task::Members(m));
+                self.prepare_render_key(key);
+                return Ok(false);
+            }
+            if needs_key_dedup {
+                m.hash = self.java_hash(&descriptor.key)?;
+                let mut duplicate = false;
+                while m.compare < m.seen.len() {
+                    let (seen, hash) = &m.seen[m.compare];
+                    m.compare += 1;
+                    if (seen.kind == CollectionMemberKind::Property)
+                        != (descriptor.kind == CollectionMemberKind::Property)
+                        || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
+                    {
+                        continue;
+                    }
+                    if !matches!(
+                        (&seen.key, &descriptor.key),
+                        (Value::Object(_), _) | (_, Value::Object(_))
+                    ) {
+                        if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
+                            duplicate = true;
+                            break;
+                        }
+                        continue;
+                    }
+                    let left = seen.key.clone();
+                    let right = descriptor.key.clone();
+                    run.tasks.push(Task::Members(m));
+                    run.await_ = Some(Await::KeyEquality);
+                    self.begin_equality(left, right, false);
+                    return Ok(false);
+                }
+                if duplicate {
+                    m.next += 1;
+                    m.compare = 0;
+                    m.prepared = false;
                     continue;
                 }
-                let left = seen.key.clone();
-                let right = descriptor.key.clone();
-                run.tasks.push(Task::Members(m));
-                run.await_ = Some(Await::KeyEquality);
-                self.begin_equality(left, right, false);
-                return Ok(false);
+                m.seen.push((descriptor.clone(), m.hash));
             }
-            m.seen.push((descriptor.clone(), m.hash));
-        }
-        m.next += 1;
-        m.compare = 0;
-        m.prepared = false;
-        if item.skip {
-            run.tasks.push(Task::Members(m));
-            return Ok(false);
-        }
+            let skip = item.skip;
+            let item = m.members[m.next].clone();
+            m.next += 1;
+            m.compare = 0;
+            m.prepared = false;
+            if skip {
+                continue;
+            }
+            break item;
+        };
+        let descriptor = &item.descriptor;
         if matches!(
             run.format,
             Format::Json
@@ -2030,18 +2117,23 @@ impl Vm {
             && let Some(span) = metadata.member_span.or(metadata.declaration)
         {
             let renderer = &self.program.metadata[self.frames.last().unwrap().block];
+            let target_module_name = renderer
+                .source
+                .as_ref()
+                .map_or(&self.program.module_name, |source| &source.module_name);
             let source = metadata
                 .source
                 .as_ref()
                 .or(self.context.primary_source.as_ref())
                 .map(|source| {
-                    Arc::new(crate::value::RuntimeSource {
-                        module_name: renderer.source.as_ref().map_or_else(
-                            || self.program.module_name.clone(),
-                            |source| source.module_name.clone(),
-                        ),
-                        ..(**source).clone()
-                    })
+                    if source.module_name == *target_module_name {
+                        source.clone()
+                    } else {
+                        Arc::new(crate::value::RuntimeSource {
+                            module_name: target_module_name.clone(),
+                            ..(**source).clone()
+                        })
+                    }
                 });
             run.source = Some(RuntimeFrame {
                 anonymous: false,
@@ -2088,7 +2180,8 @@ impl Vm {
                     return Ok(false);
                 }
             }
-            if member.descriptor.kind == CollectionMemberKind::Entry
+            if run.has_value_converters
+                && member.descriptor.kind == CollectionMemberKind::Entry
                 && let Some(function) = run.converters.select(self, &member.key, &[])?
             {
                 let argument = member.key.clone();
@@ -2112,7 +2205,9 @@ impl Vm {
         );
         if member.step == 1 {
             member.step = 2;
-            if let Some(function) = run.converters.select(self, &member.value, &path)? {
+            if run.has_value_converters
+                && let Some(function) = run.converters.select(self, &member.value, &path)?
+            {
                 let argument = member.value.clone();
                 run.tasks.push(Task::Member(member));
                 run.await_ = Some(Await::ConverterMember { key: false });
@@ -2318,20 +2413,26 @@ impl Vm {
             run.tasks.push(Task::Members(m));
             run.tasks.push(Task::RestoreSource(previous_source));
             run.value(value, depth, false, false, false, path);
-            if kind != CollectionMemberKind::Element {
-                run.tasks.push(Task::Text(
-                    if run.indent.is_empty() { ":" } else { ": " }.into(),
-                ));
-                if kind == CollectionMemberKind::Property {
-                    run.tasks
-                        .push(Task::Text(json_string(&output_name.unwrap_or_else(|| {
-                            if let Value::String(name) = &descriptor.key {
-                                name.clone()
-                            } else {
-                                unreachable!("property string key")
-                            }
-                        }))));
+            if kind == CollectionMemberKind::Property {
+                let name = output_name.unwrap_or_else(|| {
+                    if let Value::String(name) = &descriptor.key {
+                        name.clone()
+                    } else {
+                        unreachable!("property string key")
+                    }
+                });
+                run.append_json_string(&name);
+                run.output
+                    .push_str(if run.indent.is_empty() { ":" } else { ": " });
+            } else if kind == CollectionMemberKind::Entry {
+                if let Value::String(ref k) = key {
+                    run.append_json_string(k);
+                    run.output
+                        .push_str(if run.indent.is_empty() { ":" } else { ": " });
                 } else {
+                    run.tasks.push(Task::Text(
+                        if run.indent.is_empty() { ":" } else { ": " }.into(),
+                    ));
                     run.value(key, depth, false, false, false, Vec::new());
                 }
             }
@@ -2521,9 +2622,25 @@ impl Vm {
         receiver: ObjectId,
         name: &PklString,
     ) -> Result<Vec<ObjectId>, RuntimeError> {
+        let mut has_any_annotations = false;
+        let mut cur = Some(receiver);
+        for _ in 0..64 {
+            let Some(id) = cur else {
+                break;
+            };
+            let object = self.heap.get(id)?;
+            if object.class_definition.is_some() && !object.member_annotations.is_empty() {
+                has_any_annotations = true;
+                break;
+            }
+            cur = object.parent;
+        }
+        if cur.is_none() && !has_any_annotations {
+            return Ok(Vec::new());
+        }
         let mut definitions = Vec::new();
         let mut owner = Some(receiver);
-        let mut seen = BTreeSet::new();
+        let mut seen = SmallObjectIdSet::new();
         while let Some(id) = owner {
             if !seen.insert(id) {
                 return Err(RuntimeError::new(
@@ -2845,6 +2962,9 @@ enum FastObjectKind<'a> {
     PlainMapping(usize),
     PlainModule {
         class: ObjectId,
+        count: usize,
+    },
+    PlainTyped {
         count: usize,
     },
 }
@@ -3268,8 +3388,11 @@ impl Vm {
         });
         {
             let map_index = self.heap.get_mut(id).ok()?.map_index.as_mut()?;
-            for i in 0..len {
-                map_index.insert(hashes[..=i].to_vec(), true);
+            for &hash in &hashes {
+                let Ok(()) =
+                    map_index.insert_lazy::<std::convert::Infallible>(hash, true, |slot| {
+                        Ok(hashes[slot])
+                    });
             }
         }
         let mut cache_index = crate::economic_map::EconomicMapIndex::with_capacity(0);
@@ -3669,17 +3792,30 @@ impl Vm {
                 entry: next_member.entry,
             };
             let entry_probe = if next_member.entry {
-                self.cache_value_key(receiver, &cache_key)?
+                let obj = self.heap.get(receiver)?;
+                if let Some(cm) = obj.collection_members.get(idx)
+                    && cm.name == next_member.name
+                    && cm.kind != CollectionMemberKind::Property
+                {
+                    Some(cm.key.clone())
+                } else {
+                    self.cache_value_key(receiver, &cache_key)?
+                }
             } else {
                 None
             };
             if let Some(ref probe) = entry_probe
                 && !matches!(probe, Value::Object(_))
-                && self
-                    .lookup_non_object_cache_entry(receiver, probe)?
-                    .is_some()
             {
-                continue;
+                let obj = self.heap.get(receiver)?;
+                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                    || (!obj.cache_slots.is_empty()
+                        && self
+                            .lookup_non_object_cache_entry(receiver, probe)?
+                            .is_some())
+                {
+                    continue;
+                }
             }
             if entry_probe
                 .as_ref()
@@ -3732,17 +3868,30 @@ impl Vm {
                 entry: next_member.entry,
             };
             let entry_probe = if next_member.entry {
-                self.cache_value_key(receiver, &cache_key)?
+                let obj = self.heap.get(receiver)?;
+                if let Some(cm) = obj.collection_members.get(index - 1)
+                    && cm.name == next_member.name
+                    && cm.kind != CollectionMemberKind::Property
+                {
+                    Some(cm.key.clone())
+                } else {
+                    self.cache_value_key(receiver, &cache_key)?
+                }
             } else {
                 None
             };
             if let Some(ref probe) = entry_probe
                 && !matches!(probe, Value::Object(_))
-                && self
-                    .lookup_non_object_cache_entry(receiver, probe)?
-                    .is_some()
             {
-                continue;
+                let obj = self.heap.get(receiver)?;
+                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                    || (!obj.cache_slots.is_empty()
+                        && self
+                            .lookup_non_object_cache_entry(receiver, probe)?
+                            .is_some())
+                {
+                    continue;
+                }
             }
             if entry_probe
                 .as_ref()
@@ -3912,6 +4061,81 @@ impl Vm {
             if !self.instance_class_is_none_or_builtin(obj.instance_class, expected_builtin)
                 || !self.parent_is_empty_builtin(obj.parent, obj.collection_kind, expected_builtin)
             {
+                // Fast path for non-module Typed class instances with all visible
+                // properties already cached on the receiver and no property annotations.
+                if obj.collection_kind == CollectionKind::Dynamic
+                    && obj.collection_cast.is_none()
+                    && obj.class_definition.is_none()
+                    && obj.instance_class.is_some()
+                    && collections::typed_class(&self.heap, id)
+                        .ok()
+                        .flatten()
+                        .is_some()
+                    && self.is_render_directive(id).ok() == Some(false)
+                    && self.is_pcf_render_directive(id).ok() == Some(false)
+                    && self.jsonnet_wrapper(id).ok() == Some(None)
+                {
+                    let mut chain = [id; 8];
+                    let mut chain_len = 0usize;
+                    let mut cur = Some(id);
+                    while let Some(anc_id) = cur {
+                        if chain_len >= chain.len() || chain[..chain_len].contains(&anc_id) {
+                            return None;
+                        }
+                        let anc = self.heap.get_fast(anc_id)?;
+                        if !anc.member_annotations.is_empty()
+                            || anc.collection_cast.is_some()
+                            || anc.members.iter().any(|m| !m.local && !m.method && m.entry)
+                        {
+                            return None;
+                        }
+                        chain[chain_len] = anc_id;
+                        chain_len += 1;
+                        cur = anc.parent;
+                    }
+                    let base = scratch.len();
+                    let mut seen_hidden: [Option<&PklString>; 32] = [None; 32];
+                    let mut hidden_len = 0usize;
+                    for &anc_id in chain[..chain_len].iter().rev() {
+                        let anc = self.heap.get_fast(anc_id)?;
+                        for m in anc.members.iter() {
+                            if m.local || m.method {
+                                continue;
+                            }
+                            if seen_hidden[..hidden_len].contains(&Some(&m.name))
+                                || scratch[base..].iter().any(
+                                    |prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name),
+                                )
+                            {
+                                continue;
+                            }
+                            if m.hidden() || m.external() || m.definition() || m.import() {
+                                if hidden_len >= seen_hidden.len() {
+                                    scratch.truncate(base);
+                                    return None;
+                                }
+                                seen_hidden[hidden_len] = Some(&m.name);
+                                hidden_len += 1;
+                                continue;
+                            }
+                            if check_xml_marker && m.name == "_isXmlElement" {
+                                scratch.truncate(base);
+                                return None;
+                            }
+                            if scratch.len() - base >= 64 {
+                                scratch.truncate(base);
+                                return None;
+                            }
+                            let Some(val) = fast_lookup_member_cached(obj, &m.name, false) else {
+                                scratch.truncate(base);
+                                return None;
+                            };
+                            scratch.push(FastMember::Property(&m.name, val));
+                        }
+                    }
+                    let count = scratch.len() - base;
+                    return Some(FastObjectKind::PlainTyped { count });
+                }
                 return None;
             }
             let mut non_local_non_method = 0usize;
@@ -5623,7 +5847,8 @@ impl Vm {
             FastObjectKind::PlainDynamic { count, .. }
             | FastObjectKind::PlainListing(count)
             | FastObjectKind::PlainMapping(count)
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let end = base + count;
                 let doc = document && root;
                 if !doc {
@@ -5973,7 +6198,8 @@ impl Vm {
                 has_elements: false,
                 ..
             }
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
                 let end = base + count;
                 buf.push('{');
@@ -6196,7 +6422,8 @@ impl Vm {
                 has_elements: false,
                 ..
             }
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
                 let end = base + count;
                 buf.push('{');
@@ -6407,7 +6634,8 @@ impl Vm {
                 has_elements: false,
                 ..
             }
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
                 let end = base + count;
                 yaml.start(false);
@@ -6657,7 +6885,8 @@ impl Vm {
                 has_elements: false,
                 ..
             }
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let is_strict_map = matches!(kind, FastObjectKind::StrictMap(_));
                 let end = base + count;
                 let mut emitted = false;
@@ -6826,6 +7055,10 @@ impl Vm {
                         }
                         s
                     }
+                    FastObjectKind::PlainTyped { .. } => {
+                        scratch.truncate(base);
+                        return false;
+                    }
                 };
                 if output_non_empty || !buf.is_empty() {
                     *xml_line += 1;
@@ -6976,7 +7209,8 @@ impl Vm {
                 has_elements: false,
                 ..
             }
-            | FastObjectKind::PlainModule { count, .. } => {
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => {
                 let end = base + count;
                 for i in base..end {
                     let (key_str, val) = match scratch[i] {
@@ -7049,7 +7283,8 @@ impl Vm {
         let count = match kind {
             FastObjectKind::StrictMap(count)
             | FastObjectKind::PlainMapping(count)
-            | FastObjectKind::PlainModule { count, .. } => count,
+            | FastObjectKind::PlainModule { count, .. }
+            | FastObjectKind::PlainTyped { count } => count,
             FastObjectKind::PlainDynamic {
                 count,
                 has_elements: false,

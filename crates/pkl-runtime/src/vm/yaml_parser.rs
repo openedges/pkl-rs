@@ -1217,6 +1217,11 @@ impl Vm {
         } else {
             format!("\0yaml:{}", obj.collection_members.len()).into()
         };
+        let entry_key = if obj.collection_kind == CollectionKind::List {
+            Some(key.clone())
+        } else {
+            None
+        };
         obj.collection_members.push(CollectionMember {
             key,
             name: name.clone(),
@@ -1242,7 +1247,7 @@ impl Vm {
             entry,
         };
         if obj.collection_kind == CollectionKind::List {
-            obj.complete_cache(cache_key, value);
+            obj.complete_cache_with_key(cache_key, entry_key, value);
         } else {
             obj.member_values.insert(cache_key, value);
         }

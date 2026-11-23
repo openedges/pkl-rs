@@ -69,7 +69,13 @@ impl Node {
             },
         }
     }
-    fn insert(&mut self, index: usize, hash: i32, hashes: &[i32], shift: u32) {
+    fn insert_lazy<E>(
+        &mut self,
+        index: usize,
+        hash: i32,
+        shift: u32,
+        hash_of: &mut impl FnMut(usize) -> Result<Option<i32>, E>,
+    ) -> Result<bool, E> {
         if matches!(self, Self::Empty) {
             *self = Self::Bitmap {
                 array: false,
@@ -83,7 +89,7 @@ impl Node {
         {
             if *old_hash == hash {
                 indices.push(index);
-                return;
+                return Ok(true);
             }
             let slot = mask(*old_hash, shift);
             let old = std::mem::take(self);
@@ -100,27 +106,42 @@ impl Node {
             match branch {
                 Branch::Leaf(old) => {
                     let old = *old;
-                    let node = if hashes[old] == hash {
+                    let Some(old_hash) = hash_of(old)? else {
+                        return Ok(false);
+                    };
+                    let node = if old_hash == hash {
                         Node::Collision {
                             hash,
                             indices: vec![old, index],
                         }
                     } else {
                         let mut node = Node::Empty;
-                        node.insert(old, hashes[old], hashes, shift + 5);
-                        node.insert(index, hash, hashes, shift + 5);
+                        if !node.insert_lazy(old, old_hash, shift + 5, hash_of)?
+                            || !node.insert_lazy(index, hash, shift + 5, hash_of)?
+                        {
+                            return Ok(false);
+                        }
                         node
                     };
                     *branch = Branch::Node(Box::new(node));
                 }
-                Branch::Node(node) => node.insert(index, hash, hashes, shift + 5),
+                Branch::Node(node) => {
+                    if !node.insert_lazy(index, hash, shift + 5, hash_of)? {
+                        return Ok(false);
+                    }
+                }
             }
         } else {
             if !*array && slots.len() >= 16 {
                 for branch in slots.values_mut() {
                     if let Branch::Leaf(old) = branch {
+                        let Some(old_hash) = hash_of(*old)? else {
+                            return Ok(false);
+                        };
                         let mut node = Node::Empty;
-                        node.insert(*old, hashes[*old], hashes, shift + 5);
+                        if !node.insert_lazy(*old, old_hash, shift + 5, hash_of)? {
+                            return Ok(false);
+                        }
                         *branch = Branch::Node(Box::new(node));
                     }
                 }
@@ -128,13 +149,16 @@ impl Node {
             }
             let branch = if *array {
                 let mut node = Node::Empty;
-                node.insert(index, hash, hashes, shift + 5);
+                if !node.insert_lazy(index, hash, shift + 5, hash_of)? {
+                    return Ok(false);
+                }
                 Branch::Node(Box::new(node))
             } else {
                 Branch::Leaf(index)
             };
             slots.insert(slot, branch);
         }
+        Ok(true)
     }
     fn ordered(&self, result: &mut Vec<usize>) {
         match self {
@@ -281,19 +305,25 @@ impl MapIndex {
             _ => Vec::new(),
         }
     }
-    pub(crate) fn insert(&mut self, hashes: Vec<Option<i32>>, append_order: bool) {
+    pub(crate) fn insert_lazy<E>(
+        &mut self,
+        new_hash: Option<i32>,
+        append_order: bool,
+        mut hash_of: impl FnMut(usize) -> Result<Option<i32>, E>,
+    ) -> Result<(), E> {
         let index = self.length;
         self.length += 1;
         if append_order {
             self.insertion_order.push(index);
         }
-        if let Some(hashes) = hashes.into_iter().collect::<Option<Vec<_>>>() {
-            if !self.identity_dependent {
-                self.root.insert(index, hashes[index], &hashes, 0);
+        if let Some(hash) = new_hash {
+            if !self.identity_dependent && !self.root.insert_lazy(index, hash, 0, &mut hash_of)? {
+                self.identity_dependent = true;
             }
         } else {
             self.identity_dependent = true;
         }
+        Ok(())
     }
     pub(crate) fn ordered(&self) -> Vec<usize> {
         if self.identity_dependent {

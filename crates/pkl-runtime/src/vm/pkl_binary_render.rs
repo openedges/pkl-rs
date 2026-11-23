@@ -21,7 +21,7 @@ impl Vm {
             return Ok(());
         }
         let receiver = self.canonical_builtin_class(classes::BuiltinClass::Any);
-        self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
+        self.frames.last_mut().expect("renderer frame").pcf_render = Some(Box::new(RenderRun {
             receiver,
             root: root.clone(),
             document_original: None,
@@ -56,7 +56,7 @@ impl Vm {
             has_value_converters: false,
             converters: Converters::default(),
             source: None,
-        });
+        }));
         Ok(())
     }
 
@@ -660,6 +660,7 @@ impl Vm {
                         }
                     })
             }
+            FastObjectKind::PlainTyped { .. } => false,
             FastObjectKind::PlainModule { class, count } => {
                 let end = base + count;
                 if self.binary_regular_property_count(id).ok() != Some(count) {

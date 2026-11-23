@@ -231,6 +231,8 @@ fn append(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes: BTreeMap::new(),
+        module_recipes: BTreeMap::new(),
         instrument,
     };
     let mut code = Code::default();

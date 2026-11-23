@@ -16,6 +16,22 @@ pub struct EconomicMapIndex {
     buckets: Option<Vec<Option<usize>>>,
 }
 
+pub(crate) struct HashCandidates<'a> {
+    links: &'a [Option<usize>],
+    next: Option<usize>,
+}
+
+impl Iterator for HashCandidates<'_> {
+    type Item = usize;
+
+    #[inline]
+    fn next(&mut self) -> Option<usize> {
+        let index = self.next?;
+        self.next = self.links[index];
+        Some(index)
+    }
+}
+
 impl EconomicMapIndex {
     pub(crate) fn with_capacity(capacity: usize) -> Self {
         Self {
@@ -46,6 +62,19 @@ impl EconomicMapIndex {
             next = self.links[index];
         }
         result
+    }
+
+    /// Zero-allocation iterator over collision-chain indices when `has_hash()` is true.
+    #[inline]
+    pub(crate) fn hash_candidates(&self, hash: i32) -> HashCandidates<'_> {
+        let next = self
+            .buckets
+            .as_ref()
+            .and_then(|buckets| buckets[bucket(hash, buckets.len())]);
+        HashCandidates {
+            links: &self.links,
+            next,
+        }
     }
 
     /// Reserves the next insertion slot. A true result requires a complete

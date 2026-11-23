@@ -707,17 +707,28 @@ impl Object {
     }
 
     pub(crate) fn complete_cache(&mut self, key: CacheKey, value: Value) {
+        self.complete_cache_with_key(key, None, value);
+    }
+
+    pub(crate) fn complete_cache_with_key(
+        &mut self,
+        key: CacheKey,
+        entry_key: Option<Value>,
+        value: Value,
+    ) {
         // Completed entries persist for the object's lifetime. Failure cleanup
         // removes only pending entries, so retries acquire their position here.
         if !matches!(self.cache.get(&key), Some(LazyState::Completed(_))) {
             self.completed_cache_order.push(key.clone());
             self.cache_slots.push(CacheSlot {
                 key: key.clone(),
-                entry_key: None,
+                entry_key,
                 value: value.clone(),
             });
-        }
-        if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == key) {
+        } else if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == key) {
+            if entry_key.is_some() {
+                slot.entry_key = entry_key;
+            }
             slot.value = value.clone();
         }
         self.cache.insert(key, LazyState::Completed(value));

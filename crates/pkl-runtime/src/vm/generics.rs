@@ -676,6 +676,7 @@ struct SharedNode {
     ty: TypeCheck,
     noop: bool,
     needs_custom_this: bool,
+    needs_type_identity: bool,
     has_declared: bool,
     source_section: Option<crate::type_source::TypeSourceSection>,
     has_parameters: bool,
@@ -698,6 +699,9 @@ impl SharedTypeCheck {
     }
     pub(super) fn needs_custom_this(&self) -> bool {
         self.node().needs_custom_this
+    }
+    pub(super) fn needs_type_identity(&self) -> bool {
+        self.node().needs_type_identity
     }
 }
 impl Drop for SharedTypeCheck {
@@ -808,12 +812,14 @@ impl TypeCheck {
         let ty = self.into_resolved();
         let noop = ty.noop();
         let needs_custom_this = typecheck::needs_custom_this(&ty);
+        let needs_type_identity = needs_custom_this || typecheck::needs_type_identity(&ty);
         let has_declared = ty.has_declared();
         let has_parameters = ty.requires_substitution();
         Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
             ty,
             noop,
             needs_custom_this,
+            needs_type_identity,
             has_declared,
             source_section: Some(section),
             has_parameters,
@@ -821,7 +827,7 @@ impl TypeCheck {
     }
     /// Check lexical parameters in structural children and constraint actuals.
     /// Shared descendants cache this property so repeated DAG prefixes stay bounded.
-    fn requires_substitution(&self) -> bool {
+    pub(super) fn requires_substitution(&self) -> bool {
         match self {
             Self::Any
             | Self::Unknown
@@ -870,12 +876,14 @@ impl TypeCheck {
         }
         let noop = self.noop();
         let needs_custom_this = typecheck::needs_custom_this(&self);
+        let needs_type_identity = needs_custom_this || typecheck::needs_type_identity(&self);
         let has_declared = self.has_declared();
         let has_parameters = self.requires_substitution();
         Self::Shared(SharedTypeCheck(Some(Arc::new(SharedNode {
             ty: self,
             noop,
             needs_custom_this,
+            needs_type_identity,
             has_declared,
             source_section: None,
             has_parameters,

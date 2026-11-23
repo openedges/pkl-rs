@@ -1008,6 +1008,7 @@ fn compile_base_synthetic_annotations_only(
     program.next_declaration = declaration_base
         .checked_add(source.text.len_bytes() + 2)
         .ok_or_else(|| invalid("annotation declaration identity limit"))?;
+    let (declared_recipes, module_recipes) = Compiler::seed_recipe_caches(program, unit);
     let mut compiler = Compiler {
         resolved: &resolved,
         program,
@@ -1042,6 +1043,8 @@ fn compile_base_synthetic_annotations_only(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes,
+        module_recipes,
         instrument: false,
     };
     let mut publish = Code::default();
@@ -1086,6 +1089,7 @@ fn compile_reflection_annotations(
     program.next_declaration = declaration_base
         .checked_add(source.text.len_bytes() + 2)
         .ok_or_else(|| invalid("annotation declaration identity limit"))?;
+    let (declared_recipes, module_recipes) = Compiler::seed_recipe_caches(program, unit);
     let mut compiler = Compiler {
         resolved: &resolved,
         program,
@@ -1120,6 +1124,8 @@ fn compile_reflection_annotations(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes,
+        module_recipes,
         instrument: false,
     };
     if !synthetic_annotated.is_empty() {

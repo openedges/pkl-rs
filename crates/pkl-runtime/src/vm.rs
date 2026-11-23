@@ -537,6 +537,48 @@ pub enum Instruction {
     Return,
 }
 
+/// Small stack-backed `ObjectId` set for cycle detection on short parent chains,
+/// falling back to `BTreeSet` only beyond 8 ancestors.
+pub(super) struct SmallObjectIdSet {
+    inline: [ObjectId; 8],
+    len: usize,
+    overflow: Option<BTreeSet<ObjectId>>,
+}
+
+impl SmallObjectIdSet {
+    #[inline(always)]
+    pub(super) fn new() -> Self {
+        Self {
+            inline: [ObjectId {
+                heap: 0,
+                index: 0,
+                generation: 0,
+            }; 8],
+            len: 0,
+            overflow: None,
+        }
+    }
+
+    #[inline(always)]
+    pub(super) fn insert(&mut self, id: ObjectId) -> bool {
+        if let Some(set) = &mut self.overflow {
+            return set.insert(id);
+        }
+        if self.inline[..self.len].contains(&id) {
+            return false;
+        }
+        if self.len < self.inline.len() {
+            self.inline[self.len] = id;
+            self.len += 1;
+            return true;
+        }
+        let mut set: BTreeSet<ObjectId> = self.inline.into_iter().collect();
+        let inserted = set.insert(id);
+        self.overflow = Some(set);
+        inserted
+    }
+}
+
 /// Type checks supported by the shared evaluator. Parametric collections use
 /// resumable checks and lazy wrappers; function types preserve metadata and check arity.
 #[derive(Clone, Debug)]
@@ -1473,17 +1515,17 @@ struct Frame {
     environment: Environment,
     force: Option<Box<Force>>,
     lambda: bool,
-    type_run: Option<TypeRun>,
-    type_resolution: Option<type_resolution::DeclaredRun>,
-    generic_default: Option<generics::GenericDefaultRun>,
-    equality_run: Option<equality::EqualityRun>,
-    deep_force: Option<forcing::ForceRun>,
+    type_run: Option<Box<TypeRun>>,
+    type_resolution: Option<Box<type_resolution::DeclaredRun>>,
+    generic_default: Option<Box<generics::GenericDefaultRun>>,
+    equality_run: Option<Box<equality::EqualityRun>>,
+    deep_force: Option<Box<forcing::ForceRun>>,
     warning: Option<deprecation::PendingWarning>,
     method_call_site: Option<Box<deprecation::CallSite>>,
-    pcf_render: Option<rendering::RenderRun>,
+    pcf_render: Option<Box<rendering::RenderRun>>,
     json_parse: Option<Box<json_parser::Run>>,
     yaml_parse: Option<Box<yaml_parser::Run>>,
-    collection_join: Option<collections::JoinRun>,
+    collection_join: Option<Box<collections::JoinRun>>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     set_order: Option<Box<set_order::Run>>,
     set_sequence: Option<Box<set_sequence::Run>>,
@@ -1501,7 +1543,7 @@ struct Frame {
     amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
-    key_search: Option<equality::KeySearch>,
+    key_search: Option<Box<equality::KeySearch>>,
     return_to_type: bool,
     diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
@@ -1509,8 +1551,8 @@ struct Frame {
     captured_locals_len: usize,
     builders: Vec<ObjectId>,
     generator_scopes: Vec<identity::GeneratorScope>,
-    module_load: Option<modules::ModuleRun>,
-    uri_resolution: Option<uri_resolution::Resolution>,
+    module_load: Option<Box<modules::ModuleRun>>,
+    uri_resolution: Option<Box<uri_resolution::Resolution>>,
     glob: Option<Box<glob::Run>>,
     module_receiver: Option<ObjectId>,
 }
@@ -1714,7 +1756,7 @@ impl Frame {
             || self.module_load.as_ref().is_some_and(|run| run.initializing)
             || self
                 .deep_force
-                .as_ref()
+                .as_deref()
                 .is_some_and(forcing::ForceRun::is_trace)
     }
 }
@@ -1789,6 +1831,7 @@ struct SuspendedContext {
     /// Caller locations captured at the Host boundary, innermost first. The
     /// pending reader has no language call node for a callback evaluation.
     diagnostic_callers: Vec<RuntimeFrame>,
+    #[allow(clippy::vec_box)]
     frames: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
@@ -2205,7 +2248,9 @@ pub struct Vm {
     callback_closing: bool,
     log_buffer: Vec<u16>,
     heap: Heap,
+    #[allow(clippy::vec_box)]
     frames: Vec<Box<Frame>>,
+    #[allow(clippy::vec_box)]
     frame_pool: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
@@ -2237,6 +2282,8 @@ pub struct Vm {
     empty_collections: [Option<ObjectId>; 3],
     empty_objects: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    resolved_instruction_types: BTreeMap<(usize, usize, ObjectId, bool), TypeCheck>,
+    resolved_property_types: BTreeMap<(usize, ObjectId), TypeCheck>,
     type_parent_defaults: BTreeMap<(usize, usize), Value>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: ExecutableRoots,
@@ -2340,6 +2387,8 @@ impl Vm {
             empty_collections: [None; 3],
             empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
+            resolved_instruction_types: BTreeMap::new(),
+            resolved_property_types: BTreeMap::new(),
             type_parent_defaults: BTreeMap::new(),
             executable_roots: ExecutableRoots::new(),
             code_arenas: Vec::new(),
@@ -2702,7 +2751,7 @@ impl Vm {
         self.active_type_trackers = self
             .frames
             .iter()
-            .filter(|frame| frame.type_run.as_ref().is_some_and(TypeRun::has_tracker))
+            .filter(|frame| frame.type_run.as_deref().is_some_and(TypeRun::has_tracker))
             .count()
             + usize::from(self.fact_tracker.is_some());
     }
@@ -2914,6 +2963,7 @@ impl Vm {
         let heap = &mut self.heap;
         let executable_roots = &self.executable_roots;
         let resolved_declarations = &self.resolved_declarations;
+        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
         let active_type_trackers = self.active_type_trackers;
         let fast_int_cache = &mut self.fast_int_cache;
         let fast_int_captured = &mut self.fast_int_captured;
@@ -3560,13 +3610,41 @@ impl Vm {
                         break;
                     }
                     let val = stack.last().unwrap();
-                    if fast_check_type_in_poll(
+                    if fast_eval_type_in_poll(
                         ty,
                         val,
-                        frames.last().unwrap(),
+                        &frames.last().unwrap().environment,
                         heap,
                         resolved_declarations,
+                        program,
+                        builtin_fast_classes,
+                        None,
+                        0,
+                    ) == Some(true)
+                    {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::TestType(ty) => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    let val = stack.last().unwrap();
+                    if let Some(matched) = fast_eval_type_in_poll(
+                        ty,
+                        val,
+                        &frames.last().unwrap().environment,
+                        heap,
+                        resolved_declarations,
+                        program,
+                        builtin_fast_classes,
+                        None,
+                        0,
                     ) {
+                        let _ = stack.pop();
+                        stack.push_raw(Value::Bool(matched));
                         pc += 1;
                     } else {
                         break;
@@ -3664,7 +3742,18 @@ impl Vm {
                         continue;
                     }
                     let top_val = stack.last().unwrap();
-                    if !fast_check_type_in_poll(ty, top_val, frame, heap, resolved_declarations) {
+                    if fast_eval_type_in_poll(
+                        ty,
+                        top_val,
+                        &frame.environment,
+                        heap,
+                        resolved_declarations,
+                        program,
+                        builtin_fast_classes,
+                        None,
+                        0,
+                    ) != Some(true)
+                    {
                         break;
                     }
                     let index = match depth {
@@ -4604,6 +4693,8 @@ impl Vm {
         self.empty_collections = [None; 3];
         self.empty_objects = [None; 3];
         self.resolved_declarations.clear();
+        self.resolved_instruction_types.clear();
+        self.resolved_property_types.clear();
         self.type_parent_defaults.clear();
         self.executable_roots.clear();
         self.code_arenas = Vec::new();
@@ -5975,6 +6066,7 @@ impl Vm {
             entry_probe
         };
         if !hash_prepared
+            && entry_probe.is_some()
             && self.prepare_cache_read(
                 receiver,
                 initial_owner,
@@ -5995,23 +6087,35 @@ impl Vm {
             name: name.clone(),
             method,
         };
-        if memoize
-            && !entry
-            && let Some(value) = self.cached_slot(receiver, &key)?
-        {
-            self.stack.push(value);
-            return Ok(());
-        }
-        if memoize
-            && !local
-            && !method
-            && !entry
-            && self.steal_collection_property(receiver, &name)?
-        {
-            return Ok(());
+        let mut cache_evaluating = false;
+        let mut checked_cache_evaluating = false;
+        if memoize && !entry {
+            let receiver_obj = self.heap.get(receiver)?;
+            let receiver_kind = receiver_obj.collection_kind;
+            checked_cache_evaluating = true;
+            match receiver_obj.cache.get(&key) {
+                Some(LazyState::Completed(value)) => {
+                    self.stack.push(value.clone());
+                    return Ok(());
+                }
+                Some(LazyState::Evaluating) => {
+                    cache_evaluating = true;
+                }
+                Some(LazyState::Unevaluated) | None => {}
+            }
+            if !local
+                && !method
+                && matches!(
+                    receiver_kind,
+                    crate::heap::CollectionKind::Listing | crate::heap::CollectionKind::Mapping
+                )
+                && self.steal_collection_property(receiver, &name)?
+            {
+                return Ok(());
+            }
         }
         let mut owner = initial_owner;
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         let member = if let Some(member) = resolved_member {
             member
         } else {
@@ -6169,10 +6273,14 @@ impl Vm {
             && stolen_value.is_none()
             && !direct_force_read
             && !callback_attempt
-            && matches!(
-                self.heap.get(receiver)?.cache.get(&key),
-                Some(LazyState::Evaluating)
-            )
+            && if checked_cache_evaluating {
+                cache_evaluating
+            } else {
+                matches!(
+                    self.heap.get(receiver)?.cache.get(&key),
+                    Some(LazyState::Evaluating)
+                )
+            }
         {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
@@ -6249,17 +6357,18 @@ impl Vm {
             constant_value = cached;
         }
         if constant_value.is_none() {
-            constant_value = self
-                .heap
-                .get(owner)?
-                .member_values
-                .get(&CacheKey {
-                    owner: None,
-                    name: name.clone(),
-                    method,
-                    entry,
-                })
-                .cloned();
+            let owner_obj = self.heap.get(owner)?;
+            if !owner_obj.member_values.is_empty() {
+                constant_value = owner_obj
+                    .member_values
+                    .get(&CacheKey {
+                        owner: None,
+                        name: name.clone(),
+                        method,
+                        entry,
+                    })
+                    .cloned();
+            }
         }
         let owner_object = self.heap.get(owner)?;
         let owner_is_dynamic = !owner_object.is_module
@@ -6312,7 +6421,7 @@ impl Vm {
             && self.heap.get(owner)?.mirror.is_none()
         {
             let mut parent = self.heap.get(owner)?.parent;
-            let mut visited = BTreeSet::new();
+            let mut visited = SmallObjectIdSet::new();
             while let Some(id) = parent {
                 if !visited.insert(id) {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -6339,16 +6448,20 @@ impl Vm {
             inherited_types.extend(implicit_default_type);
         }
         let object = self.heap.get(owner)?;
-        let mut environment = object
-            .member_environments
-            .get(&CacheKey {
-                owner: None,
-                name: name.clone(),
-                method,
-                entry,
-            })
-            .unwrap_or(&object.environment)
-            .clone();
+        let mut environment = if object.member_environments.is_empty() {
+            object.environment.clone()
+        } else {
+            object
+                .member_environments
+                .get(&CacheKey {
+                    owner: None,
+                    name: name.clone(),
+                    method,
+                    entry,
+                })
+                .unwrap_or(&object.environment)
+                .clone()
+        };
         environment.outer_value = environment.this_value.clone();
         environment.this_value = Some(Value::Object(receiver));
         environment.custom_this = None;
@@ -6948,7 +7061,7 @@ impl Vm {
         member: &Member,
     ) -> Result<Option<&Member>, RuntimeError> {
         let mut current = Some(parent);
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         let mut definition = None;
         while let Some(id) = current {
             if !visited.insert(id) {
@@ -7105,13 +7218,112 @@ impl Vm {
             }
             return Ok(());
         }
+        // Fast zero-allocation validation pass: walk the ancestor chain once
+        // without allocating BTreeSet/Vec/PklStrings unless a missing member
+        // error actually needs to be formatted.
+        let mut class_parent = None;
+        let mut class_initializing = false;
+        let mut has_class_name = false;
+        let mut visited = SmallObjectIdSet::new();
+        let mut ancestor = Some(parent);
+        if let [single] = members {
+            let mut found_decl = single.local;
+            while let Some(id) = ancestor {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let object = self.heap.get(id)?;
+                if !has_class_name && object.class_definition.is_some() {
+                    class_parent = Some(id);
+                    class_initializing = object.class_initializing;
+                    has_class_name = true;
+                }
+                if !found_decl
+                    && object.members.iter().any(|old| {
+                        !old.local && old.name == single.name && old.method == single.method
+                    })
+                {
+                    found_decl = true;
+                }
+                ancestor = object.parent;
+            }
+            if single.local {
+                return Ok(());
+            }
+            if !has_class_name {
+                return self.validate_object_override(parent, single);
+            }
+            if found_decl || (class_initializing && !single.method) {
+                return self.validate_object_override(class_parent.unwrap_or(parent), single);
+            }
+        } else {
+            let mut all_found = true;
+            let mut chain_inline = [parent; 8];
+            let mut chain_len = 0usize;
+            let mut chain_overflow: Option<Vec<ObjectId>> = None;
+            while let Some(id) = ancestor {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                if let Some(vec) = &mut chain_overflow {
+                    vec.push(id);
+                } else if chain_len < chain_inline.len() {
+                    chain_inline[chain_len] = id;
+                    chain_len += 1;
+                } else {
+                    let mut vec = chain_inline.to_vec();
+                    vec.push(id);
+                    chain_overflow = Some(vec);
+                }
+                let object = self.heap.get(id)?;
+                if !has_class_name && object.class_definition.is_some() {
+                    class_parent = Some(id);
+                    class_initializing = object.class_initializing;
+                    has_class_name = true;
+                }
+                ancestor = object.parent;
+            }
+            if !has_class_name {
+                for member in members.iter().filter(|m| !m.local) {
+                    self.validate_object_override(parent, member)?;
+                }
+                return Ok(());
+            }
+            let chain: &[ObjectId] = chain_overflow
+                .as_deref()
+                .unwrap_or(&chain_inline[..chain_len]);
+            for member in members.iter().filter(|m| !m.local) {
+                if class_initializing && !member.method {
+                    continue;
+                }
+                let found = chain.iter().any(|&id| {
+                    self.heap.get(id).is_ok_and(|obj| {
+                        obj.members.iter().any(|old| {
+                            !old.local && old.name == member.name && old.method == member.method
+                        })
+                    })
+                });
+                if !found {
+                    all_found = false;
+                    break;
+                }
+            }
+            if all_found {
+                let target = class_parent.unwrap_or(parent);
+                for member in members.iter().filter(|m| !m.local) {
+                    self.validate_object_override(target, member)?;
+                }
+                return Ok(());
+            }
+        }
+        // Cold error path: collect full property names and diagnostics.
         let mut ancestor = Some(parent);
         let mut declared = BTreeSet::new();
         let mut property_names = Vec::new();
         let mut class_name = None;
         let mut class_parent = None;
         let mut class_initializing = false;
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         while let Some(id) = ancestor {
             if !visited.insert(id) {
                 return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -8009,8 +8221,8 @@ impl Vm {
                     {
                         let frame = self.frames.last_mut().expect("property default frame");
                         let ty = ty.substituted(&frame.environment)?;
-                        frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
-                            ty, origin, None,
+                        frame.generic_default = Some(Box::new(
+                            generics::GenericDefaultRun::inferred_parent(ty, origin, None),
                         ));
                     } else {
                         let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
@@ -9625,17 +9837,40 @@ impl Vm {
         if self.stack.len() != base + 1 {
             return Err(invalid("unbalanced return stack"));
         }
-        let value = self.pop()?;
+        let mut value = self.pop()?;
         if let Some(force) = &mut self.frames.last_mut().expect("active frame").force {
             // A successful cast exits its Java try block before cache publication.
             force.stolen_cast = None;
         }
-        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
+        while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.inherited_types.is_empty()
         {
+            let fast_ok = {
+                let (ty, _, _, owner) = &force.inherited_types[0];
+                let owner = *owner;
+                self.heap.get(owner).ok().is_some_and(|owner_obj| {
+                    owner_obj.environment.type_arguments.is_empty()
+                        && fast_eval_type_in_poll(
+                            ty,
+                            &value,
+                            &owner_obj.environment,
+                            &self.heap,
+                            &self.resolved_declarations,
+                            &self.program,
+                            builtin_fast_classes,
+                            owner_obj.is_module.then_some(owner),
+                            0,
+                        ) == Some(true)
+                })
+            };
+            if fast_ok {
+                force.inherited_types.remove(0);
+                continue;
+            }
             let receiver = force.receiver;
-            let (ty, span, member, owner) = force.inherited_types.remove(0);
+            let (mut ty, span, member, owner) = force.inherited_types.remove(0);
             let declaration = self
                 .heap
                 .get(owner)?
@@ -9644,6 +9879,65 @@ impl Vm {
                 .find(|m| m.name == force.name && !m.method)
                 .ok_or_else(|| invalid("missing inherited declaration"))?
                 .code;
+            if let Some(resolved) = self.resolve_property_type(declaration, owner, &ty) {
+                ty = resolved;
+                if self.heap.get(owner).ok().is_some_and(|owner_obj| {
+                    owner_obj.environment.type_arguments.is_empty()
+                        && fast_eval_type_in_poll(
+                            &ty,
+                            &value,
+                            &owner_obj.environment,
+                            &self.heap,
+                            &self.resolved_declarations,
+                            &self.program,
+                            builtin_fast_classes,
+                            owner_obj.is_module.then_some(owner),
+                            0,
+                        ) == Some(true)
+                }) {
+                    continue;
+                }
+            }
+            if let Some(result) = self.try_fast_lazy_collection_check(
+                &ty,
+                &value,
+                |vm| {
+                    let executable =
+                        if let Some(parent) = vm.heap.get(owner)?.environment.executable_owner {
+                            vm.heap
+                                .executable_child(parent, ExecutionSite::Member(declaration))?
+                        } else {
+                            vm.executable_root(declaration)
+                        };
+                    Ok(TypeNodeId(vm.heap.executable_child(
+                        executable,
+                        ExecutionSite::PropertyType(declaration),
+                    )?))
+                },
+                |vm| {
+                    vm.program
+                        .metadata
+                        .get(declaration)
+                        .and_then(|m| m.source.clone())
+                },
+                |_| member.clone(),
+                |vm| {
+                    let mut environment = vm.heap.get(owner)?.environment.clone();
+                    environment.outer_value = environment.this_value.clone();
+                    environment.this_value = Some(Value::Object(receiver));
+                    environment.scopes.insert(0, Scope { receiver, owner });
+                    environment.custom_this = vm
+                        .frames
+                        .last()
+                        .expect("type frame")
+                        .environment
+                        .custom_this;
+                    Ok(environment)
+                },
+            )? {
+                value = result;
+                continue;
+            }
             let ty = ty.substituted(&self.heap.get(owner)?.environment)?;
             let source = self
                 .program
@@ -9705,10 +9999,29 @@ impl Vm {
                 .environment = environment;
             return Ok(());
         }
-        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+        while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.collection_casts.is_empty()
         {
+            let fast_ok = {
+                let cast = &force.collection_casts[0];
+                cast.environment.type_arguments.is_empty()
+                    && fast_eval_type_in_poll(
+                        &cast.ty,
+                        &value,
+                        &cast.environment,
+                        &self.heap,
+                        &self.resolved_declarations,
+                        &self.program,
+                        builtin_fast_classes,
+                        None,
+                        0,
+                    ) == Some(true)
+            };
+            if fast_ok {
+                force.collection_casts.remove(0);
+                continue;
+            }
             let stolen = force.stolen_cache_value;
             let receiver = force.receiver;
             let probe = force.entry_probe.clone();
@@ -9791,13 +10104,21 @@ impl Vm {
             let receiver = force.receiver;
             let probe = force.entry_probe.clone();
             self.complete_cache_probe(receiver, key, value.clone(), probe)?;
-            if self.frames.len() > 1 {
-                let caller = self.frames.len() - 2;
-                self.frames[caller].callsite_hidden = true;
+            if self
+                .frames
+                .last()
+                .expect("active frame")
+                .equality_run
+                .is_some()
+            {
+                if self.frames.len() > 1 {
+                    let caller = self.frames.len() - 2;
+                    self.frames[caller].callsite_hidden = true;
+                }
+                self.stack.push(value);
+                self.frames.last_mut().expect("active frame").pc -= 1;
+                return Ok(());
             }
-            self.stack.push(value);
-            self.frames.last_mut().expect("active frame").pc -= 1;
-            return Ok(());
         }
         if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
             && force.publishing_cache
@@ -9843,37 +10164,794 @@ impl Vm {
 }
 
 #[inline(always)]
-fn fast_check_type_in_poll(
+fn fast_declaring_module(
+    env: &Environment,
+    heap: &Heap,
+    fallback_module: Option<ObjectId>,
+) -> Option<ObjectId> {
+    let Some(mut scope) = env.scopes.last() else {
+        return fallback_module;
+    };
+    for _ in 0..8 {
+        let obj = heap.get(scope.owner).ok()?;
+        if obj.is_module {
+            return Some(scope.owner);
+        }
+        let Some(next) = obj.environment.scopes.last() else {
+            return fallback_module;
+        };
+        scope = next;
+    }
+    None
+}
+
+#[derive(Clone, Copy)]
+struct FastBuiltinClasses {
+    list: Option<ObjectId>,
+    set: Option<ObjectId>,
+    map: Option<ObjectId>,
+    collection: Option<ObjectId>,
+}
+
+impl FastBuiltinClasses {
+    #[inline]
+    fn from_map(map: &BTreeMap<classes::BuiltinClass, ObjectId>) -> Self {
+        Self {
+            list: map.get(&classes::BuiltinClass::List).copied(),
+            set: map.get(&classes::BuiltinClass::Set).copied(),
+            map: map.get(&classes::BuiltinClass::Map).copied(),
+            collection: map.get(&classes::BuiltinClass::Collection).copied(),
+        }
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_type_is_resolved(
     ty: &TypeCheck,
-    val: &Value,
-    frame: &Frame,
+    env: &Environment,
     heap: &Heap,
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
 ) -> bool {
-    if typecheck::try_fast_leaf_type(ty, val) == Some(true) {
+    if !ty.has_declared() {
         return true;
     }
+    if depth >= 8 {
+        return false;
+    }
     match ty.resolved() {
-        TypeCheck::MetaClass(name) => {
-            if name == "Class" {
-                matches!(val, Value::Class(_))
-            } else if name == "TypeAlias" {
-                matches!(val, Value::TypeAlias(_))
-            } else {
-                false
+        TypeCheck::Nullable(inner) | TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+            fast_type_is_resolved(
+                inner,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            )
+        }
+        TypeCheck::Union { types, .. } => types.iter().all(|alt| {
+            fast_type_is_resolved(
+                alt,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            )
+        }),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::List | crate::heap::CollectionKind::Set,
+            arguments,
+        } if arguments.len() == 1 => fast_type_is_resolved(
+            &arguments[0].0,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => {
+            fast_type_is_resolved(
+                &arguments[0].0,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            ) && fast_type_is_resolved(
+                &arguments[1].0,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            )
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => {
+            arguments.first().is_none_or(|(ty, _)| {
+                fast_type_is_resolved(
+                    ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+            })
+        }
+        TypeCheck::Declared { recipe, arguments } => {
+            let Some(owner) = fast_declaring_module(env, heap, fallback_module) else {
+                return false;
+            };
+            match resolved_declarations.get(&(*recipe, owner)) {
+                Some(type_resolution::DeclarationValue::Value(Value::Class(target_cls))) => {
+                    if arguments.is_empty() {
+                        true
+                    } else if arguments.len() == 1
+                        && (builtin_classes.list == Some(*target_cls)
+                            || builtin_classes.set == Some(*target_cls)
+                            || builtin_classes.collection == Some(*target_cls))
+                    {
+                        fast_type_is_resolved(
+                            &arguments[0],
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
+                        fast_type_is_resolved(
+                            &arguments[0],
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        ) && fast_type_is_resolved(
+                            &arguments[1],
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else {
+                        false
+                    }
+                }
+                Some(type_resolution::DeclarationValue::Value(Value::TypeAlias(alias_id)))
+                    if arguments.is_empty() =>
+                {
+                    let Ok(alias) = heap.get(*alias_id) else {
+                        return false;
+                    };
+                    if !alias.type_alias_initialized {
+                        return false;
+                    }
+                    let Some(decl) = alias.type_alias_declaration else {
+                        return true;
+                    };
+                    let Some(meta) = program.alias_definition(decl) else {
+                        return false;
+                    };
+                    meta.parameters.is_empty()
+                        && fast_type_is_resolved(
+                            &meta.body,
+                            &alias.environment,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            None,
+                            depth + 1,
+                        )
+                }
+                Some(type_resolution::DeclarationValue::Builtin(bty)) if arguments.is_empty() => {
+                    fast_type_is_resolved(
+                        bty,
+                        env,
+                        heap,
+                        resolved_declarations,
+                        program,
+                        builtin_classes,
+                        fallback_module,
+                        depth + 1,
+                    )
+                }
+                _ => false,
             }
         }
-        TypeCheck::Class { id, .. } if *id != classes::TYPED => {
-            if let Value::Object(val_id) = val
+        _ => false,
+    }
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_strict_list_in_poll(
+    elem_ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    let Value::Object(id) = val else {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    };
+    let obj = heap.get(*id).ok()?;
+    if obj.collection_kind != crate::heap::CollectionKind::List
+        || obj.foreign_map_entry.is_some()
+        || obj.is_module
+        || obj.reference.is_some()
+        || obj.ref_module
+    {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    }
+    if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
+        return None;
+    }
+    let elems = obj.list_elements.as_ref()?;
+    if elems.len() != obj.length {
+        return None;
+    }
+    if elem_ty.noop() {
+        return Some(true);
+    }
+    if elems.is_empty() {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(true);
+    }
+    for elem in elems {
+        match fast_eval_type_in_poll(
+            elem_ty,
+            elem,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        ) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
+    }
+    Some(true)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_strict_set_in_poll(
+    elem_ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    let Value::Object(id) = val else {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    };
+    let obj = heap.get(*id).ok()?;
+    if obj.collection_kind != crate::heap::CollectionKind::Set
+        || obj.foreign_map_entry.is_some()
+        || obj.is_module
+        || obj.reference.is_some()
+        || obj.ref_module
+    {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    }
+    if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
+        return None;
+    }
+    if elem_ty.noop() {
+        return Some(true);
+    }
+    let order = obj.map_index().insertion_order();
+    if order.len() != obj.length {
+        return None;
+    }
+    if order.is_empty() {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(true);
+    }
+    for &idx in order {
+        let elem = obj.set_entries.get(idx)?;
+        match fast_eval_type_in_poll(
+            elem_ty,
+            elem,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        ) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
+    }
+    Some(true)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_strict_map_in_poll(
+    key_ty: &TypeCheck,
+    val_ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    let resolved_both = || {
+        fast_type_is_resolved(
+            key_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        ) && fast_type_is_resolved(
+            val_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+    };
+    let Value::Object(id) = val else {
+        return resolved_both().then_some(false);
+    };
+    let obj = heap.get(*id).ok()?;
+    if obj.collection_kind != crate::heap::CollectionKind::Map
+        || obj.foreign_map_entry.is_some()
+        || obj.is_module
+        || obj.reference.is_some()
+        || obj.ref_module
+    {
+        return resolved_both().then_some(false);
+    }
+    if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
+        return None;
+    }
+    let key_noop = key_ty.noop();
+    let val_noop = val_ty.noop();
+    if key_noop && val_noop {
+        return Some(true);
+    }
+    if obj.length == 0 {
+        return resolved_both().then_some(true);
+    }
+    let check_member =
+        |member: &crate::heap::CollectionMember, slot_hint: Option<usize>| -> Option<bool> {
+            if member.kind == crate::heap::CollectionMemberKind::Property {
+                return Some(true);
+            }
+            if !key_noop {
+                match fast_eval_type_in_poll(
+                    key_ty,
+                    &member.key,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth,
+                ) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            if !val_noop {
+                if matches!(member.key, Value::Object(_)) {
+                    return None;
+                }
+                let entry_val = if let Some(hint) = slot_hint
+                    && let Some(slot) = obj.cache_slots.get(hint)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot.key.name == member.name
+                {
+                    &slot.value
+                } else if let Some(LazyState::Completed(v)) = obj.cache.get(&CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                }) {
+                    v
+                } else {
+                    return None;
+                };
+                match fast_eval_type_in_poll(
+                    val_ty,
+                    entry_val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth,
+                ) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            Some(true)
+        };
+    if let Some(order) = &obj.map_key_order {
+        for member in order {
+            match check_member(member, None) {
+                Some(true) => continue,
+                other => return other,
+            }
+        }
+    } else {
+        for &idx in obj.map_index().insertion_order() {
+            let member = obj.collection_members.get(idx)?;
+            match check_member(member, Some(idx)) {
+                Some(true) => continue,
+                other => return other,
+            }
+        }
+    }
+    Some(true)
+}
+
+#[inline(always)]
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_type_in_poll(
+    ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    if let Some(matched) = typecheck::try_fast_leaf_type(ty, val) {
+        return Some(matched);
+    }
+    if depth >= 8 {
+        return None;
+    }
+    match ty.resolved() {
+        TypeCheck::Nothing => Some(false),
+        TypeCheck::MetaClass(name) => {
+            if name == "Class" {
+                Some(matches!(val, Value::Class(_)))
+            } else if name == "TypeAlias" {
+                Some(matches!(val, Value::TypeAlias(_)))
+            } else {
+                None
+            }
+        }
+        TypeCheck::Collection(kind) => Some(TypeCheck::Collection(*kind).accepts(val, heap)),
+        TypeCheck::Class { id, .. } => {
+            if *id != classes::TYPED
+                && let Value::Object(val_id) = val
                 && let Ok(obj) = heap.get(*val_id)
                 && obj.foreign_map_entry.is_none()
                 && obj.pair.is_none()
                 && obj.reference.is_none()
                 && let Some(cls) = obj.instance_class
             {
-                heap.class_has_ancestor_id(cls, *id)
+                Some(heap.class_has_ancestor_id(cls, *id))
             } else {
-                false
+                Some(classes::accepts_nominal(*id, val, heap))
+            }
+        }
+        TypeCheck::Nullable(inner) => {
+            if val.is_null() {
+                if matches!(inner.resolved(), TypeCheck::VarArgs { .. }) {
+                    return None;
+                }
+                fast_type_is_resolved(
+                    inner,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+                .then_some(true)
+            } else {
+                fast_eval_type_in_poll(
+                    inner,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+            }
+        }
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => fast_eval_type_in_poll(
+            inner,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::NamedAlias { expanded, .. } if !expanded.has_declared() => {
+            fast_eval_type_in_poll(
+                expanded,
+                val,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            )
+        }
+        TypeCheck::Union {
+            string_literals: true,
+            types,
+            ..
+        } if !types.is_empty() => {
+            match val {
+                Value::String(actual) => Some(types.iter().any(
+                    |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
+                )),
+                _ => Some(false),
+            }
+        }
+        TypeCheck::Union {
+            string_literals: false,
+            types,
+            ..
+        } if !types.is_empty() => {
+            for (idx, alt) in types.iter().enumerate() {
+                match fast_eval_type_in_poll(
+                    alt,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                ) {
+                    Some(true) => {
+                        if types[idx + 1..].iter().all(|rest| {
+                            fast_type_is_resolved(
+                                rest,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                        }) {
+                            return Some(true);
+                        }
+                        return None;
+                    }
+                    Some(false) => continue,
+                    None => return None,
+                }
+            }
+            Some(false)
+        }
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::List,
+            arguments,
+        } if arguments.len() == 1 => fast_eval_strict_list_in_poll(
+            &arguments[0].0,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Set,
+            arguments,
+        } if arguments.len() == 1 => fast_eval_strict_set_in_poll(
+            &arguments[0].0,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => fast_eval_strict_map_in_poll(
+            &arguments[0].0,
+            &arguments[1].0,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
+            TypeCheck::CollectionBase {
+                arguments: Vec::new(),
+            }
+            .accepts(val, heap),
+        ),
+        TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
+            let elem_ty = &arguments[0].0;
+            let Value::Object(id) = val else {
+                return fast_type_is_resolved(
+                    elem_ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+                .then_some(false);
+            };
+            let obj = heap.get(*id).ok()?;
+            match obj.collection_kind {
+                crate::heap::CollectionKind::List => fast_eval_strict_list_in_poll(
+                    elem_ty,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                ),
+                crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
+                    elem_ty,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                ),
+                _ => fast_type_is_resolved(
+                    elem_ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+                .then_some(false),
             }
         }
         TypeCheck::Function {
@@ -9884,77 +10962,216 @@ fn fast_check_type_in_poll(
                     .all(|p| matches!(p.resolved(), TypeCheck::Any | TypeCheck::Unknown))
             }) =>
         {
-            if let Value::Function(fid) = val
-                && let Ok(obj) = heap.get(*fid)
-                && obj.amendment.is_none()
-                && obj.native_function.is_none()
-                && let Some(f) = obj.function.as_ref()
-            {
-                parameters.as_ref().is_none_or(|ps| f.arity == ps.len())
+            if let Value::Function(fid) = val {
+                if let Ok(obj) = heap.get(*fid)
+                    && obj.amendment.is_none()
+                    && obj.native_function.is_none()
+                    && let Some(f) = obj.function.as_ref()
+                {
+                    Some(parameters.as_ref().is_none_or(|ps| f.arity == ps.len()))
+                } else {
+                    None
+                }
             } else {
-                false
+                Some(false)
             }
         }
-        TypeCheck::Declared { recipe, arguments } if arguments.is_empty() => {
-            let Some(scope) = frame.environment.scopes.last() else {
-                return false;
-            };
-            if !heap.get(scope.owner).is_ok_and(|o| o.is_module) {
-                return false;
-            }
-            match resolved_declarations.get(&(*recipe, scope.owner)) {
+        TypeCheck::Declared { recipe, arguments } => {
+            let owner = fast_declaring_module(env, heap, fallback_module)?;
+            match resolved_declarations.get(&(*recipe, owner)) {
                 Some(type_resolution::DeclarationValue::Value(Value::Class(target_cls))) => {
-                    match val {
-                        Value::Object(val_id) => {
-                            if let Ok(obj) = heap.get(*val_id)
-                                && obj.foreign_map_entry.is_none()
-                                && obj.pair.is_none()
-                                && obj.reference.is_none()
-                                && let Some(mut cur_cls) = obj.instance_class
-                            {
-                                if cur_cls == *target_cls {
-                                    return true;
-                                }
-                                for _ in 0..4 {
-                                    let Some(sup) =
-                                        heap.get_class(cur_cls).ok().and_then(|c| c.superclass)
-                                    else {
-                                        break;
-                                    };
-                                    if sup == *target_cls {
-                                        return true;
-                                    }
-                                    cur_cls = sup;
-                                }
-                            }
-                            false
+                    if arguments.is_empty() {
+                        let class = heap
+                            .get(heap.get_class(*target_cls).ok()?.prototype)
+                            .ok()?
+                            .class_definition
+                            .as_ref()?;
+                        if let Some(specialized) =
+                            classes::specialized_type(class.module.as_ref(), &class.name)
+                        {
+                            fast_eval_type_in_poll(
+                                &specialized,
+                                val,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                        } else if class.id != classes::TYPED
+                            && let Value::Object(val_id) = val
+                            && let Ok(obj) = heap.get(*val_id)
+                            && obj.foreign_map_entry.is_none()
+                            && obj.pair.is_none()
+                            && obj.reference.is_none()
+                            && let Some(cls) = obj.instance_class
+                        {
+                            Some(heap.class_has_ancestor_id(cls, class.id))
+                        } else {
+                            Some(classes::accepts_nominal(class.id, val, heap))
                         }
-                        Value::Class(_) => heap
-                            .get_class(*target_cls)
-                            .ok()
-                            .and_then(|c| heap.get(c.prototype).ok())
-                            .and_then(|p| p.builtin_type.as_ref())
-                            .is_some_and(
-                                |bt| matches!(bt.resolved(), TypeCheck::MetaClass(n) if n == "Class"),
+                    } else if arguments.len() == 1 && builtin_classes.list == Some(*target_cls) {
+                        fast_eval_strict_list_in_poll(
+                            &arguments[0],
+                            val,
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 1 && builtin_classes.set == Some(*target_cls) {
+                        fast_eval_strict_set_in_poll(
+                            &arguments[0],
+                            val,
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
+                        fast_eval_strict_map_in_poll(
+                            &arguments[0],
+                            &arguments[1],
+                            val,
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 1
+                        && builtin_classes.collection == Some(*target_cls)
+                    {
+                        let Value::Object(id) = val else {
+                            return fast_type_is_resolved(
+                                &arguments[0],
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                            .then_some(false);
+                        };
+                        let obj = heap.get(*id).ok()?;
+                        match obj.collection_kind {
+                            crate::heap::CollectionKind::List => fast_eval_strict_list_in_poll(
+                                &arguments[0],
+                                val,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
                             ),
-                        Value::TypeAlias(_) => heap
-                            .get_class(*target_cls)
-                            .ok()
-                            .and_then(|c| heap.get(c.prototype).ok())
-                            .and_then(|p| p.builtin_type.as_ref())
-                            .is_some_and(
-                                |bt| matches!(bt.resolved(), TypeCheck::MetaClass(n) if n == "TypeAlias"),
+                            crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
+                                &arguments[0],
+                                val,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
                             ),
-                        _ => false,
+                            _ => fast_type_is_resolved(
+                                &arguments[0],
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                            .then_some(false),
+                        }
+                    } else {
+                        None
                     }
                 }
-                Some(type_resolution::DeclarationValue::Builtin(bty)) => {
-                    fast_check_type_in_poll(bty, val, frame, heap, resolved_declarations)
+                Some(type_resolution::DeclarationValue::Value(Value::TypeAlias(alias_id)))
+                    if arguments.is_empty() =>
+                {
+                    let alias = heap.get(*alias_id).ok()?;
+                    if !alias.type_alias_initialized {
+                        return None;
+                    }
+                    if let Some(decl) = alias.type_alias_declaration {
+                        let meta = program.alias_definition(decl)?;
+                        if !meta.parameters.is_empty() {
+                            return None;
+                        }
+                        fast_eval_type_in_poll(
+                            &meta.body,
+                            val,
+                            &alias.environment,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            None,
+                            depth + 1,
+                        )
+                    } else {
+                        let name = alias.type_alias.as_ref().and_then(PklString::as_str)?;
+                        match name {
+                            "NonNull" => Some(!val.is_null()),
+                            "Int8" => Some(
+                                matches!(val, Value::Int(i) if (i8::MIN as i64..=i8::MAX as i64).contains(&i.get())),
+                            ),
+                            "Int16" => Some(
+                                matches!(val, Value::Int(i) if (i16::MIN as i64..=i16::MAX as i64).contains(&i.get())),
+                            ),
+                            "Int32" => Some(
+                                matches!(val, Value::Int(i) if (i32::MIN as i64..=i32::MAX as i64).contains(&i.get())),
+                            ),
+                            "UInt8" => Some(
+                                matches!(val, Value::Int(i) if (0..=u8::MAX as i64).contains(&i.get())),
+                            ),
+                            "UInt16" => Some(
+                                matches!(val, Value::Int(i) if (0..=u16::MAX as i64).contains(&i.get())),
+                            ),
+                            "UInt32" => Some(
+                                matches!(val, Value::Int(i) if (0..=u32::MAX as i64).contains(&i.get())),
+                            ),
+                            "UInt" => Some(matches!(val, Value::Int(i) if i.get() >= 0)),
+                            _ => None,
+                        }
+                    }
                 }
-                _ => false,
+                Some(type_resolution::DeclarationValue::Builtin(bty)) if arguments.is_empty() => {
+                    fast_eval_type_in_poll(
+                        bty,
+                        val,
+                        env,
+                        heap,
+                        resolved_declarations,
+                        program,
+                        builtin_classes,
+                        fallback_module,
+                        depth + 1,
+                    )
+                }
+                _ => None,
             }
         }
-        _ => false,
+        _ => None,
     }
 }
 
@@ -10648,6 +11865,19 @@ fn compile_unit_body_at_with_syntax(
     program.next_declaration = declaration_base
         .checked_add(resolved.module.source.len_bytes() + 2)
         .ok_or_else(|| invalid("declaration identity limit"))?;
+    let mut declared_recipes: BTreeMap<Span, usize> = BTreeMap::new();
+    let mut module_recipes: BTreeMap<Span, usize> = BTreeMap::new();
+    if replacement.is_some() {
+        for (id, recipe) in program.type_recipes.iter_with_ids() {
+            if recipe.unit == unit {
+                if recipe.path.is_empty() && recipe.failure.is_none() {
+                    module_recipes.entry(recipe.span).or_insert(id);
+                } else {
+                    declared_recipes.entry(recipe.span).or_insert(id);
+                }
+            }
+        }
+    }
     let mut compiler = Compiler {
         resolved,
         program,
@@ -10681,6 +11911,8 @@ fn compile_unit_body_at_with_syntax(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes,
+        module_recipes,
         instrument,
     };
     let module_name = resolved
@@ -10967,6 +12199,8 @@ struct Compiler<'a> {
     function_counts: BTreeMap<PklString, usize>,
     entry_counts: BTreeMap<PklString, usize>,
     function_names: BTreeMap<Span, PklString>,
+    declared_recipes: BTreeMap<Span, usize>,
+    module_recipes: BTreeMap<Span, usize>,
     instrument: bool,
 }
 

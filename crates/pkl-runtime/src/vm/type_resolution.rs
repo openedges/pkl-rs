@@ -696,6 +696,49 @@ impl Vm {
         Ok(values.pop().expect("materialized type").0)
     }
 
+    /// Resolve an inherited property's declared type against its declaring
+    /// owner's environment, caching final non-generic results as `Shared`.
+    pub(super) fn resolve_property_type(
+        &mut self,
+        declaration: usize,
+        owner: ObjectId,
+        ty: &TypeCheck,
+    ) -> Option<TypeCheck> {
+        if !ty.has_declared() {
+            return None;
+        }
+        if let Some(cached) = self.resolved_property_types.get(&(declaration, owner)) {
+            return Some(cached.clone());
+        }
+        let owner_obj = self.heap.get(owner).ok()?;
+        if !owner_obj.environment.type_arguments.is_empty() {
+            return None;
+        }
+        let fallback_env;
+        let env = if owner_obj.environment.scopes.is_empty() {
+            let mut env = owner_obj.environment.clone();
+            env.scopes = crate::heap::ScopeList::from_single(Scope {
+                receiver: owner,
+                owner,
+            });
+            fallback_env = env;
+            &fallback_env
+        } else {
+            &owner_obj.environment
+        };
+        let mut final_type = true;
+        match self.materialize_type(ty, env, false, &mut final_type) {
+            Ok(resolved) if final_type => {
+                let shared = resolved.shared();
+                self.resolved_property_types
+                    .insert((declaration, owner), shared.clone());
+                Some(shared)
+            }
+            Ok(resolved) => Some(resolved),
+            Err(_) => None,
+        }
+    }
+
     /// A caller retains its own work item while the ordinary member/import
     /// continuation resolves the next declaration.
     pub(super) fn resolve_runtime_type(
@@ -778,9 +821,39 @@ impl Vm {
         if !ty.has_declared() {
             return Ok(Some(instruction));
         }
+        let (block, pc, env_type_args_empty) = {
+            let frame = self.frames.last().expect("type instruction");
+            (
+                frame.block,
+                frame.pc.saturating_sub(1),
+                frame.environment.type_arguments.is_empty(),
+            )
+        };
+        let cache_key = if env_type_args_empty {
+            let environment = &self.frames.last().expect("type instruction").environment;
+            self.declaring_module(environment, false)
+                .ok()
+                .map(|owner| (block, pc, owner, for_default))
+        } else {
+            None
+        };
+        if let Some(key) = cache_key
+            && let Some(cached) = self.resolved_instruction_types.get(&key)
+        {
+            *ty = cached.clone();
+            return Ok(Some(instruction));
+        }
         let environment = &self.frames.last().expect("type instruction").environment;
         match self.materialize_type(ty, environment, for_default, &mut final_type) {
-            Ok(resolved) => *ty = resolved,
+            Ok(resolved) => {
+                if final_type && let Some(key) = cache_key {
+                    let shared = resolved.shared();
+                    self.resolved_instruction_types.insert(key, shared.clone());
+                    *ty = shared;
+                } else {
+                    *ty = resolved;
+                }
+            }
             Err(ResolutionFailure::Error(error)) => return Err(error),
             Err(ResolutionFailure::Need(need)) => {
                 self.begin_declared_type(need, true)?;
@@ -950,12 +1023,12 @@ impl Vm {
                     self.frames
                         .last_mut()
                         .expect("type resolution frame")
-                        .type_resolution = Some(DeclaredRun {
+                        .type_resolution = Some(Box::new(DeclaredRun {
                         need,
                         phase: Phase::Type,
                         retry_instruction,
                         imported: None,
-                    });
+                    }));
                     return self.force(id, id, name, local, true, false);
                 }
                 if first && let Some(fallback) = &recipe.builtin {
@@ -995,12 +1068,12 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("type resolution frame")
-                    .type_resolution = Some(DeclaredRun {
+                    .type_resolution = Some(Box::new(DeclaredRun {
                     need,
                     phase: Phase::Type,
                     retry_instruction,
                     imported: None,
-                });
+                }));
                 return self.force(base, base, name, false, true, false);
             }
             return Err(RuntimeError::new(
@@ -1019,12 +1092,12 @@ impl Vm {
         self.frames
             .last_mut()
             .expect("type resolution frame")
-            .type_resolution = Some(DeclaredRun {
+            .type_resolution = Some(Box::new(DeclaredRun {
             need,
             phase: Phase::Import,
             retry_instruction,
             imported: None,
-        });
+        }));
         self.force(need.owner, need.owner, import.clone(), true, true, false)
     }
 
@@ -1119,6 +1192,24 @@ impl Vm {
 }
 
 impl Compiler<'_> {
+    pub(super) fn seed_recipe_caches(
+        program: &Program,
+        unit: crate::modules::UnitId,
+    ) -> (BTreeMap<Span, usize>, BTreeMap<Span, usize>) {
+        let mut declared = BTreeMap::new();
+        let mut module = BTreeMap::new();
+        for (id, recipe) in program.type_recipes.iter_with_ids() {
+            if recipe.unit == unit {
+                if recipe.path.is_empty() && recipe.failure.is_none() {
+                    module.entry(recipe.span).or_insert(id);
+                } else {
+                    declared.entry(recipe.span).or_insert(id);
+                }
+            }
+        }
+        (declared, module)
+    }
+
     pub(super) fn deferred_type_error(
         &mut self,
         error: RuntimeError,
@@ -1141,20 +1232,10 @@ impl Compiler<'_> {
     }
 
     pub(super) fn module_type(&mut self, span: Span) -> Result<TypeCheck, RuntimeError> {
-        let recipe = self
-            .program
-            .type_recipes
-            .iter_with_ids()
-            .find(|(_, recipe)| {
-                recipe.unit == self.unit
-                    && recipe.span == span
-                    && recipe.path.is_empty()
-                    && recipe.failure.is_none()
-            })
-            .map(|(id, _)| id);
-        let recipe = match recipe {
-            Some(id) => id,
-            None => self.program.type_recipes.try_push(TypeRecipe {
+        let recipe = if let Some(&id) = self.module_recipes.get(&span) {
+            id
+        } else {
+            let id = self.program.type_recipes.try_push(TypeRecipe {
                 unit: self.unit,
                 path: Vec::new(),
                 names: Vec::new(),
@@ -1163,7 +1244,9 @@ impl Compiler<'_> {
                 builtin: None,
                 reference: None,
                 failure: None,
-            })?,
+            })?;
+            self.module_recipes.insert(span, id);
+            id
         };
         Ok(TypeCheck::Declared {
             recipe,
@@ -1184,28 +1267,36 @@ impl Compiler<'_> {
         else {
             unreachable!()
         };
-        let recipe = self
-            .program
-            .type_recipes
-            .iter_with_ids()
-            .find(|(_, recipe)| {
-                recipe.unit == self.unit
-                    && recipe.span == ty.span
-                    && recipe.path.iter().eq(path.iter())
-            })
-            .map(|(id, _)| id);
+        let recipe = match self.declared_recipes.get(&ty.span).copied() {
+            Some(id) if self.program.type_recipes[id].path.iter().eq(path.iter()) => Some(id),
+            Some(_) => self
+                .program
+                .type_recipes
+                .iter_with_ids()
+                .find(|(_, recipe)| {
+                    recipe.unit == self.unit
+                        && recipe.span == ty.span
+                        && recipe.path.iter().eq(path.iter())
+                })
+                .map(|(id, _)| id),
+            None => None,
+        };
         let recipe = match recipe {
             Some(id) => id,
-            None => self.program.type_recipes.try_push(TypeRecipe {
-                unit: self.unit,
-                path: path.clone(),
-                names: name_spans.clone(),
-                span: ty.span,
-                argument_spans: actuals.iter().map(|argument| argument.span).collect(),
-                builtin: None,
-                reference: None,
-                failure: None,
-            })?,
+            None => {
+                let id = self.program.type_recipes.try_push(TypeRecipe {
+                    unit: self.unit,
+                    path: path.clone(),
+                    names: name_spans.clone(),
+                    span: ty.span,
+                    argument_spans: actuals.iter().map(|argument| argument.span).collect(),
+                    builtin: None,
+                    reference: None,
+                    failure: None,
+                })?;
+                self.declared_recipes.entry(ty.span).or_insert(id);
+                id
+            }
         };
         Ok(TypeCheck::Declared { recipe, arguments })
     }
@@ -1344,16 +1435,18 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("default frame")
-                    .generic_default = Some(generics::GenericDefaultRun::stack(ty, origin));
+                    .generic_default =
+                    Some(Box::new(generics::GenericDefaultRun::stack(ty, origin)));
             }
             Instruction::ResolvedInferredParent { ty, origin, cache } => {
                 let frame = self.frames.last_mut().expect("inferred parent frame");
                 let ty = ty.substituted(&frame.environment)?;
-                frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
-                    ty,
-                    origin,
-                    cache.then_some((frame.block, frame.pc - 1)),
-                ));
+                frame.generic_default =
+                    Some(Box::new(generics::GenericDefaultRun::inferred_parent(
+                        ty,
+                        origin,
+                        cache.then_some((frame.block, frame.pc - 1)),
+                    )));
             }
             Instruction::ResolveClassType { name, local } => {
                 let frame = self.frames.last().expect("active frame");

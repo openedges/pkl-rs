@@ -105,7 +105,7 @@ impl Vm {
         if frame.deep_force.is_some() {
             return Err(invalid("overlapping object force continuation"));
         }
-        frame.deep_force = Some(ForceRun {
+        frame.deep_force = Some(Box::new(ForceRun {
             pending_render_key: None,
             pending_render_comparison: None,
             allow_undefined: true,
@@ -117,7 +117,7 @@ impl Vm {
             active: Vec::new(),
             incomplete: BTreeSet::new(),
             awaiting: None,
-        });
+        }));
         Ok(())
     }
     /// Hashing/equality use the same persistent force operation with undefined forbidden.
@@ -158,7 +158,7 @@ impl Vm {
             .environment
             .clone();
         let mut frame = self.alloc_frame(usize::MAX, 0, self.stack.len(), environment);
-        frame.deep_force = Some(ForceRun {
+        frame.deep_force = Some(Box::new(ForceRun {
             pending_render_key: None,
             pending_render_comparison: None,
             root: root.clone(),
@@ -170,25 +170,28 @@ impl Vm {
             active: Vec::new(),
             incomplete: BTreeSet::new(),
             awaiting: None,
-        });
+        }));
         self.frames.push(frame);
         Ok(())
     }
     pub(super) fn step_deep_force(&mut self) -> Result<(), RuntimeError> {
         let index = self.frames.len() - 1;
-        let mut run = self.frames[index]
-            .deep_force
-            .take()
-            .expect("force continuation");
+        let mut run = self.frames[index].deep_force.take();
+        debug_assert!(run.is_some(), "force continuation");
         // Always restore the continuation on failure so fail/cancel can reset its marks.
-        let result = self.advance_deep_force(&mut run);
+        let result = self.advance_deep_force(index, &mut run);
         match result {
             Ok(true) => {}
-            Ok(false) | Err(_) => self.frames[index].deep_force = Some(run),
+            Ok(false) | Err(_) => self.frames[index].deep_force = run,
         }
         result.map(|_| ())
     }
-    fn advance_deep_force(&mut self, run: &mut ForceRun) -> Result<bool, RuntimeError> {
+    fn advance_deep_force(
+        &mut self,
+        frame_index: usize,
+        run_slot: &mut Option<Box<ForceRun>>,
+    ) -> Result<bool, RuntimeError> {
+        let run = run_slot.as_deref_mut().expect("force continuation");
         if run.awaiting.take().is_some() {
             let value = self.pop()?;
             if run.recurse {
@@ -327,34 +330,98 @@ impl Vm {
             }
             Task::Members {
                 receiver,
-                owner,
-                index,
+                mut owner,
+                mut index,
             } => {
-                let object = self.heap.get(owner)?;
-                if let Some(member) = object.members.get(index).cloned() {
-                    run.tasks.push(Task::Members {
-                        receiver,
-                        owner,
-                        index: index + 1,
-                    });
-                    let deferred_binding = self.in_stdlib_bootstrap() && member.definition()
-                        && self.program.blocks.get(member.code).is_some_and(|code|
-                            matches!(code.first(), Some(Instruction::Fail(error)) if error.kind == ErrorKind::Unsupported));
-                    if deferred_binding {
-                        run.incomplete.insert(receiver);
-                    }
-                    if !deferred_binding
-                        && !member.local
-                        && !member.method
-                        && !member.external()
-                        && !member.abstract_member()
-                        && !collections::hidden_property(
-                            &self.heap,
+                let in_stdlib_bootstrap = self.in_stdlib_bootstrap();
+                loop {
+                    let next_action = {
+                        let object = self.heap.get(owner)?;
+                        if let Some(member) = object.members.get(index) {
+                            index += 1;
+                            let deferred_binding = in_stdlib_bootstrap
+                                && member.definition()
+                                && self.program.blocks.get(member.code).is_some_and(|code| {
+                                    matches!(
+                                        code.first(),
+                                        Some(Instruction::Fail(error))
+                                            if error.kind == ErrorKind::Unsupported
+                                    )
+                                });
+                            if deferred_binding {
+                                run.incomplete.insert(receiver);
+                                continue;
+                            }
+                            if member.local
+                                || member.method
+                                || member.external()
+                                || member.abstract_member()
+                                || member.hidden()
+                            {
+                                continue;
+                            }
+                            if collections::hidden_property(
+                                &self.heap,
+                                owner,
+                                &member.name,
+                                member.entry,
+                            )? {
+                                continue;
+                            }
+                            if !member.entry {
+                                let recv_obj = self.heap.get(receiver)?;
+                                let cached = if recv_obj.cache_slots.len() <= 16 {
+                                    recv_obj
+                                        .cache_slots
+                                        .iter()
+                                        .find(|slot| {
+                                            !slot.key.entry
+                                                && !slot.key.method
+                                                && slot.key.owner.is_none()
+                                                && slot.key.name == member.name
+                                        })
+                                        .map(|slot| &slot.value)
+                                } else {
+                                    let key = CacheKey {
+                                        entry: false,
+                                        owner: None,
+                                        name: member.name.clone(),
+                                        method: false,
+                                    };
+                                    match recv_obj.cache.get(&key) {
+                                        Some(LazyState::Completed(val)) => Some(val),
+                                        _ => None,
+                                    }
+                                };
+                                if let Some(val) = cached {
+                                    if run.recurse {
+                                        let val = val.clone();
+                                        run.tasks.push(Task::Members {
+                                            receiver,
+                                            owner,
+                                            index,
+                                        });
+                                        run.tasks.push(Task::Value(val));
+                                        return Ok(false);
+                                    }
+                                    continue;
+                                }
+                            }
+                            Some(member.clone())
+                        } else if let Some(parent) = object.parent {
+                            owner = parent;
+                            index = 0;
+                            continue;
+                        } else {
+                            None
+                        }
+                    };
+                    if let Some(member) = next_action {
+                        run.tasks.push(Task::Members {
+                            receiver,
                             owner,
-                            &member.name,
-                            member.entry,
-                        )?
-                    {
+                            index,
+                        });
                         run.awaiting = Some(ReadBoundary {
                             receiver,
                             owner,
@@ -363,36 +430,12 @@ impl Vm {
                             stack: self.stack.len(),
                         });
                         // force_key may defer key hashing, so install the boundary first.
-                        let frame = self.frames.len() - 1;
-                        self.frames[frame].deep_force = Some(std::mem::replace(
-                            run,
-                            ForceRun {
-                                pending_render_key: None,
-                                pending_render_comparison: None,
-                                allow_undefined: false,
-                                recurse: true,
-                                finish: FinishAction::ReturnValue,
-                                renderer: None,
-                                root: Value::Null,
-                                tasks: Vec::new(),
-                                active: Vec::new(),
-                                incomplete: BTreeSet::new(),
-                                awaiting: None,
-                            },
-                        ));
+                        self.frames[frame_index].deep_force = run_slot.take();
                         let result = self.force_declaration_member(receiver, owner, member);
-                        *run = self.frames[frame]
-                            .deep_force
-                            .take()
-                            .expect("force read boundary");
+                        *run_slot = self.frames[frame_index].deep_force.take();
                         result?;
                     }
-                } else if let Some(parent) = object.parent {
-                    run.tasks.push(Task::Members {
-                        receiver,
-                        owner: parent,
-                        index: 0,
-                    });
+                    break;
                 }
             }
         }

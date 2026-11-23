@@ -491,7 +491,14 @@ fn module_environment(environment: &Environment) -> Result<Environment, RuntimeE
 /// Lazy collection cast roots have identity even when their value type does
 /// not need a custom-this cell. Keep these two allocation policies separate.
 pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
-    match ty.resolved() {
+    needs_type_identity_depth(ty, 0)
+}
+
+fn needs_type_identity_depth(ty: &TypeCheck, depth: u8) -> bool {
+    if let TypeCheck::Shared(node) = ty {
+        return node.needs_type_identity();
+    }
+    match ty {
         TypeCheck::Any
         | TypeCheck::Unknown
         | TypeCheck::Nothing
@@ -512,7 +519,33 @@ pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
         | TypeCheck::Class { .. }
         | TypeCheck::Parameter { .. }
         | TypeCheck::Function { .. } => return false,
+        TypeCheck::Constrained { .. }
+        | TypeCheck::Declared { .. }
+        | TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Listing | crate::heap::CollectionKind::Mapping,
+            ..
+        } => return true,
         _ => {}
+    }
+    if depth < 16 {
+        let next = depth + 1;
+        return match ty {
+            TypeCheck::NamedAlias { expanded, .. }
+            | TypeCheck::Nullable(expanded)
+            | TypeCheck::Alias(expanded)
+            | TypeCheck::GenericAlias(expanded) => needs_type_identity_depth(expanded, next),
+            TypeCheck::Reference { domain, .. } => needs_type_identity_depth(domain, next),
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
+            | TypeCheck::CollectionBase { arguments } => arguments
+                .iter()
+                .any(|(arg, _)| needs_type_identity_depth(arg, next)),
+            TypeCheck::Union { types, .. } => {
+                types.iter().any(|alt| needs_type_identity_depth(alt, next))
+            }
+            TypeCheck::VarArgs { element, .. } => needs_type_identity_depth(element, next),
+            _ => false,
+        };
     }
     if needs_custom_this(ty) {
         return true;
@@ -520,6 +553,12 @@ pub(super) fn needs_type_identity(ty: &TypeCheck) -> bool {
     let mut pending = vec![ty];
     let mut seen = BTreeSet::new();
     while let Some(ty) = pending.pop() {
+        if let TypeCheck::Shared(node) = ty {
+            if node.needs_type_identity() {
+                return true;
+            }
+            continue;
+        }
         let ty = ty.resolved();
         if !seen.insert(ty as *const TypeCheck) {
             continue;
@@ -578,10 +617,14 @@ pub(super) fn try_fast_leaf_type(ty: &TypeCheck, value: &Value) -> Option<bool> 
 }
 
 #[inline]
-fn is_fast_leaf_type(ty: &TypeCheck) -> bool {
+fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
+    if depth >= 8 {
+        return false;
+    }
     match ty.resolved() {
         TypeCheck::Any
         | TypeCheck::Unknown
+        | TypeCheck::Nothing
         | TypeCheck::Int
         | TypeCheck::Float
         | TypeCheck::Number
@@ -592,21 +635,55 @@ fn is_fast_leaf_type(ty: &TypeCheck) -> bool {
         | TypeCheck::Duration
         | TypeCheck::Bytes
         | TypeCheck::IntegerAlias { .. }
-        | TypeCheck::StringLiteral(_) => true,
+        | TypeCheck::StringLiteral(_)
+        | TypeCheck::Class { .. }
+        | TypeCheck::Collection(_) => true,
+        TypeCheck::MetaClass(name) => name == "Class" || name == "TypeAlias",
         TypeCheck::Alias(inner)
         | TypeCheck::GenericAlias(inner)
         | TypeCheck::NamedAlias {
             expanded: inner, ..
         }
-        | TypeCheck::Nullable(inner) => is_fast_leaf_type(inner),
+        | TypeCheck::Nullable(inner) => is_fast_heap_type(inner, depth + 1),
+        TypeCheck::Union {
+            string_literals: true,
+            types,
+            ..
+        } => !types.is_empty(),
+        TypeCheck::Union {
+            string_literals: false,
+            types,
+            ..
+        } => !types.is_empty() && types.iter().all(|alt| is_fast_heap_type(alt, depth + 1)),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::List | crate::heap::CollectionKind::Set,
+            arguments,
+        } if arguments.len() == 1 => {
+            arguments[0].0.noop() || is_fast_heap_type(&arguments[0].0, depth + 1)
+        }
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => {
+            (arguments[0].0.noop() || is_fast_heap_type(&arguments[0].0, depth + 1))
+                && (arguments[1].0.noop() || is_fast_heap_type(&arguments[1].0, depth + 1))
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => arguments
+            .first()
+            .is_none_or(|(ty, _)| ty.noop() || is_fast_heap_type(ty, depth + 1)),
         _ => false,
     }
 }
 
 #[inline]
-fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+fn try_fast_strict_list_check(
+    elem_ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
     let elem_noop = elem_ty.noop();
-    if !elem_noop && !is_fast_leaf_type(elem_ty) {
+    if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
         return None;
     }
     let Value::Object(id) = value else {
@@ -621,7 +698,10 @@ fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -
     {
         return Some(false);
     }
-    if object.parent.is_some() || object.instance_class.is_some() {
+    if object.parent.is_some()
+        || object.instance_class.is_some()
+        || object.class_definition.is_some()
+    {
         return None;
     }
     let Some(elems) = &object.list_elements else {
@@ -633,44 +713,258 @@ fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -
     if elem_noop {
         return Some(true);
     }
-    if elems
-        .iter()
-        .all(|val| try_fast_leaf_type(elem_ty, val) == Some(true))
-    {
-        Some(true)
-    } else {
-        Some(false)
+    for val in elems {
+        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
     }
+    Some(true)
+}
+
+#[inline]
+fn try_fast_strict_set_check(
+    elem_ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
+    let elem_noop = elem_ty.noop();
+    if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
+        return None;
+    }
+    let Value::Object(id) = value else {
+        return Some(false);
+    };
+    let object = heap.get(*id).ok()?;
+    if object.collection_kind != crate::heap::CollectionKind::Set
+        || object.foreign_map_entry.is_some()
+        || object.is_module
+        || object.reference.is_some()
+        || object.ref_module
+    {
+        return Some(false);
+    }
+    if object.parent.is_some()
+        || object.instance_class.is_some()
+        || object.class_definition.is_some()
+    {
+        return None;
+    }
+    if elem_noop {
+        return Some(true);
+    }
+    let order = object.map_index().insertion_order();
+    if order.len() != object.length {
+        return None;
+    }
+    for &idx in order {
+        let val = object.set_entries.get(idx)?;
+        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
+    }
+    Some(true)
+}
+
+#[inline]
+fn try_fast_strict_map_check(
+    key_ty: &TypeCheck,
+    val_ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
+    let key_noop = key_ty.noop();
+    let val_noop = val_ty.noop();
+    if (!key_noop && !is_fast_heap_type(key_ty, depth))
+        || (!val_noop && !is_fast_heap_type(val_ty, depth))
+    {
+        return None;
+    }
+    let Value::Object(id) = value else {
+        return Some(false);
+    };
+    let object = heap.get(*id).ok()?;
+    if object.collection_kind != crate::heap::CollectionKind::Map
+        || object.foreign_map_entry.is_some()
+        || object.is_module
+        || object.reference.is_some()
+        || object.ref_module
+    {
+        return Some(false);
+    }
+    if object.parent.is_some()
+        || object.instance_class.is_some()
+        || object.class_definition.is_some()
+    {
+        return None;
+    }
+    if key_noop && val_noop {
+        return Some(true);
+    }
+    let check_member =
+        |member: &crate::heap::CollectionMember, slot_hint: Option<usize>| -> Option<bool> {
+            if member.kind == crate::heap::CollectionMemberKind::Property {
+                return Some(true);
+            }
+            if !key_noop {
+                match try_fast_type_with_heap_depth(key_ty, &member.key, heap, depth + 1) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            if !val_noop {
+                if matches!(member.key, Value::Object(_)) {
+                    return None;
+                }
+                let val = if let Some(hint) = slot_hint
+                    && let Some(slot) = object.cache_slots.get(hint)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot.key.name == member.name
+                {
+                    &slot.value
+                } else if let Some(LazyState::Completed(v)) = object.cache.get(&CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                }) {
+                    v
+                } else {
+                    return None;
+                };
+                match try_fast_type_with_heap_depth(val_ty, val, heap, depth + 1) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            Some(true)
+        };
+    if let Some(order) = &object.map_key_order {
+        for member in order {
+            match check_member(member, None) {
+                Some(true) => continue,
+                other => return other,
+            }
+        }
+    } else {
+        for &idx in object.map_index().insertion_order() {
+            let member = object.collection_members.get(idx)?;
+            match check_member(member, Some(idx)) {
+                Some(true) => continue,
+                other => return other,
+            }
+        }
+    }
+    Some(true)
 }
 
 fn try_fast_type_with_heap(ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+    try_fast_type_with_heap_depth(ty, value, heap, 0)
+}
+
+fn try_fast_type_with_heap_depth(
+    ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
     if let Some(matched) = try_fast_leaf_type(ty, value) {
         return Some(matched);
     }
+    if depth >= 8 {
+        return None;
+    }
     match ty.resolved() {
+        TypeCheck::Nothing => Some(false),
+        TypeCheck::MetaClass(name) => {
+            if name == "Class" {
+                Some(matches!(value, Value::Class(_)))
+            } else if name == "TypeAlias" {
+                Some(matches!(value, Value::TypeAlias(_)))
+            } else {
+                None
+            }
+        }
+        TypeCheck::Collection(kind) => Some(TypeCheck::Collection(*kind).accepts(value, heap)),
+        TypeCheck::Class { id, .. } => Some(classes::accepts_nominal(*id, value, heap)),
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::List,
             arguments,
-        } if arguments.len() == 1 => try_fast_strict_list_check(&arguments[0].0, value, heap),
+        } if arguments.len() == 1 => {
+            try_fast_strict_list_check(&arguments[0].0, value, heap, depth + 1)
+        }
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Set,
+            arguments,
+        } if arguments.len() == 1 => {
+            try_fast_strict_set_check(&arguments[0].0, value, heap, depth + 1)
+        }
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => {
+            try_fast_strict_map_check(&arguments[0].0, &arguments[1].0, value, heap, depth + 1)
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
+            TypeCheck::CollectionBase {
+                arguments: Vec::new(),
+            }
+            .accepts(value, heap),
+        ),
+        TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
+            let elem_ty = &arguments[0].0;
+            let Value::Object(id) = value else {
+                return (elem_ty.noop() || is_fast_heap_type(elem_ty, depth + 1)).then_some(false);
+            };
+            let object = heap.get(*id).ok()?;
+            match object.collection_kind {
+                crate::heap::CollectionKind::List => {
+                    try_fast_strict_list_check(elem_ty, value, heap, depth + 1)
+                }
+                crate::heap::CollectionKind::Set => {
+                    try_fast_strict_set_check(elem_ty, value, heap, depth + 1)
+                }
+                _ => (elem_ty.noop() || is_fast_heap_type(elem_ty, depth + 1)).then_some(false),
+            }
+        }
         TypeCheck::Nullable(inner) => {
             if value.is_null() {
-                try_fast_type_with_heap(inner, value, heap).map(|_| true)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1).map(|_| true)
             } else {
-                try_fast_type_with_heap(inner, value, heap)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
             }
         }
         TypeCheck::Alias(inner)
         | TypeCheck::GenericAlias(inner)
         | TypeCheck::NamedAlias {
             expanded: inner, ..
-        } => try_fast_type_with_heap(inner, value, heap),
+        } => try_fast_type_with_heap_depth(inner, value, heap, depth + 1),
+        TypeCheck::Union {
+            types,
+            string_literals: true,
+            ..
+        } if !types.is_empty() => {
+            match value {
+                Value::String(actual) => Some(types.iter().any(
+                    |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
+                )),
+                _ => Some(false),
+            }
+        }
         TypeCheck::Union {
             types,
             string_literals: false,
             ..
         } if !types.is_empty() => {
             for alt in types {
-                match try_fast_type_with_heap(alt, value, heap) {
+                match try_fast_type_with_heap_depth(alt, value, heap, depth + 1) {
                     Some(true) => return Some(true),
                     Some(false) => continue,
                     None => return None,
@@ -739,6 +1033,120 @@ impl Vm {
     fn active_tracker(&self) -> bool {
         self.active_type_trackers > 0
     }
+    pub(super) fn try_fast_lazy_collection_check(
+        &mut self,
+        ty: &TypeCheck,
+        value: &Value,
+        parent_node: impl FnOnce(&mut Self) -> Result<TypeNodeId, RuntimeError>,
+        source: impl FnOnce(&Self) -> Option<Arc<crate::value::RuntimeSource>>,
+        member: impl FnOnce(&Self) -> PklString,
+        cast_env: impl FnOnce(&mut Self) -> Result<Environment, RuntimeError>,
+    ) -> Result<Option<Value>, RuntimeError> {
+        if !self.suspended.is_empty()
+            || self.frames.iter().any(|frame| frame.type_run.is_some())
+            || ty.has_declared()
+            || ty.requires_substitution()
+        {
+            return Ok(None);
+        }
+        let (inner, nullable) = match ty.resolved() {
+            TypeCheck::Nullable(inner) if !value.is_null() => (inner.resolved(), true),
+            other => (other, false),
+        };
+        let TypeCheck::ParameterizedCollection { kind, arguments } = inner else {
+            return Ok(None);
+        };
+        if !matches!(
+            kind,
+            crate::heap::CollectionKind::Listing | crate::heap::CollectionKind::Mapping
+        ) || arguments.is_empty()
+        {
+            return Ok(None);
+        }
+        if !TypeCheck::Collection(*kind).accepts(value, &self.heap) {
+            return Ok(None);
+        }
+        let Value::Object(id) = *value else {
+            unreachable!()
+        };
+        if *kind == crate::heap::CollectionKind::Mapping && !arguments[0].0.noop() {
+            let key_ty = &arguments[0].0;
+            let mut current = Some(id);
+            while let Some(owner) = current {
+                let object = self.heap.get(owner)?;
+                for m in &object.collection_members {
+                    if m.kind != crate::heap::CollectionMemberKind::Property
+                        && try_fast_type_with_heap(key_ty, &m.key, &self.heap) != Some(true)
+                    {
+                        return Ok(None);
+                    }
+                }
+                current = object.parent;
+            }
+        }
+        if needs_custom_this(ty)
+            && self
+                .frames
+                .last()
+                .expect("type frame")
+                .environment
+                .custom_this
+                .is_none()
+        {
+            let slot = self.heap.allocate_custom_this(None);
+            self.frames
+                .last_mut()
+                .expect("type frame")
+                .environment
+                .custom_this = Some(slot);
+        }
+        let mut parent = parent_node(self)?;
+        if nullable {
+            parent = TypeNodeId(
+                self.heap
+                    .executable_child(parent.0, ExecutionSite::TypeChild(0))?,
+            );
+        }
+        let (val_ty, val_span) = arguments.last().expect("collection value type");
+        let child = Some(TypeNodeId(self.heap.executable_child(
+            parent.0,
+            ExecutionSite::TypeChild(arguments.len() - 1),
+        )?));
+        if val_ty.noop()
+            || self
+                .heap
+                .get(id)?
+                .collection_cast
+                .as_ref()
+                .is_some_and(|cast| {
+                    cast.ty.equivalent(val_ty) && (!needs_custom_this(val_ty) || cast.node == child)
+                })
+        {
+            return Ok(Some(Value::Object(id)));
+        }
+        let mut environment = cast_env(self)?;
+        environment.locals.clear();
+        environment.local_owners.clear();
+        let cast_source = source(self);
+        let cast_member = member(self);
+        let object = self.heap.get(id)?;
+        let wrapper = Object {
+            parent: Some(id),
+            environment: object.environment.clone(),
+            collection_kind: *kind,
+            length: object.length,
+            collection_cast: Some(crate::heap::CollectionCast {
+                source: cast_source,
+                node: child,
+                ty: val_ty.clone(),
+                span: *val_span,
+                member: cast_member,
+                environment,
+            }),
+            ..Object::default()
+        };
+        Ok(Some(Value::Object(self.heap.allocate(wrapper))))
+    }
     pub(super) fn begin_type(
         &mut self,
         ty: TypeCheck,
@@ -765,6 +1173,78 @@ impl Vm {
                     return Ok(());
                 }
                 (false, _) => {}
+            }
+        }
+        if !matches!(
+            destination,
+            TypeDestination::Test | TypeDestination::ProtobufAlternative
+        ) && let Some(result) = self.try_fast_lazy_collection_check(
+            &ty,
+            &value,
+            |vm| {
+                let owner = vm.current_executable()?;
+                let frame = vm.frames.last().expect("type-check frame");
+                let instruction = frame.pc.saturating_sub(1);
+                let site = if vm
+                    .program
+                    .metadata
+                    .get(frame.block)
+                    .is_some_and(|metadata| metadata.property_typecheck == Some(instruction))
+                {
+                    ExecutionSite::PropertyType(frame.block)
+                } else {
+                    ExecutionSite::TypeUse {
+                        block: frame.block,
+                        instruction,
+                    }
+                };
+                Ok(TypeNodeId(vm.heap.executable_child(owner, site)?))
+            },
+            |vm| match frames.first() {
+                Some(frame) => frame.source.clone(),
+                None => vm
+                    .frames
+                    .last()
+                    .and_then(|frame| vm.program.metadata.get(frame.block))
+                    .and_then(|metadata| metadata.source.clone()),
+            },
+            |vm| {
+                let frame = vm.frames.last().expect("type-check frame");
+                frames
+                    .first()
+                    .map(|f| f.member.clone())
+                    .or_else(|| frame.diagnostic_member.clone())
+                    .or_else(|| {
+                        vm.program
+                            .metadata
+                            .get(frame.block)
+                            .map(|metadata| metadata.member.clone())
+                    })
+                    .unwrap_or_default()
+            },
+            |vm| {
+                Ok(vm
+                    .frames
+                    .last()
+                    .expect("type-check frame")
+                    .environment
+                    .clone())
+            },
+        )? {
+            match destination {
+                TypeDestination::Stack => {
+                    self.stack.push(result);
+                    return Ok(());
+                }
+                TypeDestination::Local { depth, policy } => {
+                    return self.bind_local(depth, policy, result);
+                }
+                TypeDestination::Return => {
+                    self.stack.push(result);
+                    self.frames.last_mut().expect("type frame").pc -= 1;
+                    return Ok(());
+                }
+                TypeDestination::Test | TypeDestination::ProtobufAlternative => unreachable!(),
             }
         }
         let ty = ty.substituted(
@@ -848,7 +1328,7 @@ impl Vm {
             .or_else(|| frame.diagnostic_member.clone())
             .or_else(|| metadata.map(|metadata| metadata.member.clone()))
             .unwrap_or_default();
-        frame.type_run = Some(TypeRun {
+        frame.type_run = Some(Box::new(TypeRun {
             node,
             value: value.clone(),
             checked: value,
@@ -865,7 +1345,7 @@ impl Vm {
             tracker: None,
             constraint_source: None,
             constraint_section: None,
-        });
+        }));
         Ok(())
     }
     fn push_type_child(
@@ -900,7 +1380,7 @@ impl Vm {
     }
     fn launch_constraint(
         &mut self,
-        mut run: TypeRun,
+        mut run: Box<TypeRun>,
         constraint: ConstraintCode,
     ) -> Result<(), RuntimeError> {
         let mut environment = if constraint.module_environment {
@@ -1016,7 +1496,7 @@ impl Vm {
     }
     fn launch_predicate(
         &mut self,
-        mut run: TypeRun,
+        mut run: Box<TypeRun>,
         function: ObjectId,
         argument: Value,
     ) -> Result<(), RuntimeError> {
@@ -1034,7 +1514,7 @@ impl Vm {
     /// checking continuation available to `fail`, including inherited value sites.
     fn fail_type_result(
         &mut self,
-        run: TypeRun,
+        run: Box<TypeRun>,
         error: Result<RuntimeError, RuntimeError>,
         authored_span: Option<Span>,
     ) -> Result<(), RuntimeError> {
@@ -1452,7 +1932,7 @@ impl Vm {
                 {
                     if kind == crate::heap::CollectionKind::List
                         && arguments.len() == 1
-                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap)
+                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap, 0)
                             == Some(true)
                     {
                         run.outcome = Some(Ok(run.value.clone()));
@@ -2025,7 +2505,7 @@ fn union_eager(types: &[TypeCheck]) -> bool {
 impl Vm {
     fn collection_value(
         &mut self,
-        run: TypeRun,
+        run: Box<TypeRun>,
         state: CollectionState,
     ) -> Result<(), RuntimeError> {
         if state.arguments.last().expect("value type").0.noop() {
@@ -2040,7 +2520,8 @@ impl Vm {
             unreachable!()
         };
         let item = state.items[state.index].clone();
-        if let Some(elems) = &self.heap.get(receiver)?.list_elements {
+        let receiver_obj = self.heap.get(receiver)?;
+        if let Some(elems) = &receiver_obj.list_elements {
             let idx = match &item.member.key {
                 Value::Int(i) if i.get() >= 0 => i.get() as usize,
                 _ => return Err(invalid("compact List element key")),
@@ -2049,6 +2530,28 @@ impl Vm {
                 .get(idx)
                 .cloned()
                 .ok_or_else(|| invalid("compact List element out of bounds"))?;
+            let mut run = run;
+            run.eager = state.eager;
+            run.tasks.push(Task::CollectionValueReady(state));
+            run.returned = Some(value);
+            self.frames.last_mut().expect("type frame").type_run = Some(run);
+            return Ok(());
+        }
+        if receiver_obj.parent.is_none()
+            && item.owner == receiver
+            && matches!(
+                state.kind,
+                crate::heap::CollectionKind::Map | crate::heap::CollectionKind::List
+            )
+            && !matches!(item.member.key, Value::Object(_))
+            && let Some(LazyState::Completed(value)) = receiver_obj.cache.get(&CacheKey {
+                owner: None,
+                name: item.member.name.clone(),
+                method: false,
+                entry: true,
+            })
+        {
+            let value = value.clone();
             let mut run = run;
             run.eager = state.eager;
             run.tasks.push(Task::CollectionValueReady(state));

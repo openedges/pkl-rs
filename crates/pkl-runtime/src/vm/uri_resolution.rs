@@ -429,17 +429,18 @@ impl Vm {
                     {
                         let key = key.clone();
                         let authored_uri = parsed_authored.clone();
-                        self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
-                            module: module
-                                .clone()
-                                .ok_or_else(|| invalid("missing declaration identity"))?,
-                            path: PklString::default(),
-                            candidates: VecDeque::new(),
-                            selected: None,
-                            declaration_key: None,
-                            wrapper_fragment_paths: false,
-                            target: Target::Import { current, remaining },
-                        });
+                        self.frames.last_mut().unwrap().uri_resolution =
+                            Some(Box::new(Resolution {
+                                module: module
+                                    .clone()
+                                    .ok_or_else(|| invalid("missing declaration identity"))?,
+                                path: PklString::default(),
+                                candidates: VecDeque::new(),
+                                selected: None,
+                                declaration_key: None,
+                                wrapper_fragment_paths: false,
+                                target: Target::Import { current, remaining },
+                            }));
                         return self.wait_module(ModuleRequestKind::ResolveImportUri {
                             key,
                             authored_uri,
@@ -532,7 +533,7 @@ impl Vm {
         let uri = current.spec.original_uri.clone();
         let module =
             module.ok_or_else(|| invalid("import clause requires a declaration ModuleKey"))?;
-        self.frames.last_mut().unwrap().uri_resolution = Some(Resolution {
+        self.frames.last_mut().unwrap().uri_resolution = Some(Box::new(Resolution {
             module,
             path: PklString::default(),
             candidates: VecDeque::new(),
@@ -540,7 +541,7 @@ impl Vm {
             declaration_key: None,
             wrapper_fragment_paths: false,
             target: Target::Import { current, remaining },
-        });
+        }));
         self.wait_module(ModuleRequestKind::SelectKey {
             id: crate::modules::ModuleKeyId(modules::next_key_id()?),
             uri,
@@ -613,7 +614,11 @@ impl Vm {
         let name = crate::host::resources::infer_module_name(&key.uri, fragment_paths)?;
         self.finish_clause_name(run, name)
     }
-    fn finish_clause_name(&mut self, run: Resolution, name: PklString) -> Result<(), RuntimeError> {
+    fn finish_clause_name(
+        &mut self,
+        run: Box<Resolution>,
+        name: PklString,
+    ) -> Result<(), RuntimeError> {
         let Target::Import { current, remaining } = run.target else {
             return Err(invalid("missing name inference clause"));
         };
@@ -760,7 +765,7 @@ impl Vm {
         self.frames
             .last_mut()
             .expect("URI preparation frame")
-            .uri_resolution = Some(run);
+            .uri_resolution = Some(Box::new(run));
         self.wait_module(request)
     }
 
@@ -785,7 +790,7 @@ impl Vm {
                 .into();
         self.next_uri_candidate(run)
     }
-    fn next_uri_candidate(&mut self, mut run: Resolution) -> Result<(), RuntimeError> {
+    fn next_uri_candidate(&mut self, mut run: Box<Resolution>) -> Result<(), RuntimeError> {
         let Some(uri) = run.candidates.pop_front() else {
             return Err(run.host_failure(ModuleHostError::NotFound));
         };

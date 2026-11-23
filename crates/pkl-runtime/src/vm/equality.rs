@@ -389,20 +389,22 @@ impl EqualityRun {
 impl Vm {
     fn schedule_tasks(&mut self, tasks: Vec<Task>, roots: Vec<Value>) {
         let frame = self.frames.last_mut().expect("active frame");
-        let run = frame.equality_run.get_or_insert_with(|| EqualityRun {
-            tasks: Vec::new(),
-            on_false: Vec::new(),
-            active: BTreeSet::new(),
-            forced: BTreeSet::new(),
-            roots: Vec::new(),
-            equal: true,
-            negate: false,
-            retry: false,
-            prepared_hashes: None,
-            key_search: false,
-            hide_callsite: true,
-            forward: true,
-            forward_to_type: false,
+        let run = frame.equality_run.get_or_insert_with(|| {
+            Box::new(EqualityRun {
+                tasks: Vec::new(),
+                on_false: Vec::new(),
+                active: BTreeSet::new(),
+                forced: BTreeSet::new(),
+                roots: Vec::new(),
+                equal: true,
+                negate: false,
+                retry: false,
+                prepared_hashes: None,
+                key_search: false,
+                hide_callsite: true,
+                forward: true,
+                forward_to_type: false,
+            })
         });
         run.tasks.extend(tasks);
         run.roots.extend(roots);
@@ -571,6 +573,49 @@ impl Vm {
         probe: &Value,
     ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(receiver)?;
+        if object.parent.is_none() {
+            if object.collection_kind == CollectionKind::Map
+                && let Some(map_index) = object.map_index.as_deref()
+            {
+                let hash = java_hash_on_heap(&self.heap, probe)?;
+                for slot in map_index.candidates(hash) {
+                    if let Some(member) = object.collection_members.get(slot)
+                        && identical_key(&self.heap, probe, &member.key)
+                    {
+                        let key = CacheKey {
+                            owner: None,
+                            name: member.name.clone(),
+                            method: false,
+                            entry: true,
+                        };
+                        if let Some(LazyState::Completed(value)) = object.cache.get(&key) {
+                            return Ok(Some(value.clone()));
+                        }
+                    }
+                }
+                return Ok(None);
+            }
+            if object.collection_kind == CollectionKind::List
+                && let Value::Int(idx) = probe
+                && idx.get() >= 0
+            {
+                let pos = idx.get() as usize;
+                if let Some(elems) = &object.list_elements {
+                    return Ok(elems.get(pos).cloned());
+                }
+                if let Some(slot) = object.cache_slots.get(pos)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot
+                        .entry_key
+                        .as_ref()
+                        .is_some_and(|stored| identical_key(&self.heap, probe, stored))
+                {
+                    return Ok(Some(slot.value.clone()));
+                }
+            }
+        }
         let check_slot = |index: usize| -> Result<Option<Value>, RuntimeError> {
             let Some(slot) = object.cache_slots.get(index) else {
                 return Ok(None);
@@ -591,7 +636,7 @@ impl Vm {
         };
         if object.cache_index.has_hash() {
             let hash = java_hash_on_heap(&self.heap, probe)?.unwrap_or(0);
-            for index in object.cache_index.candidates(Some(hash)) {
+            for index in object.cache_index.hash_candidates(hash) {
                 if let Some(value) = check_slot(index)? {
                     return Ok(Some(value));
                 }
@@ -619,19 +664,32 @@ impl Vm {
             None => !key.entry || key.owner.is_some(),
         };
         if sync_probe {
-            {
+            let (has_hash, already_completed, slots_empty) = {
                 let object = self.heap.get_mut(receiver)?;
                 while object.cache_index.len() < object.cache_slots.len() {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
-            }
-            let hash = if let Some(ref probe_val) = probe {
-                java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
-            } else {
-                string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                let already_completed =
+                    matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                (
+                    object.cache_index.has_hash(),
+                    already_completed,
+                    object.cache_slots.is_empty(),
+                )
             };
-            let existing = {
+            let hash = if has_hash {
+                if let Some(ref probe_val) = probe {
+                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                } else {
+                    string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                }
+            } else {
+                0
+            };
+            let existing = if slots_empty || (probe.is_none() && !already_completed) {
+                None
+            } else {
                 let object = self.heap.get(receiver)?;
                 let check = |index: usize| -> Result<bool, RuntimeError> {
                     let slot = &object.cache_slots[index];
@@ -652,8 +710,8 @@ impl Vm {
                     }
                 };
                 let mut found = None;
-                if object.cache_index.has_hash() {
-                    for index in object.cache_index.candidates(Some(hash)) {
+                if has_hash {
+                    for index in object.cache_index.hash_candidates(hash) {
                         if check(index)? {
                             found = Some(index);
                             break;
@@ -697,15 +755,17 @@ impl Vm {
                     return Ok(());
                 }
             }
-            if key.owner.is_some()
-                || matches!(
-                    self.heap.get(receiver)?.cache.get(&key),
-                    Some(LazyState::Completed(_))
-                )
-            {
+            if (key.owner.is_some() || already_completed) && !self.heap.key_equalities.is_empty() {
                 self.heap.key_equalities.clear();
             }
             let need_rehash = {
+                let hash = if has_hash || !self.heap.get(receiver)?.cache_index.has_hash() {
+                    hash
+                } else if let Some(ref probe_val) = probe {
+                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                } else {
+                    string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                };
                 let object = self.heap.get_mut(receiver)?;
                 let index = object.cache_index.push();
                 object.completed_cache_order.push(key.clone());
@@ -768,14 +828,15 @@ impl Vm {
         if !memoize {
             return Ok(false);
         }
+        let Some(probe) = probe else {
+            return Ok(false);
+        };
         let object = self.heap.get(receiver)?;
         if object.cache_slots.is_empty() {
             return Ok(false);
         }
-        if let Some(ref probe_val) = probe
-            && !matches!(probe_val, Value::Object(_))
-        {
-            if let Some(value) = self.lookup_non_object_cache_entry(receiver, probe_val)? {
+        if !matches!(probe, Value::Object(_)) {
+            if let Some(value) = self.lookup_non_object_cache_entry(receiver, &probe)? {
                 self.stack.push(value);
                 return Ok(true);
             }
@@ -791,20 +852,17 @@ impl Vm {
             method,
             entry,
             predicate,
-            probe: probe.clone(),
+            probe: Some(probe.clone()),
         });
-        if let Some(probe) = probe {
-            let mut tasks = vec![Task::ResumeForce(request)];
-            if has_hash {
-                tasks.push(Task::Prepare(probe.clone()));
-            }
-            self.schedule_tasks(
-                tasks,
-                vec![Value::Object(receiver), Value::Object(owner), probe],
-            );
-            return Ok(true);
+        let mut tasks = vec![Task::ResumeForce(request)];
+        if has_hash {
+            tasks.push(Task::Prepare(probe.clone()));
         }
-        Ok(false)
+        self.schedule_tasks(
+            tasks,
+            vec![Value::Object(receiver), Value::Object(owner), probe],
+        );
+        Ok(true)
     }
 
     /// VmObject.force queries the receiver cache before reading the current
@@ -985,7 +1043,7 @@ impl Vm {
     }
 
     pub(super) fn begin_equality(&mut self, left: Value, right: Value, negate: bool) {
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: vec![Task::Compare(left.clone(), right.clone(), true)],
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -999,7 +1057,7 @@ impl Vm {
             hide_callsite: true,
             forward: false,
             forward_to_type: false,
-        });
+        }));
     }
     pub(super) fn force_collection_member(
         &mut self,
@@ -1020,7 +1078,7 @@ impl Vm {
         }
         let candidates = collections::forcing_members(&self.heap, id)?;
         let probe = member.key.clone();
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: vec![Task::Resolve(id, member, candidates, 0, None)],
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -1034,7 +1092,7 @@ impl Vm {
             hide_callsite: true,
             forward: true,
             forward_to_type: false,
-        });
+        }));
         Ok(())
     }
     pub(super) fn search_key(
@@ -1046,11 +1104,13 @@ impl Vm {
         if frame.key_search.is_none() && !matches!(key, Value::Object(_)) {
             return Ok(false);
         }
-        let mut search = frame.key_search.take().unwrap_or(KeySearch {
-            key: key.clone(),
-            candidates,
-            position: 0,
-            returned: None,
+        let mut search = frame.key_search.take().unwrap_or_else(|| {
+            Box::new(KeySearch {
+                key: key.clone(),
+                candidates,
+                position: 0,
+                returned: None,
+            })
         });
         if let Some(equal) = search.returned.take()
             && equal
@@ -1130,7 +1190,7 @@ impl Vm {
                 .prepared_hashes = Some(prepared);
             return Ok(false);
         }
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: pending.iter().rev().cloned().map(Task::Prepare).collect(),
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -1144,7 +1204,7 @@ impl Vm {
             hide_callsite: true,
             forward: false,
             forward_to_type: false,
-        });
+        }));
         Ok(true)
     }
     fn class_identity(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
@@ -1479,7 +1539,7 @@ impl Vm {
     fn step_equality_collection_ops(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -1932,7 +1992,7 @@ impl Vm {
     fn step_equality_cache_ops(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -2252,7 +2312,7 @@ impl Vm {
     fn step_equality_compare(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -2692,7 +2752,7 @@ impl Vm {
     fn step_equality_hash_and_build(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
