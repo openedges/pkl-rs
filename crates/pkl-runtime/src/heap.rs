@@ -805,7 +805,10 @@ impl Object {
             std::collections::hash_map::Entry::Occupied(mut occupied) => {
                 if matches!(occupied.get(), LazyState::Completed(_)) {
                     let key_ref = occupied.key();
-                    if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == *key_ref)
+                    if let Some(slot) = self
+                        .cache_slots
+                        .iter_mut()
+                        .find(|slot| slot.key == *key_ref)
                     {
                         if entry_key.is_some() {
                             slot.entry_key = entry_key;

@@ -2847,7 +2847,6 @@ impl Vm {
             return false;
         };
         object.cache.clear();
-        object.completed_cache_order.clear();
         object.cache_slots.clear();
         object.cache_index = crate::economic_map::EconomicMapIndex::default();
         object.list_elements = None;
@@ -4303,9 +4302,7 @@ impl Vm {
                                 .as_ref()
                                 .map(|n| &n.receiver)
                                 .or_else(|| {
-                                    obj.function
-                                        .as_ref()
-                                        .and_then(|f| f.captured_this.as_ref())
+                                    obj.function.as_ref().and_then(|f| f.captured_this.as_ref())
                                 })
                                 .or(obj.environment.this_value.as_ref());
                             let Some(recv_val) = recv_val else {
@@ -5151,8 +5148,9 @@ impl Vm {
         if !self.auto_gc || !self.frames.is_empty() || !self.suspended.is_empty() {
             return;
         }
+        const BETWEEN_OP_GC_THRESHOLD: usize = 8192;
         const EXTERNAL_GC_THRESHOLD_BYTES: usize = 8 * 1024 * 1024;
-        if self.heap.allocations_since_gc() < self.gc_threshold
+        if self.heap.allocations_since_gc() < BETWEEN_OP_GC_THRESHOLD
             && self.heap.external_bytes_since_gc() < EXTERNAL_GC_THRESHOLD_BYTES
             && self.code_arenas.len() < self.last_gc_arenas.saturating_add(64)
             && self.public_operation_entries.len() < 64

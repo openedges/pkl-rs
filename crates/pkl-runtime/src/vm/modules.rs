@@ -2244,9 +2244,7 @@ impl Vm {
 
         // Compiled-unit segment cache: replay pre-compiled sealed `CodeStorage`
         // segments via O(1) `Arc::clone` when source, URIs, and starting offsets match.
-        let cache_key = if cacheable_text
-            && let Ok(unit_id_u32) = u32::try_from(unit_id_usize)
-        {
+        let cache_key = if cacheable_text && let Ok(unit_id_u32) = u32::try_from(unit_id_usize) {
             Some(CompiledUnitCacheKey {
                 hash: text_hash,
                 text: &source.text,

@@ -237,24 +237,23 @@ impl Vm {
         if object.pair.is_some() {
             return Ok(false);
         }
-        let class: &'static str =
-            if object.is_module
-                || (object.collection_kind == CollectionKind::Dynamic
-                    && collections::typed_class(&self.heap, source)?.is_some())
-            {
-                "Typed"
-            } else if object.reference.is_none() && object.pair.is_none() {
-                match object.collection_kind {
-                    CollectionKind::Dynamic => "Dynamic",
-                    CollectionKind::Listing => "Listing",
-                    CollectionKind::Mapping => "Mapping",
-                    CollectionKind::List => "List",
-                    CollectionKind::Map => "Map",
-                    CollectionKind::Set => "Set",
-                }
-            } else {
-                return Ok(false);
-            };
+        let class: &'static str = if object.is_module
+            || (object.collection_kind == CollectionKind::Dynamic
+                && collections::typed_class(&self.heap, source)?.is_some())
+        {
+            "Typed"
+        } else if object.reference.is_none() && object.pair.is_none() {
+            match object.collection_kind {
+                CollectionKind::Dynamic => "Dynamic",
+                CollectionKind::Listing => "Listing",
+                CollectionKind::Mapping => "Mapping",
+                CollectionKind::List => "List",
+                CollectionKind::Map => "Map",
+                CollectionKind::Set => "Set",
+            }
+        } else {
+            return Ok(false);
+        };
         if class == "Typed"
             && matches!(name, "hasProperty" | "getProperty" | "getPropertyOrNull")
             && !self.typed_has_property_available(source)?
@@ -399,8 +398,11 @@ impl Vm {
                         run_mut.seen_str_index = Some(si);
                         run_mut.seen_int_index = Some(ii);
                     }
-                    let already = match (&member.key, &run_mut.seen_str_index, &run_mut.seen_int_index)
-                    {
+                    let already = match (
+                        &member.key,
+                        &run_mut.seen_str_index,
+                        &run_mut.seen_int_index,
+                    ) {
                         (Value::String(s), Some(si), _) => si.contains_key(&(is_prop, s.clone())),
                         (Value::Int(i), _, Some(ii)) => ii.contains_key(&(is_prop, i.get())),
                         _ => run_mut.seen.iter().any(|m| {

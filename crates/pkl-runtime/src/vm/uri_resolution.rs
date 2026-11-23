@@ -690,8 +690,8 @@ impl Vm {
             Some(id) => (true, &id.original_uri, &id.resolved_uri),
             None => (false, &empty_uri, &empty_uri),
         };
-        let is_base_module = has_identity
-            && (original_uri == "pkl:base" || resolved_uri == "pkl:base");
+        let is_base_module =
+            has_identity && (original_uri == "pkl:base" || resolved_uri == "pkl:base");
         let is_primary_root = !is_base_module && unit == UnitId(0);
         let prepared_list: Vec<(Span, (PklString, PklString))> = build
             .prepared

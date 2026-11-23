@@ -1061,12 +1061,10 @@ pub(crate) fn render_members(
                 && (direct.kind != CollectionMemberKind::Property) == member.entry
             {
                 direct.clone()
-            } else if let Some(descriptor) =
-                object.collection_members.iter().find(|descriptor| {
-                    descriptor.name == member.name
-                        && (descriptor.kind != CollectionMemberKind::Property) == member.entry
-                })
-            {
+            } else if let Some(descriptor) = object.collection_members.iter().find(|descriptor| {
+                descriptor.name == member.name
+                    && (descriptor.kind != CollectionMemberKind::Property) == member.entry
+            }) {
                 descriptor.clone()
             } else if member.entry {
                 continue;
@@ -2335,19 +2333,17 @@ impl Vm {
             None
         };
         let object = self.heap.get_mut(target)?;
-        let cache_key = if environment.is_some()
-            || !object.member_environments.is_empty()
-            || value.is_some()
-        {
-            Some(CacheKey {
-                owner: None,
-                name: member.name.clone(),
-                method: member.method,
-                entry: member.entry,
-            })
-        } else {
-            None
-        };
+        let cache_key =
+            if environment.is_some() || !object.member_environments.is_empty() || value.is_some() {
+                Some(CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: member.method,
+                    entry: member.entry,
+                })
+            } else {
+                None
+            };
         if let Some(environment) = environment {
             object
                 .member_environments
