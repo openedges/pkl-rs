@@ -2332,7 +2332,7 @@ impl Vm {
             // converted once more at this same path, as in pinned Java.
             if let Value::Object(id) = &value
                 && self.heap.get(*id)?.collection_kind == CollectionKind::Dynamic
-                && collections::typed_class(&self.heap, *id)?.is_none()
+                && !collections::is_typed_class(&self.heap, *id)?
                 && !self.heap.get(*id)?.is_module
                 && self.heap.get(*id)?.length != 0
             {
@@ -2695,14 +2695,14 @@ impl Vm {
         Ok(
             matches!(value, Value::Object(id) if self.heap.get(*id)?.reference.is_none()
             && self.heap.get(*id)?.pair.is_none()
-            && (collections::typed_class(&self.heap, *id)?.is_some()
+            && (collections::is_typed_class(&self.heap, *id)?
                 || matches!(self.heap.get(*id)?.collection_kind,
                     CollectionKind::Dynamic | CollectionKind::Mapping | CollectionKind::Map))),
         )
     }
     fn pcf_document_value(&self, value: &Value) -> Result<bool, RuntimeError> {
         Ok(
-            matches!(value,Value::Object(id) if self.heap.get(*id)?.reference.is_none() && self.heap.get(*id)?.pair.is_none() && (collections::typed_class(&self.heap,*id)?.is_some() || self.heap.get(*id)?.collection_kind==CollectionKind::Dynamic)),
+            matches!(value,Value::Object(id) if self.heap.get(*id)?.reference.is_none() && self.heap.get(*id)?.pair.is_none() && (collections::is_typed_class(&self.heap,*id)? || self.heap.get(*id)?.collection_kind==CollectionKind::Dynamic)),
         )
     }
     fn pcf_unrenderable(&self, run: &RenderRun, value: &Value) -> Result<bool, RuntimeError> {
@@ -2740,11 +2740,11 @@ impl Vm {
         Err(error)
     }
     pub(super) fn is_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
-        Ok(collections::typed_class(&self.heap, id)?
+        Ok(collections::typed_class_ref(&self.heap, id)?
             .is_some_and(|class| class.id == output::RENDER_DIRECTIVE))
     }
     fn is_pcf_render_directive(&self, id: ObjectId) -> Result<bool, RuntimeError> {
-        Ok(collections::typed_class(&self.heap, id)?
+        Ok(collections::typed_class_ref(&self.heap, id)?
             .is_some_and(|class| class.id == output::PCF_RENDER_DIRECTIVE))
     }
     fn plist_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
@@ -4045,10 +4045,7 @@ impl Vm {
                     && obj.collection_cast.is_none()
                     && obj.class_definition.is_none()
                     && obj.instance_class.is_some()
-                    && collections::typed_class(&self.heap, id)
-                        .ok()
-                        .flatten()
-                        .is_some()
+                    && collections::is_typed_class(&self.heap, id).ok() == Some(true)
                     && self.is_render_directive(id).ok() == Some(false)
                     && self.is_pcf_render_directive(id).ok() == Some(false)
                     && self.jsonnet_wrapper(id).ok() == Some(None)

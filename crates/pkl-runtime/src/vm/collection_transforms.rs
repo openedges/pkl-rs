@@ -2134,7 +2134,7 @@ impl Vm {
         if object.reference.is_some()
             || object.pair.is_some()
             || object.is_module
-            || collections::typed_class(&self.heap, source)?.is_some()
+            || collections::is_typed_class(&self.heap, source)?
         {
             return Ok(false);
         }

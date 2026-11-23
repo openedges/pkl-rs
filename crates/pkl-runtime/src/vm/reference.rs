@@ -1725,7 +1725,7 @@ fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
                 false
             }
             TypeCheck::Class { id, .. } => {
-                matches!(key,Value::Object(object) if collections::typed_class(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
+                matches!(key,Value::Object(object) if collections::typed_class_ref(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
             }
             TypeCheck::Any
             | TypeCheck::NonNull

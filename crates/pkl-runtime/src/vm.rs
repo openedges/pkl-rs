@@ -992,7 +992,7 @@ impl TypeCheck {
                 matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|o|o.pair.is_some()))
             }
             Self::Collection(kind) => {
-                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && object.foreign_map_entry.is_none() && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::typed_class(heap, *id).is_ok_and(|class| class.is_none()))
+                matches!(value, Value::Object(id) if heap.get(*id).is_ok_and(|object| object.collection_kind == *kind && object.foreign_map_entry.is_none() && !object.is_module && object.reference.is_none() && !object.ref_module) && collections::is_typed_class(heap, *id).is_ok_and(|typed| !typed))
             }
             Self::ParameterizedCollection { kind, .. } => {
                 Self::Collection(*kind).accepts(value, heap)
@@ -3812,6 +3812,158 @@ impl Vm {
                         }
                         break;
                     }
+                    if active_type_trackers == 0
+                        && let Some(Value::String(text)) = stack.last()
+                    {
+                        if name == "toString" {
+                            let skip =
+                                match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                                    (
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup,
+                                            arity: 0,
+                                            after_arguments: false,
+                                        }),
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup: l2,
+                                            arity: 0,
+                                            after_arguments: true,
+                                        }),
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                    ) if *lookup == pc && *l2 == pc => 4,
+                                    (
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup,
+                                            arity: 0,
+                                            ..
+                                        }),
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                        _,
+                                    ) if *lookup == pc => 3,
+                                    (
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                        _,
+                                        _,
+                                    ) => 2,
+                                    _ => 0,
+                                };
+                            if skip > 0 && consumed + skip <= max_steps {
+                                let frame = frames.last().unwrap();
+                                let exec_owner = if let Some(o) = frame.environment.executable_owner
+                                {
+                                    Some(o)
+                                } else {
+                                    if cur_exec_block != block {
+                                        cur_exec_block = block;
+                                        cur_exec_root = executable_roots.get(&block).copied();
+                                    }
+                                    cur_exec_root
+                                };
+                                if exec_owner.is_some_and(|owner| {
+                                    heap.existing_method_call_cache(owner, (block, pc))
+                                        .ok()
+                                        .flatten()
+                                        .is_some_and(|c| {
+                                            c.is_megamorphic()
+                                                || c.contains_builtin_class(
+                                                    classes::BuiltinClass::String,
+                                                )
+                                        })
+                                }) {
+                                    pc += skip;
+                                    consumed += skip;
+                                    continue;
+                                }
+                            }
+                        } else if matches!(
+                            name.as_str(),
+                            Some("startsWith" | "endsWith" | "contains")
+                        ) && consumed + 5 <= max_steps
+                            && let (
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup: l1,
+                                    arity: 0,
+                                    after_arguments: false,
+                                }),
+                                Some(arg_instr),
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup: l2,
+                                    arity: 1,
+                                    after_arguments: true,
+                                }),
+                                Some(Instruction::Call {
+                                    arity: 1,
+                                    method: true,
+                                }),
+                            ) = (
+                                code.get(pc + 1),
+                                code.get(pc + 2),
+                                code.get(pc + 3),
+                                code.get(pc + 4),
+                            )
+                            && *l1 == pc
+                            && *l2 == pc
+                        {
+                            let frame = frames.last().unwrap();
+                            let arg_str = match arg_instr {
+                                Instruction::Constant(Value::String(s)) => Some(s),
+                                Instruction::LoadLocal(depth) => depth
+                                    .checked_add(1)
+                                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                                    .and_then(|idx| match &frame.environment.locals[idx] {
+                                        Value::String(s) => Some(s),
+                                        _ => None,
+                                    }),
+                                _ => None,
+                            };
+                            if let Some(pat) = arg_str
+                                && let (Some(t), Some(p)) = (text.as_str(), pat.as_str())
+                            {
+                                let exec_owner = if let Some(o) = frame.environment.executable_owner
+                                {
+                                    Some(o)
+                                } else {
+                                    if cur_exec_block != block {
+                                        cur_exec_block = block;
+                                        cur_exec_root = executable_roots.get(&block).copied();
+                                    }
+                                    cur_exec_root
+                                };
+                                if exec_owner.is_some_and(|owner| {
+                                    heap.existing_method_call_cache(owner, (block, pc))
+                                        .ok()
+                                        .flatten()
+                                        .is_some_and(|c| {
+                                            c.is_megamorphic()
+                                                || c.contains_builtin_class(
+                                                    classes::BuiltinClass::String,
+                                                )
+                                        })
+                                }) {
+                                    let res = match name.as_str() {
+                                        Some("startsWith") => t.starts_with(p),
+                                        Some("endsWith") => t.ends_with(p),
+                                        _ => t.contains(p),
+                                    };
+                                    stack.pop();
+                                    stack.push_raw(Value::Bool(res));
+                                    pc += 5;
+                                    consumed += 5;
+                                    continue;
+                                }
+                            }
+                        }
+                        break;
+                    }
                     let Some(&Value::Object(recv_id)) = stack.last() else {
                         break;
                     };
@@ -3841,7 +3993,7 @@ impl Vm {
                         && obj.pair.is_none()
                         && obj.reference.is_none()
                         && obj.foreign_map_entry.is_none()
-                        && (name == "map" || name == "fold")
+                        && matches!(name.as_str(), Some("map" | "fold" | "toList" | "contains"))
                     {
                         let frame = frames.last().unwrap();
                         let exec_owner = if let Some(o) = frame.environment.executable_owner {
@@ -3853,15 +4005,119 @@ impl Vm {
                             }
                             cur_exec_root
                         };
-                        if let Some(owner) = exec_owner
-                            && heap
-                                .existing_method_call_cache(owner, (block, pc))
+                        let cached_list = exec_owner.is_some_and(|owner| {
+                            heap.existing_method_call_cache(owner, (block, pc))
                                 .ok()
                                 .flatten()
                                 .is_some_and(|c| {
-                                    c.contains_builtin_class(classes::BuiltinClass::List)
+                                    c.is_megamorphic()
+                                        || c.contains_builtin_class(classes::BuiltinClass::List)
                                 })
+                        });
+                        if !cached_list {
+                            break;
+                        }
+                        if name == "toList" && active_type_trackers == 0 {
+                            let skip =
+                                match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                                    (
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup,
+                                            arity: 0,
+                                            after_arguments: false,
+                                        }),
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup: l2,
+                                            arity: 0,
+                                            after_arguments: true,
+                                        }),
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                    ) if *lookup == pc && *l2 == pc => 4,
+                                    (
+                                        Some(Instruction::PrepareMethodCall {
+                                            lookup,
+                                            arity: 0,
+                                            ..
+                                        }),
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                        _,
+                                    ) if *lookup == pc => 3,
+                                    (
+                                        Some(Instruction::Call {
+                                            arity: 0,
+                                            method: true,
+                                        }),
+                                        _,
+                                        _,
+                                    ) => 2,
+                                    _ => 0,
+                                };
+                            if skip > 0 && consumed + skip <= max_steps {
+                                pc += skip;
+                                consumed += skip;
+                                continue;
+                            }
+                            break;
+                        }
+                        if name == "contains"
+                            && active_type_trackers == 0
+                            && consumed + 5 <= max_steps
+                            && let Some(elems) = obj.list_elements.as_deref()
+                            && elems.len() <= 512
+                            && let (
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup: l1,
+                                    arity: 0,
+                                    after_arguments: false,
+                                }),
+                                Some(arg_instr),
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup: l2,
+                                    arity: 1,
+                                    after_arguments: true,
+                                }),
+                                Some(Instruction::Call {
+                                    arity: 1,
+                                    method: true,
+                                }),
+                            ) = (
+                                code.get(pc + 1),
+                                code.get(pc + 2),
+                                code.get(pc + 3),
+                                code.get(pc + 4),
+                            )
+                            && *l1 == pc
+                            && *l2 == pc
                         {
+                            let arg_ref = match arg_instr {
+                                Instruction::Constant(v) => Some(v),
+                                Instruction::LoadLocal(depth) => depth
+                                    .checked_add(1)
+                                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                                    .map(|idx| &frame.environment.locals[idx]),
+                                _ => None,
+                            };
+                            if let Some(needle) = arg_ref
+                                && matches!(needle, Value::String(_) | Value::Int(_) | Value::Bool(_))
+                                && elems.iter().all(|e| !matches!(e, Value::Object(_)))
+                            {
+                                let found =
+                                    elems.iter().any(|e| equality::same_key(heap, e, needle));
+                                stack.pop();
+                                stack.push_raw(Value::Bool(found));
+                                pc += 5;
+                                consumed += 5;
+                                continue;
+                            }
+                            break;
+                        }
+                        if name == "map" || name == "fold" {
                             let (fn_block, arity) = if name == "map" {
                                 (program.collection_transform_blocks[0], 1)
                             } else {
@@ -3885,6 +4141,238 @@ impl Vm {
                         } else {
                             break;
                         }
+                    } else if obj.collection_kind == CollectionKind::Map
+                        && active_type_trackers == 0
+                        && obj.parent.is_none()
+                        && !obj.has_object_collection_key
+                        && obj.instance_class.is_none()
+                        && obj.pair.is_none()
+                        && obj.reference.is_none()
+                        && obj.foreign_map_entry.is_none()
+                        && matches!(name.as_str(), Some("getOrNull" | "containsKey"))
+                        && consumed + 5 <= max_steps
+                        && let (
+                            Some(Instruction::PrepareMethodCall {
+                                lookup: l1,
+                                arity: 0,
+                                after_arguments: false,
+                            }),
+                            Some(arg_instr),
+                            Some(Instruction::PrepareMethodCall {
+                                lookup: l2,
+                                arity: 1,
+                                after_arguments: true,
+                            }),
+                            Some(Instruction::Call {
+                                arity: 1,
+                                method: true,
+                            }),
+                        ) = (
+                            code.get(pc + 1),
+                            code.get(pc + 2),
+                            code.get(pc + 3),
+                            code.get(pc + 4),
+                        )
+                        && *l1 == pc
+                        && *l2 == pc
+                    {
+                        let frame = frames.last().unwrap();
+                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                            Some(o)
+                        } else {
+                            if cur_exec_block != block {
+                                cur_exec_block = block;
+                                cur_exec_root = executable_roots.get(&block).copied();
+                            }
+                            cur_exec_root
+                        };
+                        let arg_ref = match arg_instr {
+                            Instruction::Constant(v) => Some(v),
+                            Instruction::LoadLocal(depth) => depth
+                                .checked_add(1)
+                                .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                                .map(|idx| &frame.environment.locals[idx]),
+                            _ => None,
+                        };
+                        if let Some(key_ref) = arg_ref
+                            && matches!(key_ref, Value::String(_) | Value::Int(_) | Value::Bool(_))
+                            && exec_owner.is_some_and(|owner| {
+                                heap.existing_method_call_cache(owner, (block, pc))
+                                    .ok()
+                                    .flatten()
+                                    .is_some_and(|c| {
+                                        c.is_megamorphic()
+                                            || c.contains_builtin_class(classes::BuiltinClass::Map)
+                                    })
+                            })
+                            && let Ok(hash) = equality::java_hash_on_heap(heap, key_ref)
+                        {
+                            let mut matched_slot = None;
+                            for slot in obj.map_index().candidates(hash) {
+                                if equality::same_key(
+                                    heap,
+                                    key_ref,
+                                    &obj.collection_members[slot].key,
+                                ) {
+                                    matched_slot = Some(slot);
+                                    break;
+                                }
+                            }
+                            let result = if name == "containsKey" {
+                                Some(Value::Bool(matched_slot.is_some()))
+                            } else if let Some(slot) = matched_slot {
+                                let member = &obj.collection_members[slot];
+                                if let Some(cs) = obj.cache_slots.get(slot)
+                                    && cs.key.entry
+                                    && cs.key.owner.is_none()
+                                    && !cs.key.method
+                                    && cs.key.name == member.name
+                                {
+                                    Some(cs.value.clone())
+                                } else {
+                                    let ck = CacheKey {
+                                        owner: None,
+                                        name: member.name.clone(),
+                                        method: false,
+                                        entry: true,
+                                    };
+                                    match obj.cache.get(&ck) {
+                                        Some(LazyState::Completed(v)) => Some(v.clone()),
+                                        _ => None,
+                                    }
+                                }
+                            } else {
+                                Some(Value::Null)
+                            };
+                            if let Some(val) = result {
+                                stack.pop();
+                                stack.push_raw(val);
+                                pc += 5;
+                                consumed += 5;
+                                continue;
+                            }
+                        }
+                        break;
+                    } else if obj.collection_kind == CollectionKind::Listing
+                        && name == "toList"
+                        && active_type_trackers == 0
+                        && obj.collection_cast.is_none()
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.class_definition.is_none()
+                        && !obj.is_module
+                        && obj.foreign_map_entry.is_none()
+                        && !obj.has_object_collection_key
+                        && obj.collection_members.len() <= 512
+                        && obj.collection_members.len() == obj.members.len()
+                        && collections::is_single_level_leaf_collection(heap, obj)
+                    {
+                        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                            (
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup,
+                                    arity: 0,
+                                    after_arguments: false,
+                                }),
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup: l2,
+                                    arity: 0,
+                                    after_arguments: true,
+                                }),
+                                Some(Instruction::Call {
+                                    arity: 0,
+                                    method: true,
+                                }),
+                            ) if *lookup == pc && *l2 == pc => 4,
+                            (
+                                Some(Instruction::PrepareMethodCall {
+                                    lookup,
+                                    arity: 0,
+                                    ..
+                                }),
+                                Some(Instruction::Call {
+                                    arity: 0,
+                                    method: true,
+                                }),
+                                _,
+                            ) if *lookup == pc => 3,
+                            (
+                                Some(Instruction::Call {
+                                    arity: 0,
+                                    method: true,
+                                }),
+                                _,
+                                _,
+                            ) => 2,
+                            _ => 0,
+                        };
+                        let frame = frames.last().unwrap();
+                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                            Some(o)
+                        } else {
+                            if cur_exec_block != block {
+                                cur_exec_block = block;
+                                cur_exec_root = executable_roots.get(&block).copied();
+                            }
+                            cur_exec_root
+                        };
+                        if skip > 0
+                            && consumed + skip <= max_steps
+                            && obj.cache_slots.len() >= obj.collection_members.len()
+                            && exec_owner.is_some_and(|owner| {
+                                heap.existing_method_call_cache(owner, (block, pc))
+                                    .ok()
+                                    .flatten()
+                                    .is_some_and(|c| {
+                                        c.is_megamorphic()
+                                            || c.contains_builtin_class(
+                                                classes::BuiltinClass::Listing,
+                                            )
+                                    })
+                            })
+                        {
+                            let mut values = Vec::with_capacity(obj.collection_members.len());
+                            let mut approx_bytes = obj
+                                .collection_members
+                                .len()
+                                .saturating_mul(std::mem::size_of::<Value>());
+                            let mut ok = true;
+                            for idx in 0..obj.collection_members.len() {
+                                let cm = &obj.collection_members[idx];
+                                let m = &obj.members[idx];
+                                let slot = &obj.cache_slots[idx];
+                                if cm.kind == crate::heap::CollectionMemberKind::Element
+                                    && !m.local
+                                    && !m.method
+                                    && !m.hidden()
+                                    && !m.external()
+                                    && !m.definition()
+                                    && slot.key.entry
+                                    && slot.key.owner.is_none()
+                                    && !slot.key.method
+                                    && slot.key.name == cm.name
+                                {
+                                    if let Value::String(s) = &slot.value {
+                                        approx_bytes = approx_bytes
+                                            .saturating_add(s.as_str().map_or(16, str::len));
+                                    }
+                                    values.push(slot.value.clone());
+                                } else {
+                                    ok = false;
+                                    break;
+                                }
+                            }
+                            if ok {
+                                heap.note_external_allocation(approx_bytes);
+                                let list_id = heap.allocate_strict_list(values);
+                                stack.pop();
+                                stack.push_raw(Value::Object(list_id));
+                                pc += skip;
+                                consumed += skip;
+                                continue;
+                            }
+                        }
+                        break;
                     } else {
                         break;
                     }
@@ -6485,15 +6973,17 @@ impl Vm {
             let receiver_obj = self.heap.get(receiver)?;
             let receiver_kind = receiver_obj.collection_kind;
             checked_cache_evaluating = true;
-            match receiver_obj.cache.get(&key) {
-                Some(LazyState::Completed(value)) => {
-                    self.stack.push(value.clone());
-                    return Ok(());
+            if !receiver_obj.cache.is_empty() {
+                match receiver_obj.cache.get(&key) {
+                    Some(LazyState::Completed(value)) => {
+                        self.stack.push(value.clone());
+                        return Ok(());
+                    }
+                    Some(LazyState::Evaluating) => {
+                        cache_evaluating = true;
+                    }
+                    Some(LazyState::Unevaluated) | None => {}
                 }
-                Some(LazyState::Evaluating) => {
-                    cache_evaluating = true;
-                }
-                Some(LazyState::Unevaluated) | None => {}
             }
             if !local
                 && !method
@@ -6507,83 +6997,162 @@ impl Vm {
             }
         }
         let mut owner = initial_owner;
-        let mut visited = SmallObjectIdSet::new();
         let member = if let Some(member) = resolved_member {
             member
         } else {
-            loop {
-                if !visited.insert(owner) {
+            // Fast 2-hop lookup avoids initializing `SmallObjectIdSet` for >95% of accesses.
+            let obj0 = self.heap.get(owner)?;
+            if let Some(member) = obj0.members.iter().find(|member| {
+                member.name == name
+                    && member.local == local
+                    && member.method == method
+                    && member.entry == entry
+            }) {
+                member.clone()
+            } else if local {
+                return Err(RuntimeError::new(
+                    ErrorKind::MissingMember,
+                    PklString::from("missing local member ")
+                        .concat(&name)
+                        .concat(&"".into()),
+                ));
+            } else if let Some(parent1) = obj0.parent {
+                if parent1 == owner {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
                 }
-                let object = self.heap.get(owner)?;
-                if let Some(member) = object.members.iter().find(|member| {
+                owner = parent1;
+                let obj1 = self.heap.get(owner)?;
+                if let Some(member) = obj1.members.iter().find(|member| {
                     member.name == name
-                        && member.local == local
+                        && !member.local
                         && member.method == method
                         && member.entry == entry
                 }) {
-                    break member.clone();
+                    member.clone()
+                } else {
+                    let mut visited = SmallObjectIdSet::new();
+                    visited.insert(initial_owner);
+                    visited.insert(owner);
+                    let mut current_obj = obj1;
+                    loop {
+                        owner = match current_obj.parent {
+                            Some(parent) => parent,
+                            None if method
+                                && name == "ifNonNull"
+                                && (current_obj.class_definition.is_none()
+                                    || current_obj.class_superclass_initialized) =>
+                            {
+                                self.any_method(Value::Object(receiver));
+                                return Ok(());
+                            }
+                            None if method
+                                && name == "getClass"
+                                && current_obj.class_superclass_initialized =>
+                            {
+                                let function = self
+                                    .native_reference_method(Value::Object(receiver), "getClass");
+                                self.stack.push(function);
+                                return Ok(());
+                            }
+                            None if method
+                                && name == "toString"
+                                && (current_obj.class_definition.is_none()
+                                    || current_obj.class_superclass_initialized) =>
+                            {
+                                let function = self.native_reference_method(
+                                    Value::Object(receiver),
+                                    "objectToString",
+                                );
+                                self.stack.push(function);
+                                return Ok(());
+                            }
+                            None => {
+                                if !method
+                                    && !entry
+                                    && let Some(member) =
+                                        self.collection_cached_property(receiver, &name)?
+                                {
+                                    owner = receiver;
+                                    break member;
+                                }
+                                if method && self.conversion_method(Value::Object(receiver), &name)?
+                                {
+                                    return Ok(());
+                                }
+                                if !method
+                                    && !entry
+                                    && name == "default"
+                                    && self.object_default_member(receiver)?
+                                {
+                                    return Ok(());
+                                }
+                                let diagnostic_receiver =
+                                    if method { initial_owner } else { receiver };
+                                return Err(self.missing_member(
+                                    diagnostic_receiver,
+                                    &name,
+                                    method,
+                                )?);
+                            }
+                        };
+                        if !visited.insert(owner) {
+                            return Err(RuntimeError::new(
+                                ErrorKind::Cycle,
+                                "cyclic parent chain",
+                            ));
+                        }
+                        current_obj = self.heap.get(owner)?;
+                        if let Some(member) = current_obj.members.iter().find(|member| {
+                            member.name == name
+                                && !member.local
+                                && member.method == method
+                                && member.entry == entry
+                        }) {
+                            break member.clone();
+                        }
+                    }
                 }
-                if local {
-                    return Err(RuntimeError::new(
-                        ErrorKind::MissingMember,
-                        PklString::from("missing local member ")
-                            .concat(&name)
-                            .concat(&"".into()),
-                    ));
+            } else {
+                // Hop 0 had no parent.
+                if method
+                    && name == "ifNonNull"
+                    && (obj0.class_definition.is_none() || obj0.class_superclass_initialized)
+                {
+                    self.any_method(Value::Object(receiver));
+                    return Ok(());
                 }
-                owner = match object.parent {
-                    Some(parent) => parent,
-                    None if method
-                        && name == "ifNonNull"
-                        && (object.class_definition.is_none()
-                            || object.class_superclass_initialized) =>
-                    {
-                        self.any_method(Value::Object(receiver));
-                        return Ok(());
-                    }
-                    None if method && name == "getClass" && object.class_superclass_initialized => {
-                        let function =
-                            self.native_reference_method(Value::Object(receiver), "getClass");
-                        self.stack.push(function);
-                        return Ok(());
-                    }
-                    None if method
-                        && name == "toString"
-                        && (object.class_definition.is_none()
-                            || object.class_superclass_initialized) =>
-                    {
-                        let function =
-                            self.native_reference_method(Value::Object(receiver), "objectToString");
-                        self.stack.push(function);
-                        return Ok(());
-                    }
-                    None => {
-                        if !method
-                            && !entry
-                            && let Some(member) =
-                                self.collection_cached_property(receiver, &name)?
-                        {
-                            owner = receiver;
-                            break member;
-                        }
-                        if method && self.conversion_method(Value::Object(receiver), &name)? {
-                            return Ok(());
-                        }
-                        if !method
-                            && !entry
-                            && name == "default"
-                            && self.object_default_member(receiver)?
-                        {
-                            return Ok(());
-                        }
-                        // A super method searches from its owner's parent while
-                        // retaining the actual receiver for successful invocation.
-                        // The failed lookup describes that search origin too.
-                        let diagnostic_receiver = if method { initial_owner } else { receiver };
-                        return Err(self.missing_member(diagnostic_receiver, &name, method)?);
-                    }
-                };
+                if method && name == "getClass" && obj0.class_superclass_initialized {
+                    let function =
+                        self.native_reference_method(Value::Object(receiver), "getClass");
+                    self.stack.push(function);
+                    return Ok(());
+                }
+                if method
+                    && name == "toString"
+                    && (obj0.class_definition.is_none() || obj0.class_superclass_initialized)
+                {
+                    let function =
+                        self.native_reference_method(Value::Object(receiver), "objectToString");
+                    self.stack.push(function);
+                    return Ok(());
+                }
+                if !method
+                    && !entry
+                    && let Some(member) = self.collection_cached_property(receiver, &name)?
+                {
+                    owner = receiver;
+                    member
+                } else if (method && self.conversion_method(Value::Object(receiver), &name)?)
+                    || (!method
+                        && !entry
+                        && name == "default"
+                        && self.object_default_member(receiver)?)
+                {
+                    return Ok(());
+                } else {
+                    let diagnostic_receiver = if method { initial_owner } else { receiver };
+                    return Err(self.missing_member(diagnostic_receiver, &name, method)?);
+                }
             }
         };
         // VmUtils.doReadMember acquires inherited const properties from their
@@ -6767,7 +7336,7 @@ impl Vm {
             && owner_object.reference.is_none()
             && owner_object.pair.is_none()
             && owner_object.collection_kind == crate::heap::CollectionKind::Dynamic
-            && collections::typed_class(&self.heap, owner)?.is_none();
+            && !collections::is_typed_class(&self.heap, owner)?;
         let is_constant_member = constant_value.is_some()
             || self
                 .program
@@ -7756,7 +8325,7 @@ impl Vm {
         parent: ObjectId,
         members: &[Member],
     ) -> Result<(), RuntimeError> {
-        if collections::typed_class(&self.heap, parent)?.is_none() {
+        if !collections::is_typed_class(&self.heap, parent)? {
             for member in members.iter().filter(|member| !member.local) {
                 self.validate_object_override(parent, member)?;
             }
@@ -8801,7 +9370,7 @@ impl Vm {
                     .name
                     .clone();
                 if !self.heap.get(scope.owner)?.is_module
-                    && collections::typed_class(&self.heap, scope.owner)?.is_none()
+                    && !collections::is_typed_class(&self.heap, scope.owner)?
                 {
                     let kind = self.heap.get(scope.owner)?.collection_kind;
                     if name == "default"
@@ -9521,7 +10090,7 @@ impl Vm {
                     )?;
                     self.stack.push(Value::string(text));
                 } else if let Value::Object(id) = value {
-                    if collections::typed_class(&self.heap, id)?.is_some()
+                    if collections::is_typed_class(&self.heap, id)?
                         || self.heap.get(id)?.is_module
                     {
                         // Pkl interpolation virtually invokes Typed.toString; user

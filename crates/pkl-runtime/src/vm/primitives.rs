@@ -1117,22 +1117,33 @@ impl Vm {
                         .find_index(&text, last)
                         .map_err(|error| regex::backend_error(error, regex_pattern.pattern()))?,
                     Value::String(literal) => {
-                        let units = text.encode_utf16().collect::<Vec<_>>();
-                        let literal = literal.encode_utf16().collect::<Vec<_>>();
-                        let unit_index = if literal.is_empty() {
-                            Some(if last { units.len() } else { 0 })
-                        } else if last {
-                            units
-                                .windows(literal.len())
-                                .rposition(|part| part == literal)
+                        if let (Some(t), Some(l)) = (text.as_str(), literal.as_str()) {
+                            let byte_idx = if last { t.rfind(l) } else { t.find(l) };
+                            byte_idx.map(|idx| {
+                                if t.is_ascii() {
+                                    idx
+                                } else {
+                                    t[..idx].chars().count()
+                                }
+                            })
                         } else {
-                            units
-                                .windows(literal.len())
-                                .position(|part| part == literal)
-                        };
-                        unit_index.map(|index| {
-                            PklString::from_utf16(units[..index].to_vec()).code_point_len()
-                        })
+                            let units = text.encode_utf16().collect::<Vec<_>>();
+                            let literal = literal.encode_utf16().collect::<Vec<_>>();
+                            let unit_index = if literal.is_empty() {
+                                Some(if last { units.len() } else { 0 })
+                            } else if last {
+                                units
+                                    .windows(literal.len())
+                                    .rposition(|part| part == literal)
+                            } else {
+                                units
+                                    .windows(literal.len())
+                                    .position(|part| part == literal)
+                            };
+                            unit_index.map(|index| {
+                                PklString::from_utf16(units[..index].to_vec()).code_point_len()
+                            })
+                        }
                     }
                     _ => return Err(invalid("unchecked String index pattern")),
                 };
@@ -1199,16 +1210,25 @@ impl Vm {
                             .map_err(|error| regex::backend_error(error, pattern.pattern()))?
                     }
                     Value::String(pattern) if !matches!(operation, Operation::Matches) => {
-                        let text = text.encode_utf16().collect::<Vec<_>>();
-                        let pattern = pattern.encode_utf16().collect::<Vec<_>>();
-                        match operation {
-                            Operation::Contains => {
-                                pattern.is_empty()
-                                    || text.windows(pattern.len()).any(|part| part == pattern)
+                        if let (Some(t), Some(p)) = (text.as_str(), pattern.as_str()) {
+                            match operation {
+                                Operation::Contains => t.contains(p),
+                                Operation::StartsWith => t.starts_with(p),
+                                Operation::EndsWith => t.ends_with(p),
+                                _ => unreachable!(),
                             }
-                            Operation::StartsWith => text.starts_with(&pattern),
-                            Operation::EndsWith => text.ends_with(&pattern),
-                            _ => unreachable!(),
+                        } else {
+                            let text = text.encode_utf16().collect::<Vec<_>>();
+                            let pattern = pattern.encode_utf16().collect::<Vec<_>>();
+                            match operation {
+                                Operation::Contains => {
+                                    pattern.is_empty()
+                                        || text.windows(pattern.len()).any(|part| part == pattern)
+                                }
+                                Operation::StartsWith => text.starts_with(&pattern),
+                                Operation::EndsWith => text.ends_with(&pattern),
+                                _ => unreachable!(),
+                            }
                         }
                     }
                     _ => {

@@ -131,7 +131,7 @@ impl Vm {
         if object.is_module
             || object.reference.is_some()
             || object.pair.is_some()
-            || collections::typed_class(&self.heap, receiver)?.is_some()
+            || collections::is_typed_class(&self.heap, receiver)?
         {
             return Ok(None);
         }
@@ -305,7 +305,7 @@ impl Vm {
             }
             let mut owner = Some(receiver);
             let typed = self.heap.get(receiver)?.is_module
-                || collections::typed_class(&self.heap, receiver)?.is_some();
+                || collections::is_typed_class(&self.heap, receiver)?;
             let mut found = !typed && name == "default";
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
@@ -370,7 +370,7 @@ impl Vm {
         let identifier = collection_conversions::property_identifier(name);
         let mut error = self.missing_member(receiver, &identifier, false)?;
         let object = self.heap.get(receiver)?;
-        if object.is_module || collections::typed_class(&self.heap, receiver)?.is_some() {
+        if object.is_module || collections::is_typed_class(&self.heap, receiver)? {
             let (kind, label) = if object.is_module {
                 (
                     "module",
@@ -463,7 +463,7 @@ impl Vm {
         if object.is_module
             || object.reference.is_some()
             || object.pair.is_some()
-            || collections::typed_class(&self.heap, receiver)?.is_some()
+            || collections::is_typed_class(&self.heap, receiver)?
             || !matches!(
                 object.collection_kind,
                 CollectionKind::Dynamic | CollectionKind::Listing | CollectionKind::Mapping

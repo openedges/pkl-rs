@@ -239,7 +239,7 @@ impl Vm {
         }
         let class: &'static str = if object.is_module
             || (object.collection_kind == CollectionKind::Dynamic
-                && collections::typed_class(&self.heap, source)?.is_some())
+                && collections::is_typed_class(&self.heap, source)?)
         {
             "Typed"
         } else if object.reference.is_none() && object.pair.is_none() {

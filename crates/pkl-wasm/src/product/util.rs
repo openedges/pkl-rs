@@ -32,9 +32,12 @@ fn supports_is_well_formed() -> bool {
         1 => true,
         2 => false,
         _ => {
-            let probe = JsString::from("");
-            let ok = Reflect::get(probe.as_ref(), &JsValue::from_str("isWellFormed"))
+            // `Reflect.get` throws `TypeError` on primitive JS strings; probe
+            // `globalThis.String.prototype.isWellFormed` instead.
+            let ok = Reflect::get(js_sys::global().as_ref(), &JsValue::from_str("String"))
                 .ok()
+                .and_then(|ctor| Reflect::get(&ctor, &JsValue::from_str("prototype")).ok())
+                .and_then(|proto| Reflect::get(&proto, &JsValue::from_str("isWellFormed")).ok())
                 .is_some_and(|v| v.is_function());
             HAS_IS_WELL_FORMED.store(if ok { 1 } else { 2 }, Ordering::Relaxed);
             ok

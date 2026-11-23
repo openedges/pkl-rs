@@ -1193,9 +1193,23 @@ impl Heap {
         self.get_class_slow(id)
     }
 
+    #[inline]
+    fn get_class_slow(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+        if id.index < self.base_len
+            && id.heap == self.base_id
+            && self.base_overrides.is_empty()
+            && let Some(slot) = self.base_slots.as_deref().and_then(|s| s.get(id.index))
+            && slot.generation == id.generation
+            && let Some(Entry::Class(class)) = &slot.entry
+        {
+            return Ok(class);
+        }
+        self.get_class_cold(id)
+    }
+
     #[cold]
     #[inline(never)]
-    fn get_class_slow(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+    fn get_class_cold(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
         match self.entry(id)? {
             Entry::Class(class) => Ok(class),
             _ => Err(RuntimeError::new(
@@ -1880,9 +1894,23 @@ impl Heap {
         self.get_slow(id)
     }
 
+    #[inline]
+    fn get_slow(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+        if id.index < self.base_len
+            && id.heap == self.base_id
+            && self.base_overrides.is_empty()
+            && let Some(slot) = self.base_slots.as_deref().and_then(|s| s.get(id.index))
+            && slot.generation == id.generation
+            && let Some(Entry::Object(object)) = &slot.entry
+        {
+            return Ok(object);
+        }
+        self.get_cold(id)
+    }
+
     #[cold]
     #[inline(never)]
-    fn get_slow(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+    fn get_cold(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
             Entry::Class(_)
@@ -1912,13 +1940,16 @@ impl Heap {
         }
     }
 
-    #[cold]
-    #[inline(never)]
+    #[inline]
     fn get_fast_base(&self, id: ObjectId) -> Option<&Object> {
         if id.heap != self.base_id {
             return None;
         }
-        let slot = self.slot_ref(id.index)?;
+        let slot = if self.base_overrides.is_empty() {
+            self.base_slots.as_deref()?.get(id.index)?
+        } else {
+            self.slot_ref(id.index)?
+        };
         if slot.generation != id.generation {
             return None;
         }
