@@ -683,9 +683,9 @@ impl Vm {
                             default_origin: if self.program.base_mixin_declaration
                                 == Some(declaration)
                             {
-                                use_origin.or(Some(origin))
+                                use_origin.or(Some(origin)).map(Box::new)
                             } else {
-                                Some(origin)
+                                Some(Box::new(origin))
                             },
                         },
                         true,
@@ -839,7 +839,7 @@ impl Vm {
         if let Some(key) = cache_key
             && let Some(cached) = self.resolved_instruction_types.get(&key)
         {
-            *ty = cached.clone();
+            **ty = cached.clone();
             return Ok(Some(instruction));
         }
         let environment = &self.frames.last().expect("type instruction").environment;
@@ -848,9 +848,9 @@ impl Vm {
                 if final_type && let Some(key) = cache_key {
                     let shared = resolved.shared();
                     self.resolved_instruction_types.insert(key, shared.clone());
-                    *ty = shared;
+                    **ty = shared;
                 } else {
-                    *ty = resolved;
+                    **ty = resolved;
                 }
             }
             Err(ResolutionFailure::Error(error)) => return Err(error),
@@ -1397,12 +1397,12 @@ impl Vm {
             }
             Instruction::TestType(ty) => {
                 let value = self.pop()?;
-                self.begin_type(ty, value, TypeDestination::Test, Vec::new())?;
+                self.begin_type(*ty, value, TypeDestination::Test, Vec::new())?;
             }
             Instruction::ResolveType(_) => {}
             Instruction::ResolvedSupertype { ty, label } => {
                 if classes::BuiltinClass::from_type(&ty).is_some() {
-                    let value = self.builtin_class(ty);
+                    let value = self.builtin_class(*ty);
                     self.stack.push(value);
                     return Ok(());
                 }
@@ -1417,7 +1417,7 @@ impl Vm {
             }
             Instruction::ResolvedClass(ty) => {
                 if classes::BuiltinClass::from_type(&ty).is_some() {
-                    let value = self.builtin_class(ty);
+                    let value = self.builtin_class(*ty);
                     self.stack.push(value);
                     return Ok(());
                 }
@@ -1434,8 +1434,10 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("default frame")
-                    .generic_default =
-                    Some(Box::new(generics::GenericDefaultRun::stack(ty, origin)));
+                    .generic_default = Some(Box::new(generics::GenericDefaultRun::stack(
+                    *ty,
+                    origin.map(|o| *o),
+                )));
             }
             Instruction::ResolvedInferredParent { ty, origin, cache } => {
                 let frame = self.frames.last_mut().expect("inferred parent frame");
@@ -1443,7 +1445,7 @@ impl Vm {
                 frame.generic_default =
                     Some(Box::new(generics::GenericDefaultRun::inferred_parent(
                         ty,
-                        origin,
+                        origin.map(|o| *o),
                         cache.then_some((frame.block, frame.pc - 1)),
                     )));
             }
@@ -1466,7 +1468,7 @@ impl Vm {
                 let policy = identity::SlotPolicy::from_type(&ty);
                 let value = self.pop()?;
                 self.begin_type(
-                    ty,
+                    *ty,
                     value,
                     TypeDestination::Local { depth, policy },
                     Vec::new(),
@@ -1489,7 +1491,7 @@ impl Vm {
                     return Ok(());
                 }
                 let value = self.pop()?;
-                self.begin_type(ty, value, TypeDestination::Stack, Vec::new())?;
+                self.begin_type(*ty, value, TypeDestination::Stack, Vec::new())?;
             }
             _ => return Err(invalid("not a type instruction")),
         }

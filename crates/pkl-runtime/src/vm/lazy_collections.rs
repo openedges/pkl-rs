@@ -124,11 +124,11 @@ pub(super) fn blocks(
         }
         if operation.callback() {
             let parameter = start + declaration.find(function_type).unwrap();
-            code.push(Instruction::CheckType(TypeCheck::Function {
+            code.push(Instruction::CheckType(Box::new(TypeCheck::Function {
                 parameters: Some(vec![TypeCheck::Any; arity]),
                 result: Box::new(TypeCheck::Any),
                 syntax: true,
-            }));
+            })));
             spans.push(Some(Span::new(parameter, parameter + function_type.len())));
         }
         code.push(Instruction::BeginLazyCollection(operation));

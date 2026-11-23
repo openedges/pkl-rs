@@ -1555,7 +1555,7 @@ mod tests {
             .alloc_block(
                 vec![
                     Instruction::Input(0),
-                    Instruction::CheckType(alias_body),
+                    Instruction::CheckType(Box::new(alias_body)),
                     Instruction::Return,
                 ],
                 BlockMetadata::default(),

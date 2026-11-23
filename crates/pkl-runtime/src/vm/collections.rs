@@ -146,7 +146,7 @@ pub(super) fn join_blocks(
         let block = blocks.len();
         blocks.push(vec![
             Instruction::LoadLocal(0),
-            Instruction::CheckType(TypeCheck::String),
+            Instruction::CheckType(Box::new(TypeCheck::String)),
             Instruction::CollectionJoin,
             Instruction::Return,
         ]);
@@ -2738,7 +2738,7 @@ impl Vm {
                 let value = if defined { Some(self.pop()?) } else { None };
                 let target = self.builder()?;
                 self.heap.get_mut(target)?.collection_default = Some(value);
-                self.heap.get_mut(target)?.collection_default_origin = origin.map(Box::new);
+                self.heap.get_mut(target)?.collection_default_origin = origin;
             }
             Instruction::SetCollectionTypeDefault { ty, origin } => {
                 let environment = self
@@ -2749,7 +2749,7 @@ impl Vm {
                     .clone();
                 let ty = ty.substituted(&environment)?;
                 let target = self.builder()?;
-                self.heap.get_mut(target)?.collection_default_origin = origin.clone().map(Box::new);
+                self.heap.get_mut(target)?.collection_default_origin = origin.clone();
                 if matches!(ty.resolved(), TypeCheck::Unknown) {
                     self.heap.get_mut(target)?.collection_default = None;
                 } else {
@@ -2757,13 +2757,15 @@ impl Vm {
                         .last_mut()
                         .expect("active frame")
                         .generic_default = Some(Box::new(generics::GenericDefaultRun::new(
-                        target, ty, origin,
+                        target,
+                        ty,
+                        origin.map(|o| *o),
                     )));
                 }
             }
             Instruction::GenericConstructorParent { ty, source, cache } => {
                 let environment = &self.frames.last().expect("active frame").environment;
-                let source = ty.argument_source(environment).unwrap_or(source);
+                let source = ty.argument_source(environment).unwrap_or(*source);
                 let ty = ty.substituted(environment)?;
                 let frame = self.frames.last().expect("active frame");
                 let metadata = &self.program.metadata[frame.block];
@@ -2805,7 +2807,7 @@ impl Vm {
                     return Ok(());
                 }
                 self.add_collection_member(
-                    member,
+                    *member,
                     Some(key),
                     CollectionMemberKind::Property,
                     None,
@@ -2823,7 +2825,7 @@ impl Vm {
                         return Ok(());
                     }
                 }
-                self.add_collection_member(member, None, CollectionMemberKind::Element, None)?
+                self.add_collection_member(*member, None, CollectionMemberKind::Element, None)?
             }
             Instruction::AddCollectionEntry {
                 member,
@@ -2883,7 +2885,7 @@ impl Vm {
                     }
                 }
                 let generated_typed = !specialized_literal && is_typed;
-                self.add_collection_member(member, Some(key), CollectionMemberKind::Entry, None)
+                self.add_collection_member(*member, Some(key), CollectionMemberKind::Entry, None)
                     .map_err(|error| {
                         if generated_typed {
                             error.at(span)
@@ -3802,7 +3804,7 @@ impl Vm {
                     // Selected elements replace existing indices; they do not
                     // append or increase the collection's length.
                     self.add_collection_member(
-                        member,
+                        *member,
                         Some(key),
                         CollectionMemberKind::Entry,
                         None,
@@ -4310,11 +4312,11 @@ impl Compiler<'_> {
                     } else {
                         member.name_span
                     };
-                    output.push_at(Instruction::AddCollectionProperty(compiled), span);
+                    output.push_at(Instruction::AddCollectionProperty(Box::new(compiled)), span);
                 }
                 ObjectMember::Element { value, span } => {
                     let member = self.lazy_collection_member(value, None, value.span)?;
-                    output.push_at(Instruction::AddCollectionElement(member), *span);
+                    output.push_at(Instruction::AddCollectionElement(Box::new(member)), *span);
                 }
                 ObjectMember::Entry { key, value, span } => {
                     self.collection_eager_expression(key, output)?;
@@ -4329,7 +4331,7 @@ impl Compiler<'_> {
                     );
                     output.push_at(
                         Instruction::AddCollectionEntry {
-                            member,
+                            member: Box::new(member),
                             check_index: mixed && !literal,
                             span: *span,
                         },
@@ -4391,7 +4393,13 @@ impl Compiler<'_> {
                             .ty
                             .as_ref()
                             .map_or(parameters[0].span, |ty| ty.span);
-                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
+                        output.push_at(
+                            Instruction::BindLocal {
+                                depth: None,
+                                ty: Box::new(ty),
+                            },
+                            span,
+                        );
                     } else if parameters.len() == 2 {
                         output.push(Instruction::Swap);
                         let ty = checks[0].clone().unwrap_or(TypeCheck::Unknown);
@@ -4399,13 +4407,25 @@ impl Compiler<'_> {
                             .ty
                             .as_ref()
                             .map_or(parameters[0].span, |ty| ty.span);
-                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
+                        output.push_at(
+                            Instruction::BindLocal {
+                                depth: None,
+                                ty: Box::new(ty),
+                            },
+                            span,
+                        );
                         let ty = checks[1].clone().unwrap_or(TypeCheck::Unknown);
                         let span = parameters[1]
                             .ty
                             .as_ref()
                             .map_or(parameters[1].span, |ty| ty.span);
-                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
+                        output.push_at(
+                            Instruction::BindLocal {
+                                depth: None,
+                                ty: Box::new(ty),
+                            },
+                            span,
+                        );
                     } else {
                         return Err(unsupported_type("this generator parameter count").at(*span));
                     }
@@ -4445,7 +4465,10 @@ impl Compiler<'_> {
                     self.collection_eager_expression(condition, output)?;
                     let member =
                         self.lazy_collection_member(value, Some(condition), condition.span)?;
-                    output.push_at(Instruction::AddPredicateMember(member), condition.span);
+                    output.push_at(
+                        Instruction::AddPredicateMember(Box::new(member)),
+                        condition.span,
+                    );
                     output.push(Instruction::Jump(start));
                     output[start] = Instruction::PredicateNext { end: output.len() };
                 }

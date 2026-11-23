@@ -101,11 +101,11 @@ pub(super) fn blocks(
                     start + source.text.entire().range(start..).find(label).unwrap() + label.len();
                 code.extend([
                     Instruction::LoadLocal(local),
-                    Instruction::CheckType(TypeCheck::Function {
+                    Instruction::CheckType(Box::new(TypeCheck::Function {
                         parameters: Some(vec![TypeCheck::Any]),
                         result: Box::new(TypeCheck::Any),
                         syntax: true,
-                    }),
+                    })),
                     Instruction::Pop,
                 ]);
                 spans.extend([None, Some(Span::new(position, position + ty.len())), None]);
@@ -121,7 +121,7 @@ pub(super) fn blocks(
                     .unwrap();
             code.extend([
                 Instruction::LoadLocal(0),
-                Instruction::CheckType(TypeCheck::MetaClass("Class".into())),
+                Instruction::CheckType(Box::new(TypeCheck::MetaClass("Class".into()))),
                 Instruction::Pop,
             ]);
             spans.extend([

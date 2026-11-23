@@ -310,7 +310,7 @@ impl Compiler<'_> {
                     }
                     Work::Cast(check, span) => {
                         output.type_casts.push(output.len());
-                        output.push_at(Instruction::CheckType(check), span);
+                        output.push_at(Instruction::CheckType(Box::new(check)), span);
                     }
                     Work::NullableMember(expression, name) => {
                         output.push(Instruction::StripNullDefault);
@@ -445,7 +445,13 @@ impl Compiler<'_> {
                             None
                         };
                         let (ty, span) = check.unwrap_or((TypeCheck::Unknown, expression.span));
-                        output.push_at(Instruction::BindLocal { depth: None, ty }, span);
+                        output.push_at(
+                            Instruction::BindLocal {
+                                depth: None,
+                                ty: Box::new(ty),
+                            },
+                            span,
+                        );
                         let previous = self.member.clone();
                         if self.let_members.last() != Some(&self.member) {
                             self.member = self.member.concat(&".<let expr>".into());
@@ -507,8 +513,8 @@ impl Compiler<'_> {
                                 InferredParent::DeclaredType(ty, origin, cache) => {
                                     output.push_at(
                                         Instruction::ResolvedInferredParent {
-                                            ty,
-                                            origin: Some(origin),
+                                            ty: Box::new(ty),
+                                            origin: Some(Box::new(origin)),
                                             cache,
                                         },
                                         span,
@@ -558,7 +564,10 @@ impl Compiler<'_> {
                                     }
                                 }
                             } else {
-                                output.push_at(Instruction::Fail(cannot_infer_parent()), span);
+                                output.push_at(
+                                    Instruction::Fail(Box::new(cannot_infer_parent())),
+                                    span,
+                                );
                             }
                         } else if let Some(value) = literal_value(expression) {
                             // Leaves do not need either large expression dispatcher.
@@ -841,7 +850,7 @@ impl Compiler<'_> {
                         instructions.push_at(
                             Instruction::BindLocal {
                                 depth: Some(depth),
-                                ty,
+                                ty: Box::new(ty),
                             },
                             span,
                         );
@@ -881,7 +890,7 @@ impl Compiler<'_> {
                     !(*method && self.resolved.standard_library && self.super_method_allowed);
                 if check_return_type && let Some(ty) = return_type {
                     ctx.output.push_at(
-                        Instruction::CheckType(self.compile_type(ty)?),
+                        Instruction::CheckType(Box::new(self.compile_type(ty)?)),
                         self.type_source_span(ty),
                     );
                 }
@@ -1119,7 +1128,7 @@ impl Compiler<'_> {
                     // Annotation resolution runs when the owner is initialized. Keep a
                     // stub body so compilation cannot bypass earlier type dependencies.
                     instructions.push_at(
-                        Instruction::Fail(error.clone()),
+                        Instruction::Fail(Box::new(error.clone())),
                         error.span.unwrap_or(member.span),
                     );
                 } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
@@ -1167,7 +1176,9 @@ impl Compiler<'_> {
                 let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
                 if let Some(ty) = &member.ty {
                     instructions.push_at(
-                        Instruction::CheckType(compiled_type.clone().expect("member annotation")),
+                        Instruction::CheckType(Box::new(
+                            compiled_type.clone().expect("member annotation"),
+                        )),
                         self.type_source_span(ty),
                     );
                 }
@@ -1262,7 +1273,7 @@ impl Compiler<'_> {
                     member.name_span
                 };
                 ctx.output
-                    .push_at(Instruction::AddCollectionProperty(compiled), span);
+                    .push_at(Instruction::AddCollectionProperty(Box::new(compiled)), span);
             }
             _ => unreachable!("structured work"),
         }
@@ -1333,26 +1344,35 @@ impl Compiler<'_> {
                                 parameter.span,
                             ),
                         };
-                        output.push_at(Instruction::Fail(RuntimeError::new(kind, message)), span);
+                        output.push_at(
+                            Instruction::Fail(Box::new(RuntimeError::new(kind, message))),
+                            span,
+                        );
                     } else {
                         self.instance_body(members, parameters, ty.span, ty.span, output)?;
                         if !parameters.is_empty() && !members.is_empty() {
-                            output.push_at(Instruction::Fail(RuntimeError::new(ErrorKind::Type, "Expected a function that returns an object, but got an object.")), ty.span);
+                            output.push_at(
+                                Instruction::Fail(Box::new(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "Expected a function that returns an object, but got an object.",
+                                ))),
+                                ty.span,
+                            );
                         }
                     }
                 } else {
                     output.push_at(
-                        Instruction::Fail(RuntimeError::new(
+                        Instruction::Fail(Box::new(RuntimeError::new(
                             ErrorKind::Type,
                             "Expected an annotation class.",
-                        )),
+                        ))),
                         ty.span,
                     );
                 }
             }
             Err(error) => {
                 output.push_at(
-                    Instruction::Fail(error.clone()),
+                    Instruction::Fail(Box::new(error.clone())),
                     error.span.unwrap_or(ty.span),
                 );
             }
@@ -1379,7 +1399,7 @@ impl Compiler<'_> {
                     Err(error) => {
                         self.initialize_type_resolution(ty, output);
                         let span = error.span.unwrap_or(ty.span);
-                        output.push_at(Instruction::Fail(error), span);
+                        output.push_at(Instruction::Fail(Box::new(error)), span);
                         return Ok(());
                     }
                 };
@@ -1403,8 +1423,8 @@ impl Compiler<'_> {
                 output.push_at(
                     Instruction::GenericConstructorParent {
                         cache: !check.contains_parameter(),
-                        ty: check.clone(),
-                        source: TypeArgumentSource {
+                        ty: Box::new(check.clone()),
+                        source: Box::new(TypeArgumentSource {
                             span: ty.span,
                             text: crate::source::SourceText::from(
                                 self.resolved
@@ -1414,7 +1434,7 @@ impl Compiler<'_> {
                                     .range(ty.span.start..ty.span.end)
                                     .to_pkl_string(),
                             ),
-                        },
+                        }),
                     },
                     expression.span,
                 );
@@ -1423,7 +1443,7 @@ impl Compiler<'_> {
                 if matches!(&ty.kind, crate::syntax::TypeKind::Named { arguments, .. } if !arguments.is_empty())
                 {
                     work.push(Work::Emit(
-                        Instruction::CheckType(check),
+                        Instruction::CheckType(Box::new(check)),
                         Some(self.type_source_span(ty)),
                     ));
                 }
@@ -1515,7 +1535,10 @@ impl Compiler<'_> {
             }
             ExprKind::ReadResourceGlob(value) => {
                 let spec = self.glob_spec(expression, None)?;
-                work.push(Work::Emit(Instruction::ReadResourceGlob(spec), None));
+                work.push(Work::Emit(
+                    Instruction::ReadResourceGlob(Box::new(spec)),
+                    None,
+                ));
                 work.push(Work::Visit(value));
             }
             ExprKind::TypeCheck { value, ty } | ExprKind::TypeCast { value, ty } => {
@@ -1527,7 +1550,7 @@ impl Compiler<'_> {
                     work.push(if matches!(expression.kind, ExprKind::TypeCast { .. }) {
                         Work::Cast(check, self.type_source_span(ty))
                     } else {
-                        Work::Emit(Instruction::TestType(check), None)
+                        Work::Emit(Instruction::TestType(Box::new(check)), None)
                     });
                     work.push(Work::Visit(value));
                 }

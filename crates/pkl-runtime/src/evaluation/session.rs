@@ -909,7 +909,7 @@ impl SourceSession {
                         }
                         program_mut
                             .alloc_block(
-                                vec![Instruction::Fail(error)],
+                                vec![Instruction::Fail(Box::new(error))],
                                 BlockMetadata {
                                     source: Some(source),
                                     spans: vec![None],

@@ -262,7 +262,7 @@ pub(super) fn blocks(
             };
             code.extend([
                 Instruction::LoadLocal(parameters.len() - index - 1),
-                Instruction::CheckType(ty),
+                Instruction::CheckType(Box::new(ty)),
             ]);
             spans.extend([None, Some(span)]);
         }

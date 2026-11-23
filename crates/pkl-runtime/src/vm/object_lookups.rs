@@ -70,7 +70,7 @@ pub(super) fn blocks(
                 + 2;
             code.extend([
                 Instruction::LoadLocal(0),
-                Instruction::CheckType(ty),
+                Instruction::CheckType(Box::new(ty)),
                 Instruction::Pop,
             ]);
             spans.extend([None, Some(Span::new(position, position + text.len())), None]);

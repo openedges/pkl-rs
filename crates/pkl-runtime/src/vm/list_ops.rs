@@ -200,7 +200,7 @@ pub(super) fn blocks(
                 } else {
                     from + "Collection<Other>".len()
                 };
-                code.push(Instruction::CheckType(ty.clone()));
+                code.push(Instruction::CheckType(Box::new(ty.clone())));
                 spans.push(Some(Span::new(from, to)));
             }
         }

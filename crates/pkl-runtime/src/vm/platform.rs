@@ -135,14 +135,13 @@ impl Vm {
             .expect("active frame")
             .environment
             .clone();
+        let mut class = class;
+        class.origin_uri = origin_uri;
+        class.module = class
+            .module
+            .or_else(|| Some(self.current_module_name().into()));
         let id = self.heap.allocate(Object {
-            class_definition: Some(Box::new(Class {
-                origin_uri,
-                module: class
-                    .module
-                    .or_else(|| Some(self.current_module_name().into())),
-                ..class
-            })),
+            class_definition: Some(class),
             class_initializing: true,
             declaration_code: Some(member.code),
             environment,

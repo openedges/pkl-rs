@@ -13,11 +13,11 @@ pub(super) fn blocks(
     let block = blocks.len();
     blocks.push(vec![
         Instruction::LoadLocal(0),
-        Instruction::CheckType(TypeCheck::Function {
+        Instruction::CheckType(Box::new(TypeCheck::Function {
             parameters: Some(vec![TypeCheck::NonNull]),
             result: Box::new(TypeCheck::Unknown),
             syntax: true,
-        }),
+        })),
         Instruction::Primitive(primitives::Operation::IfNonNull),
         Instruction::Return,
     ]);

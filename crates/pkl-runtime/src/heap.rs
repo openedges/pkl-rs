@@ -3594,10 +3594,20 @@ mod tests {
         let env_size = std::mem::size_of::<Environment>();
         let slot_size = std::mem::size_of::<Slot>();
         let obj_size = std::mem::size_of::<Object>();
-        eprintln!("sizes: Environment={env_size}, Slot={slot_size}, Object={obj_size}");
+        let instr_size = std::mem::size_of::<crate::vm::Instruction>();
+        let ty_size = std::mem::size_of::<crate::vm::TypeCheck>();
+        let member_size = std::mem::size_of::<Member>();
+        eprintln!(
+            "sizes: Environment={env_size}, Slot={slot_size}, Object={obj_size}, Instruction={instr_size}, TypeCheck={ty_size}, Member={member_size}"
+        );
         assert!(env_size <= 320, "Environment grew to {env_size} bytes");
         assert!(slot_size <= 64, "Slot grew to {slot_size} bytes");
         assert!(obj_size <= 1280, "Object grew to {obj_size} bytes");
+        assert!(
+            instr_size <= 64,
+            "Instruction grew to {instr_size} bytes (must fit in one 64-byte cache line)"
+        );
+        assert!(ty_size <= 112, "TypeCheck grew to {ty_size} bytes");
     }
 
     #[test]

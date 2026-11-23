@@ -178,7 +178,10 @@ pub(super) fn blocks(
             } else {
                 TypeCheck::Int
             };
-            code.extend([Instruction::LoadLocal(0), Instruction::CheckType(ty)]);
+            code.extend([
+                Instruction::LoadLocal(0),
+                Instruction::CheckType(Box::new(ty)),
+            ]);
             spans.extend([None, Some(int_span)]);
         }
         code.extend([

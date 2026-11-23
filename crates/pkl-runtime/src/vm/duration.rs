@@ -108,7 +108,7 @@ pub(super) fn blocks(
             } else {
                 unit_type()
             };
-            code.push(Instruction::CheckType(ty));
+            code.push(Instruction::CheckType(Box::new(ty)));
             spans.push(Some(span));
         }
         code.push(Instruction::Primitive(primitives::Operation::Duration(

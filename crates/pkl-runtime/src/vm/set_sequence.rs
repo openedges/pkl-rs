@@ -175,7 +175,10 @@ pub(super) fn blocks(
                 } else {
                     p + 3
                 };
-                code.extend([Instruction::LoadLocal(0), Instruction::CheckType(ty)]);
+                code.extend([
+                    Instruction::LoadLocal(0),
+                    Instruction::CheckType(Box::new(ty)),
+                ]);
                 spans.extend([None, Some(Span::new(p, type_end))]);
             }
             code.push(Instruction::Primitive(primitives::Operation::SetSequence(

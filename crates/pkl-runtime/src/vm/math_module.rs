@@ -93,13 +93,13 @@ pub(in crate::vm) fn binding(
     for (index, parameter) in parameters.iter().enumerate() {
         code.push(Instruction::LoadLocal(arity - index - 1));
         spans.push(None);
-        code.push(Instruction::CheckType(
+        code.push(Instruction::CheckType(Box::new(
             if matches!(operation, Operation::Gcd | Operation::Lcm) {
                 TypeCheck::Int
             } else {
                 TypeCheck::Number
             },
-        ));
+        )));
         spans.push(Some(
             parameter
                 .ty

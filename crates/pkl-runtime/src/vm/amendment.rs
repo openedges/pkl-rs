@@ -457,7 +457,7 @@ impl Compiler<'_> {
                 code.push_at(
                     Instruction::BindLocal {
                         depth: Some(depth),
-                        ty: check,
+                        ty: Box::new(check),
                     },
                     span,
                 );

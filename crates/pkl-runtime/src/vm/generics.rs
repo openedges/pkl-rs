@@ -416,7 +416,7 @@ impl Vm {
                     self.program.base_mixin_declaration,
                 ) =>
                 {
-                    let mut origin = default_origin.or_else(|| run.origin.clone());
+                    let mut origin = default_origin.map(|o| *o).or_else(|| run.origin.clone());
                     if let (Some(origin), Some(caller)) = (&mut origin, &run.origin) {
                         let caller_name = crate::source::SourceText::from(&caller.member);
                         origin.member = caller_name

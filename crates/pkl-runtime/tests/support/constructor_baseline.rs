@@ -28,11 +28,11 @@ pub fn compile_module_with_constructor_baseline(
         (CollectionKind::Mapping, "Mapping"),
     ] {
         block.push(Instruction::GenericConstructorParent {
-            ty: TypeCheck::Collection(kind),
-            source: TypeArgumentSource {
+            ty: Box::new(TypeCheck::Collection(kind)),
+            source: Box::new(TypeArgumentSource {
                 span: Span::default(),
                 text: name.into(),
-            },
+            }),
             cache: true,
         });
         block.push(Instruction::Pop);

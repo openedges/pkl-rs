@@ -107,7 +107,7 @@ impl Program {
                 code.iter()
                     .any(|instruction| {
                         let spec = match instruction {
-                            Instruction::ImportModule(spec) => Some(spec),
+                            Instruction::ImportModule(spec) => Some(spec.as_ref()),
                             Instruction::ImportGlob(glob) => glob.import.as_ref(),
                             _ => None,
                         };
@@ -124,7 +124,7 @@ impl Program {
         for id in blocks {
             for instruction in self.blocks.get_mut(id).expect("selected import block") {
                 let spec = match instruction {
-                    Instruction::ImportModule(spec) => Some(spec),
+                    Instruction::ImportModule(spec) => Some(spec.as_mut()),
                     Instruction::ImportGlob(glob) => glob.import.as_mut(),
                     _ => None,
                 };

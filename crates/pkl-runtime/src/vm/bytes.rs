@@ -173,7 +173,7 @@ pub(super) fn blocks(
                 let offset = start + signature.find("Int").unwrap();
                 (TypeCheck::Int, Span::new(offset, offset + 3))
             };
-            code.push(Instruction::CheckType(ty));
+            code.push(Instruction::CheckType(Box::new(ty)));
             spans.push(Some(span));
         }
         code.extend([

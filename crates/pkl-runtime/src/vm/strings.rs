@@ -243,7 +243,7 @@ pub(super) fn encode_block(
     let block = blocks.len();
     blocks.push(vec![
         Instruction::LoadLocal(0),
-        Instruction::CheckType(charset_type),
+        Instruction::CheckType(Box::new(charset_type)),
         Instruction::StringEncode,
         Instruction::Return,
     ]);

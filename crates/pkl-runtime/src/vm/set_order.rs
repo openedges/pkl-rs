@@ -229,7 +229,7 @@ pub(super) fn blocks(
                         .len();
                 code.extend([
                     Instruction::LoadLocal(0),
-                    Instruction::CheckType(TypeCheck::Function {
+                    Instruction::CheckType(Box::new(TypeCheck::Function {
                         parameters: Some(vec![
                             TypeCheck::Any;
                             if matches!(kind, FoldIndexed) {
@@ -242,7 +242,7 @@ pub(super) fn blocks(
                         ]),
                         result: Box::new(TypeCheck::Any),
                         syntax: true,
-                    }),
+                    })),
                 ]);
                 spans.extend([None, Some(Span::new(parameter, type_end))]);
             }

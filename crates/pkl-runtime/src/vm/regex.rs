@@ -61,7 +61,7 @@ pub(super) fn blocks(
         let block = blocks.len();
         blocks.push(vec![
             Instruction::LoadLocal(0),
-            Instruction::CheckType(TypeCheck::String),
+            Instruction::CheckType(Box::new(TypeCheck::String)),
             operation.map_or(Instruction::MakeRegex, |operation| {
                 Instruction::Primitive(primitives::Operation::Regex(operation))
             }),

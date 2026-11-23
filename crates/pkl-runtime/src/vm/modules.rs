@@ -754,7 +754,7 @@ impl Vm {
                 Instruction::GetMember("text".into()),
             ]);
         } else {
-            code.push(Instruction::EvaluateQuery(expression));
+            code.push(Instruction::EvaluateQuery(Box::new(expression)));
         }
         code.push(Instruction::Return);
         let entry = program.alloc_block(code, BlockMetadata::default())?;
@@ -793,7 +793,7 @@ impl Vm {
                 Instruction::CheckModuleOutput,
                 Instruction::GetMember("bytes".into()),
             ]),
-            _ => code.push(Instruction::EvaluateRawQuery(expression)),
+            _ => code.push(Instruction::EvaluateRawQuery(Box::new(expression))),
         }
         code.push(Instruction::EncodePklBinary);
         code.push(Instruction::Return);

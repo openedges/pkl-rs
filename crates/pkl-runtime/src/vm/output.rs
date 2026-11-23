@@ -114,7 +114,10 @@ impl Definitions<'_> {
             .len();
         let type_span = Span::new(type_start, type_end);
         let check = code.len();
-        code.extend([Instruction::CheckType(ty.clone()), Instruction::Return]);
+        code.extend([
+            Instruction::CheckType(Box::new(ty.clone())),
+            Instruction::Return,
+        ]);
         let block = self.blocks.len();
         self.metadata.push(BlockMetadata {
             source: Some(self.source.clone()),
@@ -186,7 +189,7 @@ impl Definitions<'_> {
             Instruction::LoadLocal(0),
             Instruction::BindLocal {
                 depth: Some(0),
-                ty: TypeCheck::Any,
+                ty: Box::new(TypeCheck::Any),
             },
             Instruction::LoadLocal(0),
             body,
@@ -253,7 +256,7 @@ impl Definitions<'_> {
             Instruction::LoadLocal(0),
             Instruction::BindLocal {
                 depth: Some(0),
-                ty: TypeCheck::Any,
+                ty: Box::new(TypeCheck::Any),
             },
             Instruction::AbstractMember {
                 name: member_name.clone(),
@@ -317,7 +320,7 @@ pub(super) fn builtin_members(
     objects.push(Vec::new());
     let instantiate = |id| {
         vec![
-            Instruction::BuiltinClass(builtins::ty(id)),
+            Instruction::BuiltinClass(Box::new(builtins::ty(id))),
             Instruction::MakeBuiltinInstance { template: empty },
         ]
     };
@@ -339,7 +342,7 @@ pub(super) fn builtin_members(
     // and their suspension/type-check/diagnostic frames use the common engine.
     let text_code = vec![
         property("renderer"),
-        Instruction::TestType(builtins::ty(VALUE_RENDERER)),
+        Instruction::TestType(Box::new(builtins::ty(VALUE_RENDERER))),
         Instruction::JumpIfFalse(9),
         property("renderer"),
         Instruction::GetMethod("renderDocument".into()),
@@ -362,7 +365,7 @@ pub(super) fn builtin_members(
     let text = d.member("FileOutput", "text", TypeCheck::String, text_code, false);
     let bytes_code = vec![
         property("renderer"),
-        Instruction::TestType(builtins::ty(BYTES_RENDERER)),
+        Instruction::TestType(Box::new(builtins::ty(BYTES_RENDERER))),
         Instruction::JumpIfFalse(9),
         property("renderer"),
         Instruction::GetMethod("renderDocument".into()),
@@ -457,13 +460,13 @@ pub(super) fn builtin_members(
                 specialized: true,
             },
             Instruction::SetCollectionTypeDefault {
-                ty: builtins::ty(FILE_OUTPUT),
-                origin: Some(RuntimeFrame {
+                ty: Box::new(builtins::ty(FILE_OUTPUT)),
+                origin: Some(Box::new(RuntimeFrame {
                     anonymous: false,
                     source: Some(d.source.clone()),
                     span: files_val_span,
                     member: "#ModuleOutput.files.default".into(),
-                }),
+                })),
             },
             Instruction::EndCollection,
             Instruction::WrapNullableDefault { defined: true },
@@ -480,7 +483,7 @@ pub(super) fn builtin_members(
         "output",
         builtins::ty(MODULE_OUTPUT),
         vec![
-            Instruction::BuiltinClass(builtins::ty(MODULE_OUTPUT)),
+            Instruction::BuiltinClass(Box::new(builtins::ty(MODULE_OUTPUT))),
             Instruction::MakeBuiltinInstance {
                 template: empty + 1,
             },
@@ -640,7 +643,7 @@ pub(super) fn builtin_members(
                 class_name,
                 expr,
             } => {
-                rcode.push(Instruction::BuiltinClass(builtins::ty(class)));
+                rcode.push(Instruction::BuiltinClass(Box::new(builtins::ty(class))));
                 rspan_names.push(class_name);
                 rcode.push(Instruction::MakeBuiltinInstance { template: empty });
                 rspan_names.push(expr);
@@ -868,13 +871,13 @@ pub(super) fn builtin_members(
                 specialized: true,
             },
             Instruction::SetCollectionTypeDefault {
-                ty: mixin,
-                origin: Some(RuntimeFrame {
+                ty: Box::new(mixin),
+                origin: Some(Box::new(RuntimeFrame {
                     anonymous: false,
                     source: Some(d.source.clone()),
                     span: Span::new(mixin_start, mixin_start + "Mixin<ConvertProperty>".len()),
                     member: "#BaseValueRenderer.convertPropertyTransformers.default".into(),
-                }),
+                })),
             },
             Instruction::EndCollection,
         ],
@@ -1030,7 +1033,7 @@ pub(super) fn builtin_members(
         + "relativePathTo(other: ".len();
     d.blocks[relative_body] = vec![
         Instruction::LoadLocal(0),
-        Instruction::CheckType(builtins::ty(MODULE)),
+        Instruction::CheckType(Box::new(builtins::ty(MODULE))),
         Instruction::Pop,
         Instruction::LoadLocal(0),
         Instruction::ModuleRelativePathTo,

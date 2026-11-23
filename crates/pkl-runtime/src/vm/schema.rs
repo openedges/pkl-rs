@@ -1085,13 +1085,13 @@ fn build_force_members_block(
             code.push(Instruction::LoadBaseModule);
             code.push(Instruction::Pop);
         } else {
-            code.push(Instruction::ImportModule(modules::ImportSpec {
+            code.push(Instruction::ImportModule(Box::new(modules::ImportSpec {
                 authored: uri.clone(),
                 span: Span::default(),
                 unit: crate::modules::UnitId(u32::MAX),
                 absolute_uri: uri.clone(),
                 original_uri: uri.clone(),
-            }));
+            })));
             code.push(Instruction::Pop);
         }
     }

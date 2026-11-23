@@ -561,16 +561,22 @@ fn append_members(
                     Instruction::LoadRefModule,
                     Instruction::GetMethod("Reference".into()),
                 ],
-                "Reference" if !method => vec![Instruction::BuiltinClass(TypeCheck::Reference {
-                    domain: Box::new(TypeCheck::Any),
-                    referent: Box::new(TypeCheck::Any),
-                })],
-                "Domain" if !method => vec![Instruction::BuiltinClass(TypeCheck::RefDomain)],
-                "Access" if !method => vec![Instruction::BuiltinClass(TypeCheck::Class {
-                    module: None,
-                    id: reference::ACCESS_ID,
-                    name: "Access".into(),
-                })],
+                "Reference" if !method => {
+                    vec![Instruction::BuiltinClass(Box::new(TypeCheck::Reference {
+                        domain: Box::new(TypeCheck::Any),
+                        referent: Box::new(TypeCheck::Any),
+                    }))]
+                }
+                "Domain" if !method => {
+                    vec![Instruction::BuiltinClass(Box::new(TypeCheck::RefDomain))]
+                }
+                "Access" if !method => {
+                    vec![Instruction::BuiltinClass(Box::new(TypeCheck::Class {
+                        module: None,
+                        id: reference::ACCESS_ID,
+                        name: "Access".into(),
+                    }))]
+                }
                 _ => unsupported_binding(uri, declaration),
             }
         } else {
@@ -601,13 +607,13 @@ fn append_members(
                     type_span = declaration.ty.as_ref().map(|ty| ty.span);
                     // A nullable Mapping retains its collection default for amendments.
                     vec![Instruction::ResolvedDefault {
-                        ty: check,
-                        origin: Some(RuntimeFrame {
+                        ty: Box::new(check),
+                        origin: Some(Box::new(RuntimeFrame {
                             anonymous: false,
                             source: Some(source.clone()),
                             span: type_span.unwrap(),
                             member: format!("#{}", declaration.name).into(),
-                        }),
+                        })),
                     }]
                 }
                 "catch" | "catchOrNull" if method => {
@@ -627,11 +633,11 @@ fn append_members(
                     let block = program.alloc_block(
                         vec![
                             Instruction::LoadLocal(0),
-                            Instruction::CheckType(TypeCheck::Function {
+                            Instruction::CheckType(Box::new(TypeCheck::Function {
                                 parameters: Some(Vec::new()),
                                 result: Box::new(TypeCheck::Any),
                                 syntax: true,
-                            }),
+                            })),
                             Instruction::GuestCatch {
                                 or_null: declaration.name == "catchOrNull",
                             },
@@ -889,10 +895,10 @@ fn base_binding(
                 .span;
             let block = program.alloc_block(
                 vec![
-                    Instruction::Fail(RuntimeError::new(
+                    Instruction::Fail(Box::new(RuntimeError::new(
                         ErrorKind::Type,
                         "Class `VarArgs` can only be used by the standard library.",
-                    )),
+                    ))),
                     Instruction::Return,
                 ],
                 BlockMetadata {
@@ -915,7 +921,7 @@ fn base_binding(
             if let Some(ty) =
                 reference::base_type(name).or_else(|| builtins::id(name).map(builtins::ty))
             {
-                return Ok(vec![Instruction::BuiltinClass(ty)]);
+                return Ok(vec![Instruction::BuiltinClass(Box::new(ty))]);
             }
         }
         ExprKind::TypeAlias { .. }
@@ -980,13 +986,13 @@ fn math_binding(declaration: &crate::syntax::Member) -> Vec<Instruction> {
 }
 
 fn unsupported_binding(uri: &str, declaration: &crate::syntax::Member) -> Vec<Instruction> {
-    vec![Instruction::Fail(RuntimeError::new(
+    vec![Instruction::Fail(Box::new(RuntimeError::new(
         ErrorKind::Unsupported,
         format!(
             "Standard-library binding `{uri}#{}` is not implemented.",
             declaration.name
         ),
-    ))]
+    )))]
 }
 
 /// Fast cold-start path for `pkl:base`: compiles only the top-level

@@ -163,11 +163,13 @@ pub(super) fn builtin_members(
                     Instruction::LoadCustomThis,
                     Instruction::ObserveNativeLiteral {
                         span: regex_span,
-                        rendered: source
-                            .text
-                            .entire()
-                            .range(regex_span.start..regex_span.end)
-                            .into(),
+                        rendered: Box::new(
+                            source
+                                .text
+                                .entire()
+                                .range(regex_span.start..regex_span.end)
+                                .into(),
+                        ),
                     },
                     Instruction::MatchModuleVersion,
                     Instruction::Observe(span),
@@ -224,7 +226,7 @@ pub(super) fn builtin_members(
                 ],
                 _ => vec![Instruction::Undefined(property.into())],
             };
-            instructions.push(Instruction::CheckType(ty.clone()));
+            instructions.push(Instruction::CheckType(Box::new(ty.clone())));
             instructions.push(Instruction::Return);
             let code = blocks.len();
             metadata.push(BlockMetadata {

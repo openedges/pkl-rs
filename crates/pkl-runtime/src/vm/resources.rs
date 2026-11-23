@@ -92,7 +92,7 @@ pub(super) fn builtin_members(
                     Instruction::GetMember(name.into()),
                 ]
             };
-            code.push(Instruction::CheckType(ty.clone()));
+            code.push(Instruction::CheckType(Box::new(ty.clone())));
             code.push(Instruction::Return);
             let block = blocks.len();
             metadata.push(BlockMetadata {

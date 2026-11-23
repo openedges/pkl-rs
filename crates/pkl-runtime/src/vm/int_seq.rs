@@ -32,7 +32,7 @@ pub(super) fn blocks(
         let position = start + signature.find(parameter).unwrap() + parameter.len() - 3;
         code.extend([
             Instruction::LoadLocal(slot),
-            Instruction::CheckType(TypeCheck::Int),
+            Instruction::CheckType(Box::new(TypeCheck::Int)),
         ]);
         spans.extend([None, Some(Span::new(position, position + 3))]);
     }
@@ -137,7 +137,7 @@ pub(super) fn blocks(
             let parameter = start + signature.find("Int(").unwrap();
             code.extend([
                 Instruction::LoadLocal(0),
-                Instruction::CheckType(TypeCheck::Int),
+                Instruction::CheckType(Box::new(TypeCheck::Int)),
                 Instruction::CheckIntSeqStep,
             ]);
             spans.extend([
@@ -176,11 +176,11 @@ pub(super) fn blocks(
             let length = function_type.len();
             code.extend([
                 Instruction::LoadLocal(0),
-                Instruction::CheckType(TypeCheck::Function {
+                Instruction::CheckType(Box::new(TypeCheck::Function {
                     parameters: Some(vec![TypeCheck::Any; arity]),
                     result: Box::new(TypeCheck::Any),
                     syntax: true,
-                }),
+                })),
             ]);
             spans.extend([None, Some(Span::new(parameter, parameter + length))]);
         }

@@ -220,11 +220,11 @@ pub(super) fn blocks(
         };
         let mut code = vec![
             Instruction::LoadLocal(0),
-            Instruction::CheckType(TypeCheck::Function {
+            Instruction::CheckType(Box::new(TypeCheck::Function {
                 parameters: Some(vec![TypeCheck::Any; arity]),
                 result: Box::new(TypeCheck::Any),
                 syntax: true,
-            }),
+            })),
             Instruction::BeginCollectionTransform(operation),
             Instruction::CollectionTransformNext { end: 0 },
             Instruction::Call {
@@ -2080,11 +2080,11 @@ pub(super) fn every_blocks(
         };
         let code = vec![
             Instruction::LoadLocal(0),
-            Instruction::CheckType(TypeCheck::Function {
+            Instruction::CheckType(Box::new(TypeCheck::Function {
                 parameters: Some(vec![TypeCheck::Any; arity]),
                 result: Box::new(TypeCheck::Any),
                 syntax: true,
-            }),
+            })),
             Instruction::BeginCollectionEvery,
             Instruction::CollectionTransformNext { end: 7 },
             Instruction::Call {

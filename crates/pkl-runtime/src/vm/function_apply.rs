@@ -18,10 +18,10 @@ pub(super) fn blocks(
     let block = blocks.len();
     blocks.push(vec![
         Instruction::LoadLocal(0),
-        Instruction::CheckType(TypeCheck::ParameterizedCollection {
+        Instruction::CheckType(Box::new(TypeCheck::ParameterizedCollection {
             kind: CollectionKind::List,
             arguments: vec![(TypeCheck::Any, Span::new(any_start, any_start + 3))],
-        }),
+        })),
         Instruction::Primitive(Operation::FunctionApplyToList),
         Instruction::Return,
     ]);

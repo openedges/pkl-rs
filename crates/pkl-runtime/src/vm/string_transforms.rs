@@ -102,7 +102,7 @@ pub(super) fn blocks(
                     Instruction::Constant(Value::Int(0.into())),
                     Instruction::ObserveNativeLiteral {
                         span: Span::new(predicate.end - 1, predicate.end),
-                        rendered: "0".into(),
+                        rendered: Box::new("0".into()),
                     },
                     Instruction::Greater,
                     Instruction::Observe(predicate),
@@ -153,7 +153,7 @@ pub(super) fn blocks(
                     + "replacement: ".len();
                 (TypeCheck::String, Span::new(offset, offset + 6))
             };
-            code.push(Instruction::CheckType(ty));
+            code.push(Instruction::CheckType(Box::new(ty)));
             spans.push(Some(span));
         }
         code.push(op(operation));

@@ -112,10 +112,10 @@ pub enum Instruction {
     GuestCatch {
         or_null: bool,
     },
-    ImportModule(modules::ImportSpec),
+    ImportModule(Box<modules::ImportSpec>),
     LoadPrimary(Arc<crate::modules::ModuleSourceSpec>),
-    EvaluateQuery(crate::source::SourceText),
-    EvaluateRawQuery(crate::source::SourceText),
+    EvaluateQuery(Box<crate::source::SourceText>),
+    EvaluateRawQuery(Box<crate::source::SourceText>),
     PrepareModuleImports(crate::modules::UnitId),
     CheckModuleOutput,
     /// Eager initialization in the private standard-library profile.
@@ -182,16 +182,16 @@ pub enum Instruction {
     BuiltinTypeAlias(PklString),
     BeginTypeAlias {
         declaration: usize,
-        name: PklString,
+        name: Box<PklString>,
         end: usize,
     },
     FinishTypeAlias,
     CheckTypeAliasInitialized,
     ValidateTypeArguments {
-        ty: TypeCheck,
+        ty: Box<TypeCheck>,
         aliases: Vec<RuntimeFrame>,
     },
-    BuiltinClass(TypeCheck),
+    BuiltinClass(Box<TypeCheck>),
     ReferenceRenderMethod,
     Constant(Value),
     WrapNullableDefault {
@@ -205,7 +205,7 @@ pub enum Instruction {
     /// Check first, then store using the declaration's frame-slot representation.
     BindLocal {
         depth: Option<usize>,
-        ty: TypeCheck,
+        ty: Box<TypeCheck>,
     },
     PushLocal,
     PopLocal,
@@ -224,23 +224,23 @@ pub enum Instruction {
     EndCollection,
     SetCollectionDefault {
         defined: bool,
-        origin: Option<RuntimeFrame>,
+        origin: Option<Box<RuntimeFrame>>,
     },
     /// Instantiate a collection element default after lexical type substitution.
     SetCollectionTypeDefault {
-        ty: TypeCheck,
-        origin: Option<RuntimeFrame>,
+        ty: Box<TypeCheck>,
+        origin: Option<Box<RuntimeFrame>>,
     },
     /// Resolve a generic constructor's parent using this invocation's actual type.
     GenericConstructorParent {
-        ty: TypeCheck,
-        source: TypeArgumentSource,
+        ty: Box<TypeCheck>,
+        source: Box<TypeArgumentSource>,
         cache: bool,
     },
-    AddCollectionProperty(Member),
-    AddCollectionElement(Member),
+    AddCollectionProperty(Box<Member>),
+    AddCollectionElement(Box<Member>),
     AddCollectionEntry {
-        member: Member,
+        member: Box<Member>,
         check_index: bool,
         span: Span,
     },
@@ -257,7 +257,7 @@ pub enum Instruction {
     PredicateNext {
         end: usize,
     },
-    AddPredicateMember(Member),
+    AddPredicateMember(Box<Member>),
     Subscript {
         key_span: Span,
     },
@@ -387,9 +387,9 @@ pub enum Instruction {
     Observe(Span),
     ObserveNativeLiteral {
         span: Span,
-        rendered: PklString,
+        rendered: Box<PklString>,
     },
-    TestType(TypeCheck),
+    TestType(Box<TypeCheck>),
     JumpIfNull(usize),
     GetMember(PklString),
     GetMethod(PklString),
@@ -405,27 +405,27 @@ pub enum Instruction {
         local: bool,
         method: bool,
     },
-    ResolveType(TypeCheck),
+    ResolveType(Box<TypeCheck>),
     /// Resolve the actual declaration and class arity before argument nodes.
     /// Canonical Class<T> skips that argument region without resolving T.
     PrepareTypeArguments {
         recipe: usize,
         end: usize,
     },
-    ResolvedClass(TypeCheck),
+    ResolvedClass(Box<TypeCheck>),
     /// A superclass use retains its authored label through deferred alias lookup.
     /// Annotation and default-instance class resolution use ResolvedClass instead.
     ResolvedSupertype {
-        ty: TypeCheck,
+        ty: Box<TypeCheck>,
         label: PklString,
     },
     ResolvedDefault {
-        ty: TypeCheck,
-        origin: Option<RuntimeFrame>,
+        ty: Box<TypeCheck>,
+        origin: Option<Box<RuntimeFrame>>,
     },
     ResolvedInferredParent {
-        ty: TypeCheck,
-        origin: Option<RuntimeFrame>,
+        ty: Box<TypeCheck>,
+        origin: Option<Box<RuntimeFrame>>,
         cache: bool,
     },
     ResolveClassType {
@@ -462,7 +462,7 @@ pub enum Instruction {
         arity: usize,
         method: bool,
     },
-    CheckType(TypeCheck),
+    CheckType(Box<TypeCheck>),
     Duplicate,
     Pop,
     Negate,
@@ -478,7 +478,7 @@ pub enum Instruction {
     /// Publish the evaluator-owned singleton before any initialization can fail.
     BeginClass {
         template: usize,
-        class: Class,
+        class: Box<Class>,
         end: usize,
     },
     SetClassParent,
@@ -505,7 +505,7 @@ pub enum Instruction {
         method: bool,
     },
     Unsupported(PklString),
-    Fail(RuntimeError),
+    Fail(Box<RuntimeError>),
     MakeObject {
         template: usize,
         has_parent: bool,
@@ -529,8 +529,8 @@ pub enum Instruction {
     JumpIfFalse(usize),
     ReadResource,
     /// Operand validation precedes glob URI preparation and Host expansion.
-    ReadResourceGlob(glob::Spec),
-    ImportGlob(glob::Spec),
+    ReadResourceGlob(Box<glob::Spec>),
+    ImportGlob(Box<glob::Spec>),
     GlobMember,
     ResourceProperty(resources::Property),
     ReadResourceOrNull,
@@ -602,7 +602,7 @@ pub enum TypeCheck {
         name: PklString,
         arguments: Vec<TypeCheck>,
         expanded: Box<TypeCheck>,
-        default_origin: Option<RuntimeFrame>,
+        default_origin: Option<Box<RuntimeFrame>>,
     },
     /// Function annotations validate arity; their parameter/result types are metadata.
     Function {
@@ -1232,7 +1232,7 @@ impl Program {
                 arity: 1,
                 method: true,
             },
-            Instruction::CheckType(TypeCheck::String),
+            Instruction::CheckType(Box::new(TypeCheck::String)),
             Instruction::Return,
         ]);
         let typed_string_block = blocks.len();
@@ -10014,7 +10014,7 @@ impl Vm {
             | Instruction::CheckType(_) => {
                 unreachable!("type instruction uses its bounded dispatcher")
             }
-            Instruction::ImportModule(spec) => self.begin_import(spec)?,
+            Instruction::ImportModule(spec) => self.begin_import(*spec)?,
             Instruction::ImportGlob(spec) => {
                 let authored = spec
                     .import
@@ -10022,13 +10022,13 @@ impl Vm {
                     .ok_or_else(|| invalid("glob import spec"))?
                     .authored
                     .clone();
-                self.begin_glob(spec, authored)?;
+                self.begin_glob(*spec, authored)?;
             }
             Instruction::GlobMember => self.load_glob_member()?,
             Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
             Instruction::LoadPrimary(source) => self.begin_primary(source)?,
-            Instruction::EvaluateQuery(expression) => self.begin_query(expression)?,
-            Instruction::EvaluateRawQuery(expression) => self.begin_raw_query(expression)?,
+            Instruction::EvaluateQuery(expression) => self.begin_query(*expression)?,
+            Instruction::EvaluateRawQuery(expression) => self.begin_raw_query(*expression)?,
             Instruction::InitializeModuleParent => self.initialize_module_parent()?,
             Instruction::CheckModuleOutput => self.check_module_output()?,
             Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
@@ -10397,7 +10397,7 @@ impl Vm {
             }
             Instruction::ObserveNativeLiteral { span, rendered } => {
                 if self.active_type_trackers != 0 {
-                    self.observe_native_literal(span, rendered);
+                    self.observe_native_literal(span, *rendered);
                 }
             }
             Instruction::Observe(span) => {
@@ -10678,7 +10678,7 @@ impl Vm {
                 unreachable!("member access instruction uses its bounded dispatcher")
             }
 
-            Instruction::Fail(error) => return Err(error),
+            Instruction::Fail(error) => return Err(*error),
 
             Instruction::Undefined(name) => {
                 return Err(RuntimeError::new(
@@ -10737,14 +10737,13 @@ impl Vm {
                             })
                             .or_else(|| metadata.source.as_ref().map(|source| source.uri.clone()))
                     });
+                    let mut class = class;
+                    class.origin_uri = origin_uri;
+                    class.module = class
+                        .module
+                        .or_else(|| Some(self.current_module_name().into()));
                     let id = self.heap.allocate(Object {
-                        class_definition: Some(Box::new(Class {
-                            origin_uri,
-                            module: class
-                                .module
-                                .or_else(|| Some(self.current_module_name().into())),
-                            ..class
-                        })),
+                        class_definition: Some(class),
                         class_initializing: true,
                         declaration_code,
                         environment,
@@ -11488,7 +11487,7 @@ impl Vm {
                     }
                 };
                 if let Some(spec) = glob_spec {
-                    return self.begin_glob(spec, uri);
+                    return self.begin_glob(*spec, uri);
                 }
                 if self.in_stdlib_bootstrap() {
                     // StdLibModule's private context contains no caller properties
@@ -14119,7 +14118,7 @@ fn compile_unit_body_at_with_syntax(
                 compiler.identity.as_ref(),
             )?
         };
-        entry.push_at(Instruction::ImportModule(spec), parent.span);
+        entry.push_at(Instruction::ImportModule(Box::new(spec)), parent.span);
         entry.push_at(Instruction::InitializeModuleParent, parent.span);
     }
     compiler
@@ -14549,7 +14548,7 @@ impl<'a> Compiler<'a> {
                     );
                     let mut code = Code::default();
                     code.push_at(
-                        Instruction::Fail(error.clone()),
+                        Instruction::Fail(Box::new(error.clone())),
                         error.span.unwrap_or(member.span),
                     );
                     let block = self.block(code, Some(member.name_span))?;
@@ -14664,7 +14663,7 @@ impl<'a> Compiler<'a> {
             // Annotation resolution runs when the owner is initialized. Keep a
             // stub body so compilation cannot bypass earlier type dependencies.
             instructions.push_at(
-                Instruction::Fail(error.clone()),
+                Instruction::Fail(Box::new(error.clone())),
                 error.span.unwrap_or(member.span),
             );
         } else if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
@@ -14706,7 +14705,7 @@ impl<'a> Compiler<'a> {
         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
         if let Some(ty) = &member.ty {
             instructions.push_at(
-                Instruction::CheckType(compiled_type.clone().expect("member annotation")),
+                Instruction::CheckType(Box::new(compiled_type.clone().expect("member annotation"))),
                 self.type_source_span(ty),
             );
         }
@@ -14860,7 +14859,7 @@ impl<'a> Compiler<'a> {
             && declaration_name == "#Mixin";
         output.push(Instruction::BeginTypeAlias {
             declaration: self.declaration_base + expression.span.start,
-            name: declaration_name,
+            name: Box::new(declaration_name),
             end: 0,
         });
         self.declaration_annotations(expression, output)?;
@@ -14926,7 +14925,7 @@ impl<'a> Compiler<'a> {
                     ReferenceUseSite::Declaration,
                 );
                 let span = error.span.unwrap_or(ty.span);
-                output.push_at(Instruction::Fail(error), span);
+                output.push_at(Instruction::Fail(Box::new(error)), span);
             }
         }
         output.push(Instruction::FinishTypeAlias);
@@ -14999,7 +14998,7 @@ impl<'a> Compiler<'a> {
                 self.member = checkpoint.1;
                 self.modifiers = checkpoint.2;
                 let span = error.span.unwrap_or(expression.span);
-                output.push_at(Instruction::Fail(error.at(span)), span);
+                output.push_at(Instruction::Fail(Box::new(error.at(span))), span);
                 return Ok(());
             }
         };
@@ -15007,7 +15006,7 @@ impl<'a> Compiler<'a> {
         output.push_at(
             Instruction::BeginClass {
                 template,
-                class,
+                class: Box::new(class),
                 end: 0,
             },
             expression.span,
@@ -15016,7 +15015,10 @@ impl<'a> Compiler<'a> {
             if let Err(error) =
                 self.class_expression(parent, output, self.type_scopes.len(), &mut BTreeSet::new())
             {
-                output.push_at(Instruction::Fail(error.at(parent.span)), parent.span);
+                output.push_at(
+                    Instruction::Fail(Box::new(error.at(parent.span))),
+                    parent.span,
+                );
             } else {
                 output.push_at(Instruction::SetClassParent, parent.span);
             }
@@ -15060,7 +15062,7 @@ impl<'a> Compiler<'a> {
                         }
                     }
                     output.push_at(
-                        Instruction::Fail(error.clone()),
+                        Instruction::Fail(Box::new(error.clone())),
                         error.span.unwrap_or(member.span),
                     );
                     continue;
@@ -15122,9 +15124,9 @@ impl<'a> Compiler<'a> {
                 };
                 if *glob {
                     let spec = self.glob_spec(expression, Some(spec))?;
-                    output.push_at(Instruction::ImportGlob(spec), expression.span);
+                    output.push_at(Instruction::ImportGlob(Box::new(spec)), expression.span);
                 } else {
-                    output.push_at(Instruction::ImportModule(spec), expression.span);
+                    output.push_at(Instruction::ImportModule(Box::new(spec)), expression.span);
                 }
             }
             ExprKind::Class { .. } => self.class_declaration_expression(expression, output)?,
@@ -15175,7 +15177,7 @@ impl<'a> Compiler<'a> {
                     // section. Its declaration remains available to reflection,
                     // but StackTraceGenerator omits this throwing body frame.
                     error.unavailable_origin = true;
-                    output.push(Instruction::Fail(error));
+                    output.push(Instruction::Fail(Box::new(error)));
                 } else if self
                     .source
                     .as_ref()
@@ -15367,7 +15369,7 @@ impl<'a> Compiler<'a> {
                                     })
                             })
                             .ok_or_else(|| unsupported_type("builtin class value"))?;
-                        output.push(Instruction::BuiltinClass(ty));
+                        output.push(Instruction::BuiltinClass(Box::new(ty)));
                     }
                     Binding::BaseConstant => {
                         output.push(Instruction::Constant(Value::Float(if name == "NaN" {
@@ -15992,7 +15994,7 @@ impl<'a> Compiler<'a> {
     ) {
         if let Err(failure) = self.type_resolution_plan(ty, parameters, output, use_site) {
             let (error, span) = *failure;
-            output.push_at(Instruction::Fail(error.at(span)), span);
+            output.push_at(Instruction::Fail(Box::new(error.at(span))), span);
         }
     }
 
@@ -16061,7 +16063,7 @@ impl<'a> Compiler<'a> {
                         self.type_resolution_plan(argument, parameters, output, use_site)
                     {
                         let (error, span) = *failure;
-                        output.push_at(Instruction::Fail(error.at(span)), span);
+                        output.push_at(Instruction::Fail(Box::new(error.at(span))), span);
                         break;
                     }
                 }
@@ -16070,13 +16072,13 @@ impl<'a> Compiler<'a> {
                     end: output.len(),
                 };
             }
-            output.push_at(Instruction::ResolveType(check.clone()), ty.span);
+            output.push_at(Instruction::ResolveType(Box::new(check.clone())), ty.span);
             // The actual receiver determines whether this is Reference. Its
             // substituted arguments must be validated at the authored type
             // use, before evaluating the value being tested or cast.
             output.push_at(
                 Instruction::ValidateTypeArguments {
-                    ty: check,
+                    ty: Box::new(check),
                     aliases: self.alias_frames.clone(),
                 },
                 ty.span,
@@ -16178,7 +16180,7 @@ impl<'a> Compiler<'a> {
         if check.has_deferred_reference_validation() {
             output.push_at(
                 Instruction::ValidateTypeArguments {
-                    ty: check,
+                    ty: Box::new(check),
                     aliases: self.alias_frames.clone(),
                 },
                 ty.span,
@@ -16226,7 +16228,7 @@ impl<'a> Compiler<'a> {
                     output,
                     use_site,
                 );
-                output.push_at(Instruction::Fail(error.at(ty.span)), ty.span);
+                output.push_at(Instruction::Fail(Box::new(error.at(ty.span))), ty.span);
                 None
             }
         }
@@ -17147,7 +17149,13 @@ impl<'a> Compiler<'a> {
             .expect("authored supertype span")
             .to_pkl_string();
         if check.has_declared() {
-            output.push_at(Instruction::ResolvedSupertype { ty: check, label }, span);
+            output.push_at(
+                Instruction::ResolvedSupertype {
+                    ty: Box::new(check),
+                    label,
+                },
+                span,
+            );
             return Ok(());
         }
         if classes::BuiltinClass::from_type(&check).is_none()
@@ -17155,7 +17163,10 @@ impl<'a> Compiler<'a> {
         {
             // Keep this failure inside the lazy class body, at the superclass
             // use site rather than an alias declaration or annotation context.
-            output.push_at(Instruction::Fail(invalid_supertype(&label).at(span)), span);
+            output.push_at(
+                Instruction::Fail(Box::new(invalid_supertype(&label).at(span))),
+                span,
+            );
             return Ok(());
         }
         self.class_value(&check, output, span)
@@ -17168,11 +17179,11 @@ impl<'a> Compiler<'a> {
         span: Span,
     ) -> Result<(), RuntimeError> {
         if check.has_declared() {
-            output.push_at(Instruction::ResolvedClass(check.clone()), span);
+            output.push_at(Instruction::ResolvedClass(Box::new(check.clone())), span);
             return Ok(());
         }
         if classes::BuiltinClass::from_type(check).is_some() {
-            output.push_at(Instruction::BuiltinClass(check.clone()), span);
+            output.push_at(Instruction::BuiltinClass(Box::new(check.clone())), span);
             return Ok(());
         }
         let TypeCheck::Class { id, .. } = check.unaliased() else {
@@ -17246,8 +17257,8 @@ impl<'a> Compiler<'a> {
         if check.has_declared() {
             output.push_at(
                 Instruction::ResolvedDefault {
-                    ty: check.clone(),
-                    origin: origin.cloned(),
+                    ty: Box::new(check.clone()),
+                    origin: origin.cloned().map(Box::new),
                 },
                 span,
             );
@@ -17256,8 +17267,8 @@ impl<'a> Compiler<'a> {
         match check.resolved() {
             TypeCheck::VarArgs { .. } => output.push_at(
                 Instruction::ResolvedDefault {
-                    ty: check.clone(),
-                    origin: origin.cloned(),
+                    ty: Box::new(check.clone()),
+                    origin: origin.cloned().map(Box::new),
                 },
                 span,
             ),
@@ -17286,11 +17297,11 @@ impl<'a> Compiler<'a> {
                 output.push_at(
                     Instruction::GenericConstructorParent {
                         cache: !check.contains_parameter(),
-                        ty: check.clone(),
-                        source: TypeArgumentSource {
+                        ty: Box::new(check.clone()),
+                        source: Box::new(TypeArgumentSource {
                             span,
                             text: "Mixin".into(),
-                        },
+                        }),
                     },
                     span,
                 );
@@ -17324,8 +17335,8 @@ impl<'a> Compiler<'a> {
                         if ty.default_depends_on_parameters() {
                             output.push_at(
                                 Instruction::SetCollectionTypeDefault {
-                                    ty: ty.clone(),
-                                    origin: origin.cloned(),
+                                    ty: Box::new(ty.clone()),
+                                    origin: origin.cloned().map(Box::new),
                                 },
                                 *span,
                             );
@@ -17334,7 +17345,7 @@ impl<'a> Compiler<'a> {
                                 self.default_type_with_origin(ty, output, *span, origin)?;
                             output.push(Instruction::SetCollectionDefault {
                                 defined,
-                                origin: origin.cloned(),
+                                origin: origin.cloned().map(Box::new),
                             });
                         }
                     }

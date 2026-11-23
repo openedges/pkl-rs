@@ -251,7 +251,7 @@ pub(super) fn blocks(
                 };
                 let offset =
                     start + signature.find(parameter).unwrap() + parameter.find("Number").unwrap();
-                code.push(Instruction::CheckType(TypeCheck::Number));
+                code.push(Instruction::CheckType(Box::new(TypeCheck::Number)));
                 spans.push(Some(Span::new(offset, offset + 6)));
             } else if matches!(
                 operation,
@@ -265,11 +265,11 @@ pub(super) fn blocks(
                 spans.push(Some(Span::new(offset, offset + 14)));
             } else if matches!(operation, Operation::Matches) {
                 let offset = start + signature.find(": Regex").unwrap() + 2;
-                code.push(Instruction::CheckType(TypeCheck::Class {
+                code.push(Instruction::CheckType(Box::new(TypeCheck::Class {
                     module: None,
                     id: classes::REGEX,
                     name: "Regex".into(),
-                }));
+                })));
                 spans.push(Some(Span::new(offset, offset + 5)));
             } else if matches!(operation, Operation::Substring { .. }) {
                 let parameter = if argument == 0 {
@@ -279,15 +279,15 @@ pub(super) fn blocks(
                 };
                 let offset =
                     start + signature.find(parameter).unwrap() + parameter.find("Int").unwrap();
-                code.push(Instruction::CheckType(TypeCheck::Int));
+                code.push(Instruction::CheckType(Box::new(TypeCheck::Int)));
                 spans.push(Some(Span::new(offset, offset + 3)));
             } else if matches!(operation, Operation::DropLast) {
                 let offset = start + signature.find("Int").unwrap();
-                code.push(Instruction::CheckType(TypeCheck::Int));
+                code.push(Instruction::CheckType(Box::new(TypeCheck::Int)));
                 spans.push(Some(Span::new(offset, offset + 3)));
             } else if matches!(operation, Operation::BooleanXor | Operation::BooleanImplies) {
                 let offset = start + signature.find("Boolean").unwrap();
-                code.push(Instruction::CheckType(TypeCheck::Boolean));
+                code.push(Instruction::CheckType(Box::new(TypeCheck::Boolean)));
                 spans.push(Some(Span::new(offset, offset + 7)));
             }
         }
