@@ -1272,10 +1272,7 @@ fn cached_member_value(
         name: name.clone(),
         method: false,
     };
-    Ok(match vm.heap.get(owner)?.cache.get(&key) {
-        Some(LazyState::Completed(v)) => Some(v.clone()),
-        _ => None,
-    })
+    Ok(vm.heap.get(owner)?.cache_get_completed(&key).cloned())
 }
 
 fn declaration_from_code(vm: &Vm, owner: ObjectId, code: usize) -> Result<DeclInfo, RuntimeError> {

@@ -113,8 +113,7 @@ fn tracing_collects_cycles_reuses_slots_and_rejects_stale_or_foreign_handles() {
     };
     heap.get_mut(stale)
         .unwrap()
-        .cache
-        .insert(key.clone(), LazyState::Completed(Value::Object(stale)));
+        .push_completed_slot(key.clone(), None, Value::Object(stale));
     assert_eq!(heap.collect(&[Value::Object(stale)]).live, 1);
     assert_eq!(heap.collect(&[]).live, 0);
     let replacement = heap.allocate(Object::default());
@@ -130,12 +129,10 @@ fn tracing_collects_cycles_reuses_slots_and_rejects_stale_or_foreign_handles() {
         let second = heap.allocate(Object::default());
         heap.get_mut(first)
             .unwrap()
-            .cache
-            .insert(key.clone(), LazyState::Completed(Value::Object(second)));
+            .push_completed_slot(key.clone(), None, Value::Object(second));
         heap.get_mut(second)
             .unwrap()
-            .cache
-            .insert(key.clone(), LazyState::Completed(Value::Object(first)));
+            .push_completed_slot(key.clone(), None, Value::Object(first));
         assert_eq!(heap.collect(&[]).live, 0);
     }
     assert_eq!(heap.stats().slots, 2);

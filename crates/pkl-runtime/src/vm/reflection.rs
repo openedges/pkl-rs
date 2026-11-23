@@ -1116,8 +1116,8 @@ impl Vm {
             name: PklString::from(kind.name()),
             method: false,
         };
-        match self.heap.get(*reflect_mod).ok()?.cache.get(&key) {
-            Some(LazyState::Completed(Value::Class(class))) => Some(*class),
+        match self.heap.get(*reflect_mod).ok()?.cache_get_completed(&key) {
+            Some(Value::Class(class)) => Some(*class),
             _ => None,
         }
     }

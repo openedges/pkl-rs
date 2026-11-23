@@ -704,6 +704,16 @@ impl<T> ThinVec<T> {
     }
 
     #[inline]
+    pub fn pop(&mut self) -> Option<T> {
+        let v = self.0.as_mut()?;
+        let item = v.pop();
+        if v.is_empty() {
+            self.0 = None;
+        }
+        item
+    }
+
+    #[inline]
     pub fn clear(&mut self) {
         self.0 = None;
     }
@@ -917,6 +927,12 @@ impl Member {
     pub(crate) fn definition(&self) -> bool {
         self.flags & (Self::CLASS | Self::TYPE_ALIAS) != 0
     }
+}
+
+#[derive(Clone, Copy, Debug)]
+pub enum CacheEntry<'a> {
+    Evaluating,
+    Completed(&'a Value),
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -1234,8 +1250,14 @@ pub struct Object {
     pub parent: Option<ObjectId>,
     pub members: MemberList,
     pub environment: Environment,
-    pub cache: FastMap<CacheKey, LazyState>,
     pub cache_slots: Vec<CacheSlot>,
+    /// Lazy O(1) index (`CacheKey -> slot index`), allocated only once
+    /// `cache_slots.len() > 16` or when `PublishMatch` aliases a second key to an existing slot.
+    pub cache_map: ThinFastMap<CacheKey, usize>,
+    /// Inline cycle-detection marker for the common 0-or-1 evaluating member case (zero alloc).
+    pub evaluating_key: Option<CacheKey>,
+    /// Overflow cycle-detection markers when >1 members on the same object evaluate concurrently.
+    pub evaluating_overflow: ThinVec<CacheKey>,
     pub cache_index: crate::economic_map::EconomicMapIndex,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
@@ -1280,6 +1302,158 @@ impl Object {
             .unwrap_or(&crate::strict_map::EMPTY)
     }
 
+    #[inline(always)]
+    pub fn has_evaluating_keys(&self) -> bool {
+        self.evaluating_key.is_some()
+    }
+
+    #[inline(always)]
+    pub fn cache_is_empty(&self) -> bool {
+        self.cache_slots.is_empty() && self.evaluating_key.is_none()
+    }
+
+    #[inline(always)]
+    pub fn cache_len(&self) -> usize {
+        self.cache_slots.len()
+            + usize::from(self.evaluating_key.is_some())
+            + self.evaluating_overflow.len()
+    }
+
+    #[inline(always)]
+    fn is_evaluating(&self, key: &CacheKey) -> bool {
+        match &self.evaluating_key {
+            None => false,
+            Some(k) if k == key => true,
+            Some(_) => {
+                !self.evaluating_overflow.is_empty()
+                    && self.evaluating_overflow.as_slice().contains(key)
+            }
+        }
+    }
+
+    #[inline]
+    pub fn cache_get(&self, key: &CacheKey) -> Option<CacheEntry<'_>> {
+        if self.is_evaluating(key) {
+            return Some(CacheEntry::Evaluating);
+        }
+        if self.cache_map.is_empty() {
+            for slot in self.cache_slots.iter().rev() {
+                if slot.key == *key {
+                    return Some(CacheEntry::Completed(&slot.value));
+                }
+            }
+            None
+        } else {
+            self.cache_map
+                .get(key)
+                .map(|&idx| CacheEntry::Completed(&self.cache_slots[idx].value))
+        }
+    }
+
+    #[inline]
+    pub fn cache_get_completed(&self, key: &CacheKey) -> Option<&Value> {
+        match self.cache_get(key) {
+            Some(CacheEntry::Completed(v)) => Some(v),
+            _ => None,
+        }
+    }
+
+    #[inline]
+    pub fn cache_contains_key(&self, key: &CacheKey) -> bool {
+        self.cache_get(key).is_some()
+    }
+
+    #[inline]
+    pub fn cache_mark_evaluating(&mut self, key: CacheKey) {
+        match &self.evaluating_key {
+            None => self.evaluating_key = Some(key),
+            Some(k) if k == &key => {}
+            Some(_) => {
+                if !self.evaluating_overflow.as_slice().contains(&key) {
+                    self.evaluating_overflow.push(key);
+                }
+            }
+        }
+    }
+
+    #[inline]
+    pub fn cache_clear_evaluating(&mut self, key: &CacheKey) {
+        if self.evaluating_key.as_ref() == Some(key) {
+            self.evaluating_key = self.evaluating_overflow.pop();
+        } else if !self.evaluating_overflow.is_empty() {
+            self.evaluating_overflow.retain(|k| k != key);
+            if self.evaluating_overflow.is_empty() {
+                self.evaluating_overflow.clear();
+            }
+        }
+    }
+
+    fn ensure_cache_map(&mut self) {
+        if self.cache_map.is_empty() && !self.cache_slots.is_empty() {
+            let mut map = FastMap::default();
+            map.reserve(self.cache_slots.len());
+            for (idx, slot) in self.cache_slots.iter().enumerate() {
+                map.insert(slot.key.clone(), idx);
+            }
+            self.cache_map = map.into();
+        }
+    }
+
+    #[inline]
+    pub fn push_completed_slot(&mut self, key: CacheKey, entry_key: Option<Value>, value: Value) {
+        self.cache_clear_evaluating(&key);
+        let idx = self.cache_slots.len();
+        if !self.cache_map.is_empty() {
+            self.cache_map.insert(key.clone(), idx);
+            self.cache_slots.push(CacheSlot {
+                key,
+                entry_key,
+                value,
+            });
+        } else {
+            self.cache_slots.push(CacheSlot {
+                key,
+                entry_key,
+                value,
+            });
+            if self.cache_slots.len() > 16 {
+                self.ensure_cache_map();
+            }
+        }
+    }
+
+    #[inline]
+    pub fn update_completed_slot(&mut self, index: usize, key: CacheKey, value: Value) {
+        self.cache_clear_evaluating(&key);
+        self.cache_slots[index].value = value;
+        if self.cache_slots[index].key != key {
+            self.ensure_cache_map();
+            self.cache_map.insert(key, index);
+        } else if !self.cache_map.is_empty() {
+            self.cache_map.insert(key, index);
+        }
+    }
+
+    pub(crate) fn cache_clear(&mut self) {
+        self.cache_slots.clear();
+        self.cache_map.clear();
+        self.evaluating_key = None;
+        self.evaluating_overflow.clear();
+    }
+
+    pub(crate) fn cache_remove_key(&mut self, key: &CacheKey) {
+        self.cache_clear_evaluating(key);
+        self.cache_slots.retain(|s| &s.key != key);
+        self.rebuild_cache_map();
+    }
+
+    pub(crate) fn rebuild_cache_map(&mut self) {
+        self.cache_map.clear();
+        if self.cache_slots.len() > 16 {
+            self.ensure_cache_map();
+        }
+    }
+
     pub(crate) fn complete_cache(&mut self, key: CacheKey, value: Value) {
         self.complete_cache_with_key(key, None, value);
     }
@@ -1290,39 +1464,19 @@ impl Object {
         entry_key: Option<Value>,
         value: Value,
     ) {
-        // Completed entries persist for the object's lifetime. Failure cleanup
-        // removes only pending entries, so retries acquire their position here.
-        match self.cache.entry(key) {
-            std::collections::hash_map::Entry::Occupied(mut occupied) => {
-                if matches!(occupied.get(), LazyState::Completed(_)) {
-                    let key_ref = occupied.key();
-                    if let Some(slot) = self
-                        .cache_slots
-                        .iter_mut()
-                        .find(|slot| slot.key == *key_ref)
-                    {
-                        if entry_key.is_some() {
-                            slot.entry_key = entry_key;
-                        }
-                        slot.value = value.clone();
-                    }
-                } else {
-                    self.cache_slots.push(CacheSlot {
-                        key: occupied.key().clone(),
-                        entry_key,
-                        value: value.clone(),
-                    });
-                }
-                occupied.insert(LazyState::Completed(value));
+        self.cache_clear_evaluating(&key);
+        let existing = if self.cache_map.is_empty() {
+            self.cache_slots.iter().rposition(|slot| slot.key == key)
+        } else {
+            self.cache_map.get(&key).copied()
+        };
+        if let Some(idx) = existing {
+            if entry_key.is_some() {
+                self.cache_slots[idx].entry_key = entry_key;
             }
-            std::collections::hash_map::Entry::Vacant(vacant) => {
-                self.cache_slots.push(CacheSlot {
-                    key: vacant.key().clone(),
-                    entry_key,
-                    value: value.clone(),
-                });
-                vacant.insert(LazyState::Completed(value));
-            }
+            self.cache_slots[idx].value = value;
+        } else {
+            self.push_completed_slot(key, entry_key, value);
         }
     }
 }
@@ -2835,12 +2989,17 @@ fn trace_entry_edges(
             push_id(identity, out, owner);
         }
     }
-    for (key, state) in &object.cache {
+    if let Some(owner) = object.evaluating_key.as_ref().and_then(|k| k.owner) {
+        push_id(identity, out, owner);
+    }
+    for key in &object.evaluating_overflow {
         if let Some(owner) = key.owner {
             push_id(identity, out, owner);
         }
-        if let LazyState::Completed(value) = state {
-            push_value(identity, bytes_lists, out, value);
+    }
+    for (key, _) in object.cache_map.iter() {
+        if let Some(owner) = key.owner {
+            push_id(identity, out, owner);
         }
     }
 }
@@ -3439,5 +3598,78 @@ mod tests {
         assert!(env_size <= 320, "Environment grew to {env_size} bytes");
         assert!(slot_size <= 64, "Slot grew to {slot_size} bytes");
         assert!(obj_size <= 1280, "Object grew to {obj_size} bytes");
+    }
+
+    #[test]
+    fn object_cache_inline_promotion_evaluating_and_alias() {
+        let mut obj = Object::default();
+        assert!(obj.cache_is_empty());
+
+        let mk_key = |name: &str| CacheKey {
+            entry: false,
+            owner: None,
+            name: PklString::from(name),
+            method: false,
+        };
+
+        // Inline evaluating marker (0 -> 1 -> 2 -> 1 -> 0).
+        let k_a = mk_key("a");
+        let k_b = mk_key("b");
+        obj.cache_mark_evaluating(k_a.clone());
+        assert!(obj.has_evaluating_keys());
+        assert!(obj.evaluating_overflow.is_empty());
+        assert!(matches!(obj.cache_get(&k_a), Some(CacheEntry::Evaluating)));
+        obj.cache_mark_evaluating(k_b.clone());
+        assert_eq!(obj.evaluating_overflow.len(), 1);
+        assert!(matches!(obj.cache_get(&k_b), Some(CacheEntry::Evaluating)));
+        obj.cache_clear_evaluating(&k_a);
+        assert!(obj.cache_get(&k_a).is_none());
+        assert!(matches!(obj.cache_get(&k_b), Some(CacheEntry::Evaluating)));
+        assert!(obj.evaluating_overflow.is_empty());
+        obj.push_completed_slot(k_b.clone(), None, Value::Int(42.into()));
+        assert!(!obj.has_evaluating_keys());
+        assert_eq!(obj.cache_get_completed(&k_b), Some(&Value::Int(42.into())));
+
+        // Up to 16 slots stay inline without allocating cache_map.
+        for i in 1..16 {
+            obj.push_completed_slot(
+                mk_key(&format!("k{i}")),
+                None,
+                Value::Int((i as i64).into()),
+            );
+        }
+        assert_eq!(obj.cache_slots.len(), 16);
+        assert!(obj.cache_map.is_empty());
+        assert_eq!(
+            obj.cache_get_completed(&mk_key("k15")),
+            Some(&Value::Int(15.into()))
+        );
+
+        // 17th slot promotes to cache_map.
+        obj.push_completed_slot(mk_key("k16"), None, Value::Int(16.into()));
+        assert_eq!(obj.cache_slots.len(), 17);
+        assert!(!obj.cache_map.is_empty());
+        assert_eq!(
+            obj.cache_get_completed(&mk_key("k16")),
+            Some(&Value::Int(16.into()))
+        );
+        assert_eq!(obj.cache_get_completed(&k_b), Some(&Value::Int(42.into())));
+
+        // PublishMatch alias on an inline-sized object promotes cache_map and serves both keys.
+        let mut aliased = Object::default();
+        let orig = mk_key("orig");
+        let alias = mk_key("alias");
+        aliased.push_completed_slot(orig.clone(), None, Value::Int(1.into()));
+        assert!(aliased.cache_map.is_empty());
+        aliased.update_completed_slot(0, alias.clone(), Value::Int(99.into()));
+        assert!(!aliased.cache_map.is_empty());
+        assert_eq!(
+            aliased.cache_get_completed(&orig),
+            Some(&Value::Int(99.into()))
+        );
+        assert_eq!(
+            aliased.cache_get_completed(&alias),
+            Some(&Value::Int(99.into()))
+        );
     }
 }

@@ -1277,11 +1277,9 @@ impl Vm {
                             name: member.name.clone(),
                             method: false,
                         };
-                        let data = match mod_obj.cache.get(&key) {
-                            Some(LazyState::Completed(Value::Class(cid))) if is_classes => {
-                                Some(Data::Class(*cid))
-                            }
-                            Some(LazyState::Completed(Value::TypeAlias(tid))) if !is_classes => {
+                        let data = match mod_obj.cache_get_completed(&key) {
+                            Some(Value::Class(cid)) if is_classes => Some(Data::Class(*cid)),
+                            Some(Value::TypeAlias(tid)) if !is_classes => {
                                 Some(Data::TypeAlias(*tid))
                             }
                             _ => None,

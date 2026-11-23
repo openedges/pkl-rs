@@ -862,8 +862,8 @@ pub(crate) fn cached_render_value(
             }
         }
     }
-    if !entry && object.cache_slots.len() == object.cache.len() && object.cache_slots.len() <= 16 {
-        for slot in &object.cache_slots {
+    if !entry && object.cache_map.is_empty() && !object.has_evaluating_keys() {
+        for slot in object.cache_slots.iter().rev() {
             if !slot.key.entry
                 && slot.key.owner.is_none()
                 && !slot.key.method
@@ -874,17 +874,14 @@ pub(crate) fn cached_render_value(
         }
         return Ok(None);
     }
-    Ok(
-        match object.cache.get(&CacheKey {
+    Ok(object
+        .cache_get_completed(&CacheKey {
             entry,
             owner: None,
             name: member.name.clone(),
             method: false,
-        }) {
-            Some(LazyState::Completed(value)) => Some(value.clone()),
-            _ => None,
-        },
-    )
+        })
+        .cloned())
 }
 
 pub(super) fn forcing_members(

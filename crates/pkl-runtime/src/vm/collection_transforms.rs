@@ -880,7 +880,7 @@ impl Vm {
                             method: false,
                             entry: true,
                         };
-                        if let Some(LazyState::Completed(val)) = obj.cache.get(&key) {
+                        if let Some(val) = obj.cache_get_completed(&key) {
                             values.push(val.clone());
                         } else {
                             ok = false;
@@ -1370,14 +1370,14 @@ impl Vm {
         ) {
             // Paguro UnmodMap.containsValue walks the backing trie directly:
             // read its stored value without rehashing/relooking up this key.
-            match self.heap.get(source)?.cache.get(&CacheKey {
+            match self.heap.get(source)?.cache_get_completed(&CacheKey {
                 owner: None,
                 name: member.name.clone(),
                 method: false,
                 entry: true,
             }) {
-                Some(LazyState::Completed(value)) => value.clone(),
-                _ => return Err(invalid("uncached Map.containsValue entry")),
+                Some(value) => value.clone(),
+                None => return Err(invalid("uncached Map.containsValue entry")),
             }
         } else if map {
             if self.prepare_map_lookup(source, &member.key)? {

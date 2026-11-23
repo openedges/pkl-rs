@@ -58,7 +58,7 @@ scalar = 0
         let annotations = vm.heap.get(id).unwrap().annotations.clone();
         assert_eq!(annotations.len(), 1);
         let annotation = annotations[0].as_object().unwrap();
-        assert!(vm.heap.get(annotation).unwrap().cache.is_empty());
+        assert!(vm.heap.get(annotation).unwrap().cache_is_empty());
         assert_eq!(member(&mut vm, &module, "scalar"), Ok(Value::Int(0.into())));
         vm.collect(&[]);
         assert!(vm.heap.get(annotation).is_ok());

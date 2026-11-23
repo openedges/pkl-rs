@@ -4,8 +4,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 use crate::heap::{
-    CacheKey, Class, CollectionKind, Environment, ExecutableOwnerId, ExecutionSite, Function, Heap,
-    HeapStats, LazyState, Member, Object, Scope, TypeNodeId,
+    CacheEntry, CacheKey, Class, CollectionKind, Environment, ExecutableOwnerId, ExecutionSite,
+    Function, Heap, HeapStats, LazyState, Member, Object, Scope, TypeNodeId,
 };
 use crate::logging::{EvaluationContext, FrameTransformRequest, LogRequest, LoggerFailure};
 use crate::source::Span;
@@ -2821,8 +2821,7 @@ impl Vm {
         let Ok(mod_obj) = self.heap.get(mod_id) else {
             return false;
         };
-        let Some(LazyState::Completed(Value::Object(facts_id))) = mod_obj.cache.get(&facts_key)
-        else {
+        let Some(Value::Object(facts_id)) = mod_obj.cache_get_completed(&facts_key) else {
             return false;
         };
         let facts_id = *facts_id;
@@ -2846,16 +2845,14 @@ impl Vm {
         let Ok(facts_obj) = self.heap.get(facts_id) else {
             return false;
         };
-        let Some(LazyState::Completed(Value::Object(listing_id))) = facts_obj.cache.get(&entry_key)
-        else {
+        let Some(Value::Object(listing_id)) = facts_obj.cache_get_completed(&entry_key) else {
             return false;
         };
         let listing_id = *listing_id;
         let Ok(object) = self.heap.get_mut(listing_id) else {
             return false;
         };
-        object.cache.clear();
-        object.cache_slots.clear();
+        object.cache_clear();
         object.cache_index = crate::economic_map::EconomicMapIndex::default();
         object.list_elements = None;
         self.fact_tracker = Some((module_uri.clone(), fact_span, BTreeMap::new()));
@@ -3487,7 +3484,7 @@ impl Vm {
                                         method: false,
                                         entry: true,
                                     };
-                                    if let Some(LazyState::Completed(val)) = obj.cache.get(&ck) {
+                                    if let Some(val) = obj.cache_get_completed(&ck) {
                                         found = Some(val.clone());
                                     }
                                     break;
@@ -4245,10 +4242,7 @@ impl Vm {
                                         method: false,
                                         entry: true,
                                     };
-                                    match obj.cache.get(&ck) {
-                                        Some(LazyState::Completed(v)) => Some(v.clone()),
-                                        _ => None,
-                                    }
+                                    obj.cache_get_completed(&ck).cloned()
                                 }
                             } else {
                                 Some(Value::Null)
@@ -5292,8 +5286,8 @@ impl Vm {
                             };
                             if obj.cache_index.len() != obj.cache_slots.len()
                                 || !obj.cache_index.can_fast_append_no_rehash()
-                                || (!obj.cache.is_empty()
-                                    && matches!(obj.cache.get(key), Some(LazyState::Completed(_))))
+                                || (!obj.cache_slots.is_empty()
+                                    && obj.cache_get_completed(key).is_some())
                             {
                                 break;
                             }
@@ -5305,12 +5299,7 @@ impl Vm {
                                     ^ key.owner.map_or(0, |owner| owner.index as i32);
                                 let _ = obj.cache_index.put_hash(index, hash, false);
                             }
-                            obj.cache_slots.push(crate::heap::CacheSlot {
-                                key: key.clone(),
-                                entry_key: None,
-                                value: val.clone(),
-                            });
-                            obj.cache.insert(key.clone(), LazyState::Completed(val));
+                            obj.push_completed_slot(key.clone(), None, val);
                         }
                         let mut finished = frames.pop().unwrap();
                         if frame_pool.len() < 64 {
@@ -5857,13 +5846,11 @@ impl Vm {
             name,
             method: false,
         };
-        Ok(self
-            .heap
-            .get(receiver)?
-            .cache
-            .get(&key)
-            .cloned()
-            .unwrap_or(LazyState::Unevaluated))
+        Ok(match self.heap.get(receiver)?.cache_get(&key) {
+            Some(CacheEntry::Evaluating) => LazyState::Evaluating,
+            Some(CacheEntry::Completed(v)) => LazyState::Completed(v.clone()),
+            None => LazyState::Unevaluated,
+        })
     }
 
     /// Safepoint collection includes suspended frames and externally pinned results.
@@ -6655,9 +6642,7 @@ impl Vm {
             {
                 // VmUtils.doReadMember and ReadLocalPropertyNode publish only successful
                 // return values. A failed attempt must be retryable in this evaluator.
-                if matches!(object.cache.get(key), Some(LazyState::Evaluating)) {
-                    object.cache.remove(key);
-                }
+                object.cache_clear_evaluating(key);
             }
         }
         // Truffle retains the same source/initialization exception in every
@@ -7107,16 +7092,16 @@ impl Vm {
             let receiver_obj = self.heap.get(receiver)?;
             let receiver_kind = receiver_obj.collection_kind;
             checked_cache_evaluating = true;
-            if !receiver_obj.cache.is_empty() {
-                match receiver_obj.cache.get(&key) {
-                    Some(LazyState::Completed(value)) => {
+            if !receiver_obj.cache_is_empty() {
+                match receiver_obj.cache_get(&key) {
+                    Some(CacheEntry::Completed(value)) => {
                         self.stack.push(value.clone());
                         return Ok(());
                     }
-                    Some(LazyState::Evaluating) => {
+                    Some(CacheEntry::Evaluating) => {
                         cache_evaluating = true;
                     }
-                    Some(LazyState::Unevaluated) | None => {}
+                    None => {}
                 }
             }
             if !local
@@ -7370,8 +7355,8 @@ impl Vm {
                 cache_evaluating
             } else {
                 matches!(
-                    self.heap.get(receiver)?.cache.get(&key),
-                    Some(LazyState::Evaluating)
+                    self.heap.get(receiver)?.cache_get(&key),
+                    Some(CacheEntry::Evaluating)
                 )
             }
         {
@@ -7631,8 +7616,7 @@ impl Vm {
         if memoize && stolen_value.is_none() {
             self.heap
                 .get_mut(receiver)?
-                .cache
-                .insert(key.clone(), LazyState::Evaluating);
+                .cache_mark_evaluating(key.clone());
         }
         self.member_evaluations += usize::from(constant_value.is_none()) as u64;
         let base = self.stack.len();
@@ -7995,10 +7979,10 @@ impl Vm {
             name: member.name.clone(),
             method: false,
         };
-        if recv_obj.cache.contains_key(&key) {
-            return Ok(match recv_obj.cache.get(&key) {
-                Some(LazyState::Completed(v)) => Some(v.clone()),
-                _ => None,
+        if let Some(entry) = recv_obj.cache_get(&key) {
+            return Ok(match entry {
+                CacheEntry::Completed(v) => Some(v.clone()),
+                CacheEntry::Evaluating => None,
             });
         }
         let mut inherited_owner: Option<ObjectId> = None;
@@ -12756,15 +12740,13 @@ fn fast_eval_strict_map_in_poll(
                 && slot.key.name == member.name
             {
                 &slot.value
-            } else if let Some(LazyState::Completed(v)) = obj.cache.get(&CacheKey {
-                owner: None,
-                name: member.name.clone(),
-                method: false,
-                entry: true,
-            }) {
-                v
             } else {
-                return None;
+                obj.cache_get_completed(&CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                })?
             };
             match fast_eval_type_in_poll(
                 val_ty,
@@ -13377,7 +13359,7 @@ fn fast_lookup_cached<'a>(
     if obj.cache_index.is_rehash_incomplete() {
         return None;
     }
-    if obj.cache_slots.len() <= 16 {
+    if obj.cache_map.is_empty() && !obj.has_evaluating_keys() {
         for slot in obj.cache_slots.iter().rev() {
             if !slot.key.entry
                 && slot.key.method == method
@@ -13395,10 +13377,7 @@ fn fast_lookup_cached<'a>(
         name: name.clone(),
         method,
     };
-    match obj.cache.get(&key) {
-        Some(LazyState::Completed(val)) => Some(val),
-        _ => None,
-    }
+    obj.cache_get_completed(&key)
 }
 
 #[inline]

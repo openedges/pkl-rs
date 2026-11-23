@@ -160,8 +160,7 @@ impl Vm {
                 method: false,
                 name: name.into(),
             };
-            let Some(LazyState::Completed(Value::Class(class))) =
-                self.heap.get(*module)?.cache.get(&key)
+            let Some(Value::Class(class)) = self.heap.get(*module)?.cache_get_completed(&key)
             else {
                 return Err(invalid("XML canonical class"));
             };
@@ -203,7 +202,7 @@ impl Vm {
             };
             let mut owner = Some(receiver);
             let mut seen = BTreeSet::new();
-            let mut present = self.heap.get(receiver)?.cache.contains_key(&key);
+            let mut present = self.heap.get(receiver)?.cache_contains_key(&key);
             while let Some(id) = owner {
                 if !seen.insert(id) {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));

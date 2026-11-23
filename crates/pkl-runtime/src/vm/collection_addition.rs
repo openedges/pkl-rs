@@ -79,7 +79,7 @@ impl Vm {
             members: source.members.clone(),
             collection_members: source.collection_members.clone(),
             member_values: source.member_values.clone(),
-            cache: source.cache.clone(),
+            cache_map: source.cache_map.clone(),
             cache_slots: source.cache_slots.clone(),
             has_object_collection_key: source.has_object_collection_key,
             cache_index: source.cache_index.clone(),

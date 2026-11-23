@@ -57,7 +57,7 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
             .name,
         "Typed"
     );
-    assert!(builtin.cache.is_empty());
+    assert!(builtin.cache_is_empty());
     assert!(builtin.members.iter().any(|member| member.name == "output"));
     assert_eq!(
         vm.member_state(module, "output").unwrap(),
@@ -107,7 +107,7 @@ fn captured_module_keeps_exactly_one_real_parent_until_terminal_release() {
     vm.start_member(module, "scalar").unwrap();
     assert_eq!(ready(&mut vm), Ok(Value::Int(7.into())));
     assert_eq!(vm.collect(&[]).live, initialized_live + 4);
-    assert!(vm.heap.get(parent).unwrap().cache.is_empty());
+    assert!(vm.heap.get(parent).unwrap().cache_is_empty());
     vm.close();
     assert_eq!(vm.heap_stats().live, 0);
     assert_eq!(vm.heap_stats().slots, 0);
@@ -140,7 +140,7 @@ fn unrooted_module_is_reclaimed_while_base_keeps_the_shared_parent() {
         vm.heap.get(module).unwrap_err().kind,
         ErrorKind::StaleHandle
     );
-    assert!(vm.heap.get(parent).unwrap().cache.is_empty());
+    assert!(vm.heap.get(parent).unwrap().cache_is_empty());
     vm.start(program.entry, vec![]).unwrap();
     let replacement = ready(&mut vm).unwrap().as_object().unwrap();
     let replacement_parent = vm.heap.get(replacement).unwrap().parent.unwrap();

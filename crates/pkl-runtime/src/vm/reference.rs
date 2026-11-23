@@ -1992,7 +1992,7 @@ mod generic_metadata_tests {
         let mut vm = Vm::new(Arc::new(Program::new(vec![vec![Instruction::Return]])));
         let access = vm.reference_access_value(Some(&"name".into()), None);
         let id = access.as_object().unwrap();
-        assert!(vm.heap.get(id).unwrap().cache.is_empty());
+        assert!(vm.heap.get(id).unwrap().cache_is_empty());
         assert_eq!(
             access_member(&mut vm, &access, "isProperty"),
             Value::Bool(true)
@@ -2049,8 +2049,7 @@ mod generic_metadata_tests {
                 vm.heap
                     .get(access.as_object().unwrap())
                     .unwrap()
-                    .cache
-                    .is_empty()
+                    .cache_is_empty()
             );
         }
         // Completed caches retain the same rendering behavior. Ordinary forcing
@@ -2058,7 +2057,7 @@ mod generic_metadata_tests {
         for access in [&property, &subscript] {
             let object = vm.heap.get_mut(access.as_object().unwrap()).unwrap();
             for (key, value) in object.member_values.clone() {
-                object.cache.insert(key, LazyState::Completed(value));
+                object.complete_cache(key, value);
             }
         }
         vm.collect(std::slice::from_ref(&reference));
@@ -2091,7 +2090,7 @@ mod generic_metadata_tests {
             access_member(&mut vm, &access, "isSubscript"),
             Value::Bool(true)
         );
-        assert!(vm.heap.get(parent_id).unwrap().cache.is_empty());
+        assert!(vm.heap.get(parent_id).unwrap().cache_is_empty());
         assert_eq!(access_member(&mut vm, &access, "key"), Value::Object(key));
         vm.collect(std::slice::from_ref(&access));
         assert!(vm.heap.get(key).is_ok());

@@ -871,13 +871,13 @@ mod tests {
                         vm.heap
                             .get(prototype)
                             .unwrap()
-                            .cache
+                            .cache_slots
                             .iter()
-                            .any(|(key, state)| {
-                                if key.name != "converters" {
+                            .any(|slot| {
+                                if slot.key.name != "converters" {
                                     return false;
                                 }
-                                let LazyState::Completed(Value::Object(id)) = state else {
+                                let Value::Object(id) = &slot.value else {
                                     return false;
                                 };
                                 let object = vm.heap.get(*id).unwrap();

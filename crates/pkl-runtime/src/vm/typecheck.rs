@@ -839,15 +839,13 @@ fn try_fast_strict_map_check(
                     && slot.key.name == member.name
                 {
                     &slot.value
-                } else if let Some(LazyState::Completed(v)) = object.cache.get(&CacheKey {
-                    owner: None,
-                    name: member.name.clone(),
-                    method: false,
-                    entry: true,
-                }) {
-                    v
                 } else {
-                    return None;
+                    object.cache_get_completed(&CacheKey {
+                        owner: None,
+                        name: member.name.clone(),
+                        method: false,
+                        entry: true,
+                    })?
                 };
                 match try_fast_type_with_heap_depth(val_ty, val, heap, depth + 1) {
                     Some(true) => {}
@@ -2565,7 +2563,7 @@ impl Vm {
                 crate::heap::CollectionKind::Map | crate::heap::CollectionKind::List
             )
             && !matches!(item.member.key, Value::Object(_))
-            && let Some(LazyState::Completed(value)) = receiver_obj.cache.get(&CacheKey {
+            && let Some(value) = receiver_obj.cache_get_completed(&CacheKey {
                 owner: None,
                 name: item.member.name.clone(),
                 method: false,

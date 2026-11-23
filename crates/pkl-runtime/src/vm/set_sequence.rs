@@ -645,7 +645,7 @@ impl Vm {
                                 members: source.members.clone(),
                                 collection_members: source.collection_members.clone(),
                                 member_values: source.member_values.clone(),
-                                cache: source.cache.clone(),
+                                cache_map: source.cache_map.clone(),
                                 cache_slots: source.cache_slots.clone(),
                                 cache_index: source.cache_index.clone(),
                                 ..Default::default()
@@ -685,7 +685,7 @@ impl Vm {
                             members: source.members.clone(),
                             collection_members: source.collection_members.clone(),
                             member_values: source.member_values.clone(),
-                            cache: source.cache.clone(),
+                            cache_map: source.cache_map.clone(),
                             cache_slots: source.cache_slots.clone(),
                             cache_index: source.cache_index.clone(),
                             map_index: source.map_index.clone(),
@@ -822,12 +822,14 @@ impl Vm {
             object.repeat_base_len = Some(run.values.len());
             object.collection_members.reserve(count_to_populate);
             object.members.reserve(count_to_populate);
+            object.cache_slots.reserve(count_to_populate);
             let m_len = run.values.len().max(1);
             for i in 0..count_to_populate {
                 let val = run.values[i % m_len].clone();
                 let name = PklString::from(format!("\0{}:{}", builder.index, i));
+                let entry_key = Value::Int((i as i64).into());
                 let descriptor = CollectionMember {
-                    key: Value::Int((i as i64).into()),
+                    key: entry_key.clone(),
                     name: name.clone(),
                     kind: CollectionMemberKind::Element,
                 };
@@ -852,7 +854,7 @@ impl Vm {
                 object.collection_members.push(descriptor);
                 object.members.push(member);
                 object.member_values.insert(cache_key.clone(), val.clone());
-                object.cache.insert(cache_key, LazyState::Completed(val));
+                object.push_completed_slot(cache_key, Some(entry_key), val);
             }
             let value = self.finish_set_sequence(&run)?;
             return self.set_sequence_return(run.step, value);

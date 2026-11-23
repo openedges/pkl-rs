@@ -1522,9 +1522,8 @@ pub(super) fn verify_fast_int_invocation(
                 name: call.name.clone(),
                 method: true,
             };
-            match recv_obj.cache.get(&key) {
-                Some(LazyState::Completed(Value::Function(resolved_id)))
-                    if *resolved_id == fn_id => {}
+            match recv_obj.cache_get_completed(&key) {
+                Some(Value::Function(resolved_id)) if *resolved_id == fn_id => {}
                 _ => return false,
             }
         }

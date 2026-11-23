@@ -1,5 +1,5 @@
 //! Non-forcing value snapshots for diagnostics and selected collection strings.
-use crate::heap::{CacheKey, CollectionKind, CollectionMemberKind, Heap, LazyState};
+use crate::heap::{CacheKey, CollectionKind, CollectionMemberKind, Heap};
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 use std::collections::BTreeSet;
 
@@ -536,8 +536,8 @@ impl Renderer<'_> {
                         method: false,
                     };
                     let object = self.heap.get(*access)?;
-                    match object.cache.get(&key) {
-                        Some(LazyState::Completed(value)) => Ok(value.clone()),
+                    match object.cache_get(&key) {
+                        Some(crate::heap::CacheEntry::Completed(value)) => Ok(value.clone()),
                         // Generated Access components are native constant declarations.
                         // Reading their stored payload neither forces arbitrary members
                         // nor publishes a cache entry during diagnostic rendering.
@@ -547,7 +547,7 @@ impl Renderer<'_> {
                                 "Reference path component has no native value",
                             )
                         }),
-                        _ => Err(RuntimeError::new(
+                        Some(crate::heap::CacheEntry::Evaluating) => Err(RuntimeError::new(
                             ErrorKind::InvalidBytecode,
                             "Reference path component is not cached",
                         )),
@@ -818,21 +818,21 @@ mod tests {
             render(&value, &heap, "test", 80).unwrap(),
             "new Child { z = ?; a = ?; m = ? }"
         );
-        heap.get_mut(object).unwrap().cache.insert(
+        heap.get_mut(object).unwrap().complete_cache(
             CacheKey {
                 entry: false,
                 owner: None,
                 name: "a".into(),
                 method: false,
             },
-            LazyState::Completed(Value::Int(1.into())),
+            Value::Int(1.into()),
         );
-        let before = heap.get(object).unwrap().cache.clone();
+        let before = heap.get(object).unwrap().cache_slots.len();
         assert_eq!(
             render(&value, &heap, "test", 80).unwrap(),
             "new Child { z = ?; a = 1; m = ? }"
         );
-        assert_eq!(heap.get(object).unwrap().cache, before);
+        assert_eq!(heap.get(object).unwrap().cache_slots.len(), before);
     }
 
     #[test]
@@ -842,14 +842,14 @@ mod tests {
             members: vec![member("self", false)].into(),
             ..Object::default()
         });
-        heap.get_mut(object).unwrap().cache.insert(
+        heap.get_mut(object).unwrap().complete_cache(
             CacheKey {
                 entry: false,
                 owner: None,
                 name: "self".into(),
                 method: false,
             },
-            LazyState::Completed(Value::Object(object)),
+            Value::Object(object),
         );
         let value = Value::Object(object);
         let text = render(&value, &heap, "test", 80).unwrap();

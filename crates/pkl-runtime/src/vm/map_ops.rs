@@ -119,7 +119,7 @@ impl Vm {
                     members: old.members.clone(),
                     collection_members: old.collection_members.clone(),
                     member_values: old.member_values.clone(),
-                    cache: old.cache.clone(),
+                    cache_map: old.cache_map.clone(),
                     cache_slots: old.cache_slots.clone(),
                     has_object_collection_key: old.has_object_collection_key,
                     cache_index: old.cache_index.clone(),
@@ -200,12 +200,6 @@ impl Vm {
                 .filter(|(key, _)| keep(&key.name))
                 .map(|(key, value)| (key.clone(), value.clone()))
                 .collect(),
-            cache: old
-                .cache
-                .iter()
-                .filter(|(key, _)| keep(&key.name))
-                .map(|(key, value)| (key.clone(), value.clone()))
-                .collect(),
             cache_slots: old
                 .cache_slots
                 .iter()
@@ -214,6 +208,7 @@ impl Vm {
                 .collect(),
             ..Default::default()
         });
+        self.heap.get_mut(target)?.rebuild_cache_map();
         // VmMap.remove calls its constructor directly, including empty results.
         Ok(target)
     }

@@ -2857,7 +2857,7 @@ impl Vm {
                 method: false,
                 name: name.into(),
             };
-            let Some(LazyState::Completed(Value::Class(expected))) = module.cache.get(&key) else {
+            let Some(Value::Class(expected)) = module.cache_get_completed(&key) else {
                 return Err(invalid("Jsonnet module class not initialized"));
             };
             if actual == *expected {
@@ -3039,7 +3039,7 @@ fn fast_lookup_member_cached<'a>(
     if obj.cache_index.is_rehash_incomplete() {
         return None;
     }
-    if obj.cache_slots.len() <= 16 {
+    if obj.cache_map.is_empty() && !obj.has_evaluating_keys() {
         for slot in obj.cache_slots.iter().rev() {
             if slot.key.entry == entry
                 && !slot.key.method
@@ -3057,10 +3057,7 @@ fn fast_lookup_member_cached<'a>(
         name: name.clone(),
         method: false,
     };
-    match obj.cache.get(&key) {
-        Some(LazyState::Completed(val)) => Some(val),
-        _ => None,
-    }
+    obj.cache_get_completed(&key)
 }
 
 #[inline]
@@ -3619,7 +3616,6 @@ impl Vm {
         let mut members = Vec::with_capacity(len);
         let mut cache_slots = Vec::with_capacity(len);
         let mut member_values = crate::heap::FastMap::default();
-        let mut cache = crate::heap::FastMap::default();
         for (idx, val) in values.into_iter().enumerate() {
             let name = collections::format_entry_internal_name(id.index, idx);
             let key_int = Value::Int((idx as i64).into());
@@ -3653,8 +3649,7 @@ impl Vm {
                 entry_key: Some(key_int),
                 value: val.clone(),
             });
-            member_values.insert(cache_key.clone(), val.clone());
-            cache.insert(cache_key, LazyState::Completed(val));
+            member_values.insert(cache_key, val);
         }
         let obj = self.heap.get_mut(id).ok()?;
         obj.collection_members = collection_members;
@@ -3662,7 +3657,7 @@ impl Vm {
         obj.cache_slots = cache_slots;
         obj.cache_index = cache_index;
         obj.member_values = member_values.into();
-        obj.cache = cache;
+        obj.rebuild_cache_map();
         Some(id)
     }
 
@@ -3684,7 +3679,7 @@ impl Vm {
             if object.collection_cast.is_some() || !object.member_values.is_empty() {
                 return None;
             }
-            if object.cache.contains_key(cache_key) {
+            if object.cache_contains_key(cache_key) {
                 return None;
             }
             let env = object
@@ -4022,7 +4017,7 @@ impl Vm {
                 && !matches!(probe, Value::Object(_))
             {
                 let obj = self.heap.get(receiver)?;
-                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                if obj.cache_get_completed(&cache_key).is_some()
                     || (!obj.cache_slots.is_empty()
                         && self
                             .lookup_non_object_cache_entry(receiver, probe)?
@@ -4097,7 +4092,7 @@ impl Vm {
                 && !matches!(probe, Value::Object(_))
             {
                 let obj = self.heap.get(receiver)?;
-                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                if obj.cache_get_completed(&cache_key).is_some()
                     || (!obj.cache_slots.is_empty()
                         && self
                             .lookup_non_object_cache_entry(receiver, probe)?

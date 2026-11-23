@@ -406,7 +406,8 @@ impl Vm {
                             let cached = if recv_obj.cache_index.is_rehash_incomplete() {
                                 None
                             } else if !member.entry {
-                                if recv_obj.cache_slots.len() <= 16 {
+                                if recv_obj.cache_map.is_empty() && !recv_obj.has_evaluating_keys()
+                                {
                                     recv_obj
                                         .cache_slots
                                         .iter()
@@ -425,14 +426,11 @@ impl Vm {
                                         name: member.name.clone(),
                                         method: false,
                                     };
-                                    match recv_obj.cache.get(&key) {
-                                        Some(LazyState::Completed(val)) => Some(val),
-                                        _ => None,
-                                    }
+                                    recv_obj.cache_get_completed(&key)
                                 }
                             } else if !recv_obj.has_object_collection_key
                                 && !object.has_object_collection_key
-                                && !recv_obj.cache.is_empty()
+                                && !recv_obj.cache_slots.is_empty()
                             {
                                 let key = CacheKey {
                                     entry: true,
@@ -440,10 +438,7 @@ impl Vm {
                                     name: member.name.clone(),
                                     method: false,
                                 };
-                                match recv_obj.cache.get(&key) {
-                                    Some(LazyState::Completed(val)) => Some(val),
-                                    _ => None,
-                                }
+                                recv_obj.cache_get_completed(&key)
                             } else {
                                 None
                             };
@@ -601,11 +596,8 @@ impl Vm {
                             active.receiver == force.receiver && active.cache.as_ref() == Some(&key)
                         })
                     });
-                if !retained
-                    && let Ok(object) = self.heap.get_mut(force.receiver)
-                    && matches!(object.cache.get(&key), Some(LazyState::Evaluating))
-                {
-                    object.cache.remove(&key);
+                if !retained && let Ok(object) = self.heap.get_mut(force.receiver) {
+                    object.cache_clear_evaluating(&key);
                 }
             }
         }

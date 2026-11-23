@@ -443,10 +443,7 @@ impl Vm {
     ) -> Result<Option<Value>, RuntimeError> {
         if !key.entry {
             let object = self.heap.get(receiver)?;
-            return Ok(match object.cache.get(key) {
-                Some(LazyState::Completed(value)) => Some(value.clone()),
-                _ => None,
-            });
+            return Ok(object.cache_get_completed(key).cloned());
         }
         if !key.method
             && key.owner.is_none()
@@ -589,7 +586,7 @@ impl Vm {
                             method: false,
                             entry: true,
                         };
-                        if let Some(LazyState::Completed(value)) = object.cache.get(&key) {
+                        if let Some(value) = object.cache_get_completed(&key) {
                             return Ok(Some(value.clone()));
                         }
                     }
@@ -694,8 +691,8 @@ impl Vm {
                     object.cache_index.push();
                 }
                 let already_completed = !known_new
-                    && !object.cache.is_empty()
-                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                    && !object.cache_slots.is_empty()
+                    && object.cache_get_completed(&key).is_some();
                 if (known_new
                     || object.cache_slots.is_empty()
                     || (probe.is_none() && !already_completed))
@@ -730,12 +727,7 @@ impl Vm {
                     } else {
                         object.cache_index.len() > 4
                     };
-                    object.cache_slots.push(crate::heap::CacheSlot {
-                        key: key.clone(),
-                        entry_key: probe,
-                        value: value.clone(),
-                    });
-                    object.cache.insert(key, LazyState::Completed(value));
+                    object.push_completed_slot(key, probe, value);
                     need_rehash
                 };
                 if clear_eq && !self.heap.key_equalities.is_empty() {
@@ -757,8 +749,8 @@ impl Vm {
             let (has_hash, already_completed, slots_empty) = {
                 let object = self.heap.get_mut(receiver)?;
                 let already_completed = !known_new
-                    && !object.cache.is_empty()
-                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                    && !object.cache_slots.is_empty()
+                    && object.cache_get_completed(&key).is_some();
                 (
                     object.cache_index.has_hash(),
                     already_completed,
@@ -818,8 +810,7 @@ impl Vm {
             };
             if let Some(index) = existing {
                 let object = self.heap.get_mut(receiver)?;
-                object.cache_slots[index].value = value.clone();
-                object.cache.insert(key, LazyState::Completed(value));
+                object.update_completed_slot(index, key, value);
                 return Ok(());
             }
             if self
@@ -857,12 +848,7 @@ impl Vm {
                 };
                 let object = self.heap.get_mut(receiver)?;
                 let index = object.cache_index.push();
-                object.cache_slots.push(crate::heap::CacheSlot {
-                    key: key.clone(),
-                    entry_key: probe,
-                    value: value.clone(),
-                });
-                object.cache.insert(key, LazyState::Completed(value));
+                object.push_completed_slot(key, probe, value);
                 if object.cache_index.has_hash() {
                     let should = object.cache_index.should_rehash();
                     object.cache_index.put_hash(index, hash, should)
@@ -1166,7 +1152,7 @@ impl Vm {
             return Ok(());
         }
         if member.kind == CollectionMemberKind::Property {
-            if let Some(LazyState::Completed(value)) = obj.cache.get(&CacheKey {
+            if let Some(value) = obj.cache_get_completed(&CacheKey {
                 entry: false,
                 owner: None,
                 name: member.name.clone(),
@@ -2368,8 +2354,7 @@ impl Vm {
                     });
                 if let Some(index) = existing {
                     let object = self.heap.get_mut(id)?;
-                    object.cache_slots[index].value = value.clone();
-                    object.cache.insert(key, LazyState::Completed(value));
+                    object.update_completed_slot(index, key, value);
                 } else {
                     run.tasks.push(Task::AppendCache(id, key, value, None));
                     if self.heap.get_mut(id)?.cache_index.grow_before_append() {
@@ -2397,8 +2382,7 @@ impl Vm {
                     {
                         if identical_key(&self.heap, &probe, &stored) {
                             let object = self.heap.get_mut(id)?;
-                            object.cache_slots[index].value = value.clone();
-                            object.cache.insert(key, LazyState::Completed(value));
+                            object.update_completed_slot(index, key, value);
                         } else {
                             let depth = run.tasks.len();
                             run.on_false.push((depth, retry));
@@ -2425,30 +2409,17 @@ impl Vm {
                     .ok_or_else(|| invalid("cache publication branch"))?;
                 let object = self.heap.get_mut(id)?;
                 // EconomicMap replaces the value, retaining the original key object.
-                object.cache_slots[index].value = value.clone();
-                object.cache.insert(key, LazyState::Completed(value));
+                object.update_completed_slot(index, key, value);
             }
             Task::AppendCache(id, key, value, probe) => {
                 // Warming local slots or publishing duplicate slots can change
                 // directional object equality, including that of enclosing keys.
-                if key.owner.is_some()
-                    || matches!(
-                        self.heap.get(id)?.cache.get(&key),
-                        Some(LazyState::Completed(_))
-                    )
-                {
+                if key.owner.is_some() || self.heap.get(id)?.cache_get_completed(&key).is_some() {
                     self.heap.key_equalities.clear();
                 }
                 let object = self.heap.get_mut(id)?;
                 let index = object.cache_index.push();
-                object.cache_slots.push(crate::heap::CacheSlot {
-                    key: key.clone(),
-                    entry_key: probe.clone(),
-                    value: value.clone(),
-                });
-                object
-                    .cache
-                    .insert(key.clone(), LazyState::Completed(value));
+                object.push_completed_slot(key, probe.clone(), value);
                 if object.cache_index.has_hash() {
                     run.tasks.push(Task::CacheLink(id, index, true));
                     if let Some(value) = probe {

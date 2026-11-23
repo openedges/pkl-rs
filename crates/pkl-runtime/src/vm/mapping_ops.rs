@@ -192,7 +192,7 @@ impl Vm {
                 map_index: old.map_index.clone(),
                 set_entries: old.set_entries.clone(),
                 member_values: old.member_values.clone(),
-                cache: old.cache.clone(),
+                cache_map: old.cache_map.clone(),
                 cache_slots: old.cache_slots.clone(),
                 cache_index: old.cache_index.clone(),
                 ..Default::default()
