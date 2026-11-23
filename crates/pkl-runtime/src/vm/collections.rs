@@ -480,7 +480,7 @@ pub fn ordered_members(
     let typed = typed_class(heap, receiver)?.is_some() || heap.get(receiver)?.is_module;
     let mut chain = Vec::new();
     let mut next = Some(receiver);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(id) = next {
         if !visited.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -735,7 +735,7 @@ pub(super) fn forcing_members(
     let effective = ordered_members(heap, receiver)?;
     let mut result = Vec::new();
     let mut next = Some(receiver);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(id) = next {
         if !visited.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -824,7 +824,7 @@ pub(crate) fn render_members(
 ) -> Result<Vec<RenderMember>, RuntimeError> {
     let mut chain = Vec::new();
     let mut owner = Some(receiver);
-    let mut seen = BTreeSet::new();
+    let mut seen = SmallObjectIdSet::new();
     while let Some(id) = owner {
         if !seen.insert(id) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -878,7 +878,7 @@ fn predicate_members(
     let mut result = Vec::new();
     let mut seen = Vec::new();
     let mut next = Some(source);
-    let mut visited = BTreeSet::new();
+    let mut visited = SmallObjectIdSet::new();
     while let Some(owner) = next {
         if !visited.insert(owner) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));

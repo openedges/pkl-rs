@@ -537,6 +537,48 @@ pub enum Instruction {
     Return,
 }
 
+/// Small stack-backed `ObjectId` set for cycle detection on short parent chains,
+/// falling back to `BTreeSet` only beyond 8 ancestors.
+pub(super) struct SmallObjectIdSet {
+    inline: [ObjectId; 8],
+    len: usize,
+    overflow: Option<BTreeSet<ObjectId>>,
+}
+
+impl SmallObjectIdSet {
+    #[inline(always)]
+    pub(super) fn new() -> Self {
+        Self {
+            inline: [ObjectId {
+                heap: 0,
+                index: 0,
+                generation: 0,
+            }; 8],
+            len: 0,
+            overflow: None,
+        }
+    }
+
+    #[inline(always)]
+    pub(super) fn insert(&mut self, id: ObjectId) -> bool {
+        if let Some(set) = &mut self.overflow {
+            return set.insert(id);
+        }
+        if self.inline[..self.len].contains(&id) {
+            return false;
+        }
+        if self.len < self.inline.len() {
+            self.inline[self.len] = id;
+            self.len += 1;
+            return true;
+        }
+        let mut set: BTreeSet<ObjectId> = self.inline.into_iter().collect();
+        let inserted = set.insert(id);
+        self.overflow = Some(set);
+        inserted
+    }
+}
+
 /// Type checks supported by the shared evaluator. Parametric collections use
 /// resumable checks and lazy wrappers; function types preserve metadata and check arity.
 #[derive(Clone, Debug)]
@@ -3571,6 +3613,7 @@ impl Vm {
                         resolved_declarations,
                         program,
                         list_class,
+                        None,
                         0,
                     ) == Some(true)
                     {
@@ -3592,6 +3635,7 @@ impl Vm {
                         resolved_declarations,
                         program,
                         list_class,
+                        None,
                         0,
                     ) {
                         let _ = stack.pop();
@@ -3701,6 +3745,7 @@ impl Vm {
                         resolved_declarations,
                         program,
                         list_class,
+                        None,
                         0,
                     ) != Some(true)
                     {
@@ -6051,7 +6096,7 @@ impl Vm {
             return Ok(());
         }
         let mut owner = initial_owner;
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         let member = if let Some(member) = resolved_member {
             member
         } else {
@@ -6352,7 +6397,7 @@ impl Vm {
             && self.heap.get(owner)?.mirror.is_none()
         {
             let mut parent = self.heap.get(owner)?.parent;
-            let mut visited = BTreeSet::new();
+            let mut visited = SmallObjectIdSet::new();
             while let Some(id) = parent {
                 if !visited.insert(id) {
                     return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -6988,7 +7033,7 @@ impl Vm {
         member: &Member,
     ) -> Result<Option<&Member>, RuntimeError> {
         let mut current = Some(parent);
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         let mut definition = None;
         while let Some(id) = current {
             if !visited.insert(id) {
@@ -7145,13 +7190,112 @@ impl Vm {
             }
             return Ok(());
         }
+        // Fast zero-allocation validation pass: walk the ancestor chain once
+        // without allocating BTreeSet/Vec/PklStrings unless a missing member
+        // error actually needs to be formatted.
+        let mut class_parent = None;
+        let mut class_initializing = false;
+        let mut has_class_name = false;
+        let mut visited = SmallObjectIdSet::new();
+        let mut ancestor = Some(parent);
+        if let [single] = members {
+            let mut found_decl = single.local;
+            while let Some(id) = ancestor {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let object = self.heap.get(id)?;
+                if !has_class_name && object.class_definition.is_some() {
+                    class_parent = Some(id);
+                    class_initializing = object.class_initializing;
+                    has_class_name = true;
+                }
+                if !found_decl
+                    && object.members.iter().any(|old| {
+                        !old.local && old.name == single.name && old.method == single.method
+                    })
+                {
+                    found_decl = true;
+                }
+                ancestor = object.parent;
+            }
+            if single.local {
+                return Ok(());
+            }
+            if !has_class_name {
+                return self.validate_object_override(parent, single);
+            }
+            if found_decl || (class_initializing && !single.method) {
+                return self.validate_object_override(class_parent.unwrap_or(parent), single);
+            }
+        } else {
+            let mut all_found = true;
+            let mut chain_inline = [parent; 8];
+            let mut chain_len = 0usize;
+            let mut chain_overflow: Option<Vec<ObjectId>> = None;
+            while let Some(id) = ancestor {
+                if !visited.insert(id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                if let Some(vec) = &mut chain_overflow {
+                    vec.push(id);
+                } else if chain_len < chain_inline.len() {
+                    chain_inline[chain_len] = id;
+                    chain_len += 1;
+                } else {
+                    let mut vec = chain_inline.to_vec();
+                    vec.push(id);
+                    chain_overflow = Some(vec);
+                }
+                let object = self.heap.get(id)?;
+                if !has_class_name && object.class_definition.is_some() {
+                    class_parent = Some(id);
+                    class_initializing = object.class_initializing;
+                    has_class_name = true;
+                }
+                ancestor = object.parent;
+            }
+            if !has_class_name {
+                for member in members.iter().filter(|m| !m.local) {
+                    self.validate_object_override(parent, member)?;
+                }
+                return Ok(());
+            }
+            let chain: &[ObjectId] = chain_overflow
+                .as_deref()
+                .unwrap_or(&chain_inline[..chain_len]);
+            for member in members.iter().filter(|m| !m.local) {
+                if class_initializing && !member.method {
+                    continue;
+                }
+                let found = chain.iter().any(|&id| {
+                    self.heap.get(id).is_ok_and(|obj| {
+                        obj.members.iter().any(|old| {
+                            !old.local && old.name == member.name && old.method == member.method
+                        })
+                    })
+                });
+                if !found {
+                    all_found = false;
+                    break;
+                }
+            }
+            if all_found {
+                let target = class_parent.unwrap_or(parent);
+                for member in members.iter().filter(|m| !m.local) {
+                    self.validate_object_override(target, member)?;
+                }
+                return Ok(());
+            }
+        }
+        // Cold error path: collect full property names and diagnostics.
         let mut ancestor = Some(parent);
         let mut declared = BTreeSet::new();
         let mut property_names = Vec::new();
         let mut class_name = None;
         let mut class_parent = None;
         let mut class_initializing = false;
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         while let Some(id) = ancestor {
             if !visited.insert(id) {
                 return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
@@ -9670,10 +9814,36 @@ impl Vm {
             // A successful cast exits its Java try block before cache publication.
             force.stolen_cast = None;
         }
-        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+        let list_class = self
+            .builtin_classes
+            .get(&classes::BuiltinClass::List)
+            .copied();
+        while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.inherited_types.is_empty()
         {
+            let fast_ok = {
+                let (ty, _, _, owner) = &force.inherited_types[0];
+                let owner = *owner;
+                self.heap.get(owner).ok().is_some_and(|owner_obj| {
+                    owner_obj.environment.type_arguments.is_empty()
+                        && fast_eval_type_in_poll(
+                            ty,
+                            &value,
+                            &owner_obj.environment,
+                            &self.heap,
+                            &self.resolved_declarations,
+                            &self.program,
+                            list_class,
+                            owner_obj.is_module.then_some(owner),
+                            0,
+                        ) == Some(true)
+                })
+            };
+            if fast_ok {
+                force.inherited_types.remove(0);
+                continue;
+            }
             let receiver = force.receiver;
             let (ty, span, member, owner) = force.inherited_types.remove(0);
             let declaration = self
@@ -9745,10 +9915,29 @@ impl Vm {
                 .environment = environment;
             return Ok(());
         }
-        if let Some(force) = &mut self.frames.last_mut().expect("active frame").force
+        while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.collection_casts.is_empty()
         {
+            let fast_ok = {
+                let cast = &force.collection_casts[0];
+                cast.environment.type_arguments.is_empty()
+                    && fast_eval_type_in_poll(
+                        &cast.ty,
+                        &value,
+                        &cast.environment,
+                        &self.heap,
+                        &self.resolved_declarations,
+                        &self.program,
+                        list_class,
+                        None,
+                        0,
+                    ) == Some(true)
+            };
+            if fast_ok {
+                force.collection_casts.remove(0);
+                continue;
+            }
             let stolen = force.stolen_cache_value;
             let receiver = force.receiver;
             let probe = force.entry_probe.clone();
@@ -9883,18 +10072,28 @@ impl Vm {
 }
 
 #[inline(always)]
-fn fast_declaring_module(env: &Environment, heap: &Heap) -> Option<ObjectId> {
-    let mut scope = env.scopes.last()?;
+fn fast_declaring_module(
+    env: &Environment,
+    heap: &Heap,
+    fallback_module: Option<ObjectId>,
+) -> Option<ObjectId> {
+    let Some(mut scope) = env.scopes.last() else {
+        return fallback_module;
+    };
     for _ in 0..8 {
         let obj = heap.get(scope.owner).ok()?;
         if obj.is_module {
             return Some(scope.owner);
         }
-        scope = obj.environment.scopes.last()?;
+        let Some(next) = obj.environment.scopes.last() else {
+            return fallback_module;
+        };
+        scope = next;
     }
     None
 }
 
+#[allow(clippy::too_many_arguments)]
 fn fast_type_is_resolved(
     ty: &TypeCheck,
     env: &Environment,
@@ -9902,6 +10101,7 @@ fn fast_type_is_resolved(
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
     list_class: Option<ObjectId>,
+    fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> bool {
     if !ty.has_declared() {
@@ -9919,6 +10119,7 @@ fn fast_type_is_resolved(
                 resolved_declarations,
                 program,
                 list_class,
+                fallback_module,
                 depth + 1,
             )
         }
@@ -9930,6 +10131,7 @@ fn fast_type_is_resolved(
                 resolved_declarations,
                 program,
                 list_class,
+                fallback_module,
                 depth + 1,
             )
         }),
@@ -9943,10 +10145,11 @@ fn fast_type_is_resolved(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth + 1,
         ),
         TypeCheck::Declared { recipe, arguments } => {
-            let Some(owner) = fast_declaring_module(env, heap) else {
+            let Some(owner) = fast_declaring_module(env, heap, fallback_module) else {
                 return false;
             };
             match resolved_declarations.get(&(*recipe, owner)) {
@@ -9961,6 +10164,7 @@ fn fast_type_is_resolved(
                             resolved_declarations,
                             program,
                             list_class,
+                            fallback_module,
                             depth + 1,
                         )
                     } else {
@@ -9990,6 +10194,7 @@ fn fast_type_is_resolved(
                             resolved_declarations,
                             program,
                             list_class,
+                            None,
                             depth + 1,
                         )
                 }
@@ -10001,6 +10206,7 @@ fn fast_type_is_resolved(
                         resolved_declarations,
                         program,
                         list_class,
+                        fallback_module,
                         depth + 1,
                     )
                 }
@@ -10020,6 +10226,7 @@ fn fast_eval_strict_list_in_poll(
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
     list_class: Option<ObjectId>,
+    fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> Option<bool> {
     let Value::Object(id) = val else {
@@ -10030,6 +10237,7 @@ fn fast_eval_strict_list_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth,
         )
         .then_some(false);
@@ -10048,6 +10256,7 @@ fn fast_eval_strict_list_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth,
         )
         .then_some(false);
@@ -10070,6 +10279,7 @@ fn fast_eval_strict_list_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth,
         )
         .then_some(true);
@@ -10083,6 +10293,7 @@ fn fast_eval_strict_list_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth,
         ) {
             Some(true) => continue,
@@ -10103,6 +10314,7 @@ fn fast_eval_type_in_poll(
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
     list_class: Option<ObjectId>,
+    fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> Option<bool> {
     if let Some(matched) = typecheck::try_fast_leaf_type(ty, val) {
@@ -10149,6 +10361,7 @@ fn fast_eval_type_in_poll(
                     resolved_declarations,
                     program,
                     list_class,
+                    fallback_module,
                     depth + 1,
                 )
                 .then_some(true)
@@ -10161,6 +10374,7 @@ fn fast_eval_type_in_poll(
                     resolved_declarations,
                     program,
                     list_class,
+                    fallback_module,
                     depth + 1,
                 )
             }
@@ -10173,6 +10387,7 @@ fn fast_eval_type_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth + 1,
         ),
         TypeCheck::NamedAlias { expanded, .. } if !expanded.has_declared() => {
@@ -10184,6 +10399,7 @@ fn fast_eval_type_in_poll(
                 resolved_declarations,
                 program,
                 list_class,
+                fallback_module,
                 depth + 1,
             )
         }
@@ -10211,6 +10427,7 @@ fn fast_eval_type_in_poll(
                     resolved_declarations,
                     program,
                     list_class,
+                    fallback_module,
                     depth + 1,
                 ) {
                     Some(true) => {
@@ -10222,6 +10439,7 @@ fn fast_eval_type_in_poll(
                                 resolved_declarations,
                                 program,
                                 list_class,
+                                fallback_module,
                                 depth + 1,
                             )
                         }) {
@@ -10246,6 +10464,7 @@ fn fast_eval_type_in_poll(
             resolved_declarations,
             program,
             list_class,
+            fallback_module,
             depth + 1,
         ),
         TypeCheck::Function {
@@ -10271,7 +10490,7 @@ fn fast_eval_type_in_poll(
             }
         }
         TypeCheck::Declared { recipe, arguments } => {
-            let owner = fast_declaring_module(env, heap)?;
+            let owner = fast_declaring_module(env, heap, fallback_module)?;
             match resolved_declarations.get(&(*recipe, owner)) {
                 Some(type_resolution::DeclarationValue::Value(Value::Class(target_cls))) => {
                     if arguments.is_empty() {
@@ -10291,6 +10510,7 @@ fn fast_eval_type_in_poll(
                                 resolved_declarations,
                                 program,
                                 list_class,
+                                fallback_module,
                                 depth + 1,
                             )
                         } else if class.id != classes::TYPED
@@ -10314,6 +10534,7 @@ fn fast_eval_type_in_poll(
                             resolved_declarations,
                             program,
                             list_class,
+                            fallback_module,
                             depth + 1,
                         )
                     } else {
@@ -10340,6 +10561,7 @@ fn fast_eval_type_in_poll(
                             resolved_declarations,
                             program,
                             list_class,
+                            None,
                             depth + 1,
                         )
                     } else {
@@ -10378,6 +10600,7 @@ fn fast_eval_type_in_poll(
                         resolved_declarations,
                         program,
                         list_class,
+                        fallback_module,
                         depth + 1,
                     )
                 }
