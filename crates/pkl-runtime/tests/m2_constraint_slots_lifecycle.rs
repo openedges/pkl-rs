@@ -308,8 +308,11 @@ fn cancelling_reclaims_slot_capture_cycles_and_retry_keeps_alias_identity() {
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(1.into())));
     vm.start(scalar, vec![]).unwrap();
     assert_eq!(vm_ready(&mut vm), Ok(Value::Int(0.into())));
+    // `this.marker` and `this.callback` inside the `Outer` constraint allocate 2 persistent
+    // executable nodes (+7 -> +9), while `checked.marker` (`[Constant(1), Return]`) runs via
+    // zero-frame trivial member eval without allocating an unused `ExecutionSite::Member` node.
     assert_eq!(
-        retained_values(vm.collect(&[]), initialized_executables + 10),
+        retained_values(vm.collect(&[]), initialized_executables + 9),
         baseline
     );
     vm.close();
