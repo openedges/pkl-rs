@@ -429,17 +429,18 @@ impl Vm {
                     {
                         let key = key.clone();
                         let authored_uri = parsed_authored.clone();
-                        self.frames.last_mut().unwrap().uri_resolution = Some(Box::new(Resolution {
-                            module: module
-                                .clone()
-                                .ok_or_else(|| invalid("missing declaration identity"))?,
-                            path: PklString::default(),
-                            candidates: VecDeque::new(),
-                            selected: None,
-                            declaration_key: None,
-                            wrapper_fragment_paths: false,
-                            target: Target::Import { current, remaining },
-                        }));
+                        self.frames.last_mut().unwrap().uri_resolution =
+                            Some(Box::new(Resolution {
+                                module: module
+                                    .clone()
+                                    .ok_or_else(|| invalid("missing declaration identity"))?,
+                                path: PklString::default(),
+                                candidates: VecDeque::new(),
+                                selected: None,
+                                declaration_key: None,
+                                wrapper_fragment_paths: false,
+                                target: Target::Import { current, remaining },
+                            }));
                         return self.wait_module(ModuleRequestKind::ResolveImportUri {
                             key,
                             authored_uri,

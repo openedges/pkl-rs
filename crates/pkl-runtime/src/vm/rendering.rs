@@ -3372,9 +3372,10 @@ impl Vm {
         {
             let map_index = self.heap.get_mut(id).ok()?.map_index.as_mut()?;
             for &hash in &hashes {
-                let Ok(()) = map_index.insert_lazy::<std::convert::Infallible>(hash, true, |slot| {
-                    Ok(hashes[slot])
-                });
+                let Ok(()) =
+                    map_index.insert_lazy::<std::convert::Infallible>(hash, true, |slot| {
+                        Ok(hashes[slot])
+                    });
             }
         }
         let mut cache_index = crate::economic_map::EconomicMapIndex::with_capacity(0);
@@ -4067,10 +4068,7 @@ impl Vm {
                         let anc = self.heap.get_fast(anc_id)?;
                         if !anc.member_annotations.is_empty()
                             || anc.collection_cast.is_some()
-                            || anc
-                                .members
-                                .iter()
-                                .any(|m| !m.local && !m.method && m.entry)
+                            || anc.members.iter().any(|m| !m.local && !m.method && m.entry)
                         {
                             return None;
                         }
@@ -4087,7 +4085,7 @@ impl Vm {
                             if m.local || m.method {
                                 continue;
                             }
-                            if seen_hidden[..hidden_len].iter().any(|s| *s == Some(&m.name))
+                            if seen_hidden[..hidden_len].contains(&Some(&m.name))
                                 || scratch[base..].iter().any(
                                     |prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name),
                                 )

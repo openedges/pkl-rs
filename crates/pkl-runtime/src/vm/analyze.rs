@@ -495,12 +495,7 @@ impl Vm {
                     .take()
                     .ok_or_else(|| invalid("analysis edge value"))?;
                 let value_hash = self.java_hash(&value)?;
-                let mut map_index = self
-                    .heap
-                    .get_mut(set)?
-                    .map_index
-                    .take()
-                    .unwrap_or_default();
+                let mut map_index = self.heap.get_mut(set)?.map_index.take().unwrap_or_default();
                 // Core edges are unique by URI.compareTo, hence their URI strings
                 // and typed Import values are distinct. Still use the ordinary
                 // hash trie and preserve the URI-sorted visible insertion order.

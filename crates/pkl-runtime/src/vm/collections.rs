@@ -605,9 +605,13 @@ pub(crate) fn cache_entry_key(
                 return Ok(Some(Value::Int((idx as i64).into())));
             }
             let limit = (idx + 1).min(object.collection_members.len());
-            if let Some(member) = object.collection_members[..limit].iter().rev().find(|member| {
-                member.name == key.name && member.kind != CollectionMemberKind::Property
-            }) {
+            if let Some(member) = object.collection_members[..limit]
+                .iter()
+                .rev()
+                .find(|member| {
+                    member.name == key.name && member.kind != CollectionMemberKind::Property
+                })
+            {
                 return Ok(Some(member.key.clone()));
             }
             if let Some(member) = object.collection_members[limit..].iter().find(|member| {
@@ -1121,12 +1125,7 @@ impl Vm {
             if !old.is_empty() && self.prepare_keys(old)? {
                 return Ok(true);
             }
-            let mut map_index = self
-                .heap
-                .get_mut(id)?
-                .map_index
-                .take()
-                .unwrap_or_default();
+            let mut map_index = self.heap.get_mut(id)?.map_index.take().unwrap_or_default();
             map_index.insert_lazy(value_hash, true, |slot| {
                 self.java_hash(&self.heap.get(id)?.set_entries[slot])
             })?;
@@ -1339,12 +1338,7 @@ impl Vm {
         let key_for_cache = key.clone();
         if replacing.is_none() {
             let key_hash = self.java_hash(&key)?;
-            let mut map_index = self
-                .heap
-                .get_mut(id)?
-                .map_index
-                .take()
-                .unwrap_or_default();
+            let mut map_index = self.heap.get_mut(id)?.map_index.take().unwrap_or_default();
             map_index.insert_lazy(key_hash, append_order, |slot| {
                 self.java_hash(&self.heap.get(id)?.collection_members[slot].key)
             })?;
@@ -2384,8 +2378,9 @@ impl Vm {
                     self.frames
                         .last_mut()
                         .expect("active frame")
-                        .generic_default =
-                        Some(Box::new(generics::GenericDefaultRun::new(target, ty, origin)));
+                        .generic_default = Some(Box::new(generics::GenericDefaultRun::new(
+                        target, ty, origin,
+                    )));
                 }
             }
             Instruction::GenericConstructorParent { ty, source, cache } => {

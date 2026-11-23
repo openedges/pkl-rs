@@ -389,21 +389,23 @@ impl EqualityRun {
 impl Vm {
     fn schedule_tasks(&mut self, tasks: Vec<Task>, roots: Vec<Value>) {
         let frame = self.frames.last_mut().expect("active frame");
-        let run = frame.equality_run.get_or_insert_with(|| Box::new(EqualityRun {
-            tasks: Vec::new(),
-            on_false: Vec::new(),
-            active: BTreeSet::new(),
-            forced: BTreeSet::new(),
-            roots: Vec::new(),
-            equal: true,
-            negate: false,
-            retry: false,
-            prepared_hashes: None,
-            key_search: false,
-            hide_callsite: true,
-            forward: true,
-            forward_to_type: false,
-        }));
+        let run = frame.equality_run.get_or_insert_with(|| {
+            Box::new(EqualityRun {
+                tasks: Vec::new(),
+                on_false: Vec::new(),
+                active: BTreeSet::new(),
+                forced: BTreeSet::new(),
+                roots: Vec::new(),
+                equal: true,
+                negate: false,
+                retry: false,
+                prepared_hashes: None,
+                key_search: false,
+                hide_callsite: true,
+                forward: true,
+                forward_to_type: false,
+            })
+        });
         run.tasks.extend(tasks);
         run.roots.extend(roots);
     }

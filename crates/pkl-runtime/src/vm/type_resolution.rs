@@ -1435,16 +1435,18 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("default frame")
-                    .generic_default = Some(Box::new(generics::GenericDefaultRun::stack(ty, origin)));
+                    .generic_default =
+                    Some(Box::new(generics::GenericDefaultRun::stack(ty, origin)));
             }
             Instruction::ResolvedInferredParent { ty, origin, cache } => {
                 let frame = self.frames.last_mut().expect("inferred parent frame");
                 let ty = ty.substituted(&frame.environment)?;
-                frame.generic_default = Some(Box::new(generics::GenericDefaultRun::inferred_parent(
-                    ty,
-                    origin,
-                    cache.then_some((frame.block, frame.pc - 1)),
-                )));
+                frame.generic_default =
+                    Some(Box::new(generics::GenericDefaultRun::inferred_parent(
+                        ty,
+                        origin,
+                        cache.then_some((frame.block, frame.pc - 1)),
+                    )));
             }
             Instruction::ResolveClassType { name, local } => {
                 let frame = self.frames.last().expect("active frame");

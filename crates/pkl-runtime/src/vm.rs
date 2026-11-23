@@ -1831,6 +1831,7 @@ struct SuspendedContext {
     /// Caller locations captured at the Host boundary, innermost first. The
     /// pending reader has no language call node for a callback evaluation.
     diagnostic_callers: Vec<RuntimeFrame>,
+    #[allow(clippy::vec_box)]
     frames: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
@@ -2247,7 +2248,9 @@ pub struct Vm {
     callback_closing: bool,
     log_buffer: Vec<u16>,
     heap: Heap,
+    #[allow(clippy::vec_box)]
     frames: Vec<Box<Frame>>,
+    #[allow(clippy::vec_box)]
     frame_pool: Vec<Box<Frame>>,
     stack: identity::OperandStack,
     inputs: Vec<Value>,
@@ -8218,9 +8221,9 @@ impl Vm {
                     {
                         let frame = self.frames.last_mut().expect("property default frame");
                         let ty = ty.substituted(&frame.environment)?;
-                        frame.generic_default = Some(Box::new(generics::GenericDefaultRun::inferred_parent(
-                            ty, origin, None,
-                        )));
+                        frame.generic_default = Some(Box::new(
+                            generics::GenericDefaultRun::inferred_parent(ty, origin, None),
+                        ));
                     } else {
                         let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
                         self.stack.push(Value::Object(empty));
@@ -10101,7 +10104,13 @@ impl Vm {
             let receiver = force.receiver;
             let probe = force.entry_probe.clone();
             self.complete_cache_probe(receiver, key, value.clone(), probe)?;
-            if self.frames.last().expect("active frame").equality_run.is_some() {
+            if self
+                .frames
+                .last()
+                .expect("active frame")
+                .equality_run
+                .is_some()
+            {
                 if self.frames.len() > 1 {
                     let caller = self.frames.len() - 2;
                     self.frames[caller].callsite_hidden = true;
@@ -10796,12 +10805,14 @@ fn fast_eval_type_in_poll(
             string_literals: true,
             types,
             ..
-        } if !types.is_empty() => match val {
-            Value::String(actual) => Some(types.iter().any(
-                |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
-            )),
-            _ => Some(false),
-        },
+        } if !types.is_empty() => {
+            match val {
+                Value::String(actual) => Some(types.iter().any(
+                    |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
+                )),
+                _ => Some(false),
+            }
+        }
         TypeCheck::Union {
             string_literals: false,
             types,
@@ -10885,12 +10896,12 @@ fn fast_eval_type_in_poll(
             fallback_module,
             depth + 1,
         ),
-        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => {
-            Some(TypeCheck::CollectionBase {
+        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
+            TypeCheck::CollectionBase {
                 arguments: Vec::new(),
             }
-            .accepts(val, heap))
-        }
+            .accepts(val, heap),
+        ),
         TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
             let elem_ty = &arguments[0].0;
             let Value::Object(id) = val else {

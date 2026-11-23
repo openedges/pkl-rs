@@ -540,9 +540,9 @@ fn needs_type_identity_depth(ty: &TypeCheck, depth: u8) -> bool {
             | TypeCheck::CollectionBase { arguments } => arguments
                 .iter()
                 .any(|(arg, _)| needs_type_identity_depth(arg, next)),
-            TypeCheck::Union { types, .. } => types
-                .iter()
-                .any(|alt| needs_type_identity_depth(alt, next)),
+            TypeCheck::Union { types, .. } => {
+                types.iter().any(|alt| needs_type_identity_depth(alt, next))
+            }
             TypeCheck::VarArgs { element, .. } => needs_type_identity_depth(element, next),
             _ => false,
         };
@@ -909,19 +909,15 @@ fn try_fast_type_with_heap_depth(
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
             arguments,
-        } if arguments.len() == 2 => try_fast_strict_map_check(
-            &arguments[0].0,
-            &arguments[1].0,
-            value,
-            heap,
-            depth + 1,
-        ),
-        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => {
-            Some(TypeCheck::CollectionBase {
+        } if arguments.len() == 2 => {
+            try_fast_strict_map_check(&arguments[0].0, &arguments[1].0, value, heap, depth + 1)
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
+            TypeCheck::CollectionBase {
                 arguments: Vec::new(),
             }
-            .accepts(value, heap))
-        }
+            .accepts(value, heap),
+        ),
         TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
             let elem_ty = &arguments[0].0;
             let Value::Object(id) = value else {
@@ -954,12 +950,14 @@ fn try_fast_type_with_heap_depth(
             types,
             string_literals: true,
             ..
-        } if !types.is_empty() => match value {
-            Value::String(actual) => Some(types.iter().any(
-                |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
-            )),
-            _ => Some(false),
-        },
+        } if !types.is_empty() => {
+            match value {
+                Value::String(actual) => Some(types.iter().any(
+                    |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
+                )),
+                _ => Some(false),
+            }
+        }
         TypeCheck::Union {
             types,
             string_literals: false,

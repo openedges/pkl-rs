@@ -317,9 +317,7 @@ impl MapIndex {
             self.insertion_order.push(index);
         }
         if let Some(hash) = new_hash {
-            if !self.identity_dependent
-                && !self.root.insert_lazy(index, hash, 0, &mut hash_of)?
-            {
+            if !self.identity_dependent && !self.root.insert_lazy(index, hash, 0, &mut hash_of)? {
                 self.identity_dependent = true;
             }
         } else {
