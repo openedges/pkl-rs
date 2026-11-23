@@ -1,110 +1,54 @@
-# CI and local reproduction
+# CI, Release Packaging, and Local Verification
 
-[The workflow](../.github/workflows/ci.yml) has four independent scopes. The workspace
-matrix checks reference pins, formatting, lint, workspace tests, and Wasm compilation
-on Linux, macOS, and Windows. The Linux compatibility job checks inventories and all
-tooling regressions and the benchmark contract, installs the exact reference JDK, fetches the checksummed Java
-oracle, records seven smoke cases, compares an independent Java replay, and records
-three selected historical regression cases. Java replay verifies the comparison tool;
-that M0 job does not execute a Rust Pkl evaluator.
+GitHub Actions is split into two focused workflows to keep routine CI costs low while keeping release distribution automated, and all expensive differential, browser-matrix, fuzz, soak, and benchmark verification runs in a local or dedicated verification environment via [tools/local_verify.py](../tools/local_verify.py).
 
-The separate M1 experiment job executes bounded Java/Rust frontend and runtime
-comparisons, actual Java Host lifecycle observations, exact Java/Rust retry and
-nested-evaluation observation protocols, and the shared primitive
-corpus through native Rust, a Node addon, and real Chromium Wasm. It pins Node,
-Playwright and wasm-bindgen, builds artifacts, and uploads captures, artifacts,
-source snapshots and failures. Its architecture contract requires complete
-execution and cross-target consistency while preserving the exact known regex
-backend mismatches as failed compatibility cases. Remaining runtime and lifecycle
-diagnostic byte mismatches are also recorded explicitly. A green M1 job means
-the experiments and known-gap accounting reproduced, not full conformance.
-Lifecycle diagnostics are retained and compared separately from the observation
-protocol; protocol equality does not establish Java error rendering. Node and
-browser scenarios also require live Host operations to abort and release their
-resources on cancellation, close, and timeout.
-Host-sensitive VM performance measurements remain local, separately recorded
-experiments on a quiet host.
+## GitHub Actions scope (minimal tests, packaging, and release distribution)
 
-The M2 language job builds and freezes the current Rust probe, acquires raw Java
-and Rust language results, and verifies the selected development contract.
-Every selected case must match except the explicitly tracked cyclic-property
-diagnostic and integer remainder upstream bug described in
-[the M2 contract](m2-language.md). These exceptions retain their failed status;
-unrelated crashes, timeouts, missing results, or new
-differences fail the job. The full inventory remains incomplete and its strict
-gate runs additionally on manual full-corpus dispatch. A green M2 development
-job does not mean the language milestone is complete. The job also regenerates
-the identifier intervals against the pinned Java lexer/JDK and checks the exact
-Rust table bytes. A separate same-evaluator class sequence acquisition verifies
-initialization failure, subsequent access, and the declarations published before
-failure. Its bounded contract requires every selected call to match, with no new
-failure exception. Sequence results remain separate from the independent
-expression count and the full M2 gate. All evidence directories are retained in
-the M2 artifact, including failed acquisitions.
-The job has a 40-minute scheduling budget for the expanded Reference corpus;
-the preceding 1,059-case workload already took roughly 24 minutes in CI.
-Per-case timeouts, raw comparisons, and the two development exceptions are
-unchanged by this workload budget.
+1. **[ci.yml](../.github/workflows/ci.yml)** (`push`, `pull_request`, `workflow_dispatch` — **2 Ubuntu `ubuntu-24.04` jobs only**, zero macOS/Windows runners):
+   - `check-and-test`: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace + `java_regex` + `wasm32` `clippy -D warnings`, portable `wasm32-unknown-unknown` build checks, all 12 milestone manifest/contract `--check` verifiers (offline, no Java required), `tools/tests/test_local_verify.py`, and fast Rust unit/product-crate smoke tests (`xtask`, `pkl-formatter`, `pkl-server`, `pkl-repl`, `pkl-cli`, `pkl-doc`, `pkl-wasm`, `pkl-host-native`, and `pkl-runtime --lib`).
+   - `package-smoke`: Builds and smoke-tests `@pkl-rs/wasm` (`[profile.wasm-release]`, enforcing `pkl_wasm_bg.wasm` gzip-9 `<= 2.50 MiB` (`2,621,440 B`) plus `npm pack` clean-directory install), builds and smoke-tests `@pkl-rs/napi`, and builds and smoke-tests release `pkl` and `pkldoc` CLI binaries.
+2. **[release.yml](../.github/workflows/release.yml)** (**ONLY on version tags `v*` or manual `workflow_dispatch`** — never runs on ordinary `push`/`pull_request`):
+   - `package-linux-portable` (`ubuntu-24.04` `x86_64`, `ubuntu-24.04-arm` `aarch64`): Builds glibc `<= 2.28` (`manylinux_2_28`, checked via `tools/check_linux_glibc.py`) and static `musl` (`alpine:3.21`, verified zero `INTERP`) `pkl`/`pkldoc` binaries and Linux `@pkl-rs/napi` addons, then smoke-tests across Debian 12, Rocky Linux 9, Ubuntu 22.04, and Alpine 3.21.
+   - `package-macos-windows` (`macos-15`, `macos-15-intel`, `windows-latest`): Builds and smoke-tests release `pkl`/`pkldoc` archives and `@pkl-rs/napi` addons (`darwin-arm64`, `darwin-x64`, `win32-x64`).
+   - `package-wasm` (`ubuntu-24.04`): Builds, gzip-checks (`<= 2.50 MiB`), tests, and packs `@pkl-rs/wasm`.
+   - `assemble-and-release` (`ubuntu-24.04`): Collects all CLI archives, `@pkl-rs/wasm` tarball, and all 7 platform `.node` addons into a single multi-platform `@pkl-rs/napi` tarball, computes `SHA256SUMS.txt`, uploads `release-bundle` (30-day retention), publishes a GitHub Release on `v*` tags (or manual `publish_github_release=true`), and optionally publishes npm tarballs only when `publish_npm=true` with `NPM_TOKEN` configured.
 
-The M1 job also checks the retained Graal compilation archive and rederives its
-diagnostic verdict from raw captures, source/artifact identities, correctness
-records, and exact guest target/tier events. This is portable verification of a
-macOS arm64 acquisition, not a fresh Linux Graal execution or a benchmark.
-Missing target compilation, changed bytes, and incomplete cases fail the check.
-The separate diagnostic class override remains outside the oracle baseline.
-See the [compilation investigation](m1-graal.md) for acquisition commands.
-The step explicitly selects Bash so a verifier failure propagates through `tee`;
-GitHub's unspecified default shell does not enable `pipefail`.
-See the [GitHub shell contract](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idstepsshell)
-and [recorded positive and negative shell controls](../reports/m1/graal-ci-shell-evidence.tar.gz).
+All GitHub Actions third-party steps remain commit-SHA pinned, and `ci.yml`/`release.yml` contracts are checked automatically by [tools/tests/test_local_verify.py](../tools/tests/test_local_verify.py).
 
-The Java job pins Python 3.12, Temurin `21.0.13.1+2`, and action revisions. Oracle
-verification also checks the actual JDK vendor/build and Pkl artifact identity. A
-missing artifact, incompatible JDK, failed inventory check, missing case, corrupted
-capture, or byte mismatch fails the job. Reference checkouts are checked again after
-execution. Raw oracle, recording, replay, and regression evidence is uploaded even
-after failure, including hidden captured output files, with 14-day artifact retention. Missing all evidence also fails the
-upload step.
+## Local / dedicated verification environment (`tools/local_verify.py`)
 
-Manual dispatch with `full_corpus=true` additionally attempts every discovered command
-case. It currently returns failure for 99 blocked requirements and the list workload's
-512 MiB heap failure. Those outcomes are preserved in the uploaded report. Ordinary
-push and pull-request runs use the explicitly limited smoke/regression scope; a green
-smoke run cannot establish full-corpus completion. The separate Pantry investigation
-and host-sensitive performance runs are documented local commands, not CI jobs.
+Expensive verification suites — full 378-target Rust workspace tests, M0–M6 Java 0.32.0 differential suites (including M2 4,575-case replay and M4 all-29 Pantry packages), Playwright cross-browser matrices (Chromium/Firefox/WebKit), M7 seeded differential fuzzing, 18-pair memory reclamation soak, and 34-workload benchmarks against Official Apple Pkl 0.32.0 `native-image` and pinned Temurin 21 — run outside GitHub Actions via [tools/local_verify.py](../tools/local_verify.py):
+
+```sh
+# List all available suites and presets
+python3 tools/local_verify.py --list
+
+# Preview commands without executing
+python3 tools/local_verify.py --preset full --dry-run
+
+# Quick local gate (full 378-target Rust workspace + all 12 manifests/oracles/Python tests)
+python3 tools/local_verify.py --preset quick
+
+# Compatibility differential suites (M0-M6; add --full-corpus for M2 4,575 + M4 Pantry all-5)
+python3 tools/local_verify.py --preset compat
+
+# M7 fuzz + soak + benchmark (official native-image or both) + JS/Wasm analysis
+python3 tools/local_verify.py --suite m7-fuzz --suite m7-soak --suite m7-bench --baseline native-image
+```
+
+Each invocation writes to a fresh timestamped directory under `target/local-verify/<UTC-timestamp>/` (or `--output-root <dir>`) with a `summary.json` marked `provenance: "local-verification-environment-not-hosted-ci"`, preserving all raw evidence and failures without relabeling local runs as hosted CI.
 
 ## Local checkpoint acceptance
 
-Hosted CI is an automation and additional environment check, not a required
-transport for development evidence. A checkpoint can close with recorded local
-verification of its applicable development contract. Identify the exact commit,
-source/build identities, oracle settings, commands, host and runtime versions,
-raw results, known failures, and unexecuted platform coverage. Audit sealed local
-archives independently when accepting retained results. Do not repeat unchanged
-full acquisitions merely to imitate a hosted workflow.
+Hosted CI is an automation and packaging/release pipeline, not the sole transport for compatibility or performance evidence. A checkpoint can close with recorded local verification of its applicable development contract. Identify the exact commit, source/build identities, oracle settings, commands, host and runtime versions, raw results, known failures, and unexecuted platform coverage. Audit sealed local archives independently when accepting retained results. Do not repeat unchanged full acquisitions merely to imitate a hosted workflow.
 
-If CI never starts or produces no artifact, retain that failure and mark remote
-checks unexecuted. GitHub ZIP download/digest checks cannot apply to a nonexistent
-artifact; do not manufacture a local ZIP and call it CI evidence. Local archive
-integrity and exact-commit source checks provide their own provenance. Missing
-Linux or Windows execution remains a platform gap and does not block unrelated
-M2 development; all required target environments still need execution before a
-release claim. The existing workflow remains available without making its billing
-or service availability a development checkpoint gate.
+If a remote workflow is not run or produces no artifact, retain that gap honestly and mark remote checks unexecuted. Local archive integrity and exact-commit source checks provide their own provenance; all required target environments still need execution before a `release_ready: true` claim.
 
-## Reproduction
+## Historical M0/M1 CI verification record
 
-Initialize the pinned submodules as described in [README.md](../README.md). Run the
-workspace and Python checks in [TESTING.md](../TESTING.md). Install the exact reference
-JDK before following [the oracle bootstrap](oracle.md) and the record/compare/check
-commands in [the comparison contract](compatibility-tooling.md). New runs require
-fresh evidence directories. Candidate replay must use the same absolute workspace
-path as its Java baseline so error locations can be compared without rewriting bytes.
+Initialize the pinned submodules as described in [README.md](../README.md). Run the workspace and Python checks in [TESTING.md](../TESTING.md). Install the exact reference JDK before following [the oracle bootstrap](oracle.md) and the record/compare/check commands in [the comparison contract](compatibility-tooling.md). New runs require fresh evidence directories. Candidate replay must use the same absolute workspace path as its Java baseline so error locations can be compared without rewriting bytes.
 
-Recorded evidence is reviewable on another machine, but its absolute diagnostic paths
-and native JDK binary hashes belong to the original host. Generate a fresh Java baseline
-in the candidate's controlled environment for a formal comparison. Do not normalize
-historical output to make a different host appear identical.
+Recorded evidence is reviewable on another machine, but its absolute diagnostic paths and native JDK binary hashes belong to the original host. Generate a fresh Java baseline in the candidate's controlled environment for a formal comparison. Do not normalize historical output to make a different host appear identical.
 
 The local M0 checks passed on the recorded macOS host. After authenticated access became
 available, [run 39364517355](https://github.com/luuvish/pkl-rs/actions/runs/39364517355)

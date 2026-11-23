@@ -700,7 +700,7 @@
       ]
     },
     "m7:release:ci-and-platform-matrix": {
-      "description": "CI workflow covering M0-M7 verification gates and honest platform/browser/hosted-CI matrix reporting",
+      "description": "Lean packaging/smoke CI (ci.yml), tagged cross-platform release packaging/distribution (release.yml), and local/dedicated verification runner (tools/local_verify.py) with honest platform/browser/CI matrix reporting",
       "implementation_links": [
         {
           "path": "tools/m7_manifest.py",
@@ -709,8 +709,18 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "e5b32ae7cdf1a4547fcc5e74cfed5d2742ea55e0a51b66edee57ad1eea13059f",
-          "symbol": "compatibility-tooling"
+          "sha256": "0e4064060d834a8b252a350ab8cd28bf8ff34c42c5b1d338dc88942d98df6fe6",
+          "symbol": "package-smoke"
+        },
+        {
+          "path": ".github/workflows/release.yml",
+          "sha256": "bbdee51c1cc8a323a4027dafd2be8380fb9e5c0a23a5df29538b348a7112aad4",
+          "symbol": "assemble-and-release"
+        },
+        {
+          "path": "tools/local_verify.py",
+          "sha256": "7e5160b2d4b240c5bc47cad4c6d43dba0b4aa0658dbcdaad59a1f8a230b71ad5",
+          "symbol": "run_suites"
         }
       ],
       "implementation_status": "linked",
@@ -798,7 +808,7 @@
     "compatibility/m4-io-packages.json": "bf42ac571ce6bb194cea00a82d72b1f5c8075e23900ae20efb05488f9c98f793",
     "compatibility/m5-product-tools.json": "e01912ab880a32c3cdc954d45281a7862648c3aabc2401987e806f4e7e29044e",
     "compatibility/m6-wasm-napi.json": "86b2f7721c4f71d1b8c00770483473bcb05c99b9b5d9901bb6f9e1c846aeadb4",
-    "compatibility/m7-mappings.json": "1952526cce5029dd827a2e6aff05f4244b1a5e7cd53a06e6ba5db3db1d34103b",
+    "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",

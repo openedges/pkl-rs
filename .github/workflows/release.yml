@@ -1,0 +1,471 @@
+name: Release
+
+# Cross-platform packaging and distribution workflow.
+# Runs ONLY on version tags (`v*`) or explicit manual dispatch — never on
+# ordinary push or pull_request commits.
+#
+# Produces:
+# - Portable Linux glibc <= 2.28 and static musl CLI archives (`pkl`, `pkldoc`)
+#   for x86_64 and aarch64, smoke-tested across Debian 12, Rocky 9, Ubuntu 22.04,
+#   and Alpine 3.21.
+# - macOS (arm64, x64) and Windows (x64) CLI archives (`pkl`, `pkldoc`).
+# - Publishable `@pkl-rs/wasm` npm tarball (verified gzip-9 <= 2.50 MiB).
+# - Multi-platform `@pkl-rs/napi` npm tarball bundling all 7 native `.node` addons.
+# - `SHA256SUMS.txt` covering every release archive and npm tarball.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag label when running manually (e.g. v0.32.0; defaults to dry-run snapshot label)
+        required: false
+        default: ''
+        type: string
+      publish_github_release:
+        description: Create/update a GitHub Release and upload packaged assets (always true on v* tags)
+        required: false
+        default: false
+        type: boolean
+      publish_npm:
+        description: Publish @pkl-rs/wasm and @pkl-rs/napi tarballs to npm (requires NPM_TOKEN secret)
+        required: false
+        default: false
+        type: boolean
+      prerelease:
+        description: Mark the GitHub Release as a prerelease
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package-linux-portable:
+    name: Package Linux portable glibc 2.28 + static musl (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            arch: x86_64
+            node_arch: x64
+          - os: ubuntu-24.04-arm
+            arch: aarch64
+            node_arch: arm64
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    steps:
+      - name: Free disk space on Ubuntu x64 runners
+        if: ${{ runner.os == 'Linux' && runner.arch == 'X64' }}
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc || true
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - name: Build glibc 2.28 compatible pkl, pkldoc, and @pkl-rs/napi (manylinux_2_28)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/dist-linux-gnu-228
+          HOST_UID="$(id -u)"
+          HOST_GID="$(id -g)"
+          docker run --rm \
+            -e HOST_UID="$HOST_UID" \
+            -e HOST_GID="$HOST_GID" \
+            -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-gnu-228:/out" \
+            "quay.io/pypa/manylinux_2_28_${{ matrix.arch }}" \
+            bash -euo pipefail -c '
+              export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              export PATH="/tmp/cargo/bin:$PATH"
+              mkdir -p /tmp/src
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
+              cd /tmp/src
+              cargo build --release --locked -p pkl-cli -p pkl-doc -p pkl-napi
+              cp /tmp/target/release/pkl /out/pkl
+              cp /tmp/target/release/pkldoc /out/pkldoc
+              cp /tmp/target/release/libpkl_napi.so "/out/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              python3 /tmp/src/tools/check_linux_glibc.py --max-glibc 2.28 /out/pkl /out/pkldoc "/out/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              chown -R "${HOST_UID}:${HOST_GID}" /out
+            '
+      - name: Build static musl pkl, pkldoc, and Alpine musl @pkl-rs/napi (alpine:3.21)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/dist-linux-musl
+          HOST_UID="$(id -u)"
+          HOST_GID="$(id -g)"
+          docker run --rm \
+            -e HOST_UID="$HOST_UID" \
+            -e HOST_GID="$HOST_GID" \
+            -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-musl:/out" \
+            node:22-alpine3.21 \
+            sh -eu -c '
+              apk add --no-cache bash curl gcc musl-dev binutils
+              export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              export PATH="/tmp/cargo/bin:$PATH"
+              mkdir -p /tmp/src
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
+              cd /tmp/src
+              RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --locked -p pkl-cli -p pkl-doc
+              cp /tmp/target/release/pkl /out/pkl
+              cp /tmp/target/release/pkldoc /out/pkldoc
+              if readelf -l /out/pkl | grep -q INTERP; then
+                echo "ERROR: musl pkl binary is not statically linked" >&2
+                exit 1
+              fi
+              if readelf -l /out/pkldoc | grep -q INTERP; then
+                echo "ERROR: musl pkldoc binary is not statically linked" >&2
+                exit 1
+              fi
+              RUSTFLAGS="-C target-feature=-crt-static" CARGO_TARGET_DIR=/tmp/target-napi node packages/pkl-napi/scripts/build.mjs
+              node packages/pkl-napi/test/run.mjs
+              cp "packages/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-musl.node" "/out/pkl_napi.linux-${NODE_ARCH}-musl.node"
+              chown -R "${HOST_UID}:${HOST_GID}" /out
+            '
+      - name: Smoke-test Linux binaries across Debian 12, Rocky Linux 9, Ubuntu 22.04, and Alpine 3.21
+        shell: bash
+        run: |
+          set -euo pipefail
+          NODE_ARCH="${{ matrix.node_arch }}"
+          for IMG in node:22-bookworm-slim rockylinux:9-minimal ubuntu:22.04; do
+            echo "=== Smoke-testing glibc 2.28 + static musl CLI on ${IMG} ==="
+            docker run --rm \
+              -v "$PWD/target/dist-linux-gnu-228:/gnu:ro" \
+              -v "$PWD/target/dist-linux-musl:/musl:ro" \
+              "$IMG" sh -eu -c '
+                /gnu/pkl --version
+                /gnu/pkldoc --version
+                printf "a = 1 + 2\n" | /gnu/pkl eval -f json - | grep -q "\"a\": 3"
+                /musl/pkl --version
+                /musl/pkldoc --version
+                printf "a = 20 + 22\n" | /musl/pkl eval -f json - | grep -q "\"a\": 42"
+              '
+          done
+          echo "=== Smoke-testing glibc 2.28 @pkl-rs/napi on Debian 12 ==="
+          docker run --rm \
+            -e NODE_ARCH="$NODE_ARCH" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-gnu-228:/gnu:ro" \
+            node:22-bookworm-slim \
+            sh -eu -c '
+              cp -a /work/packages/pkl-napi /tmp/pkl-napi
+              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
+              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
+              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
+              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              cp "/gnu/pkl_napi.linux-${NODE_ARCH}-gnu.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-gnu.node"
+              node /tmp/pkl-napi/test/run.mjs
+            '
+          echo "=== Smoke-testing static musl CLI + musl @pkl-rs/napi on Alpine 3.21 ==="
+          docker run --rm \
+            -e NODE_ARCH="$NODE_ARCH" \
+            -v "$PWD:/work:ro" \
+            -v "$PWD/target/dist-linux-musl:/musl:ro" \
+            node:22-alpine3.21 \
+            sh -eu -c '
+              /musl/pkl --version
+              /musl/pkldoc --version
+              printf "a = 6 * 7\n" | /musl/pkl eval -f json - | grep -q "\"a\": 42"
+              cp -a /work/packages/pkl-napi /tmp/pkl-napi
+              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
+              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
+              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
+              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              cp "/musl/pkl_napi.linux-${NODE_ARCH}-musl.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-musl.node"
+              node /tmp/pkl-napi/test/run.mjs
+            '
+      - name: Archive Linux CLI release tarballs and collect N-API addons
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCH="${{ matrix.node_arch }}"
+          mkdir -p target/release-stage/cli target/release-stage/napi
+          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkl
+          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-gnu.tar.gz" -C target/dist-linux-gnu-228 pkldoc
+          tar -czf "target/release-stage/cli/pkl-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkl
+          tar -czf "target/release-stage/cli/pkldoc-linux-${ARCH}-musl.tar.gz" -C target/dist-linux-musl pkldoc
+          cp "target/dist-linux-gnu-228/pkl_napi.linux-${ARCH}-gnu.node" target/release-stage/napi/
+          cp "target/dist-linux-musl/pkl_napi.linux-${ARCH}-musl.node" target/release-stage/napi/
+      - name: Upload Linux packaged artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-linux-${{ matrix.node_arch }}
+          path: target/release-stage
+          if-no-files-found: error
+          retention-days: 14
+
+  package-macos-windows:
+    name: Package CLI and @pkl-rs/napi (${{ matrix.target_label }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-15
+            target_label: darwin-arm64
+            addon_name: pkl_napi.darwin-arm64.node
+            archive_ext: tar.gz
+          - os: macos-15-intel
+            target_label: darwin-x64
+            addon_name: pkl_napi.darwin-x64.node
+            archive_ext: tar.gz
+          - os: windows-latest
+            target_label: win32-x64
+            addon_name: pkl_napi.win32-x64.node
+            archive_ext: zip
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - name: Install pinned Rust toolchain
+        run: rustup show active-toolchain
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-rel-${{ matrix.target_label }}-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
+          restore-keys: cargo-rel-${{ matrix.target_label }}-
+      - name: Build and smoke-test release pkl and pkldoc binaries
+        shell: bash
+        run: |
+          set -euo pipefail
+          cargo build --release --locked -p pkl-cli --bin pkl -p pkl-doc --bin pkldoc
+          EXE=""
+          if [ "${{ runner.os }}" = "Windows" ]; then EXE=".exe"; fi
+          "./target/release/pkl${EXE}" --version
+          "./target/release/pkldoc${EXE}" --version
+          OUT="$(printf 'a = 20 + 22\n' | "./target/release/pkl${EXE}" eval -f json -)"
+          echo "${OUT}"
+          echo "${OUT}" | grep -q '"a": 42'
+      - name: Build and smoke-test @pkl-rs/napi
+        shell: bash
+        run: |
+          set -euo pipefail
+          node packages/pkl-napi/scripts/build.mjs
+          node packages/pkl-napi/test/run.mjs
+          test -f "packages/pkl-napi/native/${{ matrix.addon_name }}"
+      - name: Archive CLI release binaries and collect N-API addon
+        shell: bash
+        run: |
+          set -euo pipefail
+          LABEL="${{ matrix.target_label }}"
+          mkdir -p target/release-stage/cli target/release-stage/napi
+          if [ "${{ matrix.archive_ext }}" = "tar.gz" ]; then
+            tar -czf "target/release-stage/cli/pkl-${LABEL}.tar.gz" -C target/release pkl
+            tar -czf "target/release-stage/cli/pkldoc-${LABEL}.tar.gz" -C target/release pkldoc
+          else
+            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release/pkl.exe' -DestinationPath 'target/release-stage/cli/pkl-${LABEL}.zip' -Force"
+            pwsh -NoProfile -Command "Compress-Archive -Path 'target/release/pkldoc.exe' -DestinationPath 'target/release-stage/cli/pkldoc-${LABEL}.zip' -Force"
+          fi
+          cp "packages/pkl-napi/native/${{ matrix.addon_name }}" target/release-stage/napi/
+      - name: Upload packaged artifacts
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-${{ matrix.target_label }}
+          path: target/release-stage
+          if-no-files-found: error
+          retention-days: 14
+
+  package-wasm:
+    name: Package @pkl-rs/wasm (wasm-release)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - name: Install pinned Rust toolchain
+        run: rustup show active-toolchain
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            .cache/m1-tools
+            target
+          key: cargo-rel-wasm-wbg-0.2.108-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
+          restore-keys: cargo-rel-wasm-
+      - name: Install pinned wasm-bindgen-cli 0.2.108
+        run: |
+          if [ ! -x .cache/m1-tools/bin/wasm-bindgen ]; then
+            cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
+          fi
+      - name: Build, size-check, test, and pack @pkl-rs/wasm
+        run: |
+          set -euo pipefail
+          node packages/pkl-wasm/scripts/build.mjs
+          GZIP_BYTES="$(gzip -9 -c packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm | wc -c | tr -d ' ')"
+          echo "pkl_wasm_bg.wasm gzip-9 bytes: ${GZIP_BYTES} (limit: 2621440)"
+          if [ "${GZIP_BYTES}" -gt 2621440 ]; then
+            echo "ERROR: pkl_wasm_bg.wasm gzip-9 size ${GZIP_BYTES} exceeds 2.50 MiB budget (2621440)" >&2
+            exit 1
+          fi
+          node --test packages/pkl-wasm/test/wasm.test.mjs
+          mkdir -p target/release-stage/npm
+          npm pack packages/pkl-wasm --pack-destination target/release-stage/npm
+      - name: Upload @pkl-rs/wasm tarball
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-wasm
+          path: target/release-stage
+          if-no-files-found: error
+          retention-days: 14
+
+  assemble-and-release:
+    name: Assemble multi-platform release bundle, checksums, and publish
+    needs:
+      - package-linux-portable
+      - package-macos-windows
+      - package-wasm
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          submodules: recursive
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - name: Download all packaged platform artifacts
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          path: target/downloaded-release
+      - name: Assemble multi-platform @pkl-rs/napi tarball and release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p target/release-bundle packages/pkl-napi/dist packages/pkl-napi/native
+          cp packages/pkl-napi/src/runtime.cjs packages/pkl-napi/dist/index.cjs
+          cp packages/pkl-napi/src/index.mjs packages/pkl-napi/dist/index.mjs
+          cp packages/pkl-napi/src/index.d.ts packages/pkl-napi/dist/index.d.ts
+
+          # Copy all CLI archives and @pkl-rs/wasm tarball into final release-bundle
+          find target/downloaded-release -path '*/cli/*' -type f -exec cp {} target/release-bundle/ \;
+          find target/downloaded-release -path '*/npm/*.tgz' -type f -exec cp {} target/release-bundle/ \;
+
+          # Collect all 7 platform .node addons into packages/pkl-napi/native
+          find target/downloaded-release -path '*/napi/*.node' -type f -exec cp {} packages/pkl-napi/native/ \;
+          for ADDON in \
+            pkl_napi.darwin-arm64.node \
+            pkl_napi.darwin-x64.node \
+            pkl_napi.linux-x64-gnu.node \
+            pkl_napi.linux-arm64-gnu.node \
+            pkl_napi.linux-x64-musl.node \
+            pkl_napi.linux-arm64-musl.node \
+            pkl_napi.win32-x64.node; do
+            if [ ! -f "packages/pkl-napi/native/${ADDON}" ]; then
+              echo "ERROR: missing required @pkl-rs/napi addon: ${ADDON}" >&2
+              exit 1
+            fi
+          done
+
+          npm pack packages/pkl-napi --pack-destination target/release-bundle
+          (cd target/release-bundle && sha256sum *.tar.gz *.zip *.tgz | sort -k2 > SHA256SUMS.txt)
+          ls -lh target/release-bundle
+          cat target/release-bundle/SHA256SUMS.txt
+      - name: Upload consolidated release bundle artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-bundle
+          path: target/release-bundle
+          if-no-files-found: error
+          retention-days: 30
+      - name: Publish GitHub Release
+        if: ${{ startsWith(github.ref, 'refs/tags/v') || (github.event_name == 'workflow_dispatch' && inputs.publish_github_release) }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          elif [ -n "${{ inputs.tag }}" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            echo "ERROR: manual publish_github_release requires a non-empty 'tag' input (e.g. v0.32.0)" >&2
+            exit 1
+          fi
+          EXTRA_FLAGS=()
+          if [ "${{ inputs.prerelease }}" = "true" ] || [[ "${TAG}" == *-* ]]; then
+            EXTRA_FLAGS+=(--prerelease)
+          fi
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" target/release-bundle/* --clobber
+          else
+            gh release create "${TAG}" target/release-bundle/* \
+              --title "pkl-rs ${TAG}" \
+              --generate-notes \
+              "${EXTRA_FLAGS[@]}"
+          fi
+      - name: Publish @pkl-rs/wasm and @pkl-rs/napi tarballs to npm
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${NODE_AUTH_TOKEN}" ]; then
+            echo "ERROR: publish_npm=true requested, but NPM_TOKEN secret is not configured" >&2
+            exit 1
+          fi
+          printf '//registry.npmjs.org/:_authToken=%s\n' "${NODE_AUTH_TOKEN}" > "${HOME}/.npmrc"
+          chmod 600 "${HOME}/.npmrc"
+          for TGZ in target/release-bundle/pkl-rs-wasm-*.tgz target/release-bundle/pkl-rs-napi-*.tgz; do
+            npm publish "${TGZ}" --access public
+          done

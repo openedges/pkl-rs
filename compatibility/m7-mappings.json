@@ -266,11 +266,13 @@
     },
     "m7:release:ci-and-platform-matrix": {
       "track": "release-matrix",
-      "description": "CI workflow covering M0-M7 verification gates and honest platform/browser/hosted-CI matrix reporting",
+      "description": "Lean packaging/smoke CI (ci.yml), tagged cross-platform release packaging/distribution (release.yml), and local/dedicated verification runner (tools/local_verify.py) with honest platform/browser/CI matrix reporting",
       "implementation_status": "linked",
       "implementation_links": [
         {"path": "tools/m7_manifest.py", "symbol": "verify_release"},
-        {"path": ".github/workflows/ci.yml", "symbol": "compatibility-tooling"}
+        {"path": ".github/workflows/ci.yml", "symbol": "package-smoke"},
+        {"path": ".github/workflows/release.yml", "symbol": "assemble-and-release"},
+        {"path": "tools/local_verify.py", "symbol": "run_suites"}
       ]
     }
   }
