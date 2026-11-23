@@ -316,7 +316,7 @@ impl Vm {
         self.frames
             .last_mut()
             .expect("active join frame")
-            .collection_join = Some(JoinRun {
+            .collection_join = Some(Box::new(JoinRun {
             source: receiver,
             shallow,
             values,
@@ -324,7 +324,7 @@ impl Vm {
             next: 0,
             awaiting: false,
             output: crate::pkl_string::PklStringBuilder::default(),
-        });
+        }));
         if shallow {
             self.force_shallow_frame(Value::Object(receiver))?;
         }
@@ -2374,7 +2374,7 @@ impl Vm {
                         .last_mut()
                         .expect("active frame")
                         .generic_default =
-                        Some(generics::GenericDefaultRun::new(target, ty, origin));
+                        Some(Box::new(generics::GenericDefaultRun::new(target, ty, origin)));
                 }
             }
             Instruction::GenericConstructorParent { ty, source, cache } => {
@@ -2407,9 +2407,9 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("active frame")
-                    .generic_default = Some(generics::GenericDefaultRun::constructor(
+                    .generic_default = Some(Box::new(generics::GenericDefaultRun::constructor(
                     ty, source, origin, cache,
-                ));
+                )));
             }
 
             Instruction::EndCollection => self.end_collection()?,

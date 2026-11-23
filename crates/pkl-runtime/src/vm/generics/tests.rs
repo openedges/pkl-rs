@@ -190,7 +190,7 @@ fn default_descent_and_unwind_yield_trace_unpublished_objects_and_cancel() {
         let target = vm.heap.allocate(Object::default());
         let mut unpublished = BTreeSet::new();
         vm.frames.last_mut().unwrap().generic_default =
-            Some(GenericDefaultRun::new(target, ty, None));
+            Some(Box::new(GenericDefaultRun::new(target, ty, None)));
         for index in 0..stop {
             assert!(matches!(vm.poll(1), VmPoll::Yielded));
             // One shared empty Listing and the target accompany exactly one

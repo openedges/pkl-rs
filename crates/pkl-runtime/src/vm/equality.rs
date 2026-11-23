@@ -389,7 +389,7 @@ impl EqualityRun {
 impl Vm {
     fn schedule_tasks(&mut self, tasks: Vec<Task>, roots: Vec<Value>) {
         let frame = self.frames.last_mut().expect("active frame");
-        let run = frame.equality_run.get_or_insert_with(|| EqualityRun {
+        let run = frame.equality_run.get_or_insert_with(|| Box::new(EqualityRun {
             tasks: Vec::new(),
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -403,7 +403,7 @@ impl Vm {
             hide_callsite: true,
             forward: true,
             forward_to_type: false,
-        });
+        }));
         run.tasks.extend(tasks);
         run.roots.extend(roots);
     }
@@ -985,7 +985,7 @@ impl Vm {
     }
 
     pub(super) fn begin_equality(&mut self, left: Value, right: Value, negate: bool) {
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: vec![Task::Compare(left.clone(), right.clone(), true)],
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -999,7 +999,7 @@ impl Vm {
             hide_callsite: true,
             forward: false,
             forward_to_type: false,
-        });
+        }));
     }
     pub(super) fn force_collection_member(
         &mut self,
@@ -1020,7 +1020,7 @@ impl Vm {
         }
         let candidates = collections::forcing_members(&self.heap, id)?;
         let probe = member.key.clone();
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: vec![Task::Resolve(id, member, candidates, 0, None)],
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -1034,7 +1034,7 @@ impl Vm {
             hide_callsite: true,
             forward: true,
             forward_to_type: false,
-        });
+        }));
         Ok(())
     }
     pub(super) fn search_key(
@@ -1046,11 +1046,13 @@ impl Vm {
         if frame.key_search.is_none() && !matches!(key, Value::Object(_)) {
             return Ok(false);
         }
-        let mut search = frame.key_search.take().unwrap_or(KeySearch {
-            key: key.clone(),
-            candidates,
-            position: 0,
-            returned: None,
+        let mut search = frame.key_search.take().unwrap_or_else(|| {
+            Box::new(KeySearch {
+                key: key.clone(),
+                candidates,
+                position: 0,
+                returned: None,
+            })
         });
         if let Some(equal) = search.returned.take()
             && equal
@@ -1130,7 +1132,7 @@ impl Vm {
                 .prepared_hashes = Some(prepared);
             return Ok(false);
         }
-        self.frames.last_mut().expect("active frame").equality_run = Some(EqualityRun {
+        self.frames.last_mut().expect("active frame").equality_run = Some(Box::new(EqualityRun {
             tasks: pending.iter().rev().cloned().map(Task::Prepare).collect(),
             on_false: Vec::new(),
             active: BTreeSet::new(),
@@ -1144,7 +1146,7 @@ impl Vm {
             hide_callsite: true,
             forward: false,
             forward_to_type: false,
-        });
+        }));
         Ok(true)
     }
     fn class_identity(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
@@ -1479,7 +1481,7 @@ impl Vm {
     fn step_equality_collection_ops(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -1932,7 +1934,7 @@ impl Vm {
     fn step_equality_cache_ops(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -2252,7 +2254,7 @@ impl Vm {
     fn step_equality_compare(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {
@@ -2692,7 +2694,7 @@ impl Vm {
     fn step_equality_hash_and_build(
         &mut self,
         frame_index: usize,
-        mut run: EqualityRun,
+        mut run: Box<EqualityRun>,
         task: Task,
     ) -> Result<(), RuntimeError> {
         match task {

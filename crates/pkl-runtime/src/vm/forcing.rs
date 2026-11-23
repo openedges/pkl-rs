@@ -105,7 +105,7 @@ impl Vm {
         if frame.deep_force.is_some() {
             return Err(invalid("overlapping object force continuation"));
         }
-        frame.deep_force = Some(ForceRun {
+        frame.deep_force = Some(Box::new(ForceRun {
             pending_render_key: None,
             pending_render_comparison: None,
             allow_undefined: true,
@@ -117,7 +117,7 @@ impl Vm {
             active: Vec::new(),
             incomplete: BTreeSet::new(),
             awaiting: None,
-        });
+        }));
         Ok(())
     }
     /// Hashing/equality use the same persistent force operation with undefined forbidden.
@@ -158,7 +158,7 @@ impl Vm {
             .environment
             .clone();
         let mut frame = self.alloc_frame(usize::MAX, 0, self.stack.len(), environment);
-        frame.deep_force = Some(ForceRun {
+        frame.deep_force = Some(Box::new(ForceRun {
             pending_render_key: None,
             pending_render_comparison: None,
             root: root.clone(),
@@ -170,7 +170,7 @@ impl Vm {
             active: Vec::new(),
             incomplete: BTreeSet::new(),
             awaiting: None,
-        });
+        }));
         self.frames.push(frame);
         Ok(())
     }
@@ -364,7 +364,7 @@ impl Vm {
                         });
                         // force_key may defer key hashing, so install the boundary first.
                         let frame = self.frames.len() - 1;
-                        self.frames[frame].deep_force = Some(std::mem::replace(
+                        self.frames[frame].deep_force = Some(Box::new(std::mem::replace(
                             run,
                             ForceRun {
                                 pending_render_key: None,
@@ -379,9 +379,9 @@ impl Vm {
                                 incomplete: BTreeSet::new(),
                                 awaiting: None,
                             },
-                        ));
+                        )));
                         let result = self.force_declaration_member(receiver, owner, member);
-                        *run = self.frames[frame]
+                        *run = *self.frames[frame]
                             .deep_force
                             .take()
                             .expect("force read boundary");

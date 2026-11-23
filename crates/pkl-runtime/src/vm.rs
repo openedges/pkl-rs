@@ -1473,17 +1473,17 @@ struct Frame {
     environment: Environment,
     force: Option<Box<Force>>,
     lambda: bool,
-    type_run: Option<TypeRun>,
-    type_resolution: Option<type_resolution::DeclaredRun>,
-    generic_default: Option<generics::GenericDefaultRun>,
-    equality_run: Option<equality::EqualityRun>,
-    deep_force: Option<forcing::ForceRun>,
+    type_run: Option<Box<TypeRun>>,
+    type_resolution: Option<Box<type_resolution::DeclaredRun>>,
+    generic_default: Option<Box<generics::GenericDefaultRun>>,
+    equality_run: Option<Box<equality::EqualityRun>>,
+    deep_force: Option<Box<forcing::ForceRun>>,
     warning: Option<deprecation::PendingWarning>,
     method_call_site: Option<Box<deprecation::CallSite>>,
-    pcf_render: Option<rendering::RenderRun>,
+    pcf_render: Option<Box<rendering::RenderRun>>,
     json_parse: Option<Box<json_parser::Run>>,
     yaml_parse: Option<Box<yaml_parser::Run>>,
-    collection_join: Option<collections::JoinRun>,
+    collection_join: Option<Box<collections::JoinRun>>,
     collection_transform: Option<Box<collection_transforms::TransformRun>>,
     set_order: Option<Box<set_order::Run>>,
     set_sequence: Option<Box<set_sequence::Run>>,
@@ -1501,7 +1501,7 @@ struct Frame {
     amendment_arguments: Option<Vec<Value>>,
     amendment_end: Option<usize>,
     prepared_hashes: Option<Vec<Value>>,
-    key_search: Option<equality::KeySearch>,
+    key_search: Option<Box<equality::KeySearch>>,
     return_to_type: bool,
     diagnostic_member: Option<PklString>,
     callsite_hidden: bool,
@@ -1509,8 +1509,8 @@ struct Frame {
     captured_locals_len: usize,
     builders: Vec<ObjectId>,
     generator_scopes: Vec<identity::GeneratorScope>,
-    module_load: Option<modules::ModuleRun>,
-    uri_resolution: Option<uri_resolution::Resolution>,
+    module_load: Option<Box<modules::ModuleRun>>,
+    uri_resolution: Option<Box<uri_resolution::Resolution>>,
     glob: Option<Box<glob::Run>>,
     module_receiver: Option<ObjectId>,
 }
@@ -1714,7 +1714,7 @@ impl Frame {
             || self.module_load.as_ref().is_some_and(|run| run.initializing)
             || self
                 .deep_force
-                .as_ref()
+                .as_deref()
                 .is_some_and(forcing::ForceRun::is_trace)
     }
 }
@@ -2702,7 +2702,7 @@ impl Vm {
         self.active_type_trackers = self
             .frames
             .iter()
-            .filter(|frame| frame.type_run.as_ref().is_some_and(TypeRun::has_tracker))
+            .filter(|frame| frame.type_run.as_deref().is_some_and(TypeRun::has_tracker))
             .count()
             + usize::from(self.fact_tracker.is_some());
     }
@@ -8009,9 +8009,9 @@ impl Vm {
                     {
                         let frame = self.frames.last_mut().expect("property default frame");
                         let ty = ty.substituted(&frame.environment)?;
-                        frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
+                        frame.generic_default = Some(Box::new(generics::GenericDefaultRun::inferred_parent(
                             ty, origin, None,
-                        ));
+                        )));
                     } else {
                         let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
                         self.stack.push(Value::Object(empty));

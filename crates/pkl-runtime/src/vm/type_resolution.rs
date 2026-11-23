@@ -950,12 +950,12 @@ impl Vm {
                     self.frames
                         .last_mut()
                         .expect("type resolution frame")
-                        .type_resolution = Some(DeclaredRun {
+                        .type_resolution = Some(Box::new(DeclaredRun {
                         need,
                         phase: Phase::Type,
                         retry_instruction,
                         imported: None,
-                    });
+                    }));
                     return self.force(id, id, name, local, true, false);
                 }
                 if first && let Some(fallback) = &recipe.builtin {
@@ -995,12 +995,12 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("type resolution frame")
-                    .type_resolution = Some(DeclaredRun {
+                    .type_resolution = Some(Box::new(DeclaredRun {
                     need,
                     phase: Phase::Type,
                     retry_instruction,
                     imported: None,
-                });
+                }));
                 return self.force(base, base, name, false, true, false);
             }
             return Err(RuntimeError::new(
@@ -1019,12 +1019,12 @@ impl Vm {
         self.frames
             .last_mut()
             .expect("type resolution frame")
-            .type_resolution = Some(DeclaredRun {
+            .type_resolution = Some(Box::new(DeclaredRun {
             need,
             phase: Phase::Import,
             retry_instruction,
             imported: None,
-        });
+        }));
         self.force(need.owner, need.owner, import.clone(), true, true, false)
     }
 
@@ -1344,16 +1344,16 @@ impl Vm {
                 self.frames
                     .last_mut()
                     .expect("default frame")
-                    .generic_default = Some(generics::GenericDefaultRun::stack(ty, origin));
+                    .generic_default = Some(Box::new(generics::GenericDefaultRun::stack(ty, origin)));
             }
             Instruction::ResolvedInferredParent { ty, origin, cache } => {
                 let frame = self.frames.last_mut().expect("inferred parent frame");
                 let ty = ty.substituted(&frame.environment)?;
-                frame.generic_default = Some(generics::GenericDefaultRun::inferred_parent(
+                frame.generic_default = Some(Box::new(generics::GenericDefaultRun::inferred_parent(
                     ty,
                     origin,
                     cache.then_some((frame.block, frame.pc - 1)),
-                ));
+                )));
             }
             Instruction::ResolveClassType { name, local } => {
                 let frame = self.frames.last().expect("active frame");

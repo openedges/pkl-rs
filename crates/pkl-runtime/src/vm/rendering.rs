@@ -604,7 +604,7 @@ impl Vm {
                 return Ok(());
             }
         }
-        self.frames.last_mut().expect("renderer frame").pcf_render = Some(RenderRun {
+        self.frames.last_mut().expect("renderer frame").pcf_render = Some(Box::new(RenderRun {
             receiver,
             root,
             document_original: None,
@@ -630,7 +630,7 @@ impl Vm {
             has_value_converters: true,
             converters: Converters::default(),
             source: None,
-        });
+        }));
         Ok(())
     }
     pub(super) fn step_pcf(&mut self) -> Result<(), RuntimeError> {

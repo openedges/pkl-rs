@@ -848,7 +848,7 @@ impl Vm {
             .or_else(|| frame.diagnostic_member.clone())
             .or_else(|| metadata.map(|metadata| metadata.member.clone()))
             .unwrap_or_default();
-        frame.type_run = Some(TypeRun {
+        frame.type_run = Some(Box::new(TypeRun {
             node,
             value: value.clone(),
             checked: value,
@@ -865,7 +865,7 @@ impl Vm {
             tracker: None,
             constraint_source: None,
             constraint_section: None,
-        });
+        }));
         Ok(())
     }
     fn push_type_child(
@@ -900,7 +900,7 @@ impl Vm {
     }
     fn launch_constraint(
         &mut self,
-        mut run: TypeRun,
+        mut run: Box<TypeRun>,
         constraint: ConstraintCode,
     ) -> Result<(), RuntimeError> {
         let mut environment = if constraint.module_environment {
@@ -1016,7 +1016,7 @@ impl Vm {
     }
     fn launch_predicate(
         &mut self,
-        mut run: TypeRun,
+        mut run: Box<TypeRun>,
         function: ObjectId,
         argument: Value,
     ) -> Result<(), RuntimeError> {
@@ -1034,7 +1034,7 @@ impl Vm {
     /// checking continuation available to `fail`, including inherited value sites.
     fn fail_type_result(
         &mut self,
-        run: TypeRun,
+        run: Box<TypeRun>,
         error: Result<RuntimeError, RuntimeError>,
         authored_span: Option<Span>,
     ) -> Result<(), RuntimeError> {
@@ -2025,7 +2025,7 @@ fn union_eager(types: &[TypeCheck]) -> bool {
 impl Vm {
     fn collection_value(
         &mut self,
-        run: TypeRun,
+        run: Box<TypeRun>,
         state: CollectionState,
     ) -> Result<(), RuntimeError> {
         if state.arguments.last().expect("value type").0.noop() {

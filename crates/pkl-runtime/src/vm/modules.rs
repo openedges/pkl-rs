@@ -673,7 +673,7 @@ impl Vm {
             let mut run = self.fresh_module_run(source.uri.clone(), ModulePurpose::Primary, None);
             run.key = Some(key.clone());
             run.phase = ModulePhase::Resolve;
-            self.frames.last_mut().unwrap().module_load = Some(run);
+            self.frames.last_mut().unwrap().module_load = Some(Box::new(run));
             return self.wait_module(ModuleRequestKind::ResolveKey {
                 key,
                 resolved_key_id: ResolvedKeyId(next_key_id()?),
@@ -687,7 +687,7 @@ impl Vm {
             source.contents.clone(),
         );
         run.spec.original_uri = normalized.clone();
-        self.frames.last_mut().unwrap().module_load = Some(run);
+        self.frames.last_mut().unwrap().module_load = Some(Box::new(run));
         let id = ModuleKeyId(next_key_id()?);
         if source.uri == "repl:text" && source.contents.is_some() {
             self.frames
@@ -733,7 +733,7 @@ impl Vm {
             handle: "".into(),
         };
         run.key = Some(key.clone());
-        self.frames.last_mut().unwrap().module_load = Some(run);
+        self.frames.last_mut().unwrap().module_load = Some(Box::new(run));
         self.wait_module(ModuleRequestKind::ResolveKey {
             key,
             resolved_key_id: ResolvedKeyId(next_key_id()?),
@@ -1121,7 +1121,7 @@ impl Vm {
             };
             let import_uri = spec.absolute_uri.clone();
             let original_uri = spec.original_uri.clone();
-            self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
+            self.frames.last_mut().expect("import frame").module_load = Some(Box::new(ModuleRun {
                 site: cache_node.then_some((owner, site.0, site.1)),
                 purpose: ModulePurpose::Import,
                 supplied: None,
@@ -1137,7 +1137,7 @@ impl Vm {
                 initializing: false,
                 parsed: None,
                 source: None,
-            });
+            }));
             return self.wait_module(ModuleRequestKind::Resolve {
                 key,
                 resolved_key_id: ResolvedKeyId(next_key_id()?),
@@ -1150,7 +1150,7 @@ impl Vm {
             importer,
             import_uri: spec.absolute_uri.clone(),
         };
-        self.frames.last_mut().expect("import frame").module_load = Some(ModuleRun {
+        self.frames.last_mut().expect("import frame").module_load = Some(Box::new(ModuleRun {
             site: cache_node.then_some((owner, site.0, site.1)),
             purpose: ModulePurpose::Import,
             supplied: None,
@@ -1166,7 +1166,7 @@ impl Vm {
             initializing: false,
             parsed: None,
             source: None,
-        });
+        }));
         self.wait_module(request)
     }
 
