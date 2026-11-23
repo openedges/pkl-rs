@@ -901,6 +901,8 @@ fn new_repl_compiler<'a>(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes: BTreeMap::new(),
+        module_recipes: BTreeMap::new(),
         instrument,
     }
 }

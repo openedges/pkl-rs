@@ -1149,6 +1149,24 @@ impl Vm {
 }
 
 impl Compiler<'_> {
+    pub(super) fn seed_recipe_caches(
+        program: &Program,
+        unit: crate::modules::UnitId,
+    ) -> (BTreeMap<Span, usize>, BTreeMap<Span, usize>) {
+        let mut declared = BTreeMap::new();
+        let mut module = BTreeMap::new();
+        for (id, recipe) in program.type_recipes.iter_with_ids() {
+            if recipe.unit == unit {
+                if recipe.path.is_empty() && recipe.failure.is_none() {
+                    module.entry(recipe.span).or_insert(id);
+                } else {
+                    declared.entry(recipe.span).or_insert(id);
+                }
+            }
+        }
+        (declared, module)
+    }
+
     pub(super) fn deferred_type_error(
         &mut self,
         error: RuntimeError,
@@ -1171,20 +1189,10 @@ impl Compiler<'_> {
     }
 
     pub(super) fn module_type(&mut self, span: Span) -> Result<TypeCheck, RuntimeError> {
-        let recipe = self
-            .program
-            .type_recipes
-            .iter_with_ids()
-            .find(|(_, recipe)| {
-                recipe.unit == self.unit
-                    && recipe.span == span
-                    && recipe.path.is_empty()
-                    && recipe.failure.is_none()
-            })
-            .map(|(id, _)| id);
-        let recipe = match recipe {
-            Some(id) => id,
-            None => self.program.type_recipes.try_push(TypeRecipe {
+        let recipe = if let Some(&id) = self.module_recipes.get(&span) {
+            id
+        } else {
+            let id = self.program.type_recipes.try_push(TypeRecipe {
                 unit: self.unit,
                 path: Vec::new(),
                 names: Vec::new(),
@@ -1193,7 +1201,9 @@ impl Compiler<'_> {
                 builtin: None,
                 reference: None,
                 failure: None,
-            })?,
+            })?;
+            self.module_recipes.insert(span, id);
+            id
         };
         Ok(TypeCheck::Declared {
             recipe,
@@ -1214,28 +1224,36 @@ impl Compiler<'_> {
         else {
             unreachable!()
         };
-        let recipe = self
-            .program
-            .type_recipes
-            .iter_with_ids()
-            .find(|(_, recipe)| {
-                recipe.unit == self.unit
-                    && recipe.span == ty.span
-                    && recipe.path.iter().eq(path.iter())
-            })
-            .map(|(id, _)| id);
+        let recipe = match self.declared_recipes.get(&ty.span).copied() {
+            Some(id) if self.program.type_recipes[id].path.iter().eq(path.iter()) => Some(id),
+            Some(_) => self
+                .program
+                .type_recipes
+                .iter_with_ids()
+                .find(|(_, recipe)| {
+                    recipe.unit == self.unit
+                        && recipe.span == ty.span
+                        && recipe.path.iter().eq(path.iter())
+                })
+                .map(|(id, _)| id),
+            None => None,
+        };
         let recipe = match recipe {
             Some(id) => id,
-            None => self.program.type_recipes.try_push(TypeRecipe {
-                unit: self.unit,
-                path: path.clone(),
-                names: name_spans.clone(),
-                span: ty.span,
-                argument_spans: actuals.iter().map(|argument| argument.span).collect(),
-                builtin: None,
-                reference: None,
-                failure: None,
-            })?,
+            None => {
+                let id = self.program.type_recipes.try_push(TypeRecipe {
+                    unit: self.unit,
+                    path: path.clone(),
+                    names: name_spans.clone(),
+                    span: ty.span,
+                    argument_spans: actuals.iter().map(|argument| argument.span).collect(),
+                    builtin: None,
+                    reference: None,
+                    failure: None,
+                })?;
+                self.declared_recipes.entry(ty.span).or_insert(id);
+                id
+            }
         };
         Ok(TypeCheck::Declared { recipe, arguments })
     }

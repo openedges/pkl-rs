@@ -3730,6 +3730,8 @@ impl Compiler<'_> {
             function_counts: self.function_counts.clone(),
             entry_counts: self.entry_counts.clone(),
             function_names: self.function_names.clone(),
+            declared_recipes: self.declared_recipes.clone(),
+            module_recipes: self.module_recipes.clone(),
             instrument: self.instrument,
         }
     }

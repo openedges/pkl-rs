@@ -11301,6 +11301,19 @@ fn compile_unit_body_at_with_syntax(
     program.next_declaration = declaration_base
         .checked_add(resolved.module.source.len_bytes() + 2)
         .ok_or_else(|| invalid("declaration identity limit"))?;
+    let mut declared_recipes: BTreeMap<Span, usize> = BTreeMap::new();
+    let mut module_recipes: BTreeMap<Span, usize> = BTreeMap::new();
+    if replacement.is_some() {
+        for (id, recipe) in program.type_recipes.iter_with_ids() {
+            if recipe.unit == unit {
+                if recipe.path.is_empty() && recipe.failure.is_none() {
+                    module_recipes.entry(recipe.span).or_insert(id);
+                } else {
+                    declared_recipes.entry(recipe.span).or_insert(id);
+                }
+            }
+        }
+    }
     let mut compiler = Compiler {
         resolved,
         program,
@@ -11334,6 +11347,8 @@ fn compile_unit_body_at_with_syntax(
         function_counts: BTreeMap::new(),
         entry_counts: BTreeMap::new(),
         function_names: BTreeMap::new(),
+        declared_recipes,
+        module_recipes,
         instrument,
     };
     let module_name = resolved
@@ -11620,6 +11635,8 @@ struct Compiler<'a> {
     function_counts: BTreeMap<PklString, usize>,
     entry_counts: BTreeMap<PklString, usize>,
     function_names: BTreeMap<Span, PklString>,
+    declared_recipes: BTreeMap<Span, usize>,
+    module_recipes: BTreeMap<Span, usize>,
     instrument: bool,
 }
 
