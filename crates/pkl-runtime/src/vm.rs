@@ -2280,6 +2280,7 @@ pub struct Vm {
     empty_objects: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     resolved_instruction_types: BTreeMap<(usize, usize, ObjectId, bool), TypeCheck>,
+    resolved_property_types: BTreeMap<(usize, ObjectId), TypeCheck>,
     type_parent_defaults: BTreeMap<(usize, usize), Value>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: ExecutableRoots,
@@ -2384,6 +2385,7 @@ impl Vm {
             empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
             resolved_instruction_types: BTreeMap::new(),
+            resolved_property_types: BTreeMap::new(),
             type_parent_defaults: BTreeMap::new(),
             executable_roots: ExecutableRoots::new(),
             code_arenas: Vec::new(),
@@ -2958,7 +2960,7 @@ impl Vm {
         let heap = &mut self.heap;
         let executable_roots = &self.executable_roots;
         let resolved_declarations = &self.resolved_declarations;
-        let list_class = self.builtin_classes.get(&classes::BuiltinClass::List).copied();
+        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
         let active_type_trackers = self.active_type_trackers;
         let fast_int_cache = &mut self.fast_int_cache;
         let fast_int_captured = &mut self.fast_int_captured;
@@ -3612,7 +3614,7 @@ impl Vm {
                         heap,
                         resolved_declarations,
                         program,
-                        list_class,
+                        builtin_fast_classes,
                         None,
                         0,
                     ) == Some(true)
@@ -3634,7 +3636,7 @@ impl Vm {
                         heap,
                         resolved_declarations,
                         program,
-                        list_class,
+                        builtin_fast_classes,
                         None,
                         0,
                     ) {
@@ -3744,7 +3746,7 @@ impl Vm {
                         heap,
                         resolved_declarations,
                         program,
-                        list_class,
+                        builtin_fast_classes,
                         None,
                         0,
                     ) != Some(true)
@@ -4689,6 +4691,7 @@ impl Vm {
         self.empty_objects = [None; 3];
         self.resolved_declarations.clear();
         self.resolved_instruction_types.clear();
+        self.resolved_property_types.clear();
         self.type_parent_defaults.clear();
         self.executable_roots.clear();
         self.code_arenas = Vec::new();
@@ -6060,6 +6063,7 @@ impl Vm {
             entry_probe
         };
         if !hash_prepared
+            && entry_probe.is_some()
             && self.prepare_cache_read(
                 receiver,
                 initial_owner,
@@ -6080,20 +6084,32 @@ impl Vm {
             name: name.clone(),
             method,
         };
-        if memoize
-            && !entry
-            && let Some(value) = self.cached_slot(receiver, &key)?
-        {
-            self.stack.push(value);
-            return Ok(());
-        }
-        if memoize
-            && !local
-            && !method
-            && !entry
-            && self.steal_collection_property(receiver, &name)?
-        {
-            return Ok(());
+        let mut cache_evaluating = false;
+        let mut checked_cache_evaluating = false;
+        if memoize && !entry {
+            let receiver_obj = self.heap.get(receiver)?;
+            let receiver_kind = receiver_obj.collection_kind;
+            checked_cache_evaluating = true;
+            match receiver_obj.cache.get(&key) {
+                Some(LazyState::Completed(value)) => {
+                    self.stack.push(value.clone());
+                    return Ok(());
+                }
+                Some(LazyState::Evaluating) => {
+                    cache_evaluating = true;
+                }
+                Some(LazyState::Unevaluated) | None => {}
+            }
+            if !local
+                && !method
+                && matches!(
+                    receiver_kind,
+                    crate::heap::CollectionKind::Listing | crate::heap::CollectionKind::Mapping
+                )
+                && self.steal_collection_property(receiver, &name)?
+            {
+                return Ok(());
+            }
         }
         let mut owner = initial_owner;
         let mut visited = SmallObjectIdSet::new();
@@ -6254,10 +6270,14 @@ impl Vm {
             && stolen_value.is_none()
             && !direct_force_read
             && !callback_attempt
-            && matches!(
-                self.heap.get(receiver)?.cache.get(&key),
-                Some(LazyState::Evaluating)
-            )
+            && if checked_cache_evaluating {
+                cache_evaluating
+            } else {
+                matches!(
+                    self.heap.get(receiver)?.cache.get(&key),
+                    Some(LazyState::Evaluating)
+                )
+            }
         {
             return Err(RuntimeError::new(
                 ErrorKind::Cycle,
@@ -9814,15 +9834,12 @@ impl Vm {
         if self.stack.len() != base + 1 {
             return Err(invalid("unbalanced return stack"));
         }
-        let value = self.pop()?;
+        let mut value = self.pop()?;
         if let Some(force) = &mut self.frames.last_mut().expect("active frame").force {
             // A successful cast exits its Java try block before cache publication.
             force.stolen_cast = None;
         }
-        let list_class = self
-            .builtin_classes
-            .get(&classes::BuiltinClass::List)
-            .copied();
+        let builtin_fast_classes = FastBuiltinClasses::from_map(&self.builtin_classes);
         while let Some(force) = &mut self.frames.last_mut().expect("active frame").force
             && !force.skip_typecheck
             && !force.inherited_types.is_empty()
@@ -9839,7 +9856,7 @@ impl Vm {
                             &self.heap,
                             &self.resolved_declarations,
                             &self.program,
-                            list_class,
+                            builtin_fast_classes,
                             owner_obj.is_module.then_some(owner),
                             0,
                         ) == Some(true)
@@ -9850,7 +9867,7 @@ impl Vm {
                 continue;
             }
             let receiver = force.receiver;
-            let (ty, span, member, owner) = force.inherited_types.remove(0);
+            let (mut ty, span, member, owner) = force.inherited_types.remove(0);
             let declaration = self
                 .heap
                 .get(owner)?
@@ -9859,6 +9876,65 @@ impl Vm {
                 .find(|m| m.name == force.name && !m.method)
                 .ok_or_else(|| invalid("missing inherited declaration"))?
                 .code;
+            if let Some(resolved) = self.resolve_property_type(declaration, owner, &ty) {
+                ty = resolved;
+                if self.heap.get(owner).ok().is_some_and(|owner_obj| {
+                    owner_obj.environment.type_arguments.is_empty()
+                        && fast_eval_type_in_poll(
+                            &ty,
+                            &value,
+                            &owner_obj.environment,
+                            &self.heap,
+                            &self.resolved_declarations,
+                            &self.program,
+                            builtin_fast_classes,
+                            owner_obj.is_module.then_some(owner),
+                            0,
+                        ) == Some(true)
+                }) {
+                    continue;
+                }
+            }
+            if let Some(result) = self.try_fast_lazy_collection_check(
+                &ty,
+                &value,
+                |vm| {
+                    let executable =
+                        if let Some(parent) = vm.heap.get(owner)?.environment.executable_owner {
+                            vm.heap
+                                .executable_child(parent, ExecutionSite::Member(declaration))?
+                        } else {
+                            vm.executable_root(declaration)
+                        };
+                    Ok(TypeNodeId(vm.heap.executable_child(
+                        executable,
+                        ExecutionSite::PropertyType(declaration),
+                    )?))
+                },
+                |vm| {
+                    vm.program
+                        .metadata
+                        .get(declaration)
+                        .and_then(|m| m.source.clone())
+                },
+                |_| member.clone(),
+                |vm| {
+                    let mut environment = vm.heap.get(owner)?.environment.clone();
+                    environment.outer_value = environment.this_value.clone();
+                    environment.this_value = Some(Value::Object(receiver));
+                    environment.scopes.insert(0, Scope { receiver, owner });
+                    environment.custom_this = vm
+                        .frames
+                        .last()
+                        .expect("type frame")
+                        .environment
+                        .custom_this;
+                    Ok(environment)
+                },
+            )? {
+                value = result;
+                continue;
+            }
             let ty = ty.substituted(&self.heap.get(owner)?.environment)?;
             let source = self
                 .program
@@ -9934,7 +10010,7 @@ impl Vm {
                         &self.heap,
                         &self.resolved_declarations,
                         &self.program,
-                        list_class,
+                        builtin_fast_classes,
                         None,
                         0,
                     ) == Some(true)
@@ -10100,6 +10176,26 @@ fn fast_declaring_module(
     None
 }
 
+#[derive(Clone, Copy)]
+struct FastBuiltinClasses {
+    list: Option<ObjectId>,
+    set: Option<ObjectId>,
+    map: Option<ObjectId>,
+    collection: Option<ObjectId>,
+}
+
+impl FastBuiltinClasses {
+    #[inline]
+    fn from_map(map: &BTreeMap<classes::BuiltinClass, ObjectId>) -> Self {
+        Self {
+            list: map.get(&classes::BuiltinClass::List).copied(),
+            set: map.get(&classes::BuiltinClass::Set).copied(),
+            map: map.get(&classes::BuiltinClass::Map).copied(),
+            collection: map.get(&classes::BuiltinClass::Collection).copied(),
+        }
+    }
+}
+
 #[allow(clippy::too_many_arguments)]
 fn fast_type_is_resolved(
     ty: &TypeCheck,
@@ -10107,7 +10203,7 @@ fn fast_type_is_resolved(
     heap: &Heap,
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
-    list_class: Option<ObjectId>,
+    builtin_classes: FastBuiltinClasses,
     fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> bool {
@@ -10125,7 +10221,7 @@ fn fast_type_is_resolved(
                 heap,
                 resolved_declarations,
                 program,
-                list_class,
+                builtin_classes,
                 fallback_module,
                 depth + 1,
             )
@@ -10137,13 +10233,13 @@ fn fast_type_is_resolved(
                 heap,
                 resolved_declarations,
                 program,
-                list_class,
+                builtin_classes,
                 fallback_module,
                 depth + 1,
             )
         }),
         TypeCheck::ParameterizedCollection {
-            kind: crate::heap::CollectionKind::List,
+            kind: crate::heap::CollectionKind::List | crate::heap::CollectionKind::Set,
             arguments,
         } if arguments.len() == 1 => fast_type_is_resolved(
             &arguments[0].0,
@@ -10151,10 +10247,48 @@ fn fast_type_is_resolved(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth + 1,
         ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => {
+            fast_type_is_resolved(
+                &arguments[0].0,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            ) && fast_type_is_resolved(
+                &arguments[1].0,
+                env,
+                heap,
+                resolved_declarations,
+                program,
+                builtin_classes,
+                fallback_module,
+                depth + 1,
+            )
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => {
+            arguments.first().is_none_or(|(ty, _)| {
+                fast_type_is_resolved(
+                    ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+            })
+        }
         TypeCheck::Declared { recipe, arguments } => {
             let Some(owner) = fast_declaring_module(env, heap, fallback_module) else {
                 return false;
@@ -10163,14 +10297,38 @@ fn fast_type_is_resolved(
                 Some(type_resolution::DeclarationValue::Value(Value::Class(target_cls))) => {
                     if arguments.is_empty() {
                         true
-                    } else if arguments.len() == 1 && list_class == Some(*target_cls) {
+                    } else if arguments.len() == 1
+                        && (builtin_classes.list == Some(*target_cls)
+                            || builtin_classes.set == Some(*target_cls)
+                            || builtin_classes.collection == Some(*target_cls))
+                    {
                         fast_type_is_resolved(
                             &arguments[0],
                             env,
                             heap,
                             resolved_declarations,
                             program,
-                            list_class,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
+                        fast_type_is_resolved(
+                            &arguments[0],
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        ) && fast_type_is_resolved(
+                            &arguments[1],
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
                             fallback_module,
                             depth + 1,
                         )
@@ -10200,7 +10358,7 @@ fn fast_type_is_resolved(
                             heap,
                             resolved_declarations,
                             program,
-                            list_class,
+                            builtin_classes,
                             None,
                             depth + 1,
                         )
@@ -10212,7 +10370,7 @@ fn fast_type_is_resolved(
                         heap,
                         resolved_declarations,
                         program,
-                        list_class,
+                        builtin_classes,
                         fallback_module,
                         depth + 1,
                     )
@@ -10232,7 +10390,7 @@ fn fast_eval_strict_list_in_poll(
     heap: &Heap,
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
-    list_class: Option<ObjectId>,
+    builtin_classes: FastBuiltinClasses,
     fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> Option<bool> {
@@ -10243,7 +10401,7 @@ fn fast_eval_strict_list_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth,
         )
@@ -10262,7 +10420,7 @@ fn fast_eval_strict_list_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth,
         )
@@ -10285,7 +10443,7 @@ fn fast_eval_strict_list_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth,
         )
@@ -10299,13 +10457,237 @@ fn fast_eval_strict_list_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth,
         ) {
             Some(true) => continue,
             Some(false) => return Some(false),
             None => return None,
+        }
+    }
+    Some(true)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_strict_set_in_poll(
+    elem_ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    let Value::Object(id) = val else {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    };
+    let obj = heap.get(*id).ok()?;
+    if obj.collection_kind != crate::heap::CollectionKind::Set
+        || obj.foreign_map_entry.is_some()
+        || obj.is_module
+        || obj.reference.is_some()
+        || obj.ref_module
+    {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(false);
+    }
+    if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
+        return None;
+    }
+    if elem_ty.noop() {
+        return Some(true);
+    }
+    let order = obj.map_index().insertion_order();
+    if order.len() != obj.length {
+        return None;
+    }
+    if order.is_empty() {
+        return fast_type_is_resolved(
+            elem_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+        .then_some(true);
+    }
+    for &idx in order {
+        let elem = obj.set_entries.get(idx)?;
+        match fast_eval_type_in_poll(
+            elem_ty,
+            elem,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        ) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
+    }
+    Some(true)
+}
+
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_strict_map_in_poll(
+    key_ty: &TypeCheck,
+    val_ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    depth: u8,
+) -> Option<bool> {
+    let resolved_both = || {
+        fast_type_is_resolved(
+            key_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        ) && fast_type_is_resolved(
+            val_ty,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth,
+        )
+    };
+    let Value::Object(id) = val else {
+        return resolved_both().then_some(false);
+    };
+    let obj = heap.get(*id).ok()?;
+    if obj.collection_kind != crate::heap::CollectionKind::Map
+        || obj.foreign_map_entry.is_some()
+        || obj.is_module
+        || obj.reference.is_some()
+        || obj.ref_module
+    {
+        return resolved_both().then_some(false);
+    }
+    if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
+        return None;
+    }
+    let key_noop = key_ty.noop();
+    let val_noop = val_ty.noop();
+    if key_noop && val_noop {
+        return Some(true);
+    }
+    if obj.length == 0 {
+        return resolved_both().then_some(true);
+    }
+    let check_member =
+        |member: &crate::heap::CollectionMember, slot_hint: Option<usize>| -> Option<bool> {
+            if member.kind == crate::heap::CollectionMemberKind::Property {
+                return Some(true);
+            }
+            if !key_noop {
+                match fast_eval_type_in_poll(
+                    key_ty,
+                    &member.key,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth,
+                ) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            if !val_noop {
+                if matches!(member.key, Value::Object(_)) {
+                    return None;
+                }
+                let entry_val = if let Some(hint) = slot_hint
+                    && let Some(slot) = obj.cache_slots.get(hint)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot.key.name == member.name
+                {
+                    &slot.value
+                } else if let Some(LazyState::Completed(v)) = obj.cache.get(&CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                }) {
+                    v
+                } else {
+                    return None;
+                };
+                match fast_eval_type_in_poll(
+                    val_ty,
+                    entry_val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth,
+                ) {
+                    Some(true) => {}
+                    other => return other,
+                }
+            }
+            Some(true)
+        };
+    if let Some(order) = &obj.map_key_order {
+        for member in order {
+            match check_member(member, None) {
+                Some(true) => continue,
+                other => return other,
+            }
+        }
+    } else {
+        for &idx in obj.map_index().insertion_order() {
+            let member = obj.collection_members.get(idx)?;
+            match check_member(member, Some(idx)) {
+                Some(true) => continue,
+                other => return other,
+            }
         }
     }
     Some(true)
@@ -10320,7 +10702,7 @@ fn fast_eval_type_in_poll(
     heap: &Heap,
     resolved_declarations: &BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
     program: &Program,
-    list_class: Option<ObjectId>,
+    builtin_classes: FastBuiltinClasses,
     fallback_module: Option<ObjectId>,
     depth: u8,
 ) -> Option<bool> {
@@ -10367,7 +10749,7 @@ fn fast_eval_type_in_poll(
                     heap,
                     resolved_declarations,
                     program,
-                    list_class,
+                    builtin_classes,
                     fallback_module,
                     depth + 1,
                 )
@@ -10380,7 +10762,7 @@ fn fast_eval_type_in_poll(
                     heap,
                     resolved_declarations,
                     program,
-                    list_class,
+                    builtin_classes,
                     fallback_module,
                     depth + 1,
                 )
@@ -10393,7 +10775,7 @@ fn fast_eval_type_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth + 1,
         ),
@@ -10405,7 +10787,7 @@ fn fast_eval_type_in_poll(
                 heap,
                 resolved_declarations,
                 program,
-                list_class,
+                builtin_classes,
                 fallback_module,
                 depth + 1,
             )
@@ -10433,7 +10815,7 @@ fn fast_eval_type_in_poll(
                     heap,
                     resolved_declarations,
                     program,
-                    list_class,
+                    builtin_classes,
                     fallback_module,
                     depth + 1,
                 ) {
@@ -10445,7 +10827,7 @@ fn fast_eval_type_in_poll(
                                 heap,
                                 resolved_declarations,
                                 program,
-                                list_class,
+                                builtin_classes,
                                 fallback_module,
                                 depth + 1,
                             )
@@ -10470,10 +10852,97 @@ fn fast_eval_type_in_poll(
             heap,
             resolved_declarations,
             program,
-            list_class,
+            builtin_classes,
             fallback_module,
             depth + 1,
         ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Set,
+            arguments,
+        } if arguments.len() == 1 => fast_eval_strict_set_in_poll(
+            &arguments[0].0,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::Map,
+            arguments,
+        } if arguments.len() == 2 => fast_eval_strict_map_in_poll(
+            &arguments[0].0,
+            &arguments[1].0,
+            val,
+            env,
+            heap,
+            resolved_declarations,
+            program,
+            builtin_classes,
+            fallback_module,
+            depth + 1,
+        ),
+        TypeCheck::CollectionBase { arguments } if arguments.is_empty() => {
+            Some(TypeCheck::CollectionBase {
+                arguments: Vec::new(),
+            }
+            .accepts(val, heap))
+        }
+        TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
+            let elem_ty = &arguments[0].0;
+            let Value::Object(id) = val else {
+                return fast_type_is_resolved(
+                    elem_ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+                .then_some(false);
+            };
+            let obj = heap.get(*id).ok()?;
+            match obj.collection_kind {
+                crate::heap::CollectionKind::List => fast_eval_strict_list_in_poll(
+                    elem_ty,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                ),
+                crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
+                    elem_ty,
+                    val,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                ),
+                _ => fast_type_is_resolved(
+                    elem_ty,
+                    env,
+                    heap,
+                    resolved_declarations,
+                    program,
+                    builtin_classes,
+                    fallback_module,
+                    depth + 1,
+                )
+                .then_some(false),
+            }
+        }
         TypeCheck::Function {
             parameters, result, ..
         } if matches!(result.resolved(), TypeCheck::Any | TypeCheck::Unknown)
@@ -10516,7 +10985,7 @@ fn fast_eval_type_in_poll(
                                 heap,
                                 resolved_declarations,
                                 program,
-                                list_class,
+                                builtin_classes,
                                 fallback_module,
                                 depth + 1,
                             )
@@ -10532,7 +11001,7 @@ fn fast_eval_type_in_poll(
                         } else {
                             Some(classes::accepts_nominal(class.id, val, heap))
                         }
-                    } else if arguments.len() == 1 && list_class == Some(*target_cls) {
+                    } else if arguments.len() == 1 && builtin_classes.list == Some(*target_cls) {
                         fast_eval_strict_list_in_poll(
                             &arguments[0],
                             val,
@@ -10540,10 +11009,87 @@ fn fast_eval_type_in_poll(
                             heap,
                             resolved_declarations,
                             program,
-                            list_class,
+                            builtin_classes,
                             fallback_module,
                             depth + 1,
                         )
+                    } else if arguments.len() == 1 && builtin_classes.set == Some(*target_cls) {
+                        fast_eval_strict_set_in_poll(
+                            &arguments[0],
+                            val,
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
+                        fast_eval_strict_map_in_poll(
+                            &arguments[0],
+                            &arguments[1],
+                            val,
+                            env,
+                            heap,
+                            resolved_declarations,
+                            program,
+                            builtin_classes,
+                            fallback_module,
+                            depth + 1,
+                        )
+                    } else if arguments.len() == 1
+                        && builtin_classes.collection == Some(*target_cls)
+                    {
+                        let Value::Object(id) = val else {
+                            return fast_type_is_resolved(
+                                &arguments[0],
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                            .then_some(false);
+                        };
+                        let obj = heap.get(*id).ok()?;
+                        match obj.collection_kind {
+                            crate::heap::CollectionKind::List => fast_eval_strict_list_in_poll(
+                                &arguments[0],
+                                val,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            ),
+                            crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
+                                &arguments[0],
+                                val,
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            ),
+                            _ => fast_type_is_resolved(
+                                &arguments[0],
+                                env,
+                                heap,
+                                resolved_declarations,
+                                program,
+                                builtin_classes,
+                                fallback_module,
+                                depth + 1,
+                            )
+                            .then_some(false),
+                        }
                     } else {
                         None
                     }
@@ -10567,7 +11113,7 @@ fn fast_eval_type_in_poll(
                             heap,
                             resolved_declarations,
                             program,
-                            list_class,
+                            builtin_classes,
                             None,
                             depth + 1,
                         )
@@ -10606,7 +11152,7 @@ fn fast_eval_type_in_poll(
                         heap,
                         resolved_declarations,
                         program,
-                        list_class,
+                        builtin_classes,
                         fallback_module,
                         depth + 1,
                     )

@@ -133,6 +133,7 @@ impl Vm {
             empty_objects: snap.empty_objects,
             resolved_declarations: snap.resolved_declarations.clone(),
             resolved_instruction_types: BTreeMap::new(),
+            resolved_property_types: BTreeMap::new(),
             type_parent_defaults: snap.type_parent_defaults.clone(),
             executable_roots: snap.executable_roots.clone(),
             code_arenas: Vec::new(),

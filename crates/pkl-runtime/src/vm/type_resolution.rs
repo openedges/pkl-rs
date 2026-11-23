@@ -696,6 +696,49 @@ impl Vm {
         Ok(values.pop().expect("materialized type").0)
     }
 
+    /// Resolve an inherited property's declared type against its declaring
+    /// owner's environment, caching final non-generic results as `Shared`.
+    pub(super) fn resolve_property_type(
+        &mut self,
+        declaration: usize,
+        owner: ObjectId,
+        ty: &TypeCheck,
+    ) -> Option<TypeCheck> {
+        if !ty.has_declared() {
+            return None;
+        }
+        if let Some(cached) = self.resolved_property_types.get(&(declaration, owner)) {
+            return Some(cached.clone());
+        }
+        let owner_obj = self.heap.get(owner).ok()?;
+        if !owner_obj.environment.type_arguments.is_empty() {
+            return None;
+        }
+        let fallback_env;
+        let env = if owner_obj.environment.scopes.is_empty() {
+            let mut env = owner_obj.environment.clone();
+            env.scopes = crate::heap::ScopeList::from_single(Scope {
+                receiver: owner,
+                owner,
+            });
+            fallback_env = env;
+            &fallback_env
+        } else {
+            &owner_obj.environment
+        };
+        let mut final_type = true;
+        match self.materialize_type(ty, env, false, &mut final_type) {
+            Ok(resolved) if final_type => {
+                let shared = resolved.shared();
+                self.resolved_property_types
+                    .insert((declaration, owner), shared.clone());
+                Some(shared)
+            }
+            Ok(resolved) => Some(resolved),
+            Err(_) => None,
+        }
+    }
+
     /// A caller retains its own work item while the ordinary member/import
     /// continuation resolves the next declaration.
     pub(super) fn resolve_runtime_type(

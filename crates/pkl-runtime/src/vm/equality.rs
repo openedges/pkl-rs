@@ -826,14 +826,15 @@ impl Vm {
         if !memoize {
             return Ok(false);
         }
+        let Some(probe) = probe else {
+            return Ok(false);
+        };
         let object = self.heap.get(receiver)?;
         if object.cache_slots.is_empty() {
             return Ok(false);
         }
-        if let Some(ref probe_val) = probe
-            && !matches!(probe_val, Value::Object(_))
-        {
-            if let Some(value) = self.lookup_non_object_cache_entry(receiver, probe_val)? {
+        if !matches!(probe, Value::Object(_)) {
+            if let Some(value) = self.lookup_non_object_cache_entry(receiver, &probe)? {
                 self.stack.push(value);
                 return Ok(true);
             }
@@ -849,20 +850,17 @@ impl Vm {
             method,
             entry,
             predicate,
-            probe: probe.clone(),
+            probe: Some(probe.clone()),
         });
-        if let Some(probe) = probe {
-            let mut tasks = vec![Task::ResumeForce(request)];
-            if has_hash {
-                tasks.push(Task::Prepare(probe.clone()));
-            }
-            self.schedule_tasks(
-                tasks,
-                vec![Value::Object(receiver), Value::Object(owner), probe],
-            );
-            return Ok(true);
+        let mut tasks = vec![Task::ResumeForce(request)];
+        if has_hash {
+            tasks.push(Task::Prepare(probe.clone()));
         }
-        Ok(false)
+        self.schedule_tasks(
+            tasks,
+            vec![Value::Object(receiver), Value::Object(owner), probe],
+        );
+        Ok(true)
     }
 
     /// VmObject.force queries the receiver cache before reading the current
