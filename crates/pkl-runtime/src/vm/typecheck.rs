@@ -2107,7 +2107,8 @@ impl Vm {
             unreachable!()
         };
         let item = state.items[state.index].clone();
-        if let Some(elems) = &self.heap.get(receiver)?.list_elements {
+        let receiver_obj = self.heap.get(receiver)?;
+        if let Some(elems) = &receiver_obj.list_elements {
             let idx = match &item.member.key {
                 Value::Int(i) if i.get() >= 0 => i.get() as usize,
                 _ => return Err(invalid("compact List element key")),
@@ -2116,6 +2117,28 @@ impl Vm {
                 .get(idx)
                 .cloned()
                 .ok_or_else(|| invalid("compact List element out of bounds"))?;
+            let mut run = run;
+            run.eager = state.eager;
+            run.tasks.push(Task::CollectionValueReady(state));
+            run.returned = Some(value);
+            self.frames.last_mut().expect("type frame").type_run = Some(run);
+            return Ok(());
+        }
+        if receiver_obj.parent.is_none()
+            && item.owner == receiver
+            && matches!(
+                state.kind,
+                crate::heap::CollectionKind::Map | crate::heap::CollectionKind::List
+            )
+            && !matches!(item.member.key, Value::Object(_))
+            && let Some(LazyState::Completed(value)) = receiver_obj.cache.get(&CacheKey {
+                owner: None,
+                name: item.member.name.clone(),
+                method: false,
+                entry: true,
+            })
+        {
+            let value = value.clone();
             let mut run = run;
             run.eager = state.eager;
             run.tasks.push(Task::CollectionValueReady(state));

@@ -571,6 +571,49 @@ impl Vm {
         probe: &Value,
     ) -> Result<Option<Value>, RuntimeError> {
         let object = self.heap.get(receiver)?;
+        if object.parent.is_none() {
+            if object.collection_kind == CollectionKind::Map
+                && let Some(map_index) = object.map_index.as_deref()
+            {
+                let hash = java_hash_on_heap(&self.heap, probe)?;
+                for slot in map_index.candidates(hash) {
+                    if let Some(member) = object.collection_members.get(slot)
+                        && identical_key(&self.heap, probe, &member.key)
+                    {
+                        let key = CacheKey {
+                            owner: None,
+                            name: member.name.clone(),
+                            method: false,
+                            entry: true,
+                        };
+                        if let Some(LazyState::Completed(value)) = object.cache.get(&key) {
+                            return Ok(Some(value.clone()));
+                        }
+                    }
+                }
+                return Ok(None);
+            }
+            if object.collection_kind == CollectionKind::List
+                && let Value::Int(idx) = probe
+                && idx.get() >= 0
+            {
+                let pos = idx.get() as usize;
+                if let Some(elems) = &object.list_elements {
+                    return Ok(elems.get(pos).cloned());
+                }
+                if let Some(slot) = object.cache_slots.get(pos)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot
+                        .entry_key
+                        .as_ref()
+                        .is_some_and(|stored| identical_key(&self.heap, probe, stored))
+                {
+                    return Ok(Some(slot.value.clone()));
+                }
+            }
+        }
         let check_slot = |index: usize| -> Result<Option<Value>, RuntimeError> {
             let Some(slot) = object.cache_slots.get(index) else {
                 return Ok(None);
@@ -591,7 +634,7 @@ impl Vm {
         };
         if object.cache_index.has_hash() {
             let hash = java_hash_on_heap(&self.heap, probe)?.unwrap_or(0);
-            for index in object.cache_index.candidates(Some(hash)) {
+            for index in object.cache_index.hash_candidates(hash) {
                 if let Some(value) = check_slot(index)? {
                     return Ok(Some(value));
                 }
@@ -653,7 +696,7 @@ impl Vm {
                 };
                 let mut found = None;
                 if object.cache_index.has_hash() {
-                    for index in object.cache_index.candidates(Some(hash)) {
+                    for index in object.cache_index.hash_candidates(hash) {
                         if check(index)? {
                             found = Some(index);
                             break;

@@ -3251,8 +3251,10 @@ impl Vm {
         });
         {
             let map_index = self.heap.get_mut(id).ok()?.map_index.as_mut()?;
-            for i in 0..len {
-                map_index.insert(hashes[..=i].to_vec(), true);
+            for &hash in &hashes {
+                let Ok(()) = map_index.insert_lazy::<std::convert::Infallible>(hash, true, |slot| {
+                    Ok(hashes[slot])
+                });
             }
         }
         let mut cache_index = crate::economic_map::EconomicMapIndex::with_capacity(0);
@@ -3652,17 +3654,30 @@ impl Vm {
                 entry: next_member.entry,
             };
             let entry_probe = if next_member.entry {
-                self.cache_value_key(receiver, &cache_key)?
+                let obj = self.heap.get(receiver)?;
+                if let Some(cm) = obj.collection_members.get(idx)
+                    && cm.name == next_member.name
+                    && cm.kind != CollectionMemberKind::Property
+                {
+                    Some(cm.key.clone())
+                } else {
+                    self.cache_value_key(receiver, &cache_key)?
+                }
             } else {
                 None
             };
             if let Some(ref probe) = entry_probe
                 && !matches!(probe, Value::Object(_))
-                && self
-                    .lookup_non_object_cache_entry(receiver, probe)?
-                    .is_some()
             {
-                continue;
+                let obj = self.heap.get(receiver)?;
+                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                    || (!obj.cache_slots.is_empty()
+                        && self
+                            .lookup_non_object_cache_entry(receiver, probe)?
+                            .is_some())
+                {
+                    continue;
+                }
             }
             if entry_probe
                 .as_ref()
@@ -3715,17 +3730,30 @@ impl Vm {
                 entry: next_member.entry,
             };
             let entry_probe = if next_member.entry {
-                self.cache_value_key(receiver, &cache_key)?
+                let obj = self.heap.get(receiver)?;
+                if let Some(cm) = obj.collection_members.get(index - 1)
+                    && cm.name == next_member.name
+                    && cm.kind != CollectionMemberKind::Property
+                {
+                    Some(cm.key.clone())
+                } else {
+                    self.cache_value_key(receiver, &cache_key)?
+                }
             } else {
                 None
             };
             if let Some(ref probe) = entry_probe
                 && !matches!(probe, Value::Object(_))
-                && self
-                    .lookup_non_object_cache_entry(receiver, probe)?
-                    .is_some()
             {
-                continue;
+                let obj = self.heap.get(receiver)?;
+                if matches!(obj.cache.get(&cache_key), Some(LazyState::Completed(_)))
+                    || (!obj.cache_slots.is_empty()
+                        && self
+                            .lookup_non_object_cache_entry(receiver, probe)?
+                            .is_some())
+                {
+                    continue;
+                }
             }
             if entry_probe
                 .as_ref()

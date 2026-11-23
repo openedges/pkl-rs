@@ -604,14 +604,18 @@ pub(crate) fn cache_entry_key(
             {
                 return Ok(Some(Value::Int((idx as i64).into())));
             }
-            if let Some(member) = object.collection_members.get(idx)
-                && member.name == key.name
-                && member.kind != CollectionMemberKind::Property
-            {
+            let limit = (idx + 1).min(object.collection_members.len());
+            if let Some(member) = object.collection_members[..limit].iter().rev().find(|member| {
+                member.name == key.name && member.kind != CollectionMemberKind::Property
+            }) {
                 return Ok(Some(member.key.clone()));
             }
-        }
-        if let Some(member) = object
+            if let Some(member) = object.collection_members[limit..].iter().find(|member| {
+                member.name == key.name && member.kind != CollectionMemberKind::Property
+            }) {
+                return Ok(Some(member.key.clone()));
+            }
+        } else if let Some(member) = object
             .collection_members
             .iter()
             .find(|member| member.name == key.name && member.kind != CollectionMemberKind::Property)
@@ -1117,19 +1121,17 @@ impl Vm {
             if !old.is_empty() && self.prepare_keys(old)? {
                 return Ok(true);
             }
-            let mut hashes = self
+            let mut map_index = self
                 .heap
-                .get(id)?
-                .set_entries
-                .iter()
-                .map(|value| self.java_hash(value))
-                .collect::<Result<Vec<_>, _>>()?;
-            hashes.push(value_hash);
-            let object = self.heap.get_mut(id)?;
-            object
+                .get_mut(id)?
                 .map_index
-                .get_or_insert_with(Box::default)
-                .insert(hashes, true);
+                .take()
+                .unwrap_or_default();
+            map_index.insert_lazy(value_hash, true, |slot| {
+                self.java_hash(&self.heap.get(id)?.set_entries[slot])
+            })?;
+            let object = self.heap.get_mut(id)?;
+            object.map_index = Some(map_index);
             object.set_entries.push(value.clone());
         }
         Ok(false)
@@ -1334,19 +1336,20 @@ impl Vm {
             }
             Some(order)
         };
-        let object = self.heap.get(id)?;
-        let mut hashes = object
-            .collection_members
-            .iter()
-            .map(|member| self.java_hash(&member.key))
-            .collect::<Result<Vec<_>, RuntimeError>>()?;
-        hashes.push(self.java_hash(&key)?);
-        let object = self.heap.get_mut(id)?;
+        let key_for_cache = key.clone();
         if replacing.is_none() {
-            object
+            let key_hash = self.java_hash(&key)?;
+            let mut map_index = self
+                .heap
+                .get_mut(id)?
                 .map_index
-                .get_or_insert_with(Box::default)
-                .insert(hashes, append_order);
+                .take()
+                .unwrap_or_default();
+            map_index.insert_lazy(key_hash, append_order, |slot| {
+                self.java_hash(&self.heap.get(id)?.collection_members[slot].key)
+            })?;
+            let object = self.heap.get_mut(id)?;
+            object.map_index = Some(map_index);
             object.collection_members.push(CollectionMember {
                 key,
                 name: name.clone(),
@@ -1366,6 +1369,7 @@ impl Vm {
             });
             object.length = object.map_index().insertion_order().len();
         }
+        let object = self.heap.get_mut(id)?;
         if let Some(order) = explicit_order {
             object.length = order.len();
             object.map_key_order = Some(order);
@@ -1377,7 +1381,7 @@ impl Vm {
             entry: true,
         };
         object.member_values.insert(cache.clone(), value.clone());
-        object.complete_cache(cache, value);
+        object.complete_cache_with_key(cache, Some(key_for_cache), value);
         Ok(())
     }
 
@@ -1961,10 +1965,17 @@ impl Vm {
             (&object.declaration_index, self.java_hash(&descriptor.key)?)
             && index.len() == object.collection_members.len()
         {
-            index.candidates(Some(hash)).into_iter().find(|&pos| {
-                let old = &object.collection_members[pos];
-                same_member(&self.heap, &descriptor, old)
-            })
+            if index.has_hash() {
+                index.hash_candidates(hash).find(|&pos| {
+                    let old = &object.collection_members[pos];
+                    same_member(&self.heap, &descriptor, old)
+                })
+            } else {
+                (0..index.len()).find(|&pos| {
+                    let old = &object.collection_members[pos];
+                    same_member(&self.heap, &descriptor, old)
+                })
+            }
         } else {
             let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
             object.collection_members.iter().position(|old| {
