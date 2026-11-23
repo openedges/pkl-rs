@@ -148,6 +148,46 @@ def collect_pkldoc_tree(directory: Path) -> dict[str, bytes]:
     return dict(sorted(result.items()))
 
 
+# Explicit pkl-rs brand icon replacements (Apache-2.0 OpenEdges Inc., replacing
+# Apple Pkl trademarked logo assets under Apache-2.0 Section 6).
+PKLDOC_BRANDED_ICON_REL_PATHS: frozenset[str] = frozenset(
+    {
+        "images/apple-touch-icon.png",
+        "images/favicon.svg",
+        "images/favicon-16x16.png",
+        "images/favicon-32x32.png",
+    }
+)
+
+
+def compare_pkldoc_trees(
+    expected: dict[str, bytes],
+    actual: dict[str, bytes],
+    root: Path,
+) -> list[str]:
+    """Compare Java/native-image pkldoc tree against Rust pkldoc tree.
+
+    Enforces 100% raw-byte equality on every generated HTML/JSON/CSS/JS/font file
+    and symlink, while verifying the 4 branded icon paths exist in both trees and
+    match `crates/pkl-doc/assets/<rel>` byte-for-byte in Rust output.
+    """
+    diffs: list[str] = []
+    branded_root = root / "crates" / "pkl-doc" / "assets"
+    branded_keys = {f"generated/{rel}": rel for rel in PKLDOC_BRANDED_ICON_REL_PATHS}
+
+    for name in sorted(set(expected) | set(actual)):
+        if name in branded_keys:
+            if name not in expected or name not in actual:
+                diffs.append(f"files/{name}")
+                continue
+            expected_brand_bytes = (branded_root / branded_keys[name]).read_bytes()
+            if actual[name] != expected_brand_bytes:
+                diffs.append(f"files/{name}")
+        elif expected.get(name) != actual.get(name):
+            diffs.append(f"files/{name}")
+    return diffs
+
+
 def summarize_pkldoc_tree(tree: dict[str, bytes]) -> dict[str, int]:
     files = sum(1 for k in tree if k.startswith("generated/"))
     symlinks = sum(1 for k in tree if k.startswith("symlink/"))

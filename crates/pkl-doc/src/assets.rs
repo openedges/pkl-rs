@@ -1,5 +1,6 @@
-//! All 17 embedded static web resources verbatim from Apple Pkl 0.32.0
-//! `pkl-doc/src/main/resources/org/pkl/doc/**`.
+//! All 17 embedded static web resources for `pkldoc`:
+//! - 13 functional web assets verbatim from Apple Pkl 0.32.0 (`fonts/*`, `scripts/*`, `styles/*`)
+//! - 4 original `pkl-rs` brand favicons (`images/*`, Copyright 2025-2026 OpenEdges Inc., Apache-2.0)
 
 use std::fs;
 use std::io;
@@ -143,19 +144,47 @@ pub fn write_all_static_resources(target_dir: &Path) -> io::Result<()> {
 mod tests {
     use super::*;
 
+    const BRANDED_ICON_RESOURCES: &[&str] = &[
+        "images/apple-touch-icon.png",
+        "images/favicon.svg",
+        "images/favicon-16x16.png",
+        "images/favicon-32x32.png",
+    ];
+
     #[test]
-    fn all_17_embedded_assets_match_pinned_upstream_bytes() {
+    fn all_17_embedded_assets_match_pinned_upstream_or_branded_icons() {
         assert_eq!(STATIC_RESOURCES.len(), 17);
         let upstream_root = Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("../../external/pkl/pkl-doc/src/main/resources/org/pkl/doc");
         for (rel, embedded) in STATIC_RESOURCES {
             let upstream = fs::read(upstream_root.join(rel))
                 .unwrap_or_else(|e| panic!("failed to read upstream resource {rel}: {e}"));
-            assert_eq!(
-                *embedded,
-                upstream.as_slice(),
-                "embedded asset {rel} drifted from pinned Pkl 0.32.0 resource"
-            );
+            if BRANDED_ICON_RESOURCES.contains(rel) {
+                assert!(
+                    !embedded.is_empty(),
+                    "branded icon asset {rel} must not be empty"
+                );
+                assert_ne!(
+                    *embedded,
+                    upstream.as_slice(),
+                    "branded icon asset {rel} must not reuse Apple Pkl trademarked logo"
+                );
+                if rel.ends_with(".svg") {
+                    let text = std::str::from_utf8(embedded).expect("valid utf8 svg");
+                    assert!(text.contains("<svg"), "invalid svg header in {rel}");
+                } else {
+                    assert!(
+                        embedded.starts_with(b"\x89PNG\r\n\x1a\n"),
+                        "invalid PNG signature in {rel}"
+                    );
+                }
+            } else {
+                assert_eq!(
+                    *embedded,
+                    upstream.as_slice(),
+                    "embedded functional asset {rel} drifted from pinned Pkl 0.32.0 resource"
+                );
+            }
         }
     }
 }

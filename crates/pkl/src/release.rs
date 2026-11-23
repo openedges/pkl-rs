@@ -37,7 +37,7 @@ impl Release {
             format!("{os_name} {os_version}")
         };
         let flavor = "native".to_string();
-        let version_info = format!("Pkl {PKL_VERSION} ({os_part}, {flavor})");
+        let version_info = format!("pkl-rs {PKL_VERSION} ({os_part}, {flavor})");
         Self {
             version: PKL_VERSION.to_string(),
             os_name,
@@ -80,12 +80,12 @@ impl Release {
         &self.flavor
     }
 
-    /// Full version banner, e.g. `Pkl 0.32.0 (macOS 27.2, native)`.
+    /// Full version banner, e.g. `pkl-rs 0.32.0 (macOS 27.2, native)`.
     pub fn version_info(&self) -> &str {
         &self.version_info
     }
 
-    /// Tool-specific version banner, e.g. `pkldoc 0.32.0 (macOS 27.2, native)`.
+    /// Tool-specific version banner, e.g. `pkldoc-rs 0.32.0 (macOS 27.2, native)`.
     pub fn tool_version_info(&self, tool_name: &str) -> String {
         let os_part = if self.os_version.is_empty() {
             self.os_name.clone()

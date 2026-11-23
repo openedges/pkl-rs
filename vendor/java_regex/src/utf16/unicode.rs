@@ -1,5 +1,5 @@
-//! Version-pinned classification from the complete JDK 21 / Unicode 15
-//! Character capture. No dependency on the host Rust Unicode tables.
+//! Version-pinned Unicode 15.0.0 character classification generated from
+//! official UCD 15.0.0 (`UNICODE-15.0.0-PROVENANCE.md`). No host stdlib drift.
 use super::{character_lookup::character_record, types::PredefinedClass};
 use alloc::{
     format,

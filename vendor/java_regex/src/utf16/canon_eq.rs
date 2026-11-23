@@ -1,9 +1,9 @@
-//! Pinned JDK 21 / Unicode 15.0.0 canonical equivalence (`Pattern.CANON_EQ` / `(?c)`),
-//! NFD/NFC normalization, and `jdk.internal.util.regex.Grapheme.nextBoundary`.
+//! Unicode 15.0.0 canonical equivalence (`Pattern.CANON_EQ` / `(?c)`),
+//! NFD/NFC normalization, and UAX #29 grapheme cluster boundary tables.
 //!
-//! All tables are generated directly from the pinned Eclipse Adoptium Temurin
-//! 21.0.13.1+2-LTS runtime so normalization and grapheme boundaries never drift
-//! with the host Rust stdlib's Unicode version.
+//! All tables are generated directly from the official Unicode Consortium
+//! UCD 15.0.0 release (`Unicode-3.0`; see `UNICODE-15.0.0-PROVENANCE.md`) so
+//! normalization and grapheme boundaries never drift with host Rust stdlib.
 
 use alloc::vec;
 use alloc::vec::Vec;

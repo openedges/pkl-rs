@@ -330,10 +330,10 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "bf42ac571ce6bb194cea00a82d72b1f5c8075e23900ae20efb05488f9c98f793"
+      "sha256": "d447fee4c9621b13df435f2b6be68e9f0beb7dd2d659a147b09ce91e9bf78f1e"
     },
     {
-      "bytes": 63781,
+      "bytes": 63967,
       "counts": {
         "corpus_formatter_snippet_cases": 30,
         "excluded_2026_11_20_java_api": 8239,
@@ -390,14 +390,15 @@
         },
         "m5_static_cases": 112,
         "m5_total_5lane_cases": 142,
-        "pkldoc_vendored_assets_exact_matches": 17,
-        "pkldoc_vendored_assets_status": "exact-match",
+        "pkldoc_branded_icon_replacements": 4,
+        "pkldoc_vendored_assets_exact_matches": 13,
+        "pkldoc_vendored_assets_status": "exact-match-with-branded-icons",
         "stdlib_doc_package_info_items": 8
       },
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "e01912ab880a32c3cdc954d45281a7862648c3aabc2401987e806f4e7e29044e"
+      "sha256": "830f535c8707e5816cbb4c966d2278faa5871c0ef0e220db65ab4402f5f0b942"
     },
     {
       "bytes": 37108,
@@ -478,12 +479,12 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_cold_cli_pair"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "evaluate_ratio_verdict"
         }
       ],
@@ -508,7 +509,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "parse_probe_series"
         },
         {
@@ -538,7 +539,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_api_probe_pair"
         },
         {
@@ -563,7 +564,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_js_binding_workload"
         },
         {
@@ -618,7 +619,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_packages_http_workload"
         }
       ],
@@ -634,7 +635,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "run_suite"
         },
         {
@@ -655,12 +656,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_output_files_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_cold_cli_pair"
         }
       ],
@@ -676,17 +677,17 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_server_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "_run_pkldoc_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
           "symbol": "is_benign_jline_repl_stderr"
         }
       ],
@@ -805,14 +806,14 @@
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
     "compatibility/m2-language.json": "b8e617be7f52effeeeaeaf8da8dfafdd56a6bd0969b5c1cbe535230b3de7cba2",
     "compatibility/m3-stdlib-output.json": "c0bfa9671ddf84e66a367605bd3a3eb367b09128fc565e357539c074944fc6da",
-    "compatibility/m4-io-packages.json": "bf42ac571ce6bb194cea00a82d72b1f5c8075e23900ae20efb05488f9c98f793",
-    "compatibility/m5-product-tools.json": "e01912ab880a32c3cdc954d45281a7862648c3aabc2401987e806f4e7e29044e",
+    "compatibility/m4-io-packages.json": "d447fee4c9621b13df435f2b6be68e9f0beb7dd2d659a147b09ce91e9bf78f1e",
+    "compatibility/m5-product-tools.json": "830f535c8707e5816cbb4c966d2278faa5871c0ef0e220db65ab4402f5f0b942",
     "compatibility/m6-wasm-napi.json": "2be85692ae53cea570e4af93106009a6801a3e9666611a259ca24bb4ad7022f7",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
-    "tools/m7_benchmark.py": "1934b6fa0851ce2633adc5e8a4dbe3d0256f51012fcf1cd61bf10cef3bac159b",
+    "tools/m7_benchmark.py": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
     "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
     "tools/m7_memory_soak.py": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3",
     "tools/oracle.py": "9ebd3ae84eb69eb2c2d158c11f703a18cd59ce6b487af8218ca17591a74dcf5e"

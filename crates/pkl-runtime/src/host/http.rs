@@ -18,17 +18,17 @@ use std::sync::{
 /// Default redirect limit matching `RequestRewritingClient.MAX_HTTP_REDIRECTS`.
 pub const DEFAULT_MAX_REDIRECTS: usize = 20;
 
-/// Default User-Agent matching Pkl 0.32.0 `HttpClientBuilder.java:55-56` (`Pkl/<ver> (<os>; <flavor>)`).
+/// Default User-Agent identifying `pkl-rs` (`pkl-rs/<ver> (<os>; <flavor>)`).
 pub const DEFAULT_USER_AGENT: &str = if cfg!(target_os = "macos") {
-    "Pkl/0.32.0 (macOS; native)"
+    "pkl-rs/0.32.0 (macOS; native)"
 } else if cfg!(target_os = "linux") {
-    "Pkl/0.32.0 (Linux; native)"
+    "pkl-rs/0.32.0 (Linux; native)"
 } else if cfg!(target_os = "windows") {
-    "Pkl/0.32.0 (Windows; native)"
+    "pkl-rs/0.32.0 (Windows; native)"
 } else if cfg!(target_arch = "wasm32") {
-    "Pkl/0.32.0 (wasm; wasm)"
+    "pkl-rs/0.32.0 (wasm; wasm)"
 } else {
-    "Pkl/0.32.0 (unknown; native)"
+    "pkl-rs/0.32.0 (unknown; native)"
 };
 
 const RESERVED_HEADER_NAMES: &[&str] = &[

@@ -90,7 +90,7 @@ VALID_EXEC_MODES = {
     "packaging_matrix",
 }
 VALID_ORACLE_MODES = {"probe", "cli"}
-NATIVE_VERSION_RE = re.compile(rb"^(Pkl|pkldoc) 0\.32\.0 \(([^,]+), native\)\n$")
+NATIVE_VERSION_RE = re.compile(rb"^(pkl-rs|pkldoc-rs) 0\.32\.0 \(([^,]+), native\)\n$")
 
 
 def digest(data: bytes) -> str:

@@ -689,7 +689,7 @@ fn default_native_user_agent() -> String {
     } else {
         std::env::consts::OS
     };
-    format!("Pkl/0.32.0 ({os}; native)")
+    format!("pkl-rs/0.32.0 ({os}; native)")
 }
 
 pub fn build_http_client_config(

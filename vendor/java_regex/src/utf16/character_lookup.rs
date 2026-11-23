@@ -1,5 +1,6 @@
-// Target-only candidate generated from pinned JDK 21 Character data.
-// Copy the adjacent binary tables with this file. This has not been compiled.
+//! Unicode 15.0.0 character metadata and simple case-delta tables generated
+//! directly from official Unicode Consortium UCD 15.0.0 files (`Unicode-3.0`).
+//! See `UNICODE-15.0.0-PROVENANCE.md`.
 const RUNS: &[u8] = include_bytes!("metadata-runs.bin");
 const CASES: &[u8] = include_bytes!("case-deltas.bin");
 #[derive(Clone, Copy)]

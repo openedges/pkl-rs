@@ -117,7 +117,7 @@ pub const PKLDOC_HELP_TEXT: &str = concat!(
     "https://pkl-lang.org/main/0.32.0/pkl-doc/index.html#cli\n",
 );
 
-/// Honest native-flavor version string matching `pkldoc 0.32.0 (<os>, native)`.
+/// Honest native-flavor version string identifying `pkldoc-rs` (`pkldoc-rs 0.32.0 (<os>, native)`).
 pub fn pkldoc_version_info() -> String {
     let os_name = detect_os_name();
     let os_version = detect_os_version();
@@ -126,7 +126,7 @@ pub fn pkldoc_version_info() -> String {
     } else {
         format!("{os_name} {os_version}")
     };
-    format!("pkldoc {PKL_VERSION} ({os_part}, native)")
+    format!("pkldoc-rs {PKL_VERSION} ({os_part}, native)")
 }
 
 fn detect_os_name() -> String {

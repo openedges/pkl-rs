@@ -11,8 +11,8 @@
 | Component | Location | Current Version | Format / Runtime Output |
 | --- | --- | --- | --- |
 | Rust workspace crates (10 crates + `xtask`) | [Cargo.toml](../Cargo.toml) (`[workspace.package]`) | `0.32.0` | Cargo SemVer (`0.32.0`) |
-| `pkl` CLI binary | `crates/pkl/src/release.rs` | `0.32.0` | `Pkl 0.32.0 (<os>, native)` |
-| `pkldoc` CLI binary | `crates/pkl-doc/src/scope.rs` | `0.32.0` | `pkldoc 0.32.0 (<os>, native)` |
+| `pkl` CLI binary | `crates/pkl/src/release.rs` | `0.32.0` | `pkl-rs 0.32.0 (<os>, native)` |
+| `pkldoc` CLI binary | `crates/pkl-doc/src/scope.rs`, `cli.rs` | `0.32.0` | `pkldoc-rs 0.32.0 (<os>, native)` |
 | `@pkl-rs/wasm` npm package | [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) | `0.32.0` | npm SemVer + `PKL_VERSION = "0.32.0"` |
 | `@pkl-rs/napi` npm package | [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) | `0.32.0` | npm SemVer + `PKL_VERSION = "0.32.0"` |
 | Git release tags | Git tags (`v*`) | `v0.32.0` *(or `v0.32.0-rc.N`)* | Triggers [.github/workflows/release.yml](../.github/workflows/release.yml) |
@@ -143,7 +143,8 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
 
 ## 5. Known Pre-GA Publishing Prerequisites
 
-Two explicit engineering/compliance items remain tracked before general availability (GA) publication to crates.io and public registries:
+One explicit engineering prerequisite remains tracked before crates.io publication:
 
 1. **crates.io publication (`publish = false`)**: Workspace crates currently keep `publish = false` because `crates/pkl-runtime` patches `java_regex` locally via `[patch.crates-io] java_regex = { path = "vendor/java_regex" }`. crates.io disallows publishing crates that depend on unpublished path patches. Before publishing to crates.io, either upstream the UTF-16 patches to `java_regex` or publish the patched engine under an owned crate name (e.g. `pkl-java-regex`).
-2. **OpenJDK `uniName.dat` character table regeneration**: As disclosed in [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md), `vendor/java_regex` currently includes character name tables decoded from OpenJDK Temurin 21's `uniName.dat` (carrying OpenJDK GPLv2+Classpath-Exception notices alongside the Unicode 15.0 License). Regenerating these tables directly from the official Unicode Consortium `UnicodeData.txt` is recommended prior to GA under pure Apache-2.0.
+
+*(Previously tracked OpenJDK `uniName.dat` / GPLv2 provenance in `vendor/java_regex` was resolved on `2026-11-23` by regenerating all 12 tables directly from official Unicode Consortium UCD 15.0.0 files under `Unicode-3.0` via [tools/generate_ucd15_regex_tables.py](../tools/generate_ucd15_regex_tables.py).)*

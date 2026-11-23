@@ -106,7 +106,7 @@ fn version_outputs_honest_native_banner() {
         assert_eq!(code, 0);
         assert!(stderr.is_empty(), "unexpected stderr: {stderr:?}");
         assert!(
-            stdout.starts_with("pkldoc 0.32.0 (") && stdout.ends_with(", native)\n"),
+            stdout.starts_with("pkldoc-rs 0.32.0 (") && stdout.ends_with(", native)\n"),
             "unexpected version banner: {stdout:?}"
         );
     }
@@ -315,11 +315,32 @@ fn single_package_test_matches_upstream_output_byte_for_byte() {
     let expected_tree = collect_tree_raw(&expected_dir);
     let actual_tree = collect_tree_raw(&out_dir);
     assert_eq!(actual_tree.len(), expected_tree.len());
+    let branded_icons = [
+        (
+            "file/images/apple-touch-icon.png",
+            "assets/images/apple-touch-icon.png",
+        ),
+        ("file/images/favicon.svg", "assets/images/favicon.svg"),
+        (
+            "file/images/favicon-16x16.png",
+            "assets/images/favicon-16x16.png",
+        ),
+        (
+            "file/images/favicon-32x32.png",
+            "assets/images/favicon-32x32.png",
+        ),
+    ];
     for (k, exp) in &expected_tree {
         let act = actual_tree
             .get(k)
             .unwrap_or_else(|| panic!("missing generated path: {k}"));
-        assert_eq!(act, exp, "byte mismatch for SinglePackageTest path {k}");
+        if let Some((_, asset_rel)) = branded_icons.iter().find(|(key, _)| *key == k.as_str()) {
+            let branded = fs::read(manifest_dir.join(asset_rel)).expect("read branded icon");
+            assert_eq!(act, &branded, "branded icon mismatch for {k}");
+            assert_ne!(act, exp, "branded icon {k} must not match Apple Pkl logo");
+        } else {
+            assert_eq!(act, exp, "byte mismatch for SinglePackageTest path {k}");
+        }
     }
 }
 

@@ -85,7 +85,7 @@ def _build_synthetic_sealed_report(rep_dir: Path, *, source_binding: str = "reco
     # Case 2: honest native-version contract
     c2_dir = compat.case_directory("m5:synth:ver")
     j2 = compat.store_capture(rep_dir / "cases" / c2_dir / "java", _make_capture(b"Pkl 0.32.0 (macOS 27.2, Java 21.0.13.1)\n"))
-    r2 = compat.store_capture(rep_dir / "cases" / c2_dir / "rust", _make_capture(b"Pkl 0.32.0 (macOS 27.2, native)\n"))
+    r2 = compat.store_capture(rep_dir / "cases" / c2_dir / "rust", _make_capture(b"pkl-rs 0.32.0 (macOS 27.2, native)\n"))
     results.append({
         "id": "m5:synth:ver",
         "lane": "rust-api-and-cli",
@@ -140,22 +140,24 @@ def _build_synthetic_sealed_report(rep_dir: Path, *, source_binding: str = "reco
 class M5DifferentialTests(unittest.TestCase):
     def test_native_version_contract_strict(self) -> None:
         j_pkl = _make_capture(b"Pkl 0.32.0 (macOS 27.2, Java 21.0.13.1)\n")
-        r_ok = _make_capture(b"Pkl 0.32.0 (macOS 27.2, native)\n")
+        r_ok = _make_capture(b"pkl-rs 0.32.0 (macOS 27.2, native)\n")
         self.assertEqual(m5_differential.check_native_version_contract(j_pkl, r_ok), [])
 
-        # Rust MUST NOT fake Java version!
+        # Rust MUST NOT fake Java version or Apple's upstream Pkl brand!
         r_faked = _make_capture(b"Pkl 0.32.0 (macOS 27.2, Java 21.0.13.1)\n")
         self.assertEqual(m5_differential.check_native_version_contract(j_pkl, r_faked), ["stdout"])
+        r_apple = _make_capture(b"Pkl 0.32.0 (macOS 27.2, native)\n")
+        self.assertEqual(m5_differential.check_native_version_contract(j_pkl, r_apple), ["stdout"])
 
         # pkldoc native-version contract works identically
         j_doc = _make_capture(b"pkldoc 0.32.0 (macOS 27.2, Java 21.0.13.1)\n")
-        r_doc_ok = _make_capture(b"pkldoc 0.32.0 (macOS 27.2, native)\n")
+        r_doc_ok = _make_capture(b"pkldoc-rs 0.32.0 (macOS 27.2, native)\n")
         self.assertEqual(m5_differential.check_native_version_contract(j_doc, r_doc_ok), [])
 
         # Trailing whitespace or non-empty stderr must fail
-        r_ws = _make_capture(b"Pkl 0.32.0 (macOS 27.2, native) \n")
+        r_ws = _make_capture(b"pkl-rs 0.32.0 (macOS 27.2, native) \n")
         self.assertEqual(m5_differential.check_native_version_contract(j_pkl, r_ws), ["stdout"])
-        r_err = _make_capture(b"Pkl 0.32.0 (macOS 27.2, native)\n", stderr=b"warn\n")
+        r_err = _make_capture(b"pkl-rs 0.32.0 (macOS 27.2, native)\n", stderr=b"warn\n")
         self.assertEqual(m5_differential.check_native_version_contract(j_pkl, r_err), ["stderr"])
 
     def test_classify_result_no_normalization_and_idempotency(self) -> None:

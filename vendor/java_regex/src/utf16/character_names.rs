@@ -1,5 +1,6 @@
-//! Character names from the pinned JDK 21 runtime resource; no host Unicode data.
-//! See JDK-CHARACTER-NAMES.md and the retained preparation provenance.
+//! Unicode 15.0.0 character names generated directly from official UCD 15.0.0
+//! (`UnicodeData.txt`, `NameAliases.txt`, `SpecialCasing.txt`); see
+//! `UNICODE-15.0.0-PROVENANCE.md` and `LICENSE-UNICODE`.
 use super::character_lookup::character_record;
 use alloc::{format, string::String, vec::Vec};
 

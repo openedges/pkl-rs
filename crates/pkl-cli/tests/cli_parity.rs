@@ -63,7 +63,7 @@ fn version_flags_emit_honest_native_banner() {
         assert!(out.stderr.is_empty(), "stderr not empty for {flag}");
         let stdout = String::from_utf8(out.stdout).expect("utf8");
         assert!(
-            stdout.starts_with("Pkl 0.32.0 (") && stdout.ends_with(", native)\n"),
+            stdout.starts_with("pkl-rs 0.32.0 (") && stdout.ends_with(", native)\n"),
             "unexpected version banner for {flag}: {stdout:?}"
         );
     }

@@ -172,6 +172,7 @@ def classify_inventory_items(root: Path, inventory: dict, corpus: dict, mappings
     vendored_dir_rel = mappings.get("pkldoc_vendored_assets_dir")
     vendored_dir = (root / vendored_dir_rel) if vendored_dir_rel else None
     vendored_matches = 0
+    branded_icon_replacements = 0
     for i in sorted(res_items, key=lambda x: x["source"]["path"]):
         path = i["source"]["path"]
         if path.startswith(UPSTREAM_PKLDOC_RES_PREFIX):
@@ -185,7 +186,13 @@ def classify_inventory_items(root: Path, inventory: dict, corpus: dict, mappings
                 vpath = vendored_dir / rel_asset
                 if vpath.is_file():
                     vend_sha = digest(vpath.read_bytes())
-                    if vend_sha == up_sha:
+                    if rel_asset in m5_pkldoc_tree.PKLDOC_BRANDED_ICON_REL_PATHS:
+                        if vend_sha != up_sha:
+                            vend_state = "pkl-rs-branded-replacement"
+                            branded_icon_replacements += 1
+                        else:
+                            vend_state = "trademark-logo-not-replaced"
+                    elif vend_sha == up_sha:
                         vend_state = "exact-match"
                         vendored_matches += 1
                     else:
@@ -214,6 +221,8 @@ def classify_inventory_items(root: Path, inventory: dict, corpus: dict, mappings
         raise ValueError(f"expected 17 pkl-doc resources, got {len(pkldoc_assets)}")
     if vendored_dir is None:
         assets_status = "pending-track-d"
+    elif vendored_matches == 13 and branded_icon_replacements == 4:
+        assets_status = "exact-match-with-branded-icons"
     elif vendored_matches == 17:
         assets_status = "exact-match"
     else:
@@ -258,6 +267,7 @@ def classify_inventory_items(root: Path, inventory: dict, corpus: dict, mappings
             "counts": dict(sorted(res_counts.items())),
             "pkldoc_assets_status": assets_status,
             "pkldoc_assets_exact_matches": vendored_matches,
+            "pkldoc_branded_icon_replacements": branded_icon_replacements,
             "pkldoc_assets": pkldoc_assets,
         },
         "stdlib_doc_package_info": {
@@ -488,6 +498,7 @@ def build_manifest(root: Path = ROOT) -> dict:
             "inventory_resource_dispositions": inv_census["resource"]["counts"],
             "pkldoc_vendored_assets_status": inv_census["resource"]["pkldoc_assets_status"],
             "pkldoc_vendored_assets_exact_matches": inv_census["resource"]["pkldoc_assets_exact_matches"],
+            "pkldoc_branded_icon_replacements": inv_census["resource"]["pkldoc_branded_icon_replacements"],
             "stdlib_doc_package_info_items": inv_census["stdlib_doc_package_info"]["total"],
             "functional_stdlib_items": inv_census["functional_stdlib"]["total"],
             "corpus_formatter_snippet_cases": len(fmt_snippets),

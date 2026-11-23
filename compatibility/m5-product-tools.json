@@ -62,8 +62,9 @@
     },
     "m5_static_cases": 112,
     "m5_total_5lane_cases": 142,
-    "pkldoc_vendored_assets_exact_matches": 17,
-    "pkldoc_vendored_assets_status": "exact-match",
+    "pkldoc_branded_icon_replacements": 4,
+    "pkldoc_vendored_assets_exact_matches": 13,
+    "pkldoc_vendored_assets_status": "exact-match-with-branded-icons",
     "stdlib_doc_package_info_items": 8
   },
   "coverage_gate": null,
@@ -568,8 +569,8 @@
           "relative_asset": "images/apple-touch-icon.png",
           "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/apple-touch-icon.png",
           "upstream_sha256": "c25ed144e0dfa4ccdf8047f68cceb872eb1721ccf90720e277507776b9dffc30",
-          "vendored_sha256": "c25ed144e0dfa4ccdf8047f68cceb872eb1721ccf90720e277507776b9dffc30",
-          "vendored_state": "exact-match"
+          "vendored_sha256": "5157780472ac67c9a128ef9c88055b6c594191adf27703dbd675f33213595552",
+          "vendored_state": "pkl-rs-branded-replacement"
         },
         {
           "bytes": 780,
@@ -577,8 +578,8 @@
           "relative_asset": "images/favicon-16x16.png",
           "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-16x16.png",
           "upstream_sha256": "aa2e7853373a4d8fa63c3dbba3c3254d313dbbe76fdb5e89856707783b6ac4fe",
-          "vendored_sha256": "aa2e7853373a4d8fa63c3dbba3c3254d313dbbe76fdb5e89856707783b6ac4fe",
-          "vendored_state": "exact-match"
+          "vendored_sha256": "f6c19f7e11c5d1174e7e6ef8f7e0ffce937dcfdea54bea53cdac0a60bd8e6014",
+          "vendored_state": "pkl-rs-branded-replacement"
         },
         {
           "bytes": 1802,
@@ -586,8 +587,8 @@
           "relative_asset": "images/favicon-32x32.png",
           "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon-32x32.png",
           "upstream_sha256": "7b6039dbaa90284d3ecc853ccb459aa2cf1953c47a4c5102df8313c2172372fa",
-          "vendored_sha256": "7b6039dbaa90284d3ecc853ccb459aa2cf1953c47a4c5102df8313c2172372fa",
-          "vendored_state": "exact-match"
+          "vendored_sha256": "1cb1907ecd978024b474fb02d67457e7d722c161ec7ed7b23529ea9001abbda5",
+          "vendored_state": "pkl-rs-branded-replacement"
         },
         {
           "bytes": 2551,
@@ -595,8 +596,8 @@
           "relative_asset": "images/favicon.svg",
           "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg",
           "upstream_sha256": "734375cbe48acc79525c53f6262734a2de5b60af25448462dba153a0926e2488",
-          "vendored_sha256": "734375cbe48acc79525c53f6262734a2de5b60af25448462dba153a0926e2488",
-          "vendored_state": "exact-match"
+          "vendored_sha256": "6261b61fca1e7c3dde01fe4b57055eec245329c029fe513a4c1af5fe68bf4fdf",
+          "vendored_state": "pkl-rs-branded-replacement"
         },
         {
           "bytes": 24067,
@@ -635,8 +636,9 @@
           "vendored_state": "exact-match"
         }
       ],
-      "pkldoc_assets_exact_matches": 17,
-      "pkldoc_assets_status": "exact-match",
+      "pkldoc_assets_exact_matches": 13,
+      "pkldoc_assets_status": "exact-match-with-branded-icons",
+      "pkldoc_branded_icon_replacements": 4,
       "total": 27
     },
     "specification": {
@@ -1082,12 +1084,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-doc/src/cli.rs",
-          "sha256": "87079f0527c24671662e60fa0071cfdbfcc42a42753a7a6dd82db43b9c5f3543",
+          "sha256": "fc67cd2fc63a4935f01686a8fadbdba0805f5728dd2dad51df33ee5deec5693b",
           "symbol": "CliDocGenerator"
         },
         {
           "path": "crates/pkl-doc/src/cli.rs",
-          "sha256": "87079f0527c24671662e60fa0071cfdbfcc42a42753a7a6dd82db43b9c5f3543",
+          "sha256": "fc67cd2fc63a4935f01686a8fadbdba0805f5728dd2dad51df33ee5deec5693b",
           "symbol": "pkldoc_version_info"
         },
         {
@@ -1129,7 +1131,7 @@
         },
         {
           "path": "crates/pkl-doc/src/assets.rs",
-          "sha256": "562ca83f4296d81504cdc6dd315fc4c6f890a72a076aa683c6dbd0071e0468a5",
+          "sha256": "be695bab99a7b699d1e99a48a62c9784509ea1b89318372eb9f397b3bb26579f",
           "symbol": "write_all_static_resources"
         },
         {
@@ -1339,7 +1341,7 @@
     "compatibility/m5-mappings.json": "d826287b55030150f63e777e5b082cb7f24102694535f3930946bb1609a823f0",
     "tests/fixtures/m5/cases.json": "00cec6848ab1e63b1f5133b70931f86c0617a2a7a5fb42ae3cbae3b7c65f6ba3",
     "tools/java/M5ApiOracleProbe.java": "4cf720f83fd162a1be4e9db62796a35caac0cb5c10cdd99e63529ea435993bab",
-    "tools/m5_pkldoc_tree.py": "83ac982c415fa37d6b797dcbcb11b5c5e36650ff21e26f0a3b451554040de813",
+    "tools/m5_pkldoc_tree.py": "55e77419be3077ebc7f49d4d964c0600b96193e5fc6eb49c24c4f536df6e58ac",
     "tools/m5_repl_driver.py": "ed39a7d586f68084d186706b58cd89143317a0ed394ebfa2243eec22016afb05",
     "tools/m5_server_client.py": "e77af198a9aa64680ee3a3509a4266b7f9bbfb83bf8d53136986219a77ae23b2"
   }

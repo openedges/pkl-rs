@@ -62,6 +62,8 @@ try {
 
 Version `0.32.0` tracks the **Apple Pkl `0.32.0`** compatibility baseline (`PKL_VERSION === "0.32.0"`). See the [pkl-rs Versioning Guide](https://github.com/openedges/pkl-rs/blob/main/docs/versioning.md).
 
-## License
+## License & Trademarks
 
 Licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 OpenEdges Inc.). Attribution and third-party notices are bundled in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+`@pkl-rs/napi` is part of the independent `pkl-rs` project by OpenEdges Inc. and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.

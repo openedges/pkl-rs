@@ -333,7 +333,7 @@ fn http_redirects_301_302_303_307_308_and_per_hop_header_isolation() {
             .contains(&("Authorization".into(), "Bearer secret-a".into()))
     );
     assert!(
-        pkl_runtime::host::http::DEFAULT_USER_AGENT.starts_with("Pkl/0.32.0 ("),
+        pkl_runtime::host::http::DEFAULT_USER_AGENT.starts_with("pkl-rs/0.32.0 ("),
         "unexpected default User-Agent: {}",
         pkl_runtime::host::http::DEFAULT_USER_AGENT
     );
@@ -806,8 +806,8 @@ fn review_regressions_user_agent_redirect_final_uri_cidr_port_jar_magic_and_io_s
     use pkl_runtime::host::http::DEFAULT_USER_AGENT;
     use pkl_runtime::host::modulepath::{EXECUTABLE_JAR_HEADER, is_zip_or_executable_jar_magic};
 
-    // 1. Default User-Agent includes platform/flavor (`Pkl/0.32.0 (<os>; <flavor>)`)
-    assert!(DEFAULT_USER_AGENT.starts_with("Pkl/0.32.0 ("));
+    // 1. Default User-Agent includes platform/flavor (`pkl-rs/0.32.0 (<os>; <flavor>)`)
+    assert!(DEFAULT_USER_AGENT.starts_with("pkl-rs/0.32.0 ("));
     assert!(DEFAULT_USER_AGENT.ends_with(')'));
 
     // 2. Final redirected URI is reported in non-200 status errors (`HttpUtils.checkHasStatusCode200`)

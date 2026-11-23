@@ -1815,10 +1815,11 @@ def _run_pkldoc_workload(
 
     r_pf, r_tree = run_once("rust", "preflight-rust")
     r_stdout, r_err = verify_capture_raw(r_pf, expected_exit=0)
-    if r_err or r_tree != exp_tree:
+    r_tree_diffs = m5_pkldoc_tree.compare_pkldoc_trees(exp_tree, r_tree, root)
+    if r_err or r_tree_diffs:
         raise ValueError(
             f"{wid}: Rust pkldoc generated file/symlink tree differs from oracle "
-            f"({len(r_tree)} vs {len(exp_tree)} entries)"
+            f"({len(r_tree)} vs {len(exp_tree)} entries, diffs={r_tree_diffs[:8]})"
         )
     stdout_ok, stdout_detail = m5_differential.check_pkldoc_progress_stdout(ref_stdout, r_stdout)
     if not stdout_ok:
@@ -1847,8 +1848,9 @@ def _run_pkldoc_workload(
 
         rc, rt = run_once("rust", f"rust-cold/{idx}")
         rs_out, _ = verify_capture_raw(rc, expected_exit=0, expected_stderr=b"")
-        if rt != exp_tree:
-            raise ValueError(f"{wid}: Rust sample {idx} pkldoc tree differs from oracle")
+        rt_diffs = m5_pkldoc_tree.compare_pkldoc_trees(exp_tree, rt, root)
+        if rt_diffs:
+            raise ValueError(f"{wid}: Rust sample {idx} pkldoc tree differs from oracle ({rt_diffs[:8]})")
         s_ok, s_det = m5_differential.check_pkldoc_progress_stdout(sample_ref_stdout, rs_out)
         if not s_ok:
             raise ValueError(f"{wid}: sample {idx} pkldoc progress stdout contract failed: {s_det}")

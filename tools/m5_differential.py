@@ -304,10 +304,11 @@ def apply_case_setup(
 
 
 def check_native_version_contract(expected: dict, actual: dict) -> list[str]:
-    """Verify honest native-flavor --version contract without faking Java version in Rust.
+    """Verify honest native-flavor --version contract without faking Java version or Apple brand.
 
-    Java outputs `<Tool> 0.32.0 (<os>, Java <ver>)\\n`; Rust MUST output the exact same
-    `<Tool> 0.32.0 (<os>, native)\\n` with exit code 0 and empty stderr.
+    Java outputs `Pkl 0.32.0 (<os>, Java <ver>)\\n` or `pkldoc 0.32.0 (<os>, Java <ver>)\\n`;
+    Rust MUST output `pkl-rs 0.32.0 (<os>, native)\\n` or `pkldoc-rs 0.32.0 (<os>, native)\\n`
+    with exit code 0 and empty stderr.
     """
     diffs: list[str] = []
     if expected["exit_code"] != 0 or expected["stderr"] != b"":
@@ -317,7 +318,8 @@ def check_native_version_contract(expected: dict, actual: dict) -> list[str]:
         diffs.append("oracle_version_format_unexpected")
         return diffs
     tool_name, os_part = m.group(1), m.group(2)
-    expected_native_stdout = tool_name + b" 0.32.0 (" + os_part + b", native)\n"
+    rust_tool_name = b"pkl-rs" if tool_name == b"Pkl" else b"pkldoc-rs"
+    expected_native_stdout = rust_tool_name + b" 0.32.0 (" + os_part + b", native)\n"
     if actual["exit_code"] != 0:
         diffs.append("exit_code")
     if actual["stderr"] != b"":
@@ -474,9 +476,7 @@ def check_pkldoc_progress_contract(expected: dict, actual: dict) -> tuple[list[s
         diffs.append("workspace_changes")
     exp_files = expected.get("files", {})
     act_files = actual.get("files", {})
-    for name in sorted(set(exp_files) | set(act_files)):
-        if exp_files.get(name) != act_files.get(name):
-            diffs.append(f"files/{name}")
+    diffs.extend(m5_pkldoc_tree.compare_pkldoc_trees(exp_files, act_files, ROOT))
     return diffs, detail
 
 
