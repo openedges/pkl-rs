@@ -14,7 +14,13 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
+      - 'release/**'
   pull_request:
+    branches:
+      - main
+      - 'release/**'
   workflow_dispatch:
 
 permissions:
@@ -83,6 +89,7 @@ jobs:
           python3 tools/m7_manifest.py --check
           python3 tools/benchmark.py --check-contract
           python3 tools/m7_benchmark.py --check-contract
+          python3 tools/check_release_version.py
           PYTHONPATH=tools python3 -m unittest -v tools/tests/test_local_verify.py
       - name: Run fast Rust unit and product-crate smoke tests
         run: |

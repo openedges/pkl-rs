@@ -10,6 +10,14 @@ See [README.md](README.md) for the product overview, [docs/installation.md](docs
 4. Update [CHANGELOG.md](CHANGELOG.md) for notable user-facing changes and update [NOTICE](NOTICE) / [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) whenever adding or modifying third-party dependencies or embedded assets.
 5. Run checks appropriate to the changed area (see below) and record exact results, provenance, and any unverified scope. See [SECURITY.md](SECURITY.md) for reporting vulnerabilities privately.
 
+## Branching & Tagging
+
+Follow the full [Versioning, Branch & Tag Policy](docs/versioning.md):
+
+- **Branches**: Develop on short-lived topic branches (`feat/*`, `fix/*`, `perf/*`, `docs/*`, `ci/*`, `chore/*`, or `baseline/pkl-<X.Y.Z>` for upstream baseline upgrades) and open pull requests against `main` (or `release/<MAJOR>.<MINOR>` for maintenance backports). Never force-push to `main` or `release/*`.
+- **CI triggers**: [.github/workflows/ci.yml](.github/workflows/ci.yml) runs on `push` to `main`/`release/**` and on `pull_request` targeting `main`/`release/**`, so unmerged feature branches do not consume duplicate Actions runs before a PR is opened.
+- **Release tags**: Only maintainers create annotated `v*` tags (`git tag -a vX.Y.Z[-rc.N] -m "..."`) on verified `main` or `release/*` commits after `python3 tools/check_release_version.py --tag vX.Y.Z[-rc.N]` passes. Published tags are immutable and must never be moved or deleted.
+
 ## Implementation principles
 
 - Separate the shared pure-Wasm engine (`crates/pkl-runtime`, `crates/pkl-formatter`) from platform-specific Host capabilities (`crates/pkl-host-native`, `crates/pkl-wasm`, `crates/pkl-napi`). Keep evaluation semantics and error formats consistent across native, Wasm, and N-API targets.

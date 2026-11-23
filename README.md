@@ -166,7 +166,7 @@ All distributable components (`Cargo.toml` workspace crates, `pkl`/`pkldoc` bina
 | Category | Document | Description |
 | --- | --- | --- |
 | **Users & Release** | [docs/installation.md](docs/installation.md) | Prebuilt binaries, checksum verification, npm packages, source builds |
-| | [docs/versioning.md](docs/versioning.md) | Versioning scheme, upgrade policy, release checklist |
+| | [docs/versioning.md](docs/versioning.md) | Versioning, branch & tag policy, upgrade rules, release checklist |
 | | [CHANGELOG.md](CHANGELOG.md) | User-facing release notes and known pre-release boundaries |
 | | [SECURITY.md](SECURITY.md) | Vulnerability reporting and Pkl security boundaries |
 | | [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) | Embedded assets, vendored regex data, and crate licenses |

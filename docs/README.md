@@ -10,7 +10,7 @@ Documentation in `pkl-rs` is organized into three tiers so end users, contributo
 | --- | --- | --- |
 | [README.md](../README.md) | End users | Project overview, quick start (CLI, Rust, Node.js, Wasm), compatibility summary |
 | [docs/installation.md](installation.md) | End users / Ops | Prebuilt binaries, checksum verification, shell completions, npm packages, source builds |
-| [docs/versioning.md](versioning.md) | Users / Maintainers | Unified `0.32.0` versioning policy, upstream upgrade rules, release checklist |
+| [docs/versioning.md](versioning.md) | Users / Maintainers | Unified `0.32.0` versioning, branch & tag policy, upgrade rules, release checklist |
 | [CHANGELOG.md](../CHANGELOG.md) | Users / Maintainers | User-facing release notes and pre-release boundaries |
 | [SECURITY.md](../SECURITY.md) | Users / Security | Vulnerability disclosure and Pkl security model / trust boundaries |
 | [LICENSE](../LICENSE) | Legal / Distributors | Apache License, Version 2.0 |

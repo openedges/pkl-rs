@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import check_linux_glibc
+import check_release_version
 import local_verify
 
 
@@ -42,6 +43,10 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, ci_text, f"Expensive step {forbidden!r} must live in local verification, not ci.yml")
         # Must enforce the 2.50 MiB gzip-9 .wasm budget during packaging smoke.
         self.assertIn("2621440", ci_text)
+        # Must restrict push/PR branch triggers per Branch Policy (main and release/**).
+        self.assertIn("- main", ci_text)
+        self.assertIn("'release/**'", ci_text)
+        self.assertIn("check_release_version.py", ci_text)
 
     def test_release_workflow_triggers_only_on_tags_or_dispatch_and_covers_all_7_napi_targets(self) -> None:
         rel_text = (ROOT / ".github" / "workflows" / "release.yml").read_text(encoding="utf-8")
@@ -51,12 +56,14 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("'v*'", rel_text)
         self.assertIn("workflow_dispatch:", rel_text)
         for job in (
+            "verify-tag:",
             "package-linux-portable:",
             "package-macos-windows:",
             "package-wasm:",
             "assemble-and-release:",
         ):
             self.assertIn(job, rel_text)
+        self.assertIn("check_release_version.py", rel_text)
         for addon in (
             "pkl_napi.darwin-arm64.node",
             "pkl_napi.darwin-x64.node",
@@ -116,6 +123,37 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         sample = "0x0010: Name: GLIBC_2.2.5\n0x0020: Name: GLIBC_2.28\n0x0030: Name: GLIBC_2.17\n"
         self.assertEqual(check_linux_glibc.max_glibc_version(sample), (2, 28, 0))
         self.assertGreater(check_linux_glibc.max_glibc_version("Name: GLIBC_2.38"), (2, 28, 0))
+
+    def test_check_release_version_lockstep_and_tag_validation(self) -> None:
+        # Live repo must be in lockstep at 0.32.0.
+        live = check_release_version.verify_versions(ROOT, tag="refs/tags/v0.32.0")
+        self.assertEqual(live["Cargo.toml"], "0.32.0")
+        self.assertEqual(live["packages/pkl-wasm/package.json"], "0.32.0")
+        self.assertEqual(live["packages/pkl-napi/package.json"], "0.32.0")
+        self.assertEqual(live["tag"], "0.32.0")
+
+        # Synthetic repo tests for prerelease match, tag mismatch, bad tag, and manifest drift.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "packages" / "pkl-wasm").mkdir(parents=True)
+            (root / "packages" / "pkl-napi").mkdir(parents=True)
+            (root / "Cargo.toml").write_text('[workspace.package]\nversion = "0.32.0-rc.1"\n', encoding="utf-8")
+            (root / "packages" / "pkl-wasm" / "package.json").write_text('{"version":"0.32.0-rc.1"}\n', encoding="utf-8")
+            (root / "packages" / "pkl-napi" / "package.json").write_text('{"version":"0.32.0-rc.1"}\n', encoding="utf-8")
+
+            ok = check_release_version.verify_versions(root, tag="v0.32.0-rc.1")
+            self.assertEqual(ok["tag"], "0.32.0-rc.1")
+
+            with self.assertRaises(ValueError):
+                check_release_version.verify_versions(root, tag="v0.32.0")
+            with self.assertRaises(ValueError):
+                check_release_version.verify_versions(root, tag="0.32.0-rc.1")
+            with self.assertRaises(ValueError):
+                check_release_version.verify_versions(root, tag="v0.32.0+build.1")
+
+            (root / "packages" / "pkl-napi" / "package.json").write_text('{"version":"0.32.0"}\n', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                check_release_version.verify_versions(root)
 
     def test_protobuf_strict_suite_matches_testing_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

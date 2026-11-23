@@ -355,6 +355,7 @@ def build_suite_steps(
             Step("check-m7-manifest", [py, "tools/m7_manifest.py", "--check"]),
             Step("check-m0-benchmark-contract", [py, "tools/benchmark.py", "--check-contract"]),
             Step("check-m7-benchmark-contract", [py, "tools/m7_benchmark.py", "--check-contract"]),
+            Step("check-release-version-lockstep", [py, "tools/check_release_version.py"]),
             Step("verify-jvm-oracle", [py, "tools/oracle.py", "verify"]),
             Step("verify-native-image-oracle", [py, "tools/oracle.py", "verify", "--profile", "native-image"]),
             Step("unit-tests-all-active-python", [py, "-m", "unittest", *active_mods], py_env),

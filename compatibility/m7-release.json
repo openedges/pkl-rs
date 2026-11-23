@@ -709,17 +709,17 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "0e4064060d834a8b252a350ab8cd28bf8ff34c42c5b1d338dc88942d98df6fe6",
+          "sha256": "fc1e694db0617223d92a1d575dbe33d0db0fc4cff3dccb312eb62218d32a7a4a",
           "symbol": "package-smoke"
         },
         {
           "path": ".github/workflows/release.yml",
-          "sha256": "1433b3aa070f60fa032f4d02da1ba6dc4dd570b4d44a43792dd89393077ee155",
+          "sha256": "63a94dfc3af39ed08d7876b0829bd0941056715e61a9863452096c0804274754",
           "symbol": "assemble-and-release"
         },
         {
           "path": "tools/local_verify.py",
-          "sha256": "1a50eccc13a47458acbb5b1ea257ed8dcba3b33f80dd0e7ea98dd6931c3eba2b",
+          "sha256": "b62635fc1f6f0795cd8042b562821aba7af651c8b5a67aac25cb92aaa419732d",
           "symbol": "run_suites"
         }
       ],
