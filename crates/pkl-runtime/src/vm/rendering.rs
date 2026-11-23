@@ -1750,6 +1750,13 @@ impl Vm {
                         path,
                     }));
                 } else {
+                    if !run.has_value_converters
+                        && run.format != Format::Protobuf
+                        && self.try_fast_render_open_object(run, id, depth, standalone, root, &path)
+                    {
+                        run.active.remove(&id);
+                        return Ok(false);
+                    }
                     run.tasks.push(Task::OpenObject {
                         receiver: id,
                         depth,

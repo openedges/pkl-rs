@@ -662,19 +662,32 @@ impl Vm {
             None => !key.entry || key.owner.is_some(),
         };
         if sync_probe {
-            {
+            let (has_hash, already_completed, slots_empty) = {
                 let object = self.heap.get_mut(receiver)?;
                 while object.cache_index.len() < object.cache_slots.len() {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
-            }
-            let hash = if let Some(ref probe_val) = probe {
-                java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
-            } else {
-                string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                let already_completed =
+                    matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                (
+                    object.cache_index.has_hash(),
+                    already_completed,
+                    object.cache_slots.is_empty(),
+                )
             };
-            let existing = {
+            let hash = if has_hash {
+                if let Some(ref probe_val) = probe {
+                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                } else {
+                    string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                }
+            } else {
+                0
+            };
+            let existing = if slots_empty || (probe.is_none() && !already_completed) {
+                None
+            } else {
                 let object = self.heap.get(receiver)?;
                 let check = |index: usize| -> Result<bool, RuntimeError> {
                     let slot = &object.cache_slots[index];
@@ -695,7 +708,7 @@ impl Vm {
                     }
                 };
                 let mut found = None;
-                if object.cache_index.has_hash() {
+                if has_hash {
                     for index in object.cache_index.hash_candidates(hash) {
                         if check(index)? {
                             found = Some(index);
@@ -740,15 +753,17 @@ impl Vm {
                     return Ok(());
                 }
             }
-            if key.owner.is_some()
-                || matches!(
-                    self.heap.get(receiver)?.cache.get(&key),
-                    Some(LazyState::Completed(_))
-                )
-            {
+            if (key.owner.is_some() || already_completed) && !self.heap.key_equalities.is_empty() {
                 self.heap.key_equalities.clear();
             }
             let need_rehash = {
+                let hash = if has_hash || !self.heap.get(receiver)?.cache_index.has_hash() {
+                    hash
+                } else if let Some(ref probe_val) = probe {
+                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                } else {
+                    string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                };
                 let object = self.heap.get_mut(receiver)?;
                 let index = object.cache_index.push();
                 object.completed_cache_order.push(key.clone());

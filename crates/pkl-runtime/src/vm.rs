@@ -6334,17 +6334,18 @@ impl Vm {
             constant_value = cached;
         }
         if constant_value.is_none() {
-            constant_value = self
-                .heap
-                .get(owner)?
-                .member_values
-                .get(&CacheKey {
-                    owner: None,
-                    name: name.clone(),
-                    method,
-                    entry,
-                })
-                .cloned();
+            let owner_obj = self.heap.get(owner)?;
+            if !owner_obj.member_values.is_empty() {
+                constant_value = owner_obj
+                    .member_values
+                    .get(&CacheKey {
+                        owner: None,
+                        name: name.clone(),
+                        method,
+                        entry,
+                    })
+                    .cloned();
+            }
         }
         let owner_object = self.heap.get(owner)?;
         let owner_is_dynamic = !owner_object.is_module
@@ -6424,16 +6425,20 @@ impl Vm {
             inherited_types.extend(implicit_default_type);
         }
         let object = self.heap.get(owner)?;
-        let mut environment = object
-            .member_environments
-            .get(&CacheKey {
-                owner: None,
-                name: name.clone(),
-                method,
-                entry,
-            })
-            .unwrap_or(&object.environment)
-            .clone();
+        let mut environment = if object.member_environments.is_empty() {
+            object.environment.clone()
+        } else {
+            object
+                .member_environments
+                .get(&CacheKey {
+                    owner: None,
+                    name: name.clone(),
+                    method,
+                    entry,
+                })
+                .unwrap_or(&object.environment)
+                .clone()
+        };
         environment.outer_value = environment.this_value.clone();
         environment.this_value = Some(Value::Object(receiver));
         environment.custom_this = None;
@@ -10020,13 +10025,15 @@ impl Vm {
             let receiver = force.receiver;
             let probe = force.entry_probe.clone();
             self.complete_cache_probe(receiver, key, value.clone(), probe)?;
-            if self.frames.len() > 1 {
-                let caller = self.frames.len() - 2;
-                self.frames[caller].callsite_hidden = true;
+            if self.frames.last().expect("active frame").equality_run.is_some() {
+                if self.frames.len() > 1 {
+                    let caller = self.frames.len() - 2;
+                    self.frames[caller].callsite_hidden = true;
+                }
+                self.stack.push(value);
+                self.frames.last_mut().expect("active frame").pc -= 1;
+                return Ok(());
             }
-            self.stack.push(value);
-            self.frames.last_mut().expect("active frame").pc -= 1;
-            return Ok(());
         }
         if let Some(force) = self.frames.last_mut().expect("active frame").force.as_mut()
             && force.publishing_cache
