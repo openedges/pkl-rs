@@ -428,7 +428,7 @@ impl Vm {
         annotations: ObjectId,
         code: usize,
     ) -> Result<(), RuntimeError> {
-        let values = self.heap.get(annotations)?.annotations.clone();
+        let values = self.heap.get(annotations)?.annotations.to_vec();
         let deprecation = self.heap.get(annotations)?.deprecation.clone();
         let owner = self.heap.get_mut(owner)?;
         owner.member_annotations.insert(code, values);

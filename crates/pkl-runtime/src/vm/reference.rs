@@ -819,10 +819,10 @@ fn subtype(a: &TypeCheck, b: &TypeCheck, heap: &Heap) -> bool {
 impl Vm {
     pub(super) fn native_reference_method(&mut self, receiver: Value, name: &str) -> Value {
         let object = self.heap.allocate(Object {
-            native_function: Some(NativeFunction {
+            native_function: Some(Box::new(NativeFunction {
                 receiver,
                 name: name.into(),
-            }),
+            })),
             ..Object::default()
         });
         Value::Function(object)
@@ -999,7 +999,8 @@ impl Vm {
                 .ok_or_else(|| invalid("class metadata missing"))?;
             let ty = object
                 .builtin_type
-                .clone()
+                .as_deref()
+                .cloned()
                 .unwrap_or_else(|| TypeCheck::Class {
                     // Module Class values display their module name directly,
                     // independently of the caller's module. Keep their actual
@@ -1025,7 +1026,7 @@ impl Vm {
                 forced: false,
             };
             Value::Object(self.heap.allocate(Object {
-                reference: Some(reference),
+                reference: Some(Box::new(reference)),
                 ..Object::default()
             }))
         } else {
@@ -1928,14 +1929,14 @@ mod generic_metadata_tests {
         ] {
             let prototype = vm.heap.allocate(Object {
                 is_module,
-                class_definition: Some(Class {
+                class_definition: Some(Box::new(Class {
                     module: module.map(PklString::from),
                     origin_uri: None,
                     id: if is_module { 700 } else { 701 },
                     name: name.into(),
                     open: false,
                     abstract_: false,
-                }),
+                })),
                 ..Default::default()
             });
             let class = vm.heap.allocate_class(prototype);
@@ -2025,14 +2026,14 @@ mod generic_metadata_tests {
         let key = vm.heap.allocate(Object::default());
         let subscript = vm.reference_access_value(None, Some(Value::Object(key)));
         let reference = Value::Object(vm.heap.allocate(Object {
-            reference: Some(Reference {
+            reference: Some(Box::new(Reference {
                 domain: Value::Null,
                 data: Value::Null,
                 path: vec![property.clone(), subscript.clone()],
                 referent: TypeCheck::Int,
                 classes: vec![],
                 forced: false,
-            }),
+            })),
             ..Object::default()
         }));
         vm.collect(std::slice::from_ref(&reference));

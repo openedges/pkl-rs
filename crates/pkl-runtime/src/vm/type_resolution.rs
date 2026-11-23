@@ -1523,14 +1523,14 @@ mod tests {
                     ..Object::default()
                 });
                 let class = vm.heap.allocate(Object {
-                    class_definition: Some(Class {
+                    class_definition: Some(Box::new(Class {
                         id: 42,
                         module: Some("owner".into()),
                         origin_uri: None,
                         name: "C".into(),
                         open: false,
                         abstract_: false,
-                    }),
+                    })),
                     ..Object::default()
                 });
                 let class = vm.heap.allocate_class(class);

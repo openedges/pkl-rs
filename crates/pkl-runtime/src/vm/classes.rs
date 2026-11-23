@@ -56,7 +56,7 @@ pub(super) fn typed_instance(heap: &Heap, id: ObjectId) -> Result<bool, RuntimeE
     Ok(!matches!(
         prototype
             .builtin_type
-            .as_ref()
+            .as_deref()
             .and_then(BuiltinClass::from_type),
         Some(
             BuiltinClass::Dynamic
@@ -451,7 +451,7 @@ impl Vm {
         let prototype = self.heap.get(self.heap.get_class(class)?.prototype)?;
         Ok(prototype
             .builtin_type
-            .as_ref()
+            .as_deref()
             .and_then(BuiltinClass::from_type)
             .filter(|key| self.builtin_classes.get(key) == Some(&class)))
     }
@@ -525,8 +525,8 @@ impl Vm {
                     BuiltinClass::Mapping => CollectionKind::Mapping,
                     _ => CollectionKind::Dynamic,
                 },
-                builtin_type: Some(key.ty()),
-                class_definition: Some(Class {
+                builtin_type: Some(Box::new(key.ty())),
+                class_definition: Some(Box::new(Class {
                     module: Some(
                         if matches!(
                             key,
@@ -553,7 +553,7 @@ impl Vm {
                     name: key.name().into(),
                     abstract_: key.abstract_(),
                     open: matches!(key, BuiltinClass::Ordinary(id) if builtins::open_class(id)),
-                }),
+                })),
                 ..Object::default()
             });
             let class = self.heap.allocate_class(prototype);
@@ -581,7 +581,7 @@ impl Vm {
         let prototype = self.heap.get(self.heap.get_class(class)?.prototype)?;
         Ok(prototype
             .builtin_type
-            .as_ref()
+            .as_deref()
             .and_then(BuiltinClass::from_type)
             .is_some_and(BuiltinClass::external)
             || prototype

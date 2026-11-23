@@ -193,7 +193,7 @@ impl Vm {
             collection_members,
             has_object_collection_key,
             map_index: Some(Box::new(map_index)),
-            map_key_order: Some(order),
+            map_key_order: Some(Box::new(order)),
             member_values: old
                 .member_values
                 .iter()

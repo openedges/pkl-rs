@@ -795,14 +795,14 @@ mod tests {
             ..Object::default()
         });
         let class = heap.allocate(Object {
-            class_definition: Some(Class {
+            class_definition: Some(Box::new(Class {
                 module: None,
                 origin_uri: None,
                 id: 1,
                 name: "Child".into(),
                 open: false,
                 abstract_: false,
-            }),
+            })),
             parent: Some(base),
             members: vec![member("m", false)].into(),
             ..Object::default()

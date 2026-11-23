@@ -1063,7 +1063,7 @@ impl Vm {
                 declaration.syntax.recipe,
                 DeclarationRecipe::Class { .. } | DeclarationRecipe::TypeAlias { .. }
             ) {
-                Ok(object.annotations.clone())
+                Ok(object.annotations.to_vec())
             } else {
                 Ok(object
                     .member_annotations
@@ -1072,7 +1072,7 @@ impl Vm {
                     .unwrap_or_default())
             }
         } else {
-            Ok(object.annotations.clone())
+            Ok(object.annotations.to_vec())
         }
     }
 
@@ -1171,7 +1171,7 @@ impl Vm {
                     },
                 }));
             }
-            "annotations" => run.sequence(annotations),
+            "annotations" => run.sequence(annotations.into_vec()),
             "modifiers" => run.values.push(self.reflection_modifier_set(
                 if unit_mode == modules::ModuleMode::Amends {
                     0

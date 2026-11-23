@@ -10,7 +10,10 @@ pub(super) fn typed_class_ref(heap: &Heap, id: ObjectId) -> Result<Option<&Class
     // without initializing the cycle-detection stack array).
     let first = heap.get(id)?;
     if let Some(class) = &first.class_definition {
-        if matches!(first.builtin_type, Some(TypeCheck::Collection(_))) {
+        if matches!(
+            first.builtin_type.as_deref(),
+            Some(TypeCheck::Collection(_))
+        ) {
             return Ok(None);
         }
         return Ok(Some(class));
@@ -23,7 +26,10 @@ pub(super) fn typed_class_ref(heap: &Heap, id: ObjectId) -> Result<Option<&Class
     }
     let second = heap.get(parent1)?;
     if let Some(class) = &second.class_definition {
-        if matches!(second.builtin_type, Some(TypeCheck::Collection(_))) {
+        if matches!(
+            second.builtin_type.as_deref(),
+            Some(TypeCheck::Collection(_))
+        ) {
             return Ok(None);
         }
         return Ok(Some(class));
@@ -51,7 +57,10 @@ pub(super) fn typed_class_ref(heap: &Heap, id: ObjectId) -> Result<Option<&Class
         }
         let object = heap.get(cur)?;
         if let Some(class) = &object.class_definition {
-            if matches!(object.builtin_type, Some(TypeCheck::Collection(_))) {
+            if matches!(
+                object.builtin_type.as_deref(),
+                Some(TypeCheck::Collection(_))
+            ) {
                 return Ok(None);
             }
             return Ok(Some(class));
@@ -505,7 +514,10 @@ pub(super) fn is_single_level_leaf_collection(heap: &Heap, object: &Object) -> b
         None => true,
         Some(parent_id) => heap.get_fast(parent_id).is_some_and(|parent| {
             parent.parent.is_none()
-                && matches!(parent.builtin_type, Some(TypeCheck::Collection(_)))
+                && matches!(
+                    parent.builtin_type.as_deref(),
+                    Some(TypeCheck::Collection(_))
+                )
                 && parent.collection_members.is_empty()
                 && parent
                     .members
@@ -538,7 +550,7 @@ pub fn ordered_members(
         return Ok(first.collection_members.clone());
     }
     if first.collection_kind == CollectionKind::Map {
-        if let Some(order) = &first.map_key_order {
+        if let Some(order) = first.map_key_order.as_deref() {
             return Ok(order.clone());
         }
         return Ok(first
@@ -981,7 +993,12 @@ pub(crate) fn hidden_property(
         let object = heap.get(id)?;
         // Builtin collection prototypes (Dynamic/Listing/Mapping) only declare hidden `default`,
         // and their ancestors (`Object`, `Any`) declare no hidden properties at all.
-        if !is_default && matches!(object.builtin_type, Some(TypeCheck::Collection(_))) {
+        if !is_default
+            && matches!(
+                object.builtin_type.as_deref(),
+                Some(TypeCheck::Collection(_))
+            )
+        {
             return Ok(false);
         }
         if object
@@ -1593,7 +1610,7 @@ impl Vm {
         };
         if let Some(order) = explicit_order {
             object.length = order.len();
-            object.map_key_order = Some(order);
+            object.map_key_order = Some(Box::new(order));
         }
         let cache = CacheKey {
             owner: None,
@@ -1942,9 +1959,9 @@ impl Vm {
                 return Ok(());
             };
             let object = self.heap.get_mut(id)?;
-            let index = object
-                .declaration_index
-                .get_or_insert_with(|| crate::economic_map::EconomicMapIndex::with_capacity(0));
+            let index = object.declaration_index.get_or_insert_with(|| {
+                Box::new(crate::economic_map::EconomicMapIndex::with_capacity(0))
+            });
             if index.len() < object.collection_members.len() {
                 if index.grow_before_append() {
                     for old in index.start_rehash() {
@@ -1985,9 +2002,9 @@ impl Vm {
         if start == 0 {
             object.declaration_hashes.clear();
         }
-        let index = object
-            .declaration_index
-            .get_or_insert_with(|| crate::economic_map::EconomicMapIndex::with_capacity(0));
+        let index = object.declaration_index.get_or_insert_with(|| {
+            Box::new(crate::economic_map::EconomicMapIndex::with_capacity(0))
+        });
         let mut new_iter = new_hashes.into_iter();
         while index.len() < object.collection_members.len() {
             if index.grow_before_append() {
@@ -2309,7 +2326,7 @@ impl Vm {
                 && self
                     .heap
                     .get_fast(parent)
-                    .and_then(|pobj| pobj.builtin_type.as_ref())
+                    .and_then(|pobj| pobj.builtin_type.as_deref())
                     .and_then(classes::BuiltinClass::from_type)
                     == Some(classes::BuiltinClass::Dynamic);
             if !skip_plain_dynamic_prop {
@@ -2675,7 +2692,7 @@ impl Vm {
                 let value = if defined { Some(self.pop()?) } else { None };
                 let target = self.builder()?;
                 self.heap.get_mut(target)?.collection_default = Some(value);
-                self.heap.get_mut(target)?.collection_default_origin = origin;
+                self.heap.get_mut(target)?.collection_default_origin = origin.map(Box::new);
             }
             Instruction::SetCollectionTypeDefault { ty, origin } => {
                 let environment = self
@@ -2686,7 +2703,7 @@ impl Vm {
                     .clone();
                 let ty = ty.substituted(&environment)?;
                 let target = self.builder()?;
-                self.heap.get_mut(target)?.collection_default_origin = origin.clone();
+                self.heap.get_mut(target)?.collection_default_origin = origin.clone().map(Box::new);
                 if matches!(ty.resolved(), TypeCheck::Unknown) {
                     self.heap.get_mut(target)?.collection_default = None;
                 } else {
@@ -3292,7 +3309,7 @@ impl Vm {
                     })
                 };
                 let id = self.heap.allocate(Object {
-                    iterator,
+                    iterator: iterator.map(Box::new),
                     ..Object::default()
                 });
                 self.stack.push(Value::Object(id));
@@ -3597,13 +3614,13 @@ impl Vm {
                 };
                 let previous_this = self.current_custom_this()?;
                 let id = self.heap.allocate(Object {
-                    predicate_iterator: Some(PredicateIterator {
+                    predicate_iterator: Some(Box::new(PredicateIterator {
                         source,
                         members,
                         position: 0,
                         awaiting_value: false,
                         previous_this,
-                    }),
+                    })),
                     ..Object::default()
                 });
                 self.stack.push(Value::Object(id));
@@ -3793,7 +3810,10 @@ impl Vm {
             if let Some(parent) = object.parent {
                 let prototype = self.heap.get(parent)?;
                 if prototype.class_definition.is_some()
-                    && matches!(prototype.builtin_type, Some(TypeCheck::Collection(_)))
+                    && matches!(
+                        prototype.builtin_type.as_deref(),
+                        Some(TypeCheck::Collection(_))
+                    )
                 {
                     self.empty_object(object.collection_kind)
                 } else {

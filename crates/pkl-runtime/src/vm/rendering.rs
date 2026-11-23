@@ -3160,7 +3160,7 @@ impl Vm {
                     .get_class(cls)
                     .ok()
                     .and_then(|c| self.heap.get_fast(c.prototype))
-                    .and_then(|p| p.builtin_type.as_ref())
+                    .and_then(|p| p.builtin_type.as_deref())
                     .and_then(classes::BuiltinClass::from_type)
                     == Some(expected)
             }
@@ -3192,7 +3192,7 @@ impl Vm {
             }
             if pobj
                 .builtin_type
-                .as_ref()
+                .as_deref()
                 .and_then(classes::BuiltinClass::from_type)
                 == Some(expected)
             {
@@ -3369,7 +3369,7 @@ impl Vm {
         let id = self.heap.allocate(Object {
             collection_kind: CollectionKind::Set,
             length: len,
-            set_entries: values.clone(),
+            set_entries: values.clone().into(),
             map_index: Some(Box::default()),
             ..Object::default()
         });
@@ -3429,7 +3429,7 @@ impl Vm {
         obj.members = members.into();
         obj.cache_slots = cache_slots;
         obj.cache_index = cache_index;
-        obj.member_values = member_values;
+        obj.member_values = member_values.into();
         obj.cache = cache;
         Some(id)
     }
@@ -3984,7 +3984,7 @@ impl Vm {
             }
             CollectionKind::Map if obj.parent.is_none() => {
                 let base = scratch.len();
-                if let Some(order) = &obj.map_key_order {
+                if let Some(order) = obj.map_key_order.as_deref() {
                     if order.len() != obj.length {
                         return None;
                     }
@@ -4281,7 +4281,7 @@ impl Vm {
                 pobj.member_annotations.is_empty()
                     && (pobj
                         .builtin_type
-                        .as_ref()
+                        .as_deref()
                         .and_then(classes::BuiltinClass::from_type)
                         == Some(classes::BuiltinClass::Ordinary(output::MODULE))
                         || pobj

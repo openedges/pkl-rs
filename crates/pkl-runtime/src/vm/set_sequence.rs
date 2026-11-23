@@ -956,7 +956,8 @@ impl Vm {
                     .ok_or_else(|| invalid("filter class metadata"))?;
                 let ty = prototype
                     .builtin_type
-                    .clone()
+                    .as_deref()
+                    .cloned()
                     .unwrap_or_else(|| TypeCheck::Class {
                         module: class.module.clone(),
                         id: class.id,

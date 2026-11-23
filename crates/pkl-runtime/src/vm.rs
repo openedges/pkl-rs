@@ -4863,7 +4863,7 @@ impl Vm {
                                                 if recv_obj.parent.is_none_or(|p| {
                                                     heap.get_fast(p).is_some_and(|pobj| {
                                                         matches!(
-                                                            pobj.builtin_type,
+                                                            pobj.builtin_type.as_deref(),
                                                             Some(TypeCheck::Collection(_))
                                                         )
                                                     })
@@ -7362,7 +7362,7 @@ impl Vm {
         if stolen_value.is_some() {
             // getCachedValue already selected this exact parent value. An empty
             // wrapper applies only its own cast and never relooks up/reexecutes it.
-            collection_casts.extend(self.heap.get(receiver)?.collection_cast.clone());
+            collection_casts.extend(self.heap.get(receiver)?.collection_cast.as_deref().cloned());
         } else if memoize && entry && !local && !method && !predicate {
             let mut current = receiver;
             let mut cached = None;
@@ -7375,7 +7375,7 @@ impl Vm {
                     cached = Some(value);
                     break;
                 }
-                if let Some(cast) = &object.collection_cast {
+                if let Some(cast) = object.collection_cast.as_deref() {
                     collection_casts.push(cast.clone());
                 }
                 if current == owner {
@@ -7389,7 +7389,7 @@ impl Vm {
                     current = parent;
                     while current != owner {
                         let object = self.heap.get(current)?;
-                        if let Some(cast) = &object.collection_cast {
+                        if let Some(cast) = object.collection_cast.as_deref() {
                             collection_casts.push(cast.clone());
                         }
                         current = object
@@ -8834,7 +8834,7 @@ impl Vm {
         arguments: Vec<Value>,
         method: bool,
     ) -> Result<(), RuntimeError> {
-        if let Some(native) = self.heap.get(id)?.native_function.clone() {
+        if let Some(native) = self.heap.get(id)?.native_function.as_deref().cloned() {
             if native.name.as_ref() == "contains" {
                 return self.invoke_set_contains(id, native, arguments);
             }
@@ -8879,7 +8879,7 @@ impl Vm {
                 .or_else(|| {
                     object
                         .mixin
-                        .as_ref()
+                        .as_deref()
                         .and_then(|(_, _, origin)| origin.clone())
                 })
             {
@@ -10442,13 +10442,13 @@ impl Vm {
                             .or_else(|| metadata.source.as_ref().map(|source| source.uri.clone()))
                     });
                     let id = self.heap.allocate(Object {
-                        class_definition: Some(Class {
+                        class_definition: Some(Box::new(Class {
                             origin_uri,
                             module: class
                                 .module
                                 .or_else(|| Some(self.current_module_name().into())),
                             ..class
-                        }),
+                        })),
                         class_initializing: true,
                         declaration_code,
                         environment,
@@ -10713,23 +10713,28 @@ impl Vm {
                     class_definition: module
                         .as_ref()
                         .filter(|unit| unit.mode != modules::ModuleMode::Amends)
-                        .map(|unit| Class {
-                            module: None,
-                            origin_uri: unit
-                                .identity
-                                .as_ref()
-                                .map(|identity| identity.original_uri.clone())
-                                .or_else(|| unit.source.as_ref().map(|source| source.uri.clone())),
-                            id: unit.class_id,
-                            name: if unit.id.0 == 0 {
-                                self.program.module_name.clone()
-                            } else {
-                                unit.name.clone()
-                            },
-                            open: unit.modifiers & crate::syntax::ModifierKind::Open.flag() != 0,
-                            abstract_: unit.modifiers
-                                & crate::syntax::ModifierKind::Abstract.flag()
-                                != 0,
+                        .map(|unit| {
+                            Box::new(Class {
+                                module: None,
+                                origin_uri: unit
+                                    .identity
+                                    .as_ref()
+                                    .map(|identity| identity.original_uri.clone())
+                                    .or_else(|| {
+                                        unit.source.as_ref().map(|source| source.uri.clone())
+                                    }),
+                                id: unit.class_id,
+                                name: if unit.id.0 == 0 {
+                                    self.program.module_name.clone()
+                                } else {
+                                    unit.name.clone()
+                                },
+                                open: unit.modifiers & crate::syntax::ModifierKind::Open.flag()
+                                    != 0,
+                                abstract_: unit.modifiers
+                                    & crate::syntax::ModifierKind::Abstract.flag()
+                                    != 0,
+                            })
                         }),
                     class_initializing: module
                         .as_ref()
@@ -10741,7 +10746,7 @@ impl Vm {
                     published_module_members: if module.is_some() {
                         members.iter().map(|m| m.code).collect()
                     } else {
-                        BTreeSet::new()
+                        crate::heap::ThinBTreeSet::default()
                     },
                     parent,
                     members: members.into(),
@@ -10754,7 +10759,11 @@ impl Vm {
                     .and_then(|frame| frame.module_receiver)
                     .filter(|_| module.is_some());
                 let object = if let Some(receiver) = existing {
+                    let module_unit = definition.module_unit;
                     *self.heap.get_mut(receiver)? = definition;
+                    if let Some(unit_id) = module_unit {
+                        self.heap.register_module(unit_id, receiver);
+                    }
                     receiver
                 } else {
                     self.heap.allocate(definition)
@@ -12106,7 +12115,7 @@ fn fast_eval_strict_map_in_poll(
             }
             Some(true)
         };
-    if let Some(order) = &obj.map_key_order {
+    if let Some(order) = obj.map_key_order.as_deref() {
         for member in order {
             match check_member(member, None) {
                 Some(true) => continue,

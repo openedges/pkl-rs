@@ -183,22 +183,17 @@ impl<'a> IntoIterator for &'a ScopeList {
 
 pub type LocalOwnerEntry = (ExecutableOwnerId, (usize, usize));
 
-/// Small inline-first map for lexical slot owners (zero-alloc for <= 8 locals).
 #[derive(Debug, Default)]
-pub struct LocalOwners {
+struct LocalOwnersInner {
     mask: u8,
     inline: [Option<LocalOwnerEntry>; 8],
-    // Keep `Environment` compact (8 bytes instead of 24) for the common <= 8-local fast path.
     #[allow(clippy::box_collection)]
     overflow: Option<Box<BTreeMap<usize, LocalOwnerEntry>>>,
 }
 
-impl Clone for LocalOwners {
+impl Clone for LocalOwnersInner {
     #[inline]
     fn clone(&self) -> Self {
-        if self.mask == 0 && self.overflow.is_none() {
-            return Self::default();
-        }
         Self {
             mask: self.mask,
             inline: self.inline,
@@ -207,19 +202,46 @@ impl Clone for LocalOwners {
     }
 }
 
+/// Compact lexical slot owner map: 8 bytes inline (zero-alloc when empty, e.g. on
+/// heap objects without captured locals); retains its box across `clear()` on
+/// pooled frames to avoid re-allocating on hot `BindLocal`.
+#[derive(Debug, Default)]
+pub struct LocalOwners(Option<Box<LocalOwnersInner>>);
+
+impl Clone for LocalOwners {
+    #[inline]
+    fn clone(&self) -> Self {
+        match &self.0 {
+            Some(inner)
+                if inner.mask != 0 || inner.overflow.as_ref().is_some_and(|m| !m.is_empty()) =>
+            {
+                Self(Some(inner.clone()))
+            }
+            _ => Self(None),
+        }
+    }
+}
+
 impl LocalOwners {
     #[inline]
     pub fn is_empty(&self) -> bool {
-        self.mask == 0 && self.overflow.as_ref().is_none_or(|m| m.is_empty())
+        match &self.0 {
+            None => true,
+            Some(inner) => inner.mask == 0 && inner.overflow.as_ref().is_none_or(|m| m.is_empty()),
+        }
     }
 
     #[inline]
     pub fn insert(&mut self, index: usize, value: LocalOwnerEntry) {
+        let inner = self
+            .0
+            .get_or_insert_with(|| Box::new(LocalOwnersInner::default()));
         if index < 8 {
-            self.inline[index] = Some(value);
-            self.mask |= 1u8 << index;
+            inner.inline[index] = Some(value);
+            inner.mask |= 1u8 << index;
         } else {
-            self.overflow
+            inner
+                .overflow
                 .get_or_insert_with(|| Box::new(BTreeMap::new()))
                 .insert(index, value);
         }
@@ -227,67 +249,526 @@ impl LocalOwners {
 
     #[inline]
     pub fn get(&self, index: &usize) -> Option<&LocalOwnerEntry> {
+        let inner = self.0.as_deref()?;
         let idx = *index;
         if idx < 8 {
-            if (self.mask & (1u8 << idx)) != 0 {
-                self.inline[idx].as_ref()
+            if (inner.mask & (1u8 << idx)) != 0 {
+                inner.inline[idx].as_ref()
             } else {
                 None
             }
         } else {
-            self.overflow.as_ref().and_then(|map| map.get(&idx))
+            inner.overflow.as_ref().and_then(|map| map.get(&idx))
         }
     }
 
     #[inline]
     pub fn remove(&mut self, index: &usize) {
+        let Some(inner) = self.0.as_deref_mut() else {
+            return;
+        };
         let idx = *index;
         if idx < 8 {
-            self.inline[idx] = None;
-            self.mask &= !(1u8 << idx);
-        } else if let Some(map) = &mut self.overflow {
+            inner.inline[idx] = None;
+            inner.mask &= !(1u8 << idx);
+        } else if let Some(map) = &mut inner.overflow {
             map.remove(&idx);
         }
     }
 
     #[inline]
     pub fn clear(&mut self) {
-        if self.mask != 0 {
-            self.inline = [None; 8];
-            self.mask = 0;
+        let Some(inner) = self.0.as_deref_mut() else {
+            return;
+        };
+        if inner.mask != 0 {
+            inner.inline = [None; 8];
+            inner.mask = 0;
         }
-        if let Some(map) = &mut self.overflow {
+        if let Some(map) = &mut inner.overflow {
             map.clear();
         }
     }
 
     #[inline]
     pub fn truncate_from(&mut self, start: usize) {
+        let Some(inner) = self.0.as_deref_mut() else {
+            return;
+        };
         if start < 8 {
             let keep_mask = ((1u16 << start) - 1) as u8;
-            let mut drop_bits = self.mask & !keep_mask;
+            let mut drop_bits = inner.mask & !keep_mask;
             while drop_bits != 0 {
                 let idx = drop_bits.trailing_zeros() as usize;
-                self.inline[idx] = None;
+                inner.inline[idx] = None;
                 drop_bits &= drop_bits - 1;
             }
-            self.mask &= keep_mask;
+            inner.mask &= keep_mask;
         }
-        if let Some(map) = &mut self.overflow {
+        if let Some(map) = &mut inner.overflow {
             map.retain(|&k, _| k < start);
         }
     }
 
     #[inline]
     pub fn fast_eq(&self, other: &Self) -> bool {
-        self.mask == other.mask && self.inline == other.inline && self.overflow == other.overflow
+        if self.is_empty() && other.is_empty() {
+            return true;
+        }
+        match (&self.0, &other.0) {
+            (Some(a), Some(b)) => {
+                a.mask == b.mask && a.inline == b.inline && a.overflow == b.overflow
+            }
+            _ => false,
+        }
     }
 
     pub fn values(&self) -> impl Iterator<Item = &LocalOwnerEntry> + '_ {
-        self.inline
-            .iter()
-            .flatten()
-            .chain(self.overflow.iter().flat_map(|map| map.values()))
+        self.0.as_deref().into_iter().flat_map(|inner| {
+            inner
+                .inline
+                .iter()
+                .flatten()
+                .chain(inner.overflow.iter().flat_map(|map| map.values()))
+        })
+    }
+}
+
+/// Copy-on-write compact `BTreeMap` (8 bytes inline; O(1) clone via `Arc`).
+#[derive(Clone, Debug)]
+pub struct CowBTreeMap<K, V>(Option<Arc<BTreeMap<K, V>>>);
+
+impl<K, V> Default for CowBTreeMap<K, V> {
+    #[inline]
+    fn default() -> Self {
+        Self(None)
+    }
+}
+
+impl<K: Ord, V> CowBTreeMap<K, V> {
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.0.as_ref().is_none_or(|m| m.is_empty())
+    }
+
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.0.as_ref().map_or(0, |m| m.len())
+    }
+
+    #[inline]
+    pub fn get<Q: Ord + ?Sized>(&self, key: &Q) -> Option<&V>
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref()?.get(key)
+    }
+
+    #[inline]
+    pub fn contains_key<Q: Ord + ?Sized>(&self, key: &Q) -> bool
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref().is_some_and(|m| m.contains_key(key))
+    }
+
+    #[inline]
+    pub fn insert(&mut self, key: K, value: V) -> Option<V>
+    where
+        K: Clone,
+        V: Clone,
+    {
+        Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(BTreeMap::new()))).insert(key, value)
+    }
+
+    #[inline]
+    pub fn remove<Q: Ord + ?Sized>(&mut self, key: &Q) -> Option<V>
+    where
+        K: std::borrow::Borrow<Q> + Clone,
+        V: Clone,
+    {
+        let arc = self.0.as_mut()?;
+        if !arc.contains_key(key) {
+            return None;
+        }
+        Arc::make_mut(arc).remove(key)
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.0 = None;
+    }
+
+    #[inline]
+    pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
+        self.0.as_deref().into_iter().flat_map(|m| m.iter())
+    }
+}
+
+impl<K: Ord, V> From<BTreeMap<K, V>> for CowBTreeMap<K, V> {
+    #[inline]
+    fn from(map: BTreeMap<K, V>) -> Self {
+        if map.is_empty() {
+            Self(None)
+        } else {
+            Self(Some(Arc::new(map)))
+        }
+    }
+}
+
+/// Compact `FastMap` (8 bytes inline when empty; avoids `RawTable` drop on cold fields).
+#[derive(Debug)]
+pub struct ThinFastMap<K, V>(#[allow(clippy::box_collection)] Option<Box<FastMap<K, V>>>);
+
+impl<K, V> Default for ThinFastMap<K, V> {
+    #[inline]
+    fn default() -> Self {
+        Self(None)
+    }
+}
+
+impl<K: Clone + Eq + std::hash::Hash, V: Clone> Clone for ThinFastMap<K, V> {
+    #[inline]
+    fn clone(&self) -> Self {
+        match &self.0 {
+            Some(map) if !map.is_empty() => Self(Some(map.clone())),
+            _ => Self(None),
+        }
+    }
+}
+
+impl<K: Eq + std::hash::Hash, V> ThinFastMap<K, V> {
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.0.as_ref().is_none_or(|m| m.is_empty())
+    }
+
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.0.as_ref().map_or(0, |m| m.len())
+    }
+
+    #[inline]
+    pub fn get<Q: std::hash::Hash + Eq + ?Sized>(&self, key: &Q) -> Option<&V>
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref()?.get(key)
+    }
+
+    #[inline]
+    pub fn insert(&mut self, key: K, value: V) -> Option<V> {
+        self.0
+            .get_or_insert_with(|| Box::new(FastMap::default()))
+            .insert(key, value)
+    }
+
+    #[inline]
+    pub fn remove<Q: std::hash::Hash + Eq + ?Sized>(&mut self, key: &Q) -> Option<V>
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_mut()?.remove(key)
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.0 = None;
+    }
+
+    #[inline]
+    pub fn values(&self) -> impl Iterator<Item = &V> {
+        self.0.as_deref().into_iter().flat_map(|m| m.values())
+    }
+
+    #[inline]
+    pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
+        self.0.as_deref().into_iter().flat_map(|m| m.iter())
+    }
+}
+
+impl<K: Eq + std::hash::Hash, V> From<FastMap<K, V>> for ThinFastMap<K, V> {
+    #[inline]
+    fn from(map: FastMap<K, V>) -> Self {
+        if map.is_empty() {
+            Self(None)
+        } else {
+            Self(Some(Box::new(map)))
+        }
+    }
+}
+
+impl<K: Eq + std::hash::Hash, V> FromIterator<(K, V)> for ThinFastMap<K, V> {
+    fn from_iter<I: IntoIterator<Item = (K, V)>>(iter: I) -> Self {
+        let mut iter = iter.into_iter();
+        let Some(first) = iter.next() else {
+            return Self(None);
+        };
+        let mut map = FastMap::default();
+        map.insert(first.0, first.1);
+        map.extend(iter);
+        Self(Some(Box::new(map)))
+    }
+}
+
+impl<K, V> IntoIterator for ThinFastMap<K, V> {
+    type Item = (K, V);
+    type IntoIter =
+        std::iter::Flatten<std::option::IntoIter<std::collections::hash_map::IntoIter<K, V>>>;
+    fn into_iter(self) -> Self::IntoIter {
+        self.0.map(|b| (*b).into_iter()).into_iter().flatten()
+    }
+}
+
+/// Compact `BTreeMap` (8 bytes inline when empty).
+#[derive(Debug)]
+pub struct ThinBTreeMap<K, V>(#[allow(clippy::box_collection)] Option<Box<BTreeMap<K, V>>>);
+
+impl<K, V> Default for ThinBTreeMap<K, V> {
+    #[inline]
+    fn default() -> Self {
+        Self(None)
+    }
+}
+
+impl<K: Clone, V: Clone> Clone for ThinBTreeMap<K, V> {
+    #[inline]
+    fn clone(&self) -> Self {
+        match &self.0 {
+            Some(map) if !map.is_empty() => Self(Some(map.clone())),
+            _ => Self(None),
+        }
+    }
+}
+
+impl<K: Ord, V> ThinBTreeMap<K, V> {
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.0.as_ref().is_none_or(|m| m.is_empty())
+    }
+
+    #[inline]
+    pub fn len(&self) -> usize {
+        self.0.as_ref().map_or(0, |m| m.len())
+    }
+
+    #[inline]
+    pub fn get<Q: Ord + ?Sized>(&self, key: &Q) -> Option<&V>
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref()?.get(key)
+    }
+
+    #[inline]
+    pub fn contains_key<Q: Ord + ?Sized>(&self, key: &Q) -> bool
+    where
+        K: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref().is_some_and(|m| m.contains_key(key))
+    }
+
+    #[inline]
+    pub fn insert(&mut self, key: K, value: V) -> Option<V> {
+        self.0
+            .get_or_insert_with(|| Box::new(BTreeMap::new()))
+            .insert(key, value)
+    }
+
+    #[inline]
+    pub fn entry(&mut self, key: K) -> std::collections::btree_map::Entry<'_, K, V> {
+        self.0
+            .get_or_insert_with(|| Box::new(BTreeMap::new()))
+            .entry(key)
+    }
+
+    #[inline]
+    pub fn values(&self) -> impl Iterator<Item = &V> {
+        self.0.as_deref().into_iter().flat_map(|m| m.values())
+    }
+
+    #[inline]
+    pub fn iter(&self) -> impl Iterator<Item = (&K, &V)> {
+        self.0.as_deref().into_iter().flat_map(|m| m.iter())
+    }
+
+    #[inline]
+    pub fn extend<I: IntoIterator<Item = (K, V)>>(&mut self, iter: I) {
+        let mut iter = iter.into_iter();
+        if let Some((k, v)) = iter.next() {
+            let map = self.0.get_or_insert_with(|| Box::new(BTreeMap::new()));
+            map.insert(k, v);
+            map.extend(iter);
+        }
+    }
+}
+
+/// Compact `BTreeSet` (8 bytes inline when empty).
+#[derive(Debug)]
+pub struct ThinBTreeSet<T>(#[allow(clippy::box_collection)] Option<Box<BTreeSet<T>>>);
+
+impl<T> Default for ThinBTreeSet<T> {
+    #[inline]
+    fn default() -> Self {
+        Self(None)
+    }
+}
+
+impl<T: Clone> Clone for ThinBTreeSet<T> {
+    #[inline]
+    fn clone(&self) -> Self {
+        match &self.0 {
+            Some(set) if !set.is_empty() => Self(Some(set.clone())),
+            _ => Self(None),
+        }
+    }
+}
+
+impl<T: Ord> ThinBTreeSet<T> {
+    #[inline]
+    pub fn is_empty(&self) -> bool {
+        self.0.as_ref().is_none_or(|s| s.is_empty())
+    }
+
+    #[inline]
+    pub fn contains<Q: Ord + ?Sized>(&self, value: &Q) -> bool
+    where
+        T: std::borrow::Borrow<Q>,
+    {
+        self.0.as_ref().is_some_and(|s| s.contains(value))
+    }
+
+    #[inline]
+    pub fn insert(&mut self, value: T) -> bool {
+        self.0
+            .get_or_insert_with(|| Box::new(BTreeSet::new()))
+            .insert(value)
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.0 = None;
+    }
+
+    #[inline]
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
+        self.0.as_deref().into_iter().flat_map(|s| s.iter())
+    }
+}
+
+impl<T: Ord> FromIterator<T> for ThinBTreeSet<T> {
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+        let mut iter = iter.into_iter();
+        let Some(first) = iter.next() else {
+            return Self(None);
+        };
+        let mut set = BTreeSet::new();
+        set.insert(first);
+        set.extend(iter);
+        Self(Some(Box::new(set)))
+    }
+}
+
+/// Compact `Vec` (8 bytes inline when empty).
+#[derive(Debug)]
+pub struct ThinVec<T>(#[allow(clippy::box_collection)] Option<Box<Vec<T>>>);
+
+impl<T> Default for ThinVec<T> {
+    #[inline]
+    fn default() -> Self {
+        Self(None)
+    }
+}
+
+impl<T: Clone> Clone for ThinVec<T> {
+    #[inline]
+    fn clone(&self) -> Self {
+        match &self.0 {
+            Some(v) if !v.is_empty() => Self(Some(v.clone())),
+            _ => Self(None),
+        }
+    }
+}
+
+impl<T> ThinVec<T> {
+    #[inline]
+    pub fn as_slice(&self) -> &[T] {
+        self.0.as_deref().map_or(&[], Vec::as_slice)
+    }
+
+    #[inline]
+    pub fn push(&mut self, value: T) {
+        self.0
+            .get_or_insert_with(|| Box::new(Vec::new()))
+            .push(value);
+    }
+
+    #[inline]
+    pub fn clear(&mut self) {
+        self.0 = None;
+    }
+
+    #[inline]
+    pub fn truncate(&mut self, len: usize) {
+        if let Some(v) = &mut self.0 {
+            v.truncate(len);
+        }
+    }
+
+    #[inline]
+    pub fn extend<I: IntoIterator<Item = T>>(&mut self, iter: I) {
+        let mut iter = iter.into_iter();
+        if let Some(first) = iter.next() {
+            let v = self.0.get_or_insert_with(|| Box::new(Vec::new()));
+            v.push(first);
+            v.extend(iter);
+        }
+    }
+
+    #[inline]
+    pub fn retain<F: FnMut(&T) -> bool>(&mut self, f: F) {
+        if let Some(v) = &mut self.0 {
+            v.retain(f);
+        }
+    }
+
+    #[inline]
+    pub fn into_vec(self) -> Vec<T> {
+        self.0.map_or_else(Vec::new, |b| *b)
+    }
+}
+
+impl<T> std::ops::Deref for ThinVec<T> {
+    type Target = [T];
+    #[inline]
+    fn deref(&self) -> &[T] {
+        self.as_slice()
+    }
+}
+
+impl<T> From<Vec<T>> for ThinVec<T> {
+    #[inline]
+    fn from(v: Vec<T>) -> Self {
+        if v.is_empty() {
+            Self(None)
+        } else {
+            Self(Some(Box::new(v)))
+        }
+    }
+}
+
+impl<T> FromIterator<T> for ThinVec<T> {
+    fn from_iter<I: IntoIterator<Item = T>>(iter: I) -> Self {
+        Self::from(iter.into_iter().collect::<Vec<_>>())
+    }
+}
+
+impl<'a, T> IntoIterator for &'a ThinVec<T> {
+    type Item = &'a T;
+    type IntoIter = std::slice::Iter<'a, T>;
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.as_slice().iter()
     }
 }
 
@@ -377,9 +858,9 @@ pub struct Environment {
     pub code_owner: Option<ExecutableOwnerId>,
     /// Lexical substitutions captured by reusable generic constraint bodies.
     /// Runtime values are immutable shared type DAGs; environment clones copy handles.
-    pub type_arguments: BTreeMap<(usize, PklString), crate::vm::TypeCheck>,
+    pub type_arguments: CowBTreeMap<(usize, PklString), crate::vm::TypeCheck>,
     /// Source sections follow actual arguments without participating in type identity.
-    pub type_argument_sources: BTreeMap<(usize, PklString), crate::vm::TypeArgumentSource>,
+    pub type_argument_sources: CowBTreeMap<(usize, PklString), crate::vm::TypeArgumentSource>,
     /// Innermost first; immutable captured lexical object scopes.
     pub scopes: ScopeList,
 }
@@ -698,17 +1179,20 @@ pub struct Object {
     /// Opaque Java Map.entry values exposed by VmCollection.flatten.
     /// Distinct from Pkl Pair; key/value remain traced and structurally comparable.
     pub foreign_map_entry: Option<Box<[Value; 2]>>,
-    pub amendment: Option<crate::vm::amendment::Amendment>,
+    pub amendment: Option<Box<crate::vm::amendment::Amendment>>,
     /// Argument-check section and function-construction section have distinct
     /// Java source nodes, even when both belong to the same Mixin type use.
-    pub mixin: Option<(
-        crate::vm::TypeCheck,
-        Option<crate::value::RuntimeFrame>,
-        Option<crate::value::RuntimeFrame>,
-    )>,
+    #[allow(clippy::type_complexity)]
+    pub mixin: Option<
+        Box<(
+            crate::vm::TypeCheck,
+            Option<crate::value::RuntimeFrame>,
+            Option<crate::value::RuntimeFrame>,
+        )>,
+    >,
     pub function: Option<Function>,
-    pub reference: Option<crate::vm::reference::Reference>,
-    pub native_function: Option<crate::vm::reference::NativeFunction>,
+    pub reference: Option<Box<crate::vm::reference::Reference>>,
+    pub native_function: Option<Box<crate::vm::reference::NativeFunction>>,
     pub type_alias: Option<PklString>,
     pub type_alias_declaration: Option<usize>,
     /// Compiled declaration identity, separate from resolved type identity.
@@ -717,28 +1201,28 @@ pub struct Object {
     /// Successful mirror cache belongs to the declaration, never a VM-wide root.
     pub declaration_mirror: Option<ObjectId>,
     pub module_mirror: Option<ObjectId>,
-    pub mirror_annotations: BTreeMap<crate::source::Span, Vec<Value>>,
+    pub mirror_annotations: ThinBTreeMap<crate::source::Span, Vec<Value>>,
     pub type_alias_initialized: bool,
     /// Declaration-owned annotation values; fields remain ordinary lazy members.
-    pub annotations: Vec<Value>,
+    pub annotations: ThinVec<Value>,
     /// Published property/method annotation metadata, keyed by declaration code.
-    pub member_annotations: BTreeMap<usize, Vec<Value>>,
+    pub member_annotations: ThinBTreeMap<usize, Vec<Value>>,
     /// First exact Deprecated annotation's forced message, published with its method.
     #[doc(hidden)]
-    pub member_deprecations: BTreeMap<usize, crate::value::PklString>,
+    pub member_deprecations: ThinBTreeMap<usize, crate::value::PklString>,
     /// Temporary annotation-list metadata, before declaration publication.
     #[doc(hidden)]
     pub deprecation: Option<crate::value::PklString>,
     /// Actual declaration of a materialized method call target.
     #[doc(hidden)]
     pub method_declaration: Option<(ObjectId, usize)>,
-    pub builtin_type: Option<crate::vm::TypeCheck>,
+    pub builtin_type: Option<Box<crate::vm::TypeCheck>>,
     pub ref_module: bool,
     pub is_module: bool,
     pub module_unit: Option<crate::modules::UnitId>,
     pub module_initializing: bool,
-    pub published_module_members: std::collections::BTreeSet<usize>,
-    pub class_definition: Option<Class>,
+    pub published_module_members: ThinBTreeSet<usize>,
+    pub class_definition: Option<Box<Class>>,
     /// The actual runtime class of a typed instance or class prototype.
     pub instance_class: Option<ObjectId>,
     /// Published class whose initialization has not completed (including failure).
@@ -759,11 +1243,12 @@ pub struct Object {
     pub map_index: Option<Box<crate::strict_map::MapIndex>>,
     /// Captured Map insertion-order keys, independent of stored trie slots.
     /// Removal can change a different slot after recursive key forcing.
-    pub map_key_order: Option<Vec<CollectionMember>>,
+    #[allow(clippy::box_collection)]
+    pub map_key_order: Option<Box<Vec<CollectionMember>>>,
     /// Strict Set hash-table keys; element order lives in collection_members.
-    pub set_entries: Vec<Value>,
-    pub declaration_index: Option<crate::economic_map::EconomicMapIndex>,
-    pub declaration_hashes: Vec<i32>,
+    pub set_entries: ThinVec<Value>,
+    pub declaration_index: Option<Box<crate::economic_map::EconomicMapIndex>>,
+    pub declaration_hashes: ThinVec<i32>,
     pub length: usize,
     /// Compact dense storage for strict immutable `List` values (`0..length`),
     /// avoiding per-element `BTreeMap` / `PklString` / `Member` overhead.
@@ -773,19 +1258,19 @@ pub struct Object {
     /// VmMapping.getAllKeys caches its own persistent Set wrapper.
     pub mapping_keys: Option<ObjectId>,
     pub specialized_literal: bool,
-    pub member_environments: FastMap<CacheKey, Environment>,
-    pub member_values: FastMap<CacheKey, Value>,
-    pub iterator: Option<CollectionIterator>,
+    pub member_environments: ThinFastMap<CacheKey, Environment>,
+    pub member_values: ThinFastMap<CacheKey, Value>,
+    pub iterator: Option<Box<CollectionIterator>>,
     pub int_seq_iterator: Option<Box<crate::int_seq::Cursor>>,
     pub bytes_iterator: Option<Box<(crate::value::Bytes, usize, bool)>>,
     pub conversion_delegate: Option<Box<crate::vm::collection_conversions::Delegate>>,
-    pub predicate_iterator: Option<PredicateIterator>,
-    pub collection_cast: Option<CollectionCast>,
+    pub predicate_iterator: Option<Box<PredicateIterator>>,
+    pub collection_cast: Option<Box<CollectionCast>>,
     /// Inherited default value for inferred element/entry objects. `Some(None)`
     /// means the annotated value type has no default; `None` uses Dynamic's default.
     pub collection_default: Option<Option<Value>>,
     /// Authored declaration of a synthesized undefined collection default.
-    pub collection_default_origin: Option<crate::value::RuntimeFrame>,
+    pub collection_default_origin: Option<Box<crate::value::RuntimeFrame>>,
 }
 
 impl Object {
@@ -901,9 +1386,9 @@ impl ExecutableOwnerId {
 #[derive(Clone)]
 enum Entry {
     Object(Box<Object>),
-    Class(ClassRecord),
-    NullDefault(Value),
-    CustomThis(Option<Value>),
+    Class(Box<ClassRecord>),
+    NullDefault(Box<Value>),
+    CustomThis(Option<Box<Value>>),
     Executable(Box<ExecutableState>),
 }
 
@@ -944,6 +1429,8 @@ pub(crate) struct FrozenBaseHeap {
     key_equalities: std::collections::BTreeSet<(ObjectId, ObjectId)>,
     bytes_lists: BytesListMap,
     has_structural_keys: bool,
+    class_index: Arc<FastMap<usize, ObjectId>>,
+    module_index: Arc<FastMap<u32, ObjectId>>,
 }
 
 pub struct Heap {
@@ -953,6 +1440,8 @@ pub struct Heap {
     base_len: usize,
     base_id: u64,
     base_has_structural_keys: bool,
+    base_class_index: Option<Arc<FastMap<usize, ObjectId>>>,
+    base_module_index: Option<Arc<FastMap<u32, ObjectId>>>,
     /// Sparse copy-on-write overrides for mutated slots in `0..base_len`.
     base_overrides: Vec<(usize, Slot)>,
     /// Lazy O(1) index (`pos + 1`, `0` = not overridden) allocated once `base_overrides.len() >= 4`.
@@ -960,6 +1449,8 @@ pub struct Heap {
     /// User-allocated slots (`index = base_len + local_idx`, owned by `identity`).
     slots: Vec<Slot>,
     free: Vec<usize>,
+    class_index: FastMap<usize, ObjectId>,
+    module_index: FastMap<u32, ObjectId>,
     stats: HeapStats,
     mark_scratch: Vec<bool>,
     pending_scratch: Vec<ObjectId>,
@@ -990,10 +1481,14 @@ impl Heap {
             base_len: 0,
             base_id: 0,
             base_has_structural_keys: false,
+            base_class_index: None,
+            base_module_index: None,
             base_overrides: Vec::new(),
             base_override_index: None,
             slots: Vec::new(),
             free: Vec::new(),
+            class_index: FastMap::default(),
+            module_index: FastMap::default(),
             stats: HeapStats::default(),
             mark_scratch: Vec::new(),
             pending_scratch: Vec::new(),
@@ -1030,6 +1525,8 @@ impl Heap {
             key_equalities: self.key_equalities,
             bytes_lists: self.bytes_lists,
             has_structural_keys,
+            class_index: Arc::new(self.class_index),
+            module_index: Arc::new(self.module_index),
         }
     }
 
@@ -1041,10 +1538,14 @@ impl Heap {
             base_len: frozen.slots.len(),
             base_id: frozen.identity,
             base_has_structural_keys: frozen.has_structural_keys,
+            base_class_index: Some(Arc::clone(&frozen.class_index)),
+            base_module_index: Some(Arc::clone(&frozen.module_index)),
             base_overrides: Vec::new(),
             base_override_index: None,
             slots: Vec::new(),
             free: Vec::new(),
+            class_index: FastMap::default(),
+            module_index: FastMap::default(),
             stats: frozen.stats,
             mark_scratch: Vec::new(),
             pending_scratch: Vec::new(),
@@ -1144,7 +1645,16 @@ impl Heap {
     pub fn allocate(&mut self, mut object: Object) -> ObjectId {
         object.forced = false;
         object.dynamic_regular_member_count = None;
-        self.allocate_entry(Entry::Object(Box::new(object)))
+        let module_unit = object.module_unit;
+        let id = self.allocate_entry(Entry::Object(Box::new(object)));
+        if let Some(unit) = module_unit {
+            self.module_index.insert(unit.0, id);
+        }
+        id
+    }
+
+    pub(crate) fn register_module(&mut self, unit: crate::modules::UnitId, id: ObjectId) {
+        self.module_index.insert(unit.0, id);
     }
 
     /// Allocates a strict dense `List` directly into a heap `Box<Object>` without a
@@ -1180,13 +1690,16 @@ impl Heap {
             .get(prototype)
             .ok()
             .and_then(|obj| obj.class_definition.as_ref().map(|c| c.id));
-        let id = self.allocate_entry(Entry::Class(ClassRecord {
+        let id = self.allocate_entry(Entry::Class(Box::new(ClassRecord {
             prototype,
             superclass: None,
             class_id,
             ancestors: [0; 8],
             ancestors_len: u8::MAX,
-        }));
+        })));
+        if let Some(cid) = class_id {
+            self.class_index.insert(cid, id);
+        }
         self.get_mut(prototype)
             .expect("new class prototype")
             .instance_class = Some(id);
@@ -1277,6 +1790,9 @@ impl Heap {
             class.ancestors_len = ancestors_len;
             slot.edges_valid = false;
         }
+        if let Some(cid) = self_class_id {
+            self.class_index.insert(cid, id);
+        }
         let prototype = self.get_mut(prototype)?;
         prototype.parent = parent;
         prototype.class_superclass_initialized = true;
@@ -1286,7 +1802,7 @@ impl Heap {
     pub(crate) fn class_definition(&self, id: ObjectId) -> Result<&Class, RuntimeError> {
         self.get(self.get_class(id)?.prototype)?
             .class_definition
-            .as_ref()
+            .as_deref()
             .ok_or_else(|| {
                 RuntimeError::new(ErrorKind::InvalidBytecode, "missing class definition")
             })
@@ -1532,13 +2048,13 @@ impl Heap {
 
     pub(crate) fn allocate_null(&mut self, default: Option<Value>) -> Value {
         default.map_or(Value::Null, |value| {
-            Value::NullWithDefault(self.allocate_entry(Entry::NullDefault(value)))
+            Value::NullWithDefault(self.allocate_entry(Entry::NullDefault(Box::new(value))))
         })
     }
 
     pub(crate) fn null_default(&self, id: ObjectId) -> Result<Value, RuntimeError> {
         match self.entry(id)? {
-            Entry::NullDefault(value) => Ok(value.clone()),
+            Entry::NullDefault(value) => Ok((**value).clone()),
             _ => Err(RuntimeError::new(
                 ErrorKind::StaleHandle,
                 "invalid null default slot",
@@ -1558,12 +2074,12 @@ impl Heap {
     }
 
     pub(crate) fn allocate_custom_this(&mut self, value: Option<Value>) -> CustomThisSlot {
-        CustomThisSlot(self.allocate_entry(Entry::CustomThis(value)))
+        CustomThisSlot(self.allocate_entry(Entry::CustomThis(value.map(Box::new))))
     }
 
     pub(crate) fn custom_this(&self, slot: CustomThisSlot) -> Result<Option<Value>, RuntimeError> {
         match self.entry(slot.0)? {
-            Entry::CustomThis(value) => Ok(value.clone()),
+            Entry::CustomThis(value) => Ok(value.as_deref().cloned()),
             _ => Err(RuntimeError::new(
                 ErrorKind::StaleHandle,
                 "invalid custom receiver slot",
@@ -1578,7 +2094,7 @@ impl Heap {
     ) -> Result<(), RuntimeError> {
         self.custom_this(slot)?;
         let s = self.slot_mut(slot.0.index);
-        s.entry = Some(Entry::CustomThis(value));
+        s.entry = Some(Entry::CustomThis(value.map(Box::new)));
         s.edges_valid = false;
         Ok(())
     }
@@ -1860,65 +2376,56 @@ impl Heap {
         None
     }
 
+    #[inline]
     pub(crate) fn find_module(&self, unit: crate::modules::UnitId) -> Option<ObjectId> {
-        if let Some(found) = self.slots.iter().enumerate().find_map(|(local, slot)| {
-            slot.object()
-                .filter(|object| object.module_unit == Some(unit))
-                .map(|_| ObjectId {
-                    heap: self.identity,
-                    index: self.base_len + local,
-                    generation: slot.generation,
-                })
-        }) {
-            return Some(found);
+        if let Some(&id) = self.module_index.get(&unit.0)
+            && self
+                .get_fast(id)
+                .is_some_and(|object| object.module_unit == Some(unit))
+        {
+            return Some(id);
         }
-        if self.base_len > 0 {
-            for index in 0..self.base_len {
-                if let Some(slot) = self.slot_ref(index)
-                    && slot
-                        .object()
-                        .is_some_and(|object| object.module_unit == Some(unit))
-                {
-                    return Some(ObjectId {
-                        heap: self.base_id,
-                        index,
-                        generation: slot.generation,
-                    });
-                }
-            }
+        if let Some(&id) = self
+            .base_module_index
+            .as_deref()
+            .and_then(|idx| idx.get(&unit.0))
+            && self
+                .get_fast(id)
+                .is_some_and(|object| object.module_unit == Some(unit))
+        {
+            return Some(id);
         }
         None
     }
 
+    #[inline]
     pub(crate) fn find_class(&self, class_id: usize) -> Option<ObjectId> {
-        if let Some(found) = self.slots.iter().find_map(|slot| {
-            slot.object()
-                .filter(|object| {
-                    object
-                        .class_definition
-                        .as_ref()
-                        .is_some_and(|class| class.id == class_id)
-                })
-                .and_then(|object| object.instance_class)
-        }) {
-            return Some(found);
+        if let Some(&id) = self.class_index.get(&class_id)
+            && let Ok(cls) = self.get_class(id)
+            && self.get_fast(cls.prototype).is_some_and(|object| {
+                object
+                    .class_definition
+                    .as_ref()
+                    .is_some_and(|class| class.id == class_id)
+                    && object.instance_class == Some(id)
+            })
+        {
+            return Some(id);
         }
-        if self.base_len > 0 {
-            for index in 0..self.base_len {
-                if let Some(slot) = self.slot_ref(index)
-                    && let Some(class) = slot
-                        .object()
-                        .filter(|object| {
-                            object
-                                .class_definition
-                                .as_ref()
-                                .is_some_and(|class| class.id == class_id)
-                        })
-                        .and_then(|object| object.instance_class)
-                {
-                    return Some(class);
-                }
-            }
+        if let Some(&id) = self
+            .base_class_index
+            .as_deref()
+            .and_then(|idx| idx.get(&class_id))
+            && let Ok(cls) = self.get_class(id)
+            && self.get_fast(cls.prototype).is_some_and(|object| {
+                object
+                    .class_definition
+                    .as_ref()
+                    .is_some_and(|class| class.id == class_id)
+                    && object.instance_class == Some(id)
+            })
+        {
+            return Some(id);
         }
         None
     }
@@ -2251,7 +2758,7 @@ fn trace_entry_edges(
     if let Some(native) = &object.native_function {
         push_value(identity, bytes_lists, out, &native.receiver);
     }
-    if let Some(order) = &object.map_key_order {
+    if let Some(order) = object.map_key_order.as_deref() {
         for member in order {
             push_value(identity, bytes_lists, out, &member.key);
         }
@@ -2502,6 +3009,30 @@ impl Heap {
                 }
             }
         }
+        if reclaimed_this_pass > 0 {
+            let slots = &self.slots;
+            let identity = self.identity;
+            self.class_index.retain(|_, id| {
+                if id.index >= base_len {
+                    id.heap == identity
+                        && slots
+                            .get(id.index - base_len)
+                            .is_some_and(|s| s.generation == id.generation && s.entry.is_some())
+                } else {
+                    true
+                }
+            });
+            self.module_index.retain(|_, id| {
+                if id.index >= base_len {
+                    id.heap == identity
+                        && slots
+                            .get(id.index - base_len)
+                            .is_some_and(|s| s.generation == id.generation && s.entry.is_some())
+                } else {
+                    true
+                }
+            });
+        }
         let slot_live_object = |base_slots: Option<&[Slot]>,
                                 base_overrides: &[(usize, Slot)],
                                 base_override_index: Option<&[u32]>,
@@ -2622,10 +3153,14 @@ impl Heap {
         self.base_len = 0;
         self.base_id = 0;
         self.base_has_structural_keys = false;
+        self.base_class_index = None;
+        self.base_module_index = None;
         self.base_overrides = Vec::new();
         self.base_override_index = None;
         self.slots = Vec::new();
         self.free = Vec::new();
+        self.class_index.clear();
+        self.module_index.clear();
         self.mark_scratch = Vec::new();
         self.pending_scratch = Vec::new();
         self.structural_keys_dirty = false;
@@ -2745,14 +3280,14 @@ mod tests {
                 .unwrap(),
         );
         let wrapper = heap.allocate(Object {
-            collection_cast: Some(CollectionCast {
+            collection_cast: Some(Box::new(CollectionCast {
                 source: None,
                 node: Some(node),
                 ty: crate::vm::TypeCheck::Int,
                 span: crate::source::Span::new(0, 1),
                 member: "#values".into(),
                 environment: Environment::default(),
-            }),
+            })),
             ..Object::default()
         });
         let retained = heap.collect(&[Value::Object(wrapper)]);
@@ -2826,5 +3361,83 @@ mod tests {
             Some(Value::Function(function))
         );
         assert_eq!(heap.collect(&[]).live, 0);
+    }
+
+    #[test]
+    fn class_and_module_indexes_track_base_local_gc_and_release() {
+        let mut base = Heap::new();
+        let base_unit = crate::modules::UnitId(7);
+        let base_mod = base.allocate(Object {
+            is_module: true,
+            module_unit: Some(base_unit),
+            ..Object::default()
+        });
+        let base_proto = base.allocate(Object {
+            class_definition: Some(Box::new(Class {
+                id: 101,
+                name: "BaseClass".into(),
+                module: None,
+                origin_uri: None,
+                open: true,
+                abstract_: false,
+            })),
+            ..Object::default()
+        });
+        let base_cls = base.allocate_class(base_proto);
+        assert_eq!(base.find_module(base_unit), Some(base_mod));
+        assert_eq!(base.find_class(101), Some(base_cls));
+
+        let frozen = base.freeze_base();
+        let mut heap = Heap::from_frozen_base(&frozen);
+        assert_eq!(heap.find_module(base_unit), Some(base_mod));
+        assert_eq!(heap.find_class(101), Some(base_cls));
+
+        let local_unit = crate::modules::UnitId(42);
+        let local_mod = heap.allocate(Object {
+            is_module: true,
+            module_unit: Some(local_unit),
+            ..Object::default()
+        });
+        let local_proto = heap.allocate(Object {
+            class_definition: Some(Box::new(Class {
+                id: 202,
+                name: "LocalClass".into(),
+                module: None,
+                origin_uri: None,
+                open: false,
+                abstract_: false,
+            })),
+            ..Object::default()
+        });
+        let local_cls = heap.allocate_class(local_proto);
+        assert_eq!(heap.find_module(local_unit), Some(local_mod));
+        assert_eq!(heap.find_class(202), Some(local_cls));
+
+        // GC keeping only local_cls reclaims local_mod and removes it from module_index.
+        heap.collect(&[Value::Class(local_cls)]);
+        assert_eq!(heap.find_module(local_unit), None);
+        assert_eq!(heap.find_class(202), Some(local_cls));
+        assert_eq!(heap.find_module(base_unit), Some(base_mod));
+        assert_eq!(heap.find_class(101), Some(base_cls));
+
+        // Full GC reclaims local_cls too.
+        heap.collect(&[]);
+        assert_eq!(heap.find_class(202), None);
+
+        // release() clears base and local indexes.
+        heap.release();
+        assert_eq!(heap.find_module(base_unit), None);
+        assert_eq!(heap.find_class(101), None);
+    }
+
+    #[test]
+    fn compact_heap_object_and_slot_layouts() {
+        let env_size = std::mem::size_of::<Environment>();
+        let slot_size = std::mem::size_of::<Slot>();
+        let obj_size = std::mem::size_of::<Object>();
+        eprintln!("sizes: Environment={env_size}, Slot={slot_size}, Object={obj_size}");
+        assert!(env_size <= 320, "Environment grew to {env_size} bytes");
+        assert!(slot_size <= 64, "Slot grew to {slot_size} bytes");
+        assert!(obj_size <= 1280, "Object grew to {obj_size} bytes");
     }
 }

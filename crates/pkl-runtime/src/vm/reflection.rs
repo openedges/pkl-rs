@@ -772,7 +772,7 @@ impl Vm {
                     .pop()
                     .and_then(|value| value.heap_id())
                     .ok_or_else(|| invalid("annotation collector missing"))?;
-                let values = self.heap.get(collector)?.annotations.clone();
+                let values = self.heap.get(collector)?.annotations.to_vec();
                 self.heap
                     .get_mut(declaration.owner)?
                     .mirror_annotations

@@ -856,7 +856,7 @@ fn try_fast_strict_map_check(
             }
             Some(true)
         };
-    if let Some(order) = &object.map_key_order {
+    if let Some(order) = object.map_key_order.as_deref() {
         for member in order {
             match check_member(member, None) {
                 Some(true) => continue,
@@ -1156,14 +1156,14 @@ impl Vm {
             environment: object.environment.clone(),
             collection_kind: *kind,
             length: object.length,
-            collection_cast: Some(crate::heap::CollectionCast {
+            collection_cast: Some(Box::new(crate::heap::CollectionCast {
                 source: cast_source,
                 node: child,
                 ty: val_ty.clone(),
                 span: *val_span,
                 member: cast_member,
                 environment,
-            }),
+            })),
             ..Object::default()
         };
         Ok(Some(Value::Object(self.heap.allocate(wrapper))))
@@ -2699,7 +2699,7 @@ impl Vm {
                     environment: object.environment.clone(),
                     collection_kind: state.kind,
                     length: object.length,
-                    collection_cast: Some(crate::heap::CollectionCast {
+                    collection_cast: Some(Box::new(crate::heap::CollectionCast {
                         source: match run.frames.first() {
                             // An explicit None denotes the primary module source.
                             Some(frame) => frame.source.clone(),
@@ -2714,7 +2714,7 @@ impl Vm {
                         span,
                         member: run.member.clone(),
                         environment,
-                    }),
+                    })),
                     ..Object::default()
                 };
                 Value::Object(self.heap.allocate(wrapper))

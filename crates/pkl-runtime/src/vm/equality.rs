@@ -1396,7 +1396,11 @@ impl Vm {
         // Builtin collection prototypes supply inherited members and getClass,
         // but collection equality/hash use the object's own cached members.
         // Only Typed/module instances use class-declared property ordering.
-        Ok((!matches!(prototype.builtin_type, Some(TypeCheck::Collection(_)))).then_some(class))
+        Ok((!matches!(
+            prototype.builtin_type.as_deref(),
+            Some(TypeCheck::Collection(_))
+        ))
+        .then_some(class))
     }
     pub(super) fn equality_members(
         &self,

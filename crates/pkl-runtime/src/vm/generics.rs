@@ -516,7 +516,7 @@ impl Vm {
                             let id = self.heap.allocate(Object {
                                 parent: Some(parent),
                                 collection_kind: kind,
-                                collection_default_origin: run.origin.clone(),
+                                collection_default_origin: run.origin.clone().map(Box::new),
                                 environment: self
                                     .frames
                                     .last()

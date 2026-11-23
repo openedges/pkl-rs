@@ -136,13 +136,13 @@ impl Vm {
             .environment
             .clone();
         let id = self.heap.allocate(Object {
-            class_definition: Some(Class {
+            class_definition: Some(Box::new(Class {
                 origin_uri,
                 module: class
                     .module
                     .or_else(|| Some(self.current_module_name().into())),
                 ..class
-            }),
+            })),
             class_initializing: true,
             declaration_code: Some(member.code),
             environment,

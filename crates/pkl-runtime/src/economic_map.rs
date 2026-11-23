@@ -13,7 +13,8 @@ use std::ops::Range;
 pub struct EconomicMapIndex {
     capacity: usize,
     links: Vec<Option<usize>>,
-    buckets: Option<Vec<Option<usize>>>,
+    #[allow(clippy::box_collection)]
+    buckets: Option<Box<Vec<Option<usize>>>>,
     rehash_incomplete: bool,
 }
 
@@ -124,7 +125,7 @@ impl EconomicMapIndex {
             count *= 2;
         }
         count *= if self.capacity < 256 { 4 } else { 2 };
-        self.buckets = Some(vec![None; count]);
+        self.buckets = Some(Box::new(vec![None; count]));
         self.rehash_incomplete = true;
         0..self.len()
     }

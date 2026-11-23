@@ -486,7 +486,7 @@ impl Vm {
                     .undefined();
                     error
                         .frames
-                        .extend(object.collection_default_origin.clone());
+                        .extend(object.collection_default_origin.as_deref().cloned());
                     return Err(error);
                 }
                 break;
@@ -533,7 +533,7 @@ impl Vm {
                 .undefined();
                 error
                     .frames
-                    .extend(object.collection_default_origin.clone());
+                    .extend(object.collection_default_origin.as_deref().cloned());
                 return Err(error);
             }
             owner = object.parent;

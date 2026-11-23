@@ -127,7 +127,7 @@ impl Vm {
     pub(super) fn force_stdlib_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
         let annotations = root
             .heap_id()
-            .map(|id| self.heap.get(id).map(|object| object.annotations.clone()))
+            .map(|id| self.heap.get(id).map(|object| object.annotations.to_vec()))
             .transpose()?
             .unwrap_or_default();
         self.force_value_frame(root)?;

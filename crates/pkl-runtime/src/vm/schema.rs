@@ -389,7 +389,7 @@ impl VmSchemaExtractor {
         let keys = std::mem::take(&mut self.pending_builtin_anns);
         for (key, collector_val) in keys.into_iter().zip(collectors) {
             let values = if let Some(cid) = collector_val.heap_id() {
-                vm.heap.get(cid)?.annotations.clone()
+                vm.heap.get(cid)?.annotations.to_vec()
             } else {
                 Vec::new()
             };
@@ -1046,7 +1046,7 @@ fn existing_decl_annotations(vm: &Vm, decl: &DeclInfo) -> Result<Vec<Value>, Run
             decl.syntax.recipe,
             DeclarationRecipe::Class { .. } | DeclarationRecipe::TypeAlias { .. }
         ) {
-            return Ok(obj.annotations.clone());
+            return Ok(obj.annotations.to_vec());
         }
         return Ok(obj
             .member_annotations
@@ -1061,7 +1061,7 @@ fn existing_decl_annotations(vm: &Vm, decl: &DeclInfo) -> Result<Vec<Value>, Run
         decl.syntax.recipe,
         DeclarationRecipe::Class { .. } | DeclarationRecipe::TypeAlias { .. }
     ) {
-        return Ok(obj.annotations.clone());
+        return Ok(obj.annotations.to_vec());
     }
     Ok(Vec::new())
 }

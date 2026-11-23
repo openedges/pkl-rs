@@ -93,7 +93,7 @@ impl Vm {
                     method: false,
                     captured_this: None,
                 }),
-                mixin: Some((ty, origin, construction_origin)),
+                mixin: Some(Box::new((ty, origin, construction_origin))),
                 environment: self
                     .frames
                     .last()
@@ -113,7 +113,8 @@ impl Vm {
             .heap
             .get(id)?
             .mixin
-            .clone()
+            .as_deref()
+            .cloned()
             .ok_or_else(|| invalid("mixin metadata"))?;
         let value = self.pop()?;
         self.begin_type(
@@ -158,7 +159,7 @@ impl Vm {
                 method: false,
                 captured_this: None,
             }),
-            amendment: Some(amendment),
+            amendment: Some(Box::new(amendment)),
             environment,
             ..Default::default()
         })))
@@ -388,7 +389,8 @@ impl Vm {
         let object = self.heap.get(owner)?;
         let mut amendment = object
             .amendment
-            .clone()
+            .as_deref()
+            .cloned()
             .ok_or_else(|| invalid("amended function metadata"))?;
         let mut environment = object.environment.clone();
         if amendment.initial && amendment.parameter_count > 0 {

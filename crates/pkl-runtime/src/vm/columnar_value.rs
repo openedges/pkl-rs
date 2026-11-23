@@ -461,7 +461,7 @@ impl<'a> PackCtx<'a> {
             }
             if pobj
                 .builtin_type
-                .as_ref()
+                .as_deref()
                 .and_then(classes::BuiltinClass::from_type)
                 == Some(classes::BuiltinClass::Dynamic)
             {
@@ -499,7 +499,7 @@ impl<'a> PackCtx<'a> {
                     .get_class(cls)
                     .ok()
                     .and_then(|c| self.vm.heap.get_fast(c.prototype))
-                    .and_then(|p| p.builtin_type.as_ref())
+                    .and_then(|p| p.builtin_type.as_deref())
                     .and_then(classes::BuiltinClass::from_type)
                     == Some(classes::BuiltinClass::Dynamic)
             }
@@ -952,7 +952,7 @@ impl<'a> PackCtx<'a> {
                         None => true,
                         Some(p) => self.vm.heap.get_fast(p).is_some_and(|pobj| {
                             pobj.builtin_type
-                                .as_ref()
+                                .as_deref()
                                 .and_then(classes::BuiltinClass::from_type)
                                 == Some(classes::BuiltinClass::Ordinary(output::MODULE))
                                 || pobj
