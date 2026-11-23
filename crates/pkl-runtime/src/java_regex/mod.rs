@@ -1,14 +1,20 @@
-//! Checked raw UTF-16 matcher draft. Both pattern and text remain lossless.
-//! The scalar API is unchanged until a separately validated migration; this
-//! module is the intended common matcher for Pkl and M1 adapters.
-use alloc::sync::Arc;
-use alloc::{collections::BTreeMap, format, string::String, vec, vec::Vec};
-use core::fmt;
+//! Checked raw UTF-16 Java `java.util.regex.Pattern` matcher. Both pattern and
+//! text remain lossless.
+//!
+//! Adapted from `java_regex` 0.1.0 (Copyright Mathieu Dutour Sikiric,
+//! `MIT OR Apache-2.0`) and extended for raw UTF-16 code units, explicit
+//! step/depth execution budgets, canonical equivalence (`CANON_EQ` / `(?c)`),
+//! and pinned Unicode 15.0.0 tables generated from official Unicode Consortium
+//! UCD 15.0.0 files (`Unicode-3.0`; see `UNICODE-15.0.0-PROVENANCE.md` and
+//! `LICENSE-UNICODE`).
+use std::collections::BTreeMap;
+use std::fmt;
+use std::sync::Arc;
 mod canon_eq;
 mod character_lookup;
 mod character_names;
 /// Character metadata captured from the pinned JDK 21 Unicode 15 provider.
-pub use character_lookup::{character_record, CharacterRecord};
+pub use character_lookup::{CharacterRecord, character_record};
 pub const UNICODE_VERSION: &str = "15.0.0";
 mod engine;
 mod input;
@@ -116,7 +122,7 @@ impl Utf16Regex {
                         format!("Unsupported flag: {flag}"),
                         source.to_vec(),
                         0,
-                    ))
+                    ));
                 }
             }
         }

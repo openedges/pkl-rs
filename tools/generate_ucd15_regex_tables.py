@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-"""Generate all `vendor/java_regex/src/utf16/` tables directly from official Unicode 15.0.0 UCD files.
+"""Generate all `crates/pkl-runtime/src/java_regex/` tables directly from official Unicode 15.0.0 UCD files.
 
 Input files (official Unicode Consortium UCD 15.0.0, licensed under Unicode-3.0):
   https://www.unicode.org/Public/15.0.0/ucd/
@@ -31,7 +31,7 @@ import struct
 
 MAX_CP = 0x10FFFF
 
-# General_Category numeric IDs matching `vendor/java_regex/src/utf16/unicode.rs`.
+# General_Category numeric IDs matching `crates/pkl-runtime/src/java_regex/unicode.rs`.
 CATEGORY_ID: dict[str, int] = {
     "Cn": 0,
     "Lu": 1,
@@ -73,7 +73,7 @@ JAVA_CANONICAL_BLOCK_RENAMES: dict[str, str] = {
     "CYRILLIC_SUPPLEMENT": "CYRILLIC_SUPPLEMENTARY",
 }
 
-# GraphemeBreakProperty numeric IDs matching `vendor/java_regex/src/utf16/canon_eq.rs`.
+# GraphemeBreakProperty numeric IDs matching `crates/pkl-runtime/src/java_regex/canon_eq.rs`.
 GRAPHEME_ID: dict[str, int] = {
     "Other": 0,
     "CR": 1,
@@ -563,7 +563,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--out-dir",
         type=Path,
-        default=Path("vendor/java_regex/src/utf16"),
+        default=Path("crates/pkl-runtime/src/java_regex"),
         help="Destination directory for generated tables",
     )
     parser.add_argument(

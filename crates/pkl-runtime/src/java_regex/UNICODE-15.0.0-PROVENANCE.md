@@ -1,6 +1,6 @@
 # Official Unicode 15.0.0 UCD Data Provenance
 
-All 12 generated Unicode data files under `vendor/java_regex/src/utf16/`
+All 12 generated Unicode data files under `crates/pkl-runtime/src/java_regex/`
 (`name-index.bin`, `name-pool.bin`, `named-codepoints.bin`,
 `name-upper-ascii.bin`, `metadata-runs.bin`, `case-deltas.bin`,
 `canon-ccc.bin`, `canon-decomp.bin`, `canon-comp.bin`, `grapheme-runs.bin`,

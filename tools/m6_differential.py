@@ -807,12 +807,10 @@ def run_downstream_rust_crate_check(
     crate_dir = work_dir / "downstream_pkl_consumer"
     (crate_dir / "src").mkdir(parents=True, exist_ok=True)
     pkl_crate_path = (root / "crates/pkl").resolve()
-    java_regex_path = (root / "vendor/java_regex").resolve()
     cargo_toml = (
         '[package]\nname = "m6-downstream-consumer"\nversion = "0.1.0"\nedition = "2024"\n\n'
         '[workspace]\n\n'
-        f'[dependencies]\npkl = {{ path = "{pkl_crate_path}" }}\n\n'
-        f'[patch.crates-io]\njava_regex = {{ path = "{java_regex_path}" }}\n'
+        f'[dependencies]\npkl = {{ path = "{pkl_crate_path}" }}\n'
     )
     main_rs = (
         'use pkl::{EvaluatorBuilder, ModuleSource};\n'

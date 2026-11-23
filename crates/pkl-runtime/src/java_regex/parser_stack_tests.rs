@@ -1,9 +1,6 @@
 //! Internal resource and grammar regressions, not new Java compatibility rows.
 //! Existing Java raw expectations and the original failing syntax test remain unchanged.
-extern crate std;
-
 use super::{CompileError, CompileErrorKind, Limits, Utf16Regex};
-use alloc::{format, string::ToString, vec::Vec};
 
 fn compile(pattern: &str) -> Result<Utf16Regex, CompileError> {
     Utf16Regex::with_flags(&pattern.encode_utf16().collect::<Vec<_>>(), "u")

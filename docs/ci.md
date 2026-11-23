@@ -5,7 +5,7 @@ GitHub Actions is split into two focused workflows to keep routine CI costs mini
 ## 1. GitHub Actions scope (minimal tests, packaging, and release distribution)
 
 1. **[.github/workflows/ci.yml](../.github/workflows/ci.yml)** (`push` to `main`/`release/**`, `pull_request` targeting `main`/`release/**`, `workflow_dispatch` — **2 Ubuntu `ubuntu-24.04` jobs only**, zero macOS/Windows runners):
-   - `check-and-test`: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace + `java_regex` + `wasm32` `clippy -D warnings`, portable `wasm32-unknown-unknown` build checks, all 12 milestone manifest/contract `--check` verifiers (offline, no Java required), [tools/check_release_version.py](../tools/check_release_version.py) (Cargo/npm version lockstep), [tools/tests/test_local_verify.py](../tools/tests/test_local_verify.py), and fast Rust unit/product-crate smoke tests (`xtask`, `pkl-formatter`, `pkl-server`, `pkl-repl`, `pkl-cli`, `pkl-doc`, `pkl-wasm`, `pkl-host-native`, and `pkl-runtime --lib`).
+   - `check-and-test`: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace + `wasm32` `clippy -D warnings`, portable `wasm32-unknown-unknown` build checks, all 12 milestone manifest/contract `--check` verifiers (offline, no Java required), [tools/check_release_version.py](../tools/check_release_version.py) (Cargo/npm version lockstep), [tools/tests/test_local_verify.py](../tools/tests/test_local_verify.py), and fast Rust unit/product-crate smoke tests (`xtask`, `pkl-formatter`, `pkl-server`, `pkl-repl`, `pkl-cli`, `pkl-doc`, `pkl-wasm`, `pkl-host-native`, and `pkl-runtime --lib`).
    - `package-smoke`: Builds and smoke-tests `@pkl-rs/wasm` (`[profile.wasm-release]`, enforcing `pkl_wasm_bg.wasm` gzip-9 `<= 2.50 MiB` [`2,621,440 B`] plus `npm pack` clean-directory install), builds and smoke-tests `@pkl-rs/napi`, and builds and smoke-tests release `pkl` and `pkldoc` CLI binaries.
 2. **[.github/workflows/release.yml](../.github/workflows/release.yml)** (**ONLY on version tags `v*` or manual `workflow_dispatch`** — never runs on ordinary `push`/`pull_request`):
    - `verify-tag` (`ubuntu-24.04`, fast fail-first gate before cross-platform runners start): Runs [tools/check_release_version.py](../tools/check_release_version.py) to enforce strict SemVer tag syntax (`vMAJOR.MINOR.PATCH[-prerelease]`) and exact version lockstep across `Cargo.toml`, `@pkl-rs/wasm`, and `@pkl-rs/napi`.
@@ -22,7 +22,7 @@ Every verification layer omitted from minimal GitHub CI is covered without silen
 
 | Suite ID | Scope & Exact Coverage | External Prereqs |
 | --- | --- | --- |
-| `workspace` | `xtask verify`, `cargo fmt --check`, `clippy` (workspace, `java_regex`, `wasm32`), `wasm32` check, and full `cargo test --workspace --locked` (**378 targets** / ~2,500 tests) | Rust `1.98.1` |
+| `workspace` | `xtask verify`, `cargo fmt --check`, `clippy` (workspace, `wasm32`), `wasm32` check, and full `cargo test --workspace --locked` (**379 targets** / ~2,500+ tests, including internal `pkl_runtime::java_regex` unit and UTF-16 authority tests) | Rust `1.98.1` |
 | `manifests` | All **12** milestone manifest `--check` scripts, M0/M7 benchmark contracts, JVM & `native-image` oracle verification, and all **59 active** Python unit test modules (`tools/tests/`, dynamically discovered) | Python `3.10+`, JVM + `native-image` oracles |
 | `platform-js-tests` | All **41** Node.js platform/adapter/transport unit test files under `tools/platform/*.test.mjs` (**384 tests**, dynamically discovered) | Node `26+` |
 | `packages` | Standalone `@pkl-rs/wasm` build + gzip-9 `<= 2.50 MiB` + `wasm.test.mjs` (`npm pack`), `@pkl-rs/napi` build + `run.mjs` + `pack-install.mjs`, and release `pkl`/`pkldoc` CLI smoke | Node `26+`, `wasm-bindgen 0.2.108` |
@@ -41,7 +41,7 @@ Every verification layer omitted from minimal GitHub CI is covered without silen
 | `m7-js` | M7 cross-browser + Node JS/Wasm performance and memory decomposition (`m7_js_analysis.py`) | JVM oracle, Playwright |
 | `m7-release` | Unified `m7_manifest.py` release audit wired automatically to `m7-bench`/`m7-soak`/`m7-fuzz` outputs (or explicit `--release-dir`, optional `--local-checkpoint`) | M7 outputs |
 
-> **Note on `vendor/java_regex`**: Excluded from the Cargo workspace in [Cargo.toml](../Cargo.toml) because its upstream dev-dependency (`onig`) is intentionally omitted from the root `Cargo.lock`. Its library code is statically checked offline via `cargo clippy -p java_regex --lib --locked`, while regex behavior is exercised by `pkl-runtime` tests and M1/M2/M3/M7 differential suites.
+> **Note on `pkl_runtime::java_regex`**: The checked UTF-16 Java regular expression engine and official Unicode 15.0.0 UCD tables live directly inside `crates/pkl-runtime/src/java_regex/` (with zero `[patch.crates-io]` overrides or excluded vendor crates), so all regex unit tests, `unsafe_code = "deny"` lints, and `clippy -D warnings` run automatically inside standard workspace checks.
 
 ### Presets and usage
 

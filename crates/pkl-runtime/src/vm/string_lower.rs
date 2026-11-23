@@ -226,7 +226,7 @@ fn final_cased(table: &WordTable, units: &[u16], index: usize) -> bool {
 }
 
 fn cased(point: u32) -> bool {
-    java_regex::utf16::character_record(point).is_some_and(|r| matches!(r.category, 1..=3))
+    crate::java_regex::character_record(point).is_some_and(|r| matches!(r.category, 1..=3))
         || matches!(point,0x02b0..=0x02b8|0x02c0..=0x02c1|0x02e0..=0x02e4|0x0345|0x037a|0x1d2c..=0x1d61|0x2160..=0x217f|0x24b6..=0x24e9)
 }
 pub(super) fn lowercase(text: &PklString) -> PklString {
@@ -252,7 +252,7 @@ pub(super) fn lowercase(text: &PklString) -> PklString {
                 0x3c3
             }
         } else {
-            java_regex::utf16::character_record(point).map_or(point, |r| r.lower)
+            crate::java_regex::character_record(point).map_or(point, |r| r.lower)
         };
         changed |= mapped != point;
         if let Some(character) = char::from_u32(mapped) {

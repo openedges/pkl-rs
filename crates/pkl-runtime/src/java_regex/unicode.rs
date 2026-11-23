@@ -1,27 +1,23 @@
 //! Version-pinned Unicode 15.0.0 character classification generated from
 //! official UCD 15.0.0 (`UNICODE-15.0.0-PROVENANCE.md`). No host stdlib drift.
 use super::{character_lookup::character_record, types::PredefinedClass};
-use alloc::{
-    format,
-    string::{String, ToString},
-};
 
 pub trait CodePointExt {
-    fn is_ascii_digit(self) -> bool;
-    fn is_ascii_hexdigit(self) -> bool;
-    fn is_alphanumeric(self) -> bool;
+    fn is_ascii_digit(&self) -> bool;
+    fn is_ascii_hexdigit(&self) -> bool;
+    fn is_alphanumeric(&self) -> bool;
     fn to_ascii_uppercase(self) -> Self;
     fn to_ascii_lowercase(self) -> Self;
 }
 impl CodePointExt for u32 {
-    fn is_ascii_digit(self) -> bool {
-        (0x30..=0x39).contains(&self)
+    fn is_ascii_digit(&self) -> bool {
+        (0x30..=0x39).contains(self)
     }
-    fn is_ascii_hexdigit(self) -> bool {
-        self.is_ascii_digit() || (0x41..=0x46).contains(&self) || (0x61..=0x66).contains(&self)
+    fn is_ascii_hexdigit(&self) -> bool {
+        self.is_ascii_digit() || (0x41..=0x46).contains(self) || (0x61..=0x66).contains(self)
     }
-    fn is_alphanumeric(self) -> bool {
-        self.is_ascii_digit() || (0x41..=0x5a).contains(&self) || (0x61..=0x7a).contains(&self)
+    fn is_alphanumeric(&self) -> bool {
+        self.is_ascii_digit() || (0x41..=0x5a).contains(self) || (0x61..=0x7a).contains(self)
     }
     fn to_ascii_uppercase(self) -> Self {
         if (0x61..=0x7a).contains(&self) {
@@ -391,10 +387,9 @@ fn property(name: &str, cp: u32, uc: bool, ci: bool) -> Option<bool> {
         let id = dictionary_id("script", value)?;
         return Some(character_record(cp)?.script_id == id);
     }
-    if uc {
-        if let Some(value) = posix_name(name).and_then(|canonical| posix(canonical, cp, true, ci)) {
-            return Some(value);
-        }
+    if uc && let Some(value) = posix_name(name).and_then(|canonical| posix(canonical, cp, true, ci))
+    {
+        return Some(value);
     }
     for_property(name, cp, ci)
 }

@@ -1969,7 +1969,7 @@ fn is_java_blank(text: &PklString) -> bool {
         } else {
             u32::from(u)
         };
-        let is_whitespace = java_regex::utf16::character_record(cp)
+        let is_whitespace = crate::java_regex::character_record(cp)
             .is_some_and(|record| record.predicate_bits & (1 << 23) != 0);
         if !is_whitespace {
             return false;

@@ -1,11 +1,11 @@
 //! Language Regex carrier and immutable RegexMatch factory data.
 //! Pkl and the M1 adapters use the same checked raw UTF-16 backend. Pkl's Uu
 //! flags and M1's historical u flags remain separate protocol inputs.
-use crate::pkl_string::PklString;
-use crate::value_identity::Token;
-use java_regex::utf16::{
+use crate::java_regex::{
     CompileErrorKind, Limits, MatchError, MatchRanges, OwnedMatcher, Utf16Regex,
 };
+use crate::pkl_string::PklString;
+use crate::value_identity::Token;
 use std::ops::Range;
 use std::sync::Arc;
 

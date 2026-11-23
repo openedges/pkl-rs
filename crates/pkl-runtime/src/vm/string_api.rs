@@ -321,7 +321,7 @@ fn first_case(text: &PklString, lower: bool) -> PklString {
         // Sigma has no preceding cased character, so it is never final Sigma.
         result.extend([0x69, 0x307]);
     } else {
-        let mapped = java_regex::utf16::character_record(point).map_or(point, |record| {
+        let mapped = crate::java_regex::character_record(point).map_or(point, |record| {
             if lower { record.lower } else { record.title }
         });
         if let Some(point) = char::from_u32(mapped) {
@@ -348,7 +348,7 @@ fn trimmed(text: &PklString, start: bool, end: bool, jdk: bool) -> PklString {
     }
     let whitespace = |point: u32| {
         if jdk {
-            java_regex::utf16::character_record(point)
+            crate::java_regex::character_record(point)
                 .is_some_and(|record| record.predicate_bits & (1 << 23) != 0)
         } else {
             pkl_whitespace(point)

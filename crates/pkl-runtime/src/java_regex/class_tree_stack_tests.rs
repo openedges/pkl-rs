@@ -1,7 +1,5 @@
 //! Internal resource contracts for deep class trees at shallow syntax depth.
-extern crate std;
 use super::{CompileErrorKind, Limits, Utf16Regex};
-use alloc::{format, string::String, vec::Vec};
 
 fn compile(source: &str) -> Utf16Regex {
     Utf16Regex::from_str(source, "u").unwrap()
@@ -98,14 +96,18 @@ fn deep_class_regex_clone_and_matcher_branch_clone_fit_256k() {
             ("[a&&[ab]b&&b]", 'a', 'b'),
         ] {
             let regex = compile(source);
-            assert!(regex
-                .captures_entire(&[accepted as u16], Limits::default())
-                .unwrap()
-                .is_some());
-            assert!(regex
-                .captures_entire(&[rejected as u16], Limits::default())
-                .unwrap()
-                .is_none());
+            assert!(
+                regex
+                    .captures_entire(&[accepted as u16], Limits::default())
+                    .unwrap()
+                    .is_some()
+            );
+            assert!(
+                regex
+                    .captures_entire(&[rejected as u16], Limits::default())
+                    .unwrap()
+                    .is_none()
+            );
         }
     });
 }

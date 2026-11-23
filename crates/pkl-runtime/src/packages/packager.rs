@@ -5,6 +5,7 @@
 //! Matches `org.pkl.core.project.ProjectPackager` (`ProjectPackager.java:82-501`),
 //! `ImportsAndReadsParser.java:55-161`, and `CliProjectPackager.kt:28-92`.
 use crate::diagnostic::Diagnostic;
+use crate::java_regex::{Limits, Utf16Regex};
 use crate::modules::ModuleHostError;
 use crate::packages::PackageUri;
 use crate::packages::http::{PackageHttpError, PackageTransport, get_metadata_request_uri};
@@ -17,7 +18,6 @@ use crate::packages::zip::build_deterministic_package_zip;
 use crate::source::{SourceText, Span};
 use crate::syntax::*;
 use crate::value::PklString;
-use java_regex::utf16::{Limits, Utf16Regex};
 use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 

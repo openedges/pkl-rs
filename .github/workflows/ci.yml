@@ -66,10 +66,9 @@ jobs:
         run: cargo xtask verify
       - name: Check Rust formatting
         run: cargo fmt --all -- --check
-      - name: Lint workspace, regex crate, and Wasm target
+      - name: Lint workspace and Wasm target
         run: |
           cargo clippy --workspace --all-targets --locked -- -D warnings
-          cargo clippy -p java_regex --lib --locked -- -D warnings
           cargo clippy -p pkl-wasm --target wasm32-unknown-unknown --locked -- -D warnings
       - name: Check portable Wasm crates
         run: cargo check -p pkl-runtime -p pkl-formatter -p pkl-wasm --target wasm32-unknown-unknown --locked

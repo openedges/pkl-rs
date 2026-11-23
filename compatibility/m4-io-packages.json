@@ -437,7 +437,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "ParsedHttpUri"
         },
         {
@@ -471,17 +471,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "RewriteRule"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "HeaderRule"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "HeaderGlobMatcher"
         }
       ],
@@ -501,12 +501,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "ProxyConfig"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "NoProxyRule"
         },
         {
@@ -535,7 +535,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "e7a073ec5c0c3720860ef8192a3cdaabef51eee2dfa7a544d41ab668bc37667a",
+          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
           "symbol": "RewritingHttpClient"
         },
         {
@@ -620,7 +620,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/security.rs",
-          "sha256": "a54edb99ed9a96ec11a012b956e00f73d8bd8cbb25513d80e31a8970e24a4f4b",
+          "sha256": "fb3fbaf21920738c849e6ea1fe357520f3f88445706aee7cc9ac0f4698ea3efc",
           "symbol": "SecurityPolicy"
         },
         {
@@ -693,7 +693,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
           "symbol": "ProjectPackager"
         },
         {
@@ -769,12 +769,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
           "symbol": "ProjectPackager"
         },
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "157bc3d8c842678fd0d28e66fb7ba5cf9c5725c44388caecc0ed520295bd3312",
+          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
           "symbol": "java_hashmap_order"
         },
         {

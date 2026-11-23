@@ -11,9 +11,13 @@ pub fn complete(request: &ReadRequest) -> Option<Result<ReadResult, ReadFailure>
 
     // 1. Check allowed resources if configured
     if let Some(allowed) = pkl_runtime::packages::resolver::current_allowed_resources() {
+        let units: Vec<u16> = req_uri.encode_utf16().collect();
         let is_allowed = allowed.iter().any(|pattern| {
-            if let Ok(re) = java_regex::Regex::new(pattern) {
-                re.looking_at(req_uri).is_some()
+            if let Ok(re) = pkl_runtime::java_regex::Utf16Regex::from_str(pattern, "") {
+                re.looking_at(&units, pkl_runtime::java_regex::Limits::default())
+                    .ok()
+                    .flatten()
+                    .is_some()
             } else {
                 req_uri.starts_with(pattern)
             }

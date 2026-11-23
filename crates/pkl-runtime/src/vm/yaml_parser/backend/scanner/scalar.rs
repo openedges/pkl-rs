@@ -404,13 +404,13 @@ pub(super) fn decimal_digit(c: u32) -> Result<Option<u32>, YamlError> {
     if (48..=57).contains(&c) {
         return Ok(Some(c - 48));
     }
-    if java_regex::utf16::character_record(c).is_some_and(|r| r.predicate_bits & (1 << 2) != 0) {
+    if crate::java_regex::character_record(c).is_some_and(|r| r.predicate_bits & (1 << 2) != 0) {
         // Verified across all 680 JDK 21 Unicode 15.0.0 digits: Character.isDigit
         // coincides with General_Category=Nd (9), and every Nd block is a
         // contiguous run of 10 digits 0..=9 (or adjacent 10-digit runs).
         let mut start = c;
         while start > 0
-            && java_regex::utf16::character_record(start - 1).is_some_and(|r| r.category == 9)
+            && crate::java_regex::character_record(start - 1).is_some_and(|r| r.category == 9)
         {
             start -= 1;
         }

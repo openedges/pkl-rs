@@ -1,6 +1,5 @@
 use super::*;
-use alloc::string::ToString;
-use core::fmt::Write;
+use std::fmt::Write;
 fn hex(units: &[u16]) -> String {
     units
         .iter()
@@ -68,6 +67,6 @@ fn pinned_jdk_slice_and_lookbehind_raw_output() {
     }
     assert_eq!(
         out.as_bytes(),
-        include_bytes!("../../tests/utf16-authority/jdk-slice-behind.stdout.bin")
+        include_bytes!("../../tests/fixtures/utf16-authority/jdk-slice-behind.stdout.bin")
     );
 }

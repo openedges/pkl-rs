@@ -141,10 +141,7 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
 
 ---
 
-## 5. Known Pre-GA Publishing Prerequisites
+## 5. Known Pre-GA Publishing Status
 
-One explicit engineering prerequisite remains tracked before crates.io publication:
-
-1. **crates.io publication (`publish = false`)**: Workspace crates currently keep `publish = false` because `crates/pkl-runtime` patches `java_regex` locally via `[patch.crates-io] java_regex = { path = "vendor/java_regex" }`. crates.io disallows publishing crates that depend on unpublished path patches. Before publishing to crates.io, either upstream the UTF-16 patches to `java_regex` or publish the patched engine under an owned crate name (e.g. `pkl-java-regex`).
-
-*(Previously tracked OpenJDK `uniName.dat` / GPLv2 provenance in `vendor/java_regex` was resolved on `2026-11-23` by regenerating all 12 tables directly from official Unicode Consortium UCD 15.0.0 files under `Unicode-3.0` via [tools/generate_ucd15_regex_tables.py](../tools/generate_ucd15_regex_tables.py).)*
+- **Zero `[patch.crates-io]` blockers**: The checked UTF-16 Java regular expression engine and official Unicode 15.0.0 UCD tables (`Unicode-3.0`) are embedded directly inside `crates/pkl-runtime/src/java_regex/` with zero external regex/Unicode crate dependencies and zero OpenJDK GPLv2 files. External consumers can depend on `pkl` directly via Git without any `[patch.crates-io]` override.
+- **crates.io publication (`publish = false`)**: Workspace crates remain `publish = false` until the `v0.32.0` cross-platform GA release checklist is completed and crates.io publication is explicitly enabled (`pkl-runtime` → `pkl-host-native` → `pkl`).

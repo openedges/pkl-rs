@@ -75,7 +75,7 @@ class SuiteSpec:
 SUITE_SPECS: tuple[SuiteSpec, ...] = (
     SuiteSpec(
         "workspace",
-        "Full Rust workspace verify, fmt, clippy (workspace/java_regex/wasm32), wasm32 check, and all 378 workspace test targets",
+        "Full Rust workspace verify, fmt, clippy (workspace/wasm32), wasm32 check, and all workspace test targets",
         False,
         False,
         False,
@@ -331,7 +331,6 @@ def build_suite_steps(
             Step("xtask-verify", ["cargo", "xtask", "verify"]),
             Step("rustfmt-check", ["cargo", "fmt", "--all", "--", "--check"]),
             Step("clippy-workspace", ["cargo", "clippy", "--workspace", "--all-targets", "--locked", "--", "-D", "warnings"]),
-            Step("clippy-java-regex", ["cargo", "clippy", "-p", "java_regex", "--lib", "--locked", "--", "-D", "warnings"]),
             Step("clippy-wasm", ["cargo", "clippy", "-p", "pkl-wasm", "--target", "wasm32-unknown-unknown", "--locked", "--", "-D", "warnings"]),
             Step("check-wasm32", ["cargo", "check", "-p", "pkl-runtime", "-p", "pkl-formatter", "-p", "pkl-wasm", "--target", "wasm32-unknown-unknown", "--locked"]),
             Step("test-workspace", ["cargo", "test", "--workspace", "--locked"]),

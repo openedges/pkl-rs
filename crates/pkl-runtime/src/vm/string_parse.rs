@@ -17,13 +17,13 @@ fn number_units(text: &PklString) -> Vec<u16> {
 }
 pub(in crate::vm) fn decimal_digit(unit: u16) -> Option<i64> {
     let point = u32::from(unit);
-    if java_regex::utf16::character_record(point)?.category != 9 {
+    if crate::java_regex::character_record(point)?.category != 9 {
         return None;
     }
     // Every BMP Decimal_Number run is a sequence of complete 0..9 alphabets.
     // This intentionally processes UTF-16 chars: supplementary digits fail Java Long.
     let mut start = point;
-    while start > 0 && java_regex::utf16::character_record(start - 1)?.category == 9 {
+    while start > 0 && crate::java_regex::character_record(start - 1)?.category == 9 {
         start -= 1;
     }
     Some(i64::from((point - start) % 10))
@@ -222,8 +222,8 @@ pub(super) fn boolean(text: &PklString) -> Option<bool> {
                 if point == expected {
                     return true;
                 }
-                let upper = java_regex::utf16::character_record(point).map_or(point, |r| r.upper);
-                let folded = java_regex::utf16::character_record(upper).map_or(upper, |r| r.lower);
+                let upper = crate::java_regex::character_record(point).map_or(point, |r| r.upper);
+                let folded = crate::java_regex::character_record(upper).map_or(upper, |r| r.lower);
                 folded == expected
             })
         {

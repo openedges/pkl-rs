@@ -809,9 +809,13 @@ fn is_under_root_dir(uri_str: &str, root_dir: &Path) -> bool {
 }
 
 fn is_pattern_allowed(patterns: &[String], uri_str: &str) -> bool {
+    let units: Vec<u16> = uri_str.encode_utf16().collect();
     patterns.iter().any(|pat| {
-        if let Ok(re) = java_regex::Regex::new(pat) {
-            re.looking_at(uri_str).is_some()
+        if let Ok(re) = pkl_runtime::java_regex::Utf16Regex::from_str(pat, "") {
+            re.looking_at(&units, pkl_runtime::java_regex::Limits::default())
+                .ok()
+                .flatten()
+                .is_some()
         } else {
             uri_str.starts_with(pat)
         }

@@ -5,9 +5,6 @@
 //! UCD 15.0.0 release (`Unicode-3.0`; see `UNICODE-15.0.0-PROVENANCE.md`) so
 //! normalization and grapheme boundaries never drift with host Rust stdlib.
 
-use alloc::vec;
-use alloc::vec::Vec;
-
 use super::input::Input;
 use super::unicode::is_nonspacing_mark;
 use super::{CompileError, CompileErrorKind};
@@ -49,11 +46,7 @@ pub fn combining_class(cp: u32) -> u8 {
             hi = mid;
         }
     }
-    if lo < count {
-        CCC_RUNS[lo * 5 + 4]
-    } else {
-        0
-    }
+    if lo < count { CCC_RUNS[lo * 5 + 4] } else { 0 }
 }
 
 fn decompose_codepoint_nfd(cp: u32, out: &mut Vec<u32>) {
@@ -101,7 +94,7 @@ fn compose_pair(a: u32, b: u32) -> Option<u32> {
         return Some(S_BASE + (l_idx * V_COUNT + v_idx) * T_COUNT);
     }
     if (S_BASE..S_BASE + S_COUNT).contains(&a)
-        && (a - S_BASE) % T_COUNT == 0
+        && (a - S_BASE).is_multiple_of(T_COUNT)
         && b > T_BASE
         && b < T_BASE + T_COUNT
     {
@@ -198,13 +191,12 @@ pub fn nfc_points(units: &[u16]) -> Vec<u32> {
     for i in 0..list.len() {
         let ch = list[i];
         let cc = i16::from(combining_class(ch));
-        if let Some(s_pos) = starter_pos {
-            if last_cc < cc || last_cc == 0 {
-                if let Some(composed) = compose_pair(list[s_pos], ch) {
-                    list[s_pos] = composed;
-                    continue;
-                }
-            }
+        if let Some(s_pos) = starter_pos
+            && (last_cc < cc || last_cc == 0)
+            && let Some(composed) = compose_pair(list[s_pos], ch)
+        {
+            list[s_pos] = composed;
+            continue;
         }
         if cc == 0 {
             starter_pos = Some(out_len);
@@ -222,11 +214,7 @@ pub fn nfc_points(units: &[u16]) -> Vec<u32> {
 /// Computes NFC of `units` and returns `Some(cp)` iff NFC has exactly 1 code point.
 pub fn nfc_single_codepoint(units: &[u16]) -> Option<u32> {
     let nfc = nfc_points(units);
-    if nfc.len() == 1 {
-        Some(nfc[0])
-    } else {
-        None
-    }
+    if nfc.len() == 1 { Some(nfc[0]) } else { None }
 }
 
 pub fn nfc_utf16(units: &[u16]) -> Vec<u16> {

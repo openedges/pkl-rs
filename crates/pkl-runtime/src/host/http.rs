@@ -5,9 +5,9 @@
 //! supply a single-hop non-redirecting `HttpTransport`.
 
 use crate::host::errors::{IoFailure, ReadFailure};
+use crate::java_regex::{Limits, Utf16Regex};
 use crate::modules::ModuleHostError;
 use crate::value::PklString;
-use java_regex::utf16::{Limits, Utf16Regex};
 use std::collections::BTreeMap;
 use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
 use std::sync::{

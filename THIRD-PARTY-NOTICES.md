@@ -194,20 +194,20 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 ---
 
-## 6. Vendored Regular Expression Engine & Official Unicode 15.0.0 Data (`vendor/java_regex/`)
+## 6. Embedded Regular Expression Engine & Official Unicode 15.0.0 Data (`crates/pkl-runtime/src/java_regex/`)
 
-### `java_regex` (`0.1.0`, locally patched)
+### `java_regex` (`0.1.0`, adapted in `crates/pkl-runtime/src/java_regex/`)
 
 - **Project**: https://github.com/MathieuDutSik/java_regex
-- **License**: `MIT OR Apache-2.0`
+- **License**: `MIT OR Apache-2.0` (MIT license text included in Section 5 above; Apache-2.0 text in [LICENSE](LICENSE))
 - **Copyright**: Copyright Mathieu Dutour Sikiric
-- **Local modifications**: Documented in [vendor/java_regex/PKL-RS-PATCHES.md](vendor/java_regex/PKL-RS-PATCHES.md); full license texts preserved in `vendor/java_regex/LICENSE-APACHE` and `vendor/java_regex/LICENSE-MIT`.
+- **Local modifications**: Adapted into a self-contained raw UTF-16 `java.util.regex.Pattern` matcher inside `crates/pkl-runtime/src/java_regex/` with explicit step/depth execution budgets, canonical equivalence (`CANON_EQ` / `(?c)`), and zero external regex or Unicode crate dependencies.
 
 ### Official Unicode 15.0.0 Character Database (`Unicode-3.0`)
 
 - **Project**: The Unicode Standard, Version 15.0.0 (https://www.unicode.org/Public/15.0.0/ucd/)
-- **Generation**: All 12 data tables under `vendor/java_regex/src/utf16/` are deterministically generated directly from official Unicode Consortium UCD 15.0.0 files by `tools/generate_ucd15_regex_tables.py` (exact SHA-256 provenance recorded in [vendor/java_regex/UNICODE-15.0.0-PROVENANCE.md](vendor/java_regex/UNICODE-15.0.0-PROVENANCE.md)). No OpenJDK binary resources (`uniName.dat`) or GPLv2 files are used or distributed.
-- **License**: `Unicode-3.0` (verbatim text preserved in [vendor/java_regex/LICENSE-UNICODE](vendor/java_regex/LICENSE-UNICODE)):
+- **Generation**: All 12 data tables under `crates/pkl-runtime/src/java_regex/` are deterministically generated directly from official Unicode Consortium UCD 15.0.0 files by `tools/generate_ucd15_regex_tables.py` (exact SHA-256 provenance recorded in [crates/pkl-runtime/src/java_regex/UNICODE-15.0.0-PROVENANCE.md](crates/pkl-runtime/src/java_regex/UNICODE-15.0.0-PROVENANCE.md)). No OpenJDK binary resources (`uniName.dat`) or GPLv2 files are used or distributed.
+- **License**: `Unicode-3.0` (verbatim text preserved in [crates/pkl-runtime/src/java_regex/LICENSE-UNICODE](crates/pkl-runtime/src/java_regex/LICENSE-UNICODE)):
 
 ```text
 UNICODE LICENSE V3
@@ -255,16 +255,15 @@ authorization of the copyright holder.
 
 ## 7. Statically Linked Rust Crate Dependencies (`Cargo.lock`)
 
-All **83 external Rust crates** locked in [Cargo.lock](Cargo.lock) (**72 runtime/build crates** across shipped binaries/packages; **zero copyleft crates**) are distributed under permissive open-source licenses:
+All **79 external Rust crates** locked in [Cargo.lock](Cargo.lock) (**67 runtime/build crates** across shipped binaries/packages; **zero copyleft crates**) are distributed under permissive open-source licenses:
 
 | SPDX License Expression | Crate Count | Representative Crates |
 | --- | ---: | --- |
-| `MIT OR Apache-2.0` / `Apache-2.0 OR MIT` / `MIT/Apache-2.0` | 62 | `rustls`, `wasm-bindgen`, `js-sys`, `sha1`, `sha2`, `md-5`, `libc`, `syn`, `quote`, `time`, `semver`, `unicode-*`, `windows-*` |
-| `MIT` | 9 | `napi`, `napi-derive`, `napi-sys`, `libm`, `convert_case`, `pem`, `zeroize`, `bumpalo`, `rcgen` (dev-only) |
+| `MIT OR Apache-2.0` / `Apache-2.0 OR MIT` / `MIT/Apache-2.0` | 60 | `rustls`, `wasm-bindgen`, `js-sys`, `sha1`, `sha2`, `md-5`, `libc`, `syn`, `quote`, `time`, `semver`, `unicode-normalization`, `windows-*` |
+| `MIT` | 8 | `napi`, `napi-derive`, `napi-sys`, `libm`, `convert_case`, `pem`, `zeroize`, `bumpalo` |
 | `ISC` | 3 | `libloading`, `rustls-webpki`, `untrusted` |
 | `Apache-2.0 OR ISC OR MIT` / `Apache-2.0 AND ISC` | 3 | `ring`, `rustls-pki-types`, `rustls-pemfile` |
 | `Zlib OR Apache-2.0 OR MIT` | 2 | `tinyvec`, `tinyvec_macros` |
-| `Apache-2.0` | 1 | `unicode-general-category` |
 | `BSD-3-Clause` | 1 | `subtle` |
 | `(MIT OR Apache-2.0) AND Unicode-3.0` | 1 | `unicode-ident` |
 | `Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT` | 1 | `wasi` |

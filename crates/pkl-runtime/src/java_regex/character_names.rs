@@ -2,7 +2,6 @@
 //! (`UnicodeData.txt`, `NameAliases.txt`, `SpecialCasing.txt`); see
 //! `UNICODE-15.0.0-PROVENANCE.md` and `LICENSE-UNICODE`.
 use super::character_lookup::character_record;
-use alloc::{format, string::String, vec::Vec};
 
 const INDEX: &[u8] = include_bytes!("name-index.bin");
 const POOL: &[u8] = include_bytes!("name-pool.bin");

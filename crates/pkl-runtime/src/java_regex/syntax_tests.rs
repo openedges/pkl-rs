@@ -1,6 +1,5 @@
 //! Source-derived internal contracts, distinct from the copied Pkl Java56 rows.
-use super::{character_names, CompileErrorKind, Limits, MatchError, Utf16Regex};
-use alloc::{format, vec::Vec};
+use super::{CompileErrorKind, Limits, MatchError, Utf16Regex, character_names};
 
 fn compile(pattern: &str, flags: &str) -> Result<Utf16Regex, super::CompileError> {
     Utf16Regex::with_flags(&pattern.encode_utf16().collect::<Vec<_>>(), flags)
@@ -56,14 +55,18 @@ fn generic_names_use_pinned_full_normalization_and_canonical_fallback() {
     assert_eq!(lookup("BASIC LATIN 41"), None);
     assert_eq!(lookup("NO SUCH CHARACTER"), None);
     let regex = compile(r"\N{LATIN CAPITAL LETTER A}", "u").unwrap();
-    assert!(regex
-        .captures_entire(&[0x41], Limits::default())
-        .unwrap()
-        .is_some());
-    assert!(regex
-        .captures_entire(&[0x42], Limits::default())
-        .unwrap()
-        .is_none());
+    assert!(
+        regex
+            .captures_entire(&[0x41], Limits::default())
+            .unwrap()
+            .is_some()
+    );
+    assert!(
+        regex
+            .captures_entire(&[0x42], Limits::default())
+            .unwrap()
+            .is_none()
+    );
     assert_eq!(
         compile(r"\N{NO SUCH CHARACTER}", "u").unwrap_err().kind,
         CompileErrorKind::Syntax

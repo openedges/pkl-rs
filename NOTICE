@@ -59,14 +59,15 @@ THIRD-PARTY-NOTICES.md.
    - Open Sans & Material Icons webfonts: Apache License, Version 2.0.
    - Lato & Source Code Pro webfonts: SIL Open Font License 1.1 (OFL-1.1).
 
-6. Regular expression engine & Unicode 15.0.0 data (vendor/java_regex/)
-   - Based on java_regex 0.1.0 (MIT OR Apache-2.0), Copyright Mathieu Dutour
-     Sikiric, with local UTF-16 and Pkl compatibility extensions documented in
-     vendor/java_regex/PKL-RS-PATCHES.md.
+6. Regular expression engine & Unicode 15.0.0 data (crates/pkl-runtime/src/java_regex/)
+   - Adapted from java_regex 0.1.0 (MIT OR Apache-2.0), Copyright Mathieu Dutour
+     Sikiric, and extended for raw UTF-16 code units, canonical equivalence
+     (`CANON_EQ` / `(?c)`), and bounded Pkl compatibility execution inside
+     crates/pkl-runtime/src/java_regex/.
    - All Unicode 15.0.0 character, name, normalization, and grapheme tables are
      generated directly from official Unicode Consortium UCD 15.0.0 files under
      the Unicode License Agreement (Unicode-3.0), Copyright © 1991-2026
-     Unicode, Inc. (verbatim in vendor/java_regex/LICENSE-UNICODE).
+     Unicode, Inc. (verbatim in crates/pkl-runtime/src/java_regex/LICENSE-UNICODE).
 
 7. Statically linked Rust crate dependencies (Cargo.lock)
    - All external Rust dependencies are licensed under permissive licenses

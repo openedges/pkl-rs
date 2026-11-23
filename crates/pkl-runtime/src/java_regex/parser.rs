@@ -1,14 +1,9 @@
-use alloc::boxed::Box;
-use alloc::collections::BTreeMap;
-use alloc::format;
-use alloc::string::{String, ToString};
-use alloc::vec;
-use alloc::vec::Vec;
+use std::collections::BTreeMap;
 
 use super::types::*;
-use super::unicode::is_valid_unicode_property;
 use super::unicode::CodePointExt;
-use super::{input::Input, CompileError as PatternSyntaxError};
+use super::unicode::is_valid_unicode_property;
+use super::{CompileError as PatternSyntaxError, input::Input};
 
 /// Compute the maximum match length of a Pattern, or None if the engine cannot
 /// prove a finite upper bound. Mirrors `TreeInfo.maxValid` / `maxLength`
@@ -81,7 +76,7 @@ fn pattern_max_length(pattern: &Pattern) -> Option<usize> {
                     pending.push(Work::Node(inner));
                 }
                 Node::Backreference(_) | Node::NamedBackreference(_) | Node::GraphemeCluster => {
-                    return None
+                    return None;
                 }
                 node => unreachable!("parser length walk received engine-internal node {node:?}"),
             },
@@ -584,10 +579,10 @@ impl Parser {
 
             // Backreference (numbered)
             0x31..=0x39 => {
-                let mut num = (c as u32 - 0x30 as u32) as usize;
+                let mut num = (c - 0x30_u32) as usize;
                 while let Some(d) = self.peek() {
                     if d.is_ascii_digit() {
-                        let new_num = num * 10 + (d as u32 - 0x30 as u32) as usize;
+                        let new_num = num * 10 + (d - 0x30_u32) as usize;
                         if new_num <= self.group_count {
                             num = new_num;
                             self.advance();
@@ -691,11 +686,11 @@ impl Parser {
                 self.advance();
                 if self.peek() == Some(0x75) {
                     self.advance();
-                    if let Ok(low) = self.parse_4hex() {
-                        if (0xDC00..=0xDFFF).contains(&low) {
-                            let cp = 0x10000 + ((code - 0xD800) << 10) + (low - 0xDC00);
-                            return Ok(cp);
-                        }
+                    if let Ok(low) = self.parse_4hex()
+                        && (0xDC00..=0xDFFF).contains(&low)
+                    {
+                        let cp = 0x10000 + ((code - 0xD800) << 10) + (low - 0xDC00);
+                        return Ok(cp);
                     }
                 }
             }
@@ -774,7 +769,7 @@ impl Parser {
         let ctrl = self
             .advance()
             .ok_or_else(|| self.error("Expected control character after \\c".to_string()))?;
-        let code = (ctrl as u32) ^ 0x40;
+        let code = ctrl ^ 0x40;
         if code <= 0x10ffff {
             Ok(code)
         } else {
@@ -1288,31 +1283,28 @@ impl Parser {
                             if self.peek() == Some(0x2d)
                                 && self.pos + 1 < self.chars.len()
                                 && self.chars[self.pos + 1] != 0x5d
+                                && let CharClassItem::Single(start) = item
                             {
-                                if let CharClassItem::Single(start) = item {
-                                    self.advance();
-                                    if self.peek() == Some(0x5b) {
-                                        tasks.push(ClassTask::RejectNestedRangeEnd);
-                                        tasks.push(ClassTask::Bracket);
-                                        continue;
-                                    }
-                                    let end_item = self.parse_char_class_item()?;
-                                    let CharClassItem::Single(end) = end_item else {
-                                        return Err(
-                                            self.error("Illegal character range".to_string())
-                                        );
-                                    };
-                                    if start > end {
-                                        return Err(self.error(format!(
-                                            "Invalid range: {}-{}",
-                                            super::unicode::display_codepoint(start),
-                                            super::unicode::display_codepoint(end),
-                                        )));
-                                    }
-                                    body.items.push(CharClassItem::Range(start, end));
-                                    tasks.push(ClassTask::Body(body));
+                                self.advance();
+                                if self.peek() == Some(0x5b) {
+                                    tasks.push(ClassTask::RejectNestedRangeEnd);
+                                    tasks.push(ClassTask::Bracket);
                                     continue;
                                 }
+                                let end_item = self.parse_char_class_item()?;
+                                let CharClassItem::Single(end) = end_item else {
+                                    return Err(self.error("Illegal character range".to_string()));
+                                };
+                                if start > end {
+                                    return Err(self.error(format!(
+                                        "Invalid range: {}-{}",
+                                        super::unicode::display_codepoint(start),
+                                        super::unicode::display_codepoint(end),
+                                    )));
+                                }
+                                body.items.push(CharClassItem::Range(start, end));
+                                tasks.push(ClassTask::Body(body));
+                                continue;
                             }
                             body.items.push(item);
                             tasks.push(ClassTask::Body(body));

@@ -120,7 +120,7 @@ See [packages/pkl-wasm/README.md](../packages/pkl-wasm/README.md) for browser/No
 
 ## 4. Rust Library (`crates/pkl`)
 
-Until crates.io publication prerequisites (specifically resolving the locally patched `vendor/java_regex` crate; see [docs/versioning.md](versioning.md)) are completed, consume `pkl` via Git or workspace path dependency:
+Until crates.io publication is enabled for GA (see [docs/versioning.md](versioning.md)), consume `pkl` directly via Git or workspace path dependency (no `[patch.crates-io]` overrides required):
 
 ```toml
 [dependencies]

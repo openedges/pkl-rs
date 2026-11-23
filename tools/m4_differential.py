@@ -1573,7 +1573,6 @@ def snapshot_rust_sources(root: Path) -> dict[str, str]:
         "rust-toolchain.toml",
         "crates/pkl-runtime/Cargo.toml",
         "crates/pkl-host-native/Cargo.toml",
-        "vendor/java_regex/Cargo.toml",
     )
     for rel in fixed:
         p = root / rel
@@ -1583,7 +1582,6 @@ def snapshot_rust_sources(root: Path) -> dict[str, str]:
         "crates/pkl-runtime/src",
         "crates/pkl-host-native/src",
         "crates/pkl-host-native/assets",
-        "vendor/java_regex/src",
     )
     for rel_dir in roots:
         base = root / rel_dir

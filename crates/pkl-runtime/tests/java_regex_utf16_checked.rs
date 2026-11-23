@@ -1,6 +1,6 @@
 //! Raw JDK controls are source-bound in the draft's authority.json. Budget
 //! assertions below are backend safety contracts, not Java compatibility rows.
-use java_regex::utf16::{Limits, MatchError, Utf16Regex};
+use pkl_runtime::java_regex::{Limits, MatchError, Utf16Regex};
 use std::fmt::Write;
 fn hex(input: &[u16]) -> String {
     input
@@ -71,17 +71,17 @@ fn pinned_jdk_cursor_and_unicode15_raw_output() {
     writeln!(
         &mut out,
         "types 1c89={} 11f02={}",
-        java_regex::utf16::character_record(0x1c89)
+        pkl_runtime::java_regex::character_record(0x1c89)
             .unwrap()
             .category,
-        java_regex::utf16::character_record(0x11f02)
+        pkl_runtime::java_regex::character_record(0x11f02)
             .unwrap()
             .category
     )
     .unwrap();
     assert_eq!(
         out.as_bytes(),
-        include_bytes!("utf16-authority/jdk-cursor.stdout.bin")
+        include_bytes!("fixtures/utf16-authority/jdk-cursor.stdout.bin")
     );
 }
 #[test]
@@ -160,23 +160,27 @@ fn find_budget_is_not_reset_after_success() {
 
 #[test]
 fn unsupported_paths_keep_explicit_failures() {
-    use java_regex::utf16::CompileErrorKind;
+    use pkl_runtime::java_regex::CompileErrorKind;
+    // All valid Unicode 15.0.0 properties are implemented; unknown property
+    // names are syntax errors (Java `PatternSyntaxException`), not silent misses.
     assert_eq!(
         Utf16Regex::from_str("\\p{UnimplementedProperty}", "Uu")
             .unwrap_err()
             .kind,
-        CompileErrorKind::Unsupported
+        CompileErrorKind::Syntax
     );
-    let re = Utf16Regex::from_str("(?!\\X)", "Uu").unwrap();
-    assert!(matches!(
-        re.find(&[0x61], Limits::default()),
-        Err(MatchError::Unsupported(_))
-    ));
+    for pattern in ["(?!\\X)", "\\b{g}"] {
+        let re = Utf16Regex::from_str(pattern, "Uu").unwrap();
+        assert!(matches!(
+            re.find(&[0x61], Limits::default()),
+            Err(MatchError::Unsupported(_))
+        ));
+    }
 }
 
 #[test]
 fn owned_cursor_keeps_budget_and_failure_across_callback_boundaries() {
-    use java_regex::utf16::OwnedMatcher;
+    use pkl_runtime::java_regex::OwnedMatcher;
     use std::sync::Arc;
     let regex = Arc::new(Utf16Regex::from_str("", "Uu").unwrap());
     let mut cursor = OwnedMatcher::new(
@@ -211,7 +215,7 @@ fn owned_cursor_keeps_budget_and_failure_across_callback_boundaries() {
 
 #[test]
 fn last_match_region_recheck_uses_opaque_bounds() {
-    use java_regex::utf16::OwnedMatcher;
+    use pkl_runtime::java_regex::OwnedMatcher;
     use std::sync::Arc;
     // Java transform148 rows 087/088 leave "ab" unchanged for replaceLast,
     // although ordinary replaceAll/First found these same patterns.
@@ -220,9 +224,11 @@ fn last_match_region_recheck_uses_opaque_bounds() {
         let mut cursor = OwnedMatcher::new(regex, Arc::from([0x61u16, 0x62]), Limits::default());
         let matched = cursor.find().unwrap().unwrap();
         assert!(cursor.find().unwrap().is_none());
-        assert!(cursor
-            .looking_at_region(matched.start, matched.end)
-            .unwrap()
-            .is_none());
+        assert!(
+            cursor
+                .looking_at_region(matched.start, matched.end)
+                .unwrap()
+                .is_none()
+        );
     }
 }

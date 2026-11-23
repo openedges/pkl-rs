@@ -1,7 +1,7 @@
 //! Shared checked UTF-16 regex adapter. Language Regex and the M1 transport
 //! use the same matcher and retain their separate Uu/u compile flags.
+use crate::java_regex::{CompileErrorKind, Limits, MatchRanges, Utf16Regex};
 use crate::pkl_string::PklString;
-use java_regex::utf16::{CompileErrorKind, Limits, MatchRanges, Utf16Regex};
 use std::fmt::Write;
 
 #[derive(Debug)]
@@ -54,7 +54,7 @@ fn compile(pattern: &str) -> Result<Utf16Regex, String> {
     compile_utf16(&pattern.encode_utf16().collect::<Vec<_>>(), "u")
         .map_err(|e| e.message.to_java_utf8())
 }
-fn execution_error(error: java_regex::utf16::MatchError) -> String {
+fn execution_error(error: crate::java_regex::MatchError) -> String {
     format!("Regex backend execution failed: {error}")
 }
 fn hex(value: &str) -> String {

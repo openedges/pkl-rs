@@ -1,5 +1,3 @@
-use alloc::{boxed::Box, string::String, vec::Vec};
-
 #[derive(Clone, Copy, Debug, Default)]
 pub struct Flags {
     pub case_insensitive: bool, // i / CASE_INSENSITIVE
@@ -136,7 +134,7 @@ impl Clone for CharClassItem {
             Nested { negated: bool, count: usize },
             Intersection { left: usize, right: usize },
         }
-        let mut work = alloc::vec![Work::Item(self)];
+        let mut work = vec![Work::Item(self)];
         let mut values: Vec<CharClassItem> = Vec::new();
         while let Some(next) = work.pop() {
             match next {

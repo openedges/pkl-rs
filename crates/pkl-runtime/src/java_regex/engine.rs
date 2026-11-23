@@ -1,12 +1,8 @@
-use alloc::boxed::Box;
-use alloc::collections::BTreeMap;
-use alloc::string::String;
-use alloc::vec;
-use alloc::vec::Vec;
+use std::collections::BTreeMap;
 
 use super::types::*;
 use super::unicode::*;
-use super::{input::Input, Limits, MatchError};
+use super::{Limits, MatchError, input::Input};
 
 /// Greediness mode shared by `match_greedy` / `match_reluctant` and their
 /// `try_match_atom_*` dispatchers. Used to parameterize the small number of
@@ -442,12 +438,10 @@ impl<'a> Engine<'a> {
                         while pos + n < j {
                             if let Some(cp) =
                                 super::canon_eq::nfc_single_codepoint(&self.input.0[pos..j])
+                                && self.match_char_class(cc, cp)
+                                && self.match_nodes(&nodes[1..], j, state)
                             {
-                                if self.match_char_class(cc, cp)
-                                    && self.match_nodes(&nodes[1..], j, state)
-                                {
-                                    return true;
-                                }
+                                return true;
                             }
                             j = self.input.previous(j);
                         }
@@ -743,10 +737,10 @@ impl<'a> Engine<'a> {
         pos: usize,
         state: &mut State,
     ) -> bool {
-        if let Some(Some((start, end))) = state.captures.get(idx).copied() {
-            if let Some(end) = self.backref_end(start, end, pos) {
-                return self.match_nodes(rest, end, state);
-            }
+        if let Some(Some((start, end))) = state.captures.get(idx).copied()
+            && let Some(end) = self.backref_end(start, end, pos)
+        {
+            return self.match_nodes(rest, end, state);
         }
         false
     }
@@ -789,18 +783,17 @@ impl<'a> Engine<'a> {
             // GUARD: only fire when the atom would use Path 1 (= Java's
             // GroupCurly conversion). For Path 2 (Ques `Branch[head, null]`
             // or non-det `Prolog(Loop)`), Java has no such override.
-            if count > 0 {
-                if let Node::Group {
+            if count > 0
+                && let Node::Group {
                     index: Some(idx),
                     inner,
                     ..
                 } = atom
-                {
-                    let is_ques = min == 0 && max == 1;
-                    let chain_based = is_ques || !is_deterministic_body(inner);
-                    if !chain_based {
-                        state.captures[*idx] = Some((iter_start, pos));
-                    }
+            {
+                let is_ques = min == 0 && max == 1;
+                let chain_based = is_ques || !is_deterministic_body(inner);
+                if !chain_based {
+                    state.captures[*idx] = Some((iter_start, pos));
                 }
             }
             return true;
@@ -1033,10 +1026,9 @@ impl<'a> Engine<'a> {
                                     && min == 0
                                     && max > 1
                                     && pattern_max_length(inner) == Some(0)
+                                    && let Some(idx) = index
                                 {
-                                    if let Some(idx) = index {
-                                        state.captures[*idx] = saved[*idx];
-                                    }
+                                    state.captures[*idx] = saved[*idx];
                                 }
                                 if (count + 1) < min {
                                     if self.match_quant(
@@ -1262,18 +1254,17 @@ impl<'a> Engine<'a> {
                 // GUARD: only fire when atom would use Path 1 (Java's
                 // GroupCurly). For Path 2 (Ques or non-det Loop) Java has no
                 // such override.
-                if count > 0 {
-                    if let Node::Group {
+                if count > 0
+                    && let Node::Group {
                         index: Some(idx),
                         inner,
                         ..
                     } = atom
-                    {
-                        let is_ques = min == 0 && max == 1;
-                        let chain_based = is_ques || !is_deterministic_body(inner);
-                        if !chain_based {
-                            state.captures[*idx] = Some((iter_start, pos));
-                        }
+                {
+                    let is_ques = min == 0 && max == 1;
+                    let chain_based = is_ques || !is_deterministic_body(inner);
+                    if !chain_based {
+                        state.captures[*idx] = Some((iter_start, pos));
                     }
                 }
                 return true;
@@ -1551,11 +1542,7 @@ impl<'a> Engine<'a> {
 
     pub fn match_char_class(&self, cc: &CharClass, ch: u32) -> bool {
         let matched = self.match_char_class_items(&cc.items, ch);
-        if cc.negated {
-            !matched
-        } else {
-            matched
-        }
+        if cc.negated { !matched } else { matched }
     }
 
     fn match_char_class_items(&self, items: &[CharClassItem], ch: u32) -> bool {
@@ -1639,15 +1626,17 @@ impl<'a> Engine<'a> {
             // uppercasing) and wrongly excludes characters like 'g' whose uppercase
             // 'G' (0x47) is actually inside the original range 0x31..0x63.
             if self.flags.unicode_case {
-                if let Some(u) = single_char_uppercase(ch) {
-                    if u >= start && u <= end {
-                        return true;
-                    }
+                if let Some(u) = single_char_uppercase(ch)
+                    && u >= start
+                    && u <= end
+                {
+                    return true;
                 }
-                if let Some(l) = single_char_lowercase(simple_upper(ch)) {
-                    if l >= start && l <= end {
-                        return true;
-                    }
+                if let Some(l) = single_char_lowercase(simple_upper(ch))
+                    && l >= start
+                    && l <= end
+                {
+                    return true;
                 }
             } else {
                 let u = ch.to_ascii_uppercase();

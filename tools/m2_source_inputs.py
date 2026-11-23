@@ -97,7 +97,9 @@ def source_paths(root: Path):
         'tools/java/PackageFixtureServer.java', 'tools/fixtures/package-fixture.gradle',
         'docs/m2-jvm-classpath.md', 'crates/pkl-runtime/src/stdlib/modules.txt'}
     for directory, pattern in [('crates', '*.rs'), ('crates', '*.pkl'), ('crates', 'Cargo.toml'),
-                               # Include binary fixtures embedded by inline runtime tests.
+                               # Include embedded regex/Unicode data and inline test fixtures.
+                               ('crates/pkl-runtime/src/java_regex', '*'),
+                               ('crates/pkl-runtime/tests/fixtures/utf16-authority', '*'),
                                ('crates/pkl-runtime/tests/fixtures/m2-glob-lossless-source', '*'),
                                ('crates/pkl-runtime/tests/fixtures/m2-supplementary-identifier/parser', '*'),
                                ('tests/fixtures/m2', '*'),

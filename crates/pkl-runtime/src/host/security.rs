@@ -7,9 +7,9 @@
 
 use crate::host::errors::{IoFailure, ReadFailure};
 use crate::host::resources::{decoded_scheme_specific_part, module_trust_level};
+use crate::java_regex::{Limits, Utf16Regex};
 use crate::modules::ModuleHostError;
 use crate::value::PklString;
-use java_regex::utf16::{Limits, Utf16Regex};
 use std::sync::{Arc, OnceLock};
 
 /// Default module URI allowlist (`SecurityManagers.defaultAllowedModules`).

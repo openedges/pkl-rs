@@ -2,8 +2,8 @@
 //! Every expected match span below was verified directly against the pinned
 //! Eclipse Adoptium Temurin `21.0.13.1+2-LTS` JDK and Pkl 0.32.0 evaluator.
 
-use java_regex::utf16::{CompileErrorKind, Limits, Utf16Regex};
 use pkl_runtime::evaluation::frontend::{ModuleSourceInput, evaluate_module_output};
+use pkl_runtime::java_regex::{CompileErrorKind, Limits, Utf16Regex};
 
 fn find_span(pattern: &str, flags: &str, input: &str) -> Option<(usize, usize)> {
     let regex = Utf16Regex::from_str(pattern, flags).expect("valid pattern");

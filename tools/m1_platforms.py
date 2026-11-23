@@ -167,7 +167,7 @@ def source_paths(root=ROOT):
              'tests/fixtures/m1/semantics/cases.json', 'crates/pkl-runtime/Cargo.toml',
              'crates/pkl-runtime/examples/semantics_probe.rs',
              'crates/pkl-runtime/src/stdlib/modules.txt']}
-    suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json', '.bin'}
+    suffixes = {'.rs', '.pkl', '.toml', '.mjs', '.json', '.bin', '.tsv'}
     excluded = {'node_modules', 'target', '.cache'}
     for folder in ['crates/pkl-runtime/src', 'crates/pkl-wasm', 'crates/pkl-napi', 'tools/platform']:
         for directory, directories, names in os.walk(root / folder, topdown=True):
@@ -180,7 +180,8 @@ def source_paths(root=ROOT):
     # Retain binary fixtures embedded by inline runtime test modules as well.
     # These are source provenance, not executed platform compatibility cases.
     for folder in ['crates/pkl-runtime/tests/fixtures/m2-glob-lossless-source',
-                   'crates/pkl-runtime/tests/fixtures/m2-supplementary-identifier/parser']:
+                   'crates/pkl-runtime/tests/fixtures/m2-supplementary-identifier/parser',
+                   'crates/pkl-runtime/tests/fixtures/utf16-authority']:
         paths.update(path for path in (root / folder).rglob('*') if path.is_file())
     from vendor_sources import vendor_source_paths
     paths.add(root / 'tools/vendor_sources.py')

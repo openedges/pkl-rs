@@ -5,12 +5,11 @@ pub struct Input<'a>(pub &'a [u16]);
 impl Input<'_> {
     pub fn at(self, pos: usize) -> u32 {
         let high = u32::from(self.0[pos]);
-        if (0xd800..=0xdbff).contains(&high) {
-            if let Some(&low) = self.0.get(pos + 1) {
-                if (0xdc00..=0xdfff).contains(&low) {
-                    return 0x10000 + ((high - 0xd800) << 10) + u32::from(low - 0xdc00);
-                }
-            }
+        if (0xd800..=0xdbff).contains(&high)
+            && let Some(&low) = self.0.get(pos + 1)
+            && (0xdc00..=0xdfff).contains(&low)
+        {
+            return 0x10000 + ((high - 0xd800) << 10) + u32::from(low - 0xdc00);
         }
         high
     }

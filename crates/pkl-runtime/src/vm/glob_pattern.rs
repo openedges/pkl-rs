@@ -1,7 +1,7 @@
 //! Pinned GlobResolver pattern translation. This is not String.toRegex:
 //! Java compiles glob patterns without the language Regex constructor flags.
 use super::*;
-use java_regex::utf16::{Limits, Utf16Regex};
+use crate::java_regex::{Limits, Utf16Regex};
 
 pub(super) struct Pattern(Utf16Regex);
 
