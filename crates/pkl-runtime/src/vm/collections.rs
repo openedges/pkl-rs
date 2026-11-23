@@ -992,12 +992,15 @@ pub(crate) fn hidden_property(
         }
         let object = heap.get(id)?;
         // Builtin collection prototypes (Dynamic/Listing/Mapping) only declare hidden `default`,
-        // and their ancestors (`Object`, `Any`) declare no hidden properties at all.
+        // and Typed/Object/Any declare no hidden properties at all.
         if !is_default
-            && matches!(
+            && (matches!(
                 object.builtin_type.as_deref(),
                 Some(TypeCheck::Collection(_))
-            )
+            ) || object.class_definition.as_ref().is_some_and(|c| {
+                c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
+                    && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
+            }))
         {
             return Ok(false);
         }
@@ -1005,6 +1008,52 @@ pub(crate) fn hidden_property(
             .members
             .iter()
             .any(|member| member.hidden() && !member.entry && !member.local && &member.name == name)
+        {
+            return Ok(true);
+        }
+        owner = object.parent;
+    }
+    Ok(false)
+}
+
+/// Returns true if `owner` or any non-builtin ancestor declares any `hidden` non-entry property.
+pub(crate) fn owner_has_explicit_hidden(
+    heap: &Heap,
+    receiver: ObjectId,
+) -> Result<bool, RuntimeError> {
+    let mut owner = Some(receiver);
+    let mut visited = [receiver; 8];
+    let mut depth = 0usize;
+    let mut overflow: Option<BTreeSet<ObjectId>> = None;
+    while let Some(id) = owner {
+        if let Some(set) = &mut overflow {
+            if !set.insert(id) {
+                return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+            }
+        } else if visited[..depth].contains(&id) {
+            return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+        } else if depth < visited.len() {
+            visited[depth] = id;
+            depth += 1;
+        } else {
+            let mut set: BTreeSet<ObjectId> = visited.into_iter().collect();
+            set.insert(id);
+            overflow = Some(set);
+        }
+        let object = heap.get(id)?;
+        if matches!(
+            object.builtin_type.as_deref(),
+            Some(TypeCheck::Collection(_))
+        ) || object.class_definition.as_ref().is_some_and(|c| {
+            c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
+                && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
+        }) {
+            return Ok(false);
+        }
+        if object
+            .members
+            .iter()
+            .any(|member| member.hidden() && !member.entry && !member.local)
         {
             return Ok(true);
         }

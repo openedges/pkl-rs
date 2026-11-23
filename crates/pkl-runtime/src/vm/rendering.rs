@@ -208,6 +208,7 @@ pub(super) struct RenderRun {
     has_value_converters: bool,
     converters: Converters,
     source: Option<RuntimeFrame>,
+    source_overrides: crate::heap::FastMap<PklString, Arc<crate::value::RuntimeSource>>,
 }
 impl RenderRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
@@ -651,14 +652,17 @@ impl Vm {
         if format != Format::Protobuf && self.is_unmodified_default_renderer(receiver, format) {
             if let Value::Object(root_id) = root
                 && (format != Format::Properties || document)
-                && self.heap.get_fast(root_id).is_some_and(|o| {
+            {
+                if self.heap.get_fast(root_id).is_some_and(|o| {
                     o.collection_kind == CollectionKind::Dynamic
                         && !o.forced
                         && o.cache_slots.len() < o.members.len()
-                })
-                && self.is_plain_shallow_forceable(root_id)
-            {
-                let _ = self.try_force_plain_object_sync(root_id)?;
+                }) && self.is_plain_shallow_forceable(root_id)
+                {
+                    let _ = self.try_force_plain_object_sync(root_id)?;
+                } else {
+                    let _ = self.try_force_plain_typed_sync(root_id, 0)?;
+                }
             }
             if let Some(rendered) = self.try_fast_render_default_document(format, document, &root) {
                 self.stack.push(rendered);
@@ -691,6 +695,7 @@ impl Vm {
             has_value_converters: true,
             converters: Converters::default(),
             source: None,
+            source_overrides: crate::heap::FastMap::default(),
         }));
         Ok(())
     }
@@ -1958,194 +1963,258 @@ impl Vm {
                 | Format::PklBinary
                 | Format::Protobuf
         ) && m.strict);
-        let item = loop {
-            if m.next == m.members.len() {
-                if m.xml.is_some() {
+        loop {
+            let item = loop {
+                if m.next == m.members.len() {
+                    if m.xml.is_some() {
+                        return Ok(false);
+                    }
+                    run.tasks.push(Task::Close {
+                        receiver: m.receiver,
+                        depth: m.depth,
+                        document_root: m.document_root,
+                        emitted: m.emitted
+                            || (matches!(
+                                run.format,
+                                Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
+                            ) && m.strict
+                                && !m.array
+                                && !m.members.is_empty()),
+                        strict: m.strict,
+                        array: m.array,
+                        stream: m.stream,
+                    });
                     return Ok(false);
                 }
-                run.tasks.push(Task::Close {
-                    receiver: m.receiver,
-                    depth: m.depth,
-                    document_root: m.document_root,
-                    emitted: m.emitted
-                        || (matches!(
-                            run.format,
-                            Format::Json | Format::Jsonnet | Format::Yaml | Format::Plist
-                        ) && m.strict
-                            && !m.array
-                            && !m.members.is_empty()),
-                    strict: m.strict,
-                    array: m.array,
-                    stream: m.stream,
-                });
-                return Ok(false);
-            }
-            let item = &m.members[m.next];
-            let descriptor = &item.descriptor;
-            if needs_key_dedup && !m.prepared && matches!(descriptor.key, Value::Object(_)) {
-                m.prepared = true;
-                let key = descriptor.key.clone();
-                run.tasks.push(Task::Members(m));
-                self.prepare_render_key(key);
-                return Ok(false);
-            }
-            if needs_key_dedup {
-                m.hash = self.java_hash(&descriptor.key)?;
-                let mut duplicate = false;
-                while m.compare < m.seen.len() {
-                    let (seen, hash) = &m.seen[m.compare];
-                    m.compare += 1;
-                    if (seen.kind == CollectionMemberKind::Property)
-                        != (descriptor.kind == CollectionMemberKind::Property)
-                        || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
-                    {
-                        continue;
-                    }
-                    if !matches!(
-                        (&seen.key, &descriptor.key),
-                        (Value::Object(_), _) | (_, Value::Object(_))
-                    ) {
-                        if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
-                            duplicate = true;
-                            break;
-                        }
-                        continue;
-                    }
-                    let left = seen.key.clone();
-                    let right = descriptor.key.clone();
+                let item = &m.members[m.next];
+                let descriptor = &item.descriptor;
+                if needs_key_dedup && !m.prepared && matches!(descriptor.key, Value::Object(_)) {
+                    m.prepared = true;
+                    let key = descriptor.key.clone();
                     run.tasks.push(Task::Members(m));
-                    run.await_ = Some(Await::KeyEquality);
-                    self.begin_equality(left, right, false);
+                    self.prepare_render_key(key);
                     return Ok(false);
                 }
-                if duplicate {
-                    m.next += 1;
-                    m.compare = 0;
-                    m.prepared = false;
+                if needs_key_dedup {
+                    m.hash = self.java_hash(&descriptor.key)?;
+                    let mut duplicate = false;
+                    while m.compare < m.seen.len() {
+                        let (seen, hash) = &m.seen[m.compare];
+                        m.compare += 1;
+                        if (seen.kind == CollectionMemberKind::Property)
+                            != (descriptor.kind == CollectionMemberKind::Property)
+                            || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
+                        {
+                            continue;
+                        }
+                        if !matches!(
+                            (&seen.key, &descriptor.key),
+                            (Value::Object(_), _) | (_, Value::Object(_))
+                        ) {
+                            if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
+                                duplicate = true;
+                                break;
+                            }
+                            continue;
+                        }
+                        let left = seen.key.clone();
+                        let right = descriptor.key.clone();
+                        run.tasks.push(Task::Members(m));
+                        run.await_ = Some(Await::KeyEquality);
+                        self.begin_equality(left, right, false);
+                        return Ok(false);
+                    }
+                    if duplicate {
+                        m.next += 1;
+                        m.compare = 0;
+                        m.prepared = false;
+                        continue;
+                    }
+                    m.seen.push((descriptor.clone(), m.hash));
+                }
+                let skip = item.skip;
+                let item = m.members[m.next].clone();
+                m.next += 1;
+                m.compare = 0;
+                m.prepared = false;
+                if skip {
                     continue;
                 }
-                m.seen.push((descriptor.clone(), m.hash));
-            }
-            let skip = item.skip;
-            let item = m.members[m.next].clone();
-            m.next += 1;
-            m.compare = 0;
-            m.prepared = false;
-            if skip {
-                continue;
-            }
-            break item;
-        };
-        let descriptor = &item.descriptor;
-        if matches!(
-            run.format,
-            Format::Json
-                | Format::Properties
-                | Format::Jsonnet
-                | Format::Yaml
-                | Format::Plist
-                | Format::Xml
-        ) && m.array
-            && m.xml.is_none()
-            && descriptor.kind != CollectionMemberKind::Element
-        {
-            let rendered = crate::diagnostic_values::render(
-                &Value::Object(m.receiver),
-                &self.heap,
-                &self.program.module_name,
-                80,
-            )?;
-            return Err(RuntimeError::with_program_values(
-                ErrorKind::Type,
-                format!(
-                    "Cannot render object with both elements and properties/entries as {}.",
-                    run.format.name()
-                ),
-                &[("Object", rendered)],
-            ));
-        }
-        let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
-            .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
-        if let Some(mode) = &m.xml {
-            let action = match mode {
-                XmlMembers::Attributes { name } => XmlAction::Attribute {
-                    name: name.clone(),
-                    key: descriptor.key.clone(),
-                },
-                XmlMembers::Elements if descriptor.kind == CollectionMemberKind::Element => {
-                    XmlAction::Dispatch {
-                        place: XmlPlace::Element,
-                        marker_read: false,
-                    }
-                }
-                XmlMembers::Elements => {
-                    run.tasks.push(Task::Members(m));
-                    return Ok(false);
-                }
+                break item;
             };
-            let task = XmlTask {
-                value,
-                depth: m.depth,
-                path: m.path.clone(),
-                input: None,
-                action,
-            };
-            run.tasks.push(Task::Members(m));
-            run.tasks.push(Task::Xml(task));
-            return Ok(false);
-        }
-        if m.stream {
-            if m.emitted {
-                run.yaml.as_mut().unwrap().separator();
+            let descriptor = &item.descriptor;
+            if matches!(
+                run.format,
+                Format::Json
+                    | Format::Properties
+                    | Format::Jsonnet
+                    | Format::Yaml
+                    | Format::Plist
+                    | Format::Xml
+            ) && m.array
+                && m.xml.is_none()
+                && descriptor.kind != CollectionMemberKind::Element
+            {
+                let rendered = crate::diagnostic_values::render(
+                    &Value::Object(m.receiver),
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    format!(
+                        "Cannot render object with both elements and properties/entries as {}.",
+                        run.format.name()
+                    ),
+                    &[("Object", rendered)],
+                ));
             }
-            m.emitted = true;
-            let path = m.path.clone();
-            run.tasks.push(Task::Members(m));
-            run.value(value, 0, false, false, false, path);
-            return Ok(false);
-        }
-        let descriptor = descriptor.clone();
-        let key = descriptor.key.clone();
-        let previous_source = run.source.clone();
-        if let Some(metadata) = item.code.and_then(|code| self.program.metadata.get(code))
-            && let Some(span) = metadata.member_span.or(metadata.declaration)
-        {
-            let renderer = &self.program.metadata[self.frames.last().unwrap().block];
-            let target_module_name = renderer
-                .source
-                .as_ref()
-                .map_or(&self.program.module_name, |source| &source.module_name);
-            let source = metadata
-                .source
-                .as_ref()
-                .or(self.context.primary_source.as_ref())
-                .map(|source| {
-                    if source.module_name == *target_module_name {
-                        source.clone()
-                    } else {
-                        Arc::new(crate::value::RuntimeSource {
-                            module_name: target_module_name.clone(),
-                            ..(**source).clone()
-                        })
+            let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
+                .ok_or_else(|| invalid("shallow-forced member is uncached"))?;
+            if let Some(mode) = &m.xml {
+                let action = match mode {
+                    XmlMembers::Attributes { name } => XmlAction::Attribute {
+                        name: name.clone(),
+                        key: descriptor.key.clone(),
+                    },
+                    XmlMembers::Elements if descriptor.kind == CollectionMemberKind::Element => {
+                        XmlAction::Dispatch {
+                            place: XmlPlace::Element,
+                            marker_read: false,
+                        }
                     }
+                    XmlMembers::Elements => {
+                        run.tasks.push(Task::Members(m));
+                        return Ok(false);
+                    }
+                };
+                let task = XmlTask {
+                    value,
+                    depth: m.depth,
+                    path: m.path.clone(),
+                    input: None,
+                    action,
+                };
+                run.tasks.push(Task::Members(m));
+                run.tasks.push(Task::Xml(task));
+                return Ok(false);
+            }
+            if m.stream {
+                if m.emitted {
+                    run.yaml.as_mut().unwrap().separator();
+                }
+                m.emitted = true;
+                let path = m.path.clone();
+                run.tasks.push(Task::Members(m));
+                run.value(value, 0, false, false, false, path);
+                return Ok(false);
+            }
+            if !run.has_value_converters
+                && (descriptor.kind != CollectionMemberKind::Property
+                    || self
+                        .pcf_property_annotations(m.receiver, &descriptor.name)?
+                        .is_empty())
+            {
+                if (descriptor.kind == CollectionMemberKind::Property
+                    || (run.format != Format::Pcf
+                        && descriptor.kind == CollectionMemberKind::Entry))
+                    && run.omit_null
+                    && value.is_null()
+                {
+                    continue;
+                }
+                if run.format == Format::Json
+                    && matches!(
+                        &value,
+                        Value::Null
+                            | Value::NullWithDefault(_)
+                            | Value::Bool(_)
+                            | Value::Int(_)
+                            | Value::String(_)
+                    )
+                    && (descriptor.kind != CollectionMemberKind::Entry
+                        || matches!(descriptor.key, Value::String(_)))
+                {
+                    if m.emitted {
+                        run.append(",");
+                    }
+                    run.json_newline(m.depth);
+                    m.emitted = true;
+                    match descriptor.kind {
+                        CollectionMemberKind::Property | CollectionMemberKind::Entry => {
+                            if let Value::String(ref k) = descriptor.key {
+                                run.append_json_string(k);
+                                run.output
+                                    .push_str(if run.indent.is_empty() { ":" } else { ": " });
+                            }
+                        }
+                        CollectionMemberKind::Element => {}
+                    }
+                    match &value {
+                        Value::Null | Value::NullWithDefault(_) => run.append("null"),
+                        Value::Bool(b) => run.append(if *b { "true" } else { "false" }),
+                        Value::Int(n) => {
+                            let mut buf = [0u8; 24];
+                            run.output
+                                .push_str(super::format_i64_buf(n.get(), &mut buf));
+                        }
+                        Value::String(s) => run.append_json_string(s),
+                        _ => unreachable!(),
+                    }
+                    continue;
+                }
+            }
+            let descriptor = descriptor.clone();
+            let key = descriptor.key.clone();
+            let previous_source = run.source.clone();
+            if let Some(metadata) = item.code.and_then(|code| self.program.metadata.get(code))
+                && let Some(span) = metadata.member_span.or(metadata.declaration)
+            {
+                let renderer = &self.program.metadata[self.frames.last().unwrap().block];
+                let target_module_name = renderer
+                    .source
+                    .as_ref()
+                    .map_or(&self.program.module_name, |source| &source.module_name);
+                let source = metadata
+                    .source
+                    .as_ref()
+                    .or(self.context.primary_source.as_ref())
+                    .map(|source| {
+                        if source.module_name == *target_module_name {
+                            source.clone()
+                        } else if let Some(cached) = run.source_overrides.get(&source.uri)
+                            && cached.module_name == *target_module_name
+                        {
+                            cached.clone()
+                        } else {
+                            let overridden = Arc::new(crate::value::RuntimeSource {
+                                module_name: target_module_name.clone(),
+                                ..(**source).clone()
+                            });
+                            run.source_overrides
+                                .insert(source.uri.clone(), overridden.clone());
+                            overridden
+                        }
+                    });
+                run.source = Some(RuntimeFrame {
+                    anonymous: false,
+                    source,
+                    span,
+                    member: renderer.member.clone(),
                 });
-            run.source = Some(RuntimeFrame {
-                anonymous: false,
-                source,
-                span,
-                member: renderer.member.clone(),
-            });
+            }
+            run.tasks.push(Task::Member(MemberRun {
+                members: m,
+                descriptor,
+                key,
+                value,
+                step: 0,
+                output_name: None,
+                previous_source,
+            }));
+            return Ok(false);
         }
-        run.tasks.push(Task::Member(MemberRun {
-            members: m,
-            descriptor,
-            key,
-            value,
-            step: 0,
-            output_name: None,
-            previous_source,
-        }));
-        Ok(false)
     }
 
     #[cfg_attr(target_arch = "wasm32", inline(never))]
@@ -3343,15 +3412,178 @@ impl Vm {
         run: &mut RenderRun,
         receiver: ObjectId,
     ) -> Result<(), RuntimeError> {
+        if self.heap.get(receiver)?.forced {
+            return Ok(());
+        }
         if self.is_plain_shallow_forceable(receiver) {
-            if self.heap.get(receiver)?.forced {
-                return Ok(());
-            }
             self.advance_force_plain_object(run, receiver, 0)?;
+            return Ok(());
+        }
+        if self.try_force_plain_typed_sync(receiver, 0)? {
             return Ok(());
         }
         run.await_ = Some(Await::Shallow);
         self.force_shallow_frame(Value::Object(receiver))
+    }
+
+    fn try_force_plain_typed_sync(
+        &mut self,
+        id: ObjectId,
+        depth: u8,
+    ) -> Result<bool, RuntimeError> {
+        if self.in_stdlib_bootstrap() || depth >= 4 {
+            return Ok(false);
+        }
+        let Some(obj) = self.heap.get_fast(id) else {
+            return Ok(false);
+        };
+        if obj.pair.is_some()
+            || obj.reference.is_some()
+            || obj.foreign_map_entry.is_some()
+            || obj.function.is_some()
+            || obj.native_function.is_some()
+        {
+            return Ok(false);
+        }
+        if obj.collection_kind == CollectionKind::List && obj.parent.is_none() {
+            let Some(len) = obj.list_elements.as_ref().map(Vec::len) else {
+                return Ok(false);
+            };
+            let mut all_ok = true;
+            for i in 0..len {
+                let child = self
+                    .heap
+                    .get_fast(id)
+                    .and_then(|o| o.list_elements.as_ref())
+                    .and_then(|e| e.get(i))
+                    .and_then(|v| match v {
+                        Value::Object(cid) => Some(*cid),
+                        _ => None,
+                    });
+                if let Some(child_id) = child
+                    && child_id != id
+                    && !self.try_force_plain_typed_sync(child_id, depth + 1)?
+                {
+                    all_ok = false;
+                }
+            }
+            return Ok(all_ok);
+        }
+        if self.is_plain_shallow_forceable(id) {
+            return self.try_force_plain_object_sync(id);
+        }
+        if obj.collection_kind != CollectionKind::Dynamic
+            || obj.is_module
+            || obj.collection_cast.is_some()
+            || obj.class_definition.is_some()
+            || obj.instance_class.is_none()
+            || collections::is_typed_class(&self.heap, id).ok() != Some(true)
+            || self.is_render_directive(id).ok() != Some(false)
+            || self.is_pcf_render_directive(id).ok() != Some(false)
+        {
+            return Ok(false);
+        }
+        let mut chain = [id; 16];
+        let mut chain_len = 0usize;
+        let mut cur = Some(id);
+        while let Some(anc_id) = cur {
+            if chain_len >= chain.len() || chain[..chain_len].contains(&anc_id) {
+                return Ok(false);
+            }
+            let Some(anc) = self.heap.get_fast(anc_id) else {
+                return Ok(false);
+            };
+            if !anc.member_annotations.is_empty()
+                || anc.collection_cast.is_some()
+                || anc.members.iter().any(|m| !m.local && !m.method && m.entry)
+            {
+                return Ok(false);
+            }
+            chain[chain_len] = anc_id;
+            chain_len += 1;
+            cur = anc.parent;
+        }
+        let mut hidden_names: Vec<PklString> = Vec::new();
+        for &anc_id in &chain[..chain_len] {
+            let Some(anc) = self.heap.get_fast(anc_id) else {
+                return Ok(false);
+            };
+            if anc.class_definition.as_ref().is_some_and(|c| {
+                c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
+                    && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
+            }) {
+                break;
+            }
+            for m in anc.members.iter() {
+                if !m.local
+                    && !m.method
+                    && !m.entry
+                    && m.hidden()
+                    && !hidden_names.contains(&m.name)
+                {
+                    hidden_names.push(m.name.clone());
+                }
+            }
+        }
+        let mut seen_names: Vec<PklString> = Vec::new();
+        let mut to_force: Vec<(ObjectId, Member)> = Vec::new();
+        let mut nested_children: Vec<ObjectId> = Vec::new();
+        {
+            let Some(recv_obj) = self.heap.get_fast(id) else {
+                return Ok(false);
+            };
+            for &anc_id in &chain[..chain_len] {
+                let Some(anc) = self.heap.get_fast(anc_id) else {
+                    return Ok(false);
+                };
+                if anc.class_definition.as_ref().is_some_and(|c| {
+                    c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
+                        && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
+                }) {
+                    break;
+                }
+                for m in anc.members.iter() {
+                    if m.local
+                        || m.method
+                        || m.entry
+                        || m.external()
+                        || m.abstract_member()
+                        || m.definition()
+                        || m.import()
+                        || m.hidden()
+                    {
+                        continue;
+                    }
+                    if hidden_names.contains(&m.name) || seen_names.contains(&m.name) {
+                        continue;
+                    }
+                    seen_names.push(m.name.clone());
+                    if let Some(cached) = fast_lookup_member_cached(recv_obj, &m.name, false) {
+                        if let Value::Object(child_id) = cached
+                            && *child_id != id
+                        {
+                            nested_children.push(*child_id);
+                        }
+                    } else {
+                        to_force.push((anc_id, m.clone()));
+                    }
+                }
+            }
+        }
+        for (owner_id, member) in to_force {
+            let Some(val) = self.try_force_trivial_property_sync(id, owner_id, &member)? else {
+                return Ok(false);
+            };
+            if let Value::Object(child_id) = val
+                && child_id != id
+            {
+                nested_children.push(child_id);
+            }
+        }
+        for child_id in nested_children {
+            let _ = self.try_force_plain_typed_sync(child_id, depth + 1)?;
+        }
+        Ok(true)
     }
 
     fn build_pure_scalar_set(&mut self, values: Vec<Value>) -> Option<ObjectId> {
@@ -4057,7 +4289,7 @@ impl Vm {
                         || self.modules_stdlib.get("pkl:xml").is_none()
                         || self.xml_wrapper(id).ok() == Some(None))
                 {
-                    let mut chain = [id; 8];
+                    let mut chain = [id; 16];
                     let mut chain_len = 0usize;
                     let mut cur = Some(id);
                     while let Some(anc_id) = cur {
@@ -4076,7 +4308,7 @@ impl Vm {
                         cur = anc.parent;
                     }
                     let base = scratch.len();
-                    let mut seen_hidden: [Option<&PklString>; 32] = [None; 32];
+                    let mut seen_hidden: [Option<&PklString>; 64] = [None; 64];
                     let mut hidden_len = 0usize;
                     for &anc_id in chain[..chain_len].iter().rev() {
                         let anc = self.heap.get_fast(anc_id)?;
@@ -4104,7 +4336,7 @@ impl Vm {
                                 hidden_len += 1;
                                 continue;
                             }
-                            if scratch.len() - base >= 64 {
+                            if scratch.len() - base >= 128 {
                                 scratch.truncate(base);
                                 return None;
                             }
@@ -5179,13 +5411,17 @@ impl Vm {
                     _ => None,
                 })
                 && !run.active.contains(&child_id)
-                && self
+            {
+                if self
                     .heap
                     .get_fast(child_id)
                     .is_some_and(|o| !o.forced && o.cache_slots.len() < o.members.len())
-                && self.is_plain_shallow_forceable(child_id)
-            {
-                let _ = self.try_force_plain_object_sync(child_id)?;
+                    && self.is_plain_shallow_forceable(child_id)
+                {
+                    let _ = self.try_force_plain_object_sync(child_id)?;
+                } else if self.heap.get_fast(child_id).is_some_and(|o| !o.forced) {
+                    let _ = self.try_force_plain_typed_sync(child_id, 0)?;
+                }
             }
             let mut scratch = Vec::with_capacity(16);
             let Some(elem) = self

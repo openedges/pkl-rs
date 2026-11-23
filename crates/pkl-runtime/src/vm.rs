@@ -7467,7 +7467,7 @@ impl Vm {
                 "experiment frame limit exceeded",
             ));
         }
-        let mut inherited_types = Vec::new();
+        let mut inherited_owner: Option<ObjectId> = None;
         if stolen_value.is_none()
             && !skip_dynamic_property_typecheck
             && !local
@@ -7485,25 +7485,19 @@ impl Vm {
                 if entry && object.builtin_type.is_some() {
                     break;
                 }
-                for inherited in object.members.iter().filter(|member| {
-                    member.name == name && !member.local && !member.method && member.entry == entry
+                if object.members.iter().any(|inherited| {
+                    inherited.name == name
+                        && !inherited.local
+                        && !inherited.method
+                        && inherited.entry == entry
+                        && inherited.ty.is_some()
+                        && inherited.type_span.is_some()
                 }) {
-                    if let (Some(ty), Some(span)) = (&inherited.ty, inherited.type_span) {
-                        let name = self.program.metadata.get(inherited.code).map_or_else(
-                            || inherited.name.clone(),
-                            |metadata| metadata.member.clone(),
-                        );
-                        inherited_types.push((ty.clone(), span, name, id));
-                    }
-                }
-                if !inherited_types.is_empty() {
+                    inherited_owner = Some(id);
                     break;
                 }
                 parent = object.parent;
             }
-        }
-        if stolen_value.is_none() && inherited_types.is_empty() && member.ty.is_none() {
-            inherited_types.extend(implicit_default_type);
         }
         let sync_probe = !memoize
             || match &entry_probe {
@@ -7516,149 +7510,52 @@ impl Vm {
             && sync_probe
             && self.active_type_trackers == 0
             && !method
-            && member.ty.is_none()
-            && inherited_types.is_empty()
-            && collection_casts.is_empty()
+            && implicit_default_type.is_none()
             && self.frames.last().is_none_or(|f| f.equality_run.is_none())
             && (!memoize
                 || self.heap.get(receiver).ok().is_some_and(|recv_obj| {
                     recv_obj.cache_index.len() == recv_obj.cache_slots.len()
                         && recv_obj.cache_index.can_fast_append_no_rehash()
                 }))
-            && let Some(code) = self.program.blocks.get(member.code)
+            && let Some(value) = self.try_eval_trivial_member_sync(
+                receiver,
+                owner,
+                &member,
+                memoize,
+                inherited_owner,
+                &collection_casts,
+            )
         {
-            let mut ops: [Option<&Instruction>; 3] = [None, None, None];
-            let mut count = 0usize;
-            let mut overflow = false;
-            for instr in code.iter() {
-                if matches!(
-                    instr,
-                    Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. }
-                ) {
-                    continue;
-                }
-                if count < 3 {
-                    ops[count] = Some(instr);
-                    count += 1;
-                } else {
-                    overflow = true;
-                    break;
+            self.member_evaluations += 1;
+            if memoize {
+                self.complete_cache_probe(receiver, key, value.clone(), entry_probe)?;
+            }
+            if let Some(caller) = self.frames.last_mut() {
+                caller.callsite_hidden = false;
+            }
+            self.stack.push(value);
+            return Ok(());
+        }
+        let mut inherited_types = Vec::new();
+        if let Some(id) = inherited_owner {
+            let object = self.heap.get(id)?;
+            for inherited in object.members.iter().filter(|inherited| {
+                inherited.name == name
+                    && !inherited.local
+                    && !inherited.method
+                    && inherited.entry == entry
+            }) {
+                if let (Some(ty), Some(span)) = (&inherited.ty, inherited.type_span) {
+                    let decl_name = self.program.metadata.get(inherited.code).map_or_else(
+                        || inherited.name.clone(),
+                        |metadata| metadata.member.clone(),
+                    );
+                    inherited_types.push((ty.clone(), span, decl_name, id));
                 }
             }
-            let trivial_value = if overflow {
-                None
-            } else {
-                let box_val = |v: &Value| match v {
-                    Value::Int(n) => Value::Int(n.boxed()),
-                    Value::Bool(b) => Value::Bool(*b),
-                    Value::Float(f) => Value::Float(f.boxed()),
-                    Value::Null => Value::Null,
-                    other => other.clone(),
-                };
-                let get_member_env = || -> Option<&Environment> {
-                    let owner_obj = self.heap.get(owner).ok()?;
-                    if owner_obj.member_environments.is_empty() {
-                        Some(&owner_obj.environment)
-                    } else {
-                        Some(
-                            owner_obj
-                                .member_environments
-                                .get(&CacheKey {
-                                    owner: None,
-                                    name: name.clone(),
-                                    method,
-                                    entry,
-                                })
-                                .unwrap_or(&owner_obj.environment),
-                        )
-                    }
-                };
-                let cached_dynamic_prop =
-                    |obj_id: ObjectId, prop_owner: Option<ObjectId>, prop: &PklString| {
-                        let obj = self.heap.get(obj_id).ok()?;
-                        if obj.collection_kind == crate::heap::CollectionKind::Dynamic
-                            && obj.reference.is_none()
-                            && obj.pair.is_none()
-                            && obj.function.is_none()
-                            && obj.native_function.is_none()
-                            && (obj.class_definition.is_none() || obj.is_module)
-                            && obj.member_deprecations.is_empty()
-                        {
-                            fast_lookup_cached(obj, prop_owner, prop, false).cloned()
-                        } else {
-                            None
-                        }
-                    };
-                match (ops[0], ops[1], ops[2]) {
-                    (Some(Instruction::Constant(v)), Some(Instruction::Return), None) => {
-                        Some(box_val(v))
-                    }
-                    (Some(Instruction::LoadThis), Some(Instruction::Return), None) => {
-                        Some(Value::Object(receiver))
-                    }
-                    (Some(Instruction::LoadOuter), Some(Instruction::Return), None) => {
-                        get_member_env().and_then(|env| env.this_value.clone())
-                    }
-                    (Some(Instruction::LoadLocal(depth)), Some(Instruction::Return), None) => {
-                        get_member_env()
-                            .filter(|env| !env.restore_for_bindings)
-                            .and_then(|env| {
-                                depth
-                                    .checked_add(1)
-                                    .and_then(|off| env.locals.len().checked_sub(off))
-                                    .map(|idx| box_val(&env.locals[idx]))
-                            })
-                    }
-                    (
-                        Some(Instruction::LoadLocal(depth)),
-                        Some(Instruction::GetMember(prop)),
-                        Some(Instruction::Return),
-                    ) => get_member_env()
-                        .filter(|env| !env.restore_for_bindings)
-                        .and_then(|env| {
-                            depth
-                                .checked_add(1)
-                                .and_then(|off| env.locals.len().checked_sub(off))
-                                .and_then(|idx| match &env.locals[idx] {
-                                    Value::Object(obj_id) => {
-                                        cached_dynamic_prop(*obj_id, None, prop)
-                                    }
-                                    _ => None,
-                                })
-                        }),
-                    (
-                        Some(Instruction::GetProperty {
-                            name: prop,
-                            owner_depth,
-                            local: prop_local,
-                        }),
-                        Some(Instruction::Return),
-                        None,
-                    ) => {
-                        let scope = if *owner_depth == 0 {
-                            Some(Scope { receiver, owner })
-                        } else {
-                            get_member_env()
-                                .and_then(|env| env.scopes.get(*owner_depth - 1).copied())
-                        };
-                        scope.and_then(|s| {
-                            cached_dynamic_prop(s.receiver, prop_local.then_some(s.owner), prop)
-                        })
-                    }
-                    _ => None,
-                }
-            };
-            if let Some(value) = trivial_value {
-                self.member_evaluations += 1;
-                if memoize {
-                    self.complete_cache_probe(receiver, key, value.clone(), entry_probe)?;
-                }
-                if let Some(caller) = self.frames.last_mut() {
-                    caller.callsite_hidden = false;
-                }
-                self.stack.push(value);
-                return Ok(());
-            }
+        }
+        if stolen_value.is_none() && inherited_types.is_empty() && member.ty.is_none() {
+            inherited_types.extend(implicit_default_type);
         }
         let object = self.heap.get(owner)?;
         let mut environment = if object.member_environments.is_empty() {
@@ -7730,6 +7627,368 @@ impl Vm {
         }));
         self.frames.push(frame);
         Ok(())
+    }
+
+    fn try_eval_trivial_member_sync(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        member: &Member,
+        check_inherited_and_casts: bool,
+        inherited_owner: Option<ObjectId>,
+        collection_casts: &[crate::heap::CollectionCast],
+    ) -> Option<Value> {
+        enum TrivialVal {
+            Val(Value),
+            EmptyList,
+        }
+        let code_len = self.program.blocks.get(member.code)?.len();
+        if code_len == 0 {
+            return None;
+        }
+        let (trivial, check_ty_instr_idx) = {
+            let code = &self.program.blocks[member.code];
+            let mut ops: [Option<(usize, &Instruction)>; 4] = [None; 4];
+            let mut count = 0usize;
+            for (idx, instr) in code.iter().enumerate() {
+                if matches!(
+                    instr,
+                    Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. }
+                ) {
+                    continue;
+                }
+                if count < 4 {
+                    ops[count] = Some((idx, instr));
+                    count += 1;
+                } else {
+                    return None;
+                }
+            }
+            if count < 2 || !matches!(ops[count - 1], Some((_, Instruction::Return))) {
+                return None;
+            }
+            let (core_len, check_ty_instr_idx) = if count >= 3
+                && let Some((ty_idx, Instruction::CheckType(_))) = ops[count - 2]
+            {
+                (count - 2, Some(ty_idx))
+            } else {
+                (count - 1, None)
+            };
+            let box_val = |v: &Value| match v {
+                Value::Int(n) => Value::Int(n.boxed()),
+                Value::Bool(b) => Value::Bool(*b),
+                Value::Float(f) => Value::Float(f.boxed()),
+                Value::Null => Value::Null,
+                other => other.clone(),
+            };
+            let get_member_env = || -> Option<&Environment> {
+                let owner_obj = self.heap.get(owner).ok()?;
+                if owner_obj.member_environments.is_empty() {
+                    Some(&owner_obj.environment)
+                } else {
+                    Some(
+                        owner_obj
+                            .member_environments
+                            .get(&CacheKey {
+                                owner: None,
+                                name: member.name.clone(),
+                                method: member.method,
+                                entry: member.entry,
+                            })
+                            .unwrap_or(&owner_obj.environment),
+                    )
+                }
+            };
+            let cached_dynamic_prop =
+                |obj_id: ObjectId, prop_owner: Option<ObjectId>, prop: &PklString| {
+                    let obj = self.heap.get(obj_id).ok()?;
+                    if obj.collection_kind == crate::heap::CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        fast_lookup_cached(obj, prop_owner, prop, false).cloned()
+                    } else {
+                        None
+                    }
+                };
+            let val = match core_len {
+                1 => match ops[0]?.1 {
+                    Instruction::Constant(v) => Some(TrivialVal::Val(box_val(v))),
+                    Instruction::WrapNullableDefault { defined: false } => {
+                        Some(TrivialVal::Val(Value::Null))
+                    }
+                    Instruction::MakeList { length: 0 } => Some(TrivialVal::EmptyList),
+                    Instruction::LoadThis => Some(TrivialVal::Val(Value::Object(receiver))),
+                    Instruction::LoadOuter => {
+                        get_member_env().and_then(|env| env.this_value.clone().map(TrivialVal::Val))
+                    }
+                    Instruction::LoadLocal(depth) => get_member_env()
+                        .filter(|env| !env.restore_for_bindings)
+                        .and_then(|env| {
+                            depth
+                                .checked_add(1)
+                                .and_then(|off| env.locals.len().checked_sub(off))
+                                .map(|idx| TrivialVal::Val(box_val(&env.locals[idx])))
+                        }),
+                    Instruction::GetProperty {
+                        name: prop,
+                        owner_depth,
+                        local: prop_local,
+                    } => {
+                        let scope = if *owner_depth == 0 {
+                            Some(Scope { receiver, owner })
+                        } else {
+                            get_member_env()
+                                .and_then(|env| env.scopes.get(*owner_depth - 1).copied())
+                        };
+                        scope.and_then(|s| {
+                            cached_dynamic_prop(s.receiver, prop_local.then_some(s.owner), prop)
+                                .map(TrivialVal::Val)
+                        })
+                    }
+                    _ => None,
+                },
+                2 => match (ops[0]?.1, ops[1]?.1) {
+                    (Instruction::LoadLocal(depth), Instruction::GetMember(prop)) => {
+                        get_member_env()
+                            .filter(|env| !env.restore_for_bindings)
+                            .and_then(|env| {
+                                depth
+                                    .checked_add(1)
+                                    .and_then(|off| env.locals.len().checked_sub(off))
+                                    .and_then(|idx| match &env.locals[idx] {
+                                        Value::Object(obj_id) => {
+                                            cached_dynamic_prop(*obj_id, None, prop)
+                                                .map(TrivialVal::Val)
+                                        }
+                                        _ => None,
+                                    })
+                            })
+                    }
+                    _ => None,
+                },
+                _ => None,
+            }?;
+            (val, check_ty_instr_idx)
+        };
+        let value = match trivial {
+            TrivialVal::Val(v) => v,
+            TrivialVal::EmptyList => {
+                Value::Object(self.empty_strict_collection(crate::heap::CollectionKind::List))
+            }
+        };
+        let builtin_fast_classes = self.builtin_fast_classes;
+        if let Some(ty_idx) = check_ty_instr_idx {
+            let need_resolve = {
+                let Instruction::CheckType(ty) = &self.program.blocks[member.code][ty_idx] else {
+                    return None;
+                };
+                let owner_obj = self.heap.get(owner).ok()?;
+                let env = if owner_obj.member_environments.is_empty() {
+                    &owner_obj.environment
+                } else {
+                    owner_obj
+                        .member_environments
+                        .get(&CacheKey {
+                            owner: None,
+                            name: member.name.clone(),
+                            method: member.method,
+                            entry: member.entry,
+                        })
+                        .unwrap_or(&owner_obj.environment)
+                };
+                if !env.type_arguments.is_empty() {
+                    return None;
+                }
+                match fast_eval_type_in_poll(
+                    ty,
+                    &value,
+                    env,
+                    &self.heap,
+                    &self.resolved_declarations,
+                    &self.program,
+                    builtin_fast_classes,
+                    owner_obj.is_module.then_some(owner),
+                    0,
+                ) {
+                    Some(true) => None,
+                    Some(false) => return None,
+                    None => {
+                        if ty.has_declared() && owner_obj.member_environments.is_empty() {
+                            Some(ty.clone())
+                        } else {
+                            return None;
+                        }
+                    }
+                }
+            };
+            if let Some(ty_owned) = need_resolve {
+                let resolved = self.resolve_property_type(member.code, owner, &ty_owned)?;
+                let owner_obj = self.heap.get(owner).ok()?;
+                if fast_eval_type_in_poll(
+                    &resolved,
+                    &value,
+                    &owner_obj.environment,
+                    &self.heap,
+                    &self.resolved_declarations,
+                    &self.program,
+                    builtin_fast_classes,
+                    owner_obj.is_module.then_some(owner),
+                    0,
+                ) != Some(true)
+                {
+                    return None;
+                }
+            }
+        }
+        if check_inherited_and_casts {
+            if let Some(inh_owner) = inherited_owner {
+                let mut need_resolve: Vec<(usize, TypeCheck)> = Vec::new();
+                {
+                    let inh_obj = self.heap.get(inh_owner).ok()?;
+                    if !inh_obj.environment.type_arguments.is_empty() {
+                        return None;
+                    }
+                    for inherited in inh_obj.members.iter().filter(|m| {
+                        m.name == member.name && !m.local && !m.method && m.entry == member.entry
+                    }) {
+                        if let (Some(ty), Some(_)) = (&inherited.ty, inherited.type_span) {
+                            match fast_eval_type_in_poll(
+                                ty,
+                                &value,
+                                &inh_obj.environment,
+                                &self.heap,
+                                &self.resolved_declarations,
+                                &self.program,
+                                builtin_fast_classes,
+                                inh_obj.is_module.then_some(inh_owner),
+                                0,
+                            ) {
+                                Some(true) => {}
+                                Some(false) => return None,
+                                None => {
+                                    if ty.has_declared() {
+                                        need_resolve.push((inherited.code, ty.clone()));
+                                    } else {
+                                        return None;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                for (decl_code, ty_owned) in need_resolve {
+                    let resolved = self.resolve_property_type(decl_code, inh_owner, &ty_owned)?;
+                    let inh_obj = self.heap.get(inh_owner).ok()?;
+                    if fast_eval_type_in_poll(
+                        &resolved,
+                        &value,
+                        &inh_obj.environment,
+                        &self.heap,
+                        &self.resolved_declarations,
+                        &self.program,
+                        builtin_fast_classes,
+                        inh_obj.is_module.then_some(inh_owner),
+                        0,
+                    ) != Some(true)
+                    {
+                        return None;
+                    }
+                }
+            }
+            for cast in collection_casts {
+                if !cast.environment.type_arguments.is_empty()
+                    || fast_eval_type_in_poll(
+                        &cast.ty,
+                        &value,
+                        &cast.environment,
+                        &self.heap,
+                        &self.resolved_declarations,
+                        &self.program,
+                        builtin_fast_classes,
+                        None,
+                        0,
+                    ) != Some(true)
+                {
+                    return None;
+                }
+            }
+        }
+        Some(value)
+    }
+
+    pub(super) fn try_force_trivial_property_sync(
+        &mut self,
+        receiver: ObjectId,
+        owner: ObjectId,
+        member: &Member,
+    ) -> Result<Option<Value>, RuntimeError> {
+        if self.active_type_trackers != 0
+            || member.local
+            || member.method
+            || member.entry
+            || member.name.as_str() == Some("default")
+            || self.frames.last().is_some_and(|f| f.equality_run.is_some())
+        {
+            return Ok(None);
+        }
+        let recv_obj = self.heap.get(receiver)?;
+        if recv_obj.cache_index.len() != recv_obj.cache_slots.len()
+            || !recv_obj.cache_index.can_fast_append_no_rehash()
+        {
+            return Ok(None);
+        }
+        let owner_obj = self.heap.get(owner)?;
+        if !owner_obj.member_values.is_empty() || owner_obj.mirror.is_some() {
+            return Ok(None);
+        }
+        let key = CacheKey {
+            entry: false,
+            owner: None,
+            name: member.name.clone(),
+            method: false,
+        };
+        if recv_obj.cache.contains_key(&key) {
+            return Ok(match recv_obj.cache.get(&key) {
+                Some(LazyState::Completed(v)) => Some(v.clone()),
+                _ => None,
+            });
+        }
+        let mut inherited_owner: Option<ObjectId> = None;
+        if member.ty.is_none() {
+            let mut parent = owner_obj.parent;
+            let mut visited = SmallObjectIdSet::new();
+            while let Some(id) = parent {
+                if !visited.insert(id) {
+                    return Ok(None);
+                }
+                let obj = self.heap.get(id)?;
+                if obj.members.iter().any(|inherited| {
+                    inherited.name == member.name
+                        && !inherited.local
+                        && !inherited.method
+                        && !inherited.entry
+                        && inherited.ty.is_some()
+                        && inherited.type_span.is_some()
+                }) {
+                    inherited_owner = Some(id);
+                    break;
+                }
+                parent = obj.parent;
+            }
+        }
+        let Some(value) =
+            self.try_eval_trivial_member_sync(receiver, owner, member, true, inherited_owner, &[])
+        else {
+            return Ok(None);
+        };
+        self.member_evaluations += 1;
+        self.complete_cache_probe(receiver, key, value.clone(), None)?;
+        Ok(Some(value))
     }
 
     fn require_const(

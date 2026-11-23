@@ -9,6 +9,7 @@ enum Task {
         receiver: ObjectId,
         owner: ObjectId,
         index: usize,
+        check_hidden: Option<bool>,
     },
     Finish(ObjectId),
 }
@@ -142,6 +143,12 @@ impl Vm {
         Ok(())
     }
     pub(super) fn force_shallow_frame(&mut self, root: Value) -> Result<(), RuntimeError> {
+        if let Value::Object(id) = root
+            && self.heap.get(id)?.forced
+        {
+            self.stack.push(root);
+            return Ok(());
+        }
         self.force_frame(root, false)
     }
     fn force_frame(&mut self, root: Value, recurse: bool) -> Result<(), RuntimeError> {
@@ -326,6 +333,7 @@ impl Vm {
                             receiver: id,
                             owner: id,
                             index: 0,
+                            check_hidden: None,
                         });
                     }
                 }
@@ -343,6 +351,7 @@ impl Vm {
                 receiver,
                 mut owner,
                 mut index,
+                mut check_hidden,
             } => {
                 let in_stdlib_bootstrap = self.in_stdlib_bootstrap();
                 loop {
@@ -371,15 +380,27 @@ impl Vm {
                             {
                                 continue;
                             }
-                            if !member.entry
-                                && collections::hidden_property(
-                                    &self.heap,
-                                    owner,
-                                    &member.name,
-                                    false,
-                                )?
-                            {
-                                continue;
+                            if !member.entry {
+                                let has_explicit_hidden = match check_hidden {
+                                    Some(flag) => flag,
+                                    None => {
+                                        let flag = collections::owner_has_explicit_hidden(
+                                            &self.heap, owner,
+                                        )?;
+                                        check_hidden = Some(flag);
+                                        flag
+                                    }
+                                };
+                                if (has_explicit_hidden || member.name.as_str() == Some("default"))
+                                    && collections::hidden_property(
+                                        &self.heap,
+                                        owner,
+                                        &member.name,
+                                        false,
+                                    )?
+                                {
+                                    continue;
+                                }
                             }
                             let recv_obj = self.heap.get(receiver)?;
                             let cached = if recv_obj.cache_index.is_rehash_incomplete() {
@@ -433,6 +454,7 @@ impl Vm {
                                         receiver,
                                         owner,
                                         index,
+                                        check_hidden,
                                     });
                                     run.tasks.push(Task::Value(val));
                                     return Ok(false);
@@ -441,9 +463,26 @@ impl Vm {
                             }
                             Some(member.clone())
                         } else if let Some(parent) = object.parent {
-                            owner = parent;
-                            index = 0;
-                            continue;
+                            let stop_builtin = self
+                                .heap
+                                .get_fast(parent)
+                                .and_then(|p| p.class_definition.as_ref())
+                                .is_some_and(|c| {
+                                    c.module.as_ref().and_then(PklString::as_str)
+                                        == Some("pkl.base")
+                                        && matches!(
+                                            c.name.as_str(),
+                                            Some("Typed" | "Object" | "Any")
+                                        )
+                                });
+                            if stop_builtin {
+                                None
+                            } else {
+                                owner = parent;
+                                index = 0;
+                                check_hidden = None;
+                                continue;
+                            }
                         } else {
                             None
                         }
@@ -453,6 +492,7 @@ impl Vm {
                             receiver,
                             owner,
                             index,
+                            check_hidden,
                         });
                         run.awaiting = Some(ReadBoundary {
                             receiver,

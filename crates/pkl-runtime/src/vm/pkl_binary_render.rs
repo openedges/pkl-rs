@@ -56,6 +56,7 @@ impl Vm {
             has_value_converters: false,
             converters: Converters::default(),
             source: None,
+            source_overrides: crate::heap::FastMap::default(),
         }));
         Ok(())
     }
