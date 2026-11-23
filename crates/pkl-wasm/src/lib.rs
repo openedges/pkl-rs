@@ -11,13 +11,7 @@ fn error(e: impl ToString) -> JsValue {
     js_sys::Error::new(&e.to_string()).into()
 }
 fn js_text(text: &PklString) -> JsString {
-    let units: Vec<_> = text.encode_utf16().collect();
-    // js-sys uses variadic String.fromCharCode; bound every call before joining.
-    let pieces = js_sys::Array::new();
-    for chunk in units.chunks(1024) {
-        pieces.push(JsString::from_char_code(chunk).as_ref());
-    }
-    pieces.join("")
+    product::util::js_string_from_pkl(text)
 }
 fn text_error(text: PklString) -> JsValue {
     let object = js_sys::Error::new("");
@@ -37,20 +31,14 @@ fn string(value: &JsString) -> Result<String, JsValue> {
     if !JsValue::is_string(value.as_ref()) {
         return Err(error("expected string"));
     }
-    let units: Vec<u16> = (0..value.length())
-        .map(|i| value.char_code_at(i) as u16)
-        .collect();
-    String::from_utf16(&units).map_err(|_| error("unpaired UTF-16 surrogate is unsupported"))
+    product::util::rust_string_from_js_string(value)
+        .map_err(|_| error("unpaired UTF-16 surrogate is unsupported"))
 }
 fn pkl_text(value: &JsString) -> Result<PklString, JsValue> {
     if !JsValue::is_string(value.as_ref()) {
         return Err(error("expected string"));
     }
-    Ok(PklString::from_utf16(
-        (0..value.length())
-            .map(|i| value.char_code_at(i) as u16)
-            .collect::<Vec<_>>(),
-    ))
+    Ok(product::util::pkl_string_from_js_string(value))
 }
 fn source_text(value: &JsString) -> Result<SourceText, JsValue> {
     pkl_text(value).map(SourceText::from)

@@ -12540,8 +12540,10 @@ fn compile_unit_body_at_with_syntax(
             }
         }
     }
+    let type_lookup = build_type_lookup(resolved);
     let mut compiler = Compiler {
         resolved,
+        type_lookup,
         program,
         unit,
         declaration_base,
@@ -12824,8 +12826,26 @@ fn extract_type_scope(members: &[crate::syntax::Member]) -> Vec<TypeScopeClass> 
     out
 }
 
+fn build_type_lookup<'a>(
+    resolved: &'a crate::resolver::ResolvedModule,
+) -> crate::heap::FastMap<&'a PklString, &'a crate::syntax::Member> {
+    let mut type_lookup: crate::heap::FastMap<&'a PklString, &'a crate::syntax::Member> =
+        crate::heap::FastMap::default();
+    type_lookup.reserve(resolved.module.members.len());
+    for member in &resolved.module.members {
+        if !matches!(
+            member.expr.kind,
+            crate::syntax::ExprKind::Function { method: true, .. }
+        ) {
+            type_lookup.entry(&member.name).or_insert(member);
+        }
+    }
+    type_lookup
+}
+
 struct Compiler<'a> {
     resolved: &'a crate::resolver::ResolvedModule,
+    type_lookup: crate::heap::FastMap<&'a PklString, &'a crate::syntax::Member>,
     program: &'a mut Program,
     unit: crate::modules::UnitId,
     declaration_base: usize,
@@ -12924,7 +12944,7 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
     None
 }
 
-impl Compiler<'_> {
+impl<'a> Compiler<'a> {
     /// Source owned by the executable value after Java's grouping removal and
     /// direct numeric negation folding. Authored spans remain the identity for
     /// resolution and assertion observations; runtime value locations use this.
@@ -14370,7 +14390,7 @@ fn unsupported_type(feature: &str) -> RuntimeError {
     )
 }
 
-impl Compiler<'_> {
+impl<'a> Compiler<'a> {
     fn compile_reference_type(
         &self,
         ty: &crate::syntax::Type,
@@ -14456,22 +14476,15 @@ impl Compiler<'_> {
         })
     }
 
-    fn find_type(&self, name: &PklString, _limit: usize) -> Option<(crate::syntax::Member, usize)> {
+    #[inline]
+    fn find_type(
+        &self,
+        name: &PklString,
+        _limit: usize,
+    ) -> Option<(&'a crate::syntax::Member, usize)> {
         // ResolveSimpleDeclaredTypeNode starts at the enclosing module. Ordinary
         // module properties can shadow types, but locals/parameters/class members cannot.
-        self.resolved
-            .module
-            .members
-            .iter()
-            .find(|member| {
-                &member.name == name
-                    && !matches!(
-                        member.expr.kind,
-                        crate::syntax::ExprKind::Function { method: true, .. }
-                    )
-            })
-            .cloned()
-            .map(|member| (member, 0))
+        self.type_lookup.get(name).map(|&member| (member, 0))
     }
 
     fn initialize_member_types(
@@ -15251,7 +15264,7 @@ impl Compiler<'_> {
                                 || TypeCheck::Class {
                                     module,
                                     id: self.declaration_base + member.expr.span.start,
-                                    name: member.name,
+                                    name: member.name.clone(),
                                 },
                             )
                         }

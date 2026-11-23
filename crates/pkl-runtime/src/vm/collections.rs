@@ -3989,6 +3989,7 @@ impl Compiler<'_> {
         Compiler {
             program,
             resolved: self.resolved,
+            type_lookup: self.type_lookup.clone(),
             unit: self.unit,
             declaration_base: self.declaration_base,
             source: self.source.clone(),

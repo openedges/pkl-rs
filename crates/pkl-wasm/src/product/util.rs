@@ -3,8 +3,44 @@
 
 use js_sys::{Array, BigInt, JsString, Object, Reflect, Uint8Array};
 use pkl_runtime::{logging::LogFrame, source::SourceText, value::PklString};
-use std::sync::Arc;
+use std::sync::{
+    Arc,
+    atomic::{AtomicU8, Ordering},
+};
+use wasm_bindgen::prelude::wasm_bindgen;
 use wasm_bindgen::{JsCast, JsValue};
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(extends = JsString)]
+    type WellFormedJsString;
+
+    #[wasm_bindgen(method, js_name = isWellFormed)]
+    fn is_well_formed(this: &WellFormedJsString) -> bool;
+}
+
+#[inline]
+fn js_string_is_well_formed(value: &JsString) -> bool {
+    value.unchecked_ref::<WellFormedJsString>().is_well_formed()
+}
+
+static HAS_IS_WELL_FORMED: AtomicU8 = AtomicU8::new(0);
+
+#[inline]
+fn supports_is_well_formed() -> bool {
+    match HAS_IS_WELL_FORMED.load(Ordering::Relaxed) {
+        1 => true,
+        2 => false,
+        _ => {
+            let probe = JsString::from("");
+            let ok = Reflect::get(probe.as_ref(), &JsValue::from_str("isWellFormed"))
+                .ok()
+                .is_some_and(|v| v.is_function());
+            HAS_IS_WELL_FORMED.store(if ok { 1 } else { 2 }, Ordering::Relaxed);
+            ok
+        }
+    }
+}
 
 /// Maximum exact integer representable in an IEEE-754 double (`2^53 - 1`).
 pub const MAX_SAFE_INTEGER_F64: f64 = 9_007_199_254_740_991.0;
@@ -173,6 +209,9 @@ pub fn parse_i64_js(value: &JsValue) -> Result<i64, StructuredError> {
 
 /// Converts a `PklString` to a JS `String` preserving all UTF-16 code units (including unpaired surrogates).
 pub fn js_string_from_pkl(text: &PklString) -> JsString {
+    if let Some(utf8) = text.as_str() {
+        return JsString::from(utf8);
+    }
     let units: Vec<u16> = text.encode_utf16().collect();
     if units.len() <= 1024 {
         return JsString::from_char_code(&units);
@@ -194,6 +233,9 @@ pub fn pkl_string_from_js(value: &JsValue) -> Result<PklString, StructuredError>
 }
 
 pub fn pkl_string_from_js_string(value: &JsString) -> PklString {
+    if supports_is_well_formed() && js_string_is_well_formed(value) {
+        return PklString::from(String::from(value));
+    }
     let len = value.length();
     let mut units = Vec::with_capacity(len as usize);
     for i in 0..len {
@@ -216,6 +258,14 @@ pub fn rust_string_from_js(value: &JsValue) -> Result<String, StructuredError> {
 }
 
 pub fn rust_string_from_js_string(value: &JsString) -> Result<String, StructuredError> {
+    if supports_is_well_formed() {
+        if js_string_is_well_formed(value) {
+            return Ok(String::from(value));
+        }
+        return Err(StructuredError::invalid_argument(
+            "unpaired UTF-16 surrogate is unsupported in UTF-8 input",
+        ));
+    }
     let len = value.length();
     let mut units = Vec::with_capacity(len as usize);
     for i in 0..len {

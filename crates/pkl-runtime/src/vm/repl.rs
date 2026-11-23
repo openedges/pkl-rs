@@ -864,6 +864,7 @@ fn new_repl_compiler<'a>(
 ) -> Compiler<'a> {
     Compiler {
         resolved,
+        type_lookup: build_type_lookup(resolved),
         program,
         unit,
         declaration_base,

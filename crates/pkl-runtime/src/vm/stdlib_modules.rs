@@ -1011,6 +1011,7 @@ fn compile_base_synthetic_annotations_only(
     let (declared_recipes, module_recipes) = Compiler::seed_recipe_caches(program, unit);
     let mut compiler = Compiler {
         resolved: &resolved,
+        type_lookup: build_type_lookup(&resolved),
         program,
         unit,
         declaration_base,
@@ -1092,6 +1093,7 @@ fn compile_reflection_annotations(
     let (declared_recipes, module_recipes) = Compiler::seed_recipe_caches(program, unit);
     let mut compiler = Compiler {
         resolved: &resolved,
+        type_lookup: build_type_lookup(&resolved),
         program,
         unit,
         declaration_base,

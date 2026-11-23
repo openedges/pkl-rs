@@ -1180,7 +1180,22 @@ impl Heap {
         id
     }
 
+    #[inline(always)]
     pub fn get_class(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+        if id.index >= self.base_len
+            && id.heap == self.identity
+            && let Some(slot) = self.slots.get(id.index - self.base_len)
+            && slot.generation == id.generation
+            && let Some(Entry::Class(class)) = &slot.entry
+        {
+            return Ok(class);
+        }
+        self.get_class_slow(id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn get_class_slow(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
         match self.entry(id)? {
             Entry::Class(class) => Ok(class),
             _ => Err(RuntimeError::new(
@@ -1260,13 +1275,46 @@ impl Heap {
         }
     }
 
-    pub(crate) fn object_class(&self, mut id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+    #[inline]
+    pub(crate) fn object_class(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+        let obj0 = self.get(id)?;
+        if let Some(class) = obj0.instance_class {
+            self.get_class(class)?;
+            return Ok(Some(class));
+        }
+        let Some(p1) = obj0.parent else {
+            return Ok(None);
+        };
+        if p1 != id {
+            let obj1 = self.get(p1)?;
+            if let Some(class) = obj1.instance_class {
+                self.get_class(class)?;
+                return Ok(Some(class));
+            }
+            let Some(p2) = obj1.parent else {
+                return Ok(None);
+            };
+            return self.object_class_deep(id, p1, p2);
+        }
+        Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"))
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn object_class_deep(
+        &self,
+        id0: ObjectId,
+        id1: ObjectId,
+        mut id: ObjectId,
+    ) -> Result<Option<ObjectId>, RuntimeError> {
         let mut inline_seen = [ObjectId {
             heap: 0,
             index: 0,
             generation: 0,
         }; 8];
-        let mut inline_len = 0usize;
+        inline_seen[0] = id0;
+        inline_seen[1] = id1;
+        let mut inline_len = 2usize;
         let mut overflow: Option<BTreeSet<ObjectId>> = None;
         loop {
             if let Some(visited) = &mut overflow {
@@ -1333,26 +1381,58 @@ impl Heap {
     /// O(depth) subclass check against a class definition ID, avoiding an O(heap) `find_class` scan.
     #[inline]
     pub(crate) fn class_has_ancestor_id(&self, class: ObjectId, target_id: usize) -> bool {
-        let mut current = Some(class);
+        let Ok(rec0) = self.get_class(class) else {
+            return false;
+        };
+        if self
+            .get_fast(rec0.prototype)
+            .and_then(|obj| obj.class_definition.as_ref())
+            .is_some_and(|def| def.id == target_id)
+        {
+            return true;
+        }
+        let Some(c1) = rec0.superclass else {
+            return false;
+        };
+        if c1 == class {
+            return false;
+        }
+        let Ok(rec1) = self.get_class(c1) else {
+            return false;
+        };
+        if self
+            .get_fast(rec1.prototype)
+            .and_then(|obj| obj.class_definition.as_ref())
+            .is_some_and(|def| def.id == target_id)
+        {
+            return true;
+        }
+        let Some(c2) = rec1.superclass else {
+            return false;
+        };
+        self.class_has_ancestor_id_deep(class, c1, c2, target_id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn class_has_ancestor_id_deep(
+        &self,
+        c0: ObjectId,
+        c1: ObjectId,
+        start: ObjectId,
+        target_id: usize,
+    ) -> bool {
+        let mut current = Some(start);
         let mut inline_seen = [ObjectId {
             heap: 0,
             index: 0,
             generation: 0,
         }; 8];
-        let mut inline_len = 0usize;
+        inline_seen[0] = c0;
+        inline_seen[1] = c1;
+        let mut inline_len = 2usize;
         let mut overflow: Option<BTreeSet<ObjectId>> = None;
         while let Some(cls) = current {
-            let Ok(record) = self.get_class(cls) else {
-                return false;
-            };
-            if self
-                .get(record.prototype)
-                .ok()
-                .and_then(|obj| obj.class_definition.as_ref())
-                .is_some_and(|def| def.id == target_id)
-            {
-                return true;
-            }
             if let Some(seen) = &mut overflow {
                 if !seen.insert(cls) {
                     return false;
@@ -1366,6 +1446,16 @@ impl Heap {
                 let mut set: BTreeSet<ObjectId> = inline_seen.into_iter().collect();
                 set.insert(cls);
                 overflow = Some(set);
+            }
+            let Ok(record) = self.get_class(cls) else {
+                return false;
+            };
+            if self
+                .get_fast(record.prototype)
+                .and_then(|obj| obj.class_definition.as_ref())
+                .is_some_and(|def| def.id == target_id)
+            {
+                return true;
             }
             current = record.superclass;
         }
@@ -1777,8 +1867,22 @@ impl Heap {
         Err(stale_handle_error())
     }
 
-    #[inline]
+    #[inline(always)]
     pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+        if id.index >= self.base_len
+            && id.heap == self.identity
+            && let Some(slot) = self.slots.get(id.index - self.base_len)
+            && slot.generation == id.generation
+            && let Some(Entry::Object(object)) = &slot.entry
+        {
+            return Ok(object);
+        }
+        self.get_slow(id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn get_slow(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
             Entry::Class(_)
@@ -1791,7 +1895,27 @@ impl Heap {
     /// Tight inlined lookup for verified hot loops that bail cleanly on `None`.
     #[inline(always)]
     pub(crate) fn get_fast(&self, id: ObjectId) -> Option<&Object> {
-        if !self.owner().owns(id) {
+        if id.index >= self.base_len {
+            if id.heap != self.identity {
+                return None;
+            }
+            let slot = self.slots.get(id.index - self.base_len)?;
+            if slot.generation != id.generation {
+                return None;
+            }
+            match slot.entry.as_ref()? {
+                Entry::Object(object) => Some(object),
+                _ => None,
+            }
+        } else {
+            self.get_fast_base(id)
+        }
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn get_fast_base(&self, id: ObjectId) -> Option<&Object> {
+        if id.heap != self.base_id {
             return None;
         }
         let slot = self.slot_ref(id.index)?;
