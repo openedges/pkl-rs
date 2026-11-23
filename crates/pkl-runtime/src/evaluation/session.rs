@@ -831,14 +831,29 @@ impl SourceSession {
 
         let module_entry = program.entry;
         let program_mut = Arc::make_mut(&mut program);
-        let expression_owner = if parsed_expressions {
-            Some(
-                crate::parser::parse_module_for_evaluation(source.text()).map_err(|failure| {
-                    failure
-                        .minimum_version_error(&name)
-                        .map_or(failure.diagnostic.message, |error| error.message)
-                })?,
-            )
+        let needs_expression_owner = parsed_expressions
+            && property_paths.iter().any(|expression| {
+                expression.original() != "output.text"
+                    && !(fast_path_output_bytes && expression.original() == "output.bytes")
+            });
+        let expression_owner = if needs_expression_owner {
+            if let Some(syntax) = program_mut.units.get(0).and_then(|unit| {
+                unit.syntax
+                    .clone()
+                    .or_else(|| unit.build.as_ref().map(|build| build.module.clone()))
+            }) {
+                Some(syntax)
+            } else {
+                Some(Arc::new(
+                    crate::parser::parse_module_for_evaluation(source.text()).map_err(
+                        |failure| {
+                            failure
+                                .minimum_version_error(&name)
+                                .map_or(failure.diagnostic.message, |error| error.message)
+                        },
+                    )?,
+                ))
+            }
         } else {
             None
         };

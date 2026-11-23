@@ -2516,7 +2516,7 @@ enum DistinctStage {
 // index has no Pkl callbacks and is never iterated to choose comparison order.
 #[derive(Default)]
 pub(super) struct InsertionHashIndex {
-    known: std::collections::HashMap<i32, Vec<usize>>,
+    known: crate::heap::FastMap<i32, Vec<usize>>,
     unknown: Vec<usize>,
 }
 impl InsertionHashIndex {

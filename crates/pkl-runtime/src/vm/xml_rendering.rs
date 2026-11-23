@@ -95,7 +95,7 @@ impl XmlTask {
 }
 impl RenderRun {
     fn xml_dispatch(&mut self, value: Value, depth: usize, path: Vec<PathPart>, place: XmlPlace) {
-        self.tasks.push(Task::Xml(XmlTask {
+        self.tasks.push(Task::Xml(Box::new(XmlTask {
             value,
             depth,
             path,
@@ -104,7 +104,7 @@ impl RenderRun {
                 marker_read: false,
             },
             input: None,
-        }));
+        })));
     }
     fn xml_newline(&mut self, depth: usize) {
         if !self.output_empty() {
@@ -217,7 +217,7 @@ impl Vm {
             if !present {
                 let mut task = task;
                 task.input = Some(Value::Null);
-                run.tasks.push(Task::Xml(task));
+                run.tasks.push(Task::Xml(Box::new(task)));
                 return Ok(false);
             }
         }
@@ -232,7 +232,7 @@ impl Vm {
             path: task.path.clone(),
             hint,
         });
-        run.tasks.push(Task::Xml(task));
+        run.tasks.push(Task::Xml(Box::new(task)));
         self.force(receiver, receiver, name.into(), false, true, false)?;
         Ok(false)
     }
@@ -315,7 +315,7 @@ impl Vm {
         mode: XmlMembers,
     ) -> Result<(), RuntimeError> {
         let members = collections::render_members(&self.heap, receiver)?;
-        run.tasks.push(Task::Members(Members {
+        run.tasks.push(Task::Members(Box::new(Members {
             xml: Some(mode),
             receiver,
             members,
@@ -331,7 +331,7 @@ impl Vm {
             array: false,
             stream: false,
             path,
-        }));
+        })));
         Ok(())
     }
     fn advance_xml(
@@ -383,7 +383,7 @@ impl Vm {
                             "cyclic value rendering",
                         ));
                     }
-                    run.tasks.push(Task::Xml(XmlTask {
+                    run.tasks.push(Task::Xml(Box::new(XmlTask {
                         value,
                         depth,
                         path,
@@ -392,7 +392,7 @@ impl Vm {
                             stage: 0,
                             values: Vec::new(),
                         },
-                    }));
+                    })));
                     return Ok(false);
                 }
                 if matches!(place, XmlPlace::Top) && run.document {
@@ -401,7 +401,7 @@ impl Vm {
                     else {
                         return Err(invalid("XML root options"));
                     };
-                    run.tasks.push(Task::Xml(XmlTask {
+                    run.tasks.push(Task::Xml(Box::new(XmlTask {
                         value,
                         depth,
                         path,
@@ -414,7 +414,7 @@ impl Vm {
                             stage: 0,
                             explicit: false,
                         },
-                    }));
+                    })));
                     return Ok(false);
                 }
                 let wrapper = if let Value::Object(id) = &value {
@@ -425,13 +425,13 @@ impl Vm {
                 if wrapper == Some(0)
                     && matches!(place, XmlPlace::Property { .. } | XmlPlace::Element)
                 {
-                    run.tasks.push(Task::Xml(XmlTask {
+                    run.tasks.push(Task::Xml(Box::new(XmlTask {
                         value,
                         depth,
                         path,
                         input: None,
                         action: XmlAction::Wrapper { kind: 0, stage: 0 },
-                    }));
+                    })));
                     return Ok(false);
                 }
                 if let XmlPlace::Property {
@@ -441,7 +441,7 @@ impl Vm {
                 } = place
                 {
                     match key {
-                        Value::String(name) => run.tasks.push(Task::Xml(XmlTask {
+                        Value::String(name) => run.tasks.push(Task::Xml(Box::new(XmlTask {
                             value,
                             depth,
                             path,
@@ -454,7 +454,7 @@ impl Vm {
                                 stage: 0,
                                 explicit: false,
                             },
-                        })),
+                        }))),
                         Value::Object(id) if self.is_render_directive(id)? => {
                             task = XmlTask {
                                 value,
@@ -491,7 +491,7 @@ impl Vm {
                                 &self.program.module_name,
                             )?
                         };
-                        run.tasks.push(Task::Xml(XmlTask {
+                        run.tasks.push(Task::Xml(Box::new(XmlTask {
                             value,
                             depth,
                             path,
@@ -504,7 +504,7 @@ impl Vm {
                                 stage: 0,
                                 explicit: false,
                             },
-                        }));
+                        })));
                         return Ok(false);
                     }
                 }
@@ -515,7 +515,7 @@ impl Vm {
                     }
                     Value::Object(id) => {
                         if matches!(wrapper, Some(1 | 2)) {
-                            run.tasks.push(Task::Xml(XmlTask {
+                            run.tasks.push(Task::Xml(Box::new(XmlTask {
                                 value: Value::Object(id),
                                 depth,
                                 path,
@@ -524,7 +524,7 @@ impl Vm {
                                     kind: wrapper.unwrap(),
                                     stage: 0,
                                 },
-                            }));
+                            })));
                             return Ok(false);
                         }
                         if self.is_render_directive(id)? {
@@ -556,13 +556,13 @@ impl Vm {
                                 "cyclic value rendering",
                             ));
                         }
-                        run.tasks.push(Task::Xml(XmlTask {
+                        run.tasks.push(Task::Xml(Box::new(XmlTask {
                             value: Value::Object(id),
                             depth,
                             path,
                             input: None,
                             action: XmlAction::CheckedObject { marker_read: false },
-                        }));
+                        })));
                         // Strict collections already contain their values. Java's
                         // visitList/Set/Map must not force child objects before converters.
                         if !matches!(
@@ -656,7 +656,7 @@ impl Vm {
                 let Value::Bool(block) = values[2] else {
                     return self.xml_type_error(&value, "`Boolean`");
                 };
-                run.tasks.push(Task::Xml(XmlTask {
+                run.tasks.push(Task::Xml(Box::new(XmlTask {
                     value,
                     depth,
                     path,
@@ -669,7 +669,7 @@ impl Vm {
                         stage: 0,
                         explicit: true,
                     },
-                }));
+                })));
             }
             XmlAction::Wrapper { kind, stage } => {
                 let id = value.as_object()?;
@@ -740,7 +740,7 @@ impl Vm {
                 let Some(Value::String(name)) = input else {
                     return Err(invalid("XML directive key"));
                 };
-                run.tasks.push(Task::Xml(XmlTask {
+                run.tasks.push(Task::Xml(Box::new(XmlTask {
                     value,
                     depth,
                     path,
@@ -753,7 +753,7 @@ impl Vm {
                         stage: 0,
                         explicit: false,
                     },
-                }));
+                })));
             }
             XmlAction::Write {
                 name,
@@ -772,7 +772,7 @@ impl Vm {
                     }
                     run.append("<");
                     run.append_value(&name);
-                    run.tasks.push(Task::Xml(XmlTask {
+                    run.tasks.push(Task::Xml(Box::new(XmlTask {
                         value,
                         depth,
                         path: path.clone(),
@@ -785,21 +785,21 @@ impl Vm {
                             stage: 1,
                             explicit,
                         },
-                    }));
+                    })));
                     if let Some(receiver) = attributes {
-                        run.tasks.push(Task::Xml(XmlTask {
+                        run.tasks.push(Task::Xml(Box::new(XmlTask {
                             value: Value::Object(receiver),
                             depth,
                             path,
                             input: None,
                             action: XmlAction::Attributes { receiver, name },
-                        }));
+                        })));
                         run.await_ = Some(Await::Shallow);
                         self.force_shallow_frame(Value::Object(receiver))?;
                     }
                 } else {
                     run.append(">");
-                    run.tasks.push(Task::Xml(XmlTask {
+                    run.tasks.push(Task::Xml(Box::new(XmlTask {
                         value: value.clone(),
                         depth,
                         path: path.clone(),
@@ -813,16 +813,16 @@ impl Vm {
                                 None
                             },
                         },
-                    }));
+                    })));
                     if explicit {
                         let receiver = value.as_object()?;
-                        run.tasks.push(Task::Xml(XmlTask {
+                        run.tasks.push(Task::Xml(Box::new(XmlTask {
                             value,
                             depth: depth + 1,
                             path,
                             input: None,
                             action: XmlAction::Elements { receiver },
-                        }));
+                        })));
                         run.await_ = Some(Await::Shallow);
                         self.force_shallow_frame(Value::Object(receiver))?;
                     } else {

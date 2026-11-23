@@ -202,11 +202,11 @@ impl Clone for LocalOwnersInner {
     }
 }
 
-/// Compact lexical slot owner map: 8 bytes inline (zero-alloc when empty, e.g. on
-/// heap objects without captured locals); retains its box across `clear()` on
-/// pooled frames to avoid re-allocating on hot `BindLocal`.
+/// Copy-on-write lexical slot owner map: 8 bytes inline (zero-alloc when empty,
+/// O(1) `Arc::clone` on environment capture); retains its allocation across
+/// `clear()` on uniquely owned pooled frames to avoid re-allocating on hot `BindLocal`.
 #[derive(Debug, Default)]
-pub struct LocalOwners(Option<Box<LocalOwnersInner>>);
+pub struct LocalOwners(Option<Arc<LocalOwnersInner>>);
 
 impl Clone for LocalOwners {
     #[inline]
@@ -215,7 +215,7 @@ impl Clone for LocalOwners {
             Some(inner)
                 if inner.mask != 0 || inner.overflow.as_ref().is_some_and(|m| !m.is_empty()) =>
             {
-                Self(Some(inner.clone()))
+                Self(Some(Arc::clone(inner)))
             }
             _ => Self(None),
         }
@@ -233,9 +233,10 @@ impl LocalOwners {
 
     #[inline]
     pub fn insert(&mut self, index: usize, value: LocalOwnerEntry) {
-        let inner = self
-            .0
-            .get_or_insert_with(|| Box::new(LocalOwnersInner::default()));
+        let inner = Arc::make_mut(
+            self.0
+                .get_or_insert_with(|| Arc::new(LocalOwnersInner::default())),
+        );
         if index < 8 {
             inner.inline[index] = Some(value);
             inner.mask |= 1u8 << index;
@@ -264,37 +265,56 @@ impl LocalOwners {
 
     #[inline]
     pub fn remove(&mut self, index: &usize) {
-        let Some(inner) = self.0.as_deref_mut() else {
+        let Some(arc) = self.0.as_mut() else {
             return;
         };
         let idx = *index;
         if idx < 8 {
+            if (arc.mask & (1u8 << idx)) == 0 {
+                return;
+            }
+            let inner = Arc::make_mut(arc);
             inner.inline[idx] = None;
             inner.mask &= !(1u8 << idx);
-        } else if let Some(map) = &mut inner.overflow {
+        } else if arc.overflow.as_ref().is_some_and(|m| m.contains_key(&idx))
+            && let Some(map) = &mut Arc::make_mut(arc).overflow
+        {
             map.remove(&idx);
         }
     }
 
     #[inline]
     pub fn clear(&mut self) {
-        let Some(inner) = self.0.as_deref_mut() else {
+        let Some(arc) = self.0.as_mut() else {
             return;
         };
-        if inner.mask != 0 {
-            inner.inline = [None; 8];
-            inner.mask = 0;
-        }
-        if let Some(map) = &mut inner.overflow {
-            map.clear();
+        if let Some(inner) = Arc::get_mut(arc) {
+            if inner.mask != 0 {
+                inner.inline = [None; 8];
+                inner.mask = 0;
+            }
+            if let Some(map) = &mut inner.overflow {
+                map.clear();
+            }
+        } else {
+            self.0 = None;
         }
     }
 
     #[inline]
     pub fn truncate_from(&mut self, start: usize) {
-        let Some(inner) = self.0.as_deref_mut() else {
+        let Some(arc) = self.0.as_mut() else {
             return;
         };
+        let has_inline = start < 8 && (arc.mask & !(((1u16 << start) - 1) as u8)) != 0;
+        let has_overflow = arc
+            .overflow
+            .as_ref()
+            .is_some_and(|m| m.keys().any(|&k| k >= start));
+        if !has_inline && !has_overflow {
+            return;
+        }
+        let inner = Arc::make_mut(arc);
         if start < 8 {
             let keep_mask = ((1u16 << start) - 1) as u8;
             let mut drop_bits = inner.mask & !keep_mask;
@@ -317,7 +337,8 @@ impl LocalOwners {
         }
         match (&self.0, &other.0) {
             (Some(a), Some(b)) => {
-                a.mask == b.mask && a.inline == b.inline && a.overflow == b.overflow
+                Arc::ptr_eq(a, b)
+                    || (a.mask == b.mask && a.inline == b.inline && a.overflow == b.overflow)
             }
             _ => false,
         }
@@ -1550,7 +1571,7 @@ enum Entry {
 struct Slot {
     generation: u64,
     entry: Option<Entry>,
-    edges: Vec<ObjectId>,
+    edges: Box<[ObjectId]>,
     edges_valid: bool,
 }
 
@@ -1608,6 +1629,7 @@ pub struct Heap {
     stats: HeapStats,
     mark_scratch: Vec<bool>,
     pending_scratch: Vec<ObjectId>,
+    edge_scratch: Vec<ObjectId>,
     structural_keys_dirty: bool,
     last_retained_structural_keys_len: usize,
     last_retained_key_equalities_len: usize,
@@ -1646,6 +1668,7 @@ impl Heap {
             stats: HeapStats::default(),
             mark_scratch: Vec::new(),
             pending_scratch: Vec::new(),
+            edge_scratch: Vec::new(),
             structural_keys_dirty: false,
             last_retained_structural_keys_len: 0,
             last_retained_key_equalities_len: 0,
@@ -1703,6 +1726,7 @@ impl Heap {
             stats: frozen.stats,
             mark_scratch: Vec::new(),
             pending_scratch: Vec::new(),
+            edge_scratch: Vec::new(),
             structural_keys_dirty: false,
             last_retained_structural_keys_len: frozen.structural_keys.len(),
             last_retained_key_equalities_len: frozen.key_equalities.len(),
@@ -2478,14 +2502,14 @@ impl Heap {
         let index = if let Some(index) = self.free.pop() {
             let local = index - self.base_len;
             self.slots[local].entry = Some(entry);
-            self.slots[local].edges.clear();
+            self.slots[local].edges = Box::default();
             self.slots[local].edges_valid = false;
             index
         } else {
             self.slots.push(Slot {
                 generation: 0,
                 entry: Some(entry),
-                edges: Vec::new(),
+                edges: Box::default(),
                 edges_valid: false,
             });
             self.base_len + self.slots.len() - 1
@@ -3021,6 +3045,8 @@ impl Heap {
         marked.resize(slot_count, false);
         let mut pending = std::mem::take(&mut self.pending_scratch);
         pending.clear();
+        let mut edge_scratch = std::mem::take(&mut self.edge_scratch);
+        edge_scratch.clear();
         if pending.capacity() < slot_count.max(roots.len()) {
             pending.reserve(slot_count.max(roots.len()) - pending.capacity());
         }
@@ -3067,8 +3093,7 @@ impl Heap {
                     marked[id.index] = true;
                     if cache_edges {
                         if !self.base_overrides[pos].1.edges_valid {
-                            let mut edges = std::mem::take(&mut self.base_overrides[pos].1.edges);
-                            edges.clear();
+                            edge_scratch.clear();
                             trace_entry_edges(
                                 owner,
                                 &self.bytes_lists,
@@ -3077,16 +3102,17 @@ impl Heap {
                                     .entry
                                     .as_ref()
                                     .expect("live entry"),
-                                &mut edges,
+                                &mut edge_scratch,
                             );
-                            if edges.len() > 1 {
-                                edges.sort_unstable_by_key(|edge| (edge.index, edge.generation));
-                                edges.dedup();
+                            if edge_scratch.len() > 1 {
+                                edge_scratch
+                                    .sort_unstable_by_key(|edge| (edge.index, edge.generation));
+                                edge_scratch.dedup();
                             }
-                            self.base_overrides[pos].1.edges = edges;
+                            self.base_overrides[pos].1.edges = edge_scratch.as_slice().into();
                             self.base_overrides[pos].1.edges_valid = true;
                         }
-                        for &edge in &self.base_overrides[pos].1.edges {
+                        for &edge in self.base_overrides[pos].1.edges.iter() {
                             if edge.index < slot_count && !marked[edge.index] {
                                 pending.push(edge);
                             }
@@ -3120,22 +3146,21 @@ impl Heap {
             marked[id.index] = true;
             if cache_edges {
                 if !self.slots[local].edges_valid {
-                    let mut edges = std::mem::take(&mut self.slots[local].edges);
-                    edges.clear();
+                    edge_scratch.clear();
                     trace_entry_edges(
                         owner,
                         &self.bytes_lists,
                         self.slots[local].entry.as_ref().expect("live entry"),
-                        &mut edges,
+                        &mut edge_scratch,
                     );
-                    if edges.len() > 1 {
-                        edges.sort_unstable_by_key(|edge| (edge.index, edge.generation));
-                        edges.dedup();
+                    if edge_scratch.len() > 1 {
+                        edge_scratch.sort_unstable_by_key(|edge| (edge.index, edge.generation));
+                        edge_scratch.dedup();
                     }
-                    self.slots[local].edges = edges;
+                    self.slots[local].edges = edge_scratch.as_slice().into();
                     self.slots[local].edges_valid = true;
                 }
-                for &edge in &self.slots[local].edges {
+                for &edge in self.slots[local].edges.iter() {
                     if edge.index < slot_count && !marked[edge.index] {
                         pending.push(edge);
                     }
@@ -3155,7 +3180,7 @@ impl Heap {
             if !marked[index]
                 && let Some(entry) = slot.entry.take()
             {
-                slot.edges.clear();
+                slot.edges = Box::default();
                 slot.edges_valid = false;
                 reclaimed_this_pass += 1;
                 self.stats.executable_live -= usize::from(matches!(entry, Entry::Executable(_)));
@@ -3289,6 +3314,7 @@ impl Heap {
         }
         self.mark_scratch = marked;
         self.pending_scratch = pending;
+        self.edge_scratch = edge_scratch;
         self.stats.collections += 1;
         self.allocations_since_gc = 0;
         self.external_bytes_since_gc = 0;
@@ -3322,6 +3348,7 @@ impl Heap {
         self.module_index.clear();
         self.mark_scratch = Vec::new();
         self.pending_scratch = Vec::new();
+        self.edge_scratch = Vec::new();
         self.structural_keys_dirty = false;
         self.last_retained_structural_keys_len = 0;
         self.last_retained_key_equalities_len = 0;
@@ -3601,7 +3628,7 @@ mod tests {
             "sizes: Environment={env_size}, Slot={slot_size}, Object={obj_size}, Instruction={instr_size}, TypeCheck={ty_size}, Member={member_size}"
         );
         assert!(env_size <= 320, "Environment grew to {env_size} bytes");
-        assert!(slot_size <= 64, "Slot grew to {slot_size} bytes");
+        assert!(slot_size <= 48, "Slot grew to {slot_size} bytes");
         assert!(obj_size <= 1280, "Object grew to {obj_size} bytes");
         assert!(
             instr_size <= 64,

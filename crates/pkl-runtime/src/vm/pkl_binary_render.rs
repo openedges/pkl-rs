@@ -378,12 +378,12 @@ impl Vm {
     fn binary_member(
         &self,
         run: &mut RenderRun,
-        mut members: Members,
+        mut members: Box<Members>,
         descriptor: CollectionMember,
         key: Value,
         value: Value,
         output_name: Option<PklString>,
-        previous_source: Option<RuntimeFrame>,
+        previous_source: Option<Box<RuntimeFrame>>,
         path: Vec<PathPart>,
     ) -> Result<(), RuntimeError> {
         let object = self.heap.get(members.receiver)?;

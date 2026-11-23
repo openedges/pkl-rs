@@ -71,7 +71,12 @@ impl DeclaredRun {
 }
 
 impl TypeCheck {
+    #[inline]
     pub(super) fn has_declared(&self) -> bool {
+        self.has_declared_depth(0)
+    }
+
+    fn has_declared_depth(&self, depth: u8) -> bool {
         match self {
             Self::Any
             | Self::Unknown
@@ -94,6 +99,49 @@ impl TypeCheck {
             | Self::Parameter { .. } => return false,
             Self::Declared { .. } => return true,
             Self::Shared(node) => return node.has_declared(),
+            _ if depth < 8 => {
+                let next = depth + 1;
+                return match self {
+                    Self::Nullable(inner)
+                    | Self::Alias(inner)
+                    | Self::GenericAlias(inner)
+                    | Self::VarArgs { element: inner, .. } => inner.has_declared_depth(next),
+                    Self::NamedAlias {
+                        arguments,
+                        expanded,
+                        ..
+                    } => {
+                        expanded.has_declared_depth(next)
+                            || arguments.iter().any(|t| t.has_declared_depth(next))
+                    }
+                    Self::Reference { domain, referent } => {
+                        domain.has_declared_depth(next) || referent.has_declared_depth(next)
+                    }
+                    Self::Function {
+                        parameters, result, ..
+                    } => {
+                        result.has_declared_depth(next)
+                            || parameters
+                                .as_ref()
+                                .is_some_and(|ps| ps.iter().any(|t| t.has_declared_depth(next)))
+                    }
+                    Self::CollectionBase { arguments }
+                    | Self::Pair { arguments }
+                    | Self::ParameterizedCollection { arguments, .. } => {
+                        arguments.iter().any(|(t, _)| t.has_declared_depth(next))
+                    }
+                    Self::Union { types, .. } => types.iter().any(|t| t.has_declared_depth(next)),
+                    Self::Constrained {
+                        base, constraints, ..
+                    } => {
+                        base.has_declared_depth(next)
+                            || constraints
+                                .iter()
+                                .any(|c| c.arguments.values().any(|t| t.has_declared_depth(next)))
+                    }
+                    _ => unreachable!(),
+                };
+            }
             _ => {}
         }
         let mut pending = vec![self];

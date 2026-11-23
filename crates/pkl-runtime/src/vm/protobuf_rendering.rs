@@ -334,12 +334,12 @@ impl Vm {
     fn protobuf_member(
         &mut self,
         run: &mut RenderRun,
-        members: Members,
+        members: Box<Members>,
         descriptor: CollectionMember,
         key: Value,
         value: Value,
         output_name: Option<PklString>,
-        source: Option<RuntimeFrame>,
+        source: Option<Box<RuntimeFrame>>,
         path: Vec<PathPart>,
     ) -> Result<(), RuntimeError> {
         let receiver = members.receiver;

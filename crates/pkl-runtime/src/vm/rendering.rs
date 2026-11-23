@@ -53,16 +53,16 @@ struct Members {
     stream: bool,
 }
 struct MemberRun {
-    members: Members,
+    members: Box<Members>,
     descriptor: CollectionMember,
     key: Value,
     value: Value,
     step: usize,
     output_name: Option<PklString>,
-    previous_source: Option<RuntimeFrame>,
+    previous_source: Option<Box<RuntimeFrame>>,
 }
 struct PropertyRun {
-    member: MemberRun,
+    member: Box<MemberRun>,
     annotations: Vec<ObjectId>,
     next: usize,
     annotation: Value,
@@ -73,7 +73,7 @@ struct PropertyRun {
 enum Task {
     Protobuf(ProtoTask),
     BinaryArray(usize),
-    Xml(XmlTask),
+    Xml(Box<XmlTask>),
     JsonnetKey {
         key: Value,
         depth: usize,
@@ -115,9 +115,9 @@ enum Task {
         path: Vec<PathPart>,
         stream: bool,
     },
-    Member(MemberRun),
-    Property(PropertyRun),
-    Members(Members),
+    Member(Box<MemberRun>),
+    Property(Box<PropertyRun>),
+    Members(Box<Members>),
     FastList {
         receiver: ObjectId,
         index: usize,
@@ -129,7 +129,7 @@ enum Task {
         index: usize,
     },
     Text(PklString),
-    RestoreSource(Option<RuntimeFrame>),
+    RestoreSource(Option<Box<RuntimeFrame>>),
     Close {
         receiver: ObjectId,
         depth: usize,
@@ -525,12 +525,15 @@ impl Vm {
                     };
                     let (receiver, path) = match target_task {
                         Some(Task::OpenObject { receiver, path, .. }) => (receiver, path),
-                        Some(Task::Xml(XmlTask {
-                            value: Value::Object(receiver),
-                            path,
-                            action: XmlAction::CheckedObject { .. },
-                            ..
-                        })) => (receiver, path),
+                        Some(Task::Xml(task)) => match task.as_ref() {
+                            XmlTask {
+                                value: Value::Object(receiver),
+                                path,
+                                action: XmlAction::CheckedObject { .. },
+                                ..
+                            } => (receiver, path),
+                            _ => continue,
+                        },
                         _ => continue,
                     };
                     if *receiver != force.receiver {
@@ -678,7 +681,7 @@ impl Vm {
             option: 0,
             options: Vec::new(),
             await_: None,
-            tasks: Vec::new(),
+            tasks: Vec::with_capacity(64),
             active: BTreeSet::new(),
             output: Default::default(),
             binary: Default::default(),
@@ -842,9 +845,9 @@ impl Vm {
                 run.binary.array(length)?;
                 Ok(false)
             }
-            Task::Xml(task) => self.advance_xml(run, task),
+            Task::Xml(task) => self.advance_xml(run, *task),
             Task::RestoreSource(source) => {
-                run.source = source;
+                run.source = source.map(|s| *s);
                 Ok(false)
             }
             Task::Text(text) => {
@@ -1727,7 +1730,7 @@ impl Vm {
                             code: None,
                         })
                         .collect();
-                    run.tasks.push(Task::Members(Members {
+                    run.tasks.push(Task::Members(Box::new(Members {
                         xml: None,
                         receiver: id,
                         members,
@@ -1747,7 +1750,7 @@ impl Vm {
                         array,
                         stream: false,
                         path,
-                    }));
+                    })));
                 } else {
                     if !run.has_value_converters
                         && run.format != Format::Protobuf
@@ -1867,7 +1870,7 @@ impl Vm {
                         },
                     );
                 }
-                run.tasks.push(Task::Members(Members {
+                run.tasks.push(Task::Members(Box::new(Members {
                     xml: None,
                     receiver,
                     members,
@@ -1886,7 +1889,7 @@ impl Vm {
                     array,
                     stream,
                     path,
-                }));
+                })));
             }
             Task::Close {
                 receiver,
@@ -1951,7 +1954,7 @@ impl Vm {
     fn advance_pcf_members(
         &mut self,
         run: &mut RenderRun,
-        mut m: Members,
+        mut m: Box<Members>,
     ) -> Result<bool, RuntimeError> {
         let needs_key_dedup = !(matches!(
             run.format,
@@ -2097,7 +2100,7 @@ impl Vm {
                     action,
                 };
                 run.tasks.push(Task::Members(m));
-                run.tasks.push(Task::Xml(task));
+                run.tasks.push(Task::Xml(Box::new(task)));
                 return Ok(false);
             }
             if m.stream {
@@ -2167,7 +2170,7 @@ impl Vm {
             }
             let descriptor = descriptor.clone();
             let key = descriptor.key.clone();
-            let previous_source = run.source.clone();
+            let previous_source = run.source.clone().map(Box::new);
             if let Some(metadata) = item.code.and_then(|code| self.program.metadata.get(code))
                 && let Some(span) = metadata.member_span.or(metadata.declaration)
             {
@@ -2204,7 +2207,7 @@ impl Vm {
                     member: renderer.member.clone(),
                 });
             }
-            run.tasks.push(Task::Member(MemberRun {
+            run.tasks.push(Task::Member(Box::new(MemberRun {
                 members: m,
                 descriptor,
                 key,
@@ -2212,7 +2215,7 @@ impl Vm {
                 step: 0,
                 output_name: None,
                 previous_source,
-            }));
+            })));
             return Ok(false);
         }
     }
@@ -2221,7 +2224,7 @@ impl Vm {
     fn advance_pcf_member(
         &mut self,
         run: &mut RenderRun,
-        mut member: MemberRun,
+        mut member: Box<MemberRun>,
     ) -> Result<bool, RuntimeError> {
         if member.step == 0 {
             member.step = 1;
@@ -2231,7 +2234,7 @@ impl Vm {
                 if !annotations.is_empty() {
                     let property =
                         self.make_pair(member.descriptor.key.clone(), member.value.clone());
-                    run.tasks.push(Task::Property(PropertyRun {
+                    run.tasks.push(Task::Property(Box::new(PropertyRun {
                         member,
                         annotations,
                         next: 0,
@@ -2239,7 +2242,7 @@ impl Vm {
                         property,
                         function: None,
                         step: 0,
-                    }));
+                    })));
                     return Ok(false);
                 }
             }
@@ -2286,7 +2289,7 @@ impl Vm {
             output_name,
             previous_source,
             ..
-        } = member;
+        } = *member;
         if (descriptor.kind == CollectionMemberKind::Property
             || (run.format != Format::Pcf && descriptor.kind == CollectionMemberKind::Entry))
             && run.omit_null
@@ -2579,7 +2582,7 @@ impl Vm {
     fn advance_pcf_property(
         &mut self,
         run: &mut RenderRun,
-        mut p: PropertyRun,
+        mut p: Box<PropertyRun>,
     ) -> Result<bool, RuntimeError> {
         if p.step == 0 {
             if p.next == p.annotations.len() {

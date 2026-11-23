@@ -587,9 +587,9 @@ pub fn ordered_members(
         next = heap.get(id)?.parent;
     }
     let mut result: Vec<CollectionMember> = Vec::new();
-    let mut prop_index: Option<std::collections::HashMap<PklString, usize>> = None;
-    let mut str_entry_index: Option<std::collections::HashMap<PklString, usize>> = None;
-    let mut int_entry_index: Option<std::collections::HashMap<i64, usize>> = None;
+    let mut prop_index: Option<crate::heap::FastMap<PklString, usize>> = None;
+    let mut str_entry_index: Option<crate::heap::FastMap<PklString, usize>> = None;
+    let mut int_entry_index: Option<crate::heap::FastMap<i64, usize>> = None;
     let mut has_other_entry = false;
     for id in chain.into_iter().rev() {
         let object = heap.get(id)?;
@@ -610,18 +610,24 @@ pub fn ordered_members(
             &object.collection_members
         };
         if result.is_empty() && members.len() > 16 {
-            prop_index = Some(std::collections::HashMap::with_capacity(members.len()));
-            str_entry_index = Some(std::collections::HashMap::with_capacity(members.len()));
-            int_entry_index = Some(std::collections::HashMap::new());
+            let mut pi = crate::heap::FastMap::default();
+            pi.reserve(members.len());
+            let mut si = crate::heap::FastMap::default();
+            si.reserve(members.len());
+            prop_index = Some(pi);
+            str_entry_index = Some(si);
+            int_entry_index = Some(crate::heap::FastMap::default());
         }
         for member in members {
             if !typed && member.kind == CollectionMemberKind::Property && member.name == "default" {
                 continue;
             }
             if prop_index.is_none() && result.len() >= 16 {
-                let mut pi = std::collections::HashMap::with_capacity(result.len() * 2);
-                let mut si = std::collections::HashMap::with_capacity(result.len() * 2);
-                let mut ii = std::collections::HashMap::new();
+                let mut pi = crate::heap::FastMap::default();
+                pi.reserve(result.len() * 2);
+                let mut si = crate::heap::FastMap::default();
+                si.reserve(result.len() * 2);
+                let mut ii = crate::heap::FastMap::default();
                 for (idx, existing) in result.iter().enumerate() {
                     if existing.kind == CollectionMemberKind::Property {
                         pi.insert(existing.name.clone(), idx);
@@ -909,17 +915,17 @@ pub(super) fn forcing_members(
     if effective.is_empty() {
         return Ok(effective);
     }
-    let lookup: Option<std::collections::HashMap<(&PklString, bool), usize>> =
-        if effective.len() > 12 {
-            let mut map = std::collections::HashMap::with_capacity(effective.len());
-            for (idx, d) in effective.iter().enumerate() {
-                map.entry((&d.name, d.kind != CollectionMemberKind::Property))
-                    .or_insert(idx);
-            }
-            Some(map)
-        } else {
-            None
-        };
+    let lookup: Option<crate::heap::FastMap<(&PklString, bool), usize>> = if effective.len() > 12 {
+        let mut map = crate::heap::FastMap::default();
+        map.reserve(effective.len());
+        for (idx, d) in effective.iter().enumerate() {
+            map.entry((&d.name, d.kind != CollectionMemberKind::Property))
+                .or_insert(idx);
+        }
+        Some(map)
+    } else {
+        None
+    };
     let mut emitted = vec![false; effective.len()];
     let mut result = Vec::with_capacity(effective.len());
     let mut next = Some(receiver);
