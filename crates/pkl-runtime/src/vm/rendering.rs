@@ -3096,12 +3096,25 @@ impl Vm {
     }
 
     #[cfg(not(target_arch = "wasm32"))]
-    fn is_pure_shallow_member_block(&self, obj: &Object, code: usize) -> bool {
-        if code == usize::MAX {
+    fn is_pure_shallow_member_block(&self, obj: &Object, member: &Member) -> bool {
+        if member.code == usize::MAX {
             return true;
         }
-        let Some(instructions) = self.program.blocks.get(code) else {
+        let Some(instructions) = self.program.blocks.get(member.code) else {
             return false;
+        };
+        let env = if obj.member_environments.is_empty() {
+            &obj.environment
+        } else {
+            let cache_key = CacheKey {
+                owner: None,
+                name: member.name.clone(),
+                method: false,
+                entry: member.entry,
+            };
+            obj.member_environments
+                .get(&cache_key)
+                .unwrap_or(&obj.environment)
         };
         let is_scalar = |val: &Value| {
             matches!(
@@ -3120,8 +3133,12 @@ impl Vm {
         for instr in instructions {
             match instr {
                 Instruction::Constant(val) if is_scalar(val) => {}
-                Instruction::LoadLocal(slot)
-                    if obj.environment.locals.get(*slot).is_some_and(is_scalar) => {}
+                Instruction::LoadLocal(depth)
+                    if depth
+                        .checked_add(1)
+                        .and_then(|offset| env.locals.len().checked_sub(offset))
+                        .and_then(|index| env.locals.get(index))
+                        .is_some_and(is_scalar) => {}
                 Instruction::Observe(_)
                 | Instruction::ObserveNativeLiteral { .. }
                 | Instruction::Duplicate
@@ -3208,7 +3225,7 @@ impl Vm {
                     || m.abstract_member()
                     || m.hidden()
                     || (!m.entry && m.name.as_str() == Some("default"))
-                    || self.is_pure_shallow_member_block(obj, m.code)
+                    || self.is_pure_shallow_member_block(obj, m)
             })
     }
 
@@ -3355,17 +3372,17 @@ impl Vm {
             match instr {
                 Instruction::Observe(_) | Instruction::ObserveNativeLiteral { .. } => {}
                 Instruction::Constant(val) => stack.push(val.clone()),
-                Instruction::LoadLocal(slot) => {
-                    if *slot >= locals_len {
-                        return None;
-                    }
+                Instruction::LoadLocal(depth) => {
+                    let index = depth
+                        .checked_add(1)
+                        .and_then(|offset| locals_len.checked_sub(offset))?;
                     let val = {
                         let object = self.heap.get_fast(receiver)?;
                         let env = object
                             .member_environments
                             .get(cache_key)
                             .unwrap_or(&object.environment);
-                        env.locals.get(*slot)?.clone()
+                        env.locals.get(index)?.clone()
                     };
                     stack.push(val);
                 }

@@ -444,3 +444,61 @@ fn xml_and_pklbinary_foreign_map_entry_use_unified_foreign_projection() {
         );
     }
 }
+
+#[test]
+fn pure_member_render_fast_path_indexes_captured_locals_by_de_bruijn_depth() {
+    let source = r#"
+const function makeMapping(path: String, message: String, severity: String): Mapping =
+  new Mapping {
+    ["path"] = path
+    ["message"] = message
+    ["severity"] = severity
+  }
+
+const function makeDynamic(a: String, b: String, c: String): Dynamic =
+  new Dynamic {
+    first = a
+    second = b
+    third = c
+  }
+
+const function makeListing(a: String, b: String, c: String): Listing =
+  new Listing { a; b; c }
+
+const function makeGeneratorMapping(prefix: String, suffix: String, keys: List<String>): Mapping =
+  new Mapping {
+    for (k in keys) {
+      [k] = "\(prefix)-\(k)-\(suffix)"
+    }
+  }
+
+mapping = makeMapping("plain", "hello", "error")
+dynObj = makeDynamic("one", "two", "three")
+listing = makeListing("x", "y", "z")
+generated = makeGeneratorMapping("pre", "suf", List("k1", "k2"))
+"#;
+
+    let json_bytes = eval_output(
+        &format!("{source}\noutput {{ renderer = new JsonRenderer {{}} }}\n"),
+        "file:///m3-renderers/captured-locals.pkl",
+        "captured-locals",
+        ModuleEvalOptions::default(),
+    );
+    let json = String::from_utf8(json_bytes).expect("UTF-8 JSON");
+    assert_eq!(
+        json,
+        "{\n  \"mapping\": {\n    \"path\": \"plain\",\n    \"message\": \"hello\",\n    \"severity\": \"error\"\n  },\n  \"dynObj\": {\n    \"first\": \"one\",\n    \"second\": \"two\",\n    \"third\": \"three\"\n  },\n  \"listing\": [\n    \"x\",\n    \"y\",\n    \"z\"\n  ],\n  \"generated\": {\n    \"k1\": \"pre-k1-suf\",\n    \"k2\": \"pre-k2-suf\"\n  }\n}\n"
+    );
+
+    let yaml_bytes = eval_output(
+        &format!("{source}\noutput {{ renderer = new YamlRenderer {{}} }}\n"),
+        "file:///m3-renderers/captured-locals.pkl",
+        "captured-locals",
+        ModuleEvalOptions::default(),
+    );
+    let yaml = String::from_utf8(yaml_bytes).expect("UTF-8 YAML");
+    assert_eq!(
+        yaml,
+        "mapping:\n  path: plain\n  message: hello\n  severity: error\ndynObj:\n  first: one\n  second: two\n  third: three\nlisting:\n- x\n- 'y'\n- z\ngenerated:\n  k1: pre-k1-suf\n  k2: pre-k2-suf\n"
+    );
+}
