@@ -1,8 +1,82 @@
 //! Evaluator-owned tracing arena. No object edge uses reference counting.
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::hash::{BuildHasherDefault, Hasher};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
+
+/// Fast non-cryptographic hasher for internal VM maps whose keys are never
+/// exposed in iteration order (e.g. `Object.cache`, `member_values`).
+#[derive(Default)]
+pub struct FxHasher(u64);
+
+impl FxHasher {
+    const K: u64 = 0x517cc1b727220a95;
+
+    #[inline(always)]
+    fn add_to_hash(&mut self, i: u64) {
+        self.0 = (self.0.rotate_left(5) ^ i).wrapping_mul(Self::K);
+    }
+}
+
+impl Hasher for FxHasher {
+    #[inline(always)]
+    fn finish(&self) -> u64 {
+        self.0
+    }
+
+    #[inline(always)]
+    fn write(&mut self, mut bytes: &[u8]) {
+        while bytes.len() >= 8 {
+            let chunk = u64::from_ne_bytes([
+                bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7],
+            ]);
+            self.add_to_hash(chunk);
+            bytes = &bytes[8..];
+        }
+        if bytes.len() >= 4 {
+            let chunk = u32::from_ne_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
+            self.add_to_hash(u64::from(chunk));
+            bytes = &bytes[4..];
+        }
+        if bytes.len() >= 2 {
+            let chunk = u16::from_ne_bytes([bytes[0], bytes[1]]);
+            self.add_to_hash(u64::from(chunk));
+            bytes = &bytes[2..];
+        }
+        if let Some(&b) = bytes.first() {
+            self.add_to_hash(u64::from(b));
+        }
+    }
+
+    #[inline(always)]
+    fn write_u8(&mut self, i: u8) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u16(&mut self, i: u16) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u32(&mut self, i: u32) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u64(&mut self, i: u64) {
+        self.add_to_hash(i);
+    }
+
+    #[inline(always)]
+    fn write_usize(&mut self, i: usize) {
+        self.add_to_hash(i as u64);
+    }
+}
+
+pub type FxBuildHasher = BuildHasherDefault<FxHasher>;
+pub type FastMap<K, V> = HashMap<K, V, FxBuildHasher>;
 
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 
@@ -362,7 +436,7 @@ pub enum LazyState {
 }
 
 /// Local definitions use owner identity; ordinary virtual properties use `None`.
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct CacheKey {
     pub entry: bool,
     pub owner: Option<ObjectId>,
@@ -660,7 +734,7 @@ pub struct Object {
     pub parent: Option<ObjectId>,
     pub members: MemberList,
     pub environment: Environment,
-    pub cache: BTreeMap<CacheKey, LazyState>,
+    pub cache: FastMap<CacheKey, LazyState>,
     /// Successful cache publication order, matching VmObject.cachedValues.
     /// Evaluating markers do not occupy an insertion position.
     pub completed_cache_order: Vec<CacheKey>,
@@ -685,8 +759,8 @@ pub struct Object {
     /// VmMapping.getAllKeys caches its own persistent Set wrapper.
     pub mapping_keys: Option<ObjectId>,
     pub specialized_literal: bool,
-    pub member_environments: BTreeMap<CacheKey, Environment>,
-    pub member_values: BTreeMap<CacheKey, Value>,
+    pub member_environments: FastMap<CacheKey, Environment>,
+    pub member_values: FastMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
     pub int_seq_iterator: Option<Box<crate::int_seq::Cursor>>,
     pub bytes_iterator: Option<Box<(crate::value::Bytes, usize, bool)>>,
@@ -719,20 +793,39 @@ impl Object {
     ) {
         // Completed entries persist for the object's lifetime. Failure cleanup
         // removes only pending entries, so retries acquire their position here.
-        if !matches!(self.cache.get(&key), Some(LazyState::Completed(_))) {
-            self.completed_cache_order.push(key.clone());
-            self.cache_slots.push(CacheSlot {
-                key: key.clone(),
-                entry_key,
-                value: value.clone(),
-            });
-        } else if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == key) {
-            if entry_key.is_some() {
-                slot.entry_key = entry_key;
+        match self.cache.entry(key) {
+            std::collections::hash_map::Entry::Occupied(mut occupied) => {
+                if matches!(occupied.get(), LazyState::Completed(_)) {
+                    let key_ref = occupied.key();
+                    if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == *key_ref)
+                    {
+                        if entry_key.is_some() {
+                            slot.entry_key = entry_key;
+                        }
+                        slot.value = value.clone();
+                    }
+                } else {
+                    let key_clone = occupied.key().clone();
+                    self.completed_cache_order.push(key_clone.clone());
+                    self.cache_slots.push(CacheSlot {
+                        key: key_clone,
+                        entry_key,
+                        value: value.clone(),
+                    });
+                }
+                occupied.insert(LazyState::Completed(value));
             }
-            slot.value = value.clone();
+            std::collections::hash_map::Entry::Vacant(vacant) => {
+                let key_clone = vacant.key().clone();
+                self.completed_cache_order.push(key_clone.clone());
+                self.cache_slots.push(CacheSlot {
+                    key: key_clone,
+                    entry_key,
+                    value: value.clone(),
+                });
+                vacant.insert(LazyState::Completed(value));
+            }
         }
-        self.cache.insert(key, LazyState::Completed(value));
     }
 }
 

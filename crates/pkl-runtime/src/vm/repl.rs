@@ -33,7 +33,7 @@ pub(crate) struct CompiledReplMember {
 }
 
 type ReplCacheSnapshot = (
-    BTreeMap<CacheKey, LazyState>,
+    crate::heap::FastMap<CacheKey, LazyState>,
     Vec<CacheKey>,
     Vec<CacheSlot>,
     crate::economic_map::EconomicMapIndex,

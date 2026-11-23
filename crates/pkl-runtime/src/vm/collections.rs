@@ -4,26 +4,51 @@ use crate::heap::{
     CollectionIterator, CollectionKind, CollectionMember, CollectionMemberKind, PredicateIterator,
 };
 
-pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>, RuntimeError> {
-    let mut visited = [id; 8];
-    let mut depth = 0usize;
+pub(super) fn typed_class(heap: &Heap, id: ObjectId) -> Result<Option<Class>, RuntimeError> {
+    // Fast unroll for depth 0 and 1 (covers >95% of collections and builtin prototypes
+    // without initializing the cycle-detection stack array).
+    let first = heap.get(id)?;
+    if let Some(class) = &first.class_definition {
+        if matches!(first.builtin_type, Some(TypeCheck::Collection(_))) {
+            return Ok(None);
+        }
+        return Ok(Some(class.clone()));
+    }
+    let Some(parent1) = first.parent else {
+        return Ok(None);
+    };
+    if parent1 == id {
+        return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+    }
+    let second = heap.get(parent1)?;
+    if let Some(class) = &second.class_definition {
+        if matches!(second.builtin_type, Some(TypeCheck::Collection(_))) {
+            return Ok(None);
+        }
+        return Ok(Some(class.clone()));
+    }
+    let Some(mut cur) = second.parent else {
+        return Ok(None);
+    };
+    let mut visited = [id, parent1, id, id, id, id, id, id];
+    let mut depth = 2usize;
     let mut overflow: Option<BTreeSet<ObjectId>> = None;
     loop {
         if let Some(set) = &mut overflow {
-            if !set.insert(id) {
+            if !set.insert(cur) {
                 return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
             }
-        } else if visited[..depth].contains(&id) {
+        } else if visited[..depth].contains(&cur) {
             return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
         } else if depth < visited.len() {
-            visited[depth] = id;
+            visited[depth] = cur;
             depth += 1;
         } else {
             let mut set: BTreeSet<ObjectId> = visited.into_iter().collect();
-            set.insert(id);
+            set.insert(cur);
             overflow = Some(set);
         }
-        let object = heap.get(id)?;
+        let object = heap.get(cur)?;
         if let Some(class) = &object.class_definition {
             if matches!(object.builtin_type, Some(TypeCheck::Collection(_))) {
                 return Ok(None);
@@ -33,8 +58,25 @@ pub(super) fn typed_class(heap: &Heap, mut id: ObjectId) -> Result<Option<Class>
         let Some(parent) = object.parent else {
             return Ok(None);
         };
-        id = parent;
+        cur = parent;
     }
+}
+
+#[inline]
+fn format_entry_internal_name(object_index: usize, member_index: usize) -> PklString {
+    let mut buf = [0u8; 48];
+    let mut b1 = [0u8; 24];
+    let mut b2 = [0u8; 24];
+    let s1 = super::format_i64_buf(object_index as i64, &mut b1);
+    let s2 = super::format_i64_buf(member_index as i64, &mut b2);
+    buf[0] = 0;
+    let l1 = s1.len();
+    let l2 = s2.len();
+    buf[1..1 + l1].copy_from_slice(s1.as_bytes());
+    buf[1 + l1] = b':';
+    buf[2 + l1..2 + l1 + l2].copy_from_slice(s2.as_bytes());
+    let text = std::str::from_utf8(&buf[..2 + l1 + l2]).expect("ASCII entry name");
+    PklString::from(text)
 }
 
 use super::equality::same_key;
@@ -2177,6 +2219,9 @@ impl Vm {
                     let Ok(pobj) = self.heap.get(pid) else {
                         break;
                     };
+                    if pobj.builtin_type.is_some() && pobj.collection_members.is_empty() {
+                        break;
+                    }
                     if !pobj.collection_members.is_empty() {
                         parent_has_entries = true;
                         if found_name.is_none()
@@ -2205,9 +2250,7 @@ impl Vm {
             descriptor.name = replacing
                 .map(|index| object.collection_members[index].name.clone())
                 .or(parent_entry_name)
-                .unwrap_or_else(|| {
-                    PklString::from(format!("\0{}:{}", target.index, object.members.len()))
-                });
+                .unwrap_or_else(|| format_entry_internal_name(target.index, object.members.len()));
             member.name = descriptor.name.clone();
             member.entry = true;
         }

@@ -677,9 +677,91 @@ impl Vm {
             .frames
             .last()
             .and_then(|frame| frame.environment.code_owner);
+        let pure_standard_host = self.pure_standard_host;
         let program = Arc::make_mut(&mut self.program);
-        let checkpoint = modules::ArenaCheckpoint::new(program);
+        program.align_metadata()?;
+        let blocks_start = program.blocks.next_id();
+        let objects_start = program.objects.next_id();
+        let recipes_start = program.type_recipes.next_id();
+        let units_start = program.units.next_id();
+        let declaration_base = program.next_declaration;
+        let empty_uri = PklString::default();
+        let (has_identity, original_uri, resolved_uri) = match &declaration.identity {
+            Some(id) => (true, &id.original_uri, &id.resolved_uri),
+            None => (false, &empty_uri, &empty_uri),
+        };
+        let is_base_module = has_identity
+            && (original_uri == "pkl:base" || resolved_uri == "pkl:base");
+        let is_primary_root = !is_base_module && unit == UnitId(0);
+        let prepared_list: Vec<(Span, (PklString, PklString))> = build
+            .prepared
+            .iter()
+            .map(|(span, uris)| (*span, uris.clone()))
+            .collect();
+        let cacheable_source = if !build.name_changed
+            && resolved.preparation_failure.is_none()
+            && let Some(src) = declaration.source.as_ref()
+            && src.text.len_bytes() <= 256 * 1024
+            && !program
+                .type_recipes
+                .iter_with_ids()
+                .any(|(_, r)| r.unit == unit)
+        {
+            Some((src, modules::source_text_hash(&src.text)))
+        } else {
+            None
+        };
+        let cache_key = cacheable_source.map(|(src, text_hash)| modules::CompiledUnitCacheKey {
+            hash: text_hash,
+            text: &src.text,
+            source_uri: &src.uri,
+            module_name: &src.module_name,
+            has_identity,
+            original_uri,
+            resolved_uri,
+            power_assertions: build.instrument,
+            fuse_constant_add: build.options.fuse_constant_add,
+            pure_standard_host,
+            is_primary_root,
+            is_replacement: true,
+            prepared: &prepared_list,
+            blocks_start,
+            objects_start,
+            recipes_start,
+            unit_id: unit.0,
+            declaration_base,
+        });
         let arena = code_owner.map(|_| query_lifecycle::CodeArena::begin(program));
+        if let Some(key) = &cache_key
+            && let Some(mut unit_clone) = modules::try_replay_compiled_unit(program, key)?
+        {
+            unit_clone.key = declaration.key;
+            unit_clone.delegate_key = declaration.delegate_key;
+            unit_clone.standard_library = declaration.standard_library;
+            let entry = unit_clone.entry;
+            program.units[unit.0 as usize] = unit_clone;
+            if let (Some(arena), Some(owner)) = (arena, code_owner) {
+                self.code_arenas.push(arena.finish(program, owner, false));
+                self.declaration_roots_dirty = true;
+            }
+            let frame = self.frames.last_mut().unwrap();
+            frame.block = entry;
+            frame.pc = if matches!(
+                program.blocks[entry].first(),
+                Some(Instruction::LoadBaseModule)
+            ) {
+                2
+            } else {
+                0
+            };
+            return Ok(());
+        }
+        let checkpoint = modules::ArenaCheckpoint::new(program);
+        let before_decl_len = program.declaration_sources.len();
+        let before_refl_len = program.reflection_annotations.len();
+        let before_alias_len = program.alias_definitions.len();
+        let before_constr_len = program.constraint_origins.len();
+        let before_base_mixin = program.base_mixin_declaration;
         let result = if resolved.preparation_failure.is_some() {
             let mut shell = resolved.clone();
             shell.module.members.clear();
@@ -723,11 +805,26 @@ impl Vm {
             checkpoint.rollback(program);
             return Err(error);
         }
+        program.update_import_uris(unit, |span| build.prepared.get(&span));
+        if let Some(key) = &cache_key
+            && program.units[unit.0 as usize].build.is_none()
+            && program.units.next_id() == units_start
+            && program.base_mixin_declaration == before_base_mixin
+        {
+            modules::store_compiled_unit(
+                program,
+                key,
+                before_decl_len,
+                before_refl_len,
+                before_alias_len,
+                before_constr_len,
+                program.units[unit.0 as usize].clone(),
+            );
+        }
         if let (Some(arena), Some(owner)) = (arena, code_owner) {
             self.code_arenas.push(arena.finish(program, owner, false));
             self.declaration_roots_dirty = true;
         }
-        program.update_import_uris(unit, |span| build.prepared.get(&span));
         program.units[unit.0 as usize].key = declaration.key;
         program.units[unit.0 as usize].delegate_key = declaration.delegate_key;
         program.units[unit.0 as usize].standard_library = declaration.standard_library;

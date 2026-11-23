@@ -397,11 +397,15 @@ struct CachedCompiledUnit {
     text: SourceText,
     source_uri: PklString,
     module_name: PklString,
+    has_identity: bool,
     original_uri: PklString,
     resolved_uri: PklString,
     power_assertions: bool,
+    fuse_constant_add: bool,
     pure_standard_host: bool,
     is_primary_root: bool,
+    is_replacement: bool,
+    prepared: Vec<(Span, (PklString, PklString))>,
     blocks_start: usize,
     objects_start: usize,
     recipes_start: usize,
@@ -419,10 +423,224 @@ struct CachedCompiledUnit {
     constraint_origins: ConstraintOriginsVec,
 }
 
+const MAX_CACHED_UNIT_BLOCKS: usize = 8192;
+const MAX_TOTAL_CACHED_UNIT_BLOCKS: usize = 32768;
+
 fn compiled_unit_cache() -> &'static std::sync::Mutex<Vec<CachedCompiledUnit>> {
     static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedCompiledUnit>>> =
         std::sync::OnceLock::new();
     CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
+}
+
+pub(super) struct CompiledUnitCacheKey<'a> {
+    pub hash: u64,
+    pub text: &'a SourceText,
+    pub source_uri: &'a PklString,
+    pub module_name: &'a PklString,
+    pub has_identity: bool,
+    pub original_uri: &'a PklString,
+    pub resolved_uri: &'a PklString,
+    pub power_assertions: bool,
+    pub fuse_constant_add: bool,
+    pub pure_standard_host: bool,
+    pub is_primary_root: bool,
+    pub is_replacement: bool,
+    pub prepared: &'a [(Span, (PklString, PklString))],
+    pub blocks_start: usize,
+    pub objects_start: usize,
+    pub recipes_start: usize,
+    pub unit_id: u32,
+    pub declaration_base: usize,
+}
+
+pub(super) fn try_replay_compiled_unit(
+    program: &mut Program,
+    key: &CompiledUnitCacheKey<'_>,
+) -> Result<Option<ModuleUnit>, RuntimeError> {
+    let hit = {
+        let Ok(cache) = compiled_unit_cache().lock() else {
+            return Ok(None);
+        };
+        cache
+            .iter()
+            .rev()
+            .find(|e| {
+                e.hash == key.hash
+                    && e.blocks_start == key.blocks_start
+                    && e.objects_start == key.objects_start
+                    && e.recipes_start == key.recipes_start
+                    && e.unit_id == key.unit_id
+                    && e.declaration_base == key.declaration_base
+                    && e.power_assertions == key.power_assertions
+                    && e.fuse_constant_add == key.fuse_constant_add
+                    && e.pure_standard_host == key.pure_standard_host
+                    && e.is_primary_root == key.is_primary_root
+                    && e.is_replacement == key.is_replacement
+                    && e.has_identity == key.has_identity
+                    && e.original_uri == *key.original_uri
+                    && e.resolved_uri == *key.resolved_uri
+                    && e.source_uri == *key.source_uri
+                    && e.module_name == *key.module_name
+                    && e.prepared == key.prepared
+                    && e.text == *key.text
+            })
+            .map(|cached| {
+                (
+                    Arc::clone(&cached.blocks),
+                    Arc::clone(&cached.metadata),
+                    Arc::clone(&cached.objects),
+                    Arc::clone(&cached.type_recipes),
+                    cached.next_declaration_after,
+                    cached.unit.clone(),
+                    Arc::clone(&cached.declaration_sources),
+                    cached.reflection_annotations.clone(),
+                    cached.alias_definitions.clone(),
+                    cached.constraint_origins.clone(),
+                )
+            })
+    };
+    let Some((
+        blocks_seg,
+        metadata_seg,
+        objects_seg,
+        recipes_seg,
+        next_decl_after,
+        unit_clone,
+        decl_sources,
+        refl_annots,
+        alias_defs,
+        constr_origins,
+    )) = hit
+    else {
+        return Ok(None);
+    };
+    let blocks_end = key.blocks_start + blocks_seg.len();
+    program.blocks.push_sealed_segment(blocks_seg)?;
+    program.metadata.push_sealed_segment(metadata_seg)?;
+    program.objects.push_sealed_segment(objects_seg)?;
+    program.type_recipes.push_sealed_segment(recipes_seg)?;
+    program.next_declaration = next_decl_after;
+    if !decl_sources.is_empty() {
+        program
+            .extra_declaration_sources
+            .push((key.blocks_start..blocks_end, decl_sources));
+    }
+    if !refl_annots.is_empty() {
+        program.reflection_annotations.extend(refl_annots);
+    }
+    if !alias_defs.is_empty() {
+        program.alias_definitions.extend(alias_defs);
+    }
+    if !constr_origins.is_empty() {
+        program.constraint_origins.extend(constr_origins);
+    }
+    if key.is_primary_root {
+        program.module_template = Some(unit_clone.template);
+        program.module_name = unit_clone.name.clone();
+        program.entry = unit_clone.entry;
+        program.initial_module_members = unit_clone.initial_members.clone();
+    }
+    Ok(Some(unit_clone))
+}
+
+#[allow(clippy::too_many_arguments)]
+pub(super) fn store_compiled_unit(
+    program: &Program,
+    key: &CompiledUnitCacheKey<'_>,
+    before_decl_len: usize,
+    before_refl_len: usize,
+    before_alias_len: usize,
+    before_constr_len: usize,
+    mut unit_snapshot: ModuleUnit,
+) {
+    let blocks_end = program.blocks.next_id();
+    let objects_end = program.objects.next_id();
+    let recipes_end = program.type_recipes.next_id();
+    let new_blocks = blocks_end.saturating_sub(key.blocks_start);
+    if new_blocks > MAX_CACHED_UNIT_BLOCKS || program.metadata.next_id() != blocks_end {
+        return;
+    }
+    let decl_delta: Vec<_> = program
+        .declaration_sources
+        .range(key.blocks_start..blocks_end)
+        .map(|(&k, v)| (k, v.clone()))
+        .collect();
+    let refl_delta: Vec<_> = program
+        .reflection_annotations
+        .iter()
+        .filter(|(_, block)| **block >= key.blocks_start && **block < blocks_end)
+        .map(|(k, &v)| (k.clone(), v))
+        .collect();
+    let alias_delta: Vec<_> = program
+        .alias_definitions
+        .range(key.declaration_base..program.next_declaration)
+        .map(|(&k, v)| (k, v.clone()))
+        .collect();
+    let constr_delta: Vec<_> = program
+        .constraint_origins
+        .range(key.blocks_start..blocks_end)
+        .map(|(&k, v)| (k, v.clone()))
+        .collect();
+    if program.declaration_sources.len() != before_decl_len + decl_delta.len()
+        || program.reflection_annotations.len() != before_refl_len + refl_delta.len()
+        || program.alias_definitions.len() != before_alias_len + alias_delta.len()
+        || program.constraint_origins.len() != before_constr_len + constr_delta.len()
+    {
+        return;
+    }
+    let (Some(blocks_seg), Some(metadata_seg), Some(objects_seg), Some(recipes_seg)) = (
+        program.blocks.slice_segment(key.blocks_start, blocks_end),
+        program.metadata.slice_segment(key.blocks_start, blocks_end),
+        program
+            .objects
+            .slice_segment(key.objects_start, objects_end),
+        program
+            .type_recipes
+            .slice_segment(key.recipes_start, recipes_end),
+    ) else {
+        return;
+    };
+    unit_snapshot.key = None;
+    unit_snapshot.delegate_key = None;
+    if let Ok(mut cache) = compiled_unit_cache().lock() {
+        let mut total_blocks: usize = cache.iter().map(|e| e.blocks.len()).sum();
+        while !cache.is_empty()
+            && (cache.len() >= 32 || total_blocks + new_blocks > MAX_TOTAL_CACHED_UNIT_BLOCKS)
+        {
+            let evicted = cache.remove(0);
+            total_blocks = total_blocks.saturating_sub(evicted.blocks.len());
+        }
+        cache.push(CachedCompiledUnit {
+            hash: key.hash,
+            text: key.text.clone(),
+            source_uri: key.source_uri.clone(),
+            module_name: key.module_name.clone(),
+            has_identity: key.has_identity,
+            original_uri: key.original_uri.clone(),
+            resolved_uri: key.resolved_uri.clone(),
+            power_assertions: key.power_assertions,
+            fuse_constant_add: key.fuse_constant_add,
+            pure_standard_host: key.pure_standard_host,
+            is_primary_root: key.is_primary_root,
+            is_replacement: key.is_replacement,
+            prepared: key.prepared.to_vec(),
+            blocks_start: key.blocks_start,
+            objects_start: key.objects_start,
+            recipes_start: key.recipes_start,
+            unit_id: key.unit_id,
+            declaration_base: key.declaration_base,
+            next_declaration_after: program.next_declaration,
+            blocks: blocks_seg,
+            metadata: metadata_seg,
+            objects: objects_seg,
+            type_recipes: recipes_seg,
+            unit: unit_snapshot,
+            declaration_sources: Arc::from(decl_delta),
+            reflection_annotations: refl_delta,
+            alias_definitions: alias_delta,
+            constraint_origins: constr_delta,
+        });
+    }
 }
 
 struct CachedCompiledQuery {
@@ -2026,64 +2244,35 @@ impl Vm {
 
         // Compiled-unit segment cache: replay pre-compiled sealed `CodeStorage`
         // segments via O(1) `Arc::clone` when source, URIs, and starting offsets match.
-        if cacheable_text
+        let cache_key = if cacheable_text
             && let Ok(unit_id_u32) = u32::try_from(unit_id_usize)
-            && let Ok(cache) = compiled_unit_cache().lock()
-            && let Some(cached) = cache.iter().rev().find(|e| {
-                e.hash == text_hash
-                    && e.blocks_start == blocks_start
-                    && e.objects_start == objects_start
-                    && e.recipes_start == recipes_start
-                    && e.unit_id == unit_id_u32
-                    && e.declaration_base == declaration_base
-                    && e.power_assertions == power_assertions
-                    && e.pure_standard_host == pure_standard_host
-                    && e.is_primary_root == is_primary_root
-                    && e.original_uri == resolved.original_uri
-                    && e.resolved_uri == resolved.resolved_uri
-                    && e.source_uri == source.uri
-                    && e.module_name == source.module_name
-                    && e.text == source.text
-            })
         {
-            let blocks_seg = Arc::clone(&cached.blocks);
-            let metadata_seg = Arc::clone(&cached.metadata);
-            let objects_seg = Arc::clone(&cached.objects);
-            let recipes_seg = Arc::clone(&cached.type_recipes);
-            let next_decl_after = cached.next_declaration_after;
-            let mut unit_clone = cached.unit.clone();
-            let decl_sources = Arc::clone(&cached.declaration_sources);
-            let refl_annots = cached.reflection_annotations.clone();
-            let alias_defs = cached.alias_definitions.clone();
-            let constr_origins = cached.constraint_origins.clone();
-            drop(cache);
-
-            let blocks_end = blocks_start + blocks_seg.len();
-            program.blocks.push_sealed_segment(blocks_seg)?;
-            program.metadata.push_sealed_segment(metadata_seg)?;
-            program.objects.push_sealed_segment(objects_seg)?;
-            program.type_recipes.push_sealed_segment(recipes_seg)?;
-            program.next_declaration = next_decl_after;
-            if !decl_sources.is_empty() {
-                program
-                    .extra_declaration_sources
-                    .push((blocks_start..blocks_end, decl_sources));
-            }
-            if !refl_annots.is_empty() {
-                program.reflection_annotations.extend(refl_annots);
-            }
-            if !alias_defs.is_empty() {
-                program.alias_definitions.extend(alias_defs);
-            }
-            if !constr_origins.is_empty() {
-                program.constraint_origins.extend(constr_origins);
-            }
-            if is_primary_root {
-                program.module_template = Some(unit_clone.template);
-                program.module_name = unit_clone.name.clone();
-                program.entry = unit_clone.entry;
-                program.initial_module_members = unit_clone.initial_members.clone();
-            }
+            Some(CompiledUnitCacheKey {
+                hash: text_hash,
+                text: &source.text,
+                source_uri: &source.uri,
+                module_name: &source.module_name,
+                has_identity: true,
+                original_uri: &resolved.original_uri,
+                resolved_uri: &resolved.resolved_uri,
+                power_assertions,
+                fuse_constant_add: true,
+                pure_standard_host,
+                is_primary_root,
+                is_replacement: false,
+                prepared: &[],
+                blocks_start,
+                objects_start,
+                recipes_start,
+                unit_id: unit_id_u32,
+                declaration_base,
+            })
+        } else {
+            None
+        };
+        if let Some(key) = &cache_key
+            && let Some(mut unit_clone) = try_replay_compiled_unit(program, key)?
+        {
             unit_clone.key = module_key;
             unit_clone.delegate_key = delegate_key;
             let entry = unit_clone.entry;
@@ -2152,81 +2341,20 @@ impl Vm {
                 return Err(error);
             }
         };
-        let blocks_end = program.blocks.next_id();
-        let objects_end = program.objects.next_id();
-        let recipes_end = program.type_recipes.next_id();
-        if cacheable_text
+        if let Some(key) = &cache_key
             && program.units[unit.0 as usize].build.is_none()
             && program.units.next_id() == unit_id_usize + 1
-            && blocks_end.saturating_sub(blocks_start) <= 256
             && program.base_mixin_declaration == before_base_mixin
-            && program.metadata.next_id() == blocks_end
         {
-            let decl_delta: Vec<_> = program
-                .declaration_sources
-                .range(blocks_start..blocks_end)
-                .map(|(&k, v)| (k, v.clone()))
-                .collect();
-            let refl_delta: Vec<_> = program
-                .reflection_annotations
-                .iter()
-                .filter(|(_, block)| **block >= blocks_start && **block < blocks_end)
-                .map(|(k, &v)| (k.clone(), v))
-                .collect();
-            let alias_delta: Vec<_> = program
-                .alias_definitions
-                .range(declaration_base..program.next_declaration)
-                .map(|(&k, v)| (k, v.clone()))
-                .collect();
-            let constr_delta: Vec<_> = program
-                .constraint_origins
-                .range(blocks_start..blocks_end)
-                .map(|(&k, v)| (k, v.clone()))
-                .collect();
-            if program.declaration_sources.len() == before_decl_len + decl_delta.len()
-                && program.reflection_annotations.len() == before_refl_len + refl_delta.len()
-                && program.alias_definitions.len() == before_alias_len + alias_delta.len()
-                && program.constraint_origins.len() == before_constr_len + constr_delta.len()
-                && let (Some(blocks_seg), Some(metadata_seg), Some(objects_seg), Some(recipes_seg)) = (
-                    program.blocks.slice_segment(blocks_start, blocks_end),
-                    program.metadata.slice_segment(blocks_start, blocks_end),
-                    program.objects.slice_segment(objects_start, objects_end),
-                    program
-                        .type_recipes
-                        .slice_segment(recipes_start, recipes_end),
-                )
-                && let Ok(mut cache) = compiled_unit_cache().lock()
-            {
-                if cache.len() >= 32 {
-                    cache.remove(0);
-                }
-                cache.push(CachedCompiledUnit {
-                    hash: text_hash,
-                    text: source.text.clone(),
-                    source_uri: source.uri.clone(),
-                    module_name: source.module_name.clone(),
-                    original_uri: resolved.original_uri,
-                    resolved_uri: resolved.resolved_uri,
-                    power_assertions,
-                    pure_standard_host,
-                    is_primary_root,
-                    blocks_start,
-                    objects_start,
-                    recipes_start,
-                    unit_id: unit.0,
-                    declaration_base,
-                    next_declaration_after: program.next_declaration,
-                    blocks: blocks_seg,
-                    metadata: metadata_seg,
-                    objects: objects_seg,
-                    type_recipes: recipes_seg,
-                    unit: program.units[unit.0 as usize].clone(),
-                    declaration_sources: Arc::from(decl_delta),
-                    reflection_annotations: refl_delta,
-                    alias_definitions: alias_delta,
-                    constraint_origins: constr_delta,
-                });
-            }
+            store_compiled_unit(
+                program,
+                key,
+                before_decl_len,
+                before_refl_len,
+                before_alias_len,
+                before_constr_len,
+                program.units[unit.0 as usize].clone(),
+            );
         }
         program.units[unit.0 as usize].key = module_key;
         program.units[unit.0 as usize].delegate_key = delegate_key;

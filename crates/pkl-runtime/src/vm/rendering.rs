@@ -3383,8 +3383,8 @@ impl Vm {
         let mut members = Vec::with_capacity(len);
         let mut completed_cache_order = Vec::with_capacity(len);
         let mut cache_slots = Vec::with_capacity(len);
-        let mut member_values = BTreeMap::new();
-        let mut cache = BTreeMap::new();
+        let mut member_values = crate::heap::FastMap::default();
+        let mut cache = crate::heap::FastMap::default();
         for (idx, val) in values.into_iter().enumerate() {
             let name = PklString::from(format!("\0{}:{}", id.index, idx));
             let key_int = Value::Int((idx as i64).into());

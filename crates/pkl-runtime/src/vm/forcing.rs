@@ -265,7 +265,12 @@ impl Vm {
                         self.heap.get_mut(id)?.forced = true;
                         run.active.push(id);
                         run.tasks.push(Task::Finish(id));
-                        run.tasks.extend(pair.into_iter().rev().map(Task::Value));
+                        run.tasks.extend(
+                            pair.into_iter()
+                                .rev()
+                                .filter(|v| matches!(v, Value::Object(_)))
+                                .map(Task::Value),
+                        );
                     }
                 } else if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
                     if !reference.forced {
@@ -287,8 +292,10 @@ impl Vm {
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
                         if let Some(elems) = &self.heap.get(id)?.list_elements {
-                            for value in elems.iter().rev().cloned() {
-                                run.tasks.push(Task::Value(value));
+                            for value in elems.iter().rev() {
+                                if matches!(value, Value::Object(_)) {
+                                    run.tasks.push(Task::Value(value.clone()));
+                                }
                             }
                         } else {
                             for member in collections::ordered_members(&self.heap, id)?
@@ -304,8 +311,12 @@ impl Vm {
                                 let value = self.cached_slot(id, &key)?.ok_or_else(|| {
                                     invalid("strict collection value is not cached")
                                 })?;
-                                run.tasks.push(Task::Value(value));
-                                if kind == CollectionKind::Map {
+                                if matches!(value, Value::Object(_)) {
+                                    run.tasks.push(Task::Value(value));
+                                }
+                                if kind == CollectionKind::Map
+                                    && matches!(member.key, Value::Object(_))
+                                {
                                     run.tasks.push(Task::Value(member.key));
                                 }
                             }
@@ -394,7 +405,7 @@ impl Vm {
                                     }
                                 };
                                 if let Some(val) = cached {
-                                    if run.recurse {
+                                    if run.recurse && matches!(val, Value::Object(_)) {
                                         let val = val.clone();
                                         run.tasks.push(Task::Members {
                                             receiver,

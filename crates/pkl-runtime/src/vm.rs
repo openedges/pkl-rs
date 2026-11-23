@@ -3211,9 +3211,7 @@ impl Vm {
                 Instruction::Less
                 | Instruction::LessEqual
                 | Instruction::Greater
-                | Instruction::GreaterEqual
-                | Instruction::Equal
-                | Instruction::NotEqual => {
+                | Instruction::GreaterEqual => {
                     if stack.len() < base + 2 {
                         break;
                     }
@@ -3225,8 +3223,6 @@ impl Vm {
                             Instruction::LessEqual => lv <= rv,
                             Instruction::Greater => lv > rv,
                             Instruction::GreaterEqual => lv >= rv,
-                            Instruction::Equal => lv == rv,
-                            Instruction::NotEqual => lv != rv,
                             _ => unreachable!(),
                         };
                         let Some(Value::Int(_)) = stack.pop() else {
@@ -3236,6 +3232,198 @@ impl Vm {
                             unreachable!()
                         };
                         stack.push_raw(Value::Bool(res));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Equal | Instruction::NotEqual => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    let eq = match (&stack[len - 2], &stack[len - 1]) {
+                        (Value::Int(l), Value::Int(r)) => Some(l.get() == r.get()),
+                        (Value::String(l), Value::String(r)) => Some(l == r),
+                        (Value::Bool(l), Value::Bool(r)) => Some(l == r),
+                        (l, r) if l.is_null() && r.is_null() => Some(true),
+                        (l, r) if l.is_null() || r.is_null() => Some(false),
+                        (
+                            Value::String(_),
+                            Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Bool(_)
+                            | Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                        )
+                        | (
+                            Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Bool(_)
+                            | Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                            Value::String(_),
+                        )
+                        | (
+                            Value::Bool(_),
+                            Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                        )
+                        | (
+                            Value::Int(_)
+                            | Value::Float(_)
+                            | Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                            Value::Bool(_),
+                        )
+                        | (
+                            Value::Int(_),
+                            Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                        )
+                        | (
+                            Value::Object(_)
+                            | Value::Function(_)
+                            | Value::Class(_)
+                            | Value::TypeAlias(_),
+                            Value::Int(_),
+                        ) => Some(false),
+                        _ => None,
+                    };
+                    if let Some(eq) = eq {
+                        let res = if matches!(instruction, Instruction::NotEqual) {
+                            !eq
+                        } else {
+                            eq
+                        };
+                        stack.pop();
+                        stack.pop();
+                        stack.push_raw(Value::Bool(res));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Not => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if let Some(Value::Bool(b)) = stack.last_mut() {
+                        *b = !*b;
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::CheckLogicalLeft { .. }
+                | Instruction::CheckLogicalRight { .. }
+                | Instruction::CheckBoolean => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if matches!(stack.last(), Some(Value::Bool(_))) {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::NonNull => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if stack.last().is_some_and(|v| !v.is_null()) {
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::StripNullDefault => {
+                    if stack.len() <= base {
+                        break;
+                    }
+                    if let Some(top_val) = stack.last_mut()
+                        && top_val.is_null()
+                    {
+                        *top_val = Value::Null;
+                    }
+                    pc += 1;
+                }
+                Instruction::PopLocal => {
+                    let env = &mut frames.last_mut().unwrap().environment;
+                    let Some(idx) = env.locals.len().checked_sub(1) else {
+                        break;
+                    };
+                    env.copy_locals.remove(&idx);
+                    env.local_owners.remove(&idx);
+                    env.locals.pop();
+                    pc += 1;
+                }
+                Instruction::LoadThis => {
+                    let frame = frames.last().unwrap();
+                    if let Some(receiver) = &frame.environment.this_value {
+                        stack.push_raw(receiver.clone());
+                        pc += 1;
+                    } else if let Some(scope) = frame.environment.scopes.first() {
+                        stack.push_raw(Value::Object(scope.receiver));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::LoadOuter => {
+                    let frame = frames.last().unwrap();
+                    if let Some(value) = &frame.environment.outer_value {
+                        stack.push_raw(value.clone());
+                        pc += 1;
+                    } else if let Some(scope) =
+                        frame.environment.scopes.get(usize::from(!frame.lambda))
+                    {
+                        stack.push_raw(Value::Object(scope.receiver));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::LoadModule => {
+                    let frame = frames.last().unwrap();
+                    if let Some(scope) = frame.environment.scopes.last() {
+                        stack.push_raw(Value::Object(scope.receiver));
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::Subscript { .. } => {
+                    if stack.len() < base + 2 {
+                        break;
+                    }
+                    let len = stack.len();
+                    if let (Value::Object(recv_id), Value::Int(idx)) =
+                        (&stack[len - 2], &stack[len - 1])
+                        && idx.get() >= 0
+                        && let Ok(obj) = heap.get(*recv_id)
+                        && obj.collection_kind == CollectionKind::List
+                        && obj.parent.is_none()
+                        && obj.reference.is_none()
+                        && let Some(elems) = &obj.list_elements
+                        && let Some(val) = elems.get(idx.get() as usize)
+                    {
+                        let cloned = val.clone();
+                        stack.pop();
+                        stack.pop();
+                        stack.push_raw(cloned);
                         pc += 1;
                     } else {
                         break;
@@ -3284,25 +3472,54 @@ impl Vm {
                     if stack.len() <= base {
                         break;
                     }
+                    if let Some(Value::String(text)) = stack.last() {
+                        if name == "isEmpty" {
+                            let empty = text.is_empty();
+                            stack.pop();
+                            stack.push_raw(Value::Bool(empty));
+                            pc += 1;
+                            consumed += 1;
+                            continue;
+                        }
+                        if name == "length"
+                            && let Some(s) = text.as_str()
+                            && s.is_ascii()
+                        {
+                            let len = s.len() as i64;
+                            stack.pop();
+                            stack.push_raw(Value::Int(
+                                crate::value_identity::Number::from(len).boxed(),
+                            ));
+                            pc += 1;
+                            consumed += 1;
+                            continue;
+                        }
+                        break;
+                    }
                     let Some(&Value::Object(recv_id)) = stack.last() else {
                         break;
                     };
                     let Ok(obj) = heap.get(recv_id) else {
                         break;
                     };
-                    if name == "length"
-                        && matches!(
-                            obj.collection_kind,
-                            CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                        )
-                        && obj.parent.is_none()
+                    if matches!(
+                        obj.collection_kind,
+                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+                    ) && obj.parent.is_none()
+                        && matches!(name.as_str(), Some("length" | "isEmpty" | "isNotEmpty"))
                     {
-                        let len = obj.length as i64;
+                        let val = match name.as_str() {
+                            Some("length") => Value::Int(
+                                crate::value_identity::Number::from(obj.length as i64).boxed(),
+                            ),
+                            Some("isEmpty") => Value::Bool(obj.length == 0),
+                            Some("isNotEmpty") => Value::Bool(obj.length != 0),
+                            _ => unreachable!(),
+                        };
                         let Some(Value::Object(_)) = stack.pop() else {
                             unreachable!()
                         };
-                        stack
-                            .push_raw(Value::Int(crate::value_identity::Number::from(len).boxed()));
+                        stack.push_raw(val);
                         pc += 1;
                     } else if name == "values"
                         && obj.collection_kind == CollectionKind::Map
@@ -3394,6 +3611,36 @@ impl Vm {
                         let Some(val) =
                             fast_lookup_cached(obj, local.then_some(scope.owner), name, false)
                         else {
+                            break;
+                        };
+                        stack.push_raw(val.clone());
+                        pc += 1;
+                    } else {
+                        break;
+                    }
+                }
+                Instruction::GetImplicitProperty(name) => {
+                    let frame = frames.last().unwrap();
+                    let recv_id = match &frame.environment.this_value {
+                        Some(Value::Object(id)) => *id,
+                        Some(_) => break,
+                        None => match frame.environment.scopes.first() {
+                            Some(scope) => scope.receiver,
+                            None => break,
+                        },
+                    };
+                    let Ok(obj) = heap.get(recv_id) else {
+                        break;
+                    };
+                    if obj.collection_kind == CollectionKind::Dynamic
+                        && obj.reference.is_none()
+                        && obj.pair.is_none()
+                        && obj.function.is_none()
+                        && obj.native_function.is_none()
+                        && (obj.class_definition.is_none() || obj.is_module)
+                        && obj.member_deprecations.is_empty()
+                    {
+                        let Some(val) = fast_lookup_cached(obj, None, name, false) else {
                             break;
                         };
                         stack.push_raw(val.clone());
@@ -7694,132 +7941,159 @@ impl Vm {
     fn step(&mut self) -> Result<(), RuntimeError> {
         if let Some(frame) = self.frames.last_mut() {
             frame.fast_call_frame = false;
+            if frame.has_pending_run() {
+                if frame.glob.is_some() {
+                    return self.step_glob();
+                }
+                if frame.guest_catch.is_some() {
+                    return self.finish_guest_catch();
+                }
+                if frame.type_resolution.is_some() && frame.module_load.is_none() {
+                    return self.step_declared_type();
+                }
+                if frame.module_load.is_some() {
+                    return self.step_module();
+                }
+                if frame.generic_default.is_some() {
+                    return self.step_generic_default();
+                }
+                if frame.equality_run.is_some() {
+                    return self.step_equality();
+                }
+                if self.mapping_cast_failure_pending() {
+                    return self.step_mapping_cast_failure();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.type_run.is_some())
+                {
+                    return self.step_type();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.reflection.is_some())
+                {
+                    return self.step_reflection();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.analysis.is_some())
+                {
+                    return self.step_analysis();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.deep_force.is_some())
+                {
+                    return self.step_deep_force();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.yaml_parse.is_some())
+                {
+                    return self.step_yaml_parse();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.json_parse.is_some())
+                {
+                    return self.step_json_parse();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.pcf_render.is_some())
+                {
+                    return self.step_pcf();
+                }
+                if self
+                    .frames
+                    .last()
+                    .is_some_and(|frame| frame.collection_join.is_some())
+                {
+                    return self.step_collection_join();
+                }
+            }
         }
-        if self.frames.last().is_some_and(|frame| frame.glob.is_some()) {
-            return self.step_glob();
-        }
-        if self
+        let frame_index = self
             .frames
-            .last()
-            .is_some_and(|frame| frame.guest_catch.is_some())
-        {
-            return self.finish_guest_catch();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.type_resolution.is_some() && frame.module_load.is_none())
-        {
-            return self.step_declared_type();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.module_load.is_some())
-        {
-            return self.step_module();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|f| f.generic_default.is_some())
-        {
-            return self.step_generic_default();
-        }
-        if self.frames.last().is_some_and(|f| f.equality_run.is_some()) {
-            return self.step_equality();
-        }
-        if self.mapping_cast_failure_pending() {
-            return self.step_mapping_cast_failure();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.type_run.is_some())
-        {
-            return self.step_type();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.reflection.is_some())
-        {
-            return self.step_reflection();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.analysis.is_some())
-        {
-            return self.step_analysis();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.deep_force.is_some())
-        {
-            return self.step_deep_force();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.yaml_parse.is_some())
-        {
-            return self.step_yaml_parse();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.json_parse.is_some())
-        {
-            return self.step_json_parse();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.pcf_render.is_some())
-        {
-            return self.step_pcf();
-        }
-        if self
-            .frames
-            .last()
-            .is_some_and(|frame| frame.collection_join.is_some())
-        {
-            return self.step_collection_join();
-        }
-        let frame = self
-            .frames
-            .last_mut()
+            .len()
+            .checked_sub(1)
             .ok_or_else(|| invalid("missing execution frame"))?;
-        let instruction = if frame.block == usize::MAX {
-            Instruction::Return
+        let frame = &mut self.frames[frame_index];
+        let is_return = if frame.block == usize::MAX {
+            frame.pc += 1;
+            true
         } else {
-            self.program
+            let instr_ref = self
+                .program
                 .blocks
                 .get(frame.block)
                 .and_then(|block| block.get(frame.pc))
-                .ok_or_else(|| invalid("instruction pointer outside block"))?
-                .clone()
+                .ok_or_else(|| invalid("instruction pointer outside block"))?;
+            if matches!(instr_ref, Instruction::Return)
+                || (matches!(instr_ref, Instruction::EndFunctionAmendment)
+                    && frame.amendment_end == Some(frame.pc))
+            {
+                frame.pc += 1;
+                true
+            } else {
+                false
+            }
         };
+        if is_return {
+            let result = self.finish_return();
+            if let Some(frame) = self.frames.get_mut(frame_index)
+                && frame
+                    .equality_run
+                    .as_ref()
+                    .is_none_or(|run| !run.retries_instruction())
+            {
+                frame.prepared_hashes = None;
+            }
+            return result;
+        }
+        let frame = &mut self.frames[frame_index];
+        let instruction = self
+            .program
+            .blocks
+            .get(frame.block)
+            .and_then(|block| block.get(frame.pc))
+            .ok_or_else(|| invalid("instruction pointer outside block"))?
+            .clone();
         frame.pc += 1;
-        let instruction = if matches!(instruction, Instruction::EndFunctionAmendment)
-            && frame.amendment_end == Some(frame.pc - 1)
-        {
-            Instruction::Return
+        let instruction = if matches!(
+            &instruction,
+            Instruction::ResolveType(_)
+                | Instruction::ResolvedClass(_)
+                | Instruction::ResolvedSupertype { .. }
+                | Instruction::BuiltinClass(_)
+                | Instruction::BindLocal { .. }
+                | Instruction::CheckType(_)
+                | Instruction::TestType(_)
+                | Instruction::ResolvedDefault { .. }
+                | Instruction::ResolvedInferredParent { .. }
+                | Instruction::ValidateTypeArguments { .. }
+                | Instruction::GenericConstructorParent { .. }
+                | Instruction::SetCollectionTypeDefault { .. }
+        ) {
+            let Some(resolved) = self.resolve_instruction_types(instruction)? else {
+                return Ok(());
+            };
+            resolved
         } else {
             instruction
         };
-        let Some(instruction) = self.resolve_instruction_types(instruction)? else {
-            return Ok(());
-        };
-        let frame_index = self.frames.len() - 1;
         // Compiling pinned bundled declarations must not retain the large
         // general instruction-dispatch frame on the native stack. Evaluation
         // still starts in the ordinary module initializer and can yield there.
-        let result = if matches!(instruction, Instruction::Return) {
-            self.finish_return()
-        } else if matches!(instruction, Instruction::LoadBaseModule) {
+        let result = if matches!(instruction, Instruction::LoadBaseModule) {
             self.import_stdlib("pkl:base").map(|_| ())
         } else if matches!(instruction, Instruction::LoadProtobufModule) {
             self.import_stdlib("pkl:protobuf").map(|_| ())
