@@ -436,15 +436,17 @@ impl Vm {
                             ParseKind::Float => "Float",
                             ParseKind::Boolean => "Boolean",
                         };
-                        let mut message = crate::pkl_string::PklStringBuilder::default();
-                        message.push_str(&format!("Cannot parse string as `{kind}`.\nString: "));
-                        message.push_value(&crate::diagnostic_values::render_string(
+                        let rendered = crate::diagnostic_values::render_string(
                             &Value::String(text),
                             &self.heap,
                             &self.program.module_name,
                             80,
-                        )?);
-                        return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
+                        )?;
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!("Cannot parse string as `{kind}`."),
+                            &[("String", rendered)],
+                        ));
                     }
                 }
             }
@@ -494,20 +496,23 @@ impl Vm {
                     return Err(invalid("checked range start"));
                 };
                 if let Err((index, minimum)) = text.substring_code_points(start.get(), end.get()) {
-                    let mut message = crate::pkl_string::PklStringBuilder::default();
-                    message.push_str(&format!(
-                        "Character index `{}` is out of range `{}`..`{}`.\nString: ",
-                        strings::diagnostic_integer(index),
-                        strings::diagnostic_integer(minimum),
-                        strings::diagnostic_integer(text.code_point_len() as i64)
-                    ));
-                    message.push_value(&crate::diagnostic_values::render_string(
+                    let max = text.code_point_len() as i64;
+                    let rendered = crate::diagnostic_values::render_string(
                         &Value::String(text),
                         &self.heap,
                         &self.program.module_name,
                         80,
-                    )?);
-                    return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
+                    )?;
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        format!(
+                            "Character index `{}` is out of range `{}`..`{}`.",
+                            strings::diagnostic_integer(index),
+                            strings::diagnostic_integer(minimum),
+                            strings::diagnostic_integer(max)
+                        ),
+                        &[("String", rendered)],
+                    ));
                 }
                 let prefix = text
                     .substring_code_points(0, start.get())

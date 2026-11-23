@@ -3621,7 +3621,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/analyze.rs",
-          "sha256": "81cd09bcf0eff562df2e05b49b5aa0b15b63ccd7afa8f2e21eeae71b7466bf3d",
+          "sha256": "eb57ba6a7c15b461a1e9ae201e43d75276263aec49f46604e7bfd5d4f9478f8e",
           "symbol": "analysis_error"
         }
       ]
@@ -3638,7 +3638,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/primitives.rs",
-          "sha256": "fb59b943745fcdd107314f83ccf51f2d49c00d7cff9860f4b0f4b55b579d12d2",
+          "sha256": "f02da477f8cb29f0f08e301efdcb117df45ee6e711b8fa21029fa8d7b2ce2a5d",
           "symbol": "Operation"
         },
         {
@@ -3648,7 +3648,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/rendering.rs",
-          "sha256": "aaacbc9102706f7826b904888744f94636f84407c29dd8a383b7bf0d0ac02672",
+          "sha256": "23511229aa35a5329aced3c699f35b90c95d97b8a495b61736e650942ad373b8",
           "symbol": "PcfRenderer"
         }
       ]
@@ -3737,7 +3737,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/protobuf_rendering.rs",
-          "sha256": "92de3f46e8b7ac9284e245e2e562dc3aba18052b92d9b934b8c822c4f5a46cb1",
+          "sha256": "e0d19b6b7b0f549fd0ff9f61061c8ba86aa2aeede2234a542711cfb94c2692a7",
           "symbol": "protobuf"
         },
         {
@@ -3757,7 +3757,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/reference.rs",
-          "sha256": "4210ccedeba56cf2b8ad345cc91f0c16e33ce0b6da90315b3feb93ad1339883f",
+          "sha256": "6fb1a5acc422f116d3f207ef4cd810a43afa2cff12fe02c5f2d9c74742b676e8",
           "symbol": "Reference"
         }
       ]
@@ -3848,7 +3848,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/xml_rendering.rs",
-          "sha256": "5fbc690e4892360f0ff0e16b71163b64bff10707c0251f0f7168ba661dc414e6",
+          "sha256": "7b3d9047d930d76f1d5665910676a3c2619098b2df5074a93de718140a573f5f",
           "symbol": "xml"
         }
       ]

@@ -235,6 +235,24 @@ impl AnsiStringBuilder {
         }
     }
 
+    /// Creates a builder whose caller has already entered `active_codes` (e.g.
+    /// `ERROR_MESSAGE_HINT`), so inner sandboxes restore `active_codes` cleanly
+    /// and [`Self::finish_raw_pkl`] returns the interior without a duplicate open/reset.
+    pub(crate) fn new_with_active_style(using_color: bool, active_codes: AnsiCodeSet) -> Self {
+        let codes = if using_color {
+            active_codes
+        } else {
+            AnsiCodeSet::EMPTY
+        };
+        Self {
+            utf8: String::with_capacity(128),
+            utf16: None,
+            using_color,
+            current_codes: codes,
+            declared_codes: codes,
+        }
+    }
+
     fn promote_to_utf16(&mut self) -> &mut Vec<u16> {
         if self.utf16.is_none() {
             let mut units: Vec<u16> = self.utf8.encode_utf16().collect();
@@ -347,6 +365,14 @@ impl AnsiStringBuilder {
     }
 
     pub fn append_pkl(&mut self, value: &PklString) -> &mut Self {
+        self.append_codes();
+        self.push_raw_pkl(value);
+        self
+    }
+
+    /// Appends text that already carries interior ANSI transitions assuming the
+    /// currently declared scope is active, syncing active codes first if needed.
+    pub(crate) fn append_precolored_pkl(&mut self, value: &PklString) -> &mut Self {
         self.append_codes();
         self.push_raw_pkl(value);
         self
@@ -493,6 +519,15 @@ impl AnsiStringBuilder {
 
     pub fn finish_pkl(mut self) -> PklString {
         self.reset();
+        match self.utf16 {
+            Some(units) => PklString::from_utf16(units),
+            None => PklString::from(self.utf8),
+        }
+    }
+
+    /// Returns the accumulated buffer without resetting active styles (paired with
+    /// [`Self::new_with_active_style`]).
+    pub(crate) fn finish_raw_pkl(self) -> PklString {
         match self.utf16 {
             Some(units) => PklString::from_utf16(units),
             None => PklString::from(self.utf8),

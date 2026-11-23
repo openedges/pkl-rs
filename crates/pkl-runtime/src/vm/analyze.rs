@@ -646,7 +646,7 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
                     .concat(display_uri)
                     .concat(&"`.".into()),
             );
-            let nested = if let Some(site) = failure.site.as_ref() {
+            let (nested, nested_colored) = if let Some(site) = failure.site.as_ref() {
                 let mut map = crate::source::SourceMap::default();
                 let source_id = map.add(display_uri.clone(), site.source.clone());
                 let source = map.get(source_id).expect("source just inserted");
@@ -676,20 +676,54 @@ fn analysis_error(failure: AnalysisFailure, root: Option<&BlockMetadata>) -> Run
                     span: diag.span,
                     highlight_length_utf16: diag.highlight_length_utf16,
                 };
-                let rendered =
-                    crate::diagnostic::render_frontend_error_text(diag, &[frame]).to_java_utf8();
-                let body = rendered
-                    .strip_prefix("–– Pkl Error ––\n")
-                    .unwrap_or(&rendered);
-                let body = body.strip_suffix('\n').unwrap_or(body);
-                body.split('\n')
-                    .map(|line| format!(">\t{line}"))
-                    .collect::<Vec<_>>()
-                    .join("\n")
+                // Mirror `VmExceptionRenderer.java:139-143`: render wrapped body without
+                // header, then prefix each Java `.lines()` entry with `>\t`.
+                let prefix_java_lines = |raw: &str| -> String {
+                    let body = raw.strip_suffix('\n').unwrap_or(raw);
+                    body.split('\n')
+                        .map(|line| format!(">\t{line}"))
+                        .collect::<Vec<_>>()
+                        .join("\n")
+                };
+                let plain_body =
+                    crate::diagnostic::render_frontend_error_body_colored(diag, &[frame], false)
+                        .to_java_utf8();
+                let frame_colored = crate::diagnostic::RenderFrame {
+                    source,
+                    uri: if display_uri.starts_with("file:") {
+                        display_uri.concat(
+                            &format!(
+                                ", line {}",
+                                source
+                                    .position(diag.span.start)
+                                    .map_or(1, |position| position.line)
+                            )
+                            .into(),
+                        )
+                    } else {
+                        display_uri.clone()
+                    },
+                    member: &module_name,
+                    span: diag.span,
+                    highlight_length_utf16: diag.highlight_length_utf16,
+                };
+                let colored_body = crate::diagnostic::render_frontend_error_body_colored(
+                    diag,
+                    &[frame_colored],
+                    true,
+                )
+                .to_java_utf8();
+                (
+                    prefix_java_lines(&plain_body),
+                    prefix_java_lines(&colored_body),
+                )
             } else {
-                format!(">\t{}", diag.message)
+                let plain = format!(">\t{}", diag.message);
+                let colored = format!(">\t\x1b[1;31m{}\x1b[0m", diag.message);
+                (plain, colored)
             };
             error.hint = Some(PklString::from(nested));
+            error.colored_hint = Some(PklString::from(nested_colored));
             error
         }
         FailureCause::Unsupported(message)

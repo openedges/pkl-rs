@@ -27,8 +27,10 @@ impl CliError {
     }
 
     pub fn usage(usage_line: &str, err_msg: &str) -> Self {
+        let plain = format!("{usage_line}\n\nError: {err_msg}\n");
+        let level = pkl_runtime::diagnostic::mordant::detect_ansi_level();
         Self::Message {
-            text: format!("{usage_line}\n\nError: {err_msg}\n"),
+            text: pkl_runtime::diagnostic::mordant::colorize_clikt_usage_error(&plain, level),
             exit_code: 1,
         }
     }
@@ -160,7 +162,9 @@ impl ParsedCliOptions {
             http_headers: None,
             external_module_readers: None,
             external_resource_readers: None,
-            color: None,
+            // Mirrors `BaseOptions.kt:173` (`.default(Color.AUTO)`), so CLI `--color`
+            // always defaults to `auto` and overrides `PklProject.evaluatorSettings.color`.
+            color: Some(EvaluatorColor::Auto),
             trace_mode: None,
             project_dir: None,
             no_project: false,

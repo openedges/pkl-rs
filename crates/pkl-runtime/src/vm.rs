@@ -2219,6 +2219,8 @@ pub struct Vm {
     pure_standard_host: bool,
     inline_module_depth: u8,
     active_type_trackers: usize,
+    /// Optional power-assertion trace active during `pkl test` failing-fact re-evaluation.
+    fact_tracker: Option<(PklString, Span, typecheck::Trace)>,
     /// Keys belong to this immutable Program; values belong only to this evaluator.
     /// Reentering or restarting a declaration retains its first captured environment.
     public_primary: Option<ObjectId>,
@@ -2325,6 +2327,7 @@ impl Vm {
             pure_standard_host: false,
             inline_module_depth: 0,
             active_type_trackers: 0,
+            fact_tracker: None,
             public_primary: None,
             modules_original: modules::ModuleCache::default(),
             modules_stdlib: modules::ModuleCache::default(),
@@ -2684,7 +2687,7 @@ impl Vm {
             self.restore_context();
             return Err(error);
         }
-        self.active_type_trackers = 0;
+        self.recompute_active_type_trackers();
         Ok(())
     }
 
@@ -2700,7 +2703,99 @@ impl Vm {
             .frames
             .iter()
             .filter(|frame| frame.type_run.as_ref().is_some_and(TypeRun::has_tracker))
-            .count();
+            .count()
+            + usize::from(self.fact_tracker.is_some());
+    }
+
+    pub(crate) fn begin_fact_trace(
+        &mut self,
+        module_uri: &PklString,
+        group_name: &PklString,
+        fact_span: Span,
+    ) -> bool {
+        if !self.power_assertions {
+            return false;
+        }
+        let Some(modules::CachedModule::Value(mod_id)) = self
+            .modules_original
+            .get_ref(module_uri)
+            .or_else(|| self.modules_resolved.get_ref(module_uri))
+            .cloned()
+        else {
+            return false;
+        };
+        let facts_key = CacheKey {
+            entry: false,
+            owner: None,
+            name: "facts".into(),
+            method: false,
+        };
+        let Ok(mod_obj) = self.heap.get(mod_id) else {
+            return false;
+        };
+        let Some(LazyState::Completed(Value::Object(facts_id))) = mod_obj.cache.get(&facts_key)
+        else {
+            return false;
+        };
+        let facts_id = *facts_id;
+        let Ok(members) = collections::ordered_members(&self.heap, facts_id) else {
+            return false;
+        };
+        let group_val = Value::String(group_name.clone());
+        let Some(entry_name) = members
+            .into_iter()
+            .find(|m| m.key == group_val)
+            .map(|m| m.name)
+        else {
+            return false;
+        };
+        let entry_key = CacheKey {
+            entry: true,
+            owner: None,
+            name: entry_name,
+            method: false,
+        };
+        let Ok(facts_obj) = self.heap.get(facts_id) else {
+            return false;
+        };
+        let Some(LazyState::Completed(Value::Object(listing_id))) = facts_obj.cache.get(&entry_key)
+        else {
+            return false;
+        };
+        let listing_id = *listing_id;
+        let Ok(object) = self.heap.get_mut(listing_id) else {
+            return false;
+        };
+        object.cache.clear();
+        object.completed_cache_order.clear();
+        object.cache_slots.clear();
+        object.cache_index = crate::economic_map::EconomicMapIndex::default();
+        object.list_elements = None;
+        self.fact_tracker = Some((module_uri.clone(), fact_span, BTreeMap::new()));
+        self.recompute_active_type_trackers();
+        true
+    }
+
+    pub(crate) fn finish_fact_trace(&mut self) -> Vec<crate::diagnostic::PowerAssertionValue> {
+        let Some((_, _, trace)) = self.fact_tracker.take() else {
+            return Vec::new();
+        };
+        self.recompute_active_type_trackers();
+        let mut out = Vec::with_capacity(trace.len());
+        for (span, obs) in trace {
+            if let Ok(value) = obs.value.render(&self.heap, &self.program.module_name) {
+                out.push(crate::diagnostic::PowerAssertionValue {
+                    span,
+                    value,
+                    executions: obs.executions,
+                    hidden: matches!(
+                        obs.value,
+                        typecheck::ObservedValue::Runtime(Value::Function(_))
+                    ),
+                });
+            }
+        }
+        out
     }
 
     fn restore_context(&mut self) {
@@ -4517,6 +4612,7 @@ impl Vm {
         self.unowned_declaration_roots = Vec::new();
         self.public_operation_entries.clear();
         self.query_cache = Vec::new();
+        self.fact_tracker = None;
         self.active_type_trackers = 0;
         self.session_root = None;
         self.uncached_module_uris.clear();
@@ -4748,6 +4844,9 @@ impl Vm {
             for frame in frames {
                 Self::collect_frame_roots(frame, &mut roots);
             }
+        }
+        if let Some((_, _, trace)) = &self.fact_tracker {
+            roots.extend(trace.values().filter_map(|obs| obs.value.roots()));
         }
         let stats = self.heap.collect(&roots);
         self.retire_unreachable_code();
@@ -5567,7 +5666,7 @@ impl Vm {
             self.state = State::Running;
         } else {
             self.frames.clear();
-            self.active_type_trackers = 0;
+            self.recompute_active_type_trackers();
             self.stack.clear();
             self.inputs.clear();
             self.finish_error(error);
@@ -9179,39 +9278,40 @@ impl Vm {
                 let right = self.pop()?;
                 let left = self.pop()?;
                 let Value::Function(id) = right else {
-                    return Err(RuntimeError::new(
+                    let headline = PklString::join(
+                        &[
+                            "Operator `|>` is not defined for operand types `".into(),
+                            crate::diagnostic_values::type_name(
+                                &left,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?,
+                            "` and `".into(),
+                            crate::diagnostic_values::type_name(
+                                &right,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?,
+                            "`.".into(),
+                        ],
+                        "",
+                    );
+                    let left_val = crate::diagnostic_values::render(
+                        &left,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    let right_val = crate::diagnostic_values::render(
+                        &right,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::with_program_values(
                         ErrorKind::Type,
-                        PklString::join(
-                            &[
-                                "Operator `|>` is not defined for operand types `".into(),
-                                (crate::diagnostic_values::type_name(
-                                    &left,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                )?),
-                                "` and `".into(),
-                                (crate::diagnostic_values::type_name(
-                                    &right,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                )?),
-                                "`.\nLeft operand : ".into(),
-                                crate::diagnostic_values::render(
-                                    &left,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80,
-                                )?,
-                                "\nRight operand: ".into(),
-                                crate::diagnostic_values::render(
-                                    &right,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80,
-                                )?,
-                            ],
-                            "",
-                        ),
+                        headline,
+                        &[("Left operand", left_val), ("Right operand", right_val)],
                     ));
                 };
                 self.frames
@@ -9279,12 +9379,27 @@ impl Vm {
                         &self.program.module_name,
                         80,
                     )?;
-                    let message = if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
-                        PklString::join(&[format!("Operator `{operator}` is not defined for left operand type `{name}`.\nLeft operand: ").into(), rendered], "")
+                    let error = if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
+                        RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `{operator}` is not defined for left operand type `{name}`."
+                            ),
+                            &[("Left operand", rendered)],
+                        )
                     } else {
-                        PklString::join(&[format!("Operator `{operator}` is not defined for operand types `Boolean` and `{name}`.\nLeft operand : {}\nRight operand: ", !or).into(), rendered], "")
+                        RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `{operator}` is not defined for operand types `Boolean` and `{name}`."
+                            ),
+                            &[
+                                ("Left operand", (!or).to_string().into()),
+                                ("Right operand", rendered),
+                            ],
+                        )
                     };
-                    return Err(RuntimeError::new(ErrorKind::Type, message));
+                    return Err(error);
                 }
                 self.stack.push(value);
             }
@@ -9410,29 +9525,29 @@ impl Vm {
                         } else {
                             "read"
                         };
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            PklString::join(
-                                &[
-                                    format!(
-                                        "Operator `{operator}` is not defined for operand type `"
-                                    )
+                        let headline = PklString::join(
+                            &[
+                                format!("Operator `{operator}` is not defined for operand type `")
                                     .into(),
-                                    (crate::diagnostic_values::type_name(
-                                        &operand,
-                                        &self.heap,
-                                        &self.program.module_name,
-                                    )?),
-                                    "`.\nOperand: ".into(),
-                                    crate::diagnostic_values::render(
-                                        &operand,
-                                        &self.heap,
-                                        &self.program.module_name,
-                                        80,
-                                    )?,
-                                ],
-                                "",
-                            ),
+                                crate::diagnostic_values::type_name(
+                                    &operand,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                )?,
+                                "`.".into(),
+                            ],
+                            "",
+                        );
+                        let rendered = crate::diagnostic_values::render(
+                            &operand,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            headline,
+                            &[("Operand", rendered)],
                         ));
                     }
                 };
@@ -12295,13 +12410,13 @@ fn display_value(value: &Value) -> PklString {
 }
 
 fn unary_error(operator: &str, operand: &Value) -> RuntimeError {
-    RuntimeError::new(
+    RuntimeError::with_program_values(
         ErrorKind::Type,
-        PklString::from(format!(
-            "Operator `{operator}` is not defined for operand type `{}`.\nOperand: ",
+        format!(
+            "Operator `{operator}` is not defined for operand type `{}`.",
             value_type_name(operand)
-        ))
-        .concat(&display_value(operand)),
+        ),
+        &[("Operand", display_value(operand))],
     )
 }
 
@@ -12312,23 +12427,19 @@ fn binary_error(
     heap: &Heap,
     module: &PklString,
 ) -> Result<RuntimeError, RuntimeError> {
-    Ok(RuntimeError::new(
+    let headline = PklString::from(format!(
+        "Operator `{operator}` is not defined for operand types `"
+    ))
+    .concat(&crate::diagnostic_values::type_name(left, heap, module)?)
+    .concat(&"` and `".into())
+    .concat(&crate::diagnostic_values::type_name(right, heap, module)?)
+    .concat(&"`.".into());
+    let left_val = crate::diagnostic_values::render_string(left, heap, module, 80)?;
+    let right_val = crate::diagnostic_values::render_string(right, heap, module, 80)?;
+    Ok(RuntimeError::with_program_values(
         ErrorKind::Type,
-        PklString::join(
-            &[
-                PklString::from(format!(
-                    "Operator `{operator}` is not defined for operand types `"
-                ))
-                .concat(&crate::diagnostic_values::type_name(left, heap, module)?)
-                .concat(&"` and `".into())
-                .concat(&crate::diagnostic_values::type_name(right, heap, module)?)
-                .concat(&"`.\nLeft operand : ".into()),
-                crate::diagnostic_values::render_string(left, heap, module, 80)?,
-                "\nRight operand: ".into(),
-                crate::diagnostic_values::render_string(right, heap, module, 80)?,
-            ],
-            "",
-        ),
+        headline,
+        &[("Left operand", left_val), ("Right operand", right_val)],
     ))
 }
 

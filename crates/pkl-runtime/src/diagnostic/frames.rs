@@ -264,7 +264,9 @@ fn render_hint_ansi(
         out.append_char('\n')
             .append_styled(theme::STACK_TRACE_MARGIN, margin);
         if precolored {
-            out.append_pkl(hint);
+            out.append_scoped(theme::ERROR_MESSAGE_HINT, |out| {
+                out.append_precolored_pkl(hint);
+            });
         } else {
             out.append_styled_pkl(theme::ERROR_MESSAGE_HINT, hint);
         }

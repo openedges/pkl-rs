@@ -17,6 +17,9 @@ use pkl_host_native::{
     CaCertSource, NativeHost, NativeHostConfig, NativeHostExtensions, default_module_cache_dir,
     path_to_file_uri,
 };
+use pkl_runtime::diagnostic::mordant::{
+    AnsiLevel, colorize_clikt_help, colorize_clikt_usage_error, detect_ansi_level,
+};
 use pkl_runtime::evaluation::frontend::DiagnosticProfile;
 use pkl_runtime::evaluation::session::SourceSession;
 use pkl_runtime::external_reader::ExternalReaderConfig;
@@ -38,7 +41,7 @@ use pkl_runtime::pkl_binary_decode::{DecodedObject, DecodedValue, decode_lossles
 use pkl_runtime::schema::{ModuleSchema, SchemaExtractor, SchemaStep};
 use pkl_runtime::value::PklString;
 use std::collections::{BTreeMap, HashSet};
-use std::io::{self, Write};
+use std::io::{self, IsTerminal, Write};
 use std::path::{Component, Path, PathBuf};
 
 type HttpHeaderMap = BTreeMap<String, Vec<(String, String)>>;
@@ -241,19 +244,31 @@ pub fn run_cli(args: &[String]) -> i32 {
     run_cli_with_io(args, &mut stdout, &mut stderr)
 }
 
-/// Testable entry point capturing `stdout` and `stderr`.
+/// Testable entry point capturing `stdout` and `stderr` using ambient Mordant ANSI detection.
 pub fn run_cli_with_io(args: &[String], stdout: &mut dyn Write, stderr: &mut dyn Write) -> i32 {
+    run_cli_with_io_and_ansi_level(args, stdout, stderr, detect_ansi_level())
+}
+
+/// Testable entry point capturing `stdout` and `stderr` with an explicit Mordant ANSI color level.
+pub fn run_cli_with_io_and_ansi_level(
+    args: &[String],
+    stdout: &mut dyn Write,
+    stderr: &mut dyn Write,
+    level: AnsiLevel,
+) -> i32 {
     let action = match parse_cli_args(args) {
         Ok(action) => action,
         Err(err) => {
-            write_error_line(stderr, err.message());
+            let msg = colorize_clikt_usage_error(err.message(), level);
+            write_error_line(stderr, &msg);
             return 1;
         }
     };
 
     match action {
         ParsedCliAction::Help => {
-            let _ = stdout.write_all(PKLDOC_HELP_TEXT.as_bytes());
+            let help = colorize_clikt_help(PKLDOC_HELP_TEXT, level);
+            let _ = stdout.write_all(help.as_bytes());
             let _ = stdout.flush();
             0
         }
@@ -296,7 +311,12 @@ fn write_error_line(stderr: &mut dyn Write, msg: &str) {
 }
 
 fn parse_cli_args(args: &[String]) -> Result<ParsedCliAction, DocGeneratorError> {
-    let mut opts = CliDocGeneratorOptions::default();
+    let mut opts = CliDocGeneratorOptions {
+        // Mirrors `BaseOptions.kt:173` (`.default(Color.AUTO)`), so CLI `--color`
+        // defaults to `auto` and takes precedence over `PklProject.evaluatorSettings.color`.
+        color: Some(EvaluatorColor::Auto),
+        ..CliDocGeneratorOptions::default()
+    };
     let mut output_dir: Option<PathBuf> = None;
     let mut i = 0usize;
     let mut end_of_flags = false;
@@ -1478,7 +1498,11 @@ fn build_native_host(
         "pretty" => TraceMode::Pretty,
         _ => TraceMode::Compact,
     };
-    let use_color = effective.color == EvaluatorColor::Always;
+    let use_color = match effective.color {
+        EvaluatorColor::Never => false,
+        EvaluatorColor::Always => true,
+        EvaluatorColor::Auto => io::stdin().is_terminal() && io::stdout().is_terminal(),
+    };
 
     let ext = NativeHostExtensions::default().with_color(use_color);
 

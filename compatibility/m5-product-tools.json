@@ -50,9 +50,9 @@
     "inventory_resource_total": 27,
     "m5_cases_by_lane": {
       "formatter": 43,
-      "pkldoc": 15,
+      "pkldoc": 17,
       "repl": 12,
-      "rust-api-and-cli": 50,
+      "rust-api-and-cli": 59,
       "server": 22
     },
     "m5_dynamic_formatter_snippet_cases": 30,
@@ -60,8 +60,8 @@
     "m5_requirement_impl_status": {
       "linked": 16
     },
-    "m5_static_cases": 112,
-    "m5_total_5lane_cases": 142,
+    "m5_static_cases": 123,
+    "m5_total_5lane_cases": 153,
     "pkldoc_branded_icon_replacements": 4,
     "pkldoc_vendored_assets_exact_matches": 13,
     "pkldoc_vendored_assets_status": "exact-match-with-branded-icons",
@@ -596,7 +596,7 @@
           "relative_asset": "images/favicon.svg",
           "upstream_path": "pkl-doc/src/main/resources/org/pkl/doc/images/favicon.svg",
           "upstream_sha256": "734375cbe48acc79525c53f6262734a2de5b60af25448462dba153a0926e2488",
-          "vendored_sha256": "6261b61fca1e7c3dde01fe4b57055eec245329c029fe513a4c1af5fe68bf4fdf",
+          "vendored_sha256": "b00322a4366c70a4c5a965ae088b82105ff6acdccdde4076b9b673d091513b33",
           "vendored_state": "pkl-rs-branded-replacement"
         },
         {
@@ -808,7 +808,11 @@
         "m5:cli:eval-trace-mode-pretty",
         "m5:cli:eval-multi-separator-and-output-path",
         "m5:cli:eval-stdlib-doc-package-info",
-        "m5:cli:analyze-imports-output-file"
+        "m5:cli:analyze-imports-output-file",
+        "m5:cli:eval-color-program-values",
+        "m5:cli:eval-color-union-hint-and-pipe",
+        "m5:cli:analyze-imports-color-syntax-err",
+        "m5:cli:eval-color-cli-auto-overrides-project-always"
       ],
       "description": "Full product `pkl eval` flags (--color, --power-assertions/--no-power-assertions, --trace-mode, --module-output-separator, -o), analyze imports -o, and direct evaluation of deferred external/pkl/stdlib/doc-package-info.pkl (8 items)",
       "dynamic_mode": null,
@@ -816,17 +820,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/eval_cmd.rs",
-          "sha256": "9190d76347ed5f94b16c48bd0d01ef8f6eede27a8b2cc4c305fada1ebfb72b36",
+          "sha256": "6252ae6a8ebef795e09fa0a254bef661d49476d5bc614a570295d987ad6c0220",
           "symbol": "cmd_eval"
         },
         {
           "path": "crates/pkl-cli/src/eval_cmd.rs",
-          "sha256": "9190d76347ed5f94b16c48bd0d01ef8f6eede27a8b2cc4c305fada1ebfb72b36",
+          "sha256": "6252ae6a8ebef795e09fa0a254bef661d49476d5bc614a570295d987ad6c0220",
           "symbol": "cmd_analyze_imports"
         },
         {
           "path": "crates/pkl-runtime/src/diagnostic/ansi.rs",
-          "sha256": "fcb47891b0ff4389c0d46fe98e8b7476e961953e1c1bf31694fadae109dc7441",
+          "sha256": "b258d569ccb36f6d5347cce0ec3a6e1ab2aa59cfcb9bfd8e98dcc6fc8aa34d0d",
           "symbol": "AnsiStringBuilder"
         },
         {
@@ -853,7 +857,11 @@
         "m5:cli:help-project",
         "m5:cli:help-download-package",
         "m5:cli:help-analyze",
-        "m5:cli:unknown-subcommand-error"
+        "m5:cli:unknown-subcommand-error",
+        "m5:cli:help-root-color-truecolor",
+        "m5:cli:help-format-color-ansi256",
+        "m5:cli:help-root-color-ansi16",
+        "m5:cli:bad-flag-color-truecolor"
       ],
       "description": "Root & subcommand --help verbatim parity, honest native-flavor --version/-v contract, and invalid subcommand error handling",
       "dynamic_mode": null,
@@ -861,7 +869,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/lib.rs",
-          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "sha256": "71cfd6a09da5566aa83ffd68482e4ede4354afa26b391ad3512cb45fa1e0ce33",
           "symbol": "run_cli"
         },
         {
@@ -871,7 +879,7 @@
         },
         {
           "path": "crates/pkl-cli/src/options.rs",
-          "sha256": "32eac236f7ad8f5717e51173fbac79a55ff26b85a9c4861c729512d9b9af1f23",
+          "sha256": "3dfeb1a4508825aaa7cd237617ff556754b18e176fdf44ab11ed26af253f082b",
           "symbol": "ParsedCliOptions"
         }
       ],
@@ -891,7 +899,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/run_cmd.rs",
-          "sha256": "de24167ce2e8b2b20aa3521e8177ce8ec6341fe238e4a2691709c0be9c05702f",
+          "sha256": "fe5dcd3763804ef7a5a05cc6771c47eae0cd2122894c064a935175566ace3e33",
           "symbol": "cmd_run"
         },
         {
@@ -931,7 +939,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/lib.rs",
-          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "sha256": "71cfd6a09da5566aa83ffd68482e4ede4354afa26b391ad3512cb45fa1e0ce33",
           "symbol": "run_cli"
         },
         {
@@ -962,7 +970,8 @@
         "m5:cli:test-junit-per-module",
         "m5:cli:test-junit-aggregate",
         "m5:cli:test-overwrite",
-        "m5:cli:test-no-modules-error"
+        "m5:cli:test-no-modules-error",
+        "m5:cli:test-fail-fact-local-power-color"
       ],
       "description": "Full `pkl test` CLI: spec and minimal reporters, ANSI color, fact power assertions, per-module and aggregate JUnit XML reports, --overwrite expected file generation, exit codes 0/10/1",
       "dynamic_mode": null,
@@ -970,12 +979,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/test_cmd.rs",
-          "sha256": "c2b17c9e752838e7be425dad2b5885fc8c391561a4ae1548141bea21c864a838",
+          "sha256": "fdaf658ea527d963b444f971a734481a8d8364048281d717687e3473886ab031",
           "symbol": "cmd_test"
         },
         {
           "path": "crates/pkl-cli/src/test_cmd.rs",
-          "sha256": "c2b17c9e752838e7be425dad2b5885fc8c391561a4ae1548141bea21c864a838",
+          "sha256": "fdaf658ea527d963b444f971a734481a8d8364048281d717687e3473886ab031",
           "symbol": "run_test_suite"
         },
         {
@@ -1024,7 +1033,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/format_cmd.rs",
-          "sha256": "f06b12e659ce84fbdc290d08a8af2901ac98018231a8569dec9fbebd9c5fa4b2",
+          "sha256": "717e0a89c6bae0d0b16aa64bc8762d0f9b39e01766cb0fa92c11db2457fe4804",
           "symbol": "cmd_format"
         },
         {
@@ -1076,7 +1085,9 @@
         "m5:pkldoc:error-legacy-without-migrate",
         "m5:pkldoc:error-missing-doc-package-info",
         "m5:pkldoc:error-multiple-docsite-info",
-        "m5:pkldoc:error-package-fragment"
+        "m5:pkldoc:error-package-fragment",
+        "m5:pkldoc:help-color-truecolor",
+        "m5:pkldoc:eval-error-color-always"
       ],
       "description": "`pkldoc` deferred external/pkl/stdlib/doc-package-info.pkl (`importUri = \"pkl:/\"`), non-test-mode 0.32.0 release links, `--migrate` from v1 docsite, `--help`/`--version`, and CLI validation errors",
       "dynamic_mode": null,
@@ -1084,12 +1095,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-doc/src/cli.rs",
-          "sha256": "fc67cd2fc63a4935f01686a8fadbdba0805f5728dd2dad51df33ee5deec5693b",
+          "sha256": "a656ed71ff48176ac5eb0aad4f850f5dfe41d5615c5e307a3d22be11edec06f6",
           "symbol": "CliDocGenerator"
         },
         {
           "path": "crates/pkl-doc/src/cli.rs",
-          "sha256": "fc67cd2fc63a4935f01686a8fadbdba0805f5728dd2dad51df33ee5deec5693b",
+          "sha256": "a656ed71ff48176ac5eb0aad4f850f5dfe41d5615c5e307a3d22be11edec06f6",
           "symbol": "pkldoc_version_info"
         },
         {
@@ -1131,7 +1142,7 @@
         },
         {
           "path": "crates/pkl-doc/src/assets.rs",
-          "sha256": "be695bab99a7b699d1e99a48a62c9784509ea1b89318372eb9f397b3bb26579f",
+          "sha256": "33f68c32638183512dc2a55d210bc58d0537ef48e2d41147be833c8b2885400b",
           "symbol": "write_all_static_resources"
         },
         {
@@ -1160,7 +1171,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-cli/src/repl_cmd.rs",
-          "sha256": "6b3604afe6fab169dc038a886607dfb694149c9186b2b55d27ffc1502bc4d50e",
+          "sha256": "531f39e4346ed7ee5288f6db5da0d320b0030ce2fe2b4f00661b82d99fde501d",
           "symbol": "cmd_repl"
         },
         {
@@ -1338,10 +1349,10 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m5-mappings.json": "d826287b55030150f63e777e5b082cb7f24102694535f3930946bb1609a823f0",
-    "tests/fixtures/m5/cases.json": "00cec6848ab1e63b1f5133b70931f86c0617a2a7a5fb42ae3cbae3b7c65f6ba3",
+    "compatibility/m5-mappings.json": "3c710cc11b1fecf9483c9b21f32b5ce7ad4b4e91754ce24097d93ca51379ae62",
+    "tests/fixtures/m5/cases.json": "607700e7759cd1bc659407034fbbb32c4fa05ce0902ea1f098aea4de9c95af95",
     "tools/java/M5ApiOracleProbe.java": "4cf720f83fd162a1be4e9db62796a35caac0cb5c10cdd99e63529ea435993bab",
-    "tools/m5_pkldoc_tree.py": "55e77419be3077ebc7f49d4d964c0600b96193e5fc6eb49c24c4f536df6e58ac",
+    "tools/m5_pkldoc_tree.py": "c788df66c0b3ad52d89f9b331ef657f6ad1012b8d9e11b6123494199d266f060",
     "tools/m5_repl_driver.py": "ed39a7d586f68084d186706b58cd89143317a0ed394ebfa2243eec22016afb05",
     "tools/m5_server_client.py": "e77af198a9aa64680ee3a3509a4266b7f9bbfb83bf8d53136986219a77ae23b2"
   }

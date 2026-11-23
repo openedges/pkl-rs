@@ -177,6 +177,13 @@ pub struct RuntimeErrorDetails {
     pub(crate) rendered_diagnostic: Option<PklString>,
     /// Completed Host diagnostic rendering with ANSI color codes enabled.
     pub(crate) rendered_diagnostic_colored: Option<PklString>,
+    /// Optional `(headline, trailer)` split for `VmException` cause lines and
+    /// `ProgramValue` lines (`VmExceptionRenderer.java:116-134`), so only `headline`
+    /// receives `ERROR_MESSAGE` ANSI styling while `trailer` remains uncolored.
+    pub(crate) uncolored_message_split: Option<(PklString, PklString)>,
+    /// Pre-colored hint body for `VmWrappedEvalException` (`VmExceptionRenderer.java:139-143`),
+    /// appended inside `ERROR_MESSAGE_HINT` scope when ANSI color is enabled.
+    pub(crate) colored_hint: Option<PklString>,
     /// An uncaught Java URI.create failure whose JVM rendering is not implemented.
     pub uri_create_cause: Option<UriCreateCause>,
     /// A source-backed foreign cause; complete Java stack projection is pending.
@@ -246,6 +253,8 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     frame_transformer: crate::logging::FrameTransformer::Default,
     rendered_diagnostic: None,
     rendered_diagnostic_colored: None,
+    uncolored_message_split: None,
+    colored_hint: None,
     uri_create_cause: None,
     foreign_exception: None,
     java_exception_message: None,
@@ -397,6 +406,62 @@ impl RuntimeError {
         }
     }
 
+    /// Creates a `RuntimeError` whose `headline` is styled with `ERROR_MESSAGE`
+    /// and whose `trailer` (Java cause line or `ProgramValue` block) is emitted uncolored
+    /// on the following line(s), matching `VmExceptionRenderer.java:112-134`.
+    pub(crate) fn with_uncolored_trailer(
+        kind: ErrorKind,
+        headline: impl Into<PklString>,
+        trailer: impl Into<PklString>,
+    ) -> Self {
+        let headline = headline.into();
+        let trailer = trailer.into();
+        let message = headline.concat(&"\n".into()).concat(&trailer);
+        let mut error = Self::new(kind, message);
+        error.uncolored_message_split = Some((headline, trailer));
+        error
+    }
+
+    /// Creates a `RuntimeError` with aligned `ProgramValue` lines (`name   : value`)
+    /// rendered uncolored beneath the styled `headline` (`VmExceptionRenderer.java:125-134`).
+    pub(crate) fn with_program_values(
+        kind: ErrorKind,
+        headline: impl Into<PklString>,
+        values: &[(&str, PklString)],
+    ) -> Self {
+        let headline = headline.into();
+        if values.is_empty() {
+            return Self::new(kind, headline);
+        }
+        let max_len = values.iter().map(|(name, _)| name.len()).max().unwrap_or(0);
+        let mut parts: Vec<PklString> = Vec::with_capacity(values.len() * 3);
+        for (idx, (name, value)) in values.iter().enumerate() {
+            if idx > 0 {
+                parts.push("\n".into());
+            }
+            let pad = max_len.saturating_sub(name.len());
+            parts.push(format!("{name}{}: ", " ".repeat(pad)).into());
+            parts.push(value.clone());
+        }
+        let trailer = PklString::join(&parts, "");
+        Self::with_uncolored_trailer(kind, headline, trailer)
+    }
+
+    /// Appends a single uncolored `ProgramValue` (`name: value`) line to an existing error.
+    pub(crate) fn push_program_value(&mut self, name: &str, value: PklString) {
+        let headline = match &self.uncolored_message_split {
+            Some((h, _)) => h.clone(),
+            None => self.message.clone(),
+        };
+        let line = PklString::from(format!("{name}: ")).concat(&value);
+        let trailer = match &self.uncolored_message_split {
+            Some((_, prev)) => prev.concat(&"\n".into()).concat(&line),
+            None => line,
+        };
+        self.message = headline.concat(&"\n".into()).concat(&trailer);
+        self.uncolored_message_split = Some((headline, trailer));
+    }
+
     /// The runtime callback stage that produced this failure, if any.
     pub fn callback_origin(&self) -> Option<crate::logging::CallbackOrigin> {
         self.callback_origin
@@ -415,6 +480,15 @@ impl RuntimeError {
     /// Raw Host/protocol failures do not acquire this provenance by default.
     pub(crate) fn host_language(message: impl Into<PklString>) -> Self {
         let mut error = Self::new(ErrorKind::Host, message);
+        error.host_language_exception = true;
+        error
+    }
+
+    pub(crate) fn host_language_with_trailer(
+        headline: impl Into<PklString>,
+        trailer: impl Into<PklString>,
+    ) -> Self {
+        let mut error = Self::with_uncolored_trailer(ErrorKind::Host, headline, trailer);
         error.host_language_exception = true;
         error
     }

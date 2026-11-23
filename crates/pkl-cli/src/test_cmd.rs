@@ -9,7 +9,6 @@ use crate::env::{
 use crate::help::HELP_TEST;
 use crate::options::{CliError, ParsedCliOptions, SubcommandKind, parse_options};
 use pkl_host_native::{NativeHost, file_uri_to_path, path_to_file_uri};
-use pkl_runtime::diagnostic::TypeDiagnostic;
 use pkl_runtime::diagnostic::ansi::strip_ansi_codes;
 use pkl_runtime::evaluation::frontend::DiagnosticProfile;
 use pkl_runtime::evaluation::session::SourceSession;
@@ -54,7 +53,7 @@ else ex.toMap().mapValues((_, g) ->
 pub fn cmd_test(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::Test, args)?;
     if opts.show_help {
-        print!("{HELP_TEST}");
+        crate::write_help(HELP_TEST);
         return Ok(0);
     }
 
@@ -89,8 +88,9 @@ pub fn cmd_test(args: &[String]) -> Result<i32, CliError> {
         }
         list
     } else {
-        return Err(CliError::err(
-            "Usage: pkl test [<options>] <modules>...\n\nError: missing argument <modules>",
+        return Err(CliError::usage(
+            "Usage: pkl test [<options>] <modules>...",
+            "missing argument <modules>",
         ));
     };
     sources.dedup_by(|a, b| a.0 == b.0);
@@ -233,7 +233,7 @@ pub fn run_test_suite(
                 let display_path = path.to_string_lossy();
                 let _ = writeln!(stderr, "Error evaluating module {display_path}:");
                 let _ = stderr.write_all(err_msg.as_bytes());
-                if !err_msg.ends_with('\n') {
+                if !strip_ansi_codes(&err_msg).ends_with('\n') {
                     let _ = stderr.write_all(b"\n");
                 }
                 if idx + 1 != sources.len() {
@@ -377,7 +377,9 @@ fn run_single_test_module(
     let (module_name, is_test) = if direct_test_module {
         let name = declared_name.unwrap_or(inferred_name);
         // Ensure the module loads/parses cleanly (propagating syntax errors as Err).
-        let _ = host.evaluate_expression_pkl_binary_on(session, spec.clone(), "true")?;
+        let _ = host
+            .evaluate_expression_pkl_binary_on(session, spec.clone(), "true")
+            .map_err(|e| strip_trailing_repl_frames(&e))?;
         (name, true)
     } else {
         let check_expr = r#"
@@ -389,8 +391,9 @@ new Mapping {
   ["isTest"] = reflect.Class(module.getClass()).isSubclassOf(reflect.Class(testMod.getClass()))
 }
 "#;
-        let check_bytes =
-            host.evaluate_expression_pkl_binary_on(session, spec.clone(), check_expr)?;
+        let check_bytes = host
+            .evaluate_expression_pkl_binary_on(session, spec.clone(), check_expr)
+            .map_err(|e| strip_trailing_repl_frames(&e))?;
         let decoded = decode_lossless(&check_bytes)
             .map_err(|e| format!("Failed to decode test module check: {e:?}"))?;
         let mut mod_name = inferred_name;
@@ -409,16 +412,16 @@ new Mapping {
 
     let display_uri = format_test_location(uri, None, test_mode, editor_url_scheme);
     if !is_test {
-        let err_msg = match host.evaluate_expression_string_on(
-            session,
-            spec.clone(),
-            "module as import(\"pkl:test\")",
-        ) {
-            Err(rendered) => strip_trailing_repl_frames(&rendered),
-            Ok(_) => format!(
-                "–– Pkl Error ––\nExpected value of type `pkl.test`, but got type `Class`.\nValue: {module_name}\n"
-            ),
-        };
+        // Mirrors `TestRunner.java:71-77` (`VmUtils.checkAmends(testModule, TestModule.getModule().getVmClass())`):
+        // frameless `VmEvalException` with uncolored `Value: <moduleName>` program value.
+        let err_msg = pkl_runtime::diagnostic::render_error_text_with_trailer_colored(
+            &"Expected value of type `pkl.test`, but got type `Class`.".into(),
+            &format!("Value: {module_name}").into(),
+            &[],
+            None,
+            use_color,
+        )
+        .to_java_utf8();
         return Ok(TestResults {
             module_name,
             display_uri,
@@ -486,7 +489,9 @@ fn run_test_facts(
     editor_url_scheme: &str,
 ) -> Result<TestSectionResults, String> {
     let shape_expr = "if (facts == null) null else facts.toMap().mapValues((_, g) -> g.length)";
-    let shape_bytes = host.evaluate_expression_pkl_binary_on(session, spec.clone(), shape_expr)?;
+    let shape_bytes = host
+        .evaluate_expression_pkl_binary_on(session, spec.clone(), shape_expr)
+        .map_err(|e| strip_trailing_repl_frames(&e))?;
     let shape_decoded = decode_lossless(&shape_bytes)
         .map_err(|e| format!("Failed to decode facts shape: {e:?}"))?;
     let groups = match shape_decoded {
@@ -522,6 +527,8 @@ fn run_test_facts(
                             session,
                             spec,
                             module_uri,
+                            test_text,
+                            &group_name,
                             group_locs.and_then(|v| v.get(idx)),
                             idx,
                             use_color,
@@ -564,6 +571,8 @@ fn build_fact_failure(
     session: &mut SourceSession,
     spec: &ModuleSourceSpec,
     module_uri: &str,
+    test_text: &str,
+    group_name: &str,
     loc_info: Option<&(String, usize, pkl_runtime::source::Span)>,
     idx: usize,
     use_color: bool,
@@ -571,37 +580,37 @@ fn build_fact_failure(
     test_mode: bool,
     editor_url_scheme: &str,
 ) -> TestFailure {
-    let Some((expr_text, line, _span)) = loc_info else {
+    let Some((expr_text, line, fact_span)) = loc_info else {
         let loc = format_test_location(module_uri, None, test_mode, editor_url_scheme);
         return format_fact_failure(&format!("fact #{idx} == false"), &loc, use_color);
     };
     let location = format_test_location(module_uri, Some(*line), test_mode, editor_url_scheme);
 
     if power_assertions {
-        let probe_expr = format!("(null as Any({expr_text}))");
-        let now = host.clock_ms();
-        let timeout_ms = host.timeout_ms();
-        let mut stderr = Vec::new();
-        if session
-            .start_evaluation_pkl_binary(spec.clone(), probe_expr.as_str(), now, timeout_ms)
-            .is_ok()
-        {
-            let res = host.drive_public_session(session, &mut stderr);
-            if let Err(err) = res
-                && let Some(ref td) = err.type_diagnostic
-                && let Some((body_span, observations)) = extract_constraint_observations(td)
-            {
-                let mut sm = SourceMap::default();
-                let sid = sm.add("repl:text", probe_expr.as_str());
-                if let Some(src) = sm.get(sid) {
-                    return format_fact_failure_with_power_assertions(
-                        src,
-                        body_span,
-                        observations,
-                        &location,
-                        use_color,
-                    );
-                }
+        // Mirror `TestRunner.java:105-115`: clear cached values on the `facts[group]`
+        // listing and re-evaluate `facts[group][idx]` in its real lexical module scope
+        // under an active VM power-assertion value tracker.
+        let fact_expr = format!("facts[{}][{idx}]", pkl_quote_str(group_name));
+        let mod_uri = PklString::from(module_uri);
+        let grp_name = PklString::from(group_name);
+        if session.begin_fact_trace(&mod_uri, &grp_name, *fact_span) {
+            let now = host.clock_ms();
+            let timeout_ms = host.timeout_ms();
+            let mut stderr = Vec::new();
+            let _ = session
+                .start_evaluation_pkl_binary(spec.clone(), fact_expr.as_str(), now, timeout_ms)
+                .and_then(|()| host.drive_public_session(session, &mut stderr));
+            let observations = session.finish_fact_trace();
+            let mut sm = SourceMap::default();
+            let sid = sm.add(module_uri, test_text);
+            if let Some(src) = sm.get(sid) {
+                return format_fact_failure_with_power_assertions(
+                    src,
+                    *fact_span,
+                    &observations,
+                    &location,
+                    use_color,
+                );
             }
         }
     }
@@ -622,8 +631,9 @@ fn run_test_examples(
     test_mode: bool,
     editor_url_scheme: &str,
 ) -> Result<(TestSectionResults, Option<String>, Option<String>), String> {
-    let is_null_bytes =
-        host.evaluate_expression_pkl_binary_on(session, spec.clone(), "examples == null")?;
+    let is_null_bytes = host
+        .evaluate_expression_pkl_binary_on(session, spec.clone(), "examples == null")
+        .map_err(|e| strip_trailing_repl_frames(&e))?;
     if matches!(
         decode_lossless(&is_null_bytes),
         Ok(DecodedValue::Bool(true))
@@ -673,8 +683,9 @@ fn run_test_examples(
             uri: PklString::from(expected_uri.as_str()),
             contents: Some(exp_text.as_str().into()),
         };
-        let exp_bytes =
-            host.evaluate_expression_pkl_binary_on(session, exp_spec, EXPECTED_EXAMPLES_MAP_EXPR)?;
+        let exp_bytes = host
+            .evaluate_expression_pkl_binary_on(session, exp_spec, EXPECTED_EXAMPLES_MAP_EXPR)
+            .map_err(|e| strip_trailing_repl_frames(&e))?;
         let exp_decoded = decode_lossless(&exp_bytes)
             .map_err(|e| format!("Failed to decode expected examples: {e:?}"))?;
         (
@@ -764,7 +775,9 @@ fn evaluate_examples_isolated(
 ) -> Result<TestSectionResults, String> {
     let shape_expr =
         "if (examples == null) null else examples.toMap().mapValues((_, g) -> g.length)";
-    let shape_bytes = host.evaluate_expression_pkl_binary_on(session, spec.clone(), shape_expr)?;
+    let shape_bytes = host
+        .evaluate_expression_pkl_binary_on(session, spec.clone(), shape_expr)
+        .map_err(|e| strip_trailing_repl_frames(&e))?;
     let shape_decoded = decode_lossless(&shape_bytes)
         .map_err(|e| format!("Failed to decode examples shape: {e:?}"))?;
     let groups = match shape_decoded {
@@ -901,23 +914,6 @@ fn evaluate_examples_isolated(
     })
 }
 
-fn extract_constraint_observations(
-    td: &TypeDiagnostic,
-) -> Option<(
-    pkl_runtime::source::Span,
-    &[pkl_runtime::diagnostic::PowerAssertionValue],
-)> {
-    match td {
-        TypeDiagnostic::AtSource { diagnostic, .. } => extract_constraint_observations(diagnostic),
-        TypeDiagnostic::Constraint {
-            body_span,
-            observations: Some(obs),
-            ..
-        } => Some((*body_span, obs.as_slice())),
-        _ => None,
-    }
-}
-
 /// Removes trailing synthetic `repl:text` probe frames (supporting both plain and ANSI-colored
 /// error renders) while preserving trailing newline / ANSI reset semantics matching
 /// `PklException.getMessage()`.
@@ -958,7 +954,7 @@ pub fn strip_trailing_repl_frames(rendered: &str) -> String {
         let sep_line = lines[sep_idx];
         if sep_line.starts_with("\x1b[0m") {
             trailing_reset = Some("\x1b[0m");
-        } else if sep_line.is_empty() {
+        } else {
             trailing_reset = None;
         }
         lines.truncate(sep_idx);

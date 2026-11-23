@@ -119,6 +119,7 @@ impl Vm {
             pure_standard_host: false,
             inline_module_depth: 0,
             active_type_trackers: 0,
+            fact_tracker: None,
             public_primary: None,
             modules_original: snap.modules_original.clone(),
             modules_stdlib: snap.modules_stdlib.clone(),

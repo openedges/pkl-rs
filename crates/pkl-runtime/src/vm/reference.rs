@@ -1311,21 +1311,20 @@ impl Vm {
             let left =
                 crate::diagnostic_values::render(&Value::Object(id), &self.heap, module, 80)?;
             let right = crate::diagnostic_values::render(key, &self.heap, module, 80)?;
-            let mut error = RuntimeError::new(
+            let headline = PklString::join(
+                &[
+                    "Operator `[]` is not defined for operand types `".into(),
+                    actual,
+                    PklString::from("` and `")
+                        .concat(&key_type)
+                        .concat(&"`.".into()),
+                ],
+                "",
+            );
+            let mut error = RuntimeError::with_program_values(
                 ErrorKind::Type,
-                PklString::join(
-                    &[
-                        "Operator `[]` is not defined for operand types `".into(),
-                        actual,
-                        PklString::from("` and `")
-                            .concat(&key_type)
-                            .concat(&"`.\nLeft operand : ".into()),
-                        left,
-                        "\nRight operand: ".into(),
-                        right,
-                    ],
-                    "",
-                ),
+                headline,
+                &[("Left operand", left), ("Right operand", right)],
             );
             error.hint = Some(if union {
                 PklString::join(

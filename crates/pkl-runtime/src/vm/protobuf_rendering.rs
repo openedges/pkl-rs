@@ -393,7 +393,11 @@ impl Vm {
                         &self.program.module_name,
                         80,
                     )?;
-                    return Err(RuntimeError::new(ErrorKind::Type, PklString::from("Cannot render map with a non-scalar, floating point or byte array key.\nKey: ").concat(&rendered)));
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        "Cannot render map with a non-scalar, floating point or byte array key.",
+                        &[("Key", rendered)],
+                    ));
                 }
                 run.proto_name();
                 run.proto_start_message();

@@ -648,8 +648,13 @@ pub(crate) fn prepare_runtime_error(
             .as_ref()
             .map_or(0, |frontend| frontend.diagnostic.highlight_offset_utf16()),
     );
+    if let Some((headline, trailer)) = &error.uncolored_message_split {
+        prepared.set_message_split(headline.clone(), trailer.clone());
+    }
     if let Some(c_message) = colored_type_message {
         prepared.set_colored_override(c_message, colored_type_hint);
+    } else if let Some(c_hint) = &error.colored_hint {
+        prepared.set_colored_hint(c_hint.clone());
     }
     prepared
 }

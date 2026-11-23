@@ -37,7 +37,7 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 ### Legal, Licensing & Brand Separation
 
 - Regenerated all 12 Unicode 15.0.0 data tables directly from official Unicode Consortium UCD 15.0.0 files (`Unicode-3.0`) via [tools/generate_ucd15_regex_tables.py](tools/generate_ucd15_regex_tables.py), eliminating all OpenJDK `uniName.dat` / GPLv2 legal files, and absorbed the self-contained UTF-16 Java regex engine into `crates/pkl-runtime/src/java_regex/` (removing `vendor/java_regex/`, `[patch.crates-io]`, and 4 unused upstream Unicode crates from `Cargo.lock`).
-- Replaced Apple's Pkl `pkldoc` favicons with original OpenEdges `pkl-rs` Apache-2.0 SVG/PNG artwork (`crates/pkl-doc/assets/images/`), updated CLI version banners to `pkl-rs 0.32.0` / `pkldoc-rs 0.32.0` and HTTP `User-Agent` to `pkl-rs/0.32.0`, and added explicit Apple Pkl non-affiliation trademark notices.
+- Replaced Apple's Pkl `pkldoc` favicons with original `pkl-rs` Apache-2.0 SVG/PNG artwork (`crates/pkl-doc/assets/images/`), updated CLI version banners to `pkl-rs 0.32.0` / `pkldoc-rs 0.32.0` and HTTP `User-Agent` to `pkl-rs/0.32.0`, and added explicit Apple Pkl non-affiliation trademark notices.
 - Completed [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) with verbatim notices/texts for Sun FDLIBM (1993), SnakeYAML Engine 3.0.1, AOSP/Apache Spark TimSort, SIL OFL 1.1, Unicode-3.0, MIT, ISC, BSD-3-Clause, and `ring`.
 
 ### Known Pre-Release Boundaries

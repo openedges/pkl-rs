@@ -1,16 +1,15 @@
 pkl-rs
-Copyright 2025-2026 OpenEdges Inc.
+Copyright 2025-2026 The pkl-rs Authors
 
 An independent pure-Rust implementation targeting Apple Pkl 0.32.0 compatibility.
 Repository: https://github.com/openedges/pkl-rs
 
 TRADEMARK & NON-AFFILIATION NOTICE
-"pkl-rs" is an independent open-source project maintained by OpenEdges Inc. and
-is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is a
-trademark or product name of Apple Inc., referenced solely to describe language
-and specification compatibility. All `pkldoc` favicons under
-crates/pkl-doc/assets/images/ are original OpenEdges Inc. artwork licensed under
-Apache-2.0.
+"pkl-rs" is an independent open-source project and is not affiliated with,
+sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of
+Apple Inc., referenced solely to describe language and specification
+compatibility. All `pkldoc` favicons under crates/pkl-doc/assets/images/ are
+original `pkl-rs` artwork licensed under Apache-2.0.
 
 This product includes or adapts software and assets from the following third-party
 projects. Full license texts and dependency inventories are recorded in
@@ -28,7 +27,7 @@ THIRD-PARTY-NOTICES.md.
      diagnostic/frames.rs, vm/settings_paths.rs, vm/yaml_parser/backend/resolve.rs}.
    - Functional `pkldoc` web resources under crates/pkl-doc/assets/
      (styles/pkldoc.css, scripts/pkldoc.js, scripts/search-worker.js, fonts/*;
-     excluding original OpenEdges `pkl-rs` icons under images/*) and Clikt
+     excluding original `pkl-rs` icons under images/*) and Clikt
      shell-completion scripts under crates/pkl-cli/assets/ (Clikt Copyright ©
      2018 AJ Alt, Apache-2.0).
    - Bundled TLS root certificates in crates/pkl-host-native/assets/PklCARoots.pem.
@@ -78,7 +77,8 @@ THIRD-PARTY-NOTICES.md.
 
 8. Historical test fixtures (source repository only, not in binary releases)
    - tests/fixtures/rev1/ retains its original Apache-2.0 LICENSE and NOTICE
-     (OpenEdges Inc. 2025; Apple Inc./Pkl project authors 2024-2025).
+     (OPENEDGES Technology Inc., originally recorded in 2025 as OpenEdges Inc.;
+     Apple Inc./Pkl project authors 2024-2025).
    - Compatibility oracle fixtures under tests/fixtures/ originate from the
      pinned Apple Pkl 0.32.0 test suite (Apache-2.0) and are excluded from
      binary and npm distributions.

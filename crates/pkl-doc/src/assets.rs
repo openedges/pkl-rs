@@ -1,6 +1,6 @@
 //! All 17 embedded static web resources for `pkldoc`:
 //! - 13 functional web assets verbatim from Apple Pkl 0.32.0 (`fonts/*`, `scripts/*`, `styles/*`)
-//! - 4 original `pkl-rs` brand favicons (`images/*`, Copyright 2025-2026 OpenEdges Inc., Apache-2.0)
+//! - 4 original `pkl-rs` brand favicons (`images/*`, Copyright 2025-2026 The pkl-rs Authors, Apache-2.0)
 
 use std::fs;
 use std::io;

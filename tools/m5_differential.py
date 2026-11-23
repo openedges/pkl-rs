@@ -153,7 +153,7 @@ def capture_process(
 
 def build_case_env(
     base_env: dict[str, str],
-    case_env: dict[str, str],
+    case_env: dict[str, str | None],
     state_dir: Path,
     *,
     prepend_path_dir: Path | None = None,
@@ -162,15 +162,21 @@ def build_case_env(
     tmp = state_dir / "tmp"
     home.mkdir(parents=True, exist_ok=True)
     tmp.mkdir(parents=True, exist_ok=True)
-    env = {
-        **base_env,
-        **case_env,
-        "HOME": str(home),
-        "TMPDIR": str(tmp),
-        "TMP": str(tmp),
-        "TEMP": str(tmp),
-        "PYTHONDONTWRITEBYTECODE": "1",
-    }
+    env = dict(base_env)
+    for k, v in case_env.items():
+        if v is None:
+            env.pop(k, None)
+        else:
+            env[k] = v
+    env.update(
+        {
+            "HOME": str(home),
+            "TMPDIR": str(tmp),
+            "TMP": str(tmp),
+            "TEMP": str(tmp),
+            "PYTHONDONTWRITEBYTECODE": "1",
+        }
+    )
     if prepend_path_dir is not None:
         env["PATH"] = str(prepend_path_dir) + os.pathsep + env.get("PATH", os.defpath)
     return env
@@ -460,7 +466,12 @@ def check_pkldoc_progress_stdout(expected_stdout: bytes, actual_stdout: bytes) -
     return ok, detail
 
 
-def check_pkldoc_progress_contract(expected: dict, actual: dict) -> tuple[list[str], dict]:
+def check_pkldoc_progress_contract(
+    expected: dict,
+    actual: dict,
+    *,
+    allow_branded_icons: bool = True,
+) -> tuple[list[str], dict]:
     """Enforce raw-byte parity on exit_code, stderr, files/symlinks, and structured pkldoc stdout."""
     diffs: list[str] = []
     if expected["exit_code"] != actual["exit_code"]:
@@ -476,7 +487,14 @@ def check_pkldoc_progress_contract(expected: dict, actual: dict) -> tuple[list[s
         diffs.append("workspace_changes")
     exp_files = expected.get("files", {})
     act_files = actual.get("files", {})
-    diffs.extend(m5_pkldoc_tree.compare_pkldoc_trees(exp_files, act_files, ROOT))
+    diffs.extend(
+        m5_pkldoc_tree.compare_pkldoc_trees(
+            exp_files,
+            act_files,
+            ROOT,
+            allow_branded_icons=allow_branded_icons,
+        )
+    )
     return diffs, detail
 
 
@@ -570,7 +588,10 @@ def classify_result(
         diffs = check_native_version_contract(expected, actual)
         return ("mismatch", diffs) if diffs else ("pass", [])
     if comp_mode == "pkldoc-progress":
-        diffs, _ = check_pkldoc_progress_contract(expected, actual)
+        allow_branded = "--migrate" not in (case.get("command") or [])
+        diffs, _ = check_pkldoc_progress_contract(
+            expected, actual, allow_branded_icons=allow_branded
+        )
         return ("mismatch", diffs) if diffs else ("pass", [])
 
     diffs = compat.differences(expected, actual)
@@ -834,7 +855,10 @@ def run_case(
     raw_stdout_bytes_match: bool | None = None
     pkldoc_progress_detail: dict | None = None
     if case.get("comparison_mode") == "pkldoc-progress" and rust_raw is not None:
-        _, pkldoc_progress_detail = check_pkldoc_progress_contract(java_raw, rust_raw)
+        allow_branded = "--migrate" not in (case.get("command") or [])
+        _, pkldoc_progress_detail = check_pkldoc_progress_contract(
+            java_raw, rust_raw, allow_branded_icons=allow_branded
+        )
         raw_stdout_bytes_match = pkldoc_progress_detail["raw_stdout_bytes_match"]
     shutil.rmtree(work_root, ignore_errors=True)
 
@@ -1220,7 +1244,10 @@ def verify_report(directory: Path, *, strict: bool = False) -> dict:
         if row["status"] != status or row["differences"] != diffs:
             raise ValueError(f"recomputed status/differences disagree for {row['id']}: {row['status']} vs {status}")
         if case.get("comparison_mode") == "pkldoc-progress" and rust_cap is not None:
-            _, expected_detail = check_pkldoc_progress_contract(java_cap, rust_cap)
+            allow_branded = "--migrate" not in (case.get("command") or [])
+            _, expected_detail = check_pkldoc_progress_contract(
+                java_cap, rust_cap, allow_branded_icons=allow_branded
+            )
             expected_raw_match = java_cap["stdout"] == rust_cap["stdout"]
             recorded_raw_match = row.get("raw_stdout_bytes_match")
             if type(recorded_raw_match) is not bool or recorded_raw_match != expected_raw_match:

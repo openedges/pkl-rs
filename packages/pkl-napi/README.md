@@ -64,6 +64,6 @@ Version `0.32.0` tracks the **Apple Pkl `0.32.0`** compatibility baseline (`PKL_
 
 ## License & Trademarks
 
-Licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 OpenEdges Inc.). Attribution and third-party notices are bundled in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 The pkl-rs Authors). Attribution and third-party notices are bundled in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
-`@pkl-rs/napi` is part of the independent `pkl-rs` project by OpenEdges Inc. and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.
+`@pkl-rs/napi` is part of the independent open-source `pkl-rs` project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.

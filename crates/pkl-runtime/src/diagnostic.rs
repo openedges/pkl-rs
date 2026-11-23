@@ -2,6 +2,7 @@
 pub mod ansi;
 mod frames;
 pub(crate) mod highlight;
+pub mod mordant;
 
 use crate::source::{Source, SourceId, Span};
 use crate::value::PklString;
@@ -244,40 +245,41 @@ impl TypeDiagnostic {
                 if nontrivial.is_empty() {
                     return None;
                 }
-                let mut hint_builder = ansi::AnsiStringBuilder::new(use_color);
-                hint_builder.append_scoped(ansi::theme::ERROR_MESSAGE_HINT, |hout| {
-                    for (idx, child) in nontrivial.into_iter().enumerate() {
-                        if idx > 0 {
-                            hout.append_str("\n\n");
-                        }
-                        let expected = match &child.type_source {
-                            Some(section) => section
-                                .text()
-                                .slice(section.span())
-                                .map(|text| text.to_pkl_string())
-                                .unwrap_or_default(),
-                            None => source
-                                .slice(child.type_span)
-                                .map(|text| text.to_pkl_string())
-                                .unwrap_or_default(),
-                        };
-                        hout.append_str(&format!("{indent}* Value is not of type `"));
-                        hout.append_pkl(&expected);
-                        hout.append_str("` because:\n");
-                        let child_hint = child.diagnostic.render_indented_into(
-                            source,
-                            &format!("{indent}  "),
-                            power,
-                            use_color,
-                            hout,
-                        );
-                        if let Some(sub_hint) = child_hint {
-                            hout.append_str("\n\n");
-                            hout.append_pkl(&sub_hint);
-                        }
+                let mut hint_builder = ansi::AnsiStringBuilder::new_with_active_style(
+                    use_color,
+                    ansi::theme::ERROR_MESSAGE_HINT,
+                );
+                for (idx, child) in nontrivial.into_iter().enumerate() {
+                    if idx > 0 {
+                        hint_builder.append_str("\n\n");
                     }
-                });
-                Some(hint_builder.finish_pkl())
+                    let expected = match &child.type_source {
+                        Some(section) => section
+                            .text()
+                            .slice(section.span())
+                            .map(|text| text.to_pkl_string())
+                            .unwrap_or_default(),
+                        None => source
+                            .slice(child.type_span)
+                            .map(|text| text.to_pkl_string())
+                            .unwrap_or_default(),
+                    };
+                    hint_builder.append_str(&format!("{indent}* Value is not of type `"));
+                    hint_builder.append_pkl(&expected);
+                    hint_builder.append_str("` because:\n");
+                    let child_hint = child.diagnostic.render_indented_into(
+                        source,
+                        &format!("{indent}  "),
+                        power,
+                        use_color,
+                        &mut hint_builder,
+                    );
+                    if let Some(sub_hint) = child_hint {
+                        hint_builder.append_str("\n\n");
+                        hint_builder.append_precolored_pkl(&sub_hint);
+                    }
+                }
+                Some(hint_builder.finish_raw_pkl())
             }
         }
     }
@@ -469,6 +471,22 @@ pub fn render_error_text_colored(
     rendering.render_colored(use_color)
 }
 
+/// Canonical diagnostic text with an uncolored `ProgramValue`/cause trailer beneath the
+/// styled headline, matching `VmExceptionRenderer.java:112-134`.
+pub fn render_error_text_with_trailer_colored(
+    headline: &PklString,
+    trailer: &PklString,
+    frames: &[RenderFrame<'_>],
+    hint: Option<&PklString>,
+    use_color: bool,
+) -> PklString {
+    let full = headline.concat(&"\n".into()).concat(trailer);
+    let mut rendering = PreparedDiagnostic::new(&full, frames, hint);
+    rendering.set_message_split(headline.clone(), trailer.clone());
+    rendering.transform(crate::logging::FrameTransformer::Default);
+    rendering.render_colored(use_color)
+}
+
 pub(crate) fn render_frontend_error_text(
     error: &Diagnostic,
     frames: &[RenderFrame<'_>],
@@ -491,11 +509,29 @@ pub(crate) fn render_frontend_error_text_colored(
     rendering.render_colored(use_color)
 }
 
+/// Renders a frontend diagnostic without the `–– Pkl Error ––` header, matching
+/// `VmExceptionRenderer.renderException(wrapped, sb, false)` for `VmWrappedEvalException`.
+pub(crate) fn render_frontend_error_body_colored(
+    error: &Diagnostic,
+    frames: &[RenderFrame<'_>],
+    use_color: bool,
+) -> PklString {
+    let mut rendering = PreparedDiagnostic::new_frontend(
+        &error.message,
+        frames,
+        error.hint(),
+        error.highlight_offset_utf16(),
+    );
+    rendering.transform(crate::logging::FrameTransformer::Default);
+    rendering.render_colored_inner(use_color, false)
+}
+
 /// Detached rendering continuation. Frame compression precedes transformation,
 /// and replacements retain all Java string code units and source positions.
 #[derive(Clone, Debug)]
 pub(crate) struct PreparedDiagnostic {
     message: PklString,
+    message_split: Option<(PklString, PklString)>,
     hint: Option<PklString>,
     colored_message: Option<PklString>,
     colored_hint: Option<PklString>,
@@ -509,6 +545,7 @@ impl PreparedDiagnostic {
     ) -> Self {
         Self {
             message: message.clone(),
+            message_split: None,
             hint: hint.cloned(),
             colored_message: None,
             colored_hint: None,
@@ -526,6 +563,7 @@ impl PreparedDiagnostic {
         }
         Self {
             message: message.clone(),
+            message_split: None,
             hint: hint.cloned(),
             colored_message: None,
             colored_hint: None,
@@ -535,6 +573,12 @@ impl PreparedDiagnostic {
     pub(crate) fn set_colored_override(&mut self, message: PklString, hint: Option<PklString>) {
         self.colored_message = Some(message);
         self.colored_hint = hint;
+    }
+    pub(crate) fn set_message_split(&mut self, headline: PklString, trailer: PklString) {
+        self.message_split = Some((headline, trailer));
+    }
+    pub(crate) fn set_colored_hint(&mut self, hint: PklString) {
+        self.colored_hint = Some(hint);
     }
     pub(crate) fn next_frame(&self) -> Option<&crate::logging::LogFrame> {
         self.frames.next()
@@ -552,11 +596,21 @@ impl PreparedDiagnostic {
     }
 
     pub(crate) fn render_colored(&self, use_color: bool) -> PklString {
+        self.render_colored_inner(use_color, true)
+    }
+
+    fn render_colored_inner(&self, use_color: bool, with_header: bool) -> PklString {
         let mut out = ansi::AnsiStringBuilder::new(use_color);
-        out.append_styled(ansi::theme::ERROR_HEADER, "–– Pkl Error ––")
-            .append_char('\n');
+        if with_header {
+            out.append_styled(ansi::theme::ERROR_HEADER, "–– Pkl Error ––")
+                .append_char('\n');
+        }
         if use_color && let Some(precolored) = &self.colored_message {
             out.append_pkl(precolored);
+        } else if let Some((headline, trailer)) = &self.message_split {
+            out.append_styled_pkl(ansi::theme::ERROR_MESSAGE, headline)
+                .append_char('\n')
+                .append_pkl(trailer);
         } else {
             out.append_styled_pkl(ansi::theme::ERROR_MESSAGE, &self.message);
         }
@@ -572,7 +626,9 @@ impl PreparedDiagnostic {
         } else if let Some(hint) = &self.hint {
             out.append_char('\n');
             if use_color && let Some(precolored_hint) = &self.colored_hint {
-                out.append_pkl(precolored_hint);
+                out.append_scoped(ansi::theme::ERROR_MESSAGE_HINT, |out| {
+                    out.append_precolored_pkl(precolored_hint);
+                });
             } else {
                 out.append_styled_pkl(ansi::theme::ERROR_MESSAGE_HINT, hint);
             }

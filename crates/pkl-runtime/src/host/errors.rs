@@ -40,22 +40,22 @@ impl IoFailure {
         let headline = PklString::from(format!("I/O error {operation} `"))
             .concat(&uri.into())
             .concat(&"`.".into());
-        let message = match self.message {
+        match self.message {
             Some(cause) if cause != headline => {
                 let has_known_class = cause.as_str().is_some_and(|s| {
                     KNOWN_IO_SUBCLASS_PREFIXES
                         .iter()
                         .any(|prefix| s.starts_with(prefix))
                 });
-                if has_known_class {
-                    headline.concat(&"\n".into()).concat(&cause)
+                let trailer = if has_known_class {
+                    cause
                 } else {
-                    headline.concat(&"\nIOException: ".into()).concat(&cause)
-                }
+                    PklString::from("IOException: ").concat(&cause)
+                };
+                RuntimeError::host_language_with_trailer(headline, trailer)
             }
-            _ => headline,
-        };
-        RuntimeError::host_language(message)
+            _ => RuntimeError::host_language(headline),
+        }
     }
 }
 

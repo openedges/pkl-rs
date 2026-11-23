@@ -1,10 +1,10 @@
 # Third-Party Notices
 
-`pkl-rs` is licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 OpenEdges Inc.).
+`pkl-rs` is licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 The pkl-rs Authors).
 
-> **Trademark & Non-Affiliation Notice**: `pkl-rs` is an independent open-source project maintained by OpenEdges Inc. and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of Apple Inc., referenced solely to describe language and specification compatibility. All `pkldoc` favicon assets under `crates/pkl-doc/assets/images/` are original OpenEdges Inc. artwork licensed under Apache-2.0.
+> **Trademark & Non-Affiliation Notice**: `pkl-rs` is an independent open-source project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of Apple Inc., referenced solely to describe language and specification compatibility. All `pkldoc` favicon assets under `crates/pkl-doc/assets/images/` are original `pkl-rs` artwork licensed under Apache-2.0.
 
-In addition to original code authored by OpenEdges Inc. and contributors, source and binary distributions of `pkl-rs` include or link the third-party components and licenses listed below.
+In addition to original code authored by the `pkl-rs` contributors, source and binary distributions of `pkl-rs` include or link the third-party components and licenses listed below.
 
 ---
 
@@ -23,7 +23,7 @@ In addition to original code authored by OpenEdges Inc. and contributors, source
     - `crates/pkl-runtime/src/diagnostic/frames.rs`
     - `crates/pkl-runtime/src/vm/settings_paths.rs`
     - `crates/pkl-runtime/src/vm/yaml_parser/backend/resolve.rs`
-  - Functional `pkldoc` web resources under `crates/pkl-doc/assets/`: `styles/pkldoc.css`, `scripts/pkldoc.js`, `scripts/search-worker.js`, and fonts listed in Section 5. *(All four icon files under `crates/pkl-doc/assets/images/` are original OpenEdges Inc. Apache-2.0 artwork, not Apple Pkl logos.)*
+  - Functional `pkldoc` web resources under `crates/pkl-doc/assets/`: `styles/pkldoc.css`, `scripts/pkldoc.js`, `scripts/search-worker.js`, and fonts listed in Section 5. *(All four icon files under `crates/pkl-doc/assets/images/` are original `pkl-rs` Apache-2.0 artwork, not Apple Pkl logos.)*
   - `crates/pkl-cli/assets/completion_{bash,zsh,fish}.*`: Shell-completion scripts generated via [Clikt](https://github.com/ajalt/clikt) (Copyright © 2018 AJ Alt, Apache License 2.0).
   - `crates/pkl-host-native/assets/PklCARoots.pem`: Bundled CA root certificate bundle matching Apple Pkl `0.32.0`.
 
@@ -331,5 +331,5 @@ cargo metadata --format-version 1 --locked
 
 ## 8. Historical Test Fixtures (Development Repository Only)
 
-- `tests/fixtures/rev1/`: Imported regression fixtures retaining original `LICENSE` (Apache-2.0) and `NOTICE` (OpenEdges Inc. 2025; Apple Inc. and Pkl project authors 2024–2025).
+- `tests/fixtures/rev1/`: Imported regression fixtures retaining original `LICENSE` (Apache-2.0) and `NOTICE` (OPENEDGES Technology Inc., originally recorded in 2025 as `OpenEdges Inc.`; Apple Inc. and Pkl project authors 2024–2025).
 - `tests/fixtures/`: Compatibility verification fixtures derived from Apple Pkl `0.32.0` (Apache-2.0). Test fixtures are excluded from binary and npm release packages.

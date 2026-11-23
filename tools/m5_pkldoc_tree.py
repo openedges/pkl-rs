@@ -148,7 +148,7 @@ def collect_pkldoc_tree(directory: Path) -> dict[str, bytes]:
     return dict(sorted(result.items()))
 
 
-# Explicit pkl-rs brand icon replacements (Apache-2.0 OpenEdges Inc., replacing
+# Explicit pkl-rs brand icon replacements (Apache-2.0, replacing
 # Apple Pkl trademarked logo assets under Apache-2.0 Section 6).
 PKLDOC_BRANDED_ICON_REL_PATHS: frozenset[str] = frozenset(
     {
@@ -164,16 +164,25 @@ def compare_pkldoc_trees(
     expected: dict[str, bytes],
     actual: dict[str, bytes],
     root: Path,
+    *,
+    allow_branded_icons: bool = True,
 ) -> list[str]:
     """Compare Java/native-image pkldoc tree against Rust pkldoc tree.
 
     Enforces 100% raw-byte equality on every generated HTML/JSON/CSS/JS/font file
-    and symlink, while verifying the 4 branded icon paths exist in both trees and
-    match `crates/pkl-doc/assets/<rel>` byte-for-byte in Rust output.
+    and symlink. When `allow_branded_icons` is True (fresh docsite generation),
+    verifies the 4 branded icon paths exist in both trees and match
+    `crates/pkl-doc/assets/<rel>` byte-for-byte in Rust output; when False
+    (e.g. `pkldoc --migrate`, which preserves pre-existing site icons verbatim),
+    requires 100% raw-byte equality on those paths too.
     """
     diffs: list[str] = []
     branded_root = root / "crates" / "pkl-doc" / "assets"
-    branded_keys = {f"generated/{rel}": rel for rel in PKLDOC_BRANDED_ICON_REL_PATHS}
+    branded_keys = (
+        {f"generated/{rel}": rel for rel in PKLDOC_BRANDED_ICON_REL_PATHS}
+        if allow_branded_icons
+        else {}
+    )
 
     for name in sorted(set(expected) | set(actual)):
         if name in branded_keys:

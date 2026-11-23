@@ -718,6 +718,17 @@ impl HostSession {
     pub fn set_power_assertions(&mut self, enabled: bool) {
         self.vm.set_power_assertions(enabled);
     }
+    pub fn begin_fact_trace(
+        &mut self,
+        module_uri: &crate::value::PklString,
+        group_name: &crate::value::PklString,
+        fact_span: crate::source::Span,
+    ) -> bool {
+        self.vm.begin_fact_trace(module_uri, group_name, fact_span)
+    }
+    pub fn finish_fact_trace(&mut self) -> Vec<crate::diagnostic::PowerAssertionValue> {
+        self.vm.finish_fact_trace()
+    }
     pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
         self.vm.set_platform_metadata(metadata);
     }

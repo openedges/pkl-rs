@@ -387,7 +387,7 @@ def verify_differential_coverage(
         inventory = load_json(root / INVENTORY_PATH)
         corpus = load_json(root / CORPUS_PATH)
         inv_census = classify_inventory_items(root, inventory, corpus, mappings)
-        if inv_census["resource"]["pkldoc_assets_status"] != "exact-match":
+        if inv_census["resource"]["pkldoc_assets_status"] not in ("exact-match", "exact-match-with-branded-icons"):
             failures.append(
                 f"pkldoc vendored static assets parity unmet: {inv_census['resource']['pkldoc_assets_status']} "
                 f"({inv_census['resource']['pkldoc_assets_exact_matches']}/17)"

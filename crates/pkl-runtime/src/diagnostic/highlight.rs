@@ -315,7 +315,10 @@ impl Lexer<'_> {
                     return Ok(Token::Number);
                 }
             }
-            ';' | '{' | '}' | ',' | '@' | ':' | '[' | ']' => {}
+            ';' | '{' | '}' | ',' | '@' | ':' | ']' => {}
+            '[' => {
+                self.consume("[");
+            }
             '+' | '%' => return Ok(Token::Operator),
             '-' => {
                 if !self.consume(">") {
@@ -327,8 +330,9 @@ impl Lexer<'_> {
                 return Ok(Token::Operator);
             }
             '|' => {
-                self.consume("|");
-                return Ok(Token::Operator);
+                if self.consume(">") || self.consume("|") {
+                    return Ok(Token::Operator);
+                }
             }
             '<' | '>' => {
                 self.consume("=");
@@ -350,6 +354,8 @@ impl Lexer<'_> {
             '?' => {
                 if self.consume("?") {
                     return Ok(Token::Operator);
+                } else {
+                    self.consume(".");
                 }
             }
             ch if is_digit(ch) => {
@@ -686,5 +692,16 @@ mod tests {
     fn malformed_deep_interpolation_uses_an_explicit_traversal_stack() {
         let source = "\"\\(".repeat(20_000);
         assert_eq!(uncolored(&source), source);
+    }
+    #[test]
+    fn union_pipe_stays_uncolored_while_or_and_pipe_are_operators() {
+        use super::super::ansi::AnsiStringBuilder;
+        let mut out = AnsiStringBuilder::new(true);
+        super::write_to(&mut out, &"x: Int | String = (a || b) |> f".into());
+        let rendered = out.finish_string();
+        assert_eq!(
+            rendered,
+            "x: Int | String = (a \x1b[0m||\x1b[0m b) \x1b[0m|>\x1b[0m f"
+        );
     }
 }

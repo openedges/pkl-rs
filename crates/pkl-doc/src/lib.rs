@@ -20,7 +20,7 @@ pub mod util;
 
 pub use cli::{
     CliDocGenerator, CliDocGeneratorOptions, PKLDOC_HELP_TEXT, pkldoc_version_info, run_cli,
-    run_cli_with_io,
+    run_cli_with_io, run_cli_with_io_and_ansi_level,
 };
 pub use generator::{CURRENT_DIRECTORY_NAME, DocGenerator};
 pub use migrator::DocMigrator;

@@ -1262,7 +1262,13 @@ impl Vm {
                             &self.program.module_name,
                             80,
                         )?;
-                        return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "The top-level value of a YAML stream must have type `Listing`, `List`, or `Set`, but got type `{ty}`."
+                            ),
+                            &[("Value", text)],
+                        ));
                     }
                 };
                 run.active.insert(id);
@@ -1296,7 +1302,13 @@ impl Vm {
                         &self.program.module_name,
                         80,
                     )?;
-                    return Err(RuntimeError::new(ErrorKind::Type, PklString::from(format!("The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        format!(
+                            "The top-level value of an XML property list must have type `Typed`, `Dynamic`, `Listing`, `Mapping`, `List`, `Set`, or `Map`, but got type `{ty}`."
+                        ),
+                        &[("Value", text)],
+                    ));
                 }
                 run.append(super::plist::DOCUMENT_HEADER);
             }
@@ -1316,8 +1328,13 @@ impl Vm {
                         &self.program.module_name,
                         80,
                     )?;
-                    return Err(RuntimeError::new(ErrorKind::Type,
-                        PklString::from(format!("The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `{ty}`.\nValue: ")).concat(&text)));
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        format!(
+                            "The top-level value of a Java properties file must have type `Typed`, `Dynamic`, `Mapping`, or `Map`, but got type `{ty}`."
+                        ),
+                        &[("Value", text)],
+                    ));
                 }
                 if !run.document && valid && !directive {
                     return self.pcf_unrenderable(run, &value);
@@ -1336,9 +1353,12 @@ impl Vm {
                     &self.program.module_name,
                     80,
                 )?;
-                return Err(RuntimeError::new(
+                return Err(RuntimeError::with_program_values(
                     ErrorKind::Type,
-                    PklString::from(format!("The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`.\nValue: ")).concat(&text),
+                    format!(
+                        "The top-level value of a Pcf document must have type `Typed` or `Dynamic`, but got type `{ty}`."
+                    ),
+                    &[("Value", text)],
                 ));
             }
         }
@@ -1954,13 +1974,13 @@ impl Vm {
                 &self.program.module_name,
                 80,
             )?;
-            return Err(RuntimeError::new(
+            return Err(RuntimeError::with_program_values(
                 ErrorKind::Type,
-                PklString::from(format!(
-                    "Cannot render object with both elements and properties/entries as {}.\nObject: ",
+                format!(
+                    "Cannot render object with both elements and properties/entries as {}.",
                     run.format.name()
-                ))
-                .concat(&rendered),
+                ),
+                &[("Object", rendered)],
             ));
         }
         let value = collections::cached_render_value(&self.heap, m.receiver, descriptor)?
@@ -2478,16 +2498,21 @@ impl Vm {
         let render = |value: &Value| {
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
         };
-        Err(RuntimeError::new(
+        let (headline, container_label) = if map {
+            ("Cannot render map with non-scalar key as YAML.", "Map")
+        } else {
+            (
+                "Cannot render object with non-scalar key as YAML.",
+                "Object",
+            )
+        };
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(if map {
-                "Cannot render map with non-scalar key as YAML.\nMap: "
-            } else {
-                "Cannot render object with non-scalar key as YAML.\nObject: "
-            })
-            .concat(&render(&Value::Object(receiver))?)
-            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
-            .concat(&render(key)?),
+            headline,
+            &[
+                (container_label, render(&Value::Object(receiver))?),
+                ("Key", render(key)?),
+            ],
         ))
     }
     #[cfg_attr(target_arch = "wasm32", inline(never))]
@@ -2582,13 +2607,13 @@ impl Vm {
         let ty = crate::diagnostic_values::type_name(value, &self.heap, &self.program.module_name)?;
         let rendered =
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)?;
-        let mut error = RuntimeError::new(
+        let mut error = RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(format!(
-                "Cannot render value of type `{ty}` as {}.\nValue: ",
+            format!(
+                "Cannot render value of type `{ty}` as {}.",
                 run.format.name()
-            ))
-            .concat(&rendered),
+            ),
+            &[("Value", rendered)],
         );
         // PList primitive visitors use cannotRenderType directly. Object,
         // Null, Class, TypeAlias and Function errors retain the shared hint.
@@ -2616,16 +2641,24 @@ impl Vm {
         let render = |value: &Value| {
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
         };
-        Err(RuntimeError::new(
+        let (headline, container_label) = if map {
+            (
+                "Cannot render map with non-string key as XML property list.",
+                "Map",
+            )
+        } else {
+            (
+                "Cannot render object with non-string key as XML property list.",
+                "Object",
+            )
+        };
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(if map {
-                "Cannot render map with non-string key as XML property list.\nMap: "
-            } else {
-                "Cannot render object with non-string key as XML property list.\nObject: "
-            })
-            .concat(&render(&Value::Object(receiver))?)
-            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
-            .concat(&render(key)?),
+            headline,
+            &[
+                (container_label, render(&Value::Object(receiver))?),
+                ("Key", render(key)?),
+            ],
         ))
     }
     fn jsonnet_wrapper(&self, receiver: ObjectId) -> Result<Option<bool>, RuntimeError> {
@@ -2662,16 +2695,21 @@ impl Vm {
         let render = |value: &Value| {
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
         };
-        Err(RuntimeError::new(
+        let (headline, container_label) = if map {
+            ("Cannot render map with non-string key as Jsonnet.", "Map")
+        } else {
+            (
+                "Cannot render object with non-string key as Jsonnet.",
+                "Object",
+            )
+        };
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(if map {
-                "Cannot render map with non-string key as Jsonnet.\nMap: "
-            } else {
-                "Cannot render object with non-string key as Jsonnet.\nObject: "
-            })
-            .concat(&render(&Value::Object(receiver))?)
-            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
-            .concat(&render(key)?),
+            headline,
+            &[
+                (container_label, render(&Value::Object(receiver))?),
+                ("Key", render(key)?),
+            ],
         ))
     }
     fn json_non_string_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
@@ -2679,16 +2717,21 @@ impl Vm {
         let render = |value: &Value| {
             crate::diagnostic_values::render(value, &self.heap, &self.program.module_name, 80)
         };
-        Err(RuntimeError::new(
+        let (headline, container_label) = if map {
+            ("Cannot render map with non-string key as JSON.", "Map")
+        } else {
+            (
+                "Cannot render object with non-string key as JSON.",
+                "Object",
+            )
+        };
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(if map {
-                "Cannot render map with non-string key as JSON.\nMap: "
-            } else {
-                "Cannot render object with non-string key as JSON.\nObject: "
-            })
-            .concat(&render(&Value::Object(receiver))?)
-            .concat(&if map { "\nKey: " } else { "\nKey   : " }.into())
-            .concat(&render(key)?),
+            headline,
+            &[
+                (container_label, render(&Value::Object(receiver))?),
+                ("Key", render(key)?),
+            ],
         ))
     }
 }

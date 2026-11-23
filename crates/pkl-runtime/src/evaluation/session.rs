@@ -149,6 +149,24 @@ impl SourceSession {
         }
     }
 
+    /// Clears the cached elements on `facts[group_name]` for `module_uri` and starts collecting
+    /// VM power-assertion observations for the next `facts[group][idx]` re-evaluation (`TestRunner.java:105-115`).
+    pub fn begin_fact_trace(
+        &mut self,
+        module_uri: &PklString,
+        group_name: &PklString,
+        fact_span: crate::source::Span,
+    ) -> bool {
+        self.host
+            .begin_fact_trace(module_uri, group_name, fact_span)
+    }
+
+    /// Stops fact power-assertion tracking and returns rendered observations anchored
+    /// to byte spans in the test module's source.
+    pub fn finish_fact_trace(&mut self) -> Vec<crate::diagnostic::PowerAssertionValue> {
+        self.host.finish_fact_trace()
+    }
+
     /// Marks whether the driving Host uses pure, immutable standard module resolution
     /// (no custom security manager, no custom/external module readers), allowing warm
     /// cached-module public operations to bypass redundant Host roundtrips.

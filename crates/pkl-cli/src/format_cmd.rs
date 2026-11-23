@@ -44,7 +44,7 @@ pub fn cmd_format(args: &[String]) -> Result<i32, CliError> {
 
         match flag {
             "-h" | "--help" => {
-                print!("{HELP_FORMAT}");
+                crate::write_help(HELP_FORMAT);
                 return Ok(0);
             }
             "-w" | "--write" => {
@@ -101,7 +101,7 @@ pub fn cmd_format(args: &[String]) -> Result<i32, CliError> {
                 for ch in short[1..].chars() {
                     match ch {
                         'h' => {
-                            print!("{HELP_FORMAT}");
+                            crate::write_help(HELP_FORMAT);
                             return Ok(0);
                         }
                         'w' => opts.write = true,

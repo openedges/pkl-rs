@@ -409,7 +409,21 @@ impl Vm {
                         if matches!(kind, SplitOrNull) {
                             return self.set_sequence_return(step, Value::Null);
                         }
-                        return Err(RuntimeError::new(ErrorKind::Arithmetic,PklString::join(&[format!("Element index `{}` is out of range `0`..`{}`.\nCollection: ",strings::diagnostic_integer(n),strings::diagnostic_integer(len)).into(),crate::diagnostic_values::render_string(&receiver,&self.heap,&self.program.module_name,80)?],"")));
+                        let rendered = crate::diagnostic_values::render_string(
+                            &receiver,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Arithmetic,
+                            format!(
+                                "Element index `{}` is out of range `0`..`{}`.",
+                                strings::diagnostic_integer(n),
+                                strings::diagnostic_integer(len)
+                            ),
+                            &[("Collection", rendered)],
+                        ));
                     }
                     split = n as usize;
                     if collection_kind == CollectionKind::List {
@@ -986,15 +1000,10 @@ fn flatten_error(
     heap: &Heap,
     module: &PklString,
 ) -> Result<RuntimeError, RuntimeError> {
-    Ok(RuntimeError::new(
+    let rendered = crate::diagnostic_values::render_string(value, heap, module, 80)?;
+    Ok(RuntimeError::with_program_values(
         ErrorKind::Type,
-        PklString::join(
-            &[
-                "Cannot flatten a collection containing a non-collection element.\nElement: "
-                    .into(),
-                crate::diagnostic_values::render_string(value, heap, module, 80)?,
-            ],
-            "",
-        ),
+        "Cannot flatten a collection containing a non-collection element.",
+        &[("Element", rendered)],
     ))
 }

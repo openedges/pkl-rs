@@ -219,7 +219,11 @@
         "m5:cli:help-project",
         "m5:cli:help-download-package",
         "m5:cli:help-analyze",
-        "m5:cli:unknown-subcommand-error"
+        "m5:cli:unknown-subcommand-error",
+        "m5:cli:help-root-color-truecolor",
+        "m5:cli:help-format-color-ansi256",
+        "m5:cli:help-root-color-ansi16",
+        "m5:cli:bad-flag-color-truecolor"
       ],
       "implementation_status": "linked",
       "implementation_links": [
@@ -247,7 +251,11 @@
         "m5:cli:eval-trace-mode-pretty",
         "m5:cli:eval-multi-separator-and-output-path",
         "m5:cli:eval-stdlib-doc-package-info",
-        "m5:cli:analyze-imports-output-file"
+        "m5:cli:analyze-imports-output-file",
+        "m5:cli:eval-color-program-values",
+        "m5:cli:eval-color-union-hint-and-pipe",
+        "m5:cli:analyze-imports-color-syntax-err",
+        "m5:cli:eval-color-cli-auto-overrides-project-always"
       ],
       "implementation_status": "linked",
       "implementation_links": [
@@ -280,7 +288,8 @@
         "m5:cli:test-junit-per-module",
         "m5:cli:test-junit-aggregate",
         "m5:cli:test-overwrite",
-        "m5:cli:test-no-modules-error"
+        "m5:cli:test-no-modules-error",
+        "m5:cli:test-fail-fact-local-power-color"
       ],
       "implementation_status": "linked",
       "implementation_links": [
@@ -630,7 +639,9 @@
         "m5:pkldoc:error-legacy-without-migrate",
         "m5:pkldoc:error-missing-doc-package-info",
         "m5:pkldoc:error-multiple-docsite-info",
-        "m5:pkldoc:error-package-fragment"
+        "m5:pkldoc:error-package-fragment",
+        "m5:pkldoc:help-color-truecolor",
+        "m5:pkldoc:eval-error-color-always"
       ],
       "implementation_status": "linked",
       "implementation_links": [

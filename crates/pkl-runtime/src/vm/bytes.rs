@@ -305,12 +305,27 @@ impl Vm {
         key: Value,
     ) -> Result<Value, RuntimeError> {
         let Value::Int(index) = key else {
-            return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
-                format!("Operator `[]` is not defined for operand types `Bytes` and `{}`.\nLeft operand : ", crate::diagnostic_values::type_name(&key, &self.heap, &self.program.module_name)?).into(),
-                crate::diagnostic_values::render_string(&Value::Bytes(bytes.clone()), &self.heap, &self.program.module_name, 80)?,
-                "\nRight operand: ".into(),
-                crate::diagnostic_values::render_string(&key, &self.heap, &self.program.module_name, 80)?,
-            ], "")));
+            let headline = format!(
+                "Operator `[]` is not defined for operand types `Bytes` and `{}`.",
+                crate::diagnostic_values::type_name(&key, &self.heap, &self.program.module_name)?
+            );
+            let left_val = crate::diagnostic_values::render_string(
+                &Value::Bytes(bytes.clone()),
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            let right_val = crate::diagnostic_values::render_string(
+                &key,
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            return Err(RuntimeError::with_program_values(
+                ErrorKind::Type,
+                headline,
+                &[("Left operand", left_val), ("Right operand", right_val)],
+            ));
         };
         if let Some(byte) = usize::try_from(index.get())
             .ok()
@@ -318,25 +333,20 @@ impl Vm {
         {
             return Ok(Value::Int((*byte as i8 as i64).into()));
         }
-        Err(RuntimeError::new(
+        let val = crate::diagnostic_values::render_string(
+            &Value::Bytes(bytes.clone()),
+            &self.heap,
+            &self.program.module_name,
+            80,
+        )?;
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::join(
-                &[
-                    format!(
-                        "Element index `{}` is out of range `0`..`{}`.\nValue: ",
-                        diagnostic_integer(*index),
-                        diagnostic_integer(bytes.len() as i64 - 1)
-                    )
-                    .into(),
-                    crate::diagnostic_values::render_string(
-                        &Value::Bytes(bytes.clone()),
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?,
-                ],
-                "",
+            format!(
+                "Element index `{}` is out of range `0`..`{}`.",
+                diagnostic_integer(*index),
+                diagnostic_integer(bytes.len() as i64 - 1)
             ),
+            &[("Value", val)],
         ))
     }
 

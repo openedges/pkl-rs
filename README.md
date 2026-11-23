@@ -182,8 +182,8 @@ All distributable components (`Cargo.toml` workspace crates, `pkl`/`pkldoc` bina
 
 ## License & Trademarks
 
-`pkl-rs` is licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 OpenEdges Inc.).
+`pkl-rs` is licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 The pkl-rs Authors).
 
-`pkl-rs` is an independent open-source implementation by OpenEdges Inc. and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of Apple Inc., referenced solely to describe language and specification compatibility.
+`pkl-rs` is an independent open-source project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of Apple Inc., referenced solely to describe language and specification compatibility.
 
 Attribution and third-party notices for embedded Apple Pkl `0.32.0` standard library modules, `pkldoc` web assets/fonts, FDLIBM, SnakeYAML Engine, TimSort, Unicode 15.0.0 UCD data, and statically linked crate dependencies are provided in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).

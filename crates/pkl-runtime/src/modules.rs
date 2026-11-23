@@ -251,13 +251,14 @@ impl ModuleHostError {
             Self::ExternalReaderProcess { message } => {
                 let headline =
                     PklString::from("Failed to communicate with external reader process.");
-                let message = match message {
-                    Some(message) if message != headline => headline
-                        .concat(&"\nExternalReaderProcessException: ".into())
-                        .concat(&message),
-                    _ => headline,
-                };
-                RuntimeError::host_language(message)
+                match message {
+                    Some(message) if message != headline => {
+                        let trailer =
+                            PklString::from("ExternalReaderProcessException: ").concat(&message);
+                        RuntimeError::host_language_with_trailer(headline, trailer)
+                    }
+                    _ => RuntimeError::host_language(headline),
+                }
             }
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),

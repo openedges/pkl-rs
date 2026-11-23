@@ -1,8 +1,10 @@
 use pkl_doc::package_data::{PackageData, PackageRef};
-use pkl_doc::{DocGenerator, PKLDOC_HELP_TEXT, run_cli_with_io};
+use pkl_doc::{DocGenerator, PKLDOC_HELP_TEXT, run_cli_with_io_and_ansi_level};
+use pkl_runtime::diagnostic::mordant::AnsiLevel;
 use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
 use std::sync::atomic::{AtomicU64, Ordering};
 
 static NEXT_TEMP_ID: AtomicU64 = AtomicU64::new(1);
@@ -33,10 +35,14 @@ impl Drop for TempDir {
 }
 
 fn run(args: &[&str]) -> (i32, String, String) {
+    run_with_level(args, AnsiLevel::None)
+}
+
+fn run_with_level(args: &[&str], level: AnsiLevel) -> (i32, String, String) {
     let owned: Vec<String> = args.iter().map(|s| (*s).to_string()).collect();
     let mut out = Vec::new();
     let mut err = Vec::new();
-    let code = run_cli_with_io(&owned, &mut out, &mut err);
+    let code = run_cli_with_io_and_ansi_level(&owned, &mut out, &mut err, level);
     (
         code,
         String::from_utf8(out).expect("utf8 stdout"),
@@ -308,7 +314,7 @@ fn single_package_test_matches_upstream_output_byte_for_byte() {
     }
     let mut stdout = Vec::new();
     let mut stderr = Vec::new();
-    let code = run_cli_with_io(&args, &mut stdout, &mut stderr);
+    let code = run_cli_with_io_and_ansi_level(&args, &mut stdout, &mut stderr, AnsiLevel::None);
     assert_eq!(code, 0, "stderr: {}", String::from_utf8_lossy(&stderr));
     assert!(stderr.is_empty());
 
@@ -383,5 +389,74 @@ fn stdlib_doc_package_info_generates_symlink_and_pages() {
     assert_eq!(
         fs::read_to_string(out_dir.join(".pkldoc/VERSION")).unwrap(),
         "2"
+    );
+}
+
+#[test]
+fn mordant_help_usage_error_and_eval_color_parity() {
+    let (code, tc_help, tc_err) = run_with_level(&["--help"], AnsiLevel::TrueColor);
+    assert_eq!(code, 0);
+    assert!(tc_err.is_empty());
+    assert!(
+        tc_help.starts_with(
+            "\x1b[38;2;229;192;123mUsage:\x1b[39m pkldoc \x1b[2m[<options>]\x1b[22m \x1b[2m[<modules>]...\x1b[22m\n"
+        ),
+        "{tc_help:?}"
+    );
+    assert!(
+        tc_help.contains("resolving \x1b[1mmodulepath:\x1b[22m URIs."),
+        "{tc_help:?}"
+    );
+
+    let (code, _, a256_err) = run_with_level(&["foo.pkl"], AnsiLevel::Ansi256);
+    assert_eq!(code, 1);
+    assert_eq!(
+        a256_err,
+        "\x1b[38;5;186mUsage:\x1b[39m pkldoc \x1b[2m[<options>]\x1b[22m \x1b[2m[<modules>]...\x1b[22m\n\n\x1b[38;5;174mError:\x1b[39m missing option \x1b[38;5;111m--output-dir\x1b[39m\n"
+    );
+
+    // Subprocess env detection on `pkldoc` binary
+    let bin = env!("CARGO_BIN_EXE_pkldoc");
+    let out = Command::new(bin)
+        .args(["--help"])
+        .stdin(Stdio::null())
+        .env_remove("NO_COLOR")
+        .env_remove("FORCE_COLOR")
+        .env_remove("CI")
+        .env_remove("GITHUB_ACTIONS")
+        .env("TERM", "xterm-256color")
+        .env("COLORTERM", "truecolor")
+        .output()
+        .expect("spawn pkldoc");
+    assert_eq!(out.status.code(), Some(0));
+    assert!(
+        String::from_utf8(out.stdout)
+            .unwrap()
+            .starts_with("\x1b[38;2;229;192;123mUsage:\x1b[39m pkldoc")
+    );
+
+    // Pkl evaluation error under `--color=always` emits ANSI diagnostics.
+    let tmp = TempDir::new("color-err");
+    let bad = tmp.path().join("doc-package-info.pkl");
+    let alpha = tmp.path().join("Alpha.pkl");
+    fs::write(&bad, "amends \"pkl:DocPackageInfo\"\nname = 1 + \"x\"\n").unwrap();
+    fs::write(&alpha, "module com.example.Alpha\n").unwrap();
+    let out_dir = tmp.path().join("out");
+    let (code, _, stderr) = run(&[
+        "--output-dir",
+        out_dir.to_str().unwrap(),
+        "--color=always",
+        "--test-mode",
+        bad.to_str().unwrap(),
+        alpha.to_str().unwrap(),
+    ]);
+    assert_eq!(code, 1);
+    assert!(
+        stderr.contains("\x1b[31m–– Pkl Error ––\x1b[0m\n"),
+        "{stderr:?}"
+    );
+    assert!(
+        stderr.contains("Left operand : 1\nRight operand: \"x\"\n"),
+        "{stderr:?}"
     );
 }

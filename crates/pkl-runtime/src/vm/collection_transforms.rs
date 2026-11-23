@@ -1636,20 +1636,16 @@ impl Vm {
             run.operation,
             Operation::Callback(Transform::Find | Transform::FindLast)
         ) {
-            return Err(RuntimeError::new(
+            let rendered = crate::diagnostic_values::render_string(
+                &Value::Object(run.source),
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            return Err(RuntimeError::with_program_values(
                 ErrorKind::Type,
-                PklString::join(
-                    &[
-                        "Cannot find matching element in collection.\nCollection: ".into(),
-                        crate::diagnostic_values::render_string(
-                            &Value::Object(run.source),
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?,
-                    ],
-                    "",
-                ),
+                "Cannot find matching element in collection.",
+                &[("Collection", rendered)],
             ));
         }
         if matches!(run.operation, Operation::Callback(Transform::Count)) {
@@ -1804,20 +1800,16 @@ impl Vm {
                     self.stack.push(Value::Null);
                     return Ok(());
                 }
-                return Err(RuntimeError::new(
+                let rendered = crate::diagnostic_values::render_string(
+                    &receiver,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
                     ErrorKind::Type,
-                    PklString::join(
-                        &[
-                            "Expected a single-element collection.\nCollection: ".into(),
-                            crate::diagnostic_values::render_string(
-                                &receiver,
-                                &self.heap,
-                                &self.program.module_name,
-                                80,
-                            )?,
-                        ],
-                        "",
-                    ),
+                    "Expected a single-element collection.",
+                    &[("Collection", rendered)],
                 ));
             }
             if let Some(elems) = &obj.list_elements {
@@ -1854,20 +1846,16 @@ impl Vm {
                     self.stack.push(Value::Null);
                     return Ok(());
                 }
-                return Err(RuntimeError::new(
+                let rendered = crate::diagnostic_values::render_string(
+                    &receiver,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
                     ErrorKind::Type,
-                    PklString::join(
-                        &[
-                            "Expected a single-element collection.\nCollection: ".into(),
-                            crate::diagnostic_values::render_string(
-                                &receiver,
-                                &self.heap,
-                                &self.program.module_name,
-                                80,
-                            )?,
-                        ],
-                        "",
-                    ),
+                    "Expected a single-element collection.",
+                    &[("Collection", rendered)],
                 ));
             }
             let empty = members.is_empty();
@@ -1883,22 +1871,24 @@ impl Vm {
                 .ok_or_else(|| invalid("uncached strict collection endpoint"))?
         } else if nullable || is_empty {
             if is_empty && !nullable {
-                return Err(RuntimeError::new(
+                return Err(RuntimeError::with_program_values(
                     ErrorKind::Type,
-                    format!(
-                        "Expected a non-empty collection.\nCollection: {:?}()",
-                        self.heap.get(id)?.collection_kind
-                    ),
+                    "Expected a non-empty collection.",
+                    &[(
+                        "Collection",
+                        format!("{:?}()", self.heap.get(id)?.collection_kind).into(),
+                    )],
                 ));
             }
             Value::Null
         } else {
-            return Err(RuntimeError::new(
+            return Err(RuntimeError::with_program_values(
                 ErrorKind::Type,
-                format!(
-                    "Expected a non-empty collection.\nCollection: {:?}()",
-                    self.heap.get(id)?.collection_kind
-                ),
+                "Expected a non-empty collection.",
+                &[(
+                    "Collection",
+                    format!("{:?}()", self.heap.get(id)?.collection_kind).into(),
+                )],
             ));
         };
         self.stack.push(value);

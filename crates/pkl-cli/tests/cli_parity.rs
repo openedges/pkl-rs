@@ -28,12 +28,29 @@ fn make_temp_dir(label: &str) -> PathBuf {
 }
 
 fn run_pkl(args: &[&str]) -> Output {
-    Command::new(pkl_bin())
-        .args(args)
+    run_pkl_with_env(args, &[("NO_COLOR", "1")])
+}
+
+fn run_pkl_with_env(args: &[&str], env: &[(&str, &str)]) -> Output {
+    let mut cmd = Command::new(pkl_bin());
+    cmd.args(args)
         .current_dir(workspace_root())
         .stdin(Stdio::null())
-        .output()
-        .expect("spawn pkl")
+        .env_remove("NO_COLOR")
+        .env_remove("FORCE_COLOR")
+        .env_remove("TERM")
+        .env_remove("COLORTERM")
+        .env_remove("TERM_PROGRAM")
+        .env_remove("TERM_PROGRAM_VERSION")
+        .env_remove("WT_SESSION")
+        .env_remove("ANSICON")
+        .env_remove("ConEmuANSI")
+        .env_remove("CI")
+        .env_remove("GITHUB_ACTIONS");
+    for (k, v) in env {
+        cmd.env(k, v);
+    }
+    cmd.output().expect("spawn pkl")
 }
 
 fn run_pkl_with_stdin(args: &[&str], stdin_bytes: &[u8]) -> Output {
@@ -406,5 +423,195 @@ fn format_and_analyze_imports_cli() {
     );
     let content = std::fs::read_to_string(&out_file).unwrap();
     assert!(content.contains("imports {") && content.contains("resolvedImports {"));
+    let _ = std::fs::remove_dir_all(&tmp);
+}
+
+#[test]
+fn ansi_color_parity_across_cli_and_diagnostics() {
+    let root = workspace_root();
+
+    // 1. Clikt/Mordant help & usage error colors across TrueColor / Ansi256 / Ansi16 / None.
+    let tc_help = run_pkl_with_env(
+        &["--help"],
+        &[("TERM", "xterm-256color"), ("COLORTERM", "truecolor")],
+    );
+    assert_eq!(tc_help.status.code(), Some(0));
+    let tc_stdout = String::from_utf8(tc_help.stdout).unwrap();
+    assert!(tc_stdout.starts_with("\x1b[38;2;229;192;123mUsage:\x1b[39m pkl \x1b[2m[<options>]\x1b[22m \x1b[2m<command> [<args>]...\x1b[22m\n"));
+    assert!(
+        tc_stdout
+            .contains("\x1b[38;2;97;175;239m-v\x1b[39m, \x1b[38;2;97;175;239m--version\x1b[39m")
+    );
+
+    let a256_fmt = run_pkl_with_env(&["format", "--help"], &[("TERM", "xterm-256color")]);
+    assert_eq!(a256_fmt.status.code(), Some(0));
+    let a256_stdout = String::from_utf8(a256_fmt.stdout).unwrap();
+    assert!(a256_stdout.contains("\x1b[38;5;186mUsage:\x1b[39m"));
+    assert!(a256_stdout.contains("\x1b[1m2\x1b[22m: 0.30+ \x1b[1m(default)\x1b[22m"));
+
+    let bad_flag = run_pkl_with_env(
+        &["--bad-flag"],
+        &[("TERM", "xterm-256color"), ("COLORTERM", "truecolor")],
+    );
+    assert_eq!(bad_flag.status.code(), Some(1));
+    assert_eq!(
+        String::from_utf8(bad_flag.stderr).unwrap(),
+        "\x1b[38;2;229;192;123mUsage:\x1b[39m pkl \x1b[2m[<options>]\x1b[22m \x1b[2m<command> [<args>]...\x1b[22m\n\n\x1b[38;2;224;108;117mError:\x1b[39m no such option \x1b[38;2;97;175;239m--bad-flag\x1b[39m. (Possible options: \x1b[38;2;97;175;239m-v\x1b[39m, \x1b[38;2;97;175;239m--version\x1b[39m, \x1b[38;2;97;175;239m-h\x1b[39m, \x1b[38;2;97;175;239m--help\x1b[39m)\n"
+    );
+
+    let run_help = run_pkl_with_env(
+        &[
+            "run",
+            "--no-project",
+            root.join("tests/fixtures/m5/cli/cmd_basic.pkl")
+                .to_str()
+                .unwrap(),
+            "--help",
+        ],
+        &[("TERM", "xterm")],
+    );
+    assert_eq!(run_help.status.code(), Some(0));
+    let run_help_stdout = String::from_utf8(run_help.stdout).unwrap();
+    assert!(
+        run_help_stdout.contains("\x1b[36m--mode\x1b[39m=\x1b[33;2m<fast, safe>\x1b[39;22m"),
+        "{run_help_stdout:?}"
+    );
+
+    let tmp = make_temp_dir("ansi-color-parity");
+
+    // 2. Uncolored ProgramValue trailer vs colored VmTypeMismatchException.
+    let op_err = tmp.join("op_err.pkl");
+    std::fs::write(&op_err, "a = 1 + \"x\"\n").unwrap();
+    let op_out = run_pkl(&[
+        "eval",
+        "--no-project",
+        "--color=always",
+        op_err.to_str().unwrap(),
+    ]);
+    assert_eq!(op_out.status.code(), Some(1));
+    let op_stderr = String::from_utf8(op_out.stderr).unwrap();
+    assert!(
+        op_stderr.contains(
+            "\x1b[1;31mOperator `+` is not defined for operand types `Int` and `String`.\x1b[0m\nLeft operand : 1\nRight operand: \"x\"\n"
+        ),
+        "{op_stderr:?}"
+    );
+
+    // 3. Union type mismatch hint + uncolored `|` operator token in SyntaxHighlighter.
+    let union_err = tmp.join("union_err.pkl");
+    std::fs::write(&union_err, "x: Int(this > 5) | String(length > 3) = 2\n").unwrap();
+    let union_out = run_pkl(&[
+        "eval",
+        "--no-project",
+        "--color=always",
+        union_err.to_str().unwrap(),
+    ]);
+    assert_eq!(union_out.status.code(), Some(1));
+    let union_stderr = String::from_utf8(union_out.stderr).unwrap();
+    assert!(
+        union_stderr.contains(
+            "x: Int(\x1b[34mthis\x1b[0m \x1b[0m>\x1b[0m \x1b[32m5\x1b[0m) | String(length \x1b[0m>\x1b[0m \x1b[32m3\x1b[0m) = \x1b[32m2\x1b[0m\n"
+        ),
+        "bare union `|` must stay uncolored: {union_stderr:?}"
+    );
+    assert!(
+        union_stderr.contains("\n\x1b[33m* Value is not of type `Int(this > 5)` because:\n"),
+        "union hint must not have spurious yellow reset: {union_stderr:?}"
+    );
+    assert!(
+        !union_stderr.contains("\x1b[33m\x1b[0m* Value is not of type"),
+        "union hint must not have spurious yellow reset: {union_stderr:?}"
+    );
+
+    // 4. VmWrappedEvalException colored inner body in `pkl analyze imports --color=always`.
+    let syn_err = tmp.join("syn_err.pkl");
+    std::fs::write(&syn_err, "a = (\n").unwrap();
+    let an_out = run_pkl(&[
+        "analyze",
+        "imports",
+        "--no-project",
+        "--color=always",
+        syn_err.to_str().unwrap(),
+    ]);
+    assert_eq!(an_out.status.code(), Some(1));
+    let an_stderr = String::from_utf8(an_out.stderr).unwrap();
+    assert!(
+        an_stderr.contains(">\t\x1b[1;31mUnexpected end of file.\x1b[0m\n"),
+        "{an_stderr:?}"
+    );
+    assert!(an_stderr.contains(">\t\x1b[0m\x1b[0m\n"), "{an_stderr:?}");
+    assert!(an_stderr.ends_with("\x1b[0m\n"), "{an_stderr:?}");
+
+    // 5. `pkl test --color=always` failing fact power assertions with local variables + non-test module.
+    let fail_fact = tmp.join("fail_fact.pkl");
+    std::fs::write(
+        &fail_fact,
+        "amends \"pkl:test\"\nlocal x = 1\nlocal y = 2\nfacts {\n  [\"math\"] {\n    x + y == 5\n  }\n}\n",
+    )
+    .unwrap();
+    let tf_out = run_pkl(&[
+        "test",
+        "--no-project",
+        "--color=always",
+        fail_fact.to_str().unwrap(),
+    ]);
+    assert_eq!(tf_out.status.code(), Some(1));
+    let tf_stdout = String::from_utf8(tf_out.stdout).unwrap();
+    assert!(
+        tf_stdout
+            .contains("\x1b[2m│\x1b[0m \x1b[2m│\x1b[0m \x1b[2m│\x1b[0m \x1b[36mfalse\x1b[0m\n"),
+        "{tf_stdout:?}"
+    );
+    assert!(
+        tf_stdout.contains("\x1b[2m│\x1b[0m \x1b[2m│\x1b[0m \x1b[32m2\x1b[0m\n"),
+        "{tf_stdout:?}"
+    );
+    assert!(
+        tf_stdout.contains("\x1b[2m│\x1b[0m \x1b[32m3\x1b[0m\n"),
+        "{tf_stdout:?}"
+    );
+    assert!(
+        tf_stdout.contains("       \x1b[32m1\x1b[0m\n"),
+        "{tf_stdout:?}"
+    );
+
+    let not_test = tmp.join("not_test.pkl");
+    std::fs::write(&not_test, "a = 1\n").unwrap();
+    let nt_out = run_pkl(&[
+        "test",
+        "--no-project",
+        "--color=always",
+        not_test.to_str().unwrap(),
+    ]);
+    assert_eq!(nt_out.status.code(), Some(1));
+    let nt_stdout = String::from_utf8(nt_out.stdout).unwrap();
+    assert!(
+        nt_stdout.contains("\x1b[1;31mExpected value of type `pkl.test`, but got type `Class`.\x1b[0m\n  Value: not_test\n"),
+        "{nt_stdout:?}"
+    );
+
+    // 6. CLI `--color` defaults to `auto`, overriding `PklProject.evaluatorSettings.color = "always"` over a pipe.
+    let proj_dir = tmp.join("proj_always");
+    std::fs::create_dir_all(&proj_dir).unwrap();
+    std::fs::write(
+        proj_dir.join("PklProject"),
+        "amends \"pkl:Project\"\nevaluatorSettings {\n  color = \"always\"\n}\n",
+    )
+    .unwrap();
+    let proj_mod = proj_dir.join("err.pkl");
+    std::fs::write(&proj_mod, "x = 1 + \"a\"\n").unwrap();
+    let proj_out = run_pkl(&[
+        "eval",
+        "--project-dir",
+        proj_dir.to_str().unwrap(),
+        proj_mod.to_str().unwrap(),
+    ]);
+    assert_eq!(proj_out.status.code(), Some(1));
+    let proj_stderr = String::from_utf8(proj_out.stderr).unwrap();
+    assert!(
+        !proj_stderr.contains('\x1b'),
+        "CLI default --color=auto on pipe must override PklProject color=always: {proj_stderr:?}"
+    );
+
     let _ = std::fs::remove_dir_all(&tmp);
 }

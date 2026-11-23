@@ -16,20 +16,24 @@ pub(super) enum TypeDestination {
 }
 
 #[derive(Clone)]
-enum ObservedValue {
+pub(super) enum ObservedValue {
     Runtime(Value),
     // Native constant folding can retain a value's canonical representation
     // without allocating a guest object (the pinned ModuleInfo regex binding).
     NativeLiteral(PklString),
 }
 impl ObservedValue {
-    fn roots(&self) -> Option<Value> {
+    pub(super) fn roots(&self) -> Option<Value> {
         match self {
             Self::Runtime(value) => Some(value.clone()),
             Self::NativeLiteral(_) => None,
         }
     }
-    fn render(&self, heap: &Heap, module: &PklString) -> Result<PklString, RuntimeError> {
+    pub(super) fn render(
+        &self,
+        heap: &Heap,
+        module: &PklString,
+    ) -> Result<PklString, RuntimeError> {
         match self {
             Self::Runtime(value) => {
                 crate::diagnostic_values::render_string(value, heap, module, 100)
@@ -40,11 +44,11 @@ impl ObservedValue {
 }
 
 #[derive(Clone)]
-struct Observation {
-    value: ObservedValue,
-    executions: usize,
+pub(super) struct Observation {
+    pub(super) value: ObservedValue,
+    pub(super) executions: usize,
 }
-type Trace = BTreeMap<Span, Observation>;
+pub(super) type Trace = BTreeMap<Span, Observation>;
 
 #[derive(Clone)]
 enum Mismatch {
@@ -694,6 +698,26 @@ impl Vm {
     fn observe_value(&mut self, span: Span, value: ObservedValue) {
         if self.active_type_trackers == 0 || !self.power_assertions {
             return;
+        }
+        if let Some((target_uri, fact_span, trace)) = &mut self.fact_tracker {
+            let in_target_module = self
+                .frames
+                .last()
+                .and_then(|frame| self.program.metadata.get(frame.block))
+                .and_then(|meta| meta.source.as_ref())
+                .is_some_and(|src| src.uri == *target_uri);
+            if in_target_module && span.start >= fact_span.start && span.end <= fact_span.end {
+                trace
+                    .entry(span)
+                    .and_modify(|observation| {
+                        observation.executions += 1;
+                        observation.value = value.clone();
+                    })
+                    .or_insert_with(|| Observation {
+                        value: value.clone(),
+                        executions: 1,
+                    });
+            }
         }
         for frame in &mut self.frames {
             if let Some(run) = &mut frame.type_run
@@ -1790,21 +1814,29 @@ impl Vm {
                             ))
                         } else {
                             (|| {
-                                Ok(RuntimeError::new(
-                                    ErrorKind::Type,
-                                    PklString::join(&["Expected value of type `Boolean` or `Function`, but got type `".into(),
-(crate::diagnostic_values::type_name(
-                                            &value,
-                                            &self.heap,
-                                            &self.program.module_name
-                                        )?),
-"`.\nValue: ".into(),
-crate::diagnostic_values::render(
+                                let headline = PklString::join(
+                                    &[
+                                        "Expected value of type `Boolean` or `Function`, but got type `"
+                                            .into(),
+                                        crate::diagnostic_values::type_name(
                                             &value,
                                             &self.heap,
                                             &self.program.module_name,
-                                            80
-                                        )?], ""),
+                                        )?,
+                                        "`.".into(),
+                                    ],
+                                    "",
+                                );
+                                let rendered = crate::diagnostic_values::render(
+                                    &value,
+                                    &self.heap,
+                                    &self.program.module_name,
+                                    80,
+                                )?;
+                                Ok(RuntimeError::with_program_values(
+                                    ErrorKind::Type,
+                                    headline,
+                                    &[("Value", rendered)],
                                 ))
                             })()
                         };

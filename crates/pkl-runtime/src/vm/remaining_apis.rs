@@ -250,20 +250,16 @@ impl Vm {
                 let members = collections::ordered_members(&self.heap, source)?;
                 if members.is_empty() {
                     if matches!(operation, Operation::SetRest) {
-                        return Err(RuntimeError::new(
+                        let rendered = crate::diagnostic_values::render_string(
+                            &receiver,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        return Err(RuntimeError::with_program_values(
                             ErrorKind::Type,
-                            PklString::join(
-                                &[
-                                    "Expected a non-empty collection.\nCollection: ".into(),
-                                    crate::diagnostic_values::render_string(
-                                        &receiver,
-                                        &self.heap,
-                                        &self.program.module_name,
-                                        80,
-                                    )?,
-                                ],
-                                "",
-                            ),
+                            "Expected a non-empty collection.",
+                            &[("Collection", rendered)],
                         ));
                     }
                     self.stack.push(Value::Null);

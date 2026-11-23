@@ -964,6 +964,188 @@
       ]
     },
     {
+      "id": "m5:cli:help-root-color-truecolor",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "environment": {
+        "NO_COLOR": null,
+        "TERM": "xterm-256color",
+        "COLORTERM": "truecolor",
+        "COLUMNS": "80"
+      },
+      "command": [
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-format-color-ansi256",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "environment": {
+        "NO_COLOR": null,
+        "TERM": "xterm-256color",
+        "COLUMNS": "80"
+      },
+      "command": [
+        "format",
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:help-root-color-ansi16",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "environment": {
+        "NO_COLOR": null,
+        "TERM": "xterm",
+        "COLUMNS": "80"
+      },
+      "command": [
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:cli:bad-flag-color-truecolor",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "environment": {
+        "NO_COLOR": null,
+        "TERM": "xterm-256color",
+        "COLORTERM": "truecolor",
+        "COLUMNS": "80"
+      },
+      "command": [
+        "--bad-flag"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:eval-color-program-values",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "templates": [
+          [
+            "op_err.pkl",
+            "a = 1 + \"x\"\n"
+          ]
+        ]
+      },
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=always",
+        "{work_dir}/op_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:eval-color-union-hint-and-pipe",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "templates": [
+          [
+            "union_err.pkl",
+            "x: Int(this > 5) | String(length > 3) = 2\n"
+          ]
+        ]
+      },
+      "command": [
+        "eval",
+        "--no-project",
+        "--color=always",
+        "{work_dir}/union_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:analyze-imports-color-syntax-err",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "templates": [
+          [
+            "syn_err.pkl",
+            "a = (\n"
+          ]
+        ]
+      },
+      "command": [
+        "analyze",
+        "imports",
+        "--no-project",
+        "--color=always",
+        "{work_dir}/syn_err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:eval-color-cli-auto-overrides-project-always",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "templates": [
+          [
+            "PklProject",
+            "amends \"pkl:Project\"\nevaluatorSettings {\n  color = \"always\"\n}\n"
+          ],
+          [
+            "err.pkl",
+            "x = 1 + \"a\"\n"
+          ]
+        ]
+      },
+      "command": [
+        "eval",
+        "--project-dir",
+        "{work_dir}",
+        "{work_dir}/err.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:cli:test-fail-fact-local-power-color",
+      "lane": "rust-api-and-cli",
+      "exec_mode": "cli",
+      "setup": {
+        "templates": [
+          [
+            "t_fail_fact.pkl",
+            "amends \"pkl:test\"\nlocal x = 1\nlocal y = 2\nfacts {\n  [\"math\"] {\n    x + y == 5\n  }\n}\n"
+          ]
+        ]
+      },
+      "command": [
+        "test",
+        "--no-project",
+        "--color=always",
+        "{work_dir}/t_fail_fact.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
       "id": "m5:repl:pipe-welcome-help-examples-quit",
       "lane": "repl",
       "exec_mode": "repl_pipe",
@@ -3348,6 +3530,51 @@
         "{output_dir}",
         "--test-mode",
         "package://localhost:0/birds@0.5.0#/Bird.pkl"
+      ],
+      "expected_exit": [
+        1
+      ]
+    },
+    {
+      "id": "m5:pkldoc:help-color-truecolor",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "environment": {
+        "NO_COLOR": null,
+        "TERM": "xterm-256color",
+        "COLORTERM": "truecolor",
+        "COLUMNS": "80"
+      },
+      "command": [
+        "--help"
+      ],
+      "expected_exit": [
+        0
+      ]
+    },
+    {
+      "id": "m5:pkldoc:eval-error-color-always",
+      "lane": "pkldoc",
+      "exec_mode": "pkldoc",
+      "setup": {
+        "templates": [
+          [
+            "doc-package-info.pkl",
+            "amends \"pkl:DocPackageInfo\"\nname = 1 + \"x\"\n"
+          ],
+          [
+            "Alpha.pkl",
+            "module com.example.Alpha\n"
+          ]
+        ]
+      },
+      "command": [
+        "--output-dir",
+        "{output_dir}",
+        "--color=always",
+        "--test-mode",
+        "{work_dir}/doc-package-info.pkl",
+        "{work_dir}/Alpha.pkl"
       ],
       "expected_exit": [
         1

@@ -63,7 +63,7 @@ pub fn cmd_run(args: &[String]) -> Result<i32, CliError> {
 
     if positionals.is_empty() {
         if opts.show_help {
-            print!("{HELP_RUN}");
+            crate::write_help(HELP_RUN);
             return Ok(0);
         }
         return Err(CliError::usage(
@@ -297,7 +297,7 @@ fn run_command_inner(
     };
     let spec_bytes = host
         .evaluate_expression_pkl_binary_on(session, reflect_src, "spec")
-        .map_err(CliError::err)?;
+        .map_err(|e| CliError::err(strip_trailing_repl_frames(&e)))?;
     let spec_decoded = decode_lossless(&spec_bytes)
         .map_err(|e| CliError::err(format!("Failed to decode CommandSpec: {e:?}")))?;
 
@@ -338,21 +338,26 @@ fn run_command_inner(
         &root_spec_src,
     ) {
         RunParseOutcome::PrintHelp { text, exit_code } => {
+            let level = pkl_runtime::diagnostic::mordant::detect_ansi_level();
+            let colored = pkl_runtime::diagnostic::mordant::colorize_clikt_help(&text, level);
             if exit_code == 0 {
                 let mut stdout = io::stdout().lock();
-                let _ = stdout.write_all(text.as_bytes());
+                let _ = stdout.write_all(colored.as_bytes());
                 let _ = stdout.flush();
                 Ok(0)
             } else {
                 let mut stderr = io::stderr().lock();
-                let _ = stderr.write_all(text.as_bytes());
+                let _ = stderr.write_all(colored.as_bytes());
                 let _ = stderr.flush();
                 Ok(exit_code)
             }
         }
         RunParseOutcome::UsageError { text } => {
+            let level = pkl_runtime::diagnostic::mordant::detect_ansi_level();
+            let colored =
+                pkl_runtime::diagnostic::mordant::colorize_clikt_usage_error(&text, level);
             let mut stderr = io::stderr().lock();
-            let _ = stderr.write_all(text.as_bytes());
+            let _ = stderr.write_all(colored.as_bytes());
             let _ = stderr.flush();
             Ok(1)
         }

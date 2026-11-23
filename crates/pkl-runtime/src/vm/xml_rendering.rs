@@ -238,10 +238,13 @@ impl Vm {
         Ok(false)
     }
     fn xml_type_error(&self, value: &Value, expected: &str) -> Result<bool, RuntimeError> {
-        let message = if value.is_null() {
-            format!("Expected value of type {expected}, but got `null`.").into()
+        if value.is_null() {
+            Err(RuntimeError::new(
+                ErrorKind::Type,
+                format!("Expected value of type {expected}, but got `null`."),
+            ))
         } else {
-            PklString::join(
+            let headline = PklString::join(
                 &[
                     format!("Expected value of type {expected}, but got type `").into(),
                     crate::diagnostic_values::type_name(
@@ -249,63 +252,59 @@ impl Vm {
                         &self.heap,
                         &self.program.module_name,
                     )?,
-                    "`.\nValue: ".into(),
-                    crate::diagnostic_values::render(
-                        value,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?,
+                    "`.".into(),
                 ],
                 "",
-            )
-        };
-        Err(RuntimeError::new(ErrorKind::Type, message))
+            );
+            let rendered = crate::diagnostic_values::render(
+                value,
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            Err(RuntimeError::with_program_values(
+                ErrorKind::Type,
+                headline,
+                &[("Value", rendered)],
+            ))
+        }
     }
     fn xml_bad_key(&self, receiver: ObjectId, key: &Value) -> Result<bool, RuntimeError> {
         let map = self.heap.get(receiver)?.collection_kind == CollectionKind::Map;
-        Err(RuntimeError::new(
+        let (headline, container_label) = if map {
+            ("Cannot render map with non-string key as XML.", "Map")
+        } else {
+            ("Cannot render object with non-string key as XML.", "Object")
+        };
+        let container_val = crate::diagnostic_values::render(
+            &Value::Object(receiver),
+            &self.heap,
+            &self.program.module_name,
+            80,
+        )?;
+        let key_val = crate::diagnostic_values::render(
+            key,
+            &self.heap,
+            &self.program.module_name,
+            80,
+        )?;
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::join(
-                &[
-                    if map {
-                        "Cannot render map with non-string key as XML.\nMap: ".into()
-                    } else {
-                        "Cannot render object with non-string key as XML.\nObject: ".into()
-                    },
-                    crate::diagnostic_values::render(
-                        &Value::Object(receiver),
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?,
-                    if map {
-                        "\nKey: ".into()
-                    } else {
-                        "\nKey   : ".into()
-                    },
-                    crate::diagnostic_values::render(
-                        key,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?,
-                ],
-                "",
-            ),
+            headline,
+            &[(container_label, container_val), ("Key", key_val)],
         ))
     }
     fn xml_disallowed(&self, value: &Value, kind: &str) -> Result<bool, RuntimeError> {
-        Err(RuntimeError::new(
+        let rendered = crate::diagnostic_values::render(
+            value,
+            &self.heap,
+            &self.program.module_name,
+            80,
+        )?;
+        Err(RuntimeError::with_program_values(
             ErrorKind::Type,
-            PklString::from(format!("`xml.{kind}` is not supported here.\nValue: ")).concat(
-                &crate::diagnostic_values::render(
-                    value,
-                    &self.heap,
-                    &self.program.module_name,
-                    80,
-                )?,
-            ),
+            format!("`xml.{kind}` is not supported here."),
+            &[("Value", rendered)],
         ))
     }
     fn xml_members(

@@ -639,12 +639,10 @@ impl Vm {
                                 80,
                             )
                             .expect("rendering a String does not read the heap");
-                            RuntimeError::new(
+                            RuntimeError::with_program_values(
                                 ErrorKind::Arithmetic,
-                                PklString::join(
-                                    &[message.into(), "\nString: ".into(), rendered],
-                                    "",
-                                ),
+                                message,
+                                &[("String", rendered)],
                             )
                         })?;
                         Some(if name == "base64Decoded" {
@@ -1084,20 +1082,23 @@ impl Vm {
                     Ok(value) => Value::String(value),
                     Err(_) if nullable => Value::Null,
                     Err((index, minimum)) => {
-                        let mut message = crate::pkl_string::PklStringBuilder::default();
-                        message.push_str(&format!(
-                            "Character index `{}` is out of range `{}`..`{}`.\nString: ",
-                            strings::diagnostic_integer(index),
-                            strings::diagnostic_integer(minimum),
-                            strings::diagnostic_integer(text.code_point_len() as i64),
-                        ));
-                        message.push_value(&crate::diagnostic_values::render_string(
+                        let max = text.code_point_len() as i64;
+                        let rendered = crate::diagnostic_values::render_string(
                             &Value::String(text),
                             &self.heap,
                             &self.program.module_name,
                             80,
-                        )?);
-                        return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
+                        )?;
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "Character index `{}` is out of range `{}`..`{}`.",
+                                strings::diagnostic_integer(index),
+                                strings::diagnostic_integer(minimum),
+                                strings::diagnostic_integer(max),
+                            ),
+                            &[("String", rendered)],
+                        ));
                     }
                 };
                 self.stack.push(value);
@@ -1169,10 +1170,11 @@ impl Vm {
                             &self.program.module_name,
                             80,
                         )?;
-                        return Err(RuntimeError::new(ErrorKind::Type, PklString::join(&[
-                            format!("String does not contain a match for {kind} pattern.\nString : ").into(),
-                            text, "\nPattern: ".into(), pattern,
-                        ], "")));
+                        return Err(RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!("String does not contain a match for {kind} pattern."),
+                            &[("String", text), ("Pattern", pattern)],
+                        ));
                     }
                 }
             }

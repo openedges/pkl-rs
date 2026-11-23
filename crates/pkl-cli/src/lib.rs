@@ -45,7 +45,7 @@ pub fn run_cli(args: &[String]) -> i32 {
 
 fn dispatch(args: &[String]) -> Result<i32, CliError> {
     let Some(first) = args.first().map(String::as_str) else {
-        write_stdout(HELP_ROOT);
+        write_help(HELP_ROOT);
         return Ok(0);
     };
 
@@ -56,7 +56,7 @@ fn dispatch(args: &[String]) -> Result<i32, CliError> {
             Ok(0)
         }
         "-h" | "--help" => {
-            write_stdout(HELP_ROOT);
+            write_help(HELP_ROOT);
             Ok(0)
         }
         "eval" => eval_cmd::cmd_eval(&args[1..]),
@@ -71,7 +71,7 @@ fn dispatch(args: &[String]) -> Result<i32, CliError> {
         "shell-completion" => cmd_shell_completion(&args[1..]),
         other if other.starts_with('-') => Err(CliError::usage(
             ROOT_USAGE,
-            &format!("no such option {other}"),
+            &format!("no such option {other}. (Possible options: -v, --version, -h, --help)"),
         )),
         other => Err(CliError::usage(
             ROOT_USAGE,
@@ -83,7 +83,7 @@ fn dispatch(args: &[String]) -> Result<i32, CliError> {
 fn cmd_server(args: &[String]) -> Result<i32, CliError> {
     const USAGE: &str = "Usage: pkl server [<options>]";
     if args.iter().any(|a| a == "-h" || a == "--help") {
-        write_stdout(HELP_SERVER);
+        write_help(HELP_SERVER);
         return Ok(0);
     }
     if let Some(arg) = args.first() {
@@ -102,12 +102,12 @@ fn cmd_server(args: &[String]) -> Result<i32, CliError> {
 fn cmd_project(args: &[String]) -> Result<i32, CliError> {
     const USAGE: &str = "Usage: pkl project [<options>] <command> [<args>]...";
     let Some(first) = args.first().map(String::as_str) else {
-        write_stdout(HELP_PROJECT);
+        write_help(HELP_PROJECT);
         return Ok(0);
     };
     match first {
         "-h" | "--help" => {
-            write_stdout(HELP_PROJECT);
+            write_help(HELP_PROJECT);
             Ok(0)
         }
         "resolve" => eval_cmd::cmd_project_resolve(&args[1..]),
@@ -125,12 +125,12 @@ fn cmd_project(args: &[String]) -> Result<i32, CliError> {
 fn cmd_analyze(args: &[String]) -> Result<i32, CliError> {
     const USAGE: &str = "Usage: pkl analyze [<options>] <command> [<args>]...";
     let Some(first) = args.first().map(String::as_str) else {
-        write_stdout(HELP_ANALYZE);
+        write_help(HELP_ANALYZE);
         return Ok(0);
     };
     match first {
         "-h" | "--help" => {
-            write_stdout(HELP_ANALYZE);
+            write_help(HELP_ANALYZE);
             Ok(0)
         }
         "imports" => eval_cmd::cmd_analyze_imports(&args[1..]),
@@ -154,7 +154,7 @@ fn cmd_shell_completion(args: &[String]) -> Result<i32, CliError> {
             continue;
         }
         if !end_of_flags && (arg == "-h" || arg == "--help") {
-            write_stdout(HELP_SHELL_COMPLETION);
+            write_help(HELP_SHELL_COMPLETION);
             return Ok(0);
         }
         if !end_of_flags && arg.starts_with('-') && arg != "-" {
@@ -194,6 +194,12 @@ fn cmd_shell_completion(args: &[String]) -> Result<i32, CliError> {
             ),
         )),
     }
+}
+
+pub(crate) fn write_help(plain_help: &str) {
+    let level = pkl_runtime::diagnostic::mordant::detect_ansi_level();
+    let rendered = pkl_runtime::diagnostic::mordant::colorize_clikt_help(plain_help, level);
+    write_stdout(&rendered);
 }
 
 fn write_stdout(text: &str) {

@@ -269,26 +269,17 @@ fn index_error(
     min: i64,
     max: i64,
 ) -> Result<RuntimeError, RuntimeError> {
-    Ok(RuntimeError::new(
+    let rendered =
+        crate::diagnostic_values::render_string(receiver, &vm.heap, &vm.program.module_name, 80)?;
+    Ok(RuntimeError::with_program_values(
         ErrorKind::Arithmetic,
-        PklString::join(
-            &[
-                format!(
-                    "Element index `{}` is out of range `{}`..`{}`.\nCollection: ",
-                    strings::diagnostic_integer(index),
-                    strings::diagnostic_integer(min),
-                    strings::diagnostic_integer(max)
-                )
-                .into(),
-                crate::diagnostic_values::render_string(
-                    receiver,
-                    &vm.heap,
-                    &vm.program.module_name,
-                    80,
-                )?,
-            ],
-            "",
+        format!(
+            "Element index `{}` is out of range `{}`..`{}`.",
+            strings::diagnostic_integer(index),
+            strings::diagnostic_integer(min),
+            strings::diagnostic_integer(max)
         ),
+        &[("Collection", rendered)],
     ))
 }
 impl Vm {
@@ -324,9 +315,10 @@ impl Vm {
                     if kind.nullable() {
                         return self.list_ops_return(step, Value::Null);
                     }
-                    return Err(RuntimeError::new(
+                    return Err(RuntimeError::with_program_values(
                         ErrorKind::Type,
-                        "Expected a non-empty collection.\nCollection: List()",
+                        "Expected a non-empty collection.",
+                        &[("Collection", "List()".into())],
                     ));
                 }
                 selected.extend_from_slice(&input[1..]);
@@ -412,30 +404,36 @@ impl Vm {
             } else if run.kind.nullable() {
                 Value::Null
             } else {
-                let mut parts = vec![if run.kind.predicate() {
-                    "Cannot find matching element in collection.".into()
+                let headline = if run.kind.predicate() {
+                    "Cannot find matching element in collection."
                 } else {
-                    "Cannot find element in collection.".into()
-                }];
+                    "Cannot find element in collection."
+                };
+                let mut program_values = Vec::with_capacity(2);
                 if !run.kind.predicate() {
-                    parts.push("\nElement   : ".into());
-                    parts.push(crate::diagnostic_values::render_string(
-                        &run.argument,
+                    program_values.push((
+                        "Element",
+                        crate::diagnostic_values::render_string(
+                            &run.argument,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?,
+                    ));
+                }
+                program_values.push((
+                    "Collection",
+                    crate::diagnostic_values::render_string(
+                        &Value::Object(run.source),
                         &self.heap,
                         &self.program.module_name,
                         80,
-                    )?);
-                }
-                parts.push("\nCollection: ".into());
-                parts.push(crate::diagnostic_values::render_string(
-                    &Value::Object(run.source),
-                    &self.heap,
-                    &self.program.module_name,
-                    80,
-                )?);
-                return Err(RuntimeError::new(
+                    )?,
+                ));
+                return Err(RuntimeError::with_program_values(
                     ErrorKind::Type,
-                    PklString::join(&parts, ""),
+                    headline,
+                    &program_values,
                 ));
             };
             return self.list_ops_return(run.step, value);

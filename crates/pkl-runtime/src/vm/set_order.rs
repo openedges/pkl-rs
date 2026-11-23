@@ -577,13 +577,10 @@ impl Vm {
             }
             if values.is_empty() && !kind.sort() && initial.is_none() {
                 if !kind.nullable() {
-                    return Err(RuntimeError::new(
+                    return Err(RuntimeError::with_program_values(
                         ErrorKind::Type,
-                        if list {
-                            "Expected a non-empty collection.\nCollection: List()"
-                        } else {
-                            "Expected a non-empty collection.\nCollection: Set()"
-                        },
+                        "Expected a non-empty collection.",
+                        &[("Collection", if list { "List()" } else { "Set()" }.into())],
                     ));
                 }
                 self.stack.push(Value::Null);
@@ -840,20 +837,27 @@ fn comparator(value: Value, heap: &Heap, module: &PklString) -> Result<bool, Run
         Value::Int(value) => Ok(value.get() < 0),
         value => {
             // Java uses the two-class typeMismatch overload, not a union type.
-            let message = if value.is_null() {
-                "Expected value of type `Boolean` or `Int`, but got `null`.".into()
+            if value.is_null() {
+                Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "Expected value of type `Boolean` or `Int`, but got `null`.",
+                ))
             } else {
-                PklString::join(
+                let headline = PklString::join(
                     &[
                         "Expected value of type `Boolean` or `Int`, but got type `".into(),
                         crate::diagnostic_values::type_name(&value, heap, module)?,
-                        "`.\nValue: ".into(),
-                        crate::diagnostic_values::render_string(&value, heap, module, 80)?,
+                        "`.".into(),
                     ],
                     "",
-                )
-            };
-            Err(RuntimeError::new(ErrorKind::Type, message))
+                );
+                let rendered = crate::diagnostic_values::render_string(&value, heap, module, 80)?;
+                Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Value", rendered)],
+                ))
+            }
         }
     }
 }

@@ -108,7 +108,7 @@ fn resolve_real_output_path(base: &Path, rel: &str) -> (PathBuf, PathBuf) {
 pub fn cmd_eval(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::Eval, args)?;
     if opts.show_help {
-        print!("{HELP_EVAL}");
+        crate::write_help(HELP_EVAL);
         return Ok(0);
     }
     if opts.multiple_file_output_path.is_some()
@@ -459,7 +459,7 @@ fn resolve_project_files(
 pub fn cmd_project_resolve(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::ProjectResolve, args)?;
     if opts.show_help {
-        print!("{HELP_PROJECT_RESOLVE}");
+        crate::write_help(HELP_PROJECT_RESOLVE);
         return Ok(0);
     }
 
@@ -515,7 +515,7 @@ pub fn cmd_project_resolve(args: &[String]) -> Result<i32, CliError> {
 pub fn cmd_project_package(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::ProjectPackage, args)?;
     if opts.show_help {
-        print!("{HELP_PROJECT_PACKAGE}");
+        crate::write_help(HELP_PROJECT_PACKAGE);
         return Ok(0);
     }
 
@@ -628,7 +628,7 @@ pub fn cmd_project_package(args: &[String]) -> Result<i32, CliError> {
 pub fn cmd_download_package(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::DownloadPackage, args)?;
     if opts.show_help {
-        print!("{HELP_DOWNLOAD_PACKAGE}");
+        crate::write_help(HELP_DOWNLOAD_PACKAGE);
         return Ok(0);
     }
     if positionals.is_empty() {
@@ -701,7 +701,7 @@ pub fn cmd_download_package(args: &[String]) -> Result<i32, CliError> {
 pub fn cmd_analyze_imports(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::AnalyzeImports, args)?;
     if opts.show_help {
-        print!("{HELP_ANALYZE_IMPORTS}");
+        crate::write_help(HELP_ANALYZE_IMPORTS);
         return Ok(0);
     }
     if positionals.is_empty() {
@@ -774,11 +774,13 @@ pub fn cmd_analyze_imports(args: &[String]) -> Result<i32, CliError> {
     );
     host.close();
 
+    if res.exit_code != 0 {
+        let mut stderr = io::stderr().lock();
+        write_cli_error_stderr(&mut stderr, &res.stderr);
+        return Ok(res.exit_code);
+    }
     if !res.stderr.is_empty() {
         let _ = io::stderr().write_all(&res.stderr);
-    }
-    if res.exit_code != 0 {
-        return Ok(res.exit_code);
     }
 
     if let Some(ref out_path) = opts.output_path {

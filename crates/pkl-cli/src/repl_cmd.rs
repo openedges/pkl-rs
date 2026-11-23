@@ -11,7 +11,7 @@ use pkl_repl::{ReplCliConfig, run_cli_repl};
 pub fn cmd_repl(args: &[String]) -> Result<i32, CliError> {
     let (opts, positionals) = parse_options(SubcommandKind::Repl, args)?;
     if opts.show_help {
-        print!("{HELP_REPL}");
+        crate::write_help(HELP_REPL);
         return Ok(0);
     }
     if !positionals.is_empty() {

@@ -39,28 +39,31 @@ impl Vm {
         key_span: Span,
     ) -> Result<Value, RuntimeError> {
         let Value::Int(index) = key else {
-            let mut message = crate::pkl_string::PklStringBuilder::default();
-            message.push_str("Operator `[]` is not defined for operand types `String` and `");
-            message.push_value(&crate::diagnostic_values::type_name(
+            let mut headline = crate::pkl_string::PklStringBuilder::default();
+            headline.push_str("Operator `[]` is not defined for operand types `String` and `");
+            headline.push_value(&crate::diagnostic_values::type_name(
                 &key,
                 &self.heap,
                 &self.program.module_name,
             )?);
-            message.push_str("`.\nLeft operand : ");
-            message.push_value(&crate::diagnostic_values::render_string(
+            headline.push_str("`.");
+            let left_val = crate::diagnostic_values::render_string(
                 &Value::String(text.clone()),
                 &self.heap,
                 &self.program.module_name,
                 80,
-            )?);
-            message.push_str("\nRight operand: ");
-            message.push_value(&crate::diagnostic_values::render_string(
+            )?;
+            let right_val = crate::diagnostic_values::render_string(
                 &key,
                 &self.heap,
                 &self.program.module_name,
                 80,
-            )?);
-            return Err(RuntimeError::new(ErrorKind::Type, message.finish()));
+            )?;
+            return Err(RuntimeError::with_program_values(
+                ErrorKind::Type,
+                headline.finish(),
+                &[("Left operand", left_val), ("Right operand", right_val)],
+            ));
         };
         if let Some(point) = usize::try_from(index.get())
             .ok()
@@ -69,19 +72,22 @@ impl Vm {
             return Ok(Value::String(point));
         }
         let last = text.code_point_len() as i64 - 1;
-        let mut message = crate::pkl_string::PklStringBuilder::default();
-        message.push_str(&format!(
-            "Character index `{}` is out of range `0`..`{}`.\nString: ",
-            diagnostic_integer(*index),
-            diagnostic_integer(last)
-        ));
-        message.push_value(&crate::diagnostic_values::render_string(
+        let rendered = crate::diagnostic_values::render_string(
             &Value::String(text.clone()),
             &self.heap,
             &self.program.module_name,
             80,
-        )?);
-        Err(RuntimeError::new(ErrorKind::Type, message.finish()).at(key_span))
+        )?;
+        Err(RuntimeError::with_program_values(
+            ErrorKind::Type,
+            format!(
+                "Character index `{}` is out of range `0`..`{}`.",
+                diagnostic_integer(*index),
+                diagnostic_integer(last)
+            ),
+            &[("String", rendered)],
+        )
+        .at(key_span))
     }
 
     pub(super) fn string_repeat_method(&mut self, receiver: Value) {

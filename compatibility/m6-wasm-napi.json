@@ -181,12 +181,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "bf88207abc89d626791d51ea929117af7ce725b1ac9fec457bd984ee5738d394",
+          "sha256": "1c0abc4755194c0d1e127e1bc648e7869158bff29e7401080fb756414c4c534b",
           "symbol": "SourceSession"
         },
         {
           "path": "crates/pkl-cli/src/eval_cmd.rs",
-          "sha256": "9190d76347ed5f94b16c48bd0d01ef8f6eede27a8b2cc4c305fada1ebfb72b36",
+          "sha256": "6252ae6a8ebef795e09fa0a254bef661d49476d5bc614a570295d987ad6c0220",
           "symbol": "cmd_eval"
         },
         {
@@ -504,12 +504,12 @@
         },
         {
           "path": "crates/pkl-cli/src/lib.rs",
-          "sha256": "6b5d3cec99bcad9651762ba91c28b1404accb85832212d683d9157d344772ba3",
+          "sha256": "71cfd6a09da5566aa83ffd68482e4ede4354afa26b391ad3512cb45fa1e0ce33",
           "symbol": "run_cli"
         },
         {
           "path": "crates/pkl-doc/src/lib.rs",
-          "sha256": "ad4eb80efae38dcda36e16c2b6d4bc2a1b2b269eaebd949ad2a2ce341c32d3e9",
+          "sha256": "1a9c8b1e135d49751ae579a4fcc740de5f18b887f40d48e41332ed481c9c4fa6",
           "symbol": "DocGenerator"
         }
       ],
@@ -645,7 +645,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "bf88207abc89d626791d51ea929117af7ce725b1ac9fec457bd984ee5738d394",
+          "sha256": "1c0abc4755194c0d1e127e1bc648e7869158bff29e7401080fb756414c4c534b",
           "symbol": "SourceSession"
         },
         {
