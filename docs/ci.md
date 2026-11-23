@@ -20,20 +20,27 @@ All GitHub Actions third-party steps remain commit-SHA pinned, and `ci.yml`/`rel
 Expensive verification suites — full 378-target Rust workspace tests, M0–M6 Java 0.32.0 differential suites (including M2 4,575-case replay and M4 all-29 Pantry packages), Playwright cross-browser matrices (Chromium/Firefox/WebKit), M7 seeded differential fuzzing, 18-pair memory reclamation soak, and 34-workload benchmarks against Official Apple Pkl 0.32.0 `native-image` and pinned Temurin 21 — run outside GitHub Actions via [tools/local_verify.py](../tools/local_verify.py):
 
 ```sh
-# List all available suites and presets
+# List all available suites, discovered Python test counts, and presets
 python3 tools/local_verify.py --list
 
-# Preview commands without executing
-python3 tools/local_verify.py --preset full --dry-run
+# Preview full-strict commands without executing
+python3 tools/local_verify.py --preset full-strict --dry-run
 
-# Quick local gate (full 378-target Rust workspace + all 12 manifests/oracles/Python tests)
+# Quick local gate (full 378-target Rust workspace + all 12 manifests/oracles/59 active Python tests + standalone @pkl-rs/{wasm,napi}/CLI smoke)
 python3 tools/local_verify.py --preset quick
 
-# Compatibility differential suites (M0-M6; add --full-corpus for M2 4,575 + M4 Pantry all-5)
+# Compatibility differential suites (M0-M6 including M0 replay & M1 Graal check; add --full-corpus for M2 4,575 + M4 Pantry all-5)
 python3 tools/local_verify.py --preset compat
 
-# M7 fuzz + soak + benchmark (official native-image or both) + JS/Wasm analysis
-python3 tools/local_verify.py --suite m7-fuzz --suite m7-soak --suite m7-bench --baseline native-image
+# M7 fuzz + soak + benchmark (official native-image or both) + JS/Wasm analysis + release manifest check
+python3 tools/local_verify.py --preset m7 --baseline native-image
+
+# Full strict local gate (all workspace/packages/M0-M7 suites with --full-corpus, 18-pair soak, 34-workload --baseline both + --verify-strict)
+python3 tools/local_verify.py --preset full-strict --local-checkpoint
+
+# Optional: include all 75 historical M2 Python fixture/compare suites or the ignored strict Protobuf gate
+python3 tools/local_verify.py --suite py-historical
+python3 tools/local_verify.py --suite protobuf-strict
 ```
 
 Each invocation writes to a fresh timestamped directory under `target/local-verify/<UTC-timestamp>/` (or `--output-root <dir>`) with a `summary.json` marked `provenance: "local-verification-environment-not-hosted-ci"`, preserving all raw evidence and failures without relabeling local runs as hosted CI.

@@ -80,15 +80,36 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             ref = match.group(1)
             self.assertRegex(ref, r"^[^@]+@[0-9a-f]{40}$", f"Unpinned action in ci.yml: {ref}")
 
-    def test_local_verify_presets_and_dry_run_plan_all_suites(self) -> None:
+    def test_python_test_discovery_accounts_for_every_file_in_tools_tests(self) -> None:
+        all_files = sorted(f"tools/tests/{p.name}" for p in (ROOT / "tools" / "tests").glob("test_*.py"))
+        discovered = local_verify.discover_python_test_modules(ROOT)
+        active = discovered["active"]
+        historical = discovered["historical"]
+        self.assertEqual(sorted(active + historical), all_files, "No test_*.py file may be silently omitted")
+        self.assertEqual(set(active) & set(historical), set())
+        # Verify M1 (8), M2 (22), core (13), and M3-M7 (16) active modules are all included.
+        self.assertGreaterEqual(len(active), 59)
+        self.assertGreaterEqual(len(historical), 75)
+        for required in (
+            "tools/tests/test_local_verify.py",
+            "tools/tests/test_runtime_fixture_links.py",
+            "tools/tests/test_vendor_sources.py",
+            "tools/tests/test_m1_platforms.py",
+            "tools/tests/test_m2_language.py",
+            "tools/tests/test_m7_benchmark.py",
+        ):
+            self.assertIn(required, active)
+
+    def test_local_verify_full_and_full_strict_plan_complete_m0_through_m7_and_packages(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out_root = Path(tmp) / "out"
-            selected = local_verify.resolve_suite_selection([], "full")
+            selected = local_verify.resolve_suite_selection([], "full-strict", include_historical_tests=True)
             self.assertEqual(
                 selected,
                 [
                     "workspace",
                     "manifests",
+                    "packages",
                     "m0",
                     "m1",
                     "m2",
@@ -100,6 +121,8 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
                     "m7-soak",
                     "m7-bench",
                     "m7-js",
+                    "m7-release",
+                    "py-historical",
                 ],
             )
             summary = local_verify.run_suites(
@@ -108,20 +131,43 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
                 dry_run=True,
                 full_corpus=True,
                 baseline="both",
+                strict_bench=True,
                 all_soak_targets=True,
+                local_checkpoint=True,
             )
             self.assertEqual(summary["overall_status"], "planned")
             self.assertEqual(summary["provenance"], "local-verification-environment-not-hosted-ci")
             self.assertFalse(out_root.exists(), "dry-run must not create output dirs")
             suite_map = {row["suite"]: row for row in summary["suites"]}
-            # Verify full_corpus adds full M2 verify and M4 all-5 lanes.
-            m2_steps = [s["name"] for s in suite_map["m2"]["steps"]]
-            self.assertIn("m2-verify-full", m2_steps)
-            m4_steps = [s["name"] for s in suite_map["m4"]["steps"]]
-            self.assertIn("m4-differential-all5", m4_steps)
-            m7_bench_cmd = suite_map["m7-bench"]["steps"][0]["command"]
-            self.assertIn("--baseline", m7_bench_cmd)
-            self.assertIn("both", m7_bench_cmd)
+
+            # Manifests suite runs all active Python unit tests.
+            manifest_steps = {s["name"]: s["command"] for s in suite_map["manifests"]["steps"]}
+            self.assertIn("tools/tests/test_m1_platforms.py", manifest_steps["unit-tests-all-active-python"])
+            self.assertIn("tools/tests/test_m2_language.py", manifest_steps["unit-tests-all-active-python"])
+
+            # Packages suite covers Wasm gzip check, N-API run + pack-install, and CLI smoke.
+            pkg_steps = [s["name"] for s in suite_map["packages"]["steps"]]
+            self.assertIn("check-wasm-gzip-budget", pkg_steps)
+            self.assertIn("test-wasm-pkg", pkg_steps)
+            self.assertIn("test-napi-pkg", pkg_steps)
+            self.assertIn("test-napi-pack-install", pkg_steps)
+
+            # M0 includes Java replay comparison; M1 includes Graal archive check-report.
+            m0_steps = [s["name"] for s in suite_map["m0"]["steps"]]
+            self.assertIn("compat-compare-java-replay", m0_steps)
+            m1_steps = [s["name"] for s in suite_map["m1"]["steps"]]
+            self.assertIn("m1-graal-check-report", m1_steps)
+
+            # M2 full verify, M4 all-5 Pantry, M7 strict benchmark, and M7 release wiring.
+            self.assertIn("m2-verify-full", [s["name"] for s in suite_map["m2"]["steps"]])
+            self.assertIn("m4-differential-all5", [s["name"] for s in suite_map["m4"]["steps"]])
+            self.assertIn("m7-soak-verify-strict", [s["name"] for s in suite_map["m7-soak"]["steps"]])
+            self.assertIn("m7-bench-verify-strict", [s["name"] for s in suite_map["m7-bench"]["steps"]])
+            rel_cmd = suite_map["m7-release"]["steps"][0]["command"]
+            self.assertIn("--benchmark-dir", rel_cmd)
+            self.assertIn("--soak-dir", rel_cmd)
+            self.assertIn("--fuzz-dir", rel_cmd)
+            self.assertIn("--local-checkpoint", rel_cmd)
 
     def test_local_verify_rejects_unknown_suite_and_empty_selection(self) -> None:
         with self.assertRaises(ValueError):
