@@ -234,7 +234,7 @@ impl Vm {
             .last()
             .cloned()
             .ok_or_else(|| invalid("type resolution has no lexical module"))?;
-        let mut seen = BTreeSet::new();
+        let mut seen = SmallObjectIdSet::new();
         while seen.insert(scope.owner) {
             let object = self.heap.get(scope.owner)?;
             if object.is_module {
@@ -272,7 +272,7 @@ impl Vm {
             .rev()
             .map(|scope| scope.owner)
             .collect();
-        let mut visited = BTreeSet::new();
+        let mut visited = SmallObjectIdSet::new();
         while let Some(owner) = pending.pop() {
             if !visited.insert(owner) {
                 continue;

@@ -986,7 +986,7 @@ pub struct ClassRecord {
     pub(crate) ancestors_len: u8,
 }
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
 pub enum CollectionKind {
     #[default]
     Dynamic,

@@ -355,6 +355,10 @@ impl Vm {
             self.resolved_instruction_types
                 .retain(|(block, _, _, _), _| !retired_public_entries.contains(block));
         }
+        if !self.verified_strict_collections.is_empty() {
+            self.verified_strict_collections
+                .retain(|(id, _), _| self.heap.get(*id).is_ok());
+        }
     }
 }
 
