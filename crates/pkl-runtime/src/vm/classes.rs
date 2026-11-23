@@ -110,11 +110,33 @@ pub(super) fn runtime_class(value: &Value, heap: &Heap) -> Result<RuntimeClass, 
     Ok(RuntimeClass::Builtin(class))
 }
 
+#[inline]
 pub(super) fn accepts_nominal(id: usize, value: &Value, heap: &Heap) -> bool {
     if id == TYPED {
         // Java's TypedTypeNode tests VmTyped storage, not the class graph.
         // A permitted pkl.* declaration can extend Any and still be VmTyped.
         return matches!(value, Value::Object(object) if typed_instance(heap, *object).unwrap_or(false));
+    }
+    if let Value::Object(obj_id) = value
+        && let Some(object) = heap.get_fast(*obj_id)
+        && object.foreign_map_entry.is_none()
+        && object.pair.is_none()
+        && object.reference.is_none()
+    {
+        if let Ok(Some(class)) = heap.object_class(*obj_id) {
+            return heap.class_has_ancestor_id(class, id);
+        }
+        let mut class = BuiltinClass::from_type(&TypeCheck::Collection(object.collection_kind))
+            .expect("collection class");
+        loop {
+            if class.id() == id {
+                return true;
+            }
+            let Some(parent) = class.parent() else {
+                return false;
+            };
+            class = parent;
+        }
     }
     match runtime_class(value, heap) {
         Ok(RuntimeClass::Declared(class)) => heap.class_has_ancestor_id(class, id),
@@ -534,6 +556,7 @@ impl Vm {
             });
             let class = self.heap.allocate_class(prototype);
             self.builtin_classes.insert(key, class);
+            self.builtin_fast_classes.record(key, class);
             let superclass = key
                 .parent()
                 .and_then(|parent| self.builtin_classes.get(&parent).copied());

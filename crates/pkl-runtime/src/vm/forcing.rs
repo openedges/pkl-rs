@@ -191,10 +191,10 @@ impl Vm {
         frame_index: usize,
         run_slot: &mut Option<Box<ForceRun>>,
     ) -> Result<bool, RuntimeError> {
-        let run = run_slot.as_deref_mut().expect("force continuation");
+        let mut run = run_slot.as_deref_mut().expect("force continuation");
         if run.awaiting.take().is_some() {
             let value = self.pop()?;
-            if run.recurse {
+            if run.recurse && matches!(value, Value::Object(_)) {
                 run.tasks.push(Task::Value(value));
             }
         }
@@ -265,7 +265,12 @@ impl Vm {
                         self.heap.get_mut(id)?.forced = true;
                         run.active.push(id);
                         run.tasks.push(Task::Finish(id));
-                        run.tasks.extend(pair.into_iter().rev().map(Task::Value));
+                        run.tasks.extend(
+                            pair.into_iter()
+                                .rev()
+                                .filter(|v| matches!(v, Value::Object(_)))
+                                .map(Task::Value),
+                        );
                     }
                 } else if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
                     if !reference.forced {
@@ -287,8 +292,10 @@ impl Vm {
                         CollectionKind::List | CollectionKind::Map | CollectionKind::Set
                     ) {
                         if let Some(elems) = &self.heap.get(id)?.list_elements {
-                            for value in elems.iter().rev().cloned() {
-                                run.tasks.push(Task::Value(value));
+                            for value in elems.iter().rev() {
+                                if matches!(value, Value::Object(_)) {
+                                    run.tasks.push(Task::Value(value.clone()));
+                                }
                             }
                         } else {
                             for member in collections::ordered_members(&self.heap, id)?
@@ -304,8 +311,12 @@ impl Vm {
                                 let value = self.cached_slot(id, &key)?.ok_or_else(|| {
                                     invalid("strict collection value is not cached")
                                 })?;
-                                run.tasks.push(Task::Value(value));
-                                if kind == CollectionKind::Map {
+                                if matches!(value, Value::Object(_)) {
+                                    run.tasks.push(Task::Value(value));
+                                }
+                                if kind == CollectionKind::Map
+                                    && matches!(member.key, Value::Object(_))
+                                {
                                     run.tasks.push(Task::Value(member.key));
                                 }
                             }
@@ -360,17 +371,19 @@ impl Vm {
                             {
                                 continue;
                             }
-                            if collections::hidden_property(
-                                &self.heap,
-                                owner,
-                                &member.name,
-                                member.entry,
-                            )? {
+                            if !member.entry
+                                && collections::hidden_property(
+                                    &self.heap,
+                                    owner,
+                                    &member.name,
+                                    false,
+                                )?
+                            {
                                 continue;
                             }
-                            if !member.entry {
-                                let recv_obj = self.heap.get(receiver)?;
-                                let cached = if recv_obj.cache_slots.len() <= 16 {
+                            let recv_obj = self.heap.get(receiver)?;
+                            let cached = if !member.entry {
+                                if recv_obj.cache_slots.len() <= 16 {
                                     recv_obj
                                         .cache_slots
                                         .iter()
@@ -392,20 +405,35 @@ impl Vm {
                                         Some(LazyState::Completed(val)) => Some(val),
                                         _ => None,
                                     }
-                                };
-                                if let Some(val) = cached {
-                                    if run.recurse {
-                                        let val = val.clone();
-                                        run.tasks.push(Task::Members {
-                                            receiver,
-                                            owner,
-                                            index,
-                                        });
-                                        run.tasks.push(Task::Value(val));
-                                        return Ok(false);
-                                    }
-                                    continue;
                                 }
+                            } else if !recv_obj.has_object_collection_key
+                                && !recv_obj.cache.is_empty()
+                            {
+                                let key = CacheKey {
+                                    entry: true,
+                                    owner: None,
+                                    name: member.name.clone(),
+                                    method: false,
+                                };
+                                match recv_obj.cache.get(&key) {
+                                    Some(LazyState::Completed(val)) => Some(val),
+                                    _ => None,
+                                }
+                            } else {
+                                None
+                            };
+                            if let Some(val) = cached {
+                                if run.recurse && matches!(val, Value::Object(_)) {
+                                    let val = val.clone();
+                                    run.tasks.push(Task::Members {
+                                        receiver,
+                                        owner,
+                                        index,
+                                    });
+                                    run.tasks.push(Task::Value(val));
+                                    return Ok(false);
+                                }
+                                continue;
                             }
                             Some(member.clone())
                         } else if let Some(parent) = object.parent {
@@ -434,6 +462,19 @@ impl Vm {
                         let result = self.force_declaration_member(receiver, owner, member);
                         *run_slot = self.frames[frame_index].deep_force.take();
                         result?;
+                        if self.frames.len() == frame_index + 1
+                            && !self.frames[frame_index].has_pending_run()
+                        {
+                            run = run_slot.as_deref_mut().expect("force continuation");
+                            run.awaiting = None;
+                            let value = self.pop()?;
+                            if run.recurse && matches!(value, Value::Object(_)) {
+                                run.tasks.push(Task::Value(value));
+                                break;
+                            }
+                            run.tasks.pop();
+                            continue;
+                        }
                     }
                     break;
                 }

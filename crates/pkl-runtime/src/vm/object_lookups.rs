@@ -16,7 +16,7 @@ pub enum Lookup {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> BTreeMap<(Arc<str>, Arc<str>), (usize, usize)> {
+) -> BTreeMap<(&'static str, &'static str), (usize, usize)> {
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
     for (class, name, operation) in [
@@ -96,7 +96,7 @@ pub(super) fn blocks(
             spans,
             ..Default::default()
         });
-        result.insert((class.into(), name.into()), (block, 1));
+        result.insert((class, name), (block, 1));
     }
     result
 }
@@ -131,7 +131,7 @@ impl Vm {
         if object.is_module
             || object.reference.is_some()
             || object.pair.is_some()
-            || collections::typed_class(&self.heap, receiver)?.is_some()
+            || collections::is_typed_class(&self.heap, receiver)?
         {
             return Ok(None);
         }
@@ -305,7 +305,7 @@ impl Vm {
             }
             let mut owner = Some(receiver);
             let typed = self.heap.get(receiver)?.is_module
-                || collections::typed_class(&self.heap, receiver)?.is_some();
+                || collections::is_typed_class(&self.heap, receiver)?;
             let mut found = !typed && name == "default";
             while let Some(id) = owner {
                 let object = self.heap.get(id)?;
@@ -370,7 +370,7 @@ impl Vm {
         let identifier = collection_conversions::property_identifier(name);
         let mut error = self.missing_member(receiver, &identifier, false)?;
         let object = self.heap.get(receiver)?;
-        if object.is_module || collections::typed_class(&self.heap, receiver)?.is_some() {
+        if object.is_module || collections::is_typed_class(&self.heap, receiver)? {
             let (kind, label) = if object.is_module {
                 (
                     "module",
@@ -463,7 +463,7 @@ impl Vm {
         if object.is_module
             || object.reference.is_some()
             || object.pair.is_some()
-            || collections::typed_class(&self.heap, receiver)?.is_some()
+            || collections::is_typed_class(&self.heap, receiver)?
             || !matches!(
                 object.collection_kind,
                 CollectionKind::Dynamic | CollectionKind::Listing | CollectionKind::Mapping

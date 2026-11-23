@@ -204,6 +204,7 @@ fn append(
         .ok_or_else(|| invalid("declaration identity limit"))?;
     let mut compiler = Compiler {
         resolved,
+        type_lookup: build_type_lookup(resolved),
         program,
         unit,
         declaration_base,

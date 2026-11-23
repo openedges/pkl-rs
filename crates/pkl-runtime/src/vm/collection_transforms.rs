@@ -1036,6 +1036,141 @@ impl Vm {
                 None
             }
         };
+        // Fast synchronous strict-List projections for bounded non-object lists,
+        // avoiding per-element TransformRun loops while keeping huge lists cancelable.
+        if let Some(fast_result) = match operation {
+            Operation::Projection(Projection::Contains)
+                if strict_list_len.is_some_and(|n| n <= 512) =>
+            {
+                let query = self
+                    .frames
+                    .last()
+                    .and_then(|f| f.environment.locals.first());
+                if let Some(query) = query
+                    && !matches!(query, Value::Object(_))
+                    && let Some(elems) = self.heap.get(source)?.list_elements.as_deref()
+                    && elems.iter().all(|e| !matches!(e, Value::Object(_)))
+                {
+                    let found = elems
+                        .iter()
+                        .any(|e| equality::same_key(&self.heap, e, query));
+                    Some(Value::Bool(found))
+                } else {
+                    None
+                }
+            }
+            Operation::Projection(Projection::Distinct)
+                if strict_list_len.is_some_and(|n| n <= 512) =>
+            {
+                if let Some(elems) = self.heap.get(source)?.list_elements.as_deref()
+                    && elems.iter().all(|e| !matches!(e, Value::Object(_)))
+                {
+                    let mut unique = Vec::with_capacity(elems.len());
+                    let mut approx_bytes = 0usize;
+                    if elems.len() > 16 && elems.iter().all(|e| matches!(e, Value::String(_))) {
+                        let mut seen = crate::heap::FastMap::default();
+                        seen.reserve(elems.len());
+                        for e in elems {
+                            let Value::String(s) = e else { unreachable!() };
+                            if seen.insert(s.clone(), ()).is_none() {
+                                approx_bytes =
+                                    approx_bytes.saturating_add(s.as_str().map_or(16, str::len));
+                                unique.push(e.clone());
+                            }
+                        }
+                    } else if elems.len() <= 64 {
+                        for e in elems {
+                            if !unique.iter().any(|u| equality::same_key(&self.heap, u, e)) {
+                                if let Value::String(s) = e {
+                                    approx_bytes = approx_bytes
+                                        .saturating_add(s.as_str().map_or(16, str::len));
+                                }
+                                unique.push(e.clone());
+                            }
+                        }
+                    } else {
+                        unique.clear();
+                    }
+                    if elems.is_empty() || !unique.is_empty() {
+                        approx_bytes = approx_bytes.saturating_add(
+                            unique.len().saturating_mul(std::mem::size_of::<Value>()),
+                        );
+                        self.heap.note_external_allocation(approx_bytes);
+                        let list_id = self.heap.allocate_strict_list(unique);
+                        Some(Value::Object(list_id))
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                }
+            }
+            Operation::Projection(Projection::ListIsDistinct)
+                if strict_list_len.is_some_and(|n| n <= 512) =>
+            {
+                if let Some(elems) = self.heap.get(source)?.list_elements.as_deref()
+                    && elems.iter().all(|e| !matches!(e, Value::Object(_)))
+                {
+                    if elems.len() <= 1 {
+                        Some(Value::Bool(true))
+                    } else if elems.len() > 16
+                        && elems.iter().all(|e| matches!(e, Value::String(_)))
+                    {
+                        let mut seen = crate::heap::FastMap::default();
+                        seen.reserve(elems.len());
+                        let mut distinct = true;
+                        for e in elems {
+                            let Value::String(s) = e else { unreachable!() };
+                            if seen.insert(s.clone(), ()).is_some() {
+                                distinct = false;
+                                break;
+                            }
+                        }
+                        Some(Value::Bool(distinct))
+                    } else if elems.len() <= 64 {
+                        let mut distinct = true;
+                        'outer: for i in 1..elems.len() {
+                            for j in 0..i {
+                                if equality::same_key(&self.heap, &elems[i], &elems[j]) {
+                                    distinct = false;
+                                    break 'outer;
+                                }
+                            }
+                        }
+                        Some(Value::Bool(distinct))
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                }
+            }
+            Operation::Projection(Projection::Add) if strict_list_len.is_some_and(|n| n <= 512) => {
+                let extra = self
+                    .frames
+                    .last()
+                    .and_then(|f| f.environment.locals.last())
+                    .cloned();
+                if let Some(extra) = extra
+                    && let Some(elems) = self.heap.get(source)?.list_elements.as_deref()
+                {
+                    let mut out = Vec::with_capacity(elems.len() + 1);
+                    out.extend(elems.iter().cloned());
+                    out.push(extra);
+                    let approx = out.len().saturating_mul(std::mem::size_of::<Value>());
+                    self.heap.note_external_allocation(approx);
+                    let list_id = self.heap.allocate_strict_list(out);
+                    Some(Value::Object(list_id))
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        } {
+            let ret_pc = self.program.blocks[self.frames.last().unwrap().block].len() - 1;
+            self.stack.push(fast_result);
+            return self.jump(ret_pc);
+        }
         let mut members = if strict_list_len.is_some() {
             Vec::new()
         } else if matches!(
@@ -1297,6 +1432,31 @@ impl Vm {
     }
 
     pub(super) fn collection_contains_step(&mut self, matched: usize) -> Result<(), RuntimeError> {
+        let non_object_match = {
+            let element = self
+                .stack
+                .last()
+                .ok_or_else(|| invalid("contains element"))?;
+            let query = self
+                .frames
+                .last()
+                .and_then(|f| f.environment.locals.first())
+                .ok_or_else(|| invalid("contains argument"))?;
+            if !matches!(element, Value::Object(_)) && !matches!(query, Value::Object(_)) {
+                Some(equality::same_key(&self.heap, element, query))
+            } else {
+                None
+            }
+        };
+        if let Some(is_match) = non_object_match {
+            self.pop()?;
+            if is_match {
+                self.frames.last_mut().unwrap().collection_transform = None;
+                self.stack.push(Value::Bool(true));
+                self.jump(matched)?;
+            }
+            return Ok(());
+        }
         let element = self
             .stack
             .last()
@@ -1974,7 +2134,7 @@ impl Vm {
         if object.reference.is_some()
             || object.pair.is_some()
             || object.is_module
-            || collections::typed_class(&self.heap, source)?.is_some()
+            || collections::is_typed_class(&self.heap, source)?
         {
             return Ok(false);
         }
@@ -2453,7 +2613,7 @@ impl Vm {
                 self.program.collection_projection_blocks[11]
             }
             (CollectionKind::Listing, name) if listing_endpoint(name) || name == "distinct" => {
-                self.program.primitive_methods[&("Listing".into(), name.into())]
+                self.program.primitive_methods.expect("Listing", name)
             }
             _ => return Ok(None),
         };

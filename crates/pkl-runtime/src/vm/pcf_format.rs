@@ -7,7 +7,6 @@ pub(super) fn string(value: &PklString, indent: &PklString, custom: bool) -> Pkl
 
 /// Fast UTF-8 direct PCF string writer. Returns `false` only on unpaired UTF-16 surrogates.
 #[inline]
-#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn write_string(
     out: &mut String,
     value: &PklString,

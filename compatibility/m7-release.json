@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "86116f730ccf5ed197f2b17520bcedd64c62704f2604ce799df1b766a7204762"
+      "sha256": "5b8feb41a3f8b8aace02a7092dd49aef88c5039be82a1b7d7df522a7cfdbc7f9"
     },
     {
       "bytes": 111079,
@@ -277,7 +277,7 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "cb84cc735d562cf9f3902fc5215e83b2d5d2788c99478e0c5471a5fa5caad00e"
+      "sha256": "37838e26e1a400beec52782511da99d332e3b2aae3a51246f79385188d6eaa51"
     },
     {
       "bytes": 41462,
@@ -514,7 +514,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/base_snapshot.rs",
-          "sha256": "3ebd45ec62f9d64473f1d1eca262acf3f32d434b877c2c24f2c26f2d2767cc19",
+          "sha256": "9ddef47ea7bd014ca384bed3941749582eb8dd1c4f21277ca4f93aa976a1ab82",
           "symbol": "BaseSnapshot"
         }
       ],
@@ -804,8 +804,8 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "86116f730ccf5ed197f2b17520bcedd64c62704f2604ce799df1b766a7204762",
-    "compatibility/m3-stdlib-output.json": "cb84cc735d562cf9f3902fc5215e83b2d5d2788c99478e0c5471a5fa5caad00e",
+    "compatibility/m2-language.json": "5b8feb41a3f8b8aace02a7092dd49aef88c5039be82a1b7d7df522a7cfdbc7f9",
+    "compatibility/m3-stdlib-output.json": "37838e26e1a400beec52782511da99d332e3b2aae3a51246f79385188d6eaa51",
     "compatibility/m4-io-packages.json": "7b99737adcbcaebea49e92f2b3b62140e2c7fcf3cc9633a90db8833cfc2e1a27",
     "compatibility/m5-product-tools.json": "9a490bae0bd3ebd8ecdebd7ab4c739a65452fc1a8b2c20ed6135df6803472aee",
     "compatibility/m6-wasm-napi.json": "09270647fb23c1cbfaa013873beb1f85598d93217c9e320b810cce8e2c2af6cb",

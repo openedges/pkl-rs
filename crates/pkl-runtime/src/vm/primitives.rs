@@ -63,9 +63,9 @@ pub enum Operation {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> BTreeMap<(Arc<str>, Arc<str>), usize> {
+) -> PrimitiveMethodsMap {
     let source = crate::stdlib_sources::base();
-    let mut result = BTreeMap::new();
+    let mut result: BTreeMap<(Arc<str>, Arc<str>), usize> = BTreeMap::new();
     for (class, name, signature, operation, arity) in [
         (
             "Boolean",
@@ -324,7 +324,7 @@ pub(super) fn blocks(
     result.extend(collection_transforms::endpoint_blocks(blocks, metadata));
     result.extend(any::blocks(blocks, metadata));
     result.extend(string_transforms::blocks(blocks, metadata));
-    result
+    PrimitiveMethodsMap::from_entries(result)
 }
 
 fn string_pattern_type_error(
@@ -748,23 +748,18 @@ impl Vm {
             Value::String(_) => "String",
             Value::Regex(_) => "Regex",
             Value::Function(_) => "Function",
-            Value::Object(_) if self.is_list(receiver) => "List",
-            Value::Object(_) if self.is_set(receiver) => "Set",
-            Value::Object(_) if self.is_map(receiver) => "Map",
-            Value::Object(id)
-                if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Listing =>
-            {
-                "Listing"
-            }
-            Value::Object(id)
-                if self.heap.get(*id)?.collection_kind == crate::heap::CollectionKind::Mapping =>
-            {
-                "Mapping"
-            }
+            Value::Object(id) => match self.heap.get(*id)?.collection_kind {
+                crate::heap::CollectionKind::List => "List",
+                crate::heap::CollectionKind::Set => "Set",
+                crate::heap::CollectionKind::Map => "Map",
+                crate::heap::CollectionKind::Listing => "Listing",
+                crate::heap::CollectionKind::Mapping => "Mapping",
+                crate::heap::CollectionKind::Dynamic => return Ok(false),
+            },
             _ => return Ok(false),
         };
         if !method && class == "Mapping" && name == "keys" {
-            let block = self.program.primitive_methods[&("Mapping".into(), "keys".into())];
+            let block = self.program.primitive_methods.expect("Mapping", "keys");
             let id = self.heap.allocate(Object {
                 function: Some(Function {
                     block,
@@ -842,7 +837,7 @@ impl Vm {
                         "rest" | "restOrNull" | "min" | "minOrNull" | "max" | "maxOrNull"
                     )))
         {
-            let block = self.program.primitive_methods[&(class.into(), name.into())];
+            let block = self.program.primitive_methods.expect(class, name);
             let id = self.heap.allocate(Object {
                 function: Some(Function {
                     block,
@@ -870,11 +865,7 @@ impl Vm {
                 self.stack.push(function);
                 return Ok(true);
             }
-            let Some(&block) = self
-                .program
-                .primitive_methods
-                .get(&(class.into(), name.into()))
-            else {
+            let Some(block) = self.program.primitive_methods.get(class, name) else {
                 return Ok(false);
             };
             let arity = if class == "Mapping" && name == "containsKey" {
@@ -1126,22 +1117,33 @@ impl Vm {
                         .find_index(&text, last)
                         .map_err(|error| regex::backend_error(error, regex_pattern.pattern()))?,
                     Value::String(literal) => {
-                        let units = text.encode_utf16().collect::<Vec<_>>();
-                        let literal = literal.encode_utf16().collect::<Vec<_>>();
-                        let unit_index = if literal.is_empty() {
-                            Some(if last { units.len() } else { 0 })
-                        } else if last {
-                            units
-                                .windows(literal.len())
-                                .rposition(|part| part == literal)
+                        if let (Some(t), Some(l)) = (text.as_str(), literal.as_str()) {
+                            let byte_idx = if last { t.rfind(l) } else { t.find(l) };
+                            byte_idx.map(|idx| {
+                                if t.is_ascii() {
+                                    idx
+                                } else {
+                                    t[..idx].chars().count()
+                                }
+                            })
                         } else {
-                            units
-                                .windows(literal.len())
-                                .position(|part| part == literal)
-                        };
-                        unit_index.map(|index| {
-                            PklString::from_utf16(units[..index].to_vec()).code_point_len()
-                        })
+                            let units = text.encode_utf16().collect::<Vec<_>>();
+                            let literal = literal.encode_utf16().collect::<Vec<_>>();
+                            let unit_index = if literal.is_empty() {
+                                Some(if last { units.len() } else { 0 })
+                            } else if last {
+                                units
+                                    .windows(literal.len())
+                                    .rposition(|part| part == literal)
+                            } else {
+                                units
+                                    .windows(literal.len())
+                                    .position(|part| part == literal)
+                            };
+                            unit_index.map(|index| {
+                                PklString::from_utf16(units[..index].to_vec()).code_point_len()
+                            })
+                        }
                     }
                     _ => return Err(invalid("unchecked String index pattern")),
                 };
@@ -1208,16 +1210,25 @@ impl Vm {
                             .map_err(|error| regex::backend_error(error, pattern.pattern()))?
                     }
                     Value::String(pattern) if !matches!(operation, Operation::Matches) => {
-                        let text = text.encode_utf16().collect::<Vec<_>>();
-                        let pattern = pattern.encode_utf16().collect::<Vec<_>>();
-                        match operation {
-                            Operation::Contains => {
-                                pattern.is_empty()
-                                    || text.windows(pattern.len()).any(|part| part == pattern)
+                        if let (Some(t), Some(p)) = (text.as_str(), pattern.as_str()) {
+                            match operation {
+                                Operation::Contains => t.contains(p),
+                                Operation::StartsWith => t.starts_with(p),
+                                Operation::EndsWith => t.ends_with(p),
+                                _ => unreachable!(),
                             }
-                            Operation::StartsWith => text.starts_with(&pattern),
-                            Operation::EndsWith => text.ends_with(&pattern),
-                            _ => unreachable!(),
+                        } else {
+                            let text = text.encode_utf16().collect::<Vec<_>>();
+                            let pattern = pattern.encode_utf16().collect::<Vec<_>>();
+                            match operation {
+                                Operation::Contains => {
+                                    pattern.is_empty()
+                                        || text.windows(pattern.len()).any(|part| part == pattern)
+                                }
+                                Operation::StartsWith => text.starts_with(&pattern),
+                                Operation::EndsWith => text.ends_with(&pattern),
+                                _ => unreachable!(),
+                            }
                         }
                     }
                     _ => {

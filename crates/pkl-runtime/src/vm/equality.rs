@@ -101,7 +101,7 @@ fn atom(heap: &Heap, value: &Value) -> Result<Atom, RuntimeError> {
     })
 }
 #[inline]
-fn string_hash(value: &PklString) -> i32 {
+pub(super) fn string_hash(value: &PklString) -> i32 {
     if let Some(s) = value.as_str()
         && s.is_ascii()
     {
@@ -658,20 +658,104 @@ impl Vm {
         value: Value,
         probe: Option<Value>,
     ) -> Result<(), RuntimeError> {
+        self.complete_cache_probe_known_new(receiver, key, value, probe, false)
+    }
+
+    pub(super) fn complete_cache_probe_known_new(
+        &mut self,
+        receiver: ObjectId,
+        key: CacheKey,
+        value: Value,
+        probe: Option<Value>,
+        known_new: bool,
+    ) -> Result<(), RuntimeError> {
         let sync_probe = match &probe {
             Some(Value::Object(_)) => false,
             Some(_) => true,
             None => !key.entry || key.owner.is_some(),
         };
         if sync_probe {
-            let (has_hash, already_completed, slots_empty) = {
+            // Fast single-lookup path when no duplicate probe scan or table grow is needed.
+            let scalar_probe_hash: Option<i32> = match &probe {
+                None => None,
+                Some(Value::String(s)) => Some(string_hash(s)),
+                Some(Value::Int(i)) => {
+                    let v = i.get();
+                    Some((v ^ (v >> 32)) as i32)
+                }
+                Some(Value::Bool(b)) => Some(if *b { 1231 } else { 1237 }),
+                Some(other) => java_hash_on_heap(&self.heap, other)?,
+            };
+            let can_fast_insert = {
                 let object = self.heap.get_mut(receiver)?;
                 while object.cache_index.len() < object.cache_slots.len() {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
-                let already_completed =
-                    matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                let already_completed = !known_new
+                    && !object.cache.is_empty()
+                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                if (known_new
+                    || object.cache_slots.is_empty()
+                    || (probe.is_none() && !already_completed))
+                    && !object.cache_index.grow_before_append()
+                {
+                    Some(already_completed)
+                } else {
+                    None
+                }
+            };
+            if let Some(already_completed) = can_fast_insert {
+                let clear_eq = key.owner.is_some() || already_completed;
+                let need_rehash = {
+                    let object = self.heap.get_mut(receiver)?;
+                    let hash = if object.cache_index.has_hash() {
+                        if let Some(h) = scalar_probe_hash {
+                            h
+                        } else if probe.is_some() {
+                            0
+                        } else {
+                            string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
+                        }
+                    } else {
+                        0
+                    };
+                    let index = object.cache_index.push();
+                    let need_rehash = if object.cache_index.has_hash() {
+                        let should = object.cache_index.should_rehash();
+                        object.cache_index.put_hash(index, hash, should)
+                    } else {
+                        object.cache_index.len() > 4
+                    };
+                    object.cache_slots.push(crate::heap::CacheSlot {
+                        key: key.clone(),
+                        entry_key: probe,
+                        value: value.clone(),
+                    });
+                    object.cache.insert(key, LazyState::Completed(value));
+                    need_rehash
+                };
+                if clear_eq && !self.heap.key_equalities.is_empty() {
+                    self.heap.key_equalities.clear();
+                }
+                if need_rehash {
+                    if self.all_cache_slots_non_object(receiver)? {
+                        self.rebuild_cache_index_sync(receiver)?;
+                    } else {
+                        self.heap.get_mut(receiver)?.cache_index.start_rehash();
+                        self.schedule_tasks(
+                            vec![Task::CacheRebuild(receiver, 0)],
+                            vec![Value::Object(receiver)],
+                        );
+                    }
+                }
+                return Ok(());
+            }
+            let (has_hash, already_completed, slots_empty) = {
+                let object = self.heap.get_mut(receiver)?;
+                let already_completed = !known_new
+                    && !object.cache.is_empty()
+                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
                 (
                     object.cache_index.has_hash(),
                     already_completed,
@@ -679,15 +763,17 @@ impl Vm {
                 )
             };
             let hash = if has_hash {
-                if let Some(ref probe_val) = probe {
-                    java_hash_on_heap(&self.heap, probe_val)?.unwrap_or(0)
+                if let Some(h) = scalar_probe_hash {
+                    h
+                } else if probe.is_some() {
+                    0
                 } else {
                     string_hash(&key.name) ^ key.owner.map_or(0, |owner| owner.index as i32)
                 }
             } else {
                 0
             };
-            let existing = if slots_empty || (probe.is_none() && !already_completed) {
+            let existing = if known_new || slots_empty || (probe.is_none() && !already_completed) {
                 None
             } else {
                 let object = self.heap.get(receiver)?;
@@ -768,7 +854,6 @@ impl Vm {
                 };
                 let object = self.heap.get_mut(receiver)?;
                 let index = object.cache_index.push();
-                object.completed_cache_order.push(key.clone());
                 object.cache_slots.push(crate::heap::CacheSlot {
                     key: key.clone(),
                     entry_key: probe,
@@ -1064,7 +1149,8 @@ impl Vm {
         id: ObjectId,
         member: CollectionMember,
     ) -> Result<(), RuntimeError> {
-        if let Some(elems) = &self.heap.get(id)?.list_elements
+        let obj = self.heap.get(id)?;
+        if let Some(elems) = &obj.list_elements
             && member.kind == CollectionMemberKind::Element
             && let Value::Int(idx) = &member.key
             && idx.get() >= 0
@@ -1075,6 +1161,98 @@ impl Vm {
                 .ok_or_else(|| invalid("missing effective collection member"))?;
             self.stack.push(value);
             return Ok(());
+        }
+        if member.kind == CollectionMemberKind::Property {
+            if let Some(LazyState::Completed(value)) = obj.cache.get(&CacheKey {
+                entry: false,
+                owner: None,
+                name: member.name.clone(),
+                method: false,
+            }) {
+                self.stack.push(value.clone());
+                return Ok(());
+            }
+            let caller = self.frames.len() - 1;
+            self.force_key_mode_probe(
+                id,
+                id,
+                member.name,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                None,
+                None,
+            )?;
+            if self.frames.len() > caller + 1 {
+                self.frames[caller].callsite_hidden = true;
+            }
+            return Ok(());
+        }
+        if !matches!(member.key, Value::Object(_)) {
+            if let Some(value) = self.lookup_non_object_cache_entry(id, &member.key)? {
+                self.stack.push(value);
+                return Ok(());
+            }
+            let hash = java_hash_on_heap(&self.heap, &member.key)?;
+            let mut found_name: Option<PklString> = None;
+            let mut cur = Some(id);
+            let mut visited = SmallObjectIdSet::new();
+            while let Some(owner_id) = cur {
+                if !visited.insert(owner_id) {
+                    return Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"));
+                }
+                let owner_obj = self.heap.get(owner_id)?;
+                let matched = if let (Some(index), Some(h)) = (&owner_obj.declaration_index, hash)
+                    && index.len() == owner_obj.collection_members.len()
+                    && index.has_hash()
+                {
+                    index.hash_candidates(h).find_map(|pos| {
+                        let cand = &owner_obj.collection_members[pos];
+                        (cand.kind != CollectionMemberKind::Property
+                            && same_key(&self.heap, &member.key, &cand.key))
+                        .then_some(&cand.name)
+                    })
+                } else {
+                    owner_obj.collection_members.iter().find_map(|cand| {
+                        (cand.kind != CollectionMemberKind::Property
+                            && same_key(&self.heap, &member.key, &cand.key))
+                        .then_some(&cand.name)
+                    })
+                };
+                if let Some(name) = matched
+                    && owner_obj
+                        .members
+                        .iter()
+                        .any(|m| !m.local && !m.method && m.entry && &m.name == name)
+                {
+                    found_name = Some(name.clone());
+                    break;
+                }
+                cur = owner_obj.parent;
+            }
+            if let Some(name) = found_name {
+                let caller = self.frames.len() - 1;
+                self.force_key_mode_probe(
+                    id,
+                    id,
+                    name,
+                    false,
+                    true,
+                    false,
+                    true,
+                    false,
+                    true,
+                    None,
+                    Some(member.key),
+                )?;
+                if self.frames.len() > caller + 1 {
+                    self.frames[caller].callsite_hidden = true;
+                }
+                return Ok(());
+            }
         }
         let candidates = collections::forcing_members(&self.heap, id)?;
         let probe = member.key.clone();
@@ -2256,7 +2434,6 @@ impl Vm {
                 }
                 let object = self.heap.get_mut(id)?;
                 let index = object.cache_index.push();
-                object.completed_cache_order.push(key.clone());
                 object.cache_slots.push(crate::heap::CacheSlot {
                     key: key.clone(),
                     entry_key: probe.clone(),

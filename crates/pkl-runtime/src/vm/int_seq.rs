@@ -587,7 +587,7 @@ impl Vm {
     pub(super) fn int_seq_constructor(&mut self) -> Value {
         Value::Function(self.heap.allocate(Object {
             function: Some(Function {
-                block: self.program.primitive_methods[&("".into(), "IntSeq".into())],
+                block: self.program.primitive_methods.expect("", "IntSeq"),
                 arity: 2,
                 method: true,
                 captured_this: None,

@@ -1,8 +1,82 @@
 //! Evaluator-owned tracing arena. No object edge uses reference counting.
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
+use std::hash::{BuildHasherDefault, Hasher};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
+
+/// Fast non-cryptographic hasher for internal VM maps whose keys are never
+/// exposed in iteration order (e.g. `Object.cache`, `member_values`).
+#[derive(Default)]
+pub struct FxHasher(u64);
+
+impl FxHasher {
+    const K: u64 = 0x517cc1b727220a95;
+
+    #[inline(always)]
+    fn add_to_hash(&mut self, i: u64) {
+        self.0 = (self.0.rotate_left(5) ^ i).wrapping_mul(Self::K);
+    }
+}
+
+impl Hasher for FxHasher {
+    #[inline(always)]
+    fn finish(&self) -> u64 {
+        self.0
+    }
+
+    #[inline(always)]
+    fn write(&mut self, mut bytes: &[u8]) {
+        while bytes.len() >= 8 {
+            let chunk = u64::from_ne_bytes([
+                bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7],
+            ]);
+            self.add_to_hash(chunk);
+            bytes = &bytes[8..];
+        }
+        if bytes.len() >= 4 {
+            let chunk = u32::from_ne_bytes([bytes[0], bytes[1], bytes[2], bytes[3]]);
+            self.add_to_hash(u64::from(chunk));
+            bytes = &bytes[4..];
+        }
+        if bytes.len() >= 2 {
+            let chunk = u16::from_ne_bytes([bytes[0], bytes[1]]);
+            self.add_to_hash(u64::from(chunk));
+            bytes = &bytes[2..];
+        }
+        if let Some(&b) = bytes.first() {
+            self.add_to_hash(u64::from(b));
+        }
+    }
+
+    #[inline(always)]
+    fn write_u8(&mut self, i: u8) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u16(&mut self, i: u16) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u32(&mut self, i: u32) {
+        self.add_to_hash(u64::from(i));
+    }
+
+    #[inline(always)]
+    fn write_u64(&mut self, i: u64) {
+        self.add_to_hash(i);
+    }
+
+    #[inline(always)]
+    fn write_usize(&mut self, i: usize) {
+        self.add_to_hash(i as u64);
+    }
+}
+
+pub type FxBuildHasher = BuildHasherDefault<FxHasher>;
+pub type FastMap<K, V> = HashMap<K, V, FxBuildHasher>;
 
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 
@@ -204,6 +278,11 @@ impl LocalOwners {
         }
     }
 
+    #[inline]
+    pub fn fast_eq(&self, other: &Self) -> bool {
+        self.mask == other.mask && self.inline == other.inline && self.overflow == other.overflow
+    }
+
     pub fn values(&self) -> impl Iterator<Item = &LocalOwnerEntry> + '_ {
         self.inline
             .iter()
@@ -249,6 +328,11 @@ impl CopyLocals {
         if let Some(set) = &mut self.overflow {
             set.clear();
         }
+    }
+
+    #[inline]
+    pub fn fast_eq(&self, other: &Self) -> bool {
+        self.inline_mask == other.inline_mask && self.overflow == other.overflow
     }
 
     pub fn iter(&self) -> impl Iterator<Item = usize> + '_ {
@@ -362,7 +446,7 @@ pub enum LazyState {
 }
 
 /// Local definitions use owner identity; ordinary virtual properties use `None`.
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct CacheKey {
     pub entry: bool,
     pub owner: Option<ObjectId>,
@@ -413,6 +497,12 @@ pub struct Class {
 pub struct ClassRecord {
     pub prototype: ObjectId,
     pub superclass: Option<ObjectId>,
+    pub(crate) class_id: Option<usize>,
+    /// Inline ancestor `Class::id` chain (self first, up to root) populated once
+    /// `link_superclass` completes over an already-linked superclass chain.
+    /// `ancestors_len == u8::MAX` indicates uncached / deeper than 8.
+    pub(crate) ancestors: [usize; 8],
+    pub(crate) ancestors_len: u8,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -448,6 +538,7 @@ pub struct CollectionIterator {
     pub force_members: Vec<CollectionMember>,
     pub force_position: usize,
     pub awaiting_value: bool,
+    pub members_refreshed: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -659,14 +750,12 @@ pub struct Object {
     pub parent: Option<ObjectId>,
     pub members: MemberList,
     pub environment: Environment,
-    pub cache: BTreeMap<CacheKey, LazyState>,
-    /// Successful cache publication order, matching VmObject.cachedValues.
-    /// Evaluating markers do not occupy an insertion position.
-    pub completed_cache_order: Vec<CacheKey>,
+    pub cache: FastMap<CacheKey, LazyState>,
     pub cache_slots: Vec<CacheSlot>,
     pub cache_index: crate::economic_map::EconomicMapIndex,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
+    pub has_object_collection_key: bool,
     pub map_index: Option<Box<crate::strict_map::MapIndex>>,
     /// Captured Map insertion-order keys, independent of stored trie slots.
     /// Removal can change a different slot after recursive key forcing.
@@ -684,8 +773,8 @@ pub struct Object {
     /// VmMapping.getAllKeys caches its own persistent Set wrapper.
     pub mapping_keys: Option<ObjectId>,
     pub specialized_literal: bool,
-    pub member_environments: BTreeMap<CacheKey, Environment>,
-    pub member_values: BTreeMap<CacheKey, Value>,
+    pub member_environments: FastMap<CacheKey, Environment>,
+    pub member_values: FastMap<CacheKey, Value>,
     pub iterator: Option<CollectionIterator>,
     pub int_seq_iterator: Option<Box<crate::int_seq::Cursor>>,
     pub bytes_iterator: Option<Box<(crate::value::Bytes, usize, bool)>>,
@@ -718,20 +807,38 @@ impl Object {
     ) {
         // Completed entries persist for the object's lifetime. Failure cleanup
         // removes only pending entries, so retries acquire their position here.
-        if !matches!(self.cache.get(&key), Some(LazyState::Completed(_))) {
-            self.completed_cache_order.push(key.clone());
-            self.cache_slots.push(CacheSlot {
-                key: key.clone(),
-                entry_key,
-                value: value.clone(),
-            });
-        } else if let Some(slot) = self.cache_slots.iter_mut().find(|slot| slot.key == key) {
-            if entry_key.is_some() {
-                slot.entry_key = entry_key;
+        match self.cache.entry(key) {
+            std::collections::hash_map::Entry::Occupied(mut occupied) => {
+                if matches!(occupied.get(), LazyState::Completed(_)) {
+                    let key_ref = occupied.key();
+                    if let Some(slot) = self
+                        .cache_slots
+                        .iter_mut()
+                        .find(|slot| slot.key == *key_ref)
+                    {
+                        if entry_key.is_some() {
+                            slot.entry_key = entry_key;
+                        }
+                        slot.value = value.clone();
+                    }
+                } else {
+                    self.cache_slots.push(CacheSlot {
+                        key: occupied.key().clone(),
+                        entry_key,
+                        value: value.clone(),
+                    });
+                }
+                occupied.insert(LazyState::Completed(value));
             }
-            slot.value = value.clone();
+            std::collections::hash_map::Entry::Vacant(vacant) => {
+                self.cache_slots.push(CacheSlot {
+                    key: vacant.key().clone(),
+                    entry_key,
+                    value: value.clone(),
+                });
+                vacant.insert(LazyState::Completed(value));
+            }
         }
-        self.cache.insert(key, LazyState::Completed(value));
     }
 }
 
@@ -983,7 +1090,7 @@ impl Heap {
         None
     }
 
-    #[inline]
+    #[inline(always)]
     fn slot_ref(&self, index: usize) -> Option<&Slot> {
         if index >= self.base_len {
             self.slots.get(index - self.base_len)
@@ -1069,9 +1176,16 @@ impl Heap {
     }
 
     pub(crate) fn allocate_class(&mut self, prototype: ObjectId) -> ObjectId {
+        let class_id = self
+            .get(prototype)
+            .ok()
+            .and_then(|obj| obj.class_definition.as_ref().map(|c| c.id));
         let id = self.allocate_entry(Entry::Class(ClassRecord {
             prototype,
             superclass: None,
+            class_id,
+            ancestors: [0; 8],
+            ancestors_len: u8::MAX,
         }));
         self.get_mut(prototype)
             .expect("new class prototype")
@@ -1079,7 +1193,36 @@ impl Heap {
         id
     }
 
+    #[inline(always)]
     pub fn get_class(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+        if id.index >= self.base_len
+            && id.heap == self.identity
+            && let Some(slot) = self.slots.get(id.index - self.base_len)
+            && slot.generation == id.generation
+            && let Some(Entry::Class(class)) = &slot.entry
+        {
+            return Ok(class);
+        }
+        self.get_class_slow(id)
+    }
+
+    #[inline]
+    fn get_class_slow(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
+        if id.index < self.base_len
+            && id.heap == self.base_id
+            && self.base_overrides.is_empty()
+            && let Some(slot) = self.base_slots.as_deref().and_then(|s| s.get(id.index))
+            && slot.generation == id.generation
+            && let Some(Entry::Class(class)) = &slot.entry
+        {
+            return Ok(class);
+        }
+        self.get_class_cold(id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn get_class_cold(&self, id: ObjectId) -> Result<&ClassRecord, RuntimeError> {
         match self.entry(id)? {
             Entry::Class(class) => Ok(class),
             _ => Err(RuntimeError::new(
@@ -1095,12 +1238,43 @@ impl Heap {
         superclass: Option<ObjectId>,
     ) -> Result<(), RuntimeError> {
         let prototype = self.get_class(id)?.prototype;
-        let parent = superclass
-            .map(|class| self.get_class(class).map(|c| c.prototype))
-            .transpose()?;
+        let self_class_id = self.get(prototype)?.class_definition.as_ref().map(|c| c.id);
+        let (parent, ancestors, ancestors_len) = match superclass {
+            Some(sup) => {
+                let sup_rec = self.get_class(sup)?;
+                let parent = Some(sup_rec.prototype);
+                let mut ancestors = [0usize; 8];
+                let ancestors_len = if sup != id
+                    && sup_rec.ancestors_len != u8::MAX
+                    && (sup_rec.ancestors_len as usize) < ancestors.len()
+                    && let Some(cid) = self_class_id
+                {
+                    let len = sup_rec.ancestors_len as usize;
+                    ancestors[0] = cid;
+                    ancestors[1..1 + len].copy_from_slice(&sup_rec.ancestors[..len]);
+                    (1 + len) as u8
+                } else {
+                    u8::MAX
+                };
+                (parent, ancestors, ancestors_len)
+            }
+            None => {
+                let mut ancestors = [0usize; 8];
+                let ancestors_len = if let Some(cid) = self_class_id {
+                    ancestors[0] = cid;
+                    1
+                } else {
+                    u8::MAX
+                };
+                (None, ancestors, ancestors_len)
+            }
+        };
         let slot = self.slot_mut(id.index);
         if let Some(Entry::Class(class)) = &mut slot.entry {
             class.superclass = superclass;
+            class.class_id = self_class_id;
+            class.ancestors = ancestors;
+            class.ancestors_len = ancestors_len;
             slot.edges_valid = false;
         }
         let prototype = self.get_mut(prototype)?;
@@ -1159,13 +1333,46 @@ impl Heap {
         }
     }
 
-    pub(crate) fn object_class(&self, mut id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+    #[inline]
+    pub(crate) fn object_class(&self, id: ObjectId) -> Result<Option<ObjectId>, RuntimeError> {
+        let obj0 = self.get(id)?;
+        if let Some(class) = obj0.instance_class {
+            self.get_class(class)?;
+            return Ok(Some(class));
+        }
+        let Some(p1) = obj0.parent else {
+            return Ok(None);
+        };
+        if p1 != id {
+            let obj1 = self.get(p1)?;
+            if let Some(class) = obj1.instance_class {
+                self.get_class(class)?;
+                return Ok(Some(class));
+            }
+            let Some(p2) = obj1.parent else {
+                return Ok(None);
+            };
+            return self.object_class_deep(id, p1, p2);
+        }
+        Err(RuntimeError::new(ErrorKind::Cycle, "cyclic parent chain"))
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn object_class_deep(
+        &self,
+        id0: ObjectId,
+        id1: ObjectId,
+        mut id: ObjectId,
+    ) -> Result<Option<ObjectId>, RuntimeError> {
         let mut inline_seen = [ObjectId {
             heap: 0,
             index: 0,
             generation: 0,
         }; 8];
-        let mut inline_len = 0usize;
+        inline_seen[0] = id0;
+        inline_seen[1] = id1;
+        let mut inline_len = 2usize;
         let mut overflow: Option<BTreeSet<ObjectId>> = None;
         loop {
             if let Some(visited) = &mut overflow {
@@ -1232,26 +1439,68 @@ impl Heap {
     /// O(depth) subclass check against a class definition ID, avoiding an O(heap) `find_class` scan.
     #[inline]
     pub(crate) fn class_has_ancestor_id(&self, class: ObjectId, target_id: usize) -> bool {
-        let mut current = Some(class);
+        let Ok(rec0) = self.get_class(class) else {
+            return false;
+        };
+        if rec0.ancestors_len != u8::MAX {
+            return rec0.ancestors[..rec0.ancestors_len as usize].contains(&target_id);
+        }
+        if rec0.class_id == Some(target_id)
+            || (rec0.class_id.is_none()
+                && self
+                    .get_fast(rec0.prototype)
+                    .and_then(|obj| obj.class_definition.as_ref())
+                    .is_some_and(|def| def.id == target_id))
+        {
+            return true;
+        }
+        let Some(c1) = rec0.superclass else {
+            return false;
+        };
+        if c1 == class {
+            return false;
+        }
+        let Ok(rec1) = self.get_class(c1) else {
+            return false;
+        };
+        if rec1.ancestors_len != u8::MAX {
+            return rec1.ancestors[..rec1.ancestors_len as usize].contains(&target_id);
+        }
+        if rec1.class_id == Some(target_id)
+            || (rec1.class_id.is_none()
+                && self
+                    .get_fast(rec1.prototype)
+                    .and_then(|obj| obj.class_definition.as_ref())
+                    .is_some_and(|def| def.id == target_id))
+        {
+            return true;
+        }
+        let Some(c2) = rec1.superclass else {
+            return false;
+        };
+        self.class_has_ancestor_id_deep(class, c1, c2, target_id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn class_has_ancestor_id_deep(
+        &self,
+        c0: ObjectId,
+        c1: ObjectId,
+        start: ObjectId,
+        target_id: usize,
+    ) -> bool {
+        let mut current = Some(start);
         let mut inline_seen = [ObjectId {
             heap: 0,
             index: 0,
             generation: 0,
         }; 8];
-        let mut inline_len = 0usize;
+        inline_seen[0] = c0;
+        inline_seen[1] = c1;
+        let mut inline_len = 2usize;
         let mut overflow: Option<BTreeSet<ObjectId>> = None;
         while let Some(cls) = current {
-            let Ok(record) = self.get_class(cls) else {
-                return false;
-            };
-            if self
-                .get(record.prototype)
-                .ok()
-                .and_then(|obj| obj.class_definition.as_ref())
-                .is_some_and(|def| def.id == target_id)
-            {
-                return true;
-            }
             if let Some(seen) = &mut overflow {
                 if !seen.insert(cls) {
                     return false;
@@ -1265,6 +1514,16 @@ impl Heap {
                 let mut set: BTreeSet<ObjectId> = inline_seen.into_iter().collect();
                 set.insert(cls);
                 overflow = Some(set);
+            }
+            let Ok(record) = self.get_class(cls) else {
+                return false;
+            };
+            if self
+                .get_fast(record.prototype)
+                .and_then(|obj| obj.class_definition.as_ref())
+                .is_some_and(|def| def.id == target_id)
+            {
+                return true;
             }
             current = record.superclass;
         }
@@ -1664,7 +1923,7 @@ impl Heap {
         None
     }
 
-    #[inline]
+    #[inline(always)]
     fn entry(&self, id: ObjectId) -> Result<&Entry, RuntimeError> {
         if self.owner().owns(id)
             && let Some(slot) = self.slot_ref(id.index)
@@ -1673,33 +1932,78 @@ impl Heap {
         {
             return Ok(entry);
         }
-        Err(RuntimeError::new(
-            ErrorKind::StaleHandle,
-            "object does not belong to this live heap",
-        ))
+        Err(stale_handle_error())
+    }
+
+    #[inline(always)]
+    pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+        if id.index >= self.base_len
+            && id.heap == self.identity
+            && let Some(slot) = self.slots.get(id.index - self.base_len)
+            && slot.generation == id.generation
+            && let Some(Entry::Object(object)) = &slot.entry
+        {
+            return Ok(object);
+        }
+        self.get_slow(id)
     }
 
     #[inline]
-    pub fn get(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+    fn get_slow(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
+        if id.index < self.base_len
+            && id.heap == self.base_id
+            && self.base_overrides.is_empty()
+            && let Some(slot) = self.base_slots.as_deref().and_then(|s| s.get(id.index))
+            && slot.generation == id.generation
+            && let Some(Entry::Object(object)) = &slot.entry
+        {
+            return Ok(object);
+        }
+        self.get_cold(id)
+    }
+
+    #[cold]
+    #[inline(never)]
+    fn get_cold(&self, id: ObjectId) -> Result<&Object, RuntimeError> {
         match self.entry(id)? {
             Entry::Object(object) => Ok(object),
             Entry::Class(_)
             | Entry::CustomThis(_)
             | Entry::Executable(_)
-            | Entry::NullDefault(_) => Err(RuntimeError::new(
-                ErrorKind::StaleHandle,
-                "internal slot is not a Pkl object",
-            )),
+            | Entry::NullDefault(_) => Err(non_object_slot_error()),
         }
     }
 
     /// Tight inlined lookup for verified hot loops that bail cleanly on `None`.
     #[inline(always)]
     pub(crate) fn get_fast(&self, id: ObjectId) -> Option<&Object> {
-        if !self.owner().owns(id) {
+        if id.index >= self.base_len {
+            if id.heap != self.identity {
+                return None;
+            }
+            let slot = self.slots.get(id.index - self.base_len)?;
+            if slot.generation != id.generation {
+                return None;
+            }
+            match slot.entry.as_ref()? {
+                Entry::Object(object) => Some(object),
+                _ => None,
+            }
+        } else {
+            self.get_fast_base(id)
+        }
+    }
+
+    #[inline]
+    fn get_fast_base(&self, id: ObjectId) -> Option<&Object> {
+        if id.heap != self.base_id {
             return None;
         }
-        let slot = self.slot_ref(id.index)?;
+        let slot = if self.base_overrides.is_empty() {
+            self.base_slots.as_deref()?.get(id.index)?
+        } else {
+            self.slot_ref(id.index)?
+        };
         if slot.generation != id.generation {
             return None;
         }
@@ -1709,16 +2013,53 @@ impl Heap {
         }
     }
 
+    #[inline]
     pub fn get_mut(&mut self, id: ObjectId) -> Result<&mut Object, RuntimeError> {
-        self.get(id)?;
-        self.structural_keys_dirty = true;
-        let slot = self.slot_mut(id.index);
-        slot.edges_valid = false;
-        match slot.entry.as_mut() {
-            Some(Entry::Object(object)) => Ok(object),
-            _ => unreachable!("validated object slot"),
+        if id.index >= self.base_len {
+            if id.heap != self.identity {
+                return Err(stale_handle_error());
+            }
+            let Some(slot) = self.slots.get_mut(id.index - self.base_len) else {
+                return Err(stale_handle_error());
+            };
+            if slot.generation != id.generation || slot.entry.is_none() {
+                return Err(stale_handle_error());
+            }
+            if !matches!(slot.entry, Some(Entry::Object(_))) {
+                return Err(non_object_slot_error());
+            }
+            slot.edges_valid = false;
+            self.structural_keys_dirty = true;
+            match slot.entry.as_mut() {
+                Some(Entry::Object(object)) => Ok(object),
+                _ => unreachable!("validated object slot"),
+            }
+        } else {
+            self.get(id)?;
+            self.structural_keys_dirty = true;
+            let slot = self.slot_mut(id.index);
+            slot.edges_valid = false;
+            match slot.entry.as_mut() {
+                Some(Entry::Object(object)) => Ok(object),
+                _ => unreachable!("validated object slot"),
+            }
         }
     }
+}
+
+#[cold]
+#[inline(never)]
+fn stale_handle_error() -> RuntimeError {
+    RuntimeError::new(
+        ErrorKind::StaleHandle,
+        "object does not belong to this live heap",
+    )
+}
+
+#[cold]
+#[inline(never)]
+fn non_object_slot_error() -> RuntimeError {
+    RuntimeError::new(ErrorKind::StaleHandle, "internal slot is not a Pkl object")
 }
 
 #[derive(Clone, Copy)]
@@ -1729,7 +2070,7 @@ struct HeapOwner {
 }
 
 impl HeapOwner {
-    #[inline]
+    #[inline(always)]
     fn owns(self, id: ObjectId) -> bool {
         if id.index >= self.base_len {
             id.heap == self.identity

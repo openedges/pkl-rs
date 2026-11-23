@@ -646,7 +646,6 @@ impl Vm {
                                 collection_members: source.collection_members.clone(),
                                 member_values: source.member_values.clone(),
                                 cache: source.cache.clone(),
-                                completed_cache_order: source.completed_cache_order.clone(),
                                 cache_slots: source.cache_slots.clone(),
                                 cache_index: source.cache_index.clone(),
                                 ..Default::default()
@@ -687,7 +686,6 @@ impl Vm {
                             collection_members: source.collection_members.clone(),
                             member_values: source.member_values.clone(),
                             cache: source.cache.clone(),
-                            completed_cache_order: source.completed_cache_order.clone(),
                             cache_slots: source.cache_slots.clone(),
                             cache_index: source.cache_index.clone(),
                             map_index: source.map_index.clone(),

@@ -1725,7 +1725,7 @@ fn reference_key_matches(ty: &TypeCheck, key: &Value, heap: &Heap) -> bool {
                 false
             }
             TypeCheck::Class { id, .. } => {
-                matches!(key,Value::Object(object) if collections::typed_class(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
+                matches!(key,Value::Object(object) if collections::typed_class_ref(heap,*object).ok().flatten().is_some_and(|c| c.id==*id))
             }
             TypeCheck::Any
             | TypeCheck::NonNull
@@ -2000,9 +2000,9 @@ mod generic_metadata_tests {
             .heap
             .get(id)
             .unwrap()
-            .completed_cache_order
+            .cache_slots
             .iter()
-            .map(|key| key.name.clone())
+            .map(|slot| slot.key.name.clone())
             .collect();
         assert_eq!(cached, ["property", "isProperty"]);
         assert_eq!(

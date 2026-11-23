@@ -1090,7 +1090,7 @@ impl Vm {
             .last()
             .ok_or_else(|| invalid("missing module output"))?;
         if let Value::Object(id) = value
-            && collections::typed_class(&self.heap, *id)?.is_some_and(|c| c.id == MODULE_OUTPUT)
+            && collections::typed_class_ref(&self.heap, *id)?.is_some_and(|c| c.id == MODULE_OUTPUT)
         {
             return Ok(());
         }

@@ -233,7 +233,7 @@ impl Vm {
             if let Ok(object) = self.heap.get(id) {
                 (
                     object.collection_kind,
-                    collections::typed_class(&self.heap, id)?.is_some() || object.is_module,
+                    collections::is_typed_class(&self.heap, id)? || object.is_module,
                 )
             } else {
                 (default_kind, false)

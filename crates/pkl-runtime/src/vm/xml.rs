@@ -13,7 +13,6 @@ pub(super) fn valid_name_ascii(s: &str) -> bool {
     bytes.all(|b| b == b'-' || b == b'.' || b == b':' || b == b'_' || b.is_ascii_alphanumeric())
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn valid_name_str(s: &str, version11: bool) -> bool {
     if s.is_ascii() {
         return valid_name_ascii(s);

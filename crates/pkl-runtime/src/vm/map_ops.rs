@@ -120,8 +120,8 @@ impl Vm {
                     collection_members: old.collection_members.clone(),
                     member_values: old.member_values.clone(),
                     cache: old.cache.clone(),
-                    completed_cache_order: old.completed_cache_order.clone(),
                     cache_slots: old.cache_slots.clone(),
+                    has_object_collection_key: old.has_object_collection_key,
                     cache_index: old.cache_index.clone(),
                     map_index: old.map_index.clone(),
                     map_key_order: old.map_key_order.clone(),
@@ -199,12 +199,6 @@ impl Vm {
                 .iter()
                 .filter(|(key, _)| keep(&key.name))
                 .map(|(key, value)| (key.clone(), value.clone()))
-                .collect(),
-            completed_cache_order: old
-                .completed_cache_order
-                .iter()
-                .filter(|key| keep(&key.name))
-                .cloned()
                 .collect(),
             cache_slots: old
                 .cache_slots
