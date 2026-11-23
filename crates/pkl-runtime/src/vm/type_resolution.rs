@@ -778,9 +778,39 @@ impl Vm {
         if !ty.has_declared() {
             return Ok(Some(instruction));
         }
+        let (block, pc, env_type_args_empty) = {
+            let frame = self.frames.last().expect("type instruction");
+            (
+                frame.block,
+                frame.pc.saturating_sub(1),
+                frame.environment.type_arguments.is_empty(),
+            )
+        };
+        let cache_key = if env_type_args_empty {
+            let environment = &self.frames.last().expect("type instruction").environment;
+            self.declaring_module(environment, false)
+                .ok()
+                .map(|owner| (block, pc, owner, for_default))
+        } else {
+            None
+        };
+        if let Some(key) = cache_key
+            && let Some(cached) = self.resolved_instruction_types.get(&key)
+        {
+            *ty = cached.clone();
+            return Ok(Some(instruction));
+        }
         let environment = &self.frames.last().expect("type instruction").environment;
         match self.materialize_type(ty, environment, for_default, &mut final_type) {
-            Ok(resolved) => *ty = resolved,
+            Ok(resolved) => {
+                if final_type && let Some(key) = cache_key {
+                    let shared = resolved.shared();
+                    self.resolved_instruction_types.insert(key, shared.clone());
+                    *ty = shared;
+                } else {
+                    *ty = resolved;
+                }
+            }
             Err(ResolutionFailure::Error(error)) => return Err(error),
             Err(ResolutionFailure::Need(need)) => {
                 self.begin_declared_type(need, true)?;

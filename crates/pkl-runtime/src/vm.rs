@@ -2237,6 +2237,7 @@ pub struct Vm {
     empty_collections: [Option<ObjectId>; 3],
     empty_objects: [Option<ObjectId>; 3],
     resolved_declarations: BTreeMap<(usize, ObjectId), type_resolution::DeclarationValue>,
+    resolved_instruction_types: BTreeMap<(usize, usize, ObjectId, bool), TypeCheck>,
     type_parent_defaults: BTreeMap<(usize, usize), Value>,
     /// Static call targets own code state, never captured receivers/environments.
     executable_roots: ExecutableRoots,
@@ -2340,6 +2341,7 @@ impl Vm {
             empty_collections: [None; 3],
             empty_objects: [None; 3],
             resolved_declarations: BTreeMap::new(),
+            resolved_instruction_types: BTreeMap::new(),
             type_parent_defaults: BTreeMap::new(),
             executable_roots: ExecutableRoots::new(),
             code_arenas: Vec::new(),
@@ -4641,6 +4643,7 @@ impl Vm {
         self.empty_collections = [None; 3];
         self.empty_objects = [None; 3];
         self.resolved_declarations.clear();
+        self.resolved_instruction_types.clear();
         self.type_parent_defaults.clear();
         self.executable_roots.clear();
         self.code_arenas = Vec::new();

@@ -287,8 +287,19 @@ impl Vm {
                     .iter()
                     .any(|range| range.contains(block))
             });
+            self.resolved_instruction_types
+                .retain(|(block, _, owner, _), _| {
+                    !retired_arena_blocks
+                        .iter()
+                        .any(|range| range.contains(block))
+                        && self.heap.get(*owner).is_ok()
+                });
         } else {
             self.executable_roots.compact();
+            if !self.resolved_instruction_types.is_empty() {
+                self.resolved_instruction_types
+                    .retain(|(_, _, owner, _), _| self.heap.get(*owner).is_ok());
+            }
         }
         if !self.query_cache.is_empty() {
             self.query_cache
