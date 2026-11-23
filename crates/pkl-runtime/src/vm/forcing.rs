@@ -382,11 +382,14 @@ impl Vm {
                                 continue;
                             }
                             let recv_obj = self.heap.get(receiver)?;
-                            let cached = if !member.entry {
+                            let cached = if recv_obj.cache_index.is_rehash_incomplete() {
+                                None
+                            } else if !member.entry {
                                 if recv_obj.cache_slots.len() <= 16 {
                                     recv_obj
                                         .cache_slots
                                         .iter()
+                                        .rev()
                                         .find(|slot| {
                                             !slot.key.entry
                                                 && !slot.key.method
@@ -407,6 +410,7 @@ impl Vm {
                                     }
                                 }
                             } else if !recv_obj.has_object_collection_key
+                                && !object.has_object_collection_key
                                 && !recv_obj.cache.is_empty()
                             {
                                 let key = CacheKey {

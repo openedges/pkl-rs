@@ -3754,7 +3754,7 @@ impl Vm {
                     }
                 }
                 Instruction::GetMethod(name) => {
-                    if stack.len() <= base {
+                    if stack.len() <= base || frames.last().unwrap().method_call_site.is_some() {
                         break;
                     }
                     if name == "toString"
@@ -4266,6 +4266,7 @@ impl Vm {
                         && !obj.is_module
                         && obj.foreign_map_entry.is_none()
                         && !obj.has_object_collection_key
+                        && !obj.collection_members.is_empty()
                         && obj.collection_members.len() <= 512
                         && obj.collection_members.len() == obj.members.len()
                         && collections::is_single_level_leaf_collection(heap, obj)
@@ -7518,6 +7519,12 @@ impl Vm {
             && member.ty.is_none()
             && inherited_types.is_empty()
             && collection_casts.is_empty()
+            && self.frames.last().is_none_or(|f| f.equality_run.is_none())
+            && (!memoize
+                || self.heap.get(receiver).ok().is_some_and(|recv_obj| {
+                    recv_obj.cache_index.len() == recv_obj.cache_slots.len()
+                        && recv_obj.cache_index.can_fast_append_no_rehash()
+                }))
             && let Some(code) = self.program.blocks.get(member.code)
         {
             let mut ops: [Option<&Instruction>; 3] = [None, None, None];
@@ -12666,8 +12673,11 @@ fn fast_lookup_cached<'a>(
     name: &PklString,
     method: bool,
 ) -> Option<&'a Value> {
+    if obj.cache_index.is_rehash_incomplete() {
+        return None;
+    }
     if obj.cache_slots.len() <= 16 {
-        for slot in &obj.cache_slots {
+        for slot in obj.cache_slots.iter().rev() {
             if !slot.key.entry
                 && slot.key.method == method
                 && slot.key.owner == owner

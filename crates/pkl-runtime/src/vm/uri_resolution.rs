@@ -730,6 +730,7 @@ impl Vm {
             recipes_start,
             unit_id: unit.0,
             declaration_base,
+            base_mixin_declaration: program.base_mixin_declaration,
         });
         let arena = code_owner.map(|_| query_lifecycle::CodeArena::begin(program));
         if let Some(key) = &cache_key

@@ -599,3 +599,43 @@ props = new PropertiesRenderer {}.renderDocument(new Mapping { [""] = new Item {
         );
     }
 }
+
+#[test]
+fn deep_nested_pair_renders_without_unbounded_recursion_in_pcf_and_pkl_binary() {
+    let depth = 3000usize;
+    let source =
+        format!("p = IntSeq(1, {depth}).toList().fold(Pair(0, 0), (acc, i) -> Pair(i, acc))\n");
+
+    // Expected PCF matches pinned Apple Pkl 0.32.0 (`34,908` bytes for depth=3000).
+    let mut expected_pcf = String::from("p = ");
+    for i in (1..=depth).rev() {
+        expected_pcf.push_str(&format!("Pair({i}, "));
+    }
+    expected_pcf.push_str("Pair(0, 0)");
+    for _ in 0..depth {
+        expected_pcf.push(')');
+    }
+    expected_pcf.push('\n');
+    assert_eq!(expected_pcf.len(), 34_908);
+
+    let pcf_out = eval_output(
+        &source,
+        "file:///m3-renderers/deep-pair.pkl",
+        "deep_pair",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(String::from_utf8(pcf_out).expect("UTF-8 PCF"), expected_pcf);
+
+    // Also exercise `try_fast_encode_binary_value` bailout to iterative `RenderRun::tasks`.
+    let bin_out = eval_output(
+        &source,
+        "repl:text",
+        "text",
+        ModuleEvalOptions {
+            properties: vec![("pkl.outputFormat".into(), "pkl-binary".into())],
+            ..ModuleEvalOptions::default()
+        },
+    );
+    // Matches pinned Apple Pkl 0.32.0 (`pkl-macos-aarch64 eval -f pkl-binary -`: 14,644 bytes).
+    assert_eq!(bin_out.len(), 14_644);
+}

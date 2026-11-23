@@ -236,8 +236,11 @@ pub fn pkl_string_from_js(value: &JsValue) -> Result<PklString, StructuredError>
 }
 
 pub fn pkl_string_from_js_string(value: &JsString) -> PklString {
-    if supports_is_well_formed() && js_string_is_well_formed(value) {
-        return PklString::from(String::from(value));
+    if supports_is_well_formed()
+        && js_string_is_well_formed(value)
+        && let Some(s) = value.as_string()
+    {
+        return PklString::from(s);
     }
     let len = value.length();
     let mut units = Vec::with_capacity(len as usize);
@@ -262,12 +265,14 @@ pub fn rust_string_from_js(value: &JsValue) -> Result<String, StructuredError> {
 
 pub fn rust_string_from_js_string(value: &JsString) -> Result<String, StructuredError> {
     if supports_is_well_formed() {
-        if js_string_is_well_formed(value) {
-            return Ok(String::from(value));
+        if !js_string_is_well_formed(value) {
+            return Err(StructuredError::invalid_argument(
+                "unpaired UTF-16 surrogate is unsupported in UTF-8 input",
+            ));
         }
-        return Err(StructuredError::invalid_argument(
-            "unpaired UTF-16 surrogate is unsupported in UTF-8 input",
-        ));
+        if let Some(s) = value.as_string() {
+            return Ok(s);
+        }
     }
     let len = value.length();
     let mut units = Vec::with_capacity(len as usize);

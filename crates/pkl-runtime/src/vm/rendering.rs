@@ -2967,8 +2967,11 @@ fn fast_lookup_member_cached<'a>(
     name: &PklString,
     entry: bool,
 ) -> Option<&'a Value> {
+    if obj.cache_index.is_rehash_incomplete() {
+        return None;
+    }
     if obj.cache_slots.len() <= 16 {
-        for slot in &obj.cache_slots {
+        for slot in obj.cache_slots.iter().rev() {
             if slot.key.entry == entry
                 && !slot.key.method
                 && slot.key.owner.is_none()
@@ -5475,9 +5478,10 @@ impl Vm {
                 let Some(obj) = self.heap.get_fast(*id) else {
                     return false;
                 };
-                if let Some(pair) = obj.pair.as_deref() {
+                active.push(*id);
+                let ok = if let Some(pair) = obj.pair.as_deref() {
                     buf.push_str("Pair(");
-                    if !self.write_fast_pcf_value(
+                    if self.write_fast_pcf_value(
                         &pair[0],
                         buf,
                         indent,
@@ -5493,46 +5497,48 @@ impl Vm {
                         active,
                         scratch,
                     ) {
-                        return false;
+                        buf.push_str(", ");
+                        if self.write_fast_pcf_value(
+                            &pair[1],
+                            buf,
+                            indent,
+                            omit_null,
+                            custom,
+                            document,
+                            depth,
+                            true,
+                            false,
+                            false,
+                            true,
+                            outer_active,
+                            active,
+                            scratch,
+                        ) {
+                            buf.push(')');
+                            true
+                        } else {
+                            false
+                        }
+                    } else {
+                        false
                     }
-                    buf.push_str(", ");
-                    if !self.write_fast_pcf_value(
-                        &pair[1],
+                } else {
+                    self.write_fast_pcf_object(
+                        *id,
                         buf,
                         indent,
                         omit_null,
                         custom,
                         document,
                         depth,
-                        true,
-                        false,
-                        false,
-                        true,
+                        standalone,
+                        root,
+                        output_was_non_empty,
                         outer_active,
                         active,
                         scratch,
-                    ) {
-                        return false;
-                    }
-                    buf.push(')');
-                    return true;
-                }
-                active.push(*id);
-                let ok = self.write_fast_pcf_object(
-                    *id,
-                    buf,
-                    indent,
-                    omit_null,
-                    custom,
-                    document,
-                    depth,
-                    standalone,
-                    root,
-                    output_was_non_empty,
-                    outer_active,
-                    active,
-                    scratch,
-                );
+                    )
+                };
                 active.pop();
                 return ok;
             }

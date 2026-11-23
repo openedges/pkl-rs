@@ -411,6 +411,7 @@ struct CachedCompiledUnit {
     recipes_start: usize,
     unit_id: u32,
     declaration_base: usize,
+    base_mixin_declaration: Option<usize>,
     next_declaration_after: usize,
     blocks: Arc<Vec<Vec<Instruction>>>,
     metadata: Arc<Vec<BlockMetadata>>,
@@ -451,6 +452,7 @@ pub(super) struct CompiledUnitCacheKey<'a> {
     pub recipes_start: usize,
     pub unit_id: u32,
     pub declaration_base: usize,
+    pub base_mixin_declaration: Option<usize>,
 }
 
 pub(super) fn try_replay_compiled_unit(
@@ -471,6 +473,7 @@ pub(super) fn try_replay_compiled_unit(
                     && e.recipes_start == key.recipes_start
                     && e.unit_id == key.unit_id
                     && e.declaration_base == key.declaration_base
+                    && e.base_mixin_declaration == key.base_mixin_declaration
                     && e.power_assertions == key.power_assertions
                     && e.fuse_constant_add == key.fuse_constant_add
                     && e.pure_standard_host == key.pure_standard_host
@@ -629,6 +632,7 @@ pub(super) fn store_compiled_unit(
             recipes_start: key.recipes_start,
             unit_id: key.unit_id,
             declaration_base: key.declaration_base,
+            base_mixin_declaration: key.base_mixin_declaration,
             next_declaration_after: program.next_declaration,
             blocks: blocks_seg,
             metadata: metadata_seg,
@@ -2264,6 +2268,7 @@ impl Vm {
                 recipes_start,
                 unit_id: unit_id_u32,
                 declaration_base,
+                base_mixin_declaration: program.base_mixin_declaration,
             })
         } else {
             None

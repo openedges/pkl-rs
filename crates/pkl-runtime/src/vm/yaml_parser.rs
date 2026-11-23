@@ -1222,6 +1222,9 @@ impl Vm {
         } else {
             None
         };
+        if matches!(key, Value::Object(_)) {
+            obj.has_object_collection_key = true;
+        }
         obj.collection_members.push(CollectionMember {
             key,
             name: name.clone(),

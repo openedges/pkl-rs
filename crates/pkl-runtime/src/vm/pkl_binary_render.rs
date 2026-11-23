@@ -472,27 +472,27 @@ impl Vm {
                 let Some(obj) = self.heap.get_fast(*id) else {
                     return false;
                 };
-                if let Some(pair) = obj.pair.as_deref() {
-                    if wire.array(3).is_err() || wire.integer(0x09).is_err() {
-                        return false;
-                    }
-                    return self.try_fast_encode_binary_value(
-                        &pair[0],
-                        wire,
-                        outer_active,
-                        active,
-                        scratch,
-                    ) && self.try_fast_encode_binary_value(
-                        &pair[1],
-                        wire,
-                        outer_active,
-                        active,
-                        scratch,
-                    );
-                }
                 active.push(*id);
-                let ok =
-                    self.try_fast_encode_binary_object(*id, wire, outer_active, active, scratch);
+                let ok = if let Some(pair) = obj.pair.as_deref() {
+                    wire.array(3).is_ok()
+                        && wire.integer(0x09).is_ok()
+                        && self.try_fast_encode_binary_value(
+                            &pair[0],
+                            wire,
+                            outer_active,
+                            active,
+                            scratch,
+                        )
+                        && self.try_fast_encode_binary_value(
+                            &pair[1],
+                            wire,
+                            outer_active,
+                            active,
+                            scratch,
+                        )
+                } else {
+                    self.try_fast_encode_binary_object(*id, wire, outer_active, active, scratch)
+                };
                 active.pop();
                 ok
             }

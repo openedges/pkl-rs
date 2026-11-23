@@ -171,6 +171,16 @@ impl Vm {
             Some((slot, hash)) => old.map_index().without_matched(hash, slot),
             None => old.map_index().clone(),
         };
+        let collection_members: Vec<_> = old
+            .collection_members
+            .iter()
+            .filter(|member| keep(&member.name))
+            .cloned()
+            .collect();
+        let has_object_collection_key = old.has_object_collection_key
+            && collection_members
+                .iter()
+                .any(|member| matches!(member.key, Value::Object(_)));
         let target = self.heap.allocate(Object {
             collection_kind: CollectionKind::Map,
             length: order.len(),
@@ -180,12 +190,8 @@ impl Vm {
                 .filter(|member| keep(&member.name))
                 .cloned()
                 .collect(),
-            collection_members: old
-                .collection_members
-                .iter()
-                .filter(|member| keep(&member.name))
-                .cloned()
-                .collect(),
+            collection_members,
+            has_object_collection_key,
             map_index: Some(Box::new(map_index)),
             map_key_order: Some(order),
             member_values: old

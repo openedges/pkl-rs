@@ -123,8 +123,10 @@ pub(super) fn accepts_nominal(id: usize, value: &Value, heap: &Heap) -> bool {
         && object.pair.is_none()
         && object.reference.is_none()
     {
-        if let Ok(Some(class)) = heap.object_class(*obj_id) {
-            return heap.class_has_ancestor_id(class, id);
+        match heap.object_class(*obj_id) {
+            Ok(Some(class)) => return heap.class_has_ancestor_id(class, id),
+            Ok(None) => {}
+            Err(_) => return false,
         }
         let mut class = BuiltinClass::from_type(&TypeCheck::Collection(object.collection_kind))
             .expect("collection class");

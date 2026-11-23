@@ -564,6 +564,7 @@ impl Vm {
         for index in range {
             let _ = object.cache_index.put_hash(index, hashes[index], false);
         }
+        object.cache_index.finish_rehash();
         Ok(())
     }
 
@@ -634,7 +635,7 @@ impl Vm {
             };
             Ok(matched.then(|| slot.value.clone()))
         };
-        if object.cache_index.has_hash() {
+        if object.cache_index.has_hash() && object.cache_index.len() == object.cache_slots.len() {
             let hash = java_hash_on_heap(&self.heap, probe)?.unwrap_or(0);
             for index in object.cache_index.hash_candidates(hash) {
                 if let Some(value) = check_slot(index)? {
@@ -698,8 +699,10 @@ impl Vm {
                 if (known_new
                     || object.cache_slots.is_empty()
                     || (probe.is_none() && !already_completed))
-                    && !object.cache_index.grow_before_append()
+                    && !object.cache_index.would_rehash_on_grow()
                 {
+                    let grew_rehash = object.cache_index.grow_before_append();
+                    debug_assert!(!grew_rehash);
                     Some(already_completed)
                 } else {
                     None
@@ -2460,6 +2463,8 @@ impl Vm {
                         run.roots.push(value.clone());
                         run.tasks.push(Task::Prepare(value));
                     }
+                } else {
+                    self.heap.get_mut(id)?.cache_index.finish_rehash();
                 }
             }
             Task::CacheLink(id, index, allow_rehash) => {

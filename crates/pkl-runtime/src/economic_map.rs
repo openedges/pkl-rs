@@ -14,6 +14,7 @@ pub struct EconomicMapIndex {
     capacity: usize,
     links: Vec<Option<usize>>,
     buckets: Option<Vec<Option<usize>>>,
+    rehash_incomplete: bool,
 }
 
 pub(crate) struct HashCandidates<'a> {
@@ -77,6 +78,19 @@ impl EconomicMapIndex {
         }
     }
 
+    /// True if the next `grow_before_append()` would cross a capacity-width
+    /// threshold (256 or 65,536) and require a pre-publish rehash.
+    #[inline]
+    pub(crate) fn would_rehash_on_grow(&self) -> bool {
+        if self.len() < self.capacity || self.capacity == 0 {
+            return false;
+        }
+        let old_capacity = self.capacity;
+        let new_capacity = old_capacity + 8.max(old_capacity / 2);
+        (old_capacity < 256 && new_capacity >= 256)
+            || (old_capacity < 65_536 && new_capacity > 65_536)
+    }
+
     /// Reserves the next insertion slot. A true result requires a complete
     /// rehash before publishing the new key/value or calling `push`.
     pub(crate) fn grow_before_append(&mut self) -> bool {
@@ -111,7 +125,20 @@ impl EconomicMapIndex {
         }
         count *= if self.capacity < 256 { 4 } else { 2 };
         self.buckets = Some(vec![None; count]);
+        self.rehash_incomplete = true;
         0..self.len()
+    }
+
+    /// Marks the active rehash as complete after every existing slot has been linked.
+    #[inline]
+    pub(crate) fn finish_rehash(&mut self) {
+        self.rehash_incomplete = false;
+    }
+
+    /// True if a rehash wiped `buckets` and has not yet linked all existing slots.
+    #[inline]
+    pub(crate) fn is_rehash_incomplete(&self) -> bool {
+        self.rehash_incomplete
     }
 
     /// Links one successfully hashed slot. A true result requests a full
@@ -142,6 +169,9 @@ impl EconomicMapIndex {
     /// are both guaranteed false).
     #[inline]
     pub(crate) fn can_fast_append_no_rehash(&self) -> bool {
+        if self.rehash_incomplete {
+            return false;
+        }
         let next_len = self.links.len() + 1;
         if next_len > self.capacity && self.capacity >= 160 {
             return false;
@@ -185,6 +215,7 @@ mod tests {
         for index in map.start_rehash() {
             assert!(!map.put_hash(index, hashes[index], false));
         }
+        map.finish_rehash();
     }
 
     #[test]
@@ -285,11 +316,15 @@ mod tests {
             append(&mut map, &mut hashes, hash);
         }
         assert_eq!(map.capacity, 225);
+        assert!(map.would_rehash_on_grow());
+        assert!(!map.can_fast_append_no_rehash());
         assert!(map.grow_before_append());
         assert_eq!(map.capacity, 337);
+        assert!(!map.would_rehash_on_grow());
         // The capacity has grown, but the new insertion is still unpublished.
         assert_eq!(map.len(), 225);
         rebuild(&mut map, &hashes);
+        assert!(!map.is_rehash_incomplete());
         assert_eq!(map.buckets.as_ref().unwrap().len(), 512);
         assert_eq!(map.candidates(Some(225)), []);
         assert_eq!(map.push(), 225);

@@ -3648,7 +3648,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/rendering.rs",
-          "sha256": "0c5fa6ae5e6b7931362cacea30cb0786a8c5657f8e33a3dc52fe673dfaf8cd58",
+          "sha256": "73655a2afaed8c7c2588403b67698cf422bacdc0473817f212589f9fff2b3049",
           "symbol": "PcfRenderer"
         }
       ]
@@ -3704,7 +3704,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
-          "sha256": "bcd3b1b8e0eb5ff276c3db74cafbcffdf09d17f678ad9f27730e61caf84d0ca9",
+          "sha256": "5d3f930d2653d1c2229a8f57f4fe1fd18253592bd304ec78d568b040a8c29615",
           "symbol": "begin_pkl_binary_render"
         },
         {
@@ -3863,7 +3863,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/yaml_parser.rs",
-          "sha256": "50a3fc8b0ff36a7c0668f63ed0f9f59822f4f755c7afa7b12e78c9c95ab3de64",
+          "sha256": "da1e695dac4f1b9568756291d2c49728ffc0614f7b68bb000d338e3b760ef29d",
           "symbol": "parse_error"
         },
         {

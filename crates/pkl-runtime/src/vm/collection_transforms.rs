@@ -1066,25 +1066,18 @@ impl Vm {
                     && elems.iter().all(|e| !matches!(e, Value::Object(_)))
                 {
                     let mut unique = Vec::with_capacity(elems.len());
-                    let mut approx_bytes = 0usize;
                     if elems.len() > 16 && elems.iter().all(|e| matches!(e, Value::String(_))) {
                         let mut seen = crate::heap::FastMap::default();
                         seen.reserve(elems.len());
                         for e in elems {
                             let Value::String(s) = e else { unreachable!() };
                             if seen.insert(s.clone(), ()).is_none() {
-                                approx_bytes =
-                                    approx_bytes.saturating_add(s.as_str().map_or(16, str::len));
                                 unique.push(e.clone());
                             }
                         }
                     } else if elems.len() <= 64 {
                         for e in elems {
                             if !unique.iter().any(|u| equality::same_key(&self.heap, u, e)) {
-                                if let Value::String(s) = e {
-                                    approx_bytes = approx_bytes
-                                        .saturating_add(s.as_str().map_or(16, str::len));
-                                }
                                 unique.push(e.clone());
                             }
                         }
@@ -1092,11 +1085,7 @@ impl Vm {
                         unique.clear();
                     }
                     if elems.is_empty() || !unique.is_empty() {
-                        approx_bytes = approx_bytes.saturating_add(
-                            unique.len().saturating_mul(std::mem::size_of::<Value>()),
-                        );
-                        self.heap.note_external_allocation(approx_bytes);
-                        let list_id = self.heap.allocate_strict_list(unique);
+                        let list_id = self.build_strict_list(unique);
                         Some(Value::Object(list_id))
                     } else {
                         None

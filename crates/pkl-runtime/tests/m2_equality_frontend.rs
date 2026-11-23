@@ -1,5 +1,8 @@
 //! Structural keys retain authored syntax and the enclosing generator scope.
 use pkl_runtime::diagnostic::DiagnosticKind;
+use pkl_runtime::evaluation::frontend::{
+    ModuleEvalOptions, ModuleSourceInput, evaluate_module_output,
+};
 use pkl_runtime::parser::parse_module;
 use pkl_runtime::resolver::{Binding, resolve_module};
 use pkl_runtime::source::Span;
@@ -194,4 +197,125 @@ fn negative_constant_keys_keep_expression_spans_and_report_numeric_token_spans()
             )
         );
     }
+}
+
+#[test]
+fn cache_capacity_threshold_rehash_runs_at_225_slots() {
+    // Verified against pinned Apple Pkl 0.32.0 (`pkl-macos-aarch64 eval -`):
+    // crossing the 225 -> 337 (>= 256) EconomicMap width threshold must trigger
+    // a pre-publish rehash that forces `k` before publishing `p225`.
+    let mut source = String::from("import \"pkl:test\"\nlocal base = new Dynamic {\n");
+    for i in 1..=227 {
+        source.push_str(&format!("  p{i} = {i}\n"));
+    }
+    source.push_str("}\nlocal k = new Dynamic { x = throw(\"rehash\") }\n");
+    source.push_str("local d = (base) { [k] = 0 }\n");
+    source.push_str("local init = List(d[k], d.p1, d.p2, d.p3)\n");
+    for i in 4..=224 {
+        source.push_str(&format!(
+            "local c{i} = test.catch(() -> throw(\"OK:\" + d.p{i}.toString()))\n"
+        ));
+    }
+    source.push_str("local mid = List(");
+    for i in 4..=224 {
+        if i > 4 {
+            source.push_str(", ");
+        }
+        source.push_str(&format!("c{i}"));
+    }
+    source.push_str(")\n");
+    source.push_str("local r1 = test.catch(() -> throw(\"OK:\" + d.p225.toString()))\n");
+    source.push_str("local r2 = test.catch(() -> throw(\"OK:\" + d.p225.toString()))\n");
+    source.push_str("local r3 = test.catch(() -> throw(\"OK:\" + d.p226.toString()))\n");
+    source.push_str(
+        "res = if (init.length == 4 && mid.length == 221) List(r1, r2, r3) else List()\n",
+    );
+
+    let out = evaluate_module_output(
+        ModuleSourceInput {
+            text: &source,
+            uri: "repl:text",
+            inferred_name: "text",
+        },
+        &ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        out.exit_code,
+        0,
+        "stderr:\n{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    assert_eq!(
+        String::from_utf8(out.stdout).expect("UTF-8 PCF"),
+        "res = List(\"rehash\", \"OK:225\", \"OK:226\")\n"
+    );
+}
+
+#[test]
+fn deep_force_respects_ancestor_object_keys_and_incomplete_rehash() {
+    // Verified against pinned Apple Pkl 0.32.0 (`pkl-macos-aarch64 eval -`):
+    // after `child.p4` fails rehash on inherited `[k0]`, forcing `child` for `==`
+    // must re-probe `[k0]` instead of reading the stale `cache` map directly.
+    let source = r#"import "pkl:test"
+local k0 = new Dynamic { x = throw("k0-rehash") }
+local base = new Dynamic { [k0] = "u" }
+local child = (base) { p1 = 1; p2 = 2; p3 = 3; p4 = 4 }
+local s0 = List(child[k0], child.p1, child.p2, child.p3)
+local e1 = if (s0.length == 4) test.catch(() -> child.p4) else ""
+res = if (e1 == "k0-rehash") test.catch(() -> let (eq = child == new Dynamic { p1 = 999 }) throw("EQ:" + eq.toString())) else "wrong"
+"#;
+
+    let out = evaluate_module_output(
+        ModuleSourceInput {
+            text: source,
+            uri: "repl:text",
+            inferred_name: "text",
+        },
+        &ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        out.exit_code,
+        0,
+        "stderr:\n{}",
+        String::from_utf8_lossy(&out.stderr)
+    );
+    assert_eq!(
+        String::from_utf8(out.stdout).expect("UTF-8 PCF"),
+        "res = \"k0-rehash\"\n"
+    );
+}
+
+#[test]
+fn trivial_member_eval_preserves_hidden_callsite_on_cache_rebuild() {
+    // Verified against pinned Apple Pkl 0.32.0 (`pkl-macos-aarch64 eval -`):
+    // async cache rebuild triggered while publishing `d.p4` hides the caller
+    // frame `text#res` from the stack trace.
+    let source = r#"local k = new Dynamic { x = throw("boom") }
+local base = new Dynamic { [k] = 0 }
+local d = (base) { p1 = 1; p2 = 2; p3 = 3; p4 = 4 }
+res = List(d[k], d.p1, d.p2, d.p3, d.p4)
+"#;
+
+    let out = evaluate_module_output(
+        ModuleSourceInput {
+            text: source,
+            uri: "repl:text",
+            inferred_name: "text",
+        },
+        &ModuleEvalOptions::default(),
+    );
+    assert_ne!(out.exit_code, 0, "expected boom error");
+    let stderr = String::from_utf8(out.stderr).expect("UTF-8 stderr");
+    assert!(
+        stderr.contains("boom\n"),
+        "expected boom message, got:\n{stderr}"
+    );
+    assert!(
+        stderr.contains("at text#k.x (repl:text)"),
+        "expected k.x frame, got:\n{stderr}"
+    );
+    assert!(
+        !stderr.contains("at text#res (repl:text)"),
+        "caller frame text#res must be hidden during CacheRebuild, got:\n{stderr}"
+    );
 }

@@ -118,3 +118,34 @@ fn retained_class_traces_its_prototype_and_superclass_without_leaking_cycles() {
     assert!(heap.get_class(class).is_err());
     assert!(heap.get(prototype).is_err());
 }
+
+#[test]
+fn accepts_nominal_returns_false_when_object_class_errors() {
+    let mut heap = Heap::new();
+    let a = heap.allocate(Object::default());
+    let b = heap.allocate(Object::default());
+    heap.get_mut(a).expect("a").parent = Some(b);
+    heap.get_mut(b).expect("b").parent = Some(a);
+
+    assert!(heap.object_class(a).is_err());
+    assert!(!accepts_nominal(
+        BuiltinClass::Any.id(),
+        &Value::Object(a),
+        &heap
+    ));
+    assert!(!accepts_nominal(
+        BuiltinClass::Object.id(),
+        &Value::Object(a),
+        &heap
+    ));
+    assert!(!accepts_nominal(
+        BuiltinClass::Dynamic.id(),
+        &Value::Object(a),
+        &heap
+    ));
+    assert!(!accepts_nominal(
+        BuiltinClass::Listing.id(),
+        &Value::Object(a),
+        &heap
+    ));
+}
