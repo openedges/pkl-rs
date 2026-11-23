@@ -917,7 +917,7 @@ impl Evaluator {
 let (reflect = import("pkl:reflect"))
 let (testMod = import("pkl:test"))
 let (m = reflect.Module(module))
-let (isTest = module is testMod)
+let (isTest = reflect.Class(module.getClass()).isSubclassOf(reflect.Class(testMod.getClass())))
 new Mapping {
   ["moduleName"] = m.name
   ["moduleUri"] = m.uri
@@ -1385,4 +1385,49 @@ fn pkl_escape_str(s: &str) -> String {
     }
     out.push('"');
     out
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn evaluate_test_runs_passing_and_failing_pkl_test_modules() {
+        let mut evaluator = EvaluatorBuilder::preconfigured()
+            .with_module_cache_dir(None)
+            .build()
+            .expect("build evaluator");
+
+        let passing = ModuleSource::text(
+            "amends \"pkl:test\"\n\nfacts {\n  [\"math\"] {\n    1 + 1 == 2\n    2 * 3 == 6\n  }\n}\n",
+        );
+        let res = evaluator
+            .evaluate_test(&passing, false)
+            .expect("evaluate passing pkl:test");
+        assert!(!res.failed(), "unexpected failures: {res:?}");
+        assert_eq!(res.total_tests(), 1);
+        assert_eq!(res.total_asserts(), 2);
+        assert_eq!(res.total_failures(), 0);
+
+        let failing = ModuleSource::text(
+            "amends \"pkl:test\"\n\nfacts {\n  [\"broken\"] {\n    1 == 2\n  }\n}\n",
+        );
+        let res = evaluator
+            .evaluate_test(&failing, false)
+            .expect("evaluate failing pkl:test");
+        assert!(res.failed());
+        assert_eq!(res.total_tests(), 1);
+        assert_eq!(res.total_failures(), 1);
+
+        let non_test = ModuleSource::text("x = 1\n");
+        let res = evaluator
+            .evaluate_test(&non_test, false)
+            .expect("evaluate non-test module");
+        assert!(
+            res.error.is_some(),
+            "non-test module must report test error"
+        );
+
+        evaluator.close();
+    }
 }
