@@ -1,35 +1,40 @@
 # Contributing
 
-See [README.md](README.md) for the development environment and default checks, and [TESTING.md](TESTING.md) for compatibility criteria. Baseline verification tools and a bounded shared Rust engine are available. M2 language implementation is in progress; complete language, product API, and performance compatibility remain unverified.
+See [README.md](README.md) for the current project status, development environment, and quick-start checks, [TESTING.md](TESTING.md) for the complete verification contract, and [docs/ci.md](docs/ci.md) for the GitHub Actions vs. local verification split.
 
 ## Workflow
 
-1. Follow the README instructions for preserving line endings and initializing submodules, then check the reference pins with `cargo xtask verify`.
-2. Review the goals in [INTENT.md](INTENT.md) and the phase overview, task scope, and prerequisites in [PLAN.md](PLAN.md). Establish the semantics of new implementations from the pinned `external/pkl` sources and tests.
-3. Keep changes small and explain their effects on observable behavior. Do not add placeholders that return success for unimplemented APIs.
-4. Run checks appropriate to the changed area and record the results and unverified scope.
+1. Follow [README.md](README.md) to preserve reference fixture line endings (`core.autocrlf=false`) and initialize the pinned Git submodules under `external/`, then check the reference pins with `cargo xtask verify`.
+2. Review project goals and scope in [INTENT.md](INTENT.md), roadmap and current status in [PLAN.md](PLAN.md), and architecture guidance in [docs/architecture.md](docs/architecture.md). Establish semantics from the pinned `external/pkl` `0.32.0` sources and tests.
+3. Keep changes focused and explain their effects on observable behavior. Do not add placeholders that return success for unimplemented APIs or add Java fallbacks to production Rust evaluation paths.
+4. Run checks appropriate to the changed area (see below) and record exact results, provenance, and any unverified scope.
 
 ## Implementation principles
 
-Separate the shared engine from platform-specific Host capabilities. Keep evaluation semantics and error formats consistent across native, Wasm, and N-API targets. Running the Rust implementation must not require a Java runtime.
-
-Support compatibility changes with actual Java 0.32.0 results and reproducible inputs. Regression cases need their inputs, environment, and expected output provenance. Preserve original licenses and copyright notices when importing upstream code.
-
-Before adding dependencies, review their purpose, Wasm support, licensing, and memory and performance impact. Track `Cargo.lock` in the repository and use `--locked` in CI and verification commands.
-
-Write standard project documentation in English, including `INTENT.md`, the README, repository instructions, contribution guide, testing contract, architecture documentation, and API references. Write planning documents in Korean, including `PLAN.md`, implementation plans, and task plans. Apply these language rules to new documents and future updates.
-
-Keep code, commands, identifiers, and file paths unchanged when translating prose. Preserve the original contents of upstream references and compatibility fixtures.
+- Separate the shared pure-Wasm engine (`crates/pkl-runtime`, `crates/pkl-formatter`) from platform-specific Host capabilities (`crates/pkl-host-native`, `crates/pkl-wasm`, `crates/pkl-napi`). Keep evaluation semantics and error formats consistent across native, Wasm, and N-API targets.
+- Maintain `unsafe_code = "deny"` across the workspace and keep `@pkl-rs/wasm` (`pkl_wasm_bg.wasm`) within the `2.50 MiB` (`2,621,440 B`) gzip-9 budget.
+- Support compatibility changes with actual pinned Pkl `0.32.0` oracle results (Temurin `21.0.13.1+2-LTS` + `pkl-tools-0.32.0.jar`, and Official Apple Pkl `0.32.0` `native-image` for CLI/server/`pkldoc` performance) and reproducible inputs. Compare raw bytes without trimming, sorting, or reserialization.
+- Before adding dependencies, review their purpose, `wasm32-unknown-unknown` support, licensing, and binary/memory impact. Track `Cargo.lock` and always pass `--locked` in CI and verification commands.
+- **Documentation language rules**: Write standard project documentation in English (`README.md`, `AGENTS.md`, `CONTRIBUTING.md`, `INTENT.md`, `TESTING.md`, `docs/*.md`). Write planning documents in Korean (`PLAN.md`, implementation plans, task plans). Preserve code, commands, identifiers, file paths, and upstream reference files unchanged.
 
 ## Verification and change descriptions
 
-Run the default checks in the README after changing Rust code or development configuration. For Python tooling changes, run the relevant regression tests and manifest freshness checks. For documentation changes, check links, paths, commands, and the accuracy of implementation status statements. Distinguish recorded Java baselines and Java-to-Java replay from actual Java/Rust comparisons.
+- **GitHub Actions** runs minimal Ubuntu checks and packaging smoke on `push`/`pull_request` ([ci.yml](.github/workflows/ci.yml)), and cross-platform packaging/publishing on `v*` tags or manual dispatch ([release.yml](.github/workflows/release.yml)).
+- **Local / dedicated verification** covers the full 378-target Rust workspace, all 59 active (+ 75 historical) Python tests, all 41 platform Node.js tests, standalone `@pkl-rs/wasm` and `@pkl-rs/napi` package tests, M0–M6 Java differential gates, and M7 fuzz/soak/benchmark/JS suites via `tools/local_verify.py`:
+
+```sh
+# Fast default local gate (378-target Rust workspace + 12 manifests/oracles + 59 Python + 41 JS tests + packages)
+python3 tools/local_verify.py --preset quick
+
+# List all M0-M7 verification suites and presets
+python3 tools/local_verify.py --list
+```
 
 Include the following in change descriptions:
 
-- The problem being addressed and the resulting behavior.
-- Relevant Pkl 0.32.0 source and test evidence.
-- Checks run and their results.
-- Known mismatches, unexecuted checks, and follow-up work.
+- The problem being addressed and the observable behavior change.
+- Relevant Pkl `0.32.0` source, oracle, or benchmark evidence.
+- Exact checks run, provenance (local vs. hosted CI), and outcomes.
+- Known mismatches, unexecuted checks, and remaining platform gaps.
 
-Keep reference version updates separate from ordinary feature changes. Review both submodule pins, `references.lock`, documentation, and oracle and corpus baselines together when updating references. Ad hoc edits under `external/` are not a substitute for implementation changes in this project.
+Keep reference version updates separate from ordinary feature changes. Update submodule gitlinks, `references.lock`, `oracle.lock.json`, manifests, and documentation together. Never modify files under `external/` as a substitute for implementation changes.

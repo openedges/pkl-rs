@@ -13,6 +13,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
+import check_linux_glibc
 import local_verify
 
 
@@ -100,6 +101,38 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         ):
             self.assertIn(required, active)
 
+    def test_platform_js_test_discovery_accounts_for_all_files(self) -> None:
+        all_js = sorted(f"tools/platform/{p.name}" for p in (ROOT / "tools" / "platform").glob("*.test.mjs"))
+        discovered = local_verify.discover_platform_js_tests(ROOT)
+        self.assertEqual(discovered, all_js)
+        self.assertGreaterEqual(len(discovered), 41)
+        self.assertIn("platform-js-tests", local_verify.PRESETS["quick"])
+        self.assertIn("platform-js-tests", local_verify.PRESETS["full"])
+        self.assertIn("platform-js-tests", local_verify.PRESETS["full-strict"])
+
+    def test_check_linux_glibc_version_parsing_and_max_detection(self) -> None:
+        self.assertEqual(check_linux_glibc.parse_version("2.28"), (2, 28, 0))
+        self.assertEqual(check_linux_glibc.parse_version("2.3.4"), (2, 3, 4))
+        sample = "0x0010: Name: GLIBC_2.2.5\n0x0020: Name: GLIBC_2.28\n0x0030: Name: GLIBC_2.17\n"
+        self.assertEqual(check_linux_glibc.max_glibc_version(sample), (2, 28, 0))
+        self.assertGreater(check_linux_glibc.max_glibc_version("Name: GLIBC_2.38"), (2, 28, 0))
+
+    def test_protobuf_strict_suite_matches_testing_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            steps = local_verify.build_suite_steps(
+                "protobuf-strict",
+                python_exe=sys.executable,
+                out_root=Path(tmp),
+            )
+            self.assertEqual(len(steps), 1)
+            step = steps[0]
+            self.assertIn("java04_strict_full_compatibility_gate", step.command)
+            self.assertIn("--ignored", step.command)
+            self.assertIn("--exact", step.command)
+            self.assertIn("--test-threads=1", step.command)
+            self.assertIsNotNone(step.env_overrides)
+            self.assertIn("PKL_PROTOBUF_CAPTURE_DIR", step.env_overrides or {})
+
     def test_local_verify_full_and_full_strict_plan_complete_m0_through_m7_and_packages(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out_root = Path(tmp) / "out"
@@ -109,6 +142,7 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
                 [
                     "workspace",
                     "manifests",
+                    "platform-js-tests",
                     "packages",
                     "m0",
                     "m1",

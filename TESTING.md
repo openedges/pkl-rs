@@ -1,6 +1,37 @@
 # Validation Contract
 
-The goals are behavioral and byte compatibility with the Java implementation of Pkl 0.32.0, with execution time and memory usage at least as good as Java for every required workload. Source verification, inventories, a pinned Java oracle, and raw comparison tooling are available. M1 adds bounded Rust/Java architecture comparisons and actual browser/Node execution; complete language and product performance gates remain open.
+The goals are behavioral and raw-byte compatibility with **Apple Pkl 0.32.0**, with execution time and peak RSS `<= 1.00x` against the pinned **Official Apple Pkl 0.32.0 `native-image`** executables for all 15 CLI/server/`pkldoc` workloads and against the pinned **Eclipse Adoptium Temurin `21.0.13.1+2-LTS`** JVM (plus the `2026-11-22` browser Wasm contract) for all 19 embedded API and JS/Wasm workloads.
+
+## Verification architecture & complete test inventory
+
+Every test and verification harness in the repository is explicitly accounted for across six layers, split cleanly between low-cost **GitHub Actions** ([ci.yml](.github/workflows/ci.yml) + [release.yml](.github/workflows/release.yml)) and the **local / dedicated verification runner** ([tools/local_verify.py](tools/local_verify.py); full command catalog in [docs/ci.md](docs/ci.md)):
+
+| Layer | Complete Inventory | GitHub Actions | Local Verification (`tools/local_verify.py`) |
+| --- | --- | --- | --- |
+| **1. Static, pins & manifests** | `cargo xtask verify`, `cargo fmt --check`, `clippy` (`workspace`, `java_regex`, `wasm32`), `wasm32` check, 12 milestone manifest `--check` scripts, M0/M7 benchmark contracts, JVM & `native-image` oracle checks | `ci.yml::check-and-test` (offline manifests/contracts; no Java) | `--suite workspace`, `--suite manifests` (includes JVM + `native-image` oracle pin verification) |
+| **2. Rust tests** | **378 workspace targets** (~2,500 tests across 10 crates + `xtask`, incl. `349` integration suites in `crates/pkl-runtime/tests/`) + **2 explicit `#[ignore]` tests** (`frontend::frontend_probe`, `m2_protobuf_java04_full::java04_strict_full_compatibility_gate`) | `ci.yml::check-and-test` runs fast product crates + `pkl-runtime --lib` | `--suite workspace` (all 378 targets), `--suite m1` (`frontend_probe`), `--suite protobuf-strict` (`java04_strict_full_compatibility_gate`) |
+| **3. Python tooling tests** | **134 files** under `tools/tests/test_*.py`: **59 active** (13 core + M1 `8` + M2 `22` + M3 `2` + M4 `3` + M5 `4` + M6 `2` + M7 `5`, incl. `check_linux_glibc.py` & workflow contract tests) + **75 historical** M2 fixture/compare suites | `ci.yml::check-and-test` runs `test_local_verify.py` | `--suite manifests` (all **59 active** modules), `--suite py-historical` / `--include-historical-tests` (all **75 historical** modules) |
+| **4. Platform & package JS tests** | **41** Node.js adapter/session test files under `tools/platform/*.test.mjs` (**384 tests**) + **3** standalone package test scripts (`packages/pkl-wasm/test/wasm.test.mjs`, `packages/pkl-napi/test/{run,pack-install}.mjs`) + `.wasm` gzip-9 `<= 2.50 MiB` budget + release CLI smoke | `ci.yml::package-smoke` (Ubuntu); `release.yml` (all 7 native targets + 4 Linux distros on `v*` tags / manual dispatch) | `--suite platform-js-tests` (all **41 files / 384 tests**), `--suite packages` (Wasm + N-API + CLI smoke) |
+| **5. M0–M6 Java `0.32.0` differential gates** | Raw-byte comparison vs pinned Temurin `21.0.13.1+2-LTS` + `pkl-tools-0.32.0.jar`: M0 smoke/replay/regressions, M1 (`6,078` cross-target + Graal archive check), M2 (`4,575` ready cases), M3 (`1,781` census + `118` diff), M4 (`429` offline + 29 Pantry packages), M5 (`142` product tools), M6 (`80 + 6` Wasm/N-API + 3-browser Playwright smoke) | — (moved to verification environment) | `--preset compat` (add `--full-corpus` for M0 full, M2 `4,575` + `--verify-full`, M4 Pantry all-5) |
+| **6. M7 performance, memory & fuzzing gates** | Seeded differential fuzzer (`210 + 5` regressions), 18-pair memory reclamation soak (Native/N-API/Wasm), 34-workload benchmark suite (15 CLI/server/`pkldoc` vs Official `native-image` `<= 1.00x`, 19 embedded/JS/Wasm vs Temurin 21 + browser Wasm contract), cross-browser JS analysis, unified `m7_manifest.py --verify-release` | — (moved to verification environment) | `--preset m7` or `--preset full-strict --local-checkpoint` |
+
+> **Note on `vendor/java_regex`**: Excluded from the Cargo workspace in [Cargo.toml](Cargo.toml) because its upstream dev-dependency (`onig`) is not in the root `Cargo.lock`. Its library code is linted offline (`cargo clippy -p java_regex --lib --locked`), and regex behavior is verified by `pkl-runtime` tests and M1/M2/M3/M7 differential suites.
+
+### Quick verification commands
+
+```sh
+# 1) Fast local gate (full 378-target Rust + 12 manifests/oracles + 59 active Python + 41 platform JS + packages)
+python3 tools/local_verify.py --preset quick
+
+# 2) M0-M6 Java 0.32.0 compatibility differential suites (add --full-corpus for full M2 + Pantry)
+python3 tools/local_verify.py --preset compat
+
+# 3) M7 fuzz + soak + Official Apple Pkl 0.32.0 native-image benchmark + JS analysis + release audit
+python3 tools/local_verify.py --preset m7 --baseline native-image
+
+# 4) Complete strict local audit (forces --full-corpus, 18-pair soak, 34-workload --baseline both + --verify-strict)
+python3 tools/local_verify.py --preset full-strict --local-checkpoint
+```
 
 ## M2 behavior verification contract
 
@@ -203,6 +234,15 @@ Milestone M7 adds four automated release-verification harnesses, a lean Ubuntu-o
    - Tooling unit, workflow-separation, and tamper-detection tests live in `tools/tests/test_oracle.py`, `tools/tests/test_local_verify.py`, and `tools/tests/test_m7_{benchmark,memory_soak,fuzz,manifest,js_analysis}.py`.
 
 ## Current recorded baseline
+
+### `2026-11-23` Official Apple Pkl `0.32.0` `native-image` parity & lean CI/local verification checkpoint (local macOS `arm64`, `release_ready: false`)
+
+On local macOS `arm64` (`darwin-arm64`, `rustc 1.98.1`, **NOT hosted CI**), the `2026-11-23` performance and CI-split checkpoints record:
+- **Official Apple Pkl `0.32.0` `native-image` benchmark (`tools/m7_benchmark.py --profile full --baseline native-image`, `--verify-report` Exit `0`, `exact_native_image_lock_match: true`, `correctness_verified: 15`)**: **`15 / 15 PASS`** across all CLI, server, and `pkldoc` workloads — every workload achieves **`<= 1.00x` execution time (`0.055x–0.935x`) and `<= 1.00x` `os.wait4` peak RSS (`0.136x–0.662x`)** against SHA-256 pinned `pkl-macos-aarch64` (`94.7 MiB`) and `pkldoc-macos-aarch64` (`94.7 MiB`), plus **`6 / 6 PASS`** vs archived M0 GraalVM CE `25.0.1` (`scalar` `0.628x/0.468x`, `stdlib-collections` `0.371x/0.281x`, `recursive-compute` `0.411x/0.136x`, `large-output` `0.441x/0.275x`, `failure-diagnostics` `0.599x/0.465x`, `import-graph` `0.618x/0.474x`, `reflection-stdlib` `0.904x/0.662x`, `renderers-files` `0.704x/0.519x`, `renderers-binary` `0.742x/0.662x`, `packages-http-warm` `0.457x/0.329x`, `packages-http-cold` `0.669x/0.309x`, `repl-session` `0.055x/0.330x`, `server-session` `0.279x/0.153x`, `formatter-large` `0.493x/0.162x`, `pkldoc-single-package` `0.935x/0.650x`).
+- **Frozen-source regression & tooling checks (`6bdae09a1`..`352df2c9b`)**: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace/`java_regex`/`wasm32` `clippy -D warnings`, `wasm32` checks, full Rust workspace tests (**`378/378` targets + `pkl-host-native` `9/9`, `0` failed**), `@pkl-rs/wasm` (`10/10 PASS`, `pkl_wasm_bg.wasm` `8,022,629 B` raw / **`2,619,729 B` [`2.498 MiB`] gzip-9 `<= 2.50 MiB`**), `@pkl-rs/napi` (`11/11 PASS`), all **41** `tools/platform/*.test.mjs` files (**`384/384 PASS`**), all **59** active Python test modules (**`525/525 PASS`**), all **12/12** milestone manifest `--check` scripts, both benchmark contracts, `tools/oracle.py verify --profile native-image`, and YAML/contract validation of `.github/workflows/{ci,release}.yml` all pass.
+- **Preserved limits (`release_ready: false`)**: Non-macOS OS/architecture release targets (`darwin-x64`, `linux-x64-gnu`, `linux-arm64-gnu`, `linux-x64-musl`, `linux-arm64-musl`, `win32-x64-msvc`), post-optimization Firefox/WebKit browser runs, unified `--baseline both` 34-workload verification, and hosted CI execution remain unverified.
+
+### Prior M7 local macOS `arm64` frozen verification checkpoint (`#154`/`#156`, Temurin 21 baseline)
 
 The [M7 local macOS arm64 verification checkpoint](reports/m7/README.md) records the complete frozen-source (`#154`/`#156`) verification of Milestone **M7** on local macOS `arm64` (`darwin-arm64`, `macOS-27.2-arm64`, Apple M1, `rustc 1.98.1`, **NOT hosted CI**) against pinned **Eclipse Adoptium Temurin `21.0.13.1+2-LTS`** (**`exact_jdk_lock_match: true`**, without `PKL_ALLOW_LOCAL_JDK=1`) plus separate cross-comparison against archived M0 **GraalVM CE `25.0.1`** (`reports/m0/benchmarks.json`):
 - **M7 Gate Outcomes (Frozen `#154`/`#156` Tree)**:

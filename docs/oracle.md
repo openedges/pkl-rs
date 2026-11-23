@@ -1,35 +1,63 @@
-# Pinned Java oracle
+# Pinned Pkl 0.32.0 Oracles (JVM, GraalVM CE, and Official Native Image)
 
-The development oracle is the official `org.pkl-lang:pkl-tools:0.32.0` shaded
-JVM artifact from Maven Central. It contains the CLI, core evaluator, server,
-configuration API, documentation tool, and Java/Kotlin code generators. It is
-used for verification and baseline measurements; it is not a production fallback.
-A successful bootstrap or repeated Java result does not establish Rust language
-compatibility or performance.
+Verification uses three explicitly pinned, checksummed Apple Pkl **0.32.0**
+reference profiles locked in [oracle.lock.json](../oracle.lock.json). All three
+are strictly for verification and baseline measurement — never as a production
+fallback in Rust evaluation paths. A successful bootstrap or repeated oracle
+result never by itself establishes Rust compatibility or performance parity.
 
-[oracle.lock.json](../oracle.lock.json) pins the download URL, SHA-256, embedded
-release version and source commit, source metadata hashes, JDK identity, heap
-settings, and execution policy. The JAR's `org/pkl/core/Release.properties`
-contains version `0.32.0` and commit `e51fb2f`, corresponding to the full commit
-in [references.lock](../references.lock). No reference checkout is modified.
+1. **`reference` (default JVM oracle)**: Official Maven Central
+   `org.pkl-lang:pkl-tools:0.32.0` shaded JAR running on exact pinned **Eclipse
+   Adoptium Temurin OpenJDK `21.0.13.1+2-LTS`** (`java.version=21.0.13.1`).
+   Authoritative byte oracle for M0–M6 differential compatibility, M7 fuzzing,
+   and all 19 embedded API + JS/Wasm performance workloads.
+2. **`native-image` (primary CLI/server/`pkldoc` performance oracle, pinned 2026-11-23)**:
+   Official GitHub Release `0.32.0` prebuilt `native-image` CLI executables
+   (`pkl-macos-aarch64` [`99,267,376 B`, SHA-256 `fb891856...a848c13928`] and
+   `pkldoc-macos-aarch64` [`99,266,664 B`, SHA-256 `f363e095...46923f`] for
+   `Darwin-arm64`). Primary `<= 1.00x` execution time and `os.wait4` peak RSS
+   strict gate for all 15 CLI, server, and `pkldoc` workloads (`cold-cli` and
+   `steady-server`).
+3. **`performance` (archived M0 GraalVM CE optimizing JVM profile)**: Official
+   **GraalVM Community Edition `25.0.1`** archive (`Darwin-arm64`), used for
+   the archived M0 optimizing-JIT baseline in `reports/m0/benchmarks.json`.
+
+[oracle.lock.json](../oracle.lock.json) pins download URLs, byte sizes,
+SHA-256 digests, embedded release version (`0.32.0`) and source commit
+(`e51fb2f`, matching [references.lock](../references.lock)), source metadata
+hashes, JDK identity, heap settings, and execution policy. No reference
+checkout under `external/` is modified.
 
 ## Bootstrap and verification
 
-Requirements are Python 3.9 or newer, Git, and Eclipse Temurin OpenJDK
-`21.0.13.1+2-LTS` (`java.version=21.0.13.1`, updated 2026-11-20 to address
-`CVE-2026-114938` through `CVE-2026-114942`). Provision that exact JDK separately
-from [Adoptium's official releases](https://adoptium.net/temurin/releases/).
-The tool does not install system software. Select its executable using
-`PKL_ORACLE_JAVA` when the pinned JDK is not the `java` on `PATH`:
+Requirements are Python 3.9+ (Python 3.10+ for M2/M7 scripts using
+`zip(..., strict=True)`), Git, and Eclipse Temurin OpenJDK `21.0.13.1+2-LTS`
+(provisioned separately from
+[Adoptium's official releases](https://adoptium.net/temurin/releases/)). Select
+the pinned JDK with `PKL_ORACLE_JAVA` when it is not `java` on `PATH`. For the
+`native-image` profile, `fetch --profile native-image` installs into
+`.cache/oracle/native-image-0.32.0/`, or pre-provisioned executables may be
+pointed to via `PKL_ORACLE_NATIVE_PKL` and `PKL_ORACLE_NATIVE_PKLDOC` (still
+strictly checked for exact byte size, SHA-256, executable bit, and `--version`):
 
 ```sh
 export PKL_ORACLE_JAVA=/absolute/path/to/pinned-jdk/bin/java
+
+# 1) Default JVM reference oracle (Temurin 21 + pkl-tools-0.32.0.jar)
 python3 tools/oracle.py fetch
 python3 tools/oracle.py verify
 python3 tools/oracle.py smoke
+
+# 2) Official Apple Pkl 0.32.0 native-image CLI oracle (pkl + pkldoc)
+python3 tools/oracle.py fetch --profile native-image
+python3 tools/oracle.py verify --profile native-image
+
+# 3) Optimizing GraalVM CE 25.0.1 profile (macOS arm64 M0 reference)
 python3 tools/oracle.py fetch --profile performance
 python3 tools/oracle.py verify --profile performance
-python3 -m unittest discover -s tools/tests -p 'test_oracle.py'
+
+# Tool unit & tamper-detection tests
+PYTHONPATH=tools python3 -m unittest tools/tests/test_oracle.py -v
 ```
 
 `fetch` downloads the fixed HTTPS URL to a temporary file, verifies SHA-256 and
@@ -118,7 +146,10 @@ The returned metadata is JSON-compatible. `command` ends with
 `org.pkl.cli.Main` and is ready for CLI arguments; `java` and `artifact` are
 absolute paths for JVM API probes. Keep subprocess output as bytes.
 Use `ensure_oracle(repository_root, fetch=False, profile="performance")` for
-measurements against the optimizing GraalVM runtime.
+measurements against the optimizing GraalVM runtime, and
+`ensure_native_image_oracle(repository_root, fetch=False)` to retrieve verified
+paths and hashes for the pinned Official Apple Pkl `0.32.0` `native-image`
+`pkl` and `pkldoc` CLI executables (`exact_native_image_lock_match: true`).
 
 ## Upstream build, Truffle, and licensing
 

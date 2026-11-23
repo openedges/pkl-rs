@@ -95,6 +95,13 @@ SUITE_SPECS: tuple[SuiteSpec, ...] = (
         False,
     ),
     SuiteSpec(
+        "platform-js-tests",
+        "All 41 Node.js platform/adapter/transport unit test files under tools/platform/*.test.mjs (384 tests)",
+        False,
+        False,
+        False,
+    ),
+    SuiteSpec(
         "py-historical",
         "All 75 historical M2 fixture/compare Python test suites (opt-in; preserves 2 Stage-65 stale-oracle.lock.json modules honestly)",
         True,
@@ -197,12 +204,13 @@ SUITE_SPECS: tuple[SuiteSpec, ...] = (
 SUITE_BY_ID: dict[str, SuiteSpec] = {spec.id: spec for spec in SUITE_SPECS}
 
 PRESETS: dict[str, tuple[str, ...]] = {
-    "quick": ("workspace", "manifests", "packages"),
+    "quick": ("workspace", "manifests", "platform-js-tests", "packages"),
     "compat": ("m0", "m1", "m2", "m3", "m4", "m5", "m6"),
     "m7": ("m7-fuzz", "m7-soak", "m7-bench", "m7-js", "m7-release"),
     "full": (
         "workspace",
         "manifests",
+        "platform-js-tests",
         "packages",
         "m0",
         "m1",
@@ -220,6 +228,7 @@ PRESETS: dict[str, tuple[str, ...]] = {
     "full-strict": (
         "workspace",
         "manifests",
+        "platform-js-tests",
         "packages",
         "m0",
         "m1",
@@ -249,6 +258,12 @@ def discover_python_test_modules(root: Path = ROOT) -> dict[str, list[str]]:
         else:
             historical.append(f"tools/tests/{name}")
     return {"active": active, "historical": historical}
+
+
+def discover_platform_js_tests(root: Path = ROOT) -> list[str]:
+    """Discover all Node.js unit test files under `tools/platform/*.test.mjs`."""
+    platform_dir = root / "tools" / "platform"
+    return sorted(f"tools/platform/{p.name}" for p in platform_dir.glob("*.test.mjs"))
 
 
 def _helper_write_java_replay_runner(dest: Path) -> int:
@@ -361,6 +376,12 @@ def build_suite_steps(
             Step("smoke-pkldoc-version", ["./target/release/pkldoc", "--version"]),
         ]
 
+    if suite_id == "platform-js-tests":
+        js_tests = discover_platform_js_tests(root)
+        return [
+            Step("unit-tests-platform-js", ["node", "--test", *js_tests]),
+        ]
+
     if suite_id == "py-historical":
         discovered = discover_python_test_modules(root)
         historical_mods = discovered["historical"]
@@ -369,10 +390,26 @@ def build_suite_steps(
         ]
 
     if suite_id == "protobuf-strict":
+        capture_dir = suite_out / "capture"
         return [
             Step(
                 "protobuf-strict-ignored-gate",
-                ["cargo", "test", "-p", "pkl-runtime", "--test", "m2_protobuf_java04_full", "--locked", "--", "--ignored", "--nocapture"],
+                [
+                    "cargo",
+                    "test",
+                    "-p",
+                    "pkl-runtime",
+                    "--test",
+                    "m2_protobuf_java04_full",
+                    "--locked",
+                    "java04_strict_full_compatibility_gate",
+                    "--",
+                    "--ignored",
+                    "--exact",
+                    "--test-threads=1",
+                    "--nocapture",
+                ],
+                {"PKL_PROTOBUF_CAPTURE_DIR": str(capture_dir.resolve())},
             ),
         ]
 
@@ -780,7 +817,12 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.list:
         discovered = discover_python_test_modules(ROOT)
-        print(f"Python test discovery: {len(discovered['active'])} active modules, {len(discovered['historical'])} historical modules\n")
+        js_tests = discover_platform_js_tests(ROOT)
+        print(
+            f"Test discovery: {len(discovered['active'])} active Python modules, "
+            f"{len(discovered['historical'])} historical Python modules, "
+            f"{len(js_tests)} platform Node.js test files\n"
+        )
         print("Suites:")
         for spec in SUITE_SPECS:
             reqs = []
