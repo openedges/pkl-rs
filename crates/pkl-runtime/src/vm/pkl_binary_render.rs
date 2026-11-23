@@ -660,6 +660,7 @@ impl Vm {
                         }
                     })
             }
+            FastObjectKind::PlainTyped { .. } => false,
             FastObjectKind::PlainModule { class, count } => {
                 let end = base + count;
                 if self.binary_regular_property_count(id).ok() != Some(count) {
