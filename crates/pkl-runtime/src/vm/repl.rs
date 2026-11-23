@@ -830,7 +830,7 @@ fn compile_repl_member_into(
         key: None,
         delegate_key: None,
         build: None,
-        syntax: Some(Arc::new(resolved.module.clone())),
+        syntax: Some(Arc::clone(&resolved.module)),
         source: Some(source.clone()),
         name: "repl".into(),
         template,

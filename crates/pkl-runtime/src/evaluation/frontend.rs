@@ -237,9 +237,9 @@ fn resolve_input_colored(
         ..input.clone()
     };
     let resolved = if defer_ast {
-        crate::resolver::resolve_module_for_evaluation(&module)
+        crate::resolver::resolve_module_for_evaluation_arc(Arc::new(module))
     } else {
-        crate::resolver::resolve_module(&module).map_err(|error| {
+        crate::resolver::resolve_module_owned(module).map_err(|error| {
             render_failure_text_colored(
                 resolved_input.clone(),
                 options.diagnostic_profile,
@@ -249,6 +249,22 @@ fn resolve_input_colored(
         })?
     };
     Ok((resolved, resolved_input.inferred_name.to_owned()))
+}
+
+struct CachedPreparedModule {
+    hash: u64,
+    text: SourceText,
+    uri: PklString,
+    inferred_name: PklString,
+    program: Arc<crate::vm::Program>,
+    source: crate::source::Source,
+    name: PklString,
+}
+
+fn prepared_module_cache() -> &'static std::sync::Mutex<Vec<CachedPreparedModule>> {
+    static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedPreparedModule>>> =
+        std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
 }
 
 /// Prepare actual execution without discarding structured frontend failures.
@@ -275,6 +291,45 @@ pub fn prepare_module_text_colored(
     use_color: bool,
 ) -> Result<PreparedModule, ModuleFrontendFailure> {
     let input = input.into();
+    let file_or_bundled = input.uri.starts_with("file:") || input.uri.starts_with("pkl:");
+    let has_project_allowed = options.no_project || crate::packages::resolver::has_active_project();
+    if !has_project_allowed
+        || options.settings != "pkl:settings"
+        || (!options.no_cache && !file_or_bundled)
+    {
+        return Err(unsupported(
+            FrontendPhase::Configuration,
+            "module-evaluation-configuration",
+            "This module-evaluation adapter requires --no-project or --project-dir and --settings pkl:settings; cache-enabled primary sources are limited to file: and pkl:.",
+        ));
+    }
+    let cacheable = input.text.len_bytes() <= 256 * 1024;
+    let hash = if cacheable {
+        crate::vm::modules::source_text_hash(&input.text)
+    } else {
+        0
+    };
+    if cacheable
+        && let Ok(mut cache) = prepared_module_cache().lock()
+        && let Some(pos) = cache.iter().rposition(|entry| {
+            entry.hash == hash
+                && entry.uri == input.uri
+                && entry.inferred_name == input.inferred_name
+                && entry.text == input.text
+        })
+    {
+        let last = cache.len() - 1;
+        if pos != last {
+            let entry = cache.remove(pos);
+            cache.push(entry);
+        }
+        let hit = &cache[last];
+        return Ok(PreparedModule {
+            program: Arc::clone(&hit.program),
+            source: hit.source.clone(),
+            name: hit.name.clone(),
+        });
+    }
     let (resolved, name) = resolve_input_colored(input.clone(), options, true, use_color)?;
     let mut sources = SourceMap::default();
     let id = sources.add(input.uri.clone(), input.text.clone());
@@ -314,6 +369,20 @@ pub fn prepare_module_text_colored(
                 use_color,
             )
         })?;
+    if cacheable && let Ok(mut cache) = prepared_module_cache().lock() {
+        if cache.len() >= 32 {
+            cache.remove(0);
+        }
+        cache.push(CachedPreparedModule {
+            hash,
+            text: input.text,
+            uri: input.uri,
+            inferred_name: input.inferred_name,
+            program: Arc::clone(&program),
+            source: source.clone(),
+            name: name.clone(),
+        });
+    }
     Ok(PreparedModule {
         program,
         source,

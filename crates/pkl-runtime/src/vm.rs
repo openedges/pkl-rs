@@ -52,7 +52,7 @@ mod glob_traversal;
 mod guest_exceptions;
 pub(crate) mod json_parser;
 mod jsonnet;
-mod modules;
+pub(crate) mod modules;
 mod null;
 mod platform;
 mod query_lifecycle;
@@ -13869,14 +13869,14 @@ fn compile_unit_into_with_syntax(
             decl
         });
         let shell = crate::resolver::ResolvedModule {
-            module: crate::syntax::Module {
+            module: Arc::new(crate::syntax::Module {
                 source: resolved.module.source.clone(),
                 declaration: shell_decl,
                 members: Vec::new(),
                 deferred_diagnostics: Vec::new(),
                 folded_integer_spans: BTreeMap::new(),
                 interpolation_spans: BTreeMap::new(),
-            },
+            }),
             standard_library: resolved.standard_library,
             preparation: resolved
                 .preparation
@@ -13899,7 +13899,7 @@ fn compile_unit_into_with_syntax(
         };
         let unit = compile_unit_body(program, &shell, options, instrument, source, identity)?;
         program.units[unit.0 as usize].build = Some(modules::ModuleBuild {
-            module: cached_syntax.unwrap_or_else(|| Arc::new(resolved.module.clone())),
+            module: cached_syntax.unwrap_or_else(|| Arc::clone(&resolved.module)),
             resolved: cached_resolved,
             name_changed: false,
             options,
@@ -13924,9 +13924,10 @@ fn compile_unit_into_with_syntax(
     // Rejected ASTs never publish or execute partially resolved guest members.
     // Their initializer only replays the observed construction prefix and fails.
     let mut rejected = resolved.clone();
-    rejected.module.members.clear();
-    rejected.module.deferred_diagnostics.clear();
-    if let Some(declaration) = &mut rejected.module.declaration {
+    let rejected_mod = Arc::make_mut(&mut rejected.module);
+    rejected_mod.members.clear();
+    rejected_mod.deferred_diagnostics.clear();
+    if let Some(declaration) = &mut rejected_mod.declaration {
         declaration.annotations.clear();
         declaration.parent = None;
         declaration.modifiers.clear();
@@ -14207,7 +14208,7 @@ fn compile_unit_body_at_with_syntax(
         key: None,
         delegate_key: None,
         build: None,
-        syntax: Some(cached_syntax.unwrap_or_else(|| Arc::new(resolved.module.clone()))),
+        syntax: Some(cached_syntax.unwrap_or_else(|| Arc::clone(&resolved.module))),
         source: compiler.source,
         name: module_name,
         template,

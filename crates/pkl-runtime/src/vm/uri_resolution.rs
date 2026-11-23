@@ -663,16 +663,17 @@ impl Vm {
         let Some(build) = declaration.build else {
             return Ok(());
         };
-        let cached_syntax = Some(Arc::clone(&build.module));
         let resolved_owned;
         let resolved: &crate::resolver::ResolvedModule = if !build.name_changed
             && let Some(cached) = build.resolved.as_ref()
         {
             cached
         } else {
-            resolved_owned = crate::resolver::resolve_module_for_evaluation(&build.module);
+            resolved_owned =
+                crate::resolver::resolve_module_for_evaluation_arc(Arc::clone(&build.module));
             &resolved_owned
         };
+        let cached_syntax = Some(Arc::clone(&resolved.module));
         let code_owner = self
             .frames
             .last()
@@ -758,6 +759,10 @@ impl Vm {
             return Ok(());
         }
         let checkpoint = modules::ArenaCheckpoint::new(program);
+        program.blocks.seal();
+        program.metadata.seal();
+        program.objects.seal();
+        program.type_recipes.seal();
         let before_decl_len = program.declaration_sources.len();
         let before_refl_len = program.reflection_annotations.len();
         let before_alias_len = program.alias_definitions.len();
@@ -765,9 +770,10 @@ impl Vm {
         let before_base_mixin = program.base_mixin_declaration;
         let result = if resolved.preparation_failure.is_some() {
             let mut shell = resolved.clone();
-            shell.module.members.clear();
-            shell.module.deferred_diagnostics.clear();
-            if let Some(decl) = &mut shell.module.declaration {
+            let shell_mod = Arc::make_mut(&mut shell.module);
+            shell_mod.members.clear();
+            shell_mod.deferred_diagnostics.clear();
+            if let Some(decl) = &mut shell_mod.declaration {
                 decl.annotations.clear();
                 decl.parent = None;
                 decl.modifiers.clear();

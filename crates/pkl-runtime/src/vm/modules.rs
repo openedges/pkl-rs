@@ -296,17 +296,14 @@ pub(super) fn next_failure_id() -> u64 {
 
 enum ParsedOrResolved {
     Parsed(Box<crate::syntax::Module>),
-    Resolved(
-        Arc<crate::resolver::ResolvedModule>,
-        Arc<crate::syntax::Module>,
-    ),
+    Resolved(Arc<crate::resolver::ResolvedModule>),
 }
 
 impl ParsedOrResolved {
     fn module(&self) -> &crate::syntax::Module {
         match self {
             Self::Parsed(module) => module,
-            Self::Resolved(resolved, _) => &resolved.module,
+            Self::Resolved(resolved) => &resolved.module,
         }
     }
 }
@@ -318,10 +315,9 @@ struct CachedFrontendEntry {
     hash: u64,
     text: SourceText,
     resolved: Arc<crate::resolver::ResolvedModule>,
-    syntax: Arc<crate::syntax::Module>,
 }
 
-pub(super) fn source_text_hash(text: &SourceText) -> u64 {
+pub(crate) fn source_text_hash(text: &SourceText) -> u64 {
     let mut hash: u64 = 0xcbf29ce484222325;
     if let Some(s) = text.as_str() {
         for &b in s.as_bytes() {
@@ -340,52 +336,56 @@ pub(super) fn source_text_hash(text: &SourceText) -> u64 {
 fn frontend_cache() -> &'static std::sync::Mutex<Vec<CachedFrontendEntry>> {
     static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedFrontendEntry>>> =
         std::sync::OnceLock::new();
-    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(256)))
 }
 
-fn cached_user_resolved(
+pub(crate) fn cached_user_resolved(
     text: &SourceText,
-) -> Option<(
-    Arc<crate::resolver::ResolvedModule>,
-    Arc<crate::syntax::Module>,
-)> {
+) -> Option<Arc<crate::resolver::ResolvedModule>> {
     // Only cache reasonably sized modules (avoid pinning huge generated text).
     if text.len_bytes() > 256 * 1024 {
         return None;
     }
     let hash = source_text_hash(text);
-    let cache = frontend_cache().lock().ok()?;
-    cache
+    let mut cache = frontend_cache().lock().ok()?;
+    let pos = cache
         .iter()
-        .rev()
-        .find(|entry| entry.hash == hash && entry.text == *text)
-        .map(|entry| (Arc::clone(&entry.resolved), Arc::clone(&entry.syntax)))
+        .rposition(|entry| entry.hash == hash && entry.text == *text)?;
+    let last = cache.len() - 1;
+    if pos != last {
+        let entry = cache.remove(pos);
+        cache.push(entry);
+    }
+    Some(Arc::clone(&cache[last].resolved))
 }
 
-fn store_user_resolved(
+pub(crate) fn store_user_resolved(
     text: &SourceText,
     resolved: Arc<crate::resolver::ResolvedModule>,
-    syntax: Arc<crate::syntax::Module>,
 ) {
     if text.len_bytes() > 256 * 1024 {
         return;
     }
     let hash = source_text_hash(text);
     if let Ok(mut cache) = frontend_cache().lock() {
-        if cache
+        if let Some(pos) = cache
             .iter()
-            .any(|entry| entry.hash == hash && entry.text == *text)
+            .position(|entry| entry.hash == hash && entry.text == *text)
         {
+            let last = cache.len() - 1;
+            if pos != last {
+                let entry = cache.remove(pos);
+                cache.push(entry);
+            }
             return;
         }
-        if cache.len() >= 32 {
+        if cache.len() >= 256 {
             cache.remove(0);
         }
         cache.push(CachedFrontendEntry {
             hash,
             text: text.clone(),
             resolved,
-            syntax,
         });
     }
 }
@@ -424,13 +424,14 @@ struct CachedCompiledUnit {
     constraint_origins: ConstraintOriginsVec,
 }
 
-const MAX_CACHED_UNIT_BLOCKS: usize = 8192;
-const MAX_TOTAL_CACHED_UNIT_BLOCKS: usize = 32768;
+const MAX_CACHED_UNIT_BLOCKS: usize = 16384;
+const MAX_TOTAL_CACHED_UNIT_BLOCKS: usize = 262144;
+const MAX_CACHED_UNITS: usize = 256;
 
 fn compiled_unit_cache() -> &'static std::sync::Mutex<Vec<CachedCompiledUnit>> {
     static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedCompiledUnit>>> =
         std::sync::OnceLock::new();
-    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(32)))
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(MAX_CACHED_UNITS)))
 }
 
 pub(super) struct CompiledUnitCacheKey<'a> {
@@ -460,47 +461,50 @@ pub(super) fn try_replay_compiled_unit(
     key: &CompiledUnitCacheKey<'_>,
 ) -> Result<Option<ModuleUnit>, RuntimeError> {
     let hit = {
-        let Ok(cache) = compiled_unit_cache().lock() else {
+        let Ok(mut cache) = compiled_unit_cache().lock() else {
             return Ok(None);
         };
-        cache
-            .iter()
-            .rev()
-            .find(|e| {
-                e.hash == key.hash
-                    && e.blocks_start == key.blocks_start
-                    && e.objects_start == key.objects_start
-                    && e.recipes_start == key.recipes_start
-                    && e.unit_id == key.unit_id
-                    && e.declaration_base == key.declaration_base
-                    && e.base_mixin_declaration == key.base_mixin_declaration
-                    && e.power_assertions == key.power_assertions
-                    && e.fuse_constant_add == key.fuse_constant_add
-                    && e.pure_standard_host == key.pure_standard_host
-                    && e.is_primary_root == key.is_primary_root
-                    && e.is_replacement == key.is_replacement
-                    && e.has_identity == key.has_identity
-                    && e.original_uri == *key.original_uri
-                    && e.resolved_uri == *key.resolved_uri
-                    && e.source_uri == *key.source_uri
-                    && e.module_name == *key.module_name
-                    && e.prepared == key.prepared
-                    && e.text == *key.text
-            })
-            .map(|cached| {
-                (
-                    Arc::clone(&cached.blocks),
-                    Arc::clone(&cached.metadata),
-                    Arc::clone(&cached.objects),
-                    Arc::clone(&cached.type_recipes),
-                    cached.next_declaration_after,
-                    cached.unit.clone(),
-                    Arc::clone(&cached.declaration_sources),
-                    cached.reflection_annotations.clone(),
-                    cached.alias_definitions.clone(),
-                    cached.constraint_origins.clone(),
-                )
-            })
+        let pos = cache.iter().rposition(|e| {
+            e.hash == key.hash
+                && e.blocks_start == key.blocks_start
+                && e.objects_start == key.objects_start
+                && e.recipes_start == key.recipes_start
+                && e.unit_id == key.unit_id
+                && e.declaration_base == key.declaration_base
+                && e.base_mixin_declaration == key.base_mixin_declaration
+                && e.power_assertions == key.power_assertions
+                && e.fuse_constant_add == key.fuse_constant_add
+                && e.pure_standard_host == key.pure_standard_host
+                && e.is_primary_root == key.is_primary_root
+                && e.is_replacement == key.is_replacement
+                && e.has_identity == key.has_identity
+                && e.original_uri == *key.original_uri
+                && e.resolved_uri == *key.resolved_uri
+                && e.source_uri == *key.source_uri
+                && e.module_name == *key.module_name
+                && e.prepared == key.prepared
+                && e.text == *key.text
+        });
+        pos.map(|pos| {
+            let last = cache.len() - 1;
+            if pos != last {
+                let entry = cache.remove(pos);
+                cache.push(entry);
+            }
+            let cached = &cache[last];
+            (
+                Arc::clone(&cached.blocks),
+                Arc::clone(&cached.metadata),
+                Arc::clone(&cached.objects),
+                Arc::clone(&cached.type_recipes),
+                cached.next_declaration_after,
+                cached.unit.clone(),
+                Arc::clone(&cached.declaration_sources),
+                cached.reflection_annotations.clone(),
+                cached.alias_definitions.clone(),
+                cached.constraint_origins.clone(),
+            )
+        })
     };
     let Some((
         blocks_seg,
@@ -608,7 +612,8 @@ pub(super) fn store_compiled_unit(
     if let Ok(mut cache) = compiled_unit_cache().lock() {
         let mut total_blocks: usize = cache.iter().map(|e| e.blocks.len()).sum();
         while !cache.is_empty()
-            && (cache.len() >= 32 || total_blocks + new_blocks > MAX_TOTAL_CACHED_UNIT_BLOCKS)
+            && (cache.len() >= MAX_CACHED_UNITS
+                || total_blocks + new_blocks > MAX_TOTAL_CACHED_UNIT_BLOCKS)
         {
             let evicted = cache.remove(0);
             total_blocks = total_blocks.saturating_sub(evicted.blocks.len());
@@ -2055,14 +2060,13 @@ impl Vm {
             });
         // VmLanguage infers the selected key's module name even when parsing
         // fails. Keep the original diagnostic while its name getter suspends.
-        let parsed =
-            if let Some((cached_resolved, cached_syntax)) = cached_user_resolved(&input.text) {
-                Ok(ParsedOrResolved::Resolved(cached_resolved, cached_syntax))
-            } else {
-                crate::parser::parse_module_for_evaluation(&input.text)
-                    .map(|m| ParsedOrResolved::Parsed(Box::new(m)))
-                    .map_err(|failure| Box::new((*failure, import_member)))
-            };
+        let parsed = if let Some(cached_resolved) = cached_user_resolved(&input.text) {
+            Ok(ParsedOrResolved::Resolved(cached_resolved))
+        } else {
+            crate::parser::parse_module_for_evaluation(&input.text)
+                .map(|m| ParsedOrResolved::Parsed(Box::new(m)))
+                .map_err(|failure| Box::new((*failure, import_member)))
+        };
         if let Some(name) = parsed
             .as_ref()
             .ok()
@@ -2203,16 +2207,17 @@ impl Vm {
             .resolved
             .clone()
             .ok_or_else(|| invalid("missing resolved module"))?;
-        let (resolved_ast, cached_syntax) = match parsed {
-            ParsedOrResolved::Resolved(cached, syntax) => (cached, Some(syntax)),
+        let resolved_ast = match parsed {
+            ParsedOrResolved::Resolved(cached) => cached,
             ParsedOrResolved::Parsed(parsed) => {
-                let resolved_ast =
-                    Arc::new(crate::resolver::resolve_module_for_evaluation(&parsed));
-                let syntax = Arc::new(*parsed);
-                store_user_resolved(&source.text, Arc::clone(&resolved_ast), Arc::clone(&syntax));
-                (resolved_ast, Some(syntax))
+                let resolved_ast = Arc::new(crate::resolver::resolve_module_for_evaluation_arc(
+                    Arc::new(*parsed),
+                ));
+                store_user_resolved(&source.text, Arc::clone(&resolved_ast));
+                resolved_ast
             }
         };
+        let cached_syntax = Some(Arc::clone(&resolved_ast.module));
         // The evaluator owns one append-only code arena. Clone only while an
         // external prepared-program snapshot shares it; subsequent modules
         // append in place. Failed compilation retracts only its uncommitted tail.
@@ -2291,6 +2296,10 @@ impl Vm {
         }
 
         let checkpoint = ArenaCheckpoint::new(program);
+        program.blocks.seal();
+        program.metadata.seal();
+        program.objects.seal();
+        program.type_recipes.seal();
         let before_decl_len = program.declaration_sources.len();
         let before_refl_len = program.reflection_annotations.len();
         let before_alias_len = program.alias_definitions.len();

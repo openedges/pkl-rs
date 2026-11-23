@@ -11,6 +11,7 @@ use crate::syntax::{
 };
 use crate::value::PklString;
 use std::collections::BTreeMap;
+use std::sync::Arc;
 mod constant_keys;
 mod diagnostic_owner;
 
@@ -236,7 +237,7 @@ pub(crate) enum AstPreparation {
 
 #[derive(Clone, Debug)]
 pub struct ResolvedModule {
-    pub module: Module,
+    pub module: Arc<Module>,
     pub(crate) standard_library: bool,
     pub(crate) preparation: Vec<AstPreparation>,
     pub(crate) preparation_is_evaluation: bool,
@@ -2339,21 +2340,21 @@ fn validate_modifiers(
 }
 
 pub fn resolve_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
-    resolve_module_with_context(module, false)
+    resolve_module_with_context(Arc::new(module.clone()), false)
 }
 
 /// Only the bundled-source loader may opt into the pinned stdlib declaration rules.
 /// User modules and separately parsed session expressions never receive this context.
 pub(crate) fn resolve_stdlib_module(module: &Module) -> Result<ResolvedModule, Diagnostic> {
-    resolve_module_with_context(module, true)
+    resolve_module_with_context(Arc::new(module.clone()), true)
 }
 
 fn resolve_module_with_context(
-    module: &Module,
+    module: Arc<Module>,
     standard_library: bool,
 ) -> Result<ResolvedModule, Diagnostic> {
     let (resolved, error, owner_requested) =
-        resolve_module_inner(module, false, false, standard_library);
+        resolve_module_inner(Arc::clone(&module), false, false, standard_library);
     let Some(mut error) = error else {
         return Ok(resolved);
     };
@@ -2368,15 +2369,25 @@ fn resolve_module_with_context(
     Err(error)
 }
 
+/// Resolve an owned `Module` without cloning its syntax tree.
+pub(crate) fn resolve_module_owned(module: Module) -> Result<ResolvedModule, Diagnostic> {
+    resolve_module_with_context(Arc::new(module), false)
+}
+
 /// An incomplete binding result can only compile to a failing initializer.
 pub(crate) fn resolve_module_for_evaluation(module: &Module) -> ResolvedModule {
+    resolve_module_for_evaluation_arc(Arc::new(module.clone()))
+}
+
+/// Resolve a shared `Arc<Module>` for evaluation without cloning its syntax tree.
+pub(crate) fn resolve_module_for_evaluation_arc(module: Arc<Module>) -> ResolvedModule {
     let (mut resolved, error, _) = resolve_module_inner(module, true, true, false);
     resolved.preparation_failure = error;
     resolved
 }
 
 fn resolve_module_inner(
-    module: &Module,
+    module: Arc<Module>,
     capture_diagnostic_owner: bool,
     evaluation_preparation: bool,
     standard_library: bool,
@@ -2516,7 +2527,16 @@ fn resolve_module_inner(
         }
         Ok::<(), Diagnostic>(())
     })();
-    let diagnostic_owner_requested = resolver.diagnostic_owner_requested;
+    let Resolver {
+        preparation,
+        function_owners,
+        names,
+        const_names,
+        custom_this,
+        custom_functions,
+        diagnostic_owner_requested,
+        ..
+    } = resolver;
     let error = validation.err().map(|mut error| {
         error.module_name = module
             .declaration
@@ -2526,16 +2546,16 @@ fn resolve_module_inner(
         error
     });
     let resolved = ResolvedModule {
-        module: module.clone(),
+        module,
         standard_library,
-        preparation: resolver.preparation,
-        function_owners: resolver.function_owners,
+        preparation,
+        function_owners,
         preparation_is_evaluation: evaluation_preparation,
         preparation_failure: None,
-        names: resolver.names,
-        const_names: resolver.const_names,
-        custom_this: resolver.custom_this,
-        custom_functions: resolver.custom_functions,
+        names,
+        const_names,
+        custom_this,
+        custom_functions,
     };
     (resolved, error, diagnostic_owner_requested)
 }
@@ -2592,14 +2612,14 @@ pub(crate) fn resolve_session_expression<'a>(
         function_owners: resolver.function_owners,
         preparation_is_evaluation: true,
         preparation_failure,
-        module: Module {
+        module: Arc::new(Module {
             deferred_diagnostics: Vec::new(),
             source: SourceText::from(text.to_pkl_string()),
             declaration: None,
             members: Vec::new(),
             folded_integer_spans: parsed.folded_integer_spans.clone(),
             interpolation_spans: parsed.interpolation_spans.clone(),
-        },
+        }),
         names: resolver.names,
         const_names: resolver.const_names,
         custom_this: resolver.custom_this,
@@ -2621,7 +2641,7 @@ mod tests {
             let parsed = parse_module(&source.text).unwrap();
             let resolved = resolve_stdlib_module(&parsed).unwrap();
             assert!(resolved.standard_library);
-            assert_eq!(resolved.module, parsed, "{}", source.uri);
+            assert_eq!(*resolved.module, parsed, "{}", source.uri);
         }
 
         let parsed = parse_module(
@@ -2630,7 +2650,7 @@ mod tests {
         )
         .unwrap();
         let resolved = resolve_stdlib_module(&parsed).unwrap();
-        assert_eq!(resolved.module, parsed);
+        assert_eq!(*resolved.module, parsed);
         let ExprKind::Class { members, .. } = &parsed.members[0].expr.kind else {
             panic!("generic class");
         };
