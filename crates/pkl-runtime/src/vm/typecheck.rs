@@ -578,10 +578,14 @@ pub(super) fn try_fast_leaf_type(ty: &TypeCheck, value: &Value) -> Option<bool> 
 }
 
 #[inline]
-fn is_fast_leaf_type(ty: &TypeCheck) -> bool {
+fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
+    if depth >= 8 {
+        return false;
+    }
     match ty.resolved() {
         TypeCheck::Any
         | TypeCheck::Unknown
+        | TypeCheck::Nothing
         | TypeCheck::Int
         | TypeCheck::Float
         | TypeCheck::Number
@@ -592,21 +596,45 @@ fn is_fast_leaf_type(ty: &TypeCheck) -> bool {
         | TypeCheck::Duration
         | TypeCheck::Bytes
         | TypeCheck::IntegerAlias { .. }
-        | TypeCheck::StringLiteral(_) => true,
+        | TypeCheck::StringLiteral(_)
+        | TypeCheck::Class { .. }
+        | TypeCheck::Collection(_) => true,
+        TypeCheck::MetaClass(name) => name == "Class" || name == "TypeAlias",
         TypeCheck::Alias(inner)
         | TypeCheck::GenericAlias(inner)
         | TypeCheck::NamedAlias {
             expanded: inner, ..
         }
-        | TypeCheck::Nullable(inner) => is_fast_leaf_type(inner),
+        | TypeCheck::Nullable(inner) => is_fast_heap_type(inner, depth + 1),
+        TypeCheck::Union {
+            string_literals: true,
+            types,
+            ..
+        } => !types.is_empty(),
+        TypeCheck::Union {
+            string_literals: false,
+            types,
+            ..
+        } => !types.is_empty() && types.iter().all(|alt| is_fast_heap_type(alt, depth + 1)),
+        TypeCheck::ParameterizedCollection {
+            kind: crate::heap::CollectionKind::List,
+            arguments,
+        } if arguments.len() == 1 => {
+            arguments[0].0.noop() || is_fast_heap_type(&arguments[0].0, depth + 1)
+        }
         _ => false,
     }
 }
 
 #[inline]
-fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+fn try_fast_strict_list_check(
+    elem_ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
     let elem_noop = elem_ty.noop();
-    if !elem_noop && !is_fast_leaf_type(elem_ty) {
+    if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
         return None;
     }
     let Value::Object(id) = value else {
@@ -621,7 +649,10 @@ fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -
     {
         return Some(false);
     }
-    if object.parent.is_some() || object.instance_class.is_some() {
+    if object.parent.is_some()
+        || object.instance_class.is_some()
+        || object.class_definition.is_some()
+    {
         return None;
     }
     let Some(elems) = &object.list_elements else {
@@ -633,44 +664,80 @@ fn try_fast_strict_list_check(elem_ty: &TypeCheck, value: &Value, heap: &Heap) -
     if elem_noop {
         return Some(true);
     }
-    if elems
-        .iter()
-        .all(|val| try_fast_leaf_type(elem_ty, val) == Some(true))
-    {
-        Some(true)
-    } else {
-        Some(false)
+    for val in elems {
+        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1) {
+            Some(true) => continue,
+            Some(false) => return Some(false),
+            None => return None,
+        }
     }
+    Some(true)
 }
 
 fn try_fast_type_with_heap(ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
+    try_fast_type_with_heap_depth(ty, value, heap, 0)
+}
+
+fn try_fast_type_with_heap_depth(
+    ty: &TypeCheck,
+    value: &Value,
+    heap: &Heap,
+    depth: u8,
+) -> Option<bool> {
     if let Some(matched) = try_fast_leaf_type(ty, value) {
         return Some(matched);
     }
+    if depth >= 8 {
+        return None;
+    }
     match ty.resolved() {
+        TypeCheck::Nothing => Some(false),
+        TypeCheck::MetaClass(name) => {
+            if name == "Class" {
+                Some(matches!(value, Value::Class(_)))
+            } else if name == "TypeAlias" {
+                Some(matches!(value, Value::TypeAlias(_)))
+            } else {
+                None
+            }
+        }
+        TypeCheck::Collection(kind) => Some(TypeCheck::Collection(*kind).accepts(value, heap)),
+        TypeCheck::Class { id, .. } => Some(classes::accepts_nominal(*id, value, heap)),
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::List,
             arguments,
-        } if arguments.len() == 1 => try_fast_strict_list_check(&arguments[0].0, value, heap),
+        } if arguments.len() == 1 => {
+            try_fast_strict_list_check(&arguments[0].0, value, heap, depth + 1)
+        }
         TypeCheck::Nullable(inner) => {
             if value.is_null() {
-                try_fast_type_with_heap(inner, value, heap).map(|_| true)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1).map(|_| true)
             } else {
-                try_fast_type_with_heap(inner, value, heap)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
             }
         }
         TypeCheck::Alias(inner)
         | TypeCheck::GenericAlias(inner)
         | TypeCheck::NamedAlias {
             expanded: inner, ..
-        } => try_fast_type_with_heap(inner, value, heap),
+        } => try_fast_type_with_heap_depth(inner, value, heap, depth + 1),
+        TypeCheck::Union {
+            types,
+            string_literals: true,
+            ..
+        } if !types.is_empty() => match value {
+            Value::String(actual) => Some(types.iter().any(
+                |alt| matches!(alt.resolved(), TypeCheck::StringLiteral(s) if s == actual),
+            )),
+            _ => Some(false),
+        },
         TypeCheck::Union {
             types,
             string_literals: false,
             ..
         } if !types.is_empty() => {
             for alt in types {
-                match try_fast_type_with_heap(alt, value, heap) {
+                match try_fast_type_with_heap_depth(alt, value, heap, depth + 1) {
                     Some(true) => return Some(true),
                     Some(false) => continue,
                     None => return None,
@@ -1452,7 +1519,7 @@ impl Vm {
                 {
                     if kind == crate::heap::CollectionKind::List
                         && arguments.len() == 1
-                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap)
+                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap, 0)
                             == Some(true)
                     {
                         run.outcome = Some(Ok(run.value.clone()));
