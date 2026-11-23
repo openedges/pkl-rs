@@ -1756,20 +1756,16 @@ new Mapping {
         let display_uri = self.format_test_location(&module_uri, None);
 
         if !is_test {
-            let err_msg = match self.eval_string_locked(
-                session,
-                uri,
-                contents,
-                "module as import(\"pkl:test\")",
-                call_cancel,
-                watchdog,
-                timeout_ms,
-            ) {
-                Err(err) => err.message.to_java_utf8(),
-                Ok(_) => format!(
-                    "–– Pkl Error ––\nExpected value of type `pkl.test`, but got type `Class`.\nValue: {module_name}\n"
-                ),
-            };
+            // Mirrors `TestRunner.java:71-77` (`VmUtils.checkAmends(testModule, TestModule.getModule().getVmClass())`):
+            // frameless `VmEvalException` with uncolored `Value: <moduleName>` program value.
+            let err_msg = pkl_runtime::diagnostic::render_error_text_with_trailer_colored(
+                &"Expected value of type `pkl.test`, but got type `Class`.".into(),
+                &format!("Value: {module_name}").into(),
+                &[],
+                None,
+                self.use_color,
+            )
+            .to_java_utf8();
             let short_msg = extract_short_error_message(&err_msg);
             return Ok(TestResults {
                 module_name,

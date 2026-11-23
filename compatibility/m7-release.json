@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "c03609b314a9ad30e24d085e565b0a5336f27e2fe87f5ebbef3fe3b94af5aa4f"
+      "sha256": "86116f730ccf5ed197f2b17520bcedd64c62704f2604ce799df1b766a7204762"
     },
     {
       "bytes": 111079,
@@ -277,7 +277,7 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "fbb73dab3dff7447867afb86bcffd67ed17f876993443b18c4a441777477584e"
+      "sha256": "cb84cc735d562cf9f3902fc5215e83b2d5d2788c99478e0c5471a5fa5caad00e"
     },
     {
       "bytes": 41462,
@@ -398,7 +398,7 @@
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "1b3dcef11b6cc867ebe2d6c7c202ffc08c1ea0d957d89a4ac626e8ad8d15613a"
+      "sha256": "9a490bae0bd3ebd8ecdebd7ab4c739a65452fc1a8b2c20ed6135df6803472aee"
     },
     {
       "bytes": 37108,
@@ -434,7 +434,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "93fe74413a71fe89f4b6a502dfa89a7b5f99777e22e4efc42e2c5691477f47c5"
+      "sha256": "09270647fb23c1cbfaa013873beb1f85598d93217c9e320b810cce8e2c2af6cb"
     }
   ],
   "requirements": {
@@ -804,11 +804,11 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "c03609b314a9ad30e24d085e565b0a5336f27e2fe87f5ebbef3fe3b94af5aa4f",
-    "compatibility/m3-stdlib-output.json": "fbb73dab3dff7447867afb86bcffd67ed17f876993443b18c4a441777477584e",
+    "compatibility/m2-language.json": "86116f730ccf5ed197f2b17520bcedd64c62704f2604ce799df1b766a7204762",
+    "compatibility/m3-stdlib-output.json": "cb84cc735d562cf9f3902fc5215e83b2d5d2788c99478e0c5471a5fa5caad00e",
     "compatibility/m4-io-packages.json": "7b99737adcbcaebea49e92f2b3b62140e2c7fcf3cc9633a90db8833cfc2e1a27",
-    "compatibility/m5-product-tools.json": "1b3dcef11b6cc867ebe2d6c7c202ffc08c1ea0d957d89a4ac626e8ad8d15613a",
-    "compatibility/m6-wasm-napi.json": "93fe74413a71fe89f4b6a502dfa89a7b5f99777e22e4efc42e2c5691477f47c5",
+    "compatibility/m5-product-tools.json": "9a490bae0bd3ebd8ecdebd7ab4c739a65452fc1a8b2c20ed6135df6803472aee",
+    "compatibility/m6-wasm-napi.json": "09270647fb23c1cbfaa013873beb1f85598d93217c9e320b810cce8e2c2af6cb",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

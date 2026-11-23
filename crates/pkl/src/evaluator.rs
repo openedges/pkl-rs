@@ -959,15 +959,16 @@ new Mapping {
         let display_uri = self.format_test_location(&module_uri, None);
 
         if !is_test {
-            // Trigger exact Pkl type-mismatch message matching `VmUtils.checkAmends(testModule, pkl:test)`.
-            let err_msg = match self
-                .evaluate_expression_string(source, "module as import(\"pkl:test\")")
-            {
-                Err(err) => err.message().to_string(),
-                Ok(_) => format!(
-                    "–– Pkl Error ––\nExpected value of type `pkl.test`, but got type `Class`.\nValue: {module_name}\n"
-                ),
-            };
+            // Mirrors `TestRunner.java:71-77` (`VmUtils.checkAmends(testModule, TestModule.getModule().getVmClass())`):
+            // frameless `VmEvalException` with uncolored `Value: <moduleName>` program value.
+            let err_msg = pkl_runtime::diagnostic::render_error_text_with_trailer_colored(
+                &"Expected value of type `pkl.test`, but got type `Class`.".into(),
+                &format!("Value: {module_name}").into(),
+                &[],
+                None,
+                self.use_color,
+            )
+            .to_java_utf8();
             let short_msg = extract_short_error_message(&err_msg);
             return Ok(TestResults {
                 module_name,
@@ -1423,9 +1424,17 @@ mod tests {
         let res = evaluator
             .evaluate_test(&non_test, false)
             .expect("evaluate non-test module");
-        assert!(
-            res.error.is_some(),
-            "non-test module must report test error"
+        let err = res
+            .error
+            .as_ref()
+            .expect("non-test module must report test error");
+        assert_eq!(
+            err.rendered,
+            "–– Pkl Error ––\nExpected value of type `pkl.test`, but got type `Class`.\nValue: text\n"
+        );
+        assert_eq!(
+            err.message,
+            "Expected value of type `pkl.test`, but got type `Class`.\nValue: text"
         );
 
         evaluator.close();

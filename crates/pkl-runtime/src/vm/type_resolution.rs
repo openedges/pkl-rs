@@ -734,8 +734,7 @@ impl Vm {
                     .insert((declaration, owner), shared.clone());
                 Some(shared)
             }
-            Ok(resolved) => Some(resolved),
-            Err(_) => None,
+            Ok(_) | Err(_) => None,
         }
     }
 

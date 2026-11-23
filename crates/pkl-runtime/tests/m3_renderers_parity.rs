@@ -502,3 +502,100 @@ generated = makeGeneratorMapping("pre", "suf", List("k1", "k2"))
         "mapping:\n  path: plain\n  message: hello\n  severity: error\ndynObj:\n  first: one\n  second: two\n  third: three\nlisting:\n- x\n- 'y'\n- z\ngenerated:\n  k1: pre-k1-suf\n  k2: pre-k2-suf\n"
     );
 }
+
+#[test]
+fn plain_typed_fast_render_preserves_xml_wrappers_and_empty_properties_prefix() {
+    let expected = concat!(
+        "json = \"\"\"\n",
+        "  {\n",
+        "    \"c\": {\n",
+        "      \"text\": \"hello\",\n",
+        "      \"isBlockFormat\": true\n",
+        "    },\n",
+        "    \"d\": {\n",
+        "      \"text\": \"raw\"\n",
+        "    },\n",
+        "    \"i\": {\n",
+        "      \"value\": {\n",
+        "        \"a\": 1\n",
+        "      }\n",
+        "    },\n",
+        "    \"item\": {\n",
+        "      \"name\": \"widget\",\n",
+        "      \"count\": 3\n",
+        "    }\n",
+        "  }\n",
+        "  \n",
+        "  \"\"\"\n",
+        "pcf = \"\"\"\n",
+        "  name = \"widget\"\n",
+        "  count = 3\n",
+        "  \n",
+        "  \"\"\"\n",
+        "yaml = \"\"\"\n",
+        "  name: widget\n",
+        "  count: 3\n",
+        "  \n",
+        "  \"\"\"\n",
+        "xmlOut = \"\"\"\n",
+        "  <?xml version=\"1.0\" encoding=\"UTF-8\"?>\n",
+        "  <root>\n",
+        "    <c>\n",
+        "      <!--hello-->\n",
+        "    </c>\n",
+        "    <d><![CDATA[raw]]></d>\n",
+        "    <a>1</a>\n",
+        "    <item>\n",
+        "      <name>widget</name>\n",
+        "      <count>3</count>\n",
+        "    </item>\n",
+        "  </root>\n",
+        "  \n",
+        "  \"\"\"\n",
+        "props = \"\"\"\n",
+        "  .name = widget\n",
+        "  .count = 3\n",
+        "  \n",
+        "  \"\"\"\n",
+    );
+
+    let body = r#"
+class Item {
+  name: String
+  count: Int
+  hidden secret: String = "shh"
+}
+local box = new Dynamic {
+  c = xml.Comment("hello")
+  d = xml.CData("raw")
+  i = xml.Inline(new Dynamic { a = 1 })
+  item = new Item { name = "widget"; count = 3 }
+}
+json = new JsonRenderer {}.renderDocument(box)
+pcf = new PcfRenderer {}.renderDocument(new Item { name = "widget"; count = 3 })
+yaml = new YamlRenderer {}.renderDocument(new Item { name = "widget"; count = 3 })
+xmlOut = new xml.Renderer {}.renderDocument(box)
+props = new PropertiesRenderer {}.renderDocument(new Mapping { [""] = new Item { name = "widget"; count = 3 } })
+"#;
+
+    for (tag, header) in [
+        ("without-jsonnet", "import \"pkl:xml\"\n"),
+        (
+            "with-jsonnet",
+            "import \"pkl:xml\"\nimport \"pkl:jsonnet\"\n",
+        ),
+    ] {
+        let source = format!("{header}{body}");
+        let out = eval_output(
+            &source,
+            &format!("file:///m3-renderers/plain-typed-{tag}.pkl"),
+            "plain_typed",
+            ModuleEvalOptions::default(),
+        );
+        assert_eq!(
+            String::from_utf8(out).expect("UTF-8 PCF"),
+            expected,
+            "mismatch for {tag}"
+        );
+    }
+}

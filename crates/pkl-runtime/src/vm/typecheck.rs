@@ -600,11 +600,14 @@ pub(super) fn try_fast_leaf_type(ty: &TypeCheck, value: &Value) -> Option<bool> 
         TypeCheck::StringLiteral(expected) => {
             Some(matches!(value, Value::String(actual) if actual == expected))
         }
-        TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
-        } => try_fast_leaf_type(inner, value),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+            try_fast_leaf_type(inner, value)
+        }
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded: inner,
+            ..
+        } if arguments.iter().all(|a| !a.has_declared()) => try_fast_leaf_type(inner, value),
         TypeCheck::Nullable(inner) => {
             if value.is_null() {
                 try_fast_leaf_type(inner, value).map(|_| true)
@@ -639,12 +642,14 @@ fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
         | TypeCheck::Class { .. }
         | TypeCheck::Collection(_) => true,
         TypeCheck::MetaClass(name) => name == "Class" || name == "TypeAlias",
-        TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) | TypeCheck::Nullable(inner) => {
+            is_fast_heap_type(inner, depth + 1)
         }
-        | TypeCheck::Nullable(inner) => is_fast_heap_type(inner, depth + 1),
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded: inner,
+            ..
+        } => arguments.iter().all(|a| !a.has_declared()) && is_fast_heap_type(inner, depth + 1),
         TypeCheck::Union {
             string_literals: true,
             types,
@@ -659,18 +664,23 @@ fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
             kind: crate::heap::CollectionKind::List | crate::heap::CollectionKind::Set,
             arguments,
         } if arguments.len() == 1 => {
-            arguments[0].0.noop() || is_fast_heap_type(&arguments[0].0, depth + 1)
+            (arguments[0].0.noop() && !arguments[0].0.has_declared())
+                || is_fast_heap_type(&arguments[0].0, depth + 1)
         }
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
             arguments,
         } if arguments.len() == 2 => {
-            (arguments[0].0.noop() || is_fast_heap_type(&arguments[0].0, depth + 1))
-                && (arguments[1].0.noop() || is_fast_heap_type(&arguments[1].0, depth + 1))
+            ((arguments[0].0.noop() && !arguments[0].0.has_declared())
+                || is_fast_heap_type(&arguments[0].0, depth + 1))
+                && ((arguments[1].0.noop() && !arguments[1].0.has_declared())
+                    || is_fast_heap_type(&arguments[1].0, depth + 1))
         }
-        TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => arguments
-            .first()
-            .is_none_or(|(ty, _)| ty.noop() || is_fast_heap_type(ty, depth + 1)),
+        TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => {
+            arguments.first().is_none_or(|(ty, _)| {
+                (ty.noop() && !ty.has_declared()) || is_fast_heap_type(ty, depth + 1)
+            })
+        }
         _ => false,
     }
 }
@@ -682,7 +692,7 @@ fn try_fast_strict_list_check(
     heap: &Heap,
     depth: u8,
 ) -> Option<bool> {
-    let elem_noop = elem_ty.noop();
+    let elem_noop = elem_ty.noop() && !elem_ty.has_declared();
     if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
         return None;
     }
@@ -730,7 +740,7 @@ fn try_fast_strict_set_check(
     heap: &Heap,
     depth: u8,
 ) -> Option<bool> {
-    let elem_noop = elem_ty.noop();
+    let elem_noop = elem_ty.noop() && !elem_ty.has_declared();
     if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
         return None;
     }
@@ -778,8 +788,8 @@ fn try_fast_strict_map_check(
     heap: &Heap,
     depth: u8,
 ) -> Option<bool> {
-    let key_noop = key_ty.noop();
-    let val_noop = val_ty.noop();
+    let key_noop = key_ty.noop() && !key_ty.has_declared();
+    let val_noop = val_ty.noop() && !val_ty.has_declared();
     if (!key_noop && !is_fast_heap_type(key_ty, depth))
         || (!val_noop && !is_fast_heap_type(val_ty, depth))
     {
@@ -854,7 +864,11 @@ fn try_fast_strict_map_check(
             }
         }
     } else {
-        for &idx in object.map_index().insertion_order() {
+        let order = object.map_index().insertion_order();
+        if order.len() != object.length {
+            return None;
+        }
+        for &idx in order {
             let member = object.collection_members.get(idx)?;
             match check_member(member, Some(idx)) {
                 Some(true) => continue,
@@ -920,8 +934,10 @@ fn try_fast_type_with_heap_depth(
         ),
         TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
             let elem_ty = &arguments[0].0;
+            let elem_fast = (elem_ty.noop() && !elem_ty.has_declared())
+                || is_fast_heap_type(elem_ty, depth + 1);
             let Value::Object(id) = value else {
-                return (elem_ty.noop() || is_fast_heap_type(elem_ty, depth + 1)).then_some(false);
+                return elem_fast.then_some(false);
             };
             let object = heap.get(*id).ok()?;
             match object.collection_kind {
@@ -931,7 +947,7 @@ fn try_fast_type_with_heap_depth(
                 crate::heap::CollectionKind::Set => {
                     try_fast_strict_set_check(elem_ty, value, heap, depth + 1)
                 }
-                _ => (elem_ty.noop() || is_fast_heap_type(elem_ty, depth + 1)).then_some(false),
+                _ => elem_fast.then_some(false),
             }
         }
         TypeCheck::Nullable(inner) => {
@@ -941,11 +957,16 @@ fn try_fast_type_with_heap_depth(
                 try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
             }
         }
-        TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
-        } => try_fast_type_with_heap_depth(inner, value, heap, depth + 1),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
+            try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
+        }
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded: inner,
+            ..
+        } if arguments.iter().all(|a| !a.has_declared()) => {
+            try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
+        }
         TypeCheck::Union {
             types,
             string_literals: true,

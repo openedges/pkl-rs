@@ -9876,7 +9876,7 @@ impl Vm {
                 .get(owner)?
                 .members
                 .iter()
-                .find(|m| m.name == force.name && !m.method)
+                .find(|m| m.name == force.name && !m.method && !m.local && m.entry == force.entry)
                 .ok_or_else(|| invalid("missing inherited declaration"))?
                 .code;
             if let Some(resolved) = self.resolve_property_type(declaration, owner, &ty) {
@@ -10442,7 +10442,7 @@ fn fast_eval_strict_list_in_poll(
     if elems.len() != obj.length {
         return None;
     }
-    if elem_ty.noop() {
+    if elem_ty.noop() && !elem_ty.has_declared() {
         return Some(true);
     }
     if elems.is_empty() {
@@ -10525,7 +10525,7 @@ fn fast_eval_strict_set_in_poll(
     if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
         return None;
     }
-    if elem_ty.noop() {
+    if elem_ty.noop() && !elem_ty.has_declared() {
         return Some(true);
     }
     let order = obj.map_index().insertion_order();
@@ -10615,13 +10615,16 @@ fn fast_eval_strict_map_in_poll(
     if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
         return None;
     }
-    let key_noop = key_ty.noop();
-    let val_noop = val_ty.noop();
+    let key_noop = key_ty.noop() && !key_ty.has_declared();
+    let val_noop = val_ty.noop() && !val_ty.has_declared();
     if key_noop && val_noop {
         return Some(true);
     }
+    if (key_ty.has_declared() || val_ty.has_declared()) && !resolved_both() {
+        return None;
+    }
     if obj.length == 0 {
-        return resolved_both().then_some(true);
+        return Some(true);
     }
     let check_member =
         |member: &crate::heap::CollectionMember, slot_hint: Option<usize>| -> Option<bool> {
@@ -10691,7 +10694,11 @@ fn fast_eval_strict_map_in_poll(
             }
         }
     } else {
-        for &idx in obj.map_index().insertion_order() {
+        let order = obj.map_index().insertion_order();
+        if order.len() != obj.length {
+            return None;
+        }
+        for &idx in order {
             let member = obj.collection_members.get(idx)?;
             match check_member(member, Some(idx)) {
                 Some(true) => continue,
@@ -10788,7 +10795,11 @@ fn fast_eval_type_in_poll(
             fallback_module,
             depth + 1,
         ),
-        TypeCheck::NamedAlias { expanded, .. } if !expanded.has_declared() => {
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded,
+            ..
+        } if !expanded.has_declared() && arguments.iter().all(|a| !a.has_declared()) => {
             fast_eval_type_in_poll(
                 expanded,
                 val,

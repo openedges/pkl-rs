@@ -331,7 +331,7 @@ impl Vm {
                 .collect();
             for entry in finished.into_iter().rev() {
                 self.public_operation_entries.remove(&entry);
-                if !self.fast_int_cache.is_empty() {
+                if !self.fast_int_cache.is_empty() || !self.resolved_instruction_types.is_empty() {
                     retired_public_entries.push(entry);
                 }
                 let program = Arc::make_mut(&mut self.program);
@@ -350,6 +350,10 @@ impl Vm {
                     .any(|range| range.contains(&block_id))
                     && !retired_public_entries.contains(&block_id)
             });
+        }
+        if !retired_public_entries.is_empty() && !self.resolved_instruction_types.is_empty() {
+            self.resolved_instruction_types
+                .retain(|(block, _, _, _), _| !retired_public_entries.contains(block));
         }
     }
 }
@@ -408,6 +412,88 @@ mod tests {
             vm.fast_int_cache.capacity() <= 512,
             "fast_int_cache must stay O(live), got cap={}",
             vm.fast_int_cache.capacity()
+        );
+    }
+
+    #[test]
+    fn repeated_public_expressions_keep_resolved_instruction_types_bounded() {
+        let mut session = crate::evaluation::session::SourceSession::module_evaluator(
+            crate::evaluation::session::SourceSessionOptions::default(),
+        );
+        let module_src = "class Box {\n  n: Int\n}\nbaseVal = new Box { n = 1 }\n";
+        let mut baseline = 0usize;
+        for step in 0..150usize {
+            let spec = ModuleSourceSpec {
+                uri: "memo:/cached.pkl".into(),
+                contents: Some(module_src.into()),
+            };
+            let expr = format!("(new Box {{ n = {step} }} is Box) && (baseVal is Box)");
+            session.start_evaluation(spec, &expr, 0, None).unwrap();
+            loop {
+                match session.poll(0, 100_000) {
+                    crate::host::HostPoll::Yielded => {}
+                    crate::host::HostPoll::Ready(Ok(_)) => break,
+                    crate::host::HostPoll::Module { token, request } => {
+                        let comp = match &request.kind {
+                            ModuleRequestKind::SelectKey { id, uri, .. }
+                                if uri.starts_with("memo:") =>
+                            {
+                                ModuleCompletion::KeySelected(Ok(ModuleKey {
+                                    id: *id,
+                                    uri: uri.clone(),
+                                    kind: ModuleKeyKind::Host,
+                                    handle: "test".into(),
+                                }))
+                            }
+                            ModuleRequestKind::QueryCachePolicy { .. } => {
+                                ModuleCompletion::CachePolicy(Ok(true))
+                            }
+                            ModuleRequestKind::Resolve { key, .. } => {
+                                ModuleCompletion::Resolved(Ok(ResolvedModule {
+                                    original_uri: key.uri.clone(),
+                                    resolved_uri: key.uri.clone(),
+                                    source_uri: key.uri.clone(),
+                                }))
+                            }
+                            ModuleRequestKind::LoadSource { .. } => {
+                                ModuleCompletion::Source(Ok(ModuleSource {
+                                    text: module_src.into(),
+                                    inferred_name: "cached".into(),
+                                }))
+                            }
+                            _ => crate::modules::default_completion(&request).unwrap(),
+                        };
+                        session.complete_module(&token, comp, 0).unwrap();
+                    }
+                    other => panic!("unexpected {other:?}"),
+                }
+            }
+            if step == 0 {
+                let vm = session.vm_mut();
+                vm.collect(&[]);
+                baseline = vm.resolved_instruction_types.len();
+            }
+        }
+        let vm = session.vm_mut();
+        // Also exercise direct `public_operation_entries` retirement while the declaring
+        // owner stays live (e.g. REPL expression blocks on a cached module).
+        let live_owner = vm.heap.allocate(Object::default());
+        let entry = Arc::make_mut(&mut vm.program)
+            .alloc_block(vec![Instruction::Return], BlockMetadata::default())
+            .unwrap();
+        vm.public_operation_entries.insert(entry);
+        vm.resolved_instruction_types
+            .insert((entry, 0, live_owner, false), TypeCheck::Int);
+        vm.collect(&[Value::Object(live_owner)]);
+        assert!(
+            !vm.resolved_instruction_types
+                .contains_key(&(entry, 0, live_owner, false)),
+            "retired public_operation_entries block leaked in resolved_instruction_types"
+        );
+        assert!(
+            vm.resolved_instruction_types.len() <= baseline + 16,
+            "resolved_instruction_types grew past baseline: baseline={baseline}, after={}",
+            vm.resolved_instruction_types.len()
         );
     }
 

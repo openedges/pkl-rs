@@ -2965,6 +2965,7 @@ enum FastObjectKind<'a> {
         count: usize,
     },
     PlainTyped {
+        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
         count: usize,
     },
 }
@@ -4073,7 +4074,11 @@ impl Vm {
                         .is_some()
                     && self.is_render_directive(id).ok() == Some(false)
                     && self.is_pcf_render_directive(id).ok() == Some(false)
-                    && self.jsonnet_wrapper(id).ok() == Some(None)
+                    && (self.modules_stdlib.get("pkl:jsonnet").is_none()
+                        || self.jsonnet_wrapper(id).ok() == Some(None))
+                    && (!check_xml_marker
+                        || self.modules_stdlib.get("pkl:xml").is_none()
+                        || self.xml_wrapper(id).ok() == Some(None))
                 {
                     let mut chain = [id; 8];
                     let mut chain_len = 0usize;
@@ -4109,6 +4114,10 @@ impl Vm {
                             {
                                 continue;
                             }
+                            if check_xml_marker && m.name == "_isXmlElement" {
+                                scratch.truncate(base);
+                                return None;
+                            }
                             if m.hidden() || m.external() || m.definition() || m.import() {
                                 if hidden_len >= seen_hidden.len() {
                                     scratch.truncate(base);
@@ -4117,10 +4126,6 @@ impl Vm {
                                 seen_hidden[hidden_len] = Some(&m.name);
                                 hidden_len += 1;
                                 continue;
-                            }
-                            if check_xml_marker && m.name == "_isXmlElement" {
-                                scratch.truncate(base);
-                                return None;
                             }
                             if scratch.len() - base >= 64 {
                                 scratch.truncate(base);
@@ -4658,6 +4663,7 @@ impl Vm {
                     root_id,
                     &mut buf,
                     &mut prefix,
+                    false,
                     true,
                     false,
                     None,
@@ -4869,6 +4875,7 @@ impl Vm {
                     root_id,
                     &mut buf,
                     &mut prefix,
+                    false,
                     run.omit_null,
                     run.restrict_charset,
                     None,
@@ -5176,6 +5183,7 @@ impl Vm {
                     return false;
                 }
                 let mut prefix = String::with_capacity(64);
+                let mut has_prefix = false;
                 for part in path {
                     match part {
                         PathPart::Root => {}
@@ -5183,18 +5191,20 @@ impl Vm {
                             let Some(s) = name.as_str() else {
                                 return false;
                             };
-                            if !prefix.is_empty() {
+                            if has_prefix {
                                 prefix.push('.');
                             }
+                            has_prefix = true;
                             write_properties_str(&mut prefix, s, true, run.restrict_charset);
                         }
                         PathPart::Entry(Value::String(name)) => {
                             let Some(s) = name.as_str() else {
                                 return false;
                             };
-                            if !prefix.is_empty() {
+                            if has_prefix {
                                 prefix.push('.');
                             }
+                            has_prefix = true;
                             write_properties_str(&mut prefix, s, true, run.restrict_charset);
                         }
                         _ => return false,
@@ -5205,6 +5215,7 @@ impl Vm {
                     receiver,
                     &mut buf,
                     &mut prefix,
+                    has_prefix,
                     run.omit_null,
                     run.restrict_charset,
                     Some(&run.active),
@@ -7270,6 +7281,7 @@ impl Vm {
         id: ObjectId,
         buf: &mut String,
         prefix: &mut String,
+        has_prefix: bool,
         omit_null: bool,
         restrict_charset: bool,
         outer_active: Option<&BTreeSet<ObjectId>>,
@@ -7316,7 +7328,7 @@ impl Vm {
                 continue;
             }
             let saved_prefix = prefix.len();
-            if !prefix.is_empty() {
+            if has_prefix {
                 prefix.push('.');
             }
             if key_is_prop {
@@ -7396,6 +7408,7 @@ impl Vm {
                         *child_id,
                         buf,
                         prefix,
+                        true,
                         omit_null,
                         restrict_charset,
                         outer_active,

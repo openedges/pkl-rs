@@ -147,3 +147,121 @@ fn original_amending_module_adopts_the_parent_class() {
         ["file:///corpus/modules/library.pkl"]
     );
 }
+
+#[test]
+fn inherited_module_self_type_tracks_sub_module_receiver() {
+    let base_src = "open module Base\nx: module = this\nitems: Listing<module> = new { module }\n";
+    let sub_direct_src =
+        "open module Sub\nextends \"Base.pkl\"\nimport \"Base.pkl\"\nx = new Base {}\n";
+    let sub_listing_src = "open module SubListing\nextends \"Base.pkl\"\nimport \"Base.pkl\"\nitems { new Base {} }\n";
+    let files: &[(&str, &str)] = &[
+        ("Base", base_src),
+        ("Sub", sub_direct_src),
+        ("SubListing", sub_listing_src),
+    ];
+
+    for (entry_text, expected_err) in [
+        (
+            "import \"Base.pkl\"\nimport \"Sub.pkl\"\na = Base.x\nb = Sub.x\n",
+            "Expected value of type `Sub`, but got type `Base`.",
+        ),
+        (
+            "import \"Base.pkl\"\nimport \"SubListing.pkl\"\na = Base.items.length\nb = SubListing.items[1]\n",
+            "Expected value of type `SubListing`, but got type `Base`.",
+        ),
+    ] {
+        let result = evaluate_module_output_with_host(
+            ModuleSourceInput {
+                text: entry_text,
+                uri: "file:///corpus/modules/Run.pkl",
+                inferred_name: "Run",
+            },
+            &ModuleEvalOptions::default(),
+            |request| match &request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
+                ModuleRequestKind::CheckImport { .. } => {
+                    module_keys::defaults(request).expect("default import policy")
+                }
+                ModuleRequestKind::Resolve { original_uri, .. } => {
+                    ModuleCompletion::Resolved(Ok(ResolvedModule {
+                        original_uri: original_uri.clone(),
+                        resolved_uri: original_uri.clone(),
+                        source_uri: original_uri.clone(),
+                    }))
+                }
+                ModuleRequestKind::LoadSource { resolved, .. } => {
+                    let name = resolved
+                        .original_uri
+                        .as_str()
+                        .expect("utf8 uri")
+                        .rsplit('/')
+                        .next()
+                        .unwrap()
+                        .strip_suffix(".pkl")
+                        .unwrap();
+                    let text = files.iter().find(|(k, _)| *k == name).unwrap().1;
+                    ModuleCompletion::Source(Ok(ModuleSource {
+                        text: text.into(),
+                        inferred_name: name.into(),
+                    }))
+                }
+                other => panic!("unexpected module request: {other:?}"),
+            },
+        );
+        assert_ne!(result.exit_code, 0, "expected type mismatch error");
+        let stderr = String::from_utf8_lossy(&result.stderr);
+        assert!(
+            stderr.contains(expected_err),
+            "expected `{expected_err}`, got:\n{stderr}"
+        );
+    }
+}
+
+#[test]
+fn fast_type_checks_resolve_map_val_and_named_alias_arguments() {
+    let cases = [
+        "import \"pkl:base\"\nres = Map(\"a\", 1) is Map<Int, base.DoesNotExist>\n",
+        "import \"pkl:base\"\nx: Map<Int, base.DoesNotExist> | Map<String, Int> = Map(\"a\", 1)\n",
+        "import \"pkl:base\"\ntypealias IgnoreInt<T> = Int\nr = 1 is IgnoreInt<base.DoesNotExist>\n",
+        "import \"pkl:base\"\ntypealias IgnoreInt<T> = Int\nr = null is IgnoreInt<base.DoesNotExist>?\n",
+        "import \"pkl:base\"\ntypealias IgnoreList<T> = List<Int>\nr = List(1) is IgnoreList<base.DoesNotExist>\n",
+        "import \"pkl:base\"\ntypealias IgnoreAny<T> = Any\nr = List(1) is List<IgnoreAny<base.DoesNotExist>>\n",
+        "import \"pkl:base\"\ntypealias IgnoreAny<T> = Any\nr = Set(1) is Set<IgnoreAny<base.DoesNotExist>>\n",
+        "import \"pkl:base\"\ntypealias IgnoreAny<T> = Any\nr = Map(\"a\", 1) is Map<IgnoreAny<base.DoesNotExist>, Any>\n",
+    ];
+
+    for (idx, source) in cases.iter().enumerate() {
+        let result = evaluate_module_output_with_host(
+            ModuleSourceInput {
+                text: source,
+                uri: &format!("file:///corpus/modules/fast-type-case-{idx}.pkl"),
+                inferred_name: "fast_type_case",
+            },
+            &ModuleEvalOptions::default(),
+            |request| match &request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
+                ModuleRequestKind::CheckImport { .. } => {
+                    module_keys::defaults(request).expect("default import policy")
+                }
+                other => panic!("unexpected module request: {other:?}"),
+            },
+        );
+        assert_ne!(
+            result.exit_code,
+            0,
+            "case {idx} unexpectedly succeeded:\n{source}\nstdout={}",
+            String::from_utf8_lossy(&result.stdout)
+        );
+        let stderr = String::from_utf8_lossy(&result.stderr);
+        assert!(
+            stderr.contains("Cannot find type `DoesNotExist` in module `pkl.base`."),
+            "case {idx} unexpected error:\n{stderr}"
+        );
+    }
+}
