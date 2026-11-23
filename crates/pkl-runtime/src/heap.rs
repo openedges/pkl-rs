@@ -1081,7 +1081,7 @@ impl Heap {
         None
     }
 
-    #[inline]
+    #[inline(always)]
     fn slot_ref(&self, index: usize) -> Option<&Slot> {
         if index >= self.base_len {
             self.slots.get(index - self.base_len)
@@ -1762,7 +1762,7 @@ impl Heap {
         None
     }
 
-    #[inline]
+    #[inline(always)]
     fn entry(&self, id: ObjectId) -> Result<&Entry, RuntimeError> {
         if self.owner().owns(id)
             && let Some(slot) = self.slot_ref(id.index)
@@ -1771,10 +1771,7 @@ impl Heap {
         {
             return Ok(entry);
         }
-        Err(RuntimeError::new(
-            ErrorKind::StaleHandle,
-            "object does not belong to this live heap",
-        ))
+        Err(stale_handle_error())
     }
 
     #[inline]
@@ -1784,10 +1781,7 @@ impl Heap {
             Entry::Class(_)
             | Entry::CustomThis(_)
             | Entry::Executable(_)
-            | Entry::NullDefault(_) => Err(RuntimeError::new(
-                ErrorKind::StaleHandle,
-                "internal slot is not a Pkl object",
-            )),
+            | Entry::NullDefault(_) => Err(non_object_slot_error()),
         }
     }
 
@@ -1807,16 +1801,53 @@ impl Heap {
         }
     }
 
+    #[inline]
     pub fn get_mut(&mut self, id: ObjectId) -> Result<&mut Object, RuntimeError> {
-        self.get(id)?;
-        self.structural_keys_dirty = true;
-        let slot = self.slot_mut(id.index);
-        slot.edges_valid = false;
-        match slot.entry.as_mut() {
-            Some(Entry::Object(object)) => Ok(object),
-            _ => unreachable!("validated object slot"),
+        if id.index >= self.base_len {
+            if id.heap != self.identity {
+                return Err(stale_handle_error());
+            }
+            let Some(slot) = self.slots.get_mut(id.index - self.base_len) else {
+                return Err(stale_handle_error());
+            };
+            if slot.generation != id.generation || slot.entry.is_none() {
+                return Err(stale_handle_error());
+            }
+            if !matches!(slot.entry, Some(Entry::Object(_))) {
+                return Err(non_object_slot_error());
+            }
+            slot.edges_valid = false;
+            self.structural_keys_dirty = true;
+            match slot.entry.as_mut() {
+                Some(Entry::Object(object)) => Ok(object),
+                _ => unreachable!("validated object slot"),
+            }
+        } else {
+            self.get(id)?;
+            self.structural_keys_dirty = true;
+            let slot = self.slot_mut(id.index);
+            slot.edges_valid = false;
+            match slot.entry.as_mut() {
+                Some(Entry::Object(object)) => Ok(object),
+                _ => unreachable!("validated object slot"),
+            }
         }
     }
+}
+
+#[cold]
+#[inline(never)]
+fn stale_handle_error() -> RuntimeError {
+    RuntimeError::new(
+        ErrorKind::StaleHandle,
+        "object does not belong to this live heap",
+    )
+}
+
+#[cold]
+#[inline(never)]
+fn non_object_slot_error() -> RuntimeError {
+    RuntimeError::new(ErrorKind::StaleHandle, "internal slot is not a Pkl object")
 }
 
 #[derive(Clone, Copy)]
@@ -1827,7 +1858,7 @@ struct HeapOwner {
 }
 
 impl HeapOwner {
-    #[inline]
+    #[inline(always)]
     fn owns(self, id: ObjectId) -> bool {
         if id.index >= self.base_len {
             id.heap == self.identity

@@ -78,7 +78,7 @@ impl Vm {
     }
 
     pub(super) fn any_method(&mut self, receiver: Value) {
-        let block = self.program.primitive_methods[&("Any".into(), "ifNonNull".into())];
+        let block = self.program.primitive_methods.expect("Any", "ifNonNull");
         let id = self.heap.allocate(Object {
             function: Some(Function {
                 block,

@@ -2173,6 +2173,13 @@ impl Vm {
         let replacing = if descriptor.kind == CollectionMemberKind::Property {
             // Line 1905 already verified no duplicate property with this name/local/method exists.
             None
+        } else if descriptor.kind == CollectionMemberKind::Element
+            && collection_kind == CollectionKind::Listing
+            && !object.specialized_literal
+            && object.collection_members.len() == length
+        {
+            // Sequential Listing element append (key = length): cannot collide with 0..length.
+            None
         } else if let (Some(index), Some(hash)) =
             (&object.declaration_index, self.java_hash(&descriptor.key)?)
             && index.len() == object.collection_members.len()
@@ -2322,19 +2329,33 @@ impl Vm {
                 Some(environment)
             }
         };
-        let cache_key = CacheKey {
-            owner: None,
-            name: member.name.clone(),
-            method: member.method,
-            entry: member.entry,
+        let probe = if value.is_some() && kind != CollectionMemberKind::Property {
+            Some(descriptor.key.clone())
+        } else {
+            None
         };
         let object = self.heap.get_mut(target)?;
+        let cache_key = if environment.is_some()
+            || !object.member_environments.is_empty()
+            || value.is_some()
+        {
+            Some(CacheKey {
+                owner: None,
+                name: member.name.clone(),
+                method: member.method,
+                entry: member.entry,
+            })
+        } else {
+            None
+        };
         if let Some(environment) = environment {
             object
                 .member_environments
-                .insert(cache_key.clone(), environment);
+                .insert(cache_key.as_ref().unwrap().clone(), environment);
         } else if !object.member_environments.is_empty() {
-            object.member_environments.remove(&cache_key);
+            object
+                .member_environments
+                .remove(cache_key.as_ref().unwrap());
         }
         if !member.local && !member.method {
             if matches!(descriptor.key, Value::Object(_)) {
@@ -2364,6 +2385,7 @@ impl Vm {
         let need_decl_index =
             kind != CollectionMemberKind::Property || object.declaration_index.is_some();
         if let Some(value) = value {
+            let cache_key = cache_key.unwrap();
             // Defer caching synthetic `default` properties on Dynamic/Listing/Mapping
             // so the first read runs `VmUtils.doReadMember`'s `default: (unknown) -> Any`
             // type check (e.g. `Map("default", null).toDynamic().default`), while
@@ -2378,7 +2400,13 @@ impl Vm {
                 .member_values
                 .insert(cache_key.clone(), value.clone());
             if !defer_default_cache {
-                self.complete_cache(target, cache_key, value)?;
+                self.complete_cache_probe_known_new(
+                    target,
+                    cache_key,
+                    value,
+                    probe,
+                    replacing.is_none(),
+                )?;
             }
         }
         if need_decl_index {

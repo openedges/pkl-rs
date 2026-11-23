@@ -658,6 +658,17 @@ impl Vm {
         value: Value,
         probe: Option<Value>,
     ) -> Result<(), RuntimeError> {
+        self.complete_cache_probe_known_new(receiver, key, value, probe, false)
+    }
+
+    pub(super) fn complete_cache_probe_known_new(
+        &mut self,
+        receiver: ObjectId,
+        key: CacheKey,
+        value: Value,
+        probe: Option<Value>,
+        known_new: bool,
+    ) -> Result<(), RuntimeError> {
         let sync_probe = match &probe {
             Some(Value::Object(_)) => false,
             Some(_) => true,
@@ -670,7 +681,8 @@ impl Vm {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
-                let already_completed = !object.cache.is_empty()
+                let already_completed = !known_new
+                    && !object.cache.is_empty()
                     && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
                 (
                     object.cache_index.has_hash(),
@@ -687,7 +699,7 @@ impl Vm {
             } else {
                 0
             };
-            let existing = if slots_empty || (probe.is_none() && !already_completed) {
+            let existing = if known_new || slots_empty || (probe.is_none() && !already_completed) {
                 None
             } else {
                 let object = self.heap.get(receiver)?;

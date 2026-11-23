@@ -146,7 +146,7 @@ impl Vm {
             public_operation_entries: BTreeSet::new(),
             query_cache: Vec::new(),
             auto_gc: false,
-            gc_threshold: 8192,
+            gc_threshold: super::MIN_GC_THRESHOLD,
             last_gc_arenas: 0,
             gc_epoch: 1,
             session_root: None,

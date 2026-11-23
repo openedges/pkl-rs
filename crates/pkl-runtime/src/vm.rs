@@ -1069,7 +1069,36 @@ type ExtraDeclarationSources = Vec<(
     Arc<[(usize, crate::syntax::DeclarationSource)]>,
 )>;
 type ConversionBlocksMap = BTreeMap<(&'static str, &'static str), (usize, usize)>;
-type PrimitiveMethodsMap = BTreeMap<(Arc<str>, Arc<str>), usize>;
+
+#[derive(Clone, Debug, Default)]
+struct PrimitiveMethodsMap(crate::heap::FastMap<Box<str>, crate::heap::FastMap<Box<str>, usize>>);
+
+impl PrimitiveMethodsMap {
+    fn from_entries(entries: BTreeMap<(Arc<str>, Arc<str>), usize>) -> Self {
+        let mut outer: crate::heap::FastMap<Box<str>, crate::heap::FastMap<Box<str>, usize>> =
+            crate::heap::FastMap::default();
+        for ((class, name), block) in entries {
+            outer
+                .entry(Box::<str>::from(class.as_ref()))
+                .or_default()
+                .insert(Box::<str>::from(name.as_ref()), block);
+        }
+        Self(outer)
+    }
+
+    #[inline]
+    fn get(&self, class: &str, name: &str) -> Option<usize> {
+        self.0.get(class)?.get(name).copied()
+    }
+
+    #[inline]
+    fn expect(&self, class: &str, name: &str) -> usize {
+        self.get(class, name)
+            .unwrap_or_else(|| panic!("missing primitive block {class}.{name}"))
+    }
+}
+
+pub(super) const MIN_GC_THRESHOLD: usize = 32_768;
 
 #[derive(Clone, Debug)]
 pub struct Program {
@@ -1397,8 +1426,8 @@ impl Program {
             null_constructor_block,
             string_encode_block,
             pair_constructor_block,
-            list_fold_block: *primitive_methods
-                .get(&(Arc::from("List"), Arc::from("fold")))
+            list_fold_block: primitive_methods
+                .get("List", "fold")
                 .expect("List.fold primitive block"),
             primitive_methods: Arc::new(primitive_methods),
             amended_function_block,
@@ -2400,7 +2429,7 @@ impl Vm {
             public_operation_entries: BTreeSet::new(),
             query_cache: Vec::new(),
             auto_gc: false,
-            gc_threshold: 8192,
+            gc_threshold: MIN_GC_THRESHOLD,
             last_gc_arenas: 0,
             gc_epoch: 1,
             session_root: None,
@@ -2919,7 +2948,7 @@ impl Vm {
             }
             if self.auto_gc && self.heap.allocations_since_gc() >= self.gc_threshold {
                 let stats = self.collect(&[]);
-                self.gc_threshold = stats.live.saturating_mul(2).max(8192);
+                self.gc_threshold = stats.live.saturating_mul(2).max(MIN_GC_THRESHOLD);
                 self.last_gc_arenas = self.code_arenas.len();
             }
             let fast = self.poll_fast_run(remaining);
@@ -2929,7 +2958,7 @@ impl Vm {
             }
             if fast > 0 && self.auto_gc && self.heap.allocations_since_gc() >= self.gc_threshold {
                 let stats = self.collect(&[]);
-                self.gc_threshold = stats.live.saturating_mul(2).max(8192);
+                self.gc_threshold = stats.live.saturating_mul(2).max(MIN_GC_THRESHOLD);
                 self.last_gc_arenas = self.code_arenas.len();
             }
             self.instructions += 1;
@@ -5080,7 +5109,7 @@ impl Vm {
         self.fast_int_locals = Vec::new();
         self.fast_int_calls = Vec::new();
         self.scratch_utf8 = String::new();
-        self.gc_threshold = 8192;
+        self.gc_threshold = MIN_GC_THRESHOLD;
         self.last_gc_arenas = 0;
         self.gc_epoch = self.gc_epoch.wrapping_add(1);
         self.heap.release();
@@ -5158,7 +5187,7 @@ impl Vm {
             }
         }
         let stats = self.collect(&keep_roots);
-        self.gc_threshold = stats.live.saturating_mul(2).max(8192);
+        self.gc_threshold = stats.live.saturating_mul(2).max(MIN_GC_THRESHOLD);
         self.last_gc_arenas = self.code_arenas.len();
     }
 

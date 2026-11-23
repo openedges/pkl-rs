@@ -183,7 +183,7 @@ impl Vm {
                 ..Default::default()
             },
             function: Some(Function {
-                block: self.program.primitive_methods[&("".into(), "Regex".into())],
+                block: self.program.primitive_methods.expect("", "Regex"),
                 arity: 1,
                 method: true,
                 captured_this: None,

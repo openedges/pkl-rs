@@ -2453,7 +2453,7 @@ impl Vm {
                 self.program.collection_projection_blocks[11]
             }
             (CollectionKind::Listing, name) if listing_endpoint(name) || name == "distinct" => {
-                self.program.primitive_methods[&("Listing".into(), name.into())]
+                self.program.primitive_methods.expect("Listing", name)
             }
             _ => return Ok(None),
         };

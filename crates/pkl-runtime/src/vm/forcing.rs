@@ -191,7 +191,7 @@ impl Vm {
         frame_index: usize,
         run_slot: &mut Option<Box<ForceRun>>,
     ) -> Result<bool, RuntimeError> {
-        let run = run_slot.as_deref_mut().expect("force continuation");
+        let mut run = run_slot.as_deref_mut().expect("force continuation");
         if run.awaiting.take().is_some() {
             let value = self.pop()?;
             if run.recurse && matches!(value, Value::Object(_)) {
@@ -371,12 +371,14 @@ impl Vm {
                             {
                                 continue;
                             }
-                            if collections::hidden_property(
-                                &self.heap,
-                                owner,
-                                &member.name,
-                                member.entry,
-                            )? {
+                            if !member.entry
+                                && collections::hidden_property(
+                                    &self.heap,
+                                    owner,
+                                    &member.name,
+                                    false,
+                                )?
+                            {
                                 continue;
                             }
                             let recv_obj = self.heap.get(receiver)?;
@@ -460,6 +462,19 @@ impl Vm {
                         let result = self.force_declaration_member(receiver, owner, member);
                         *run_slot = self.frames[frame_index].deep_force.take();
                         result?;
+                        if self.frames.len() == frame_index + 1
+                            && !self.frames[frame_index].has_pending_run()
+                        {
+                            run = run_slot.as_deref_mut().expect("force continuation");
+                            run.awaiting = None;
+                            let value = self.pop()?;
+                            if run.recurse && matches!(value, Value::Object(_)) {
+                                run.tasks.push(Task::Value(value));
+                                break;
+                            }
+                            run.tasks.pop();
+                            continue;
+                        }
                     }
                     break;
                 }
