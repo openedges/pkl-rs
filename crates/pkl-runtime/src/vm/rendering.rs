@@ -124,7 +124,6 @@ enum Task {
         depth: usize,
         path: Vec<PathPart>,
     },
-    #[cfg(not(target_arch = "wasm32"))]
     ForcePlainObject {
         receiver: ObjectId,
         index: usize,
@@ -254,7 +253,6 @@ impl RenderRun {
                     path_roots(path, roots);
                 }
                 Task::Close { receiver, .. } => roots.push(Value::Object(*receiver)),
-                #[cfg(not(target_arch = "wasm32"))]
                 Task::ForcePlainObject { receiver, .. } => roots.push(Value::Object(*receiver)),
                 Task::Members(m) => {
                     path_roots(&m.path, roots);
@@ -517,7 +515,6 @@ impl Vm {
                 }
                 Some(Await::Shallow) => {
                     let target_task = match run.tasks.last() {
-                        #[cfg(not(target_arch = "wasm32"))]
                         Some(Task::ForcePlainObject { .. }) => run
                             .tasks
                             .len()
@@ -652,7 +649,6 @@ impl Vm {
             self.scope(0)?.receiver
         };
         if format != Format::Protobuf && self.is_unmodified_default_renderer(receiver, format) {
-            #[cfg(not(target_arch = "wasm32"))]
             if let Value::Object(root_id) = root
                 && (format != Format::Properties || document)
                 && self.heap.get_fast(root_id).is_some_and(|o| {
@@ -867,7 +863,6 @@ impl Vm {
                 depth,
                 path,
             } => self.advance_fast_list(run, receiver, index, depth, path),
-            #[cfg(not(target_arch = "wasm32"))]
             Task::ForcePlainObject { receiver, index } => {
                 self.advance_force_plain_object(run, receiver, index)
             }
@@ -1663,7 +1658,6 @@ impl Vm {
                     if run.format == Format::Properties && array {
                         return self.pcf_unrenderable(run, &Value::Object(id));
                     }
-                    #[cfg(not(target_arch = "wasm32"))]
                     if !run.has_value_converters
                         && kind == CollectionKind::List
                         && matches!(
@@ -2953,9 +2947,7 @@ enum FastObjectKind<'a> {
     StrictMap(usize),
     PlainDynamic {
         count: usize,
-        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
         has_elements: bool,
-        #[cfg_attr(target_arch = "wasm32", allow(dead_code))]
         has_keyed: bool,
     },
     PlainListing(usize),
@@ -2999,7 +2991,6 @@ fn fast_lookup_member_cached<'a>(
     }
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 #[inline]
 fn push_indent_str(buf: &mut String, indent: &str, depth: usize) {
     if depth == 0 || indent.is_empty() {
@@ -3020,7 +3011,6 @@ fn push_indent_str(buf: &mut String, indent: &str, depth: usize) {
     }
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 #[inline]
 fn write_json_str(out: &mut String, s: &str) {
     out.push('"');
@@ -3071,7 +3061,6 @@ fn write_json_str(out: &mut String, s: &str) {
     out.push('"');
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 fn write_properties_str(out: &mut String, s: &str, key: bool, restrict: bool) {
     let bytes = s.as_bytes();
     let fast_clean = if restrict {
@@ -3135,7 +3124,6 @@ fn write_properties_str(out: &mut String, s: &str, key: bool, restrict: bool) {
     }
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 #[inline]
 fn write_fast_scalar_text(out: &mut String, value: &Value) -> bool {
     match value {
@@ -3215,7 +3203,6 @@ impl Vm {
         true
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn is_pure_shallow_member_block(&self, obj: &Object, code: usize) -> bool {
         if code == usize::MAX {
             return true;
@@ -3299,7 +3286,6 @@ impl Vm {
         true
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn is_plain_shallow_forceable(&self, id: ObjectId) -> bool {
         if self.in_stdlib_bootstrap() {
             return false;
@@ -3337,7 +3323,6 @@ impl Vm {
         run: &mut RenderRun,
         receiver: ObjectId,
     ) -> Result<(), RuntimeError> {
-        #[cfg(not(target_arch = "wasm32"))]
         if self.is_plain_shallow_forceable(receiver) {
             if self.heap.get(receiver)?.forced {
                 return Ok(());
@@ -3349,7 +3334,6 @@ impl Vm {
         self.force_shallow_frame(Value::Object(receiver))
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn build_pure_scalar_set(&mut self, values: Vec<Value>) -> Option<ObjectId> {
         let len = values.len();
         if len == 0 {
@@ -3381,12 +3365,11 @@ impl Vm {
         let mut cache_index = crate::economic_map::EconomicMapIndex::with_capacity(0);
         let mut collection_members = Vec::with_capacity(len);
         let mut members = Vec::with_capacity(len);
-        let mut completed_cache_order = Vec::with_capacity(len);
         let mut cache_slots = Vec::with_capacity(len);
         let mut member_values = crate::heap::FastMap::default();
         let mut cache = crate::heap::FastMap::default();
         for (idx, val) in values.into_iter().enumerate() {
-            let name = PklString::from(format!("\0{}:{}", id.index, idx));
+            let name = collections::format_entry_internal_name(id.index, idx);
             let key_int = Value::Int((idx as i64).into());
             collection_members.push(CollectionMember {
                 key: key_int.clone(),
@@ -3413,7 +3396,6 @@ impl Vm {
             };
             cache_index.grow_before_append();
             cache_index.push();
-            completed_cache_order.push(cache_key.clone());
             cache_slots.push(crate::heap::CacheSlot {
                 key: cache_key.clone(),
                 entry_key: Some(key_int),
@@ -3425,7 +3407,6 @@ impl Vm {
         let obj = self.heap.get_mut(id).ok()?;
         obj.collection_members = collection_members;
         obj.members = members.into();
-        obj.completed_cache_order = completed_cache_order;
         obj.cache_slots = cache_slots;
         obj.cache_index = cache_index;
         obj.member_values = member_values;
@@ -3433,7 +3414,6 @@ impl Vm {
         Some(id)
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn try_eval_pure_member(
         &mut self,
         receiver: ObjectId,
@@ -3743,7 +3723,6 @@ impl Vm {
         None
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn try_force_plain_object_sync(&mut self, receiver: ObjectId) -> Result<bool, RuntimeError> {
         let len = self.heap.get(receiver)?.members.len();
         for idx in 0..len {
@@ -3813,7 +3792,6 @@ impl Vm {
         Ok(true)
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn advance_force_plain_object(
         &mut self,
         run: &mut RenderRun,
@@ -4438,23 +4416,6 @@ impl Vm {
         }
     }
 
-    #[cfg(target_arch = "wasm32")]
-    #[inline(never)]
-    fn try_fast_render_default_document(
-        &self,
-        format: Format,
-        _document: bool,
-        root: &Value,
-    ) -> Option<Value> {
-        match format {
-            Format::PklBinary => self
-                .try_fast_encode_pkl_binary(root)
-                .map(|bytes| Value::Bytes(bytes.into())),
-            _ => None,
-        }
-    }
-
-    #[cfg(not(target_arch = "wasm32"))]
     fn try_fast_render_default_document(
         &self,
         format: Format,
@@ -4657,19 +4618,6 @@ impl Vm {
         }
     }
 
-    #[cfg(target_arch = "wasm32")]
-    #[inline(never)]
-    fn try_fast_render_document(&self, run: &mut RenderRun) -> bool {
-        if run.format == Format::PklBinary
-            && let Some(bytes) = self.try_fast_encode_pkl_binary(&run.root)
-        {
-            run.binary = super::pkl_binary_wire::BinaryWire::default();
-            return run.binary.raw(&bytes).is_ok();
-        }
-        false
-    }
-
-    #[cfg(not(target_arch = "wasm32"))]
     fn try_fast_render_document(&self, run: &mut RenderRun) -> bool {
         match run.format {
             Format::PklBinary => {
@@ -4869,7 +4817,6 @@ impl Vm {
         }
     }
 
-    #[cfg(not(target_arch = "wasm32"))]
     fn try_fast_render_xml_document(&self, run: &mut RenderRun) -> bool {
         let Some(indent) = run.indent.as_str() else {
             return false;
@@ -4957,39 +4904,6 @@ impl Vm {
         true
     }
 
-    #[cfg(target_arch = "wasm32")]
-    #[allow(clippy::too_many_arguments)]
-    #[inline(never)]
-    fn try_fast_render_open_object(
-        &self,
-        run: &mut RenderRun,
-        receiver: ObjectId,
-        _depth: usize,
-        _standalone: bool,
-        _root: bool,
-        _path: &[PathPart],
-    ) -> bool {
-        if run.format != Format::PklBinary {
-            return false;
-        }
-        let mut active = Vec::with_capacity(8);
-        let mut scratch = Vec::with_capacity(32);
-        let cp = run.binary.len();
-        if self.try_fast_encode_binary_object(
-            receiver,
-            &mut run.binary,
-            Some(&run.active),
-            &mut active,
-            &mut scratch,
-        ) {
-            true
-        } else {
-            run.binary.truncate(cp);
-            false
-        }
-    }
-
-    #[cfg(not(target_arch = "wasm32"))]
     #[allow(clippy::too_many_arguments)]
     fn try_fast_render_open_object(
         &self,
@@ -5203,83 +5117,6 @@ impl Vm {
         }
     }
 
-    #[cfg(target_arch = "wasm32")]
-    #[inline(never)]
-    fn advance_fast_list(
-        &mut self,
-        run: &mut RenderRun,
-        receiver: ObjectId,
-        mut index: usize,
-        depth: usize,
-        path: Vec<PathPart>,
-    ) -> Result<bool, RuntimeError> {
-        let len = self
-            .heap
-            .get_fast(receiver)
-            .and_then(|o| o.list_elements.as_ref())
-            .map_or(0, Vec::len);
-        let mut local_active = Vec::with_capacity(8);
-        let mut scratch = Vec::with_capacity(16);
-        let mut pending: Option<(usize, Value)> = None;
-        while index < len {
-            let Some(elem) = self
-                .heap
-                .get_fast(receiver)
-                .and_then(|o| o.list_elements.as_ref())
-                .and_then(|e| e.get(index))
-            else {
-                return Err(invalid("fast list element"));
-            };
-            let cp = run.binary.len();
-            local_active.clear();
-            scratch.clear();
-            if self.try_fast_encode_binary_value(
-                elem,
-                &mut run.binary,
-                Some(&run.active),
-                &mut local_active,
-                &mut scratch,
-            ) {
-                index += 1;
-                continue;
-            }
-            run.binary.truncate(cp);
-            pending = Some((index, elem.clone()));
-            break;
-        }
-        if let Some((elem_idx, elem)) = pending {
-            let mut elem_path = path.clone();
-            elem_path.push(PathPart::Entry(Value::Int((elem_idx as i64).into())));
-            run.tasks.push(Task::FastList {
-                receiver,
-                index: elem_idx + 1,
-                depth,
-                path,
-            });
-            if let Value::Object(child_id) = elem
-                && !run.active.contains(&child_id)
-                && self.is_plain_unforced_dynamic(child_id)
-            {
-                run.active.insert(child_id);
-                run.tasks.push(Task::OpenObject {
-                    receiver: child_id,
-                    depth,
-                    standalone: false,
-                    root: false,
-                    path: elem_path,
-                    stream: false,
-                });
-                self.begin_shallow_force_for_render(run, child_id)?;
-            } else {
-                run.value(elem, depth, false, false, false, elem_path);
-            }
-            return Ok(false);
-        }
-        run.active.remove(&receiver);
-        Ok(false)
-    }
-
-    #[cfg(not(target_arch = "wasm32"))]
     fn advance_fast_list(
         &mut self,
         run: &mut RenderRun,
@@ -5545,7 +5382,6 @@ impl Vm {
     }
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 impl Vm {
     #[allow(clippy::too_many_arguments)]
     fn write_fast_pcf_value<'a>(

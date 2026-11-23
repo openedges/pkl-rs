@@ -16,7 +16,7 @@ pub enum Lookup {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> BTreeMap<(Arc<str>, Arc<str>), (usize, usize)> {
+) -> BTreeMap<(&'static str, &'static str), (usize, usize)> {
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
     for (class, name, operation) in [
@@ -96,7 +96,7 @@ pub(super) fn blocks(
             spans,
             ..Default::default()
         });
-        result.insert((class.into(), name.into()), (block, 1));
+        result.insert((class, name), (block, 1));
     }
     result
 }

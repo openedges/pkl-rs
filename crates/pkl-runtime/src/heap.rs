@@ -278,6 +278,11 @@ impl LocalOwners {
         }
     }
 
+    #[inline]
+    pub fn fast_eq(&self, other: &Self) -> bool {
+        self.mask == other.mask && self.inline == other.inline && self.overflow == other.overflow
+    }
+
     pub fn values(&self) -> impl Iterator<Item = &LocalOwnerEntry> + '_ {
         self.inline
             .iter()
@@ -323,6 +328,11 @@ impl CopyLocals {
         if let Some(set) = &mut self.overflow {
             set.clear();
         }
+    }
+
+    #[inline]
+    pub fn fast_eq(&self, other: &Self) -> bool {
+        self.inline_mask == other.inline_mask && self.overflow == other.overflow
     }
 
     pub fn iter(&self) -> impl Iterator<Item = usize> + '_ {
@@ -735,13 +745,11 @@ pub struct Object {
     pub members: MemberList,
     pub environment: Environment,
     pub cache: FastMap<CacheKey, LazyState>,
-    /// Successful cache publication order, matching VmObject.cachedValues.
-    /// Evaluating markers do not occupy an insertion position.
-    pub completed_cache_order: Vec<CacheKey>,
     pub cache_slots: Vec<CacheSlot>,
     pub cache_index: crate::economic_map::EconomicMapIndex,
     pub collection_kind: CollectionKind,
     pub collection_members: Vec<CollectionMember>,
+    pub has_object_collection_key: bool,
     pub map_index: Option<Box<crate::strict_map::MapIndex>>,
     /// Captured Map insertion-order keys, independent of stored trie slots.
     /// Removal can change a different slot after recursive key forcing.
@@ -805,10 +813,8 @@ impl Object {
                         slot.value = value.clone();
                     }
                 } else {
-                    let key_clone = occupied.key().clone();
-                    self.completed_cache_order.push(key_clone.clone());
                     self.cache_slots.push(CacheSlot {
-                        key: key_clone,
+                        key: occupied.key().clone(),
                         entry_key,
                         value: value.clone(),
                     });
@@ -816,10 +822,8 @@ impl Object {
                 occupied.insert(LazyState::Completed(value));
             }
             std::collections::hash_map::Entry::Vacant(vacant) => {
-                let key_clone = vacant.key().clone();
-                self.completed_cache_order.push(key_clone.clone());
                 self.cache_slots.push(CacheSlot {
-                    key: key_clone,
+                    key: vacant.key().clone(),
                     entry_key,
                     value: value.clone(),
                 });

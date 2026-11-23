@@ -9,7 +9,6 @@ pub(super) enum Mode {
     Yaml12,
 }
 
-#[cfg(not(target_arch = "wasm32"))]
 #[derive(Clone, Copy)]
 pub(super) struct Checkpoint {
     len: usize,
@@ -37,12 +36,10 @@ impl Emitter {
             mode,
         }
     }
-    #[cfg(not(target_arch = "wasm32"))]
     #[inline]
     pub(super) fn is_utf8(&self) -> bool {
         self.units.is_none()
     }
-    #[cfg(not(target_arch = "wasm32"))]
     #[inline]
     pub(super) fn checkpoint(&self) -> Checkpoint {
         Checkpoint {
@@ -55,7 +52,6 @@ impl Emitter {
             utf16: self.units.is_some(),
         }
     }
-    #[cfg(not(target_arch = "wasm32"))]
     #[inline]
     pub(super) fn rollback(&mut self, cp: Checkpoint) {
         if cp.utf16 {
@@ -190,7 +186,6 @@ impl Emitter {
         }
         self.raw(value);
     }
-    #[cfg(not(target_arch = "wasm32"))]
     #[inline]
     pub(super) fn scalar_str(&mut self, value: &str) {
         if !self.is_empty() {

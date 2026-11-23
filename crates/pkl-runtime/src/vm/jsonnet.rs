@@ -110,7 +110,6 @@ pub(super) fn field_name(value: &PklString, indent: &PklString, current: &PklStr
 
 /// Fast UTF-8 direct Jsonnet string writer. Returns `false` only on unpaired UTF-16 surrogates.
 #[inline]
-#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn write_string(
     out: &mut String,
     value: &PklString,
@@ -149,7 +148,6 @@ pub(super) fn write_string(
 }
 
 #[inline]
-#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn write_field_name(
     out: &mut String,
     value: &PklString,

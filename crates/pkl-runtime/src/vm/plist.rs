@@ -63,7 +63,6 @@ pub(super) fn escape(value: &PklString) -> PklString {
 }
 
 /// Fast UTF-8 direct PList scalar writer. Returns `false` on non-scalars or unpaired surrogates.
-#[cfg(not(target_arch = "wasm32"))]
 pub(super) fn write_scalar(out: &mut String, value: &Value) -> bool {
     match value {
         Value::String(text) => {

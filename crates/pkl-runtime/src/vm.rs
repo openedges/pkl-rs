@@ -1068,7 +1068,7 @@ type ExtraDeclarationSources = Vec<(
     std::ops::Range<usize>,
     Arc<[(usize, crate::syntax::DeclarationSource)]>,
 )>;
-type ConversionBlocksMap = BTreeMap<(Arc<str>, Arc<str>), (usize, usize)>;
+type ConversionBlocksMap = BTreeMap<(&'static str, &'static str), (usize, usize)>;
 type PrimitiveMethodsMap = BTreeMap<(Arc<str>, Arc<str>), usize>;
 
 #[derive(Clone, Debug)]
@@ -3410,21 +3410,57 @@ impl Vm {
                         break;
                     }
                     let len = stack.len();
-                    if let (Value::Object(recv_id), Value::Int(idx)) =
-                        (&stack[len - 2], &stack[len - 1])
-                        && idx.get() >= 0
-                        && let Ok(obj) = heap.get(*recv_id)
-                        && obj.collection_kind == CollectionKind::List
-                        && obj.parent.is_none()
-                        && obj.reference.is_none()
-                        && let Some(elems) = &obj.list_elements
-                        && let Some(val) = elems.get(idx.get() as usize)
-                    {
-                        let cloned = val.clone();
-                        stack.pop();
-                        stack.pop();
-                        stack.push_raw(cloned);
-                        pc += 1;
+                    let Value::Object(recv_id) = stack[len - 2] else {
+                        break;
+                    };
+                    let Ok(obj) = heap.get(recv_id) else {
+                        break;
+                    };
+                    if obj.parent.is_none() && obj.reference.is_none() {
+                        if obj.collection_kind == CollectionKind::List
+                            && let Value::Int(idx) = &stack[len - 1]
+                            && idx.get() >= 0
+                            && let Some(elems) = &obj.list_elements
+                            && let Some(val) = elems.get(idx.get() as usize)
+                        {
+                            let cloned = val.clone();
+                            stack.pop();
+                            stack.pop();
+                            stack.push_raw(cloned);
+                            pc += 1;
+                        } else if obj.collection_kind == CollectionKind::Map
+                            && !obj.has_object_collection_key
+                            && matches!(&stack[len - 1], Value::String(_) | Value::Int(_))
+                            && let Ok(hash) = equality::java_hash_on_heap(heap, &stack[len - 1])
+                        {
+                            let key_ref = &stack[len - 1];
+                            let mut found = None;
+                            for slot in obj.map_index().candidates(hash) {
+                                let member = &obj.collection_members[slot];
+                                if equality::same_key(heap, key_ref, &member.key) {
+                                    let ck = CacheKey {
+                                        owner: None,
+                                        name: member.name.clone(),
+                                        method: false,
+                                        entry: true,
+                                    };
+                                    if let Some(LazyState::Completed(val)) = obj.cache.get(&ck) {
+                                        found = Some(val.clone());
+                                    }
+                                    break;
+                                }
+                            }
+                            if let Some(val) = found {
+                                stack.pop();
+                                stack.pop();
+                                stack.push_raw(val);
+                                pc += 1;
+                            } else {
+                                break;
+                            }
+                        } else {
+                            break;
+                        }
                     } else {
                         break;
                     }
@@ -3473,23 +3509,26 @@ impl Vm {
                         break;
                     }
                     if let Some(Value::String(text)) = stack.last() {
-                        if name == "isEmpty" {
-                            let empty = text.is_empty();
+                        let out = match name.as_str() {
+                            Some("isEmpty") => Some(Value::Bool(text.is_empty())),
+                            Some("isNotEmpty") => Some(Value::Bool(!text.is_empty())),
+                            Some("isBlank") => Some(Value::Bool(text.is_blank())),
+                            Some("isNotBlank") => Some(Value::Bool(!text.is_blank())),
+                            Some("length") => text.as_str().filter(|s| s.is_ascii()).map(|s| {
+                                Value::Int(
+                                    crate::value_identity::Number::from(s.len() as i64).boxed(),
+                                )
+                            }),
+                            Some("lastIndex") => text.as_str().filter(|s| s.is_ascii()).map(|s| {
+                                Value::Int(
+                                    crate::value_identity::Number::from(s.len() as i64 - 1).boxed(),
+                                )
+                            }),
+                            _ => None,
+                        };
+                        if let Some(val) = out {
                             stack.pop();
-                            stack.push_raw(Value::Bool(empty));
-                            pc += 1;
-                            consumed += 1;
-                            continue;
-                        }
-                        if name == "length"
-                            && let Some(s) = text.as_str()
-                            && s.is_ascii()
-                        {
-                            let len = s.len() as i64;
-                            stack.pop();
-                            stack.push_raw(Value::Int(
-                                crate::value_identity::Number::from(len).boxed(),
-                            ));
+                            stack.push_raw(val);
                             pc += 1;
                             consumed += 1;
                             continue;

@@ -63,7 +63,7 @@ pub(super) fn typed_class(heap: &Heap, id: ObjectId) -> Result<Option<Class>, Ru
 }
 
 #[inline]
-fn format_entry_internal_name(object_index: usize, member_index: usize) -> PklString {
+pub(super) fn format_entry_internal_name(object_index: usize, member_index: usize) -> PklString {
     let mut buf = [0u8; 48];
     let mut b1 = [0u8; 24];
     let mut b2 = [0u8; 24];
@@ -682,42 +682,20 @@ pub fn ordered_members(
 
 #[inline]
 fn environments_match(a: &Environment, b: &Environment) -> bool {
-    if a.restore_for_bindings != b.restore_for_bindings
-        || a.this_value != b.this_value
-        || a.outer_value != b.outer_value
-        || a.custom_this.map(|s| s.root()) != b.custom_this.map(|s| s.root())
-        || a.executable_owner != b.executable_owner
-        || a.code_owner != b.code_owner
-        || a.scopes.as_slice() != b.scopes.as_slice()
-        || a.locals != b.locals
-        || !a.type_arguments.is_empty()
-        || !b.type_arguments.is_empty()
-        || !a.type_argument_sources.is_empty()
-        || !b.type_argument_sources.is_empty()
-        || !a.copy_locals.iter().eq(b.copy_locals.iter())
-    {
-        return false;
-    }
-    if a.local_owners.is_empty() && b.local_owners.is_empty() {
-        return true;
-    }
-    let a_count = a.local_owners.values().count();
-    let b_count = b.local_owners.values().count();
-    if a_count != b_count {
-        return false;
-    }
-    let mut matched = 0usize;
-    for i in 0..a.locals.len() {
-        let ao = a.local_owners.get(&i);
-        let bo = b.local_owners.get(&i);
-        if ao != bo {
-            return false;
-        }
-        if ao.is_some() {
-            matched += 1;
-        }
-    }
-    matched == a_count
+    a.restore_for_bindings == b.restore_for_bindings
+        && a.executable_owner == b.executable_owner
+        && a.code_owner == b.code_owner
+        && a.this_value == b.this_value
+        && a.outer_value == b.outer_value
+        && a.custom_this.map(|s| s.root()) == b.custom_this.map(|s| s.root())
+        && a.scopes.as_slice() == b.scopes.as_slice()
+        && a.locals == b.locals
+        && a.type_arguments.is_empty()
+        && b.type_arguments.is_empty()
+        && a.type_argument_sources.is_empty()
+        && b.type_argument_sources.is_empty()
+        && a.copy_locals.fast_eq(&b.copy_locals)
+        && a.local_owners.fast_eq(&b.local_owners)
 }
 
 /// Recover an entry's authored key from the internal cache name.
@@ -1499,7 +1477,8 @@ impl Vm {
             Some(append) => append,
             None => self.map_value(id, &key)?.is_none(),
         };
-        let candidates = object.map_index().assoc_candidates(self.java_hash(&key)?);
+        let key_hash = self.java_hash(&key)?;
+        let candidates = object.map_index().assoc_candidates(key_hash);
         let replacing = candidates
             .into_iter()
             .find(|slot| same_key(&self.heap, &key, &object.collection_members[*slot].key));
@@ -1508,11 +1487,7 @@ impl Vm {
         let name = replacing
             .map(|index| object.collection_members[index].name.clone())
             .unwrap_or_else(|| {
-                PklString::from(format!(
-                    "\0{}:{}",
-                    id.index,
-                    object.collection_members.len()
-                ))
+                format_entry_internal_name(id.index, object.collection_members.len())
             });
         let explicit_order = if preserve_implicit_order {
             None
@@ -1529,13 +1504,15 @@ impl Vm {
         };
         let key_for_cache = key.clone();
         if replacing.is_none() {
-            let key_hash = self.java_hash(&key)?;
             let mut map_index = self.heap.get_mut(id)?.map_index.take().unwrap_or_default();
             map_index.insert_lazy(key_hash, append_order, |slot| {
                 self.java_hash(&self.heap.get(id)?.collection_members[slot].key)
             })?;
             let object = self.heap.get_mut(id)?;
             object.map_index = Some(map_index);
+            if matches!(key, Value::Object(_)) {
+                object.has_object_collection_key = true;
+            }
             object.collection_members.push(CollectionMember {
                 key,
                 name: name.clone(),
@@ -2037,6 +2014,7 @@ impl Vm {
         let length = object.length;
         let key = key.unwrap_or(Value::Int((length as i64).into()));
         if kind != CollectionMemberKind::Property
+            && collection_kind == CollectionKind::Dynamic
             && let Some(class) = typed_class(&self.heap, target)?
         {
             let element = kind == CollectionMemberKind::Element;
@@ -2162,6 +2140,11 @@ impl Vm {
                     same_member(&self.heap, &descriptor, old)
                 })
             }
+        } else if !matches!(descriptor.key, Value::Object(_)) && !object.has_object_collection_key {
+            object
+                .collection_members
+                .iter()
+                .position(|old| same_member(&self.heap, &descriptor, old))
         } else {
             let candidates = self.declaration_candidates(target, &descriptor.key, false)?;
             object.collection_members.iter().position(|old| {
@@ -2306,6 +2289,9 @@ impl Vm {
             object.member_environments.remove(&cache_key);
         }
         if !member.local && !member.method {
+            if matches!(descriptor.key, Value::Object(_)) {
+                object.has_object_collection_key = true;
+            }
             if let Some(index) = replacing {
                 object.collection_members[index] = descriptor;
             } else {
@@ -2643,7 +2629,15 @@ impl Vm {
             } => {
                 let key = self.pop()?;
                 let target = self.builder()?;
-                if typed_class(&self.heap, target)?.is_none() && !check_index {
+                let (is_typed, specialized_literal, needs_obj_prep) = {
+                    let obj = self.heap.get(target)?;
+                    let is_typed = obj.collection_kind == CollectionKind::Dynamic
+                        && typed_class(&self.heap, target)?.is_some();
+                    let needs_obj_prep =
+                        matches!(key, Value::Object(_)) || obj.has_object_collection_key;
+                    (is_typed, obj.specialized_literal, needs_obj_prep)
+                };
+                if !is_typed && !check_index && needs_obj_prep {
                     if self.heap.get(target)?.members.len() > 4
                         && self.prepare_keys(vec![key.clone()])?
                     {
@@ -2685,9 +2679,7 @@ impl Vm {
                         ));
                     }
                 }
-                let target = self.builder()?;
-                let generated_typed = !self.heap.get(target)?.specialized_literal
-                    && typed_class(&self.heap, target)?.is_some();
+                let generated_typed = !specialized_literal && is_typed;
                 self.add_collection_member(member, Some(key), CollectionMemberKind::Entry, None)
                     .map_err(|error| {
                         if generated_typed {

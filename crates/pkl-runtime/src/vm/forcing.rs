@@ -194,7 +194,7 @@ impl Vm {
         let run = run_slot.as_deref_mut().expect("force continuation");
         if run.awaiting.take().is_some() {
             let value = self.pop()?;
-            if run.recurse {
+            if run.recurse && matches!(value, Value::Object(_)) {
                 run.tasks.push(Task::Value(value));
             }
         }
@@ -379,9 +379,9 @@ impl Vm {
                             )? {
                                 continue;
                             }
-                            if !member.entry {
-                                let recv_obj = self.heap.get(receiver)?;
-                                let cached = if recv_obj.cache_slots.len() <= 16 {
+                            let recv_obj = self.heap.get(receiver)?;
+                            let cached = if !member.entry {
+                                if recv_obj.cache_slots.len() <= 16 {
                                     recv_obj
                                         .cache_slots
                                         .iter()
@@ -403,20 +403,35 @@ impl Vm {
                                         Some(LazyState::Completed(val)) => Some(val),
                                         _ => None,
                                     }
-                                };
-                                if let Some(val) = cached {
-                                    if run.recurse && matches!(val, Value::Object(_)) {
-                                        let val = val.clone();
-                                        run.tasks.push(Task::Members {
-                                            receiver,
-                                            owner,
-                                            index,
-                                        });
-                                        run.tasks.push(Task::Value(val));
-                                        return Ok(false);
-                                    }
-                                    continue;
                                 }
+                            } else if !recv_obj.has_object_collection_key
+                                && !recv_obj.cache.is_empty()
+                            {
+                                let key = CacheKey {
+                                    entry: true,
+                                    owner: None,
+                                    name: member.name.clone(),
+                                    method: false,
+                                };
+                                match recv_obj.cache.get(&key) {
+                                    Some(LazyState::Completed(val)) => Some(val),
+                                    _ => None,
+                                }
+                            } else {
+                                None
+                            };
+                            if let Some(val) = cached {
+                                if run.recurse && matches!(val, Value::Object(_)) {
+                                    let val = val.clone();
+                                    run.tasks.push(Task::Members {
+                                        receiver,
+                                        owner,
+                                        index,
+                                    });
+                                    run.tasks.push(Task::Value(val));
+                                    return Ok(false);
+                                }
+                                continue;
                             }
                             Some(member.clone())
                         } else if let Some(parent) = object.parent {

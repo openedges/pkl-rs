@@ -2000,9 +2000,9 @@ mod generic_metadata_tests {
             .heap
             .get(id)
             .unwrap()
-            .completed_cache_order
+            .cache_slots
             .iter()
-            .map(|key| key.name.clone())
+            .map(|slot| slot.key.name.clone())
             .collect();
         assert_eq!(cached, ["property", "isProperty"]);
         assert_eq!(

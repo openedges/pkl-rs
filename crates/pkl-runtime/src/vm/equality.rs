@@ -670,8 +670,8 @@ impl Vm {
                     object.cache_index.grow_before_append();
                     object.cache_index.push();
                 }
-                let already_completed =
-                    matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
+                let already_completed = !object.cache.is_empty()
+                    && matches!(object.cache.get(&key), Some(LazyState::Completed(_)));
                 (
                     object.cache_index.has_hash(),
                     already_completed,
@@ -768,7 +768,6 @@ impl Vm {
                 };
                 let object = self.heap.get_mut(receiver)?;
                 let index = object.cache_index.push();
-                object.completed_cache_order.push(key.clone());
                 object.cache_slots.push(crate::heap::CacheSlot {
                     key: key.clone(),
                     entry_key: probe,
@@ -2349,7 +2348,6 @@ impl Vm {
                 }
                 let object = self.heap.get_mut(id)?;
                 let index = object.cache_index.push();
-                object.completed_cache_order.push(key.clone());
                 object.cache_slots.push(crate::heap::CacheSlot {
                     key: key.clone(),
                     entry_key: probe.clone(),

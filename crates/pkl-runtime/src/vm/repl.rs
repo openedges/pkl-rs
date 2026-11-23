@@ -34,7 +34,6 @@ pub(crate) struct CompiledReplMember {
 
 type ReplCacheSnapshot = (
     crate::heap::FastMap<CacheKey, LazyState>,
-    Vec<CacheKey>,
     Vec<CacheSlot>,
     crate::economic_map::EconomicMapIndex,
 );
@@ -143,12 +142,7 @@ impl Vm {
         working_dir_uri: &PklString,
     ) -> Result<ObjectId, RuntimeError> {
         let src = self.heap.get(current)?.clone();
-        let cache_snapshot = (
-            src.cache,
-            src.completed_cache_order,
-            src.cache_slots,
-            src.cache_index,
-        );
+        let cache_snapshot = (src.cache, src.cache_slots, src.cache_index);
         self.alloc_repl_module_from(
             src.parent,
             src.members,
@@ -242,9 +236,8 @@ impl Vm {
             environment,
             ..Object::default()
         };
-        if let Some((cache, completed_cache_order, cache_slots, cache_index)) = cache_snapshot {
+        if let Some((cache, cache_slots, cache_index)) = cache_snapshot {
             object.cache = cache;
-            object.completed_cache_order = completed_cache_order;
             object.cache_slots = cache_slots;
             object.cache_index = cache_index;
         }
@@ -466,7 +459,6 @@ impl Vm {
             };
             for key in [&key_local, &key_nonlocal] {
                 obj.cache.remove(key);
-                obj.completed_cache_order.retain(|k| k != key);
                 obj.cache_slots.retain(|s| &s.key != key);
             }
         }

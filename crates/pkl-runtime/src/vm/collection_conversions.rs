@@ -44,7 +44,7 @@ impl Operation {
 pub(super) fn blocks(
     blocks: &mut Vec<Vec<Instruction>>,
     metadata: &mut Vec<BlockMetadata>,
-) -> BTreeMap<(Arc<str>, Arc<str>), (usize, usize)> {
+) -> BTreeMap<(&'static str, &'static str), (usize, usize)> {
     use Operation::*;
     let source = crate::stdlib_sources::base();
     let mut result = BTreeMap::new();
@@ -190,7 +190,7 @@ pub(super) fn blocks(
             spans,
             ..Default::default()
         });
-        result.insert((class.into(), name.into()), (block, arity));
+        result.insert((class, name), (block, arity));
     }
     result
 }
@@ -203,6 +203,9 @@ pub(super) struct Run {
     shallow: bool,
     strict: bool,
     seen: Vec<CollectionMember>,
+    seen_has_object: bool,
+    seen_str_index: Option<crate::heap::FastMap<(bool, PklString), ()>>,
+    seen_int_index: Option<crate::heap::FastMap<(bool, i64), ()>>,
     current: Option<Value>,
     key: Option<Value>,
     kind: CollectionMemberKind,
@@ -234,22 +237,31 @@ impl Vm {
         if object.pair.is_some() {
             return Ok(false);
         }
-        let class: Arc<str> =
-            if object.is_module || collections::typed_class(&self.heap, source)?.is_some() {
-                "Typed".into()
+        let class: &'static str =
+            if object.is_module
+                || (object.collection_kind == CollectionKind::Dynamic
+                    && collections::typed_class(&self.heap, source)?.is_some())
+            {
+                "Typed"
             } else if object.reference.is_none() && object.pair.is_none() {
-                format!("{:?}", object.collection_kind).into()
+                match object.collection_kind {
+                    CollectionKind::Dynamic => "Dynamic",
+                    CollectionKind::Listing => "Listing",
+                    CollectionKind::Mapping => "Mapping",
+                    CollectionKind::List => "List",
+                    CollectionKind::Map => "Map",
+                    CollectionKind::Set => "Set",
+                }
             } else {
                 return Ok(false);
             };
-        if class.as_ref() == "Typed"
+        if class == "Typed"
             && matches!(name, "hasProperty" | "getProperty" | "getPropertyOrNull")
             && !self.typed_has_property_available(source)?
         {
             return Ok(false);
         }
-        let Some(&(block, arity)) = self.program.conversion_blocks.get(&(class, name.into()))
-        else {
+        let Some(&(block, arity)) = self.program.conversion_blocks.get(&(class, name)) else {
             return Ok(false);
         };
         let callable = self.heap.allocate(Object {
@@ -317,6 +329,9 @@ impl Vm {
             shallow: !strict,
             strict,
             seen: Vec::new(),
+            seen_has_object: false,
+            seen_str_index: None,
+            seen_int_index: None,
             current: None,
             key: None,
             kind: CollectionMemberKind::Element,
@@ -343,75 +358,137 @@ impl Vm {
                 .unwrap()
                 .shallow = false;
         }
-        let run = self
-            .frames
-            .last()
-            .and_then(|f| f.conversion_run.as_ref())
-            .ok_or_else(|| invalid("conversion cursor"))?;
-        let Some(item) = run.members.get(run.next).cloned() else {
-            return self.jump(end);
-        };
-        let source = run.source;
-        let operation = run.operation;
-        let member = item.descriptor;
-        if !run.strict {
-            let candidates: Vec<_> = run
-                .seen
-                .iter()
-                .filter(|m| {
-                    (m.kind == CollectionMemberKind::Property)
-                        == (member.kind == CollectionMemberKind::Property)
-                })
-                .map(|m| m.key.clone())
-                .collect();
-            if self.prepare_keys(vec![member.key.clone()])? {
-                return Ok(());
-            }
-            let hash = self.java_hash(&member.key)?;
-            let candidates = candidates
-                .into_iter()
-                .filter(|value| {
-                    self.java_hash(value)
-                        .is_ok_and(|other| !hash.zip(other).is_some_and(|(a, b)| a != b))
-                })
-                .collect::<Vec<_>>();
-            if self.search_key(&member.key, candidates.clone())? {
-                return Ok(());
-            }
-            let seen = candidates
-                .iter()
-                .any(|key| equality::same_key(&self.heap, key, &member.key));
+        let (source, operation, member) = loop {
             let run = self
                 .frames
-                .last_mut()
-                .unwrap()
-                .conversion_run
-                .as_mut()
-                .unwrap();
-            run.next += 1;
-            if !seen {
-                run.seen.push(member.clone());
-            }
-            let include = match operation {
-                Operation::ToMap => member.kind != CollectionMemberKind::Element,
-                Operation::ToList | Operation::ToSet => {
-                    member.kind == CollectionMemberKind::Element
-                }
-                _ => true,
+                .last()
+                .and_then(|f| f.conversion_run.as_ref())
+                .ok_or_else(|| invalid("conversion cursor"))?;
+            let Some(item) = run.members.get(run.next).cloned() else {
+                return self.jump(end);
             };
-            if seen || item.skip || !include {
-                self.frames.last_mut().unwrap().pc -= 1;
-                return Ok(());
+            let source = run.source;
+            let operation = run.operation;
+            let member = item.descriptor;
+            if !run.strict {
+                let key_is_obj = matches!(member.key, Value::Object(_));
+                let seen = if !key_is_obj && !run.seen_has_object {
+                    let is_prop = member.kind == CollectionMemberKind::Property;
+                    let run_mut = self
+                        .frames
+                        .last_mut()
+                        .unwrap()
+                        .conversion_run
+                        .as_mut()
+                        .unwrap();
+                    if run_mut.seen_str_index.is_none() && run_mut.seen.len() >= 12 {
+                        let mut si = crate::heap::FastMap::default();
+                        let mut ii = crate::heap::FastMap::default();
+                        for m in &run_mut.seen {
+                            let p = m.kind == CollectionMemberKind::Property;
+                            match &m.key {
+                                Value::String(s) => {
+                                    si.insert((p, s.clone()), ());
+                                }
+                                Value::Int(i) => {
+                                    ii.insert((p, i.get()), ());
+                                }
+                                _ => {}
+                            }
+                        }
+                        run_mut.seen_str_index = Some(si);
+                        run_mut.seen_int_index = Some(ii);
+                    }
+                    let already = match (&member.key, &run_mut.seen_str_index, &run_mut.seen_int_index)
+                    {
+                        (Value::String(s), Some(si), _) => si.contains_key(&(is_prop, s.clone())),
+                        (Value::Int(i), _, Some(ii)) => ii.contains_key(&(is_prop, i.get())),
+                        _ => run_mut.seen.iter().any(|m| {
+                            (m.kind == CollectionMemberKind::Property) == is_prop
+                                && equality::same_key(&self.heap, &m.key, &member.key)
+                        }),
+                    };
+                    if !already {
+                        match &member.key {
+                            Value::String(s) => {
+                                if let Some(si) = run_mut.seen_str_index.as_mut() {
+                                    si.insert((is_prop, s.clone()), ());
+                                }
+                            }
+                            Value::Int(i) => {
+                                if let Some(ii) = run_mut.seen_int_index.as_mut() {
+                                    ii.insert((is_prop, i.get()), ());
+                                }
+                            }
+                            _ => {}
+                        }
+                    }
+                    already
+                } else {
+                    let candidates: Vec<_> = run
+                        .seen
+                        .iter()
+                        .filter(|m| {
+                            (m.kind == CollectionMemberKind::Property)
+                                == (member.kind == CollectionMemberKind::Property)
+                        })
+                        .map(|m| m.key.clone())
+                        .collect();
+                    if self.prepare_keys(vec![member.key.clone()])? {
+                        return Ok(());
+                    }
+                    let hash = self.java_hash(&member.key)?;
+                    let candidates = candidates
+                        .into_iter()
+                        .filter(|value| {
+                            self.java_hash(value)
+                                .is_ok_and(|other| !hash.zip(other).is_some_and(|(a, b)| a != b))
+                        })
+                        .collect::<Vec<_>>();
+                    if self.search_key(&member.key, candidates.clone())? {
+                        return Ok(());
+                    }
+                    candidates
+                        .iter()
+                        .any(|key| equality::same_key(&self.heap, key, &member.key))
+                };
+                let run = self
+                    .frames
+                    .last_mut()
+                    .unwrap()
+                    .conversion_run
+                    .as_mut()
+                    .unwrap();
+                run.next += 1;
+                if !seen {
+                    if key_is_obj {
+                        run.seen_has_object = true;
+                        run.seen_str_index = None;
+                        run.seen_int_index = None;
+                    }
+                    run.seen.push(member.clone());
+                }
+                let include = match operation {
+                    Operation::ToMap => member.kind != CollectionMemberKind::Element,
+                    Operation::ToList | Operation::ToSet => {
+                        member.kind == CollectionMemberKind::Element
+                    }
+                    _ => true,
+                };
+                if seen || item.skip || !include {
+                    continue;
+                }
+            } else {
+                self.frames
+                    .last_mut()
+                    .unwrap()
+                    .conversion_run
+                    .as_mut()
+                    .unwrap()
+                    .next += 1;
             }
-        } else {
-            self.frames
-                .last_mut()
-                .unwrap()
-                .conversion_run
-                .as_mut()
-                .unwrap()
-                .next += 1;
-        }
+            break (source, operation, member);
+        };
         let value = collections::cached_render_value(&self.heap, source, &member)?
             .ok_or_else(|| invalid("uncached conversion value"))?;
         if operation == Operation::SelectMap {

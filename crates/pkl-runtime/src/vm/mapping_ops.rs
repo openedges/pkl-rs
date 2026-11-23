@@ -193,7 +193,6 @@ impl Vm {
                 set_entries: old.set_entries.clone(),
                 member_values: old.member_values.clone(),
                 cache: old.cache.clone(),
-                completed_cache_order: old.completed_cache_order.clone(),
                 cache_slots: old.cache_slots.clone(),
                 cache_index: old.cache_index.clone(),
                 ..Default::default()
