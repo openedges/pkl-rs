@@ -14033,6 +14033,7 @@ fn compile_unit_body_at_with_syntax(
         declared_recipes,
         module_recipes,
         instrument,
+        replaying_prefix_error: false,
     };
     let module_name = resolved
         .module
@@ -14339,6 +14340,7 @@ struct Compiler<'a> {
     declared_recipes: crate::heap::FastMap<Span, usize>,
     module_recipes: crate::heap::FastMap<Span, usize>,
     instrument: bool,
+    replaying_prefix_error: bool,
 }
 
 fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {

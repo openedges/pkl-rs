@@ -1053,6 +1053,7 @@ fn compile_base_synthetic_annotations_only(
         declared_recipes,
         module_recipes,
         instrument: false,
+        replaying_prefix_error: false,
     };
     let mut publish = Code::default();
     for &(index, code, method) in synthetic_annotated {
@@ -1135,6 +1136,7 @@ fn compile_reflection_annotations(
         declared_recipes,
         module_recipes,
         instrument: false,
+        replaying_prefix_error: false,
     };
     if !synthetic_annotated.is_empty() {
         let mut publish = Code::default();

@@ -235,6 +235,7 @@ fn append(
         declared_recipes: crate::heap::FastMap::default(),
         module_recipes: crate::heap::FastMap::default(),
         instrument,
+        replaying_prefix_error: false,
     };
     let mut code = Code::default();
     code.push(Instruction::PrepareModuleImports(unit));

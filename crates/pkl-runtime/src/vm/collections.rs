@@ -4043,7 +4043,7 @@ impl Compiler<'_> {
             None
         };
         self.type_scopes.push(extract_type_scope(&properties));
-        if let Some(first_generator) = members.iter().position(|member| {
+        let first_generator = members.iter().position(|member| {
             matches!(
                 member,
                 crate::syntax::ObjectMember::When { .. }
@@ -4051,9 +4051,12 @@ impl Compiler<'_> {
                     | crate::syntax::ObjectMember::Spread { .. }
                     | crate::syntax::ObjectMember::Predicate { .. }
             )
-        }) {
-            self.project_generator_prefix(&members[..first_generator]);
-        }
+        });
+        let prefix_unlabeled = if let Some(first_gen) = first_generator {
+            self.project_generator_prefix(&members[..first_gen])
+        } else {
+            0
+        };
         output.push(Instruction::BeginCollection {
             kind,
             has_parent,
@@ -4063,8 +4066,59 @@ impl Compiler<'_> {
             .iter()
             .any(|m| matches!(m, crate::syntax::ObjectMember::Element { .. }));
         let mut parameter_check = None;
-        if generators {
-            self.collection_members(members, false, output)?;
+        if let Some(first_gen) = first_generator {
+            if first_gen > 0 && prefix_unlabeled > 0 {
+                let saved_member = self.member.clone();
+                let saved_type_scopes_len = self.type_scopes.len();
+                let saved_let_members_len = self.let_members.len();
+                let saved_modifiers = self.modifiers.clone();
+                for (idx, member) in members[..first_gen].iter().enumerate() {
+                    if let Err(err) =
+                        self.collection_members(std::slice::from_ref(member), false, output)
+                    {
+                        // AstBuilder aborts during pass 1 on compile errors in the prefix
+                        // before ever encountering the generator. Replay only the failing
+                        // unlabeled element/entry with pass-1 numbering so diagnostics match
+                        // Pkl 0.32.0 with zero hot-path overhead.
+                        let is_unlabeled =
+                            matches!(member, crate::syntax::ObjectMember::Element { .. })
+                                || matches!(
+                                    member,
+                                    crate::syntax::ObjectMember::Entry { key, .. }
+                                        if Self::entry_key_node_label(key).is_none()
+                                );
+                        if !is_unlabeled {
+                            return Err(err);
+                        }
+                        self.member = saved_member;
+                        self.type_scopes.truncate(saved_type_scopes_len - 1);
+                        self.type_scopes.push(extract_type_scope(&properties));
+                        self.let_members.truncate(saved_let_members_len);
+                        self.modifiers = saved_modifiers;
+                        self.entry_counts.clear();
+                        let prior_unlabeled = Self::count_unlabeled_prefix(&members[..idx]);
+                        if prior_unlabeled > 0 {
+                            self.entry_counts
+                                .insert(self.member.clone(), prior_unlabeled);
+                        }
+                        self.function_names.clear();
+                        self.replaying_prefix_error = true;
+                        let replay = self.collection_members(
+                            std::slice::from_ref(member),
+                            false,
+                            &mut Code::default(),
+                        );
+                        self.replaying_prefix_error = false;
+                        return match replay {
+                            Err(pass1_err) => Err(pass1_err),
+                            Ok(()) => Err(err),
+                        };
+                    }
+                }
+                self.collection_members(&members[first_gen..], false, output)?;
+            } else {
+                self.collection_members(members, false, output)?;
+            }
         } else {
             // Pinned specialized literals install keyed members before elements.
             for member in members
@@ -4118,7 +4172,7 @@ impl Compiler<'_> {
     /// body when it encounters a generator. Only direct unlabeled elements and
     /// entries in the prefix advance this object scope's `entry_counts`, since
     /// nested object bodies save and restore `entry_counts` around their own scope.
-    fn project_generator_prefix(&mut self, prefix: &[crate::syntax::ObjectMember]) {
+    fn count_unlabeled_prefix(prefix: &[crate::syntax::ObjectMember]) -> usize {
         let mut unlabeled = 0usize;
         for member in prefix {
             match member {
@@ -4131,9 +4185,15 @@ impl Compiler<'_> {
                 _ => {}
             }
         }
+        unlabeled
+    }
+
+    fn project_generator_prefix(&mut self, prefix: &[crate::syntax::ObjectMember]) -> usize {
+        let unlabeled = Self::count_unlabeled_prefix(prefix);
         if unlabeled > 0 {
             *self.entry_counts.entry(self.member.clone()).or_default() += unlabeled;
         }
+        unlabeled
     }
 
     /// Match the scalar ConstantNode values that Java uses for entry names.
@@ -4230,7 +4290,10 @@ impl Compiler<'_> {
                 .concat(&"]".into())
         };
         let mut code = Code::default();
-        self.expression_with_entry_parent(value, &mut code)?;
+        if let Err(err) = self.expression_with_entry_parent(value, &mut code) {
+            self.member = previous;
+            return Err(err);
+        }
         let is_constant = self.constant_member_body(value);
         if is_constant {
             for instruction in &mut code.instructions {
@@ -4240,7 +4303,13 @@ impl Compiler<'_> {
             }
         }
         code.push(Instruction::Return);
-        let block = self.block(code, Some(span))?;
+        let block = match self.block(code, Some(span)) {
+            Ok(block) => block,
+            Err(err) => {
+                self.member = previous;
+                return Err(err);
+            }
+        };
         self.program.metadata[block].member_span = Some(span);
         self.program.metadata[block].value_span = Some(if is_constant {
             self.constant_member_value_span(

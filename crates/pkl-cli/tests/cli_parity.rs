@@ -615,3 +615,168 @@ fn ansi_color_parity_across_cli_and_diagnostics() {
 
     let _ = std::fs::remove_dir_all(&tmp);
 }
+
+#[test]
+fn static_project_fast_path_matches_pkl_0_32_0_on_invalid_manifests() {
+    let tmp = make_temp_dir("static-project-parity");
+
+    let run_with_project = |name: &str, project_src: &str| {
+        let proj = tmp.join(name);
+        std::fs::create_dir_all(&proj).unwrap();
+        std::fs::write(proj.join("PklProject"), project_src).unwrap();
+        let main_pkl = proj.join("main.pkl");
+        std::fs::write(&main_pkl, "x = 1\n").unwrap();
+        run_pkl(&[
+            "eval",
+            "--color=never",
+            "--project-dir",
+            proj.to_str().unwrap(),
+            main_pkl.to_str().unwrap(),
+        ])
+    };
+
+    // 1. Strict SemVer validation on package.version and RemoteDependency.uri
+    for (tag, src) in [
+        (
+            "semver-pkg-leading-zero",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"01.2.3\"\n  packageZipUrl = \"https://example.com/a.zip\"\n}\n",
+        ),
+        (
+            "semver-pkg-pre-zero",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.2.3-01\"\n  packageZipUrl = \"https://example.com/a.zip\"\n}\n",
+        ),
+        (
+            "semver-dep-leading-zero",
+            "amends \"pkl:Project\"\ndependencies {\n  [\"a\"] { uri = \"package://example.com/a@01.2.3\" }\n}\n",
+        ),
+        // 2. RemoteDependency.uri with #fragment or ?query
+        (
+            "dep-uri-fragment",
+            "amends \"pkl:Project\"\ndependencies {\n  [\"a\"] { uri = \"package://example.com/a@1.2.3#/foo.pkl\" }\n}\n",
+        ),
+        (
+            "dep-uri-query",
+            "amends \"pkl:Project\"\ndependencies {\n  [\"a\"] { uri = \"package://example.com/a@1.2.3?q=1\" }\n}\n",
+        ),
+        // 3. Parenthesized new { ... }
+        (
+            "paren-new-tests",
+            "amends \"pkl:Project\"\ntests = (new { \"a.pkl\" })\n",
+        ),
+        // 4. EmailAddress with vertical tab or Unicode line separator
+        (
+            "email-vtab",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/a.zip\"\n  authors { \"a@b\\u{0b}c\" }\n}\n",
+        ),
+        (
+            "email-linesep",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/a.zip\"\n  authors { \"a\\u{2028}b@c.com\" }\n}\n",
+        ),
+        // 6. Malformed Java URIs in package fields
+        (
+            "uri-bad-zip-escape",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/%ZZ.zip\"\n}\n",
+        ),
+        (
+            "uri-bad-website-bracket",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/a.zip\"\n  website = \"https://example.com/a[0]\"\n}\n",
+        ),
+        (
+            "uri-bad-doc-double-frag",
+            "amends \"pkl:Project\"\npackage {\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/a.zip\"\n  documentation = \"https://example.com/a#b#c\"\n}\n",
+        ),
+    ] {
+        let out = run_with_project(tag, src);
+        assert_eq!(
+            out.status.code(),
+            Some(1),
+            "case `{tag}` unexpectedly succeeded: stdout={}",
+            String::from_utf8_lossy(&out.stdout)
+        );
+    }
+
+    // 5. Local project import edge cases (percent-encoded PklProject and triple-dot)
+    let dep_dir = tmp.join("dep_real");
+    std::fs::create_dir_all(&dep_dir).unwrap();
+    std::fs::write(
+        dep_dir.join("PklProject"),
+        "amends \"pkl:Project\"\npackage {\n  name = \"dep\"\n  baseUri = \"package://example.com/dep\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/dep.zip\"\n}\n",
+    )
+    .unwrap();
+    let encoded_dep_uri = format!(
+        "file://{}/Pkl%50roject",
+        dep_dir.to_string_lossy().replace('\\', "/")
+    );
+    let pct_out = run_with_project(
+        "dep-percent-encoded",
+        &format!(
+            "amends \"pkl:Project\"\ndependencies {{\n  [\"dep\"] = import(\"{encoded_dep_uri}\")\n}}\n"
+        ),
+    );
+    assert_eq!(
+        pct_out.status.code(),
+        Some(1),
+        "percent-encoded Pkl%50roject import must fail: stdout={}",
+        String::from_utf8_lossy(&pct_out.stdout)
+    );
+
+    let triple_proj = tmp.join("triple_proj");
+    std::fs::create_dir_all(triple_proj.join("...")).unwrap();
+    std::fs::write(
+        triple_proj.join("...").join("PklProject"),
+        "amends \"pkl:Project\"\npackage {\n  name = \"t\"\n  baseUri = \"package://example.com/t\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/t.zip\"\n}\n",
+    )
+    .unwrap();
+    std::fs::write(
+        triple_proj.join("PklProject"),
+        "amends \"pkl:Project\"\ndependencies {\n  [\"t\"] = import(\".../PklProject\")\n}\n",
+    )
+    .unwrap();
+    let triple_main = triple_proj.join("main.pkl");
+    std::fs::write(&triple_main, "x = 1\n").unwrap();
+    let triple_out = run_pkl(&[
+        "eval",
+        "--color=never",
+        "--project-dir",
+        triple_proj.to_str().unwrap(),
+        triple_main.to_str().unwrap(),
+    ]);
+    assert_eq!(
+        triple_out.status.code(),
+        Some(1),
+        "triple-dot .../PklProject import must fail: stdout={}",
+        String::from_utf8_lossy(&triple_out.stdout)
+    );
+
+    // 8. Non-Project PklProject single-evaluation error reporting (direct & non-direct & function & null)
+    for (tag, src, expected_type) in [
+        (
+            "non-project-direct-int",
+            "amends \"pkl:Project\"\noutput { value = 42 }\n",
+            "Int",
+        ),
+        (
+            "non-project-direct-fn",
+            "amends \"pkl:Project\"\noutput { value = (x) -> x }\n",
+            "Function1",
+        ),
+        (
+            "non-project-direct-null",
+            "amends \"pkl:Project\"\noutput { value = null }\n",
+            "Null",
+        ),
+        ("non-project-plain-module", "x = 1\n", "PklProject"),
+    ] {
+        let out = run_with_project(tag, src);
+        assert_eq!(out.status.code(), Some(1), "case `{tag}` must fail");
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        assert!(
+            stderr.contains(&format!(
+                "to be of type `pkl.Project`, but got type `{expected_type}`."
+            )),
+            "case `{tag}` unexpected stderr: {stderr}"
+        );
+    }
+
+    let _ = std::fs::remove_dir_all(&tmp);
+}

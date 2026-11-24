@@ -21,7 +21,10 @@ pub use driver::{
     HostFrameTransformer, HostLogger, NativeHost, NativeHostConfig, NativeHostExtensions,
     NativeStreamingOutputFilesOutcome, PrimaryModuleSource,
 };
-pub use fs::{NativeFs, canonicalize_root_dir, file_uri_to_path, path_to_file_uri};
+pub use fs::{
+    NativeFs, canonicalize_root_dir, file_uri_to_path, path_to_file_uri,
+    read_static_local_project_import,
+};
 pub use http::{CancelFlag, NativeHttpClient, NativeHttpTransport};
 pub use modulepath::{
     NativeModulePathResolver, read_generic_jar_resource, resolve_generic_jar_module,

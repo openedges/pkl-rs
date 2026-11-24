@@ -344,7 +344,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
+          "sha256": "12642f55a4db43a3bd40c1f4a68972c1d7ae761581b35159f05b98698c13788b",
           "symbol": "EvaluatorSettings"
         }
       ],
@@ -625,12 +625,12 @@
         },
         {
           "path": "crates/pkl-host-native/src/fs.rs",
-          "sha256": "16601c51834e398f171c011c3242e4d40f37c5e9baacabd8c5a4d6edbf5e8df8",
+          "sha256": "4ac1ab95fc8981c1b69a328c6b7397c1e93ed1b9a6a6b87d01b2cd16a634c7f7",
           "symbol": "NativeFs"
         },
         {
           "path": "crates/pkl-host-native/src/fs.rs",
-          "sha256": "16601c51834e398f171c011c3242e4d40f37c5e9baacabd8c5a4d6edbf5e8df8",
+          "sha256": "4ac1ab95fc8981c1b69a328c6b7397c1e93ed1b9a6a6b87d01b2cd16a634c7f7",
           "symbol": "open_file_nofollow"
         }
       ],
@@ -708,7 +708,7 @@
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "9e7a3fb676a8ef2da369a7f25b17820a481430f2c708713b05f5362df3416809",
+          "sha256": "a368d87d7de561e7955260612eb00fa4d4988871882de31caa2174ebe267af18",
           "symbol": "run_cli"
         },
         {
@@ -845,17 +845,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
+          "sha256": "12642f55a4db43a3bd40c1f4a68972c1d7ae761581b35159f05b98698c13788b",
           "symbol": "PklSettings"
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
+          "sha256": "12642f55a4db43a3bd40c1f4a68972c1d7ae761581b35159f05b98698c13788b",
           "symbol": "EvaluatorSettings"
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "9e7a3fb676a8ef2da369a7f25b17820a481430f2c708713b05f5362df3416809",
+          "sha256": "a368d87d7de561e7955260612eb00fa4d4988871882de31caa2174ebe267af18",
           "symbol": "ParsedCliOptions"
         }
       ],

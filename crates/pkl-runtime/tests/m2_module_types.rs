@@ -339,3 +339,79 @@ fn verified_strict_collections_invalidated_on_amends_receiver_overwrite() {
         );
     }
 }
+
+#[test]
+fn generator_prefix_compile_errors_preserve_pass1_entry_numbering() {
+    // Verified against pinned Apple Pkl 0.32.0:
+    // - Compile errors in the prefix before the first generator abort during pass 1 (#2, not #5).
+    // - Runtime errors in a valid prefix and compile errors after the first generator use pass-2 numbering.
+    let cases = [
+        (
+            "prefix-element-compile-error",
+            "x = new {\n  10\n  super.f()\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#2] ",
+        ),
+        (
+            "prefix-unlabeled-entry-compile-error",
+            "x = new {\n  10\n  [1 + 2] = super.f()\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#2] ",
+        ),
+        (
+            "prefix-nested-object-compile-error",
+            "x = new {\n  10\n  new { super.f() }\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#2][#1] ",
+        ),
+        (
+            "prefix-lambda-compile-error",
+            "x = new {\n  10\n  () -> super.f()\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#2].<function#1> ",
+        ),
+        (
+            "prefix-let-compile-error",
+            "x = new {\n  10\n  let (a = 1) super.f()\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#2].<let expr> ",
+        ),
+        (
+            "prefix-runtime-error-uses-pass2",
+            "x = new {\n  10\n  throw(\"boom\")\n  20\n  when (true) { 2 }\n}\n",
+            "at repro#x[#5] ",
+        ),
+        (
+            "post-generator-compile-error-uses-pass2",
+            "x = new {\n  10\n  20\n  when (true) { 2 }\n  super.f()\n}\n",
+            "at repro#x[#6] ",
+        ),
+    ];
+
+    for (label, source, expected_frame) in cases {
+        let result = evaluate_module_output_with_host(
+            ModuleSourceInput {
+                text: source,
+                uri: "file:///corpus/modules/repro.pkl",
+                inferred_name: "repro",
+            },
+            &ModuleEvalOptions::default(),
+            |request| match &request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
+                ModuleRequestKind::CheckImport { .. } => {
+                    module_keys::defaults(request).expect("default import policy")
+                }
+                other => panic!("unexpected module request in {label}: {other:?}"),
+            },
+        );
+        assert_ne!(
+            result.exit_code,
+            0,
+            "{label}: expected failure, got stdout:\n{}",
+            String::from_utf8_lossy(&result.stdout)
+        );
+        let stderr = String::from_utf8_lossy(&result.stderr);
+        assert!(
+            stderr.contains(expected_frame),
+            "{label}: expected frame `{expected_frame}` in stderr:\n{stderr}"
+        );
+    }
+}

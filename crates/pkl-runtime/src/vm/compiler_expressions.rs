@@ -794,16 +794,17 @@ impl Compiler<'_> {
                 }
                 let previous = self.member.clone();
                 if !method {
-                    self.member = self
-                        .function_names
-                        .entry(expression.span)
-                        .or_insert_with(|| {
-                            if let Some(owner) = self.resolved.function_owners.get(&expression.span)
-                            {
-                                let nested_root =
-                                    owner.encode_utf16().next() == Some(u16::from(b'.'));
-                                let prefix =
-                                    if self.identity.as_ref().is_some_and(|identity| {
+                    self.member =
+                        self.function_names
+                            .entry(expression.span)
+                            .or_insert_with(|| {
+                                if !self.replaying_prefix_error
+                                    && let Some(owner) =
+                                        self.resolved.function_owners.get(&expression.span)
+                                {
+                                    let nested_root =
+                                        owner.encode_utf16().next() == Some(u16::from(b'.'));
+                                    let prefix = if self.identity.as_ref().is_some_and(|identity| {
                                         identity.original_uri == "repl:text"
                                     }) {
                                         if nested_root {
@@ -818,15 +819,15 @@ impl Compiler<'_> {
                                     } else {
                                         "#"
                                     };
-                                PklString::from(prefix).concat(owner)
-                            } else {
-                                let count =
-                                    self.function_counts.entry(previous.clone()).or_default();
-                                *count += 1;
-                                previous.concat(&format!(".<function#{count}>").into())
-                            }
-                        })
-                        .clone();
+                                    PklString::from(prefix).concat(owner)
+                                } else {
+                                    let count =
+                                        self.function_counts.entry(previous.clone()).or_default();
+                                    *count += 1;
+                                    previous.concat(&format!(".<function#{count}>").into())
+                                }
+                            })
+                            .clone();
                 }
                 let mut failed = false;
                 if !method {

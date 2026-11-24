@@ -896,6 +896,7 @@ fn new_repl_compiler<'a>(
         declared_recipes: crate::heap::FastMap::default(),
         module_recipes: crate::heap::FastMap::default(),
         instrument,
+        replaying_prefix_error: false,
     }
 }
 

@@ -1405,18 +1405,36 @@ fn parse_decoded_package(obj: &DecodedObject) -> Result<PackageSpec, ModuleHostE
     let uri = PackageUri::parse(uri_str.as_str())
         .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
     let package_zip_url = get_required_string(obj, "packageZipUrl")?;
+    crate::host::resources::package_components(&PklString::from(package_zip_url.as_str()))
+        .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
     let description = get_optional_string(obj, "description");
     let authors = obj
         .get_property("authors")
         .map(extract_string_sequence)
         .unwrap_or_default();
     let website = get_optional_string(obj, "website");
+    if let Some(ref u) = website {
+        crate::host::resources::package_components(&PklString::from(u.as_str()))
+            .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
+    }
     let documentation = get_optional_string(obj, "documentation");
+    if let Some(ref u) = documentation {
+        crate::host::resources::package_components(&PklString::from(u.as_str()))
+            .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
+    }
     let source_code = get_optional_string(obj, "sourceCode");
+    if let Some(ref u) = source_code {
+        crate::host::resources::package_components(&PklString::from(u.as_str()))
+            .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
+    }
     let source_code_url_scheme = get_optional_string(obj, "sourceCodeUrlScheme");
     let license = get_optional_string(obj, "license");
     let license_text = get_optional_string(obj, "licenseText");
     let issue_tracker = get_optional_string(obj, "issueTracker");
+    if let Some(ref u) = issue_tracker {
+        crate::host::resources::package_components(&PklString::from(u.as_str()))
+            .map_err(|e| ModuleHostError::UriSyntax { reason: e.reason() })?;
+    }
     let api_tests = obj
         .get_property("apiTests")
         .map(extract_string_sequence)
@@ -2068,6 +2086,9 @@ pub fn parse_project_validation(
 // identical Pkl diagnostics.
 // ---------------------------------------------------------------------------
 
+const MAX_STATIC_PROJECT_DEPTH: usize = 16;
+const MAX_STATIC_PROJECT_VISITS: usize = 64;
+
 /// Attempts to load a purely static `amends "pkl:Project"` manifest directly
 /// from its parsed AST, avoiding compiling `pkl:Project`, `pkl:EvaluatorSettings`,
 /// `pkl:platform`, `pkl:reflect`, and `pkl:semver` on every cold CLI invocation.
@@ -2079,7 +2100,18 @@ pub fn try_parse_static_project<F>(
 where
     F: FnMut(&str, &str) -> Option<(String, String)>,
 {
-    try_parse_static_project_inner(project_file_uri, text, read_local_project, 0)
+    let mut active = std::collections::HashSet::new();
+    let mut memo = std::collections::HashMap::new();
+    let mut visits = 0usize;
+    try_parse_static_project_inner(
+        project_file_uri,
+        text,
+        read_local_project,
+        0,
+        &mut active,
+        &mut memo,
+        &mut visits,
+    )
 }
 
 fn try_parse_static_project_inner<F>(
@@ -2087,6 +2119,50 @@ fn try_parse_static_project_inner<F>(
     text: &str,
     read_local_project: &mut F,
     depth: usize,
+    active: &mut std::collections::HashSet<String>,
+    memo: &mut std::collections::HashMap<String, Project>,
+    visits: &mut usize,
+) -> Option<Project>
+where
+    F: FnMut(&str, &str) -> Option<(String, String)>,
+{
+    if depth > MAX_STATIC_PROJECT_DEPTH || !active.insert(project_file_uri.to_string()) {
+        return None;
+    }
+    if let Some(cached) = memo.get(project_file_uri) {
+        active.remove(project_file_uri);
+        return Some(cached.clone());
+    }
+    *visits += 1;
+    if *visits > MAX_STATIC_PROJECT_VISITS {
+        active.remove(project_file_uri);
+        return None;
+    }
+
+    let parsed = parse_static_project_body(
+        project_file_uri,
+        text,
+        read_local_project,
+        depth,
+        active,
+        memo,
+        visits,
+    );
+    active.remove(project_file_uri);
+    if let Some(ref project) = parsed {
+        memo.insert(project_file_uri.to_string(), project.clone());
+    }
+    parsed
+}
+
+fn parse_static_project_body<F>(
+    project_file_uri: &str,
+    text: &str,
+    read_local_project: &mut F,
+    depth: usize,
+    active: &mut std::collections::HashSet<String>,
+    memo: &mut std::collections::HashMap<String, Project>,
+    visits: &mut usize,
 ) -> Option<Project>
 where
     F: FnMut(&str, &str) -> Option<(String, String)>,
@@ -2094,9 +2170,6 @@ where
     use crate::syntax::{ExprKind, ModuleParentKind, ObjectMember};
     use std::collections::HashSet;
 
-    if depth > 16 {
-        return None;
-    }
     let src = crate::source::SourceText::from(text);
     let module = crate::parser::parse_module(src.entire()).ok()?;
     if !module.deferred_diagnostics.is_empty() {
@@ -2168,6 +2241,9 @@ where
                             &child_text,
                             read_local_project,
                             depth + 1,
+                            active,
+                            memo,
+                            visits,
                         )?;
                         child.package.as_ref()?;
                         local_dependencies
@@ -2184,7 +2260,7 @@ where
             }
             "tests" => {
                 let items = parse_static_string_listing(&member.expr, Some(member))?;
-                if !all_distinct(&items) {
+                if !all_distinct(&items) || !items.iter().all(|s| is_valid_static_uri(s)) {
                     return None;
                 }
                 tests = items;
@@ -2236,37 +2312,113 @@ fn all_distinct(items: &[String]) -> bool {
     items.iter().all(|s| seen.insert(s.as_str()))
 }
 
-fn is_conservative_uri(s: &str) -> bool {
-    !s.is_empty()
-        && s.bytes().all(|b| {
-            b > 0x20
-                && b < 0x7f
-                && !matches!(
-                    b,
-                    b'<' | b'>' | b'"' | b'{' | b'}' | b'|' | b'\\' | b'^' | b'`'
-                )
-        })
-        && s.contains("://")
-}
+/// Strictly validates a SemVer 2.0.0 string matching `pkl:semver`'s `versionRegex`
+/// (`external/pkl/stdlib/semver.pkl:227`) and non-negative 64-bit integer components.
+fn is_strict_semver(s: &str) -> bool {
+    let (core_and_pre, build) = match s.split_once('+') {
+        Some((head, b)) => (head, Some(b)),
+        None => (s, None),
+    };
+    let (core, pre) = match core_and_pre.split_once('-') {
+        Some((c, p)) => (c, Some(p)),
+        None => (core_and_pre, None),
+    };
 
-fn is_valid_email_address(s: &str) -> bool {
-    if s.is_empty() || s.bytes().any(|b| b == b'\n' || b == b'\r') {
+    let mut parts = core.split('.');
+    let (Some(major), Some(minor), Some(patch), None) =
+        (parts.next(), parts.next(), parts.next(), parts.next())
+    else {
         return false;
-    }
-    if let (Some(open), Some(close)) = (s.rfind('<'), s.rfind('>'))
-        && open > 0
-        && close == s.len() - 1
-        && close > open + 1
-    {
-        let inner = &s[open + 1..close];
-        if let Some(at) = inner.find('@') {
-            return at > 0
-                && at + 1 < inner.len()
-                && !inner.bytes().any(|b| b.is_ascii_whitespace());
+    };
+    for num in [major, minor, patch] {
+        if num.is_empty()
+            || !num.bytes().all(|b| b.is_ascii_digit())
+            || (num.len() > 1 && num.starts_with('0'))
+            || num.parse::<i64>().is_err()
+        {
+            return false;
         }
     }
-    if let Some(at) = s.find('@') {
-        return at > 0 && at + 1 < s.len() && !s[at + 1..].bytes().any(|b| b.is_ascii_whitespace());
+
+    if let Some(pre) = pre {
+        if pre.is_empty() {
+            return false;
+        }
+        for ident in pre.split('.') {
+            if ident.is_empty()
+                || !ident
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+            {
+                return false;
+            }
+            if ident.bytes().all(|b| b.is_ascii_digit())
+                && ident.len() > 1
+                && ident.starts_with('0')
+            {
+                return false;
+            }
+        }
+    }
+
+    if let Some(build) = build {
+        if build.is_empty() {
+            return false;
+        }
+        for ident in build.split('.') {
+            if ident.is_empty()
+                || !ident
+                    .bytes()
+                    .all(|b| b.is_ascii_alphanumeric() || b == b'-')
+            {
+                return false;
+            }
+        }
+    }
+
+    true
+}
+
+/// Validates RFC 2396 / `java.net.URI` syntax via `ResourceUri::parse`, conservatively
+/// rejecting opaque URIs and empty strings so non-standard cases fall back to `NativeHost`.
+fn is_valid_static_uri(s: &str) -> bool {
+    !s.is_empty()
+        && crate::host::resources::package_components(&PklString::from(s))
+            .is_ok_and(|components| !components.opaque)
+}
+
+fn is_java_dot(c: char) -> bool {
+    !matches!(c, '\n' | '\r' | '\u{0085}' | '\u{2028}' | '\u{2029}')
+}
+
+fn is_java_non_whitespace(c: char) -> bool {
+    !matches!(c, ' ' | '\t' | '\n' | '\u{000B}' | '\u{000C}' | '\r')
+}
+
+/// Conservative match for `Project.pkl:269`:
+/// `typealias EmailAddress = String(matches(Regex(#".+@\S+|.+<\S+@\S+>"#)))`.
+fn is_valid_email_address(s: &str) -> bool {
+    if s.is_empty() || !s.chars().all(is_java_dot) {
+        return false;
+    }
+    if s.match_indices('@').any(|(at, _)| {
+        at > 0 && at + 1 < s.len() && s[at + 1..].chars().all(is_java_non_whitespace)
+    }) {
+        return true;
+    }
+    if let Some(before_gt) = s.strip_suffix('>') {
+        for (open, _) in before_gt.match_indices('<') {
+            if open > 0 {
+                let inner = &before_gt[open + 1..];
+                if inner.chars().all(is_java_non_whitespace)
+                    && inner
+                        .match_indices('@')
+                        .any(|(at, _)| at > 0 && at + 1 < inner.len())
+                {
+                    return true;
+                }
+            }
+        }
     }
     false
 }
@@ -2277,11 +2429,13 @@ fn extract_static_object_body<'a>(
     allow_entry_amendment: bool,
 ) -> Option<&'a [crate::syntax::ObjectMember]> {
     use crate::syntax::ExprKind;
+    // Do NOT strip parentheses: `(new { ... })` is rejected by Pkl 0.32.0
+    // with `Cannot tell which parent to amend.`.
     let ExprKind::Object {
         parent,
         parameters,
         members,
-    } = &expr.unparenthesized().kind
+    } = &expr.kind
     else {
         return None;
     };
@@ -2378,7 +2532,15 @@ fn parse_static_remote_dep(
     }
 
     let uri_str = uri_str?;
-    if !uri_str.starts_with("package:") {
+    if !uri_str.starts_with("package://")
+        || uri_str.contains('#')
+        || uri_str.contains('?')
+        || !is_valid_static_uri(&uri_str)
+    {
+        return None;
+    }
+    let (_, version_suffix) = uri_str.rsplit_once('@')?;
+    if !is_strict_semver(version_suffix) {
         return None;
     }
     let package_uri = PackageUri::parse(uri_str.as_str()).ok()?;
@@ -2526,10 +2688,17 @@ fn parse_static_package(members: &[crate::syntax::ObjectMember]) -> Option<Packa
     let version_str = resolved.remove("version")?;
     let package_zip_url = resolved.remove("packageZipUrl")?;
 
-    if !base_uri.starts_with("package:") || !is_conservative_uri(&base_uri) {
+    if !base_uri.starts_with("package://")
+        || base_uri.contains('?')
+        || base_uri.contains('#')
+        || !is_valid_static_uri(&base_uri)
+    {
         return None;
     }
-    if !package_zip_url.starts_with("https:") || !is_conservative_uri(&package_zip_url) {
+    if !package_zip_url.starts_with("https://") || !is_valid_static_uri(&package_zip_url) {
+        return None;
+    }
+    if !is_strict_semver(&version_str) {
         return None;
     }
     let version = PackageVersion::parse(version_str.as_str()).ok()?;
@@ -2539,7 +2708,25 @@ fn parse_static_package(members: &[crate::syntax::ObjectMember]) -> Option<Packa
 
     let documentation = resolved.remove("documentation");
     if let Some(ref doc) = documentation
-        && (doc.ends_with('/') || !is_conservative_uri(doc))
+        && (doc.ends_with('/') || !is_valid_static_uri(doc))
+    {
+        return None;
+    }
+    let website = resolved.remove("website");
+    if let Some(ref url) = website
+        && !is_valid_static_uri(url)
+    {
+        return None;
+    }
+    let source_code = resolved.remove("sourceCode");
+    if let Some(ref url) = source_code
+        && !is_valid_static_uri(url)
+    {
+        return None;
+    }
+    let issue_tracker = resolved.remove("issueTracker");
+    if let Some(ref url) = issue_tracker
+        && !is_valid_static_uri(url)
     {
         return None;
     }
@@ -2552,13 +2739,13 @@ fn parse_static_package(members: &[crate::syntax::ObjectMember]) -> Option<Packa
         package_zip_url,
         description: resolved.remove("description"),
         authors,
-        website: resolved.remove("website"),
+        website,
         documentation,
-        source_code: resolved.remove("sourceCode"),
+        source_code,
         source_code_url_scheme: resolved.remove("sourceCodeUrlScheme"),
         license: resolved.remove("license"),
         license_text: resolved.remove("licenseText"),
-        issue_tracker: resolved.remove("issueTracker"),
+        issue_tracker,
         api_tests,
         exclude,
     })
@@ -2662,6 +2849,271 @@ package {
                 &mut |_, _| None
             )
             .is_none()
+        );
+    }
+
+    #[test]
+    fn static_project_enforces_strict_semver_and_rejects_query_or_fragment_dep_uris() {
+        for bad_ver in [
+            "01.2.3",
+            "1.02.3",
+            "1.2.03",
+            "1.2.3-01",
+            "1.2.3-a_b",
+            "1.2.3+a_b",
+        ] {
+            let pkg_src = format!(
+                r#"amends "pkl:Project"
+package {{
+  name = "a"
+  baseUri = "package://example.com/a"
+  version = "{bad_ver}"
+  packageZipUrl = "https://example.com/a.zip"
+}}"#
+            );
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", &pkg_src, &mut |_, _| {
+                    None
+                })
+                .is_none(),
+                "package version `{bad_ver}` must fall back"
+            );
+
+            let dep_src = format!(
+                r#"amends "pkl:Project"
+dependencies {{
+  ["a"] {{
+    uri = "package://example.com/a@{bad_ver}"
+  }}
+}}"#
+            );
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", &dep_src, &mut |_, _| {
+                    None
+                })
+                .is_none(),
+                "remote dep version `{bad_ver}` must fall back"
+            );
+        }
+
+        for bad_dep_uri in [
+            "package://example.com/a@1.2.3#/foo.pkl",
+            "package://example.com/a@1.2.3?q=1",
+            "package://example.com/a@1.2.3?q=@1.2.3",
+            "package://example.com/a@1.2.3#foo@1.2.3",
+        ] {
+            let dep_src = format!(
+                r#"amends "pkl:Project"
+dependencies {{
+  ["a"] {{
+    uri = "{bad_dep_uri}"
+  }}
+}}"#
+            );
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", &dep_src, &mut |_, _| {
+                    None
+                })
+                .is_none(),
+                "remote dep uri `{bad_dep_uri}` must fall back"
+            );
+        }
+
+        let valid_semver_src = r#"amends "pkl:Project"
+package {
+  name = "ok"
+  baseUri = "package://example.com/ok"
+  version = "1.2.3-0a.0+01.build-2"
+  packageZipUrl = "https://example.com/ok.zip"
+}
+dependencies {
+  ["dep"] {
+    uri = "package://example.com/dep@0.1.0-alpha.1+001"
+  }
+}"#;
+        assert!(
+            try_parse_static_project(
+                "file:///workspace/PklProject",
+                valid_semver_src,
+                &mut |_, _| None
+            )
+            .is_some()
+        );
+    }
+
+    #[test]
+    fn static_project_rejects_parenthesized_objects_bad_emails_and_bad_uris() {
+        for bad_paren in [
+            "amends \"pkl:Project\"\ntests = (new { \"a.pkl\" })\n",
+            "amends \"pkl:Project\"\ndependencies = (new { [\"a\"] { uri = \"package://example.com/a@1.0.0\" } })\n",
+            "amends \"pkl:Project\"\ndependencies { [\"a\"] = (new { uri = \"package://example.com/a@1.0.0\" }) }\n",
+            "amends \"pkl:Project\"\ndependencies { [\"a\"] { uri = \"package://example.com/a@1.0.0\"; checksums = (new { sha256 = \"abc\" }) } }\n",
+            "amends \"pkl:Project\"\npackage = (new { name = \"a\"; baseUri = \"package://example.com/a\"; version = \"1.0.0\"; packageZipUrl = \"https://example.com/a.zip\" })\n",
+            "amends \"pkl:Project\"\npackage { name = \"a\"; baseUri = \"package://example.com/a\"; version = \"1.0.0\"; packageZipUrl = \"https://example.com/a.zip\"; authors = (new { \"a@b.com\" }) }\n",
+        ] {
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", bad_paren, &mut |_, _| {
+                    None
+                })
+                .is_none(),
+                "parenthesized object must fall back:\n{bad_paren}"
+            );
+        }
+
+        for bad_email in [
+            "a@b\\u{0b}c",
+            "Name <a@b\\u{0b}c.com>",
+            "a\\u{2028}b@c.com",
+            "a\\u{0085}@b.com",
+            "Name\\u{2029} <a@b.com>",
+        ] {
+            let src = format!(
+                "amends \"pkl:Project\"\npackage {{\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/a.zip\"\n  authors {{ \"{bad_email}\" }}\n}}\n"
+            );
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", &src, &mut |_, _| None)
+                    .is_none(),
+                "invalid email `{bad_email}` must fall back"
+            );
+        }
+        assert!(is_valid_email_address("a@b c@d"));
+        assert!(is_valid_email_address("Name <a@b.com>"));
+        assert!(!is_valid_email_address("a@b\u{0b}c"));
+        assert!(!is_valid_email_address("Name <a@b\u{0b}c.com>"));
+        assert!(!is_valid_email_address("a\u{2028}b@c.com"));
+        assert!(!is_valid_email_address("a\u{0085}@b.com"));
+        assert!(!is_valid_email_address("Name\u{2029} <a@b.com>"));
+
+        for bad_uri_field in [
+            r#"packageZipUrl = "https://example.com/%ZZ.zip""#,
+            r#"packageZipUrl = "https://example.com/a[0].zip""#,
+            r#"packageZipUrl = "https://example.com/a#b#c""#,
+            r#"packageZipUrl = "https:foo://bar""#,
+            r#"packageZipUrl = "https://example.com/a.zip"; documentation = "https://example.com/%ZZ""#,
+            r#"packageZipUrl = "https://example.com/a.zip"; documentation = "https://example.com/a[0]""#,
+            r#"packageZipUrl = "https://example.com/a.zip"; website = "https://example.com/%ZZ""#,
+            r#"packageZipUrl = "https://example.com/a.zip"; sourceCode = "https://example.com/a[0]""#,
+            r#"packageZipUrl = "https://example.com/a.zip"; issueTracker = "https://example.com/a#b#c""#,
+        ] {
+            let src = format!(
+                "amends \"pkl:Project\"\npackage {{\n  name = \"a\"\n  baseUri = \"package://example.com/a\"\n  version = \"1.0.0\"\n  {bad_uri_field}\n}}\n"
+            );
+            assert!(
+                try_parse_static_project("file:///workspace/PklProject", &src, &mut |_, _| None)
+                    .is_none(),
+                "invalid URI field `{bad_uri_field}` must fall back"
+            );
+        }
+
+        let bad_test_uri = "amends \"pkl:Project\"\ntests { \"a b.pkl\" }\n";
+        assert!(
+            try_parse_static_project("file:///workspace/PklProject", bad_test_uri, &mut |_, _| {
+                None
+            })
+            .is_none()
+        );
+    }
+
+    #[test]
+    fn static_project_memoizes_diamond_dag_and_bounds_cyclic_graphs() {
+        let leaf_src = r#"amends "pkl:Project"
+package {
+  name = "leaf"
+  baseUri = "package://example.com/leaf"
+  version = "1.0.0"
+  packageZipUrl = "https://example.com/leaf.zip"
+}"#;
+        let node_src = |idx: usize, next: usize| {
+            format!(
+                r#"amends "pkl:Project"
+package {{
+  name = "n{idx}"
+  baseUri = "package://example.com/n{idx}"
+  version = "1.0.0"
+  packageZipUrl = "https://example.com/n{idx}.zip"
+}}
+dependencies {{
+  ["a"] = import("../l{next}a/PklProject")
+  ["b"] = import("../l{next}b/PklProject")
+}}"#
+            )
+        };
+
+        // 1. Depth-10 diamond ladder: 2^10 = 1024 paths, but memoization keeps reads linear.
+        let mut reads = 0usize;
+        let root_src = node_src(0, 1);
+        let parsed = try_parse_static_project(
+            "file:///workspace/root/PklProject",
+            &root_src,
+            &mut |_base, import_uri| {
+                reads += 1;
+                let dir = import_uri
+                    .strip_prefix("../")?
+                    .strip_suffix("/PklProject")?;
+                let level: usize = dir[1..dir.len() - 1].parse().ok()?;
+                let uri = format!("file:///workspace/{dir}/PklProject");
+                let src = if level >= 10 {
+                    leaf_src.to_string()
+                } else {
+                    node_src(level, level + 1)
+                };
+                Some((uri, src))
+            },
+        );
+        assert!(parsed.is_some(), "diamond DAG should parse via memoization");
+        assert!(
+            reads <= 40,
+            "expected linear reads on depth-10 diamond DAG, got {reads}"
+        );
+
+        // 2. Direct 2-node cycle is caught immediately by active set.
+        let cyc_a = r#"amends "pkl:Project"
+package { name = "a"; baseUri = "package://example.com/a"; version = "1.0.0"; packageZipUrl = "https://example.com/a.zip" }
+dependencies { ["b"] = import("../b/PklProject") }"#;
+        let cyc_b = r#"amends "pkl:Project"
+package { name = "b"; baseUri = "package://example.com/b"; version = "1.0.0"; packageZipUrl = "https://example.com/b.zip" }
+dependencies { ["a"] = import("../a/PklProject") }"#;
+        let mut cyc_reads = 0usize;
+        assert!(
+            try_parse_static_project(
+                "file:///workspace/a/PklProject",
+                cyc_a,
+                &mut |_base, import_uri| {
+                    cyc_reads += 1;
+                    if import_uri == "../b/PklProject" {
+                        Some(("file:///workspace/b/PklProject".into(), cyc_b.into()))
+                    } else {
+                        Some(("file:///workspace/a/PklProject".into(), cyc_a.into()))
+                    }
+                }
+            )
+            .is_none()
+        );
+        assert_eq!(cyc_reads, 2);
+
+        // 3. Branching symlink-aliased cycle with fresh non-canonical URIs is capped by visit budget.
+        let branch_src = r#"amends "pkl:Project"
+package { name = "s"; baseUri = "package://example.com/s"; version = "1.0.0"; packageZipUrl = "https://example.com/s.zip" }
+dependencies {
+  ["x"] = import("x/PklProject")
+  ["y"] = import("y/PklProject")
+}"#;
+        let mut sym_reads = 0usize;
+        assert!(
+            try_parse_static_project(
+                "file:///workspace/sym/PklProject",
+                branch_src,
+                &mut |base, import_uri| {
+                    sym_reads += 1;
+                    let prefix = base.strip_suffix("/PklProject")?;
+                    Some((format!("{prefix}/{import_uri}"), branch_src.to_string()))
+                }
+            )
+            .is_none()
+        );
+        assert!(
+            sym_reads <= MAX_STATIC_PROJECT_VISITS,
+            "branching symlink cycle must stay within visit budget, got {sym_reads}"
         );
     }
 }
