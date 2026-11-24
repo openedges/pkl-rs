@@ -183,18 +183,17 @@ impl Parser<'_> {
             Work::Atom(expectation) => {
                 let start = self.token.span.start;
                 work.push(Work::Suffix(start));
-                let kind = match self.token.kind.clone() {
-                    Kind::Name(name)
-                        if matches!(name.as_str(), "unknown" | "nothing" | "module") =>
-                    {
+                let kind = match &self.token.kind {
+                    Kind::Name if matches!(self.token_str(), "unknown" | "nothing" | "module") => {
+                        let kw = self.token_str();
                         self.advance()?;
-                        match name.as_str() {
+                        match kw {
                             "unknown" => TypeKind::Unknown,
                             "nothing" => TypeKind::Nothing,
                             _ => TypeKind::Module,
                         }
                     }
-                    Kind::Name(_) | Kind::QuotedName(_) => {
+                    Kind::Name | Kind::QuotedName(_) => {
                         let (name, name_span) = self.identifier()?;
                         let mut named = Named {
                             start,
@@ -226,11 +225,13 @@ impl Parser<'_> {
                             arguments: named.arguments,
                         }
                     }
-                    Kind::String(value) => {
-                        self.advance()?;
+                    Kind::String(_) => {
+                        let Kind::String(value) = self.advance()?.kind else {
+                            unreachable!();
+                        };
                         TypeKind::String(value)
                     }
-                    Kind::StringError(error) => return Err(*error),
+                    Kind::StringError(error) => return Err((**error).clone()),
                     Kind::Symbol('(') => {
                         self.advance()?;
                         let empty = self.is_symbol(')');

@@ -1,5 +1,6 @@
 //! Heap-backed emission continuations for ordinary authored expression trees.
 use super::*;
+use crate::heap::FastMap;
 use crate::resolver::Binding;
 use crate::syntax::{BinaryOp, Expr, ExprKind, UnaryOp};
 
@@ -28,7 +29,7 @@ enum InferredParent {
 fn register_inferred_parents(
     body: &Expr,
     parent: InferredParent,
-    parents: &mut BTreeMap<Span, InferredParent>,
+    parents: &mut FastMap<Span, InferredParent>,
 ) {
     let mut bodies = vec![body];
     while let Some(body) = bodies.pop() {
@@ -100,7 +101,7 @@ struct ExpressionContextState<'a, 'b> {
     output: &'b mut Code,
     work: &'b mut Vec<Work<'a>>,
     pending_spans: &'b mut Vec<usize>,
-    inferred_parents: &'b mut BTreeMap<Span, InferredParent>,
+    inferred_parents: &'b mut FastMap<Span, InferredParent>,
     emitted_start: &'b mut usize,
 }
 
@@ -197,7 +198,7 @@ impl Compiler<'_> {
     fn register_property_parents(
         &mut self,
         member: &crate::syntax::Member,
-        parents: &mut BTreeMap<Span, InferredParent>,
+        parents: &mut FastMap<Span, InferredParent>,
     ) -> Result<(), RuntimeError> {
         let parent = if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
@@ -256,7 +257,33 @@ impl Compiler<'_> {
         property_parent: Option<&crate::syntax::Member>,
         entry_parent: bool,
     ) -> Result<(), RuntimeError> {
-        let mut work = Vec::with_capacity(16);
+        if !self.instrument {
+            if let Some(value) = literal_value(expression) {
+                output.push_at(Instruction::Constant(value), expression.span);
+                return Ok(());
+            }
+            match &expression.kind {
+                ExprKind::This => {
+                    let instr = if self.resolved.custom_this.contains(&expression.span) {
+                        Instruction::LoadCustomThis
+                    } else {
+                        Instruction::LoadThis
+                    };
+                    output.push_at(instr, expression.span);
+                    return Ok(());
+                }
+                ExprKind::Outer => {
+                    output.push_at(Instruction::LoadOuter, expression.span);
+                    return Ok(());
+                }
+                ExprKind::Module => {
+                    output.push_at(Instruction::LoadModule, expression.span);
+                    return Ok(());
+                }
+                _ => {}
+            }
+        }
+        let mut work = Vec::with_capacity(8);
         work.push(Work::Visit(expression));
         // Children own their emitted source spans. Only outstanding instructions
         // need their parent's span; never rescan an already completed subtree.
@@ -265,7 +292,7 @@ impl Compiler<'_> {
         // Only the new expressions connected directly to a method body through
         // if/let nodes inherit its return type. Nested properties and lambdas
         // establish their own inference contexts.
-        let mut inferred_parents = BTreeMap::new();
+        let mut inferred_parents = FastMap::default();
         if let Some(member) = property_parent {
             self.register_property_parents(member, &mut inferred_parents)?;
         } else if entry_parent {
@@ -1075,16 +1102,14 @@ impl Compiler<'_> {
                 let previous_bound =
                     std::mem::replace(&mut self.constructor_parameters_bound, false);
                 let mut visit = false;
-                let previous_modifiers =
-                    std::mem::replace(&mut self.modifiers, member.modifiers.clone());
+                let previous_modifiers = if member.modifiers.is_empty() {
+                    std::mem::take(&mut self.modifiers)
+                } else {
+                    std::mem::replace(&mut self.modifiers, member.modifiers.clone())
+                };
                 self.validate_modifiers(member)?;
                 let previous_member = self.member.clone();
-                let label = crate::diagnostic_names::quote_identifier(&member.name);
-                self.member = if previous_member.is_empty() {
-                    PklString::from("#").concat(&label)
-                } else {
-                    previous_member.concat(&".".into()).concat(&label)
-                };
+                self.member = append_member_name(&previous_member, &member.name, false);
                 let mut initialization_error = None;
                 let compiled_type = member.ty.as_ref().map(|ty| {
                     self.compile_type(ty).unwrap_or_else(|error| {

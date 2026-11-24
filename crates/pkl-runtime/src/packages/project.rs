@@ -2060,3 +2060,608 @@ pub fn parse_project_validation(
         resolved_evaluator_settings,
     })
 }
+
+// ---------------------------------------------------------------------------
+// Fast static AST loader for common `amends "pkl:Project"` manifests.
+// Returns `None` on any dynamic/non-trivial feature, constraint failure, or
+// unknown field so the caller falls back to full `NativeHost` evaluation with
+// identical Pkl diagnostics.
+// ---------------------------------------------------------------------------
+
+/// Attempts to load a purely static `amends "pkl:Project"` manifest directly
+/// from its parsed AST, avoiding compiling `pkl:Project`, `pkl:EvaluatorSettings`,
+/// `pkl:platform`, `pkl:reflect`, and `pkl:semver` on every cold CLI invocation.
+pub fn try_parse_static_project<F>(
+    project_file_uri: &str,
+    text: &str,
+    read_local_project: &mut F,
+) -> Option<Project>
+where
+    F: FnMut(&str, &str) -> Option<(String, String)>,
+{
+    try_parse_static_project_inner(project_file_uri, text, read_local_project, 0)
+}
+
+fn try_parse_static_project_inner<F>(
+    project_file_uri: &str,
+    text: &str,
+    read_local_project: &mut F,
+    depth: usize,
+) -> Option<Project>
+where
+    F: FnMut(&str, &str) -> Option<(String, String)>,
+{
+    use crate::syntax::{ExprKind, ModuleParentKind, ObjectMember};
+    use std::collections::HashSet;
+
+    if depth > 16 {
+        return None;
+    }
+    let src = crate::source::SourceText::from(text);
+    let module = crate::parser::parse_module(src.entire()).ok()?;
+    if !module.deferred_diagnostics.is_empty() {
+        return None;
+    }
+    let decl = module.declaration.as_ref()?;
+    if !decl.annotations.is_empty() || !decl.modifiers.is_empty() || decl.name.is_some() {
+        return None;
+    }
+    let parent = decl.parent.as_ref()?;
+    if parent.kind != ModuleParentKind::Amends || parent.uri != "pkl:Project" {
+        return None;
+    }
+
+    let project_base_uri = resolve_parent_uri(project_file_uri);
+    let project_dir = file_uri_to_dir_path(&project_base_uri);
+
+    let mut seen_top = HashSet::new();
+    let mut package: Option<PackageSpec> = None;
+    let mut tests: Vec<String> = Vec::new();
+    let mut remote_dependencies: Vec<DeclaredRemoteDep> = Vec::new();
+    let mut local_dependencies: Vec<(String, DeclaredDependenciesTree)> = Vec::new();
+    let mut local_project_dependencies: Vec<(String, Project)> = Vec::new();
+
+    for member in &module.members {
+        if member.local
+            || !member.annotations.is_empty()
+            || !member.modifiers.is_empty()
+            || member.ty.is_some()
+        {
+            return None;
+        }
+        let name = member.name.as_str()?;
+        if !seen_top.insert(name) {
+            return None;
+        }
+        match name {
+            "dependencies" => {
+                let dep_members = extract_static_object_body(&member.expr, Some(member), false)?;
+                let mut seen_deps = HashSet::new();
+                for om in dep_members {
+                    let ObjectMember::Entry { key, value, .. } = om else {
+                        return None;
+                    };
+                    let dep_name = static_string_expr(key)?;
+                    if dep_name.contains('/') || !seen_deps.insert(dep_name.clone()) {
+                        return None;
+                    }
+                    if let Some(entry_members) = extract_static_object_body(value, None, true) {
+                        let remote = parse_static_remote_dep(&dep_name, entry_members)?;
+                        remote_dependencies.push(remote);
+                    } else if let ExprKind::Import {
+                        uri: import_uri,
+                        glob: false,
+                        ..
+                    } = &value.unparenthesized().kind
+                    {
+                        let import_str = import_uri.as_str()?;
+                        let (child_uri, child_text) =
+                            read_local_project(project_file_uri, import_str)?;
+                        if !same_uri_scheme(project_file_uri, &child_uri)
+                            || !child_uri.ends_with("/PklProject")
+                            || child_uri == project_file_uri
+                        {
+                            return None;
+                        }
+                        let child = try_parse_static_project_inner(
+                            &child_uri,
+                            &child_text,
+                            read_local_project,
+                            depth + 1,
+                        )?;
+                        child.package.as_ref()?;
+                        local_dependencies
+                            .push((dep_name.clone(), child.declared_dependencies.clone()));
+                        local_project_dependencies.push((dep_name, child));
+                    } else {
+                        return None;
+                    }
+                }
+            }
+            "package" => {
+                let pkg_members = extract_static_object_body(&member.expr, Some(member), false)?;
+                package = Some(parse_static_package(pkg_members)?);
+            }
+            "tests" => {
+                let items = parse_static_string_listing(&member.expr, Some(member))?;
+                if !all_distinct(&items) {
+                    return None;
+                }
+                tests = items;
+            }
+            _ => return None,
+        }
+    }
+
+    let declared_dependencies = DeclaredDependenciesTree {
+        project_file_uri: project_file_uri.to_string(),
+        package_uri: package.as_ref().map(|p| p.uri.clone()),
+        remote_dependencies,
+        local_dependencies,
+    };
+
+    Some(Project {
+        project_file_uri: project_file_uri.to_string(),
+        project_base_uri,
+        project_dir,
+        package,
+        declared_dependencies,
+        evaluator_settings: Some(EvaluatorSettings::default()),
+        resolved_evaluator_settings: Some(EvaluatorSettings::default()),
+        tests,
+        local_project_dependencies,
+        annotations: Vec::new(),
+    })
+}
+
+fn static_string_expr(expr: &crate::syntax::Expr) -> Option<String> {
+    match &expr.unparenthesized().kind {
+        crate::syntax::ExprKind::String(s) => s.as_str().map(str::to_string),
+        _ => None,
+    }
+}
+
+fn same_uri_scheme(a: &str, b: &str) -> bool {
+    let Some(ia) = a.find(':') else {
+        return false;
+    };
+    let Some(ib) = b.find(':') else {
+        return false;
+    };
+    a[..ia] == b[..ib]
+}
+
+fn all_distinct(items: &[String]) -> bool {
+    let mut seen = std::collections::HashSet::with_capacity(items.len());
+    items.iter().all(|s| seen.insert(s.as_str()))
+}
+
+fn is_conservative_uri(s: &str) -> bool {
+    !s.is_empty()
+        && s.bytes().all(|b| {
+            b > 0x20
+                && b < 0x7f
+                && !matches!(
+                    b,
+                    b'<' | b'>' | b'"' | b'{' | b'}' | b'|' | b'\\' | b'^' | b'`'
+                )
+        })
+        && s.contains("://")
+}
+
+fn is_valid_email_address(s: &str) -> bool {
+    if s.is_empty() || s.bytes().any(|b| b == b'\n' || b == b'\r') {
+        return false;
+    }
+    if let (Some(open), Some(close)) = (s.rfind('<'), s.rfind('>'))
+        && open > 0
+        && close == s.len() - 1
+        && close > open + 1
+    {
+        let inner = &s[open + 1..close];
+        if let Some(at) = inner.find('@') {
+            return at > 0
+                && at + 1 < inner.len()
+                && !inner.bytes().any(|b| b.is_ascii_whitespace());
+        }
+    }
+    if let Some(at) = s.find('@') {
+        return at > 0 && at + 1 < s.len() && !s[at + 1..].bytes().any(|b| b.is_ascii_whitespace());
+    }
+    false
+}
+
+fn extract_static_object_body<'a>(
+    expr: &'a crate::syntax::Expr,
+    member_amendment: Option<&crate::syntax::Member>,
+    allow_entry_amendment: bool,
+) -> Option<&'a [crate::syntax::ObjectMember]> {
+    use crate::syntax::ExprKind;
+    let ExprKind::Object {
+        parent,
+        parameters,
+        members,
+    } = &expr.unparenthesized().kind
+    else {
+        return None;
+    };
+    if !parameters.is_empty() {
+        return None;
+    }
+    match parent {
+        None => Some(members),
+        Some(parent_expr) => {
+            if let Some(member) = member_amendment
+                && member.is_amendment()
+                && parent_expr.span == member.name_span
+            {
+                return Some(members);
+            }
+            if allow_entry_amendment && matches!(parent_expr.kind, ExprKind::EntryParent) {
+                return Some(members);
+            }
+            None
+        }
+    }
+}
+
+fn parse_static_string_listing(
+    expr: &crate::syntax::Expr,
+    member_amendment: Option<&crate::syntax::Member>,
+) -> Option<Vec<String>> {
+    use crate::syntax::ObjectMember;
+    let members = extract_static_object_body(expr, member_amendment, false)?;
+    let mut out = Vec::with_capacity(members.len());
+    for om in members {
+        let ObjectMember::Element { value, .. } = om else {
+            return None;
+        };
+        out.push(static_string_expr(value)?);
+    }
+    Some(out)
+}
+
+fn parse_static_remote_dep(
+    dep_name: &str,
+    members: &[crate::syntax::ObjectMember],
+) -> Option<DeclaredRemoteDep> {
+    use crate::syntax::ObjectMember;
+    use std::collections::HashSet;
+
+    let mut seen = HashSet::new();
+    let mut uri_str: Option<String> = None;
+    let mut sha256: Option<PklString> = None;
+
+    for om in members {
+        let ObjectMember::Property(prop) = om else {
+            return None;
+        };
+        if prop.local
+            || !prop.annotations.is_empty()
+            || !prop.modifiers.is_empty()
+            || prop.ty.is_some()
+        {
+            return None;
+        }
+        let field = prop.name.as_str()?;
+        if !seen.insert(field) {
+            return None;
+        }
+        match field {
+            "uri" => {
+                uri_str = Some(static_string_expr(&prop.expr)?);
+            }
+            "checksums" => {
+                let cs_members = extract_static_object_body(&prop.expr, Some(prop), false)?;
+                let mut cs_seen = HashSet::new();
+                for cs_om in cs_members {
+                    let ObjectMember::Property(cs_prop) = cs_om else {
+                        return None;
+                    };
+                    if cs_prop.local
+                        || !cs_prop.annotations.is_empty()
+                        || !cs_prop.modifiers.is_empty()
+                        || cs_prop.ty.is_some()
+                    {
+                        return None;
+                    }
+                    let cs_field = cs_prop.name.as_str()?;
+                    if cs_field != "sha256" || !cs_seen.insert(cs_field) {
+                        return None;
+                    }
+                    sha256 = Some(PklString::from(static_string_expr(&cs_prop.expr)?));
+                }
+                sha256.as_ref()?;
+            }
+            _ => return None,
+        }
+    }
+
+    let uri_str = uri_str?;
+    if !uri_str.starts_with("package:") {
+        return None;
+    }
+    let package_uri = PackageUri::parse(uri_str.as_str()).ok()?;
+    package_uri.check_has_no_checksum_component().ok()?;
+
+    Some(DeclaredRemoteDep {
+        name: dep_name.to_string(),
+        package_uri,
+        sha256,
+    })
+}
+
+fn resolve_package_string_expr(
+    expr: &crate::syntax::Expr,
+    known: &std::collections::HashMap<&str, String>,
+) -> Option<String> {
+    use crate::syntax::ExprKind;
+    match &expr.unparenthesized().kind {
+        ExprKind::String(s) => s.as_str().map(str::to_string),
+        ExprKind::InterpolatedString(parts) => {
+            let mut out = String::new();
+            for part in parts {
+                match &part.unparenthesized().kind {
+                    ExprKind::String(s) => out.push_str(s.as_str()?),
+                    ExprKind::Name(var) => {
+                        let key = var.as_str()?;
+                        out.push_str(known.get(key)?);
+                    }
+                    _ => return None,
+                }
+            }
+            Some(out)
+        }
+        _ => None,
+    }
+}
+
+fn parse_static_package(members: &[crate::syntax::ObjectMember]) -> Option<PackageSpec> {
+    use crate::syntax::{Expr, ObjectMember};
+    use std::collections::{HashMap, HashSet};
+
+    let mut seen = HashSet::new();
+    let mut raw_strings: HashMap<&str, &Expr> = HashMap::new();
+    let mut authors: Vec<String> = Vec::new();
+    let mut api_tests: Vec<String> = Vec::new();
+    let mut exclude: Vec<String> = vec![
+        "PklProject".to_string(),
+        "PklProject.deps.json".to_string(),
+        ".**".to_string(),
+    ];
+
+    for om in members {
+        let ObjectMember::Property(prop) = om else {
+            return None;
+        };
+        if prop.local
+            || !prop.annotations.is_empty()
+            || !prop.modifiers.is_empty()
+            || prop.ty.is_some()
+        {
+            return None;
+        }
+        let field = prop.name.as_str()?;
+        if !seen.insert(field) {
+            return None;
+        }
+        match field {
+            "name"
+            | "baseUri"
+            | "version"
+            | "packageZipUrl"
+            | "description"
+            | "website"
+            | "documentation"
+            | "sourceCode"
+            | "sourceCodeUrlScheme"
+            | "license"
+            | "licenseText"
+            | "issueTracker" => {
+                raw_strings.insert(field, &prop.expr);
+            }
+            "authors" => {
+                let items = parse_static_string_listing(&prop.expr, Some(prop))?;
+                if !items.iter().all(|s| is_valid_email_address(s)) {
+                    return None;
+                }
+                authors = items;
+            }
+            "apiTests" => {
+                let items = parse_static_string_listing(&prop.expr, Some(prop))?;
+                if !all_distinct(&items) {
+                    return None;
+                }
+                api_tests = items;
+            }
+            "exclude" => {
+                let items = parse_static_string_listing(&prop.expr, Some(prop))?;
+                if prop.is_amendment() {
+                    exclude.extend(items);
+                } else {
+                    exclude = items;
+                }
+            }
+            _ => return None,
+        }
+    }
+
+    // Resolve plain string literals first, then iteratively resolve interpolated fields
+    // (including derived `uri` once `baseUri` and `version` are known).
+    let mut resolved: HashMap<&str, String> = HashMap::with_capacity(raw_strings.len() + 1);
+    for (&field, &expr) in &raw_strings {
+        if let Some(s) = static_string_expr(expr) {
+            resolved.insert(field, s);
+        }
+    }
+    loop {
+        if !resolved.contains_key("uri")
+            && let (Some(base_uri), Some(version)) =
+                (resolved.get("baseUri"), resolved.get("version"))
+        {
+            resolved.insert("uri", format!("{base_uri}@{version}"));
+        }
+        let mut progressed = false;
+        for (&field, &expr) in &raw_strings {
+            if !resolved.contains_key(field)
+                && let Some(s) = resolve_package_string_expr(expr, &resolved)
+            {
+                resolved.insert(field, s);
+                progressed = true;
+            }
+        }
+        if !progressed {
+            break;
+        }
+    }
+    if raw_strings
+        .keys()
+        .any(|field| !resolved.contains_key(field))
+    {
+        return None;
+    }
+
+    let name = resolved.remove("name")?;
+    let base_uri = resolved.remove("baseUri")?;
+    let version_str = resolved.remove("version")?;
+    let package_zip_url = resolved.remove("packageZipUrl")?;
+
+    if !base_uri.starts_with("package:") || !is_conservative_uri(&base_uri) {
+        return None;
+    }
+    if !package_zip_url.starts_with("https:") || !is_conservative_uri(&package_zip_url) {
+        return None;
+    }
+    let version = PackageVersion::parse(version_str.as_str()).ok()?;
+    let uri_str = format!("{base_uri}@{version_str}");
+    let uri = PackageUri::parse(uri_str.as_str()).ok()?;
+    uri.check_has_no_checksum_component().ok()?;
+
+    let documentation = resolved.remove("documentation");
+    if let Some(ref doc) = documentation
+        && (doc.ends_with('/') || !is_conservative_uri(doc))
+    {
+        return None;
+    }
+
+    Some(PackageSpec {
+        name,
+        base_uri,
+        version,
+        uri,
+        package_zip_url,
+        description: resolved.remove("description"),
+        authors,
+        website: resolved.remove("website"),
+        documentation,
+        source_code: resolved.remove("sourceCode"),
+        source_code_url_scheme: resolved.remove("sourceCodeUrlScheme"),
+        license: resolved.remove("license"),
+        license_text: resolved.remove("licenseText"),
+        issue_tracker: resolved.remove("issueTracker"),
+        api_tests,
+        exclude,
+    })
+}
+
+#[cfg(test)]
+mod static_project_tests {
+    use super::*;
+
+    #[test]
+    fn static_project_parses_remote_local_and_package_with_interpolation() {
+        let dep_src = r#"
+amends "pkl:Project"
+
+package {
+  name = "reticast"
+  baseUri = "package://pkg.pkl-lang.org/github.com/openedges/reticast/reticast"
+  version = "2.0.0-rc.1"
+  packageZipUrl = "https://github.com/openedges/reticast/releases/download/\(version)/reticast@\(version).zip"
+  description = "Core Library"
+  authors {
+    "OPENEDGES <info@openedges.com>"
+  }
+  license = "MIT"
+}
+"#;
+        let root_src = r#"
+amends "pkl:Project"
+
+dependencies {
+  ["reticast"] = import("../spec/PklProject")
+  ["remote"] {
+    uri = "package://example.com/foo@1.2.3"
+  }
+}
+"#;
+        let project = try_parse_static_project(
+            "file:///workspace/proj/PklProject",
+            root_src,
+            &mut |_base, import_uri| {
+                assert_eq!(import_uri, "../spec/PklProject");
+                Some((
+                    "file:///workspace/spec/PklProject".to_string(),
+                    dep_src.to_string(),
+                ))
+            },
+        )
+        .expect("static project should parse");
+
+        assert_eq!(
+            project.project_file_uri,
+            "file:///workspace/proj/PklProject"
+        );
+        assert_eq!(project.project_base_uri, "file:///workspace/proj/");
+        assert_eq!(project.declared_dependencies.local_dependencies.len(), 1);
+        assert_eq!(project.declared_dependencies.remote_dependencies.len(), 1);
+        assert_eq!(project.local_project_dependencies.len(), 1);
+        let (_, child) = &project.local_project_dependencies[0];
+        let pkg = child.package.as_ref().unwrap();
+        assert_eq!(pkg.name, "reticast");
+        assert_eq!(
+            pkg.package_zip_url,
+            "https://github.com/openedges/reticast/releases/download/2.0.0-rc.1/reticast@2.0.0-rc.1.zip"
+        );
+        assert_eq!(
+            pkg.exclude,
+            vec!["PklProject", "PklProject.deps.json", ".**"]
+        );
+    }
+
+    #[test]
+    fn static_project_falls_back_on_evaluator_settings_or_dynamic_expr() {
+        let with_settings = r#"
+amends "pkl:Project"
+evaluatorSettings {
+  noCache = true
+}
+"#;
+        assert!(
+            try_parse_static_project(
+                "file:///workspace/PklProject",
+                with_settings,
+                &mut |_, _| None
+            )
+            .is_none()
+        );
+
+        let invalid_version = r#"
+amends "pkl:Project"
+package {
+  name = "bad"
+  baseUri = "package://example.com/bad"
+  version = "not-a-semver"
+  packageZipUrl = "https://example.com/bad.zip"
+}
+"#;
+        assert!(
+            try_parse_static_project(
+                "file:///workspace/PklProject",
+                invalid_version,
+                &mut |_, _| None
+            )
+            .is_none()
+        );
+    }
+}

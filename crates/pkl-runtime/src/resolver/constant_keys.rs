@@ -1,9 +1,9 @@
 //! The constant key subset produced by the pinned AST builder.
 use super::Binding;
+use crate::heap::FastMap;
 use crate::source::Span;
 use crate::syntax::{Expr, ExprKind, UnaryOp};
 use crate::value::PklString;
-use std::collections::BTreeMap;
 
 // A prefix token stream keeps construction, equality, rendering and destruction
 // iterative even when a literal List key is nested thousands of times.
@@ -20,7 +20,7 @@ enum ConstantToken {
     List(usize),
 }
 
-pub(super) fn resolve(expression: &Expr, names: &BTreeMap<Span, Binding>) -> Option<ConstantKey> {
+pub(super) fn resolve(expression: &Expr, names: &FastMap<Span, Binding>) -> Option<ConstantKey> {
     let mut work = vec![expression];
     let mut tokens = Vec::new();
     while let Some(expression) = work.pop() {

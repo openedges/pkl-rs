@@ -35,10 +35,15 @@ pub struct Position {
 pub struct Source {
     pub name: crate::value::PklString,
     text: SourceText,
-    positions: SourceTextIndex,
+    positions: std::sync::OnceLock<SourceTextIndex>,
 }
 
 impl Source {
+    #[inline]
+    fn positions(&self) -> &SourceTextIndex {
+        self.positions.get_or_init(|| self.text.index())
+    }
+
     /// Retained authored UTF-16 and the shared lexer's byte address space.
     pub fn text(&self) -> &SourceText {
         &self.text
@@ -46,16 +51,16 @@ impl Source {
 
     /// Reject continuation bytes; never round a position into another unit.
     pub fn position(&self, byte: usize) -> Option<Position> {
-        self.positions.position(byte)
+        self.positions().position(byte)
     }
 
     /// An interior UTF-16 position in a scalar pair has no byte boundary.
     pub fn byte_from_utf16(&self, utf16: usize) -> Option<usize> {
-        self.positions.byte_from_utf16(utf16)
+        self.positions().byte_from_utf16(utf16)
     }
 
     pub fn utf16_span(&self, span: Span) -> Option<(usize, usize)> {
-        self.positions.utf16_span(span)
+        self.positions().utf16_span(span)
     }
 
     pub fn slice(&self, span: Span) -> Option<SourceSlice<'_>> {
@@ -63,7 +68,7 @@ impl Source {
     }
 
     pub fn line_slice(&self, line_1based: usize) -> Option<SourceSlice<'_>> {
-        self.positions.line_slice(line_1based)
+        self.positions().line_slice(line_1based)
     }
 }
 
@@ -79,12 +84,11 @@ impl SourceMap {
         text: impl Into<SourceText>,
     ) -> SourceId {
         let text = text.into();
-        let positions = text.index();
         let id = SourceId(self.sources.len());
         self.sources.push(Source {
             name: name.into(),
             text,
-            positions,
+            positions: std::sync::OnceLock::new(),
         });
         id
     }

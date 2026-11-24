@@ -1242,9 +1242,12 @@ impl Compiler<'_> {
     pub(super) fn seed_recipe_caches(
         program: &Program,
         unit: crate::modules::UnitId,
-    ) -> (BTreeMap<Span, usize>, BTreeMap<Span, usize>) {
-        let mut declared = BTreeMap::new();
-        let mut module = BTreeMap::new();
+    ) -> (
+        crate::heap::FastMap<Span, usize>,
+        crate::heap::FastMap<Span, usize>,
+    ) {
+        let mut declared = crate::heap::FastMap::default();
+        let mut module = crate::heap::FastMap::default();
         for (id, recipe) in program.type_recipes.iter_with_ids() {
             if recipe.unit == unit {
                 if recipe.path.is_empty() && recipe.failure.is_none() {
