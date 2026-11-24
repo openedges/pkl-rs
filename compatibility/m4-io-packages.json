@@ -344,7 +344,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
           "symbol": "EvaluatorSettings"
         }
       ],
@@ -708,7 +708,7 @@
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "0282038021732a46e12caad79cfa9ccca85fd6bf61ae74a8aace49afb9d443ce",
+          "sha256": "9e7a3fb676a8ef2da369a7f25b17820a481430f2c708713b05f5362df3416809",
           "symbol": "run_cli"
         },
         {
@@ -845,17 +845,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
           "symbol": "PklSettings"
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "0e741eae28a5d61799a8beb04588d7cf4f9bbf043f767f967c6adbec26c409e1",
+          "sha256": "e44e0581b70bc282fd1c3b3bb4b7ba895665c8233d72a70f8533ed3d06ff8cc9",
           "symbol": "EvaluatorSettings"
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "0282038021732a46e12caad79cfa9ccca85fd6bf61ae74a8aace49afb9d443ce",
+          "sha256": "9e7a3fb676a8ef2da369a7f25b17820a481430f2c708713b05f5362df3416809",
           "symbol": "ParsedCliOptions"
         }
       ],

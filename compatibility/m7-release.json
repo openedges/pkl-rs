@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "a8c4c9303502ae4ed30b3cef54a1ef0675402f39d81dd3e3727117dcc15c993d"
+      "sha256": "56006b923fce20e062b11dfed6c87ce611540fc032d3632456ee73c0aa7c4594"
     },
     {
       "bytes": 111079,
@@ -277,7 +277,7 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "da8ccb9572041d3d59adbd71f503d1bbb4d08f291e6311131f0d91cea314f3ea"
+      "sha256": "a16207d881296a6e69049c6d7be7d30a18c10fe57545747974b91e55c439c9e9"
     },
     {
       "bytes": 41462,
@@ -330,7 +330,7 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "7b99737adcbcaebea49e92f2b3b62140e2c7fcf3cc9633a90db8833cfc2e1a27"
+      "sha256": "72f06779fd993d63d9d2e2d0841ae794c7846cda5d4d02f8f8d08629d84170e3"
     },
     {
       "bytes": 64484,
@@ -804,9 +804,9 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "a8c4c9303502ae4ed30b3cef54a1ef0675402f39d81dd3e3727117dcc15c993d",
-    "compatibility/m3-stdlib-output.json": "da8ccb9572041d3d59adbd71f503d1bbb4d08f291e6311131f0d91cea314f3ea",
-    "compatibility/m4-io-packages.json": "7b99737adcbcaebea49e92f2b3b62140e2c7fcf3cc9633a90db8833cfc2e1a27",
+    "compatibility/m2-language.json": "56006b923fce20e062b11dfed6c87ce611540fc032d3632456ee73c0aa7c4594",
+    "compatibility/m3-stdlib-output.json": "a16207d881296a6e69049c6d7be7d30a18c10fe57545747974b91e55c439c9e9",
+    "compatibility/m4-io-packages.json": "72f06779fd993d63d9d2e2d0841ae794c7846cda5d4d02f8f8d08629d84170e3",
     "compatibility/m5-product-tools.json": "4aa6bfc37a0c35bff122b00a90c1ecb7984f37b5b65cc6fcc5cb7c656bb46884",
     "compatibility/m6-wasm-napi.json": "2b14b7ba7baea4176dcab491dad3be3a8403a276ad66486baede5de4ea395511",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
