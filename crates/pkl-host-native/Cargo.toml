@@ -7,10 +7,14 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
-publish.workspace = true
+readme = "../../README.md"
+keywords = ["pkl", "apple-pkl", "configuration", "config"]
+categories = ["config", "network-programming"]
+publish = true
+exclude = ["tests/**"]
 
 [dependencies]
-pkl-runtime = { path = "../pkl-runtime" }
+pkl-runtime.workspace = true
 rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
 rustls-pemfile = "2"
 rustls-pki-types = "1"

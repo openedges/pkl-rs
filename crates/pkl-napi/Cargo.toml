@@ -15,10 +15,10 @@ test = false
 doctest = false
 
 [dependencies]
-pkl = { path = "../pkl" }
-pkl-formatter = { path = "../pkl-formatter" }
-pkl-host-native = { path = "../pkl-host-native" }
-pkl-runtime = { path = "../pkl-runtime" }
+pkl.workspace = true
+pkl-formatter.workspace = true
+pkl-host-native.workspace = true
+pkl-runtime.workspace = true
 napi = { version = "=3.4.0", default-features = false, features = ["dyn-symbols", "napi8"] }
 napi-derive = "=3.3.0"
 napi-derive-backend = "=3.0.0"

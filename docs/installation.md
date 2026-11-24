@@ -4,7 +4,21 @@ This guide covers installing `pkl-rs` as standalone CLI tools (`pkl`, `pkldoc`),
 
 ---
 
-## 1. Prebuilt CLI Binaries (`pkl` and `pkldoc`)
+## 1. Homebrew (macOS & Linux)
+
+Install both `pkl` and `pkldoc` (plus bundled `bash`/`zsh`/`fish` shell completions and `LICENSE`/`NOTICE`/`THIRD-PARTY-NOTICES.md`) from the `openedges/homebrew-tap` tap:
+
+```sh
+brew install openedges/tap/pkl-rs
+pkl --version
+pkldoc --version
+```
+
+*(Conflicts with Homebrew's `pkl` formula because both provide a `pkl` executable.)*
+
+---
+
+## 2. Prebuilt CLI Binaries (`pkl` and `pkldoc`)
 
 Prebuilt archives are built by [.github/workflows/release.yml](../.github/workflows/release.yml) and published to [GitHub Releases](https://github.com/openedges/pkl-rs/releases). Every archive bundles the executable alongside `LICENSE`, `NOTICE`, and `THIRD-PARTY-NOTICES.md`.
 
@@ -25,7 +39,7 @@ Prebuilt archives are built by [.github/workflows/release.yml](../.github/workfl
 #### macOS / Linux
 
 ```sh
-VERSION=v0.32.0
+VERSION=v0.32.0-rc.1
 ARCHIVE=pkl-darwin-arm64.tar.gz   # Adjust for your platform above
 
 curl -fSLO "https://github.com/openedges/pkl-rs/releases/download/${VERSION}/${ARCHIVE}"
@@ -42,7 +56,7 @@ pkl --version
 #### Windows (PowerShell)
 
 ```powershell
-$Version = "v0.32.0"
+$Version = "v0.32.0-rc.1"
 $Archive = "pkl-win32-x64.zip"
 
 Invoke-WebRequest "https://github.com/openedges/pkl-rs/releases/download/$Version/$Archive" -OutFile $Archive
@@ -73,14 +87,15 @@ pkl shell-completion fish > ~/.config/fish/completions/pkl.fish
 
 ---
 
-## 2. Node.js Native Package (`@pkl-rs/napi`)
+## 3. Node.js Native Package (`@pkl-rs/napi`)
 
 - **Node.js requirement**: `>= 18.0.0` (N-API v8)
 - **Bundled prebuilt addons (7 platforms)**: `darwin-arm64`, `darwin-x64`, `linux-x64-gnu` (glibc `>= 2.28`), `linux-arm64-gnu`, `linux-x64-musl`, `linux-arm64-musl`, `win32-x64-msvc`.
 - **Module formats**: Dual ESM (`import`) and CommonJS (`require`) with bundled TypeScript declarations (`dist/index.d.ts`).
 
 ```sh
-npm install @pkl-rs/napi
+# Release candidates use the `next` dist-tag (GA uses `npm install @pkl-rs/napi`)
+npm install @pkl-rs/napi@next
 ```
 
 To build and test locally from a source checkout:
@@ -95,14 +110,15 @@ See [packages/pkl-napi/README.md](../packages/pkl-napi/README.md) for API usage 
 
 ---
 
-## 3. WebAssembly Package (`@pkl-rs/wasm`)
+## 4. WebAssembly Package (`@pkl-rs/wasm`)
 
 - **Browser support**: Modern evergreen browsers supporting WebAssembly + ES Modules (Chromium, Firefox, WebKit/Safari).
 - **Node.js requirement**: `>= 20.16.0` (ESM).
 - **Bundle budget**: `pkl_wasm_bg.wasm` stays within `<= 2.50 MiB` (`2,621,440 B`) gzip-9 compressed.
 
 ```sh
-npm install @pkl-rs/wasm
+# Release candidates use the `next` dist-tag (GA uses `npm install @pkl-rs/wasm`)
+npm install @pkl-rs/wasm@next
 ```
 
 To build and test locally from a source checkout (requires `wasm32-unknown-unknown` target and pinned `wasm-bindgen-cli 0.2.108`):
@@ -118,20 +134,34 @@ See [packages/pkl-wasm/README.md](../packages/pkl-wasm/README.md) for browser/No
 
 ---
 
-## 4. Rust Library (`crates/pkl`)
+## 5. Rust Crates (`crates.io`)
 
-Until crates.io publication is enabled for GA (see [docs/versioning.md](versioning.md)), consume `pkl` directly via Git or workspace path dependency (no `[patch.crates-io]` overrides required):
+The public Rust evaluator API crate (`crates/pkl`) is published on crates.io as **`pkl-rs`** while exporting its library module as `pkl` (`use pkl::...;`), alongside the modular workspace crates (`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`):
 
 ```toml
 [dependencies]
-pkl = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0" }
+pkl-rs = "0.32.0-rc.1"
+```
+
+Or install the CLI tools directly via Cargo:
+
+```sh
+cargo install pkl-cli --version 0.32.0-rc.1
+cargo install pkl-doc --version 0.32.0-rc.1
+```
+
+Git dependency consumption also works directly with zero `[patch.crates-io]` overrides:
+
+```toml
+[dependencies]
+pkl-rs = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0-rc.1" }
 ```
 
 - **Minimum Supported Rust Version (MSRV)**: Rust `1.98` (workspace pinned to `1.98.1` in [rust-toolchain.toml](../rust-toolchain.toml), Rust 2024 edition).
 
 ---
 
-## 5. Building from Source
+## 6. Building from Source
 
 ### Prerequisites
 

@@ -68,15 +68,45 @@ def normalize_tag(raw_tag: str) -> str:
     return version
 
 
+def parse_workspace_internal_dep_versions(cargo_toml_text: str) -> dict[str, str]:
+    """Extract `version` for internal workspace path dependencies under `[workspace.dependencies]`."""
+    in_section = False
+    versions: dict[str, str] = {}
+    for raw_line in cargo_toml_text.splitlines():
+        line = raw_line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            in_section = line == "[workspace.dependencies]"
+            continue
+        if in_section:
+            m = re.match(r'^([A-Za-z0-9_-]+)\s*=\s*\{(.+)\}$', line)
+            if not m:
+                continue
+            dep_name, body = m.group(1), m.group(2)
+            path_m = re.search(r'\bpath\s*=\s*"([^"]+)"', body)
+            if not path_m or not path_m.group(1).startswith("crates/"):
+                continue
+            ver_m = re.search(r'\bversion\s*=\s*"([^"]+)"', body)
+            if not ver_m:
+                raise ValueError(
+                    f"Workspace internal dependency {dep_name!r} in `[workspace.dependencies]` "
+                    "must declare an explicit `version` for crates.io publishing"
+                )
+            versions[f"Cargo.toml:[workspace.dependencies].{dep_name}"] = ver_m.group(1)
+    return versions
+
+
 def verify_versions(root: Path = ROOT, tag: str | None = None) -> dict[str, str]:
-    cargo_version = parse_workspace_cargo_version(
-        (root / "Cargo.toml").read_text(encoding="utf-8")
-    )
+    cargo_toml_text = (root / "Cargo.toml").read_text(encoding="utf-8")
+    cargo_version = parse_workspace_cargo_version(cargo_toml_text)
+    internal_dep_versions = parse_workspace_internal_dep_versions(cargo_toml_text)
     wasm_version = parse_npm_version(root / "packages" / "pkl-wasm" / "package.json")
     napi_version = parse_npm_version(root / "packages" / "pkl-napi" / "package.json")
 
     versions = {
         "Cargo.toml": cargo_version,
+        **internal_dep_versions,
         "packages/pkl-wasm/package.json": wasm_version,
         "packages/pkl-napi/package.json": napi_version,
     }

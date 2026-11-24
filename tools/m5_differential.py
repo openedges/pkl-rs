@@ -70,7 +70,7 @@ DEFAULT_PKL_PACKAGE = "pkl-cli"
 DEFAULT_PKL_BIN = "pkl"
 DEFAULT_PKLDOC_PACKAGE = "pkl-doc"
 DEFAULT_PKLDOC_BIN = "pkldoc"
-DEFAULT_API_PROBE_PACKAGE = "pkl"
+DEFAULT_API_PROBE_PACKAGE = "pkl-rs"
 DEFAULT_API_PROBE_EXAMPLE = "pkl_m5_api_probe"
 
 NATIVE_VERSION_RE = re.compile(rb"^(Pkl|pkldoc) 0\.32\.0 \(([^,]+), Java [^\)]+\)\n$")

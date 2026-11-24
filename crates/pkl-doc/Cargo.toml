@@ -7,15 +7,19 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
-publish.workspace = true
+readme = "../../README.md"
+keywords = ["pkl", "apple-pkl", "pkldoc", "documentation", "cli"]
+categories = ["config", "command-line-utilities", "development-tools"]
+publish = true
+exclude = ["tests/**"]
 
 [[bin]]
 name = "pkldoc"
 path = "src/bin/pkldoc.rs"
 
 [dependencies]
-pkl-host-native = { path = "../pkl-host-native" }
-pkl-runtime = { path = "../pkl-runtime" }
+pkl-host-native.workspace = true
+pkl-runtime.workspace = true
 
 [lints]
 workspace = true

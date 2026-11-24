@@ -6,6 +6,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -16,6 +18,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 import check_linux_glibc
 import check_release_version
 import local_verify
+import render_homebrew_formula
 
 
 class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
@@ -43,6 +46,9 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, ci_text, f"Expensive step {forbidden!r} must live in local verification, not ci.yml")
         # Must enforce the 2.50 MiB gzip-9 .wasm budget during packaging smoke.
         self.assertIn("2621440", ci_text)
+        # Must never invoke `npm pack packages/...` without leading `./` (npm parses bare `a/b` as GitHub shorthand).
+        self.assertNotIn("npm pack --dry-run packages/", ci_text)
+        self.assertNotIn("npm pack packages/", ci_text)
         # Must restrict push/PR branch triggers per Branch Policy (main and release/**).
         self.assertIn("- main", ci_text)
         self.assertIn("'release/**'", ci_text)
@@ -60,6 +66,7 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             "package-linux-portable:",
             "package-macos-windows:",
             "package-wasm:",
+            "package-crates:",
             "assemble-and-release:",
         ):
             self.assertIn(job, rel_text)
@@ -77,6 +84,17 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("SHA256SUMS.txt", rel_text)
         self.assertIn("gh release create", rel_text)
         self.assertIn("npm publish", rel_text)
+        self.assertIn("--tag next", rel_text)
+        self.assertIn("publish_crates:", rel_text)
+        self.assertIn("CARGO_REGISTRY_TOKEN", rel_text)
+        self.assertIn("cargo publish --locked", rel_text)
+        self.assertIn("publish_homebrew:", rel_text)
+        self.assertIn("HOMEBREW_TAP_TOKEN", rel_text)
+        self.assertIn("openedges/homebrew-tap", rel_text)
+        self.assertIn("render_homebrew_formula.py", rel_text)
+        self.assertIn("ruby -c", rel_text)
+        # Must never invoke `npm pack packages/...` without leading `./` (npm parses bare `a/b` as GitHub shorthand).
+        self.assertNotIn("npm pack packages/", rel_text)
         # Every third-party action reference must remain commit-SHA pinned.
         for match in re.finditer(r"uses:\s+([^\s#]+)", rel_text):
             ref = match.group(1)
@@ -125,19 +143,28 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertGreater(check_linux_glibc.max_glibc_version("Name: GLIBC_2.38"), (2, 28, 0))
 
     def test_check_release_version_lockstep_and_tag_validation(self) -> None:
-        # Live repo must be in lockstep at 0.32.0.
-        live = check_release_version.verify_versions(ROOT, tag="refs/tags/v0.32.0")
-        self.assertEqual(live["Cargo.toml"], "0.32.0")
-        self.assertEqual(live["packages/pkl-wasm/package.json"], "0.32.0")
-        self.assertEqual(live["packages/pkl-napi/package.json"], "0.32.0")
-        self.assertEqual(live["tag"], "0.32.0")
+        # Live repo must be in lockstep across Cargo.toml, internal workspace deps, and both npm packages.
+        live = check_release_version.verify_versions(ROOT)
+        current_ver = live["Cargo.toml"]
+        self.assertRegex(current_ver, check_release_version.SEMVER_RE)
+        self.assertEqual(live["packages/pkl-wasm/package.json"], current_ver)
+        self.assertEqual(live["packages/pkl-napi/package.json"], current_ver)
+        self.assertEqual(live["Cargo.toml:[workspace.dependencies].pkl-runtime"], current_ver)
+        self.assertEqual(live["Cargo.toml:[workspace.dependencies].pkl"], current_ver)
+        live_tagged = check_release_version.verify_versions(ROOT, tag=f"refs/tags/v{current_ver}")
+        self.assertEqual(live_tagged["tag"], current_ver)
 
-        # Synthetic repo tests for prerelease match, tag mismatch, bad tag, and manifest drift.
+        # Synthetic repo tests for prerelease match, tag mismatch, bad tag, and manifest/dep drift.
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             (root / "packages" / "pkl-wasm").mkdir(parents=True)
             (root / "packages" / "pkl-napi").mkdir(parents=True)
-            (root / "Cargo.toml").write_text('[workspace.package]\nversion = "0.32.0-rc.1"\n', encoding="utf-8")
+            (root / "Cargo.toml").write_text(
+                '[workspace.package]\nversion = "0.32.0-rc.1"\n\n'
+                '[workspace.dependencies]\n'
+                'pkl-runtime = { version = "0.32.0-rc.1", path = "crates/pkl-runtime" }\n',
+                encoding="utf-8",
+            )
             (root / "packages" / "pkl-wasm" / "package.json").write_text('{"version":"0.32.0-rc.1"}\n', encoding="utf-8")
             (root / "packages" / "pkl-napi" / "package.json").write_text('{"version":"0.32.0-rc.1"}\n', encoding="utf-8")
 
@@ -151,9 +178,74 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 check_release_version.verify_versions(root, tag="v0.32.0+build.1")
 
+            # Workspace internal dep version drift must fail loudly.
+            (root / "Cargo.toml").write_text(
+                '[workspace.package]\nversion = "0.32.0-rc.1"\n\n'
+                '[workspace.dependencies]\n'
+                'pkl-runtime = { version = "0.32.0", path = "crates/pkl-runtime" }\n',
+                encoding="utf-8",
+            )
+            with self.assertRaises(ValueError):
+                check_release_version.verify_versions(root)
+
+            # Restoring Cargo.toml and drifting npm manifest must also fail loudly.
+            (root / "Cargo.toml").write_text('[workspace.package]\nversion = "0.32.0-rc.1"\n', encoding="utf-8")
             (root / "packages" / "pkl-napi" / "package.json").write_text('{"version":"0.32.0"}\n', encoding="utf-8")
             with self.assertRaises(ValueError):
                 check_release_version.verify_versions(root)
+
+    def test_render_homebrew_formula_validates_checksums_and_ruby_syntax(self) -> None:
+        archives = [
+            "pkl-darwin-arm64.tar.gz",
+            "pkldoc-darwin-arm64.tar.gz",
+            "pkl-darwin-x64.tar.gz",
+            "pkldoc-darwin-x64.tar.gz",
+            "pkl-linux-arm64-gnu.tar.gz",
+            "pkldoc-linux-arm64-gnu.tar.gz",
+            "pkl-linux-x64-gnu.tar.gz",
+            "pkldoc-linux-x64-gnu.tar.gz",
+            "pkl-win32-x64.zip",
+        ]
+        checksum_lines = [f"{str(idx) * 64}  {name}" for idx, name in enumerate(archives, start=1)]
+        parsed = render_homebrew_formula.parse_checksums("\n".join(checksum_lines) + "\n")
+        formula = render_homebrew_formula.render_formula(
+            version="0.32.0-rc.1",
+            tag="v0.32.0-rc.1",
+            checksums=parsed,
+            repo="openedges/pkl-rs",
+        )
+        self.assertIn('class PklRs < Formula', formula)
+        self.assertIn('version "0.32.0-rc.1"', formula)
+        self.assertIn('license "Apache-2.0"', formula)
+        self.assertIn('conflicts_with "pkl"', formula)
+        self.assertIn('releases/download/v0.32.0-rc.1/pkl-darwin-arm64.tar.gz', formula)
+        self.assertIn('releases/download/v0.32.0-rc.1/pkldoc-linux-x64-gnu.tar.gz', formula)
+        self.assertIn('generate_completions_from_executable', formula)
+        self.assertIn('prefix.install "LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"', formula)
+
+        # Reject version/tag mismatch or missing archive digest.
+        with self.assertRaises(ValueError):
+            render_homebrew_formula.render_formula(
+                version="0.32.0-rc.1",
+                tag="v0.32.0",
+                checksums=parsed,
+            )
+        incomplete = dict(parsed)
+        del incomplete["pkldoc-darwin-arm64.tar.gz"]
+        with self.assertRaises(ValueError):
+            render_homebrew_formula.render_formula(
+                version="0.32.0-rc.1",
+                tag="v0.32.0-rc.1",
+                checksums=incomplete,
+            )
+
+        ruby = shutil.which("ruby")
+        if ruby:
+            with tempfile.TemporaryDirectory() as tmp:
+                rb_path = Path(tmp) / "pkl-rs.rb"
+                rb_path.write_text(formula, encoding="utf-8")
+                proc = subprocess.run([ruby, "-c", str(rb_path)], capture_output=True, text=True)
+                self.assertEqual(proc.returncode, 0, proc.stderr)
 
     def test_protobuf_strict_suite_matches_testing_contract(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

@@ -1,6 +1,27 @@
 # 구현 계획
 
-## 현재 상태 — `0.32.0` 배포 전 코드 리뷰·결함 수정 및 전체 로컬 재검증 완료 (`2026-11-24`, 로컬 macOS `arm64`, `release_ready: false`)
+## 현재 상태 — `v0.32.0-rc.1` 4채널 배포 준비 완료 (GitHub Releases, npm, crates.io, Homebrew; 로컬 커밋 후 태그/푸시 최종 확인 대기, `release_ready: false`)
+
+`2026-11-24` 사용자 확정안(`v0.32.0-rc.1`, GitHub Releases·npm·crates.io·Homebrew 4채널 배포)에 따라 전체 매니페스트 버전을 `0.32.0-rc.1`로 일괄 잠금(언어 기준선 `PKL_VERSION = "0.32.0"`은 유지)하고 4채널 자동 배포 파이프라인과 패키징 검증을 완비했다.
+
+### `2026-11-24` `v0.32.0-rc.1` 4채널 배포 구성 항목
+- **전 매니페스트 `0.32.0-rc.1` 잠금 및 검증 ([tools/check_release_version.py](tools/check_release_version.py))**:
+  - 루트 [Cargo.toml](Cargo.toml)(`[workspace.package].version` + `[workspace.dependencies]` 내부 크레이트 7종 버전), `Cargo.lock`, [packages/pkl-wasm/package.json](packages/pkl-wasm/package.json), [packages/pkl-napi/package.json](packages/pkl-napi/package.json)을 모두 `0.32.0-rc.1`로 정렬하고, `check_release_version.py`가 `[workspace.dependencies]` 내부 버전 드리프트까지 기계적으로 차단하도록 확장했다.
+- **crates.io 8개 크레이트 배포 구성 (`crates/pkl` → `pkl-rs`, `[lib] name = "pkl"`)**:
+  - 기존 crates.io 선점 충돌(`pkl` `v0.0.0`)을 회피하기 위해 `crates/pkl/Cargo.toml`의 패키지명만 `pkl-rs`로 변경하고 `[lib] name = "pkl"`을 유지해 Rust 소비자의 `use pkl::...` 호환성을 보존했다.
+  - 배포 대상 8개 크레이트(`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-rs`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`)에 `publish = true`, `readme = "../../README.md"`, `keywords`, `categories`, 테스트/예제 `exclude`를 설정했다(바인딩/도구 크레이트 `pkl-wasm`, `pkl-napi`, `xtask`는 `publish = false` 유지).
+  - CI 및 하네스(`ci.yml`, `tools/m5_differential.py`, `tools/m7_benchmark.py`, `tools/m7_memory_soak.py`)의 `-p pkl` 참조를 `-p pkl-rs`로 갱신하고 `crates/pkl-doc/src/cli.rs`의 기본 HTTP `User-Agent`를 `pkl-rs/0.32.0`으로 정렬했다.
+- **Homebrew Tap Formula 생성기 ([tools/render_homebrew_formula.py](tools/render_homebrew_formula.py))**:
+  - `SHA256SUMS.txt`에서 4개 플랫폼(`darwin-arm64`, `darwin-x64`, `linux-arm64-gnu`, `linux-x64-gnu`)의 `pkl`·`pkldoc` 아카이브 8종 SHA-256을 엄격 검증해 `Formula/pkl-rs.rb`(`conflicts_with "pkl"`, `bash`/`zsh`/`fish` 자동 완성, `LICENSE`·`NOTICE`·`THIRD-PARTY-NOTICES.md`, `test do`)를 결정적으로 생성하고 `ruby -c` 구문 검증과 단위 테스트([tools/tests/test_local_verify.py](tools/tests/test_local_verify.py))를 추가했다.
+- **4채널 릴리스 워크플로 ([.github/workflows/release.yml](.github/workflows/release.yml))**:
+  - 병렬 `package-crates` 잡을 추가해 8개 `.crate` 패키징(`pkl-runtime`·`pkl-formatter` 전체 빌드 검증 + 6개 종속 크레이트 패키징 및 `<= 10 MiB` 예산)을 사전 검증한다.
+  - **GitHub Releases**: `v*` 태그 시 자동 발행(`-*` 태그 자동 `--prerelease`), 명시적 자산 파일 업로드(`*.tar.gz`, `*.zip`, `*.tgz`, `SHA256SUMS.txt`) + `Formula/pkl-rs.rb` 아티팩트 보존.
+  - **npm (`publish_npm`)**: `NPM_TOKEN` 가드 및 프리릴리스(`*-*`) 자동 `--tag next` 부여로 `latest` 오염 방지.
+  - **crates.io (`publish_crates`)**: `CARGO_REGISTRY_TOKEN` 가드, 8개 크레이트 위상 정렬 순차 발행, 인덱스 전파 재시도 및 이미 배포된 버전 멱등 처리.
+  - **Homebrew (`publish_homebrew`)**: `HOMEBREW_TAP_TOKEN` 가드, `openedges/homebrew-tap` 자동 갱신, 기존 GitHub Release 재사용 시 라이브 `SHA256SUMS.txt`를 직접 다운로드해 체크섬 불일치 원천 차단.
+- **문서 갱신**: [CHANGELOG.md](CHANGELOG.md)(`[0.32.0-rc.1]` 섹션), [README.md](README.md), [docs/installation.md](docs/installation.md), [docs/versioning.md](docs/versioning.md), [docs/ci.md](docs/ci.md)를 4채널 `v0.32.0-rc.1` 배포 기준으로 정렬했다.
+
+## 이전 상태 — `0.32.0` 배포 전 코드 리뷰·결함 수정 및 전체 로컬 재검증 완료 (`2026-11-24`, 로컬 macOS `arm64`, `release_ready: false`)
 
 `2026-11-24` 배포 전 최종 감사에서 식별된 릴리스 차단 결함·식별자 정리·호환성/메모리 회귀를 모두 수정하고, 동결 소스 기준 로컬 macOS `arm64`(Apple Silicon, `rustc 1.98.1`, 핀 Temurin `21.0.13.1+2-LTS` + 핀 공식 Apple Pkl `0.32.0` `native-image`, **호스티드 CI 아님**)에서 전체 정적·단위·차분·소크·퍼징·34-워크로드 벤치마크·Chromium 분석을 재실행했다.
 

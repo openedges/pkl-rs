@@ -984,7 +984,7 @@ def build_rust_artifacts(
         if need_pkldoc:
             cmd.extend(["-p", "pkl-doc", "--bin", "pkldoc"])
         if need_probe:
-            cmd.extend(["-p", "pkl", "--example", "m7_bench_probe"])
+            cmd.extend(["-p", "pkl-rs", "--example", "m7_bench_probe"])
         build_cap = capture_wait4(cmd, root, dict(os.environ), destination / "build/rust-release", timeout=600)
         if build_cap["status"] != "executed" or build_cap["exit_code"] != 0:
             err = raw_channel(build_cap, "stderr").decode("utf-8", errors="replace")

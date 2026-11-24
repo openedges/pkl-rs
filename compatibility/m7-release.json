@@ -398,7 +398,7 @@
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "b55a9d482ae9a74135180934c7ac009822f4a8095864f879992fa47467615b1e"
+      "sha256": "7fb580ec45c12d1653227107dfb888742e82a16fb94f835944c0443168ee0a93"
     },
     {
       "bytes": 37108,
@@ -434,7 +434,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "d71e5f02b6283cda402eaf305e717e39426454753a0fc87cde0af7e19801a065"
+      "sha256": "2715d05de7a1bac20375477b90ae65beca4932310896909b752344e12764efbd"
     }
   ],
   "requirements": {
@@ -479,12 +479,12 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_cold_cli_pair"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "evaluate_ratio_verdict"
         }
       ],
@@ -509,7 +509,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "parse_probe_series"
         },
         {
@@ -539,7 +539,7 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_api_probe_pair"
         },
         {
@@ -564,7 +564,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_js_binding_workload"
         },
         {
@@ -619,7 +619,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_packages_http_workload"
         }
       ],
@@ -635,7 +635,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "run_suite"
         },
         {
@@ -656,12 +656,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_output_files_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_cold_cli_pair"
         }
       ],
@@ -677,17 +677,17 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_server_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "_run_pkldoc_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+          "sha256": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
           "symbol": "is_benign_jline_repl_stderr"
         }
       ],
@@ -710,12 +710,12 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "55ed222043557577c79a62ad2a5032d42bca6f723b0d6871bd7a9777ec46a314",
+          "sha256": "80ff1bd4a5186243959df939d5084476a54c435540e88cf13ab6f9eb7de898b4",
           "symbol": "package-smoke"
         },
         {
           "path": ".github/workflows/release.yml",
-          "sha256": "02935d87d6a1fa4b71c7d4e09f13fcd6ec087e3b4e495d036b88360f528f7bd4",
+          "sha256": "d1db17e8888cd1edbce13850e5ea883d6742acf4249ef87c2da3dd3c49290886",
           "symbol": "assemble-and-release"
         },
         {
@@ -732,7 +732,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3",
+          "sha256": "e04e14693383f9bb9836cf02430dbc5e8b5490dd984add386afba74fdfc5368f",
           "symbol": "analyze_series"
         },
         {
@@ -773,7 +773,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3",
+          "sha256": "e04e14693383f9bb9836cf02430dbc5e8b5490dd984add386afba74fdfc5368f",
           "symbol": "verify_report"
         },
         {
@@ -807,15 +807,15 @@
     "compatibility/m2-language.json": "7b861b2f6064b4b17e9b68ae01e2aea97f5164803759b6efe6d78b6506dce198",
     "compatibility/m3-stdlib-output.json": "f1226e285cc4da4e8c24975f33fb4b187a3bddb0ed648ec1b9d6c087befd5635",
     "compatibility/m4-io-packages.json": "093545537ad4a2c8d8ffc0bbce8b72d67f2bfee45e94913592b0bfc62277661d",
-    "compatibility/m5-product-tools.json": "b55a9d482ae9a74135180934c7ac009822f4a8095864f879992fa47467615b1e",
-    "compatibility/m6-wasm-napi.json": "d71e5f02b6283cda402eaf305e717e39426454753a0fc87cde0af7e19801a065",
+    "compatibility/m5-product-tools.json": "7fb580ec45c12d1653227107dfb888742e82a16fb94f835944c0443168ee0a93",
+    "compatibility/m6-wasm-napi.json": "2715d05de7a1bac20375477b90ae65beca4932310896909b752344e12764efbd",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
-    "tools/m7_benchmark.py": "b219061ddadc972b50abe8c679b52eb40ad42417092245274324b4fcb631511a",
+    "tools/m7_benchmark.py": "298f81be02bd6736717a8a12f3837343df70c3c3ef0c1ac6b0c724ab7ad21b21",
     "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
-    "tools/m7_memory_soak.py": "534429a17dd97db4b1b46d380c9784fb99ef17828f0debd5d57ea8ac46d309d3",
+    "tools/m7_memory_soak.py": "e04e14693383f9bb9836cf02430dbc5e8b5490dd984add386afba74fdfc5368f",
     "tools/oracle.py": "9ebd3ae84eb69eb2c2d158c11f703a18cd59ce6b487af8218ca17591a74dcf5e"
   },
   "target_ratios": {

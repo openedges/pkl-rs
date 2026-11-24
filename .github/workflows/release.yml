@@ -11,6 +11,8 @@ name: Release
 # - macOS (arm64, x64) and Windows (x64) CLI archives (`pkl`, `pkldoc`).
 # - Publishable `@pkl-rs/wasm` npm tarball (verified gzip-9 <= 2.50 MiB).
 # - Multi-platform `@pkl-rs/napi` npm tarball bundling all 7 native `.node` addons.
+# - Verified `.crate` packaging for all 8 crates.io workspace crates.
+# - Deterministic Homebrew Formula (`Formula/pkl-rs.rb`) rendered from `SHA256SUMS.txt`.
 # - `SHA256SUMS.txt` covering every release archive and npm tarball.
 
 on:
@@ -20,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag label when running manually (e.g. v0.32.0; defaults to dry-run snapshot label)
+        description: Release tag label when running manually (e.g. v0.32.0-rc.1; defaults to dry-run snapshot label)
         required: false
         default: ''
         type: string
@@ -34,6 +36,21 @@ on:
         required: false
         default: false
         type: boolean
+      publish_crates:
+        description: Publish all 8 workspace crates to crates.io in topological order (requires CARGO_REGISTRY_TOKEN secret)
+        required: false
+        default: false
+        type: boolean
+      publish_homebrew:
+        description: Update Formula/pkl-rs.rb in the Homebrew tap repository (requires HOMEBREW_TAP_TOKEN secret)
+        required: false
+        default: false
+        type: boolean
+      homebrew_tap_repo:
+        description: Target Homebrew tap repository (owner/repo)
+        required: false
+        default: 'openedges/homebrew-tap'
+        type: string
       prerelease:
         description: Mark the GitHub Release as a prerelease
         required: false
@@ -382,7 +399,7 @@ jobs:
           fi
           node --test packages/pkl-wasm/test/wasm.test.mjs
           mkdir -p target/release-stage/npm
-          npm pack packages/pkl-wasm --pack-destination target/release-stage/npm
+          npm pack ./packages/pkl-wasm --pack-destination target/release-stage/npm
       - name: Upload @pkl-rs/wasm tarball
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
@@ -391,14 +408,67 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  package-crates:
+    name: Verify crates.io packaging for all 8 publishable crates
+    needs: verify-tag
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - name: Install pinned Rust toolchain
+        run: rustup show active-toolchain
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-rel-crates-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
+          restore-keys: cargo-rel-crates-
+      - name: Package and verify crates.io tarballs (all 8 crates <= 10 MiB)
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Full standalone compile verification for root crates with zero internal deps
+          cargo package --locked -p pkl-runtime -p pkl-formatter
+          # Multi-crate packaging for all 8 crates together (resolves unpublished workspace deps)
+          cargo package --no-verify --locked \
+            -p pkl-runtime \
+            -p pkl-formatter \
+            -p pkl-host-native \
+            -p pkl-rs \
+            -p pkl-repl \
+            -p pkl-server \
+            -p pkl-doc \
+            -p pkl-cli
+          for FILE in target/package/*.crate; do
+            SIZE="$(wc -c < "${FILE}" | tr -d ' ')"
+            echo "${FILE}: ${SIZE} bytes (limit: 10485760)"
+            if [ "${SIZE}" -gt 10485760 ]; then
+              echo "ERROR: ${FILE} exceeds crates.io 10 MiB limit (${SIZE} bytes)" >&2
+              exit 1
+            fi
+          done
+
   assemble-and-release:
     name: Assemble multi-platform release bundle, checksums, and publish
     needs:
       - package-linux-portable
       - package-macos-windows
       - package-wasm
+      - package-crates
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     permissions:
       contents: write
     steps:
@@ -419,7 +489,7 @@ jobs:
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           path: target/downloaded-release
-      - name: Assemble multi-platform @pkl-rs/napi tarball and release assets
+      - name: Assemble multi-platform @pkl-rs/napi tarball, checksums, and Homebrew formula
         shell: bash
         run: |
           set -euo pipefail
@@ -449,8 +519,26 @@ jobs:
             fi
           done
 
-          npm pack packages/pkl-napi --pack-destination target/release-bundle
+          npm pack ./packages/pkl-napi --pack-destination target/release-bundle
+          rm -rf packages/pkl-napi/dist packages/pkl-napi/native packages/pkl-napi/LICENSE packages/pkl-napi/NOTICE packages/pkl-napi/THIRD-PARTY-NOTICES.md
           (cd target/release-bundle && sha256sum *.tar.gz *.zip *.tgz | sort -k2 > SHA256SUMS.txt)
+
+          VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            FORMULA_TAG="${GITHUB_REF#refs/tags/}"
+          elif [ -n "${{ inputs.tag }}" ]; then
+            FORMULA_TAG="${{ inputs.tag }}"
+          else
+            FORMULA_TAG="v${VERSION}"
+          fi
+          python3 tools/render_homebrew_formula.py \
+            --version "${VERSION}" \
+            --tag "${FORMULA_TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --checksums target/release-bundle/SHA256SUMS.txt \
+            --output target/release-bundle/Formula/pkl-rs.rb
+          ruby -c target/release-bundle/Formula/pkl-rs.rb
+
           ls -lh target/release-bundle
           cat target/release-bundle/SHA256SUMS.txt
       - name: Upload consolidated release bundle artifact
@@ -472,17 +560,23 @@ jobs:
           elif [ -n "${{ inputs.tag }}" ]; then
             TAG="${{ inputs.tag }}"
           else
-            echo "ERROR: manual publish_github_release requires a non-empty 'tag' input (e.g. v0.32.0)" >&2
+            echo "ERROR: manual publish_github_release requires a non-empty 'tag' input (e.g. v0.32.0-rc.1)" >&2
             exit 1
           fi
           EXTRA_FLAGS=()
           if [ "${{ inputs.prerelease }}" = "true" ] || [[ "${TAG}" == *-* ]]; then
             EXTRA_FLAGS+=(--prerelease)
           fi
+          ASSETS=(
+            target/release-bundle/*.tar.gz
+            target/release-bundle/*.zip
+            target/release-bundle/*.tgz
+            target/release-bundle/SHA256SUMS.txt
+          )
           if gh release view "${TAG}" >/dev/null 2>&1; then
-            gh release upload "${TAG}" target/release-bundle/* --clobber
+            gh release upload "${TAG}" "${ASSETS[@]}" --clobber
           else
-            gh release create "${TAG}" target/release-bundle/* \
+            gh release create "${TAG}" "${ASSETS[@]}" \
               --title "pkl-rs ${TAG}" \
               --generate-notes \
               "${EXTRA_FLAGS[@]}"
@@ -498,8 +592,113 @@ jobs:
             echo "ERROR: publish_npm=true requested, but NPM_TOKEN secret is not configured" >&2
             exit 1
           fi
+          VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
+          DIST_TAG_ARGS=()
+          if [[ "${VERSION}" == *-* ]]; then
+            DIST_TAG_ARGS=(--tag next)
+          fi
           printf '//registry.npmjs.org/:_authToken=%s\n' "${NODE_AUTH_TOKEN}" > "${HOME}/.npmrc"
           chmod 600 "${HOME}/.npmrc"
           for TGZ in target/release-bundle/pkl-rs-wasm-*.tgz target/release-bundle/pkl-rs-napi-*.tgz; do
-            npm publish "${TGZ}" --access public
+            npm publish "${TGZ}" --access public "${DIST_TAG_ARGS[@]}"
           done
+      - name: Publish all 8 workspace crates to crates.io
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
+            echo "ERROR: publish_crates=true requested, but CARGO_REGISTRY_TOKEN secret is not configured" >&2
+            exit 1
+          fi
+          rustup show active-toolchain
+          CRATES=(
+            pkl-runtime
+            pkl-formatter
+            pkl-host-native
+            pkl-rs
+            pkl-repl
+            pkl-server
+            pkl-doc
+            pkl-cli
+          )
+          for CRATE in "${CRATES[@]}"; do
+            PUBLISHED=0
+            for ATTEMPT in 1 2 3 4 5; do
+              echo "Publishing ${CRATE} (attempt ${ATTEMPT}/5)..."
+              LOG_FILE="/tmp/cargo-publish-${CRATE}.log"
+              if cargo publish --locked -p "${CRATE}" 2>&1 | tee "${LOG_FILE}"; then
+                PUBLISHED=1
+                break
+              fi
+              if grep -q "already exists on crates.io index" "${LOG_FILE}"; then
+                echo "${CRATE} already exists at this version on crates.io; continuing."
+                PUBLISHED=1
+                break
+              fi
+              if [ "${ATTEMPT}" -lt 5 ]; then
+                echo "Waiting 25s for crates.io sparse index propagation before retrying ${CRATE}..."
+                sleep 25
+              fi
+            done
+            if [ "${PUBLISHED}" -ne 1 ]; then
+              echo "ERROR: failed to publish ${CRATE} after 5 attempts" >&2
+              exit 1
+            fi
+            sleep 15
+          done
+      - name: Publish Homebrew formula to tap repository
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_homebrew }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          TAP_REPO: ${{ inputs.homebrew_tap_repo }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${HOMEBREW_TAP_TOKEN}" ]; then
+            echo "ERROR: publish_homebrew=true requested, but HOMEBREW_TAP_TOKEN secret is not configured" >&2
+            exit 1
+          fi
+          VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          elif [ -n "${{ inputs.tag }}" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="v${VERSION}"
+          fi
+          python3 tools/check_release_version.py --tag "${TAG}"
+
+          # Always anchor Formula checksums to the live GitHub Release when not uploaded in this run.
+          CHECKSUMS_PATH="target/release-bundle/SHA256SUMS.txt"
+          if [ "${{ inputs.publish_github_release }}" != "true" ]; then
+            mkdir -p target/homebrew-release-checksums
+            gh release download "${TAG}" -p SHA256SUMS.txt -D target/homebrew-release-checksums --clobber
+            CHECKSUMS_PATH="target/homebrew-release-checksums/SHA256SUMS.txt"
+          fi
+
+          TAP_DIR="/tmp/homebrew-tap"
+          rm -rf "${TAP_DIR}"
+          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/${TAP_REPO}.git" "${TAP_DIR}"
+          mkdir -p "${TAP_DIR}/Formula"
+          python3 tools/render_homebrew_formula.py \
+            --version "${VERSION}" \
+            --tag "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --checksums "${CHECKSUMS_PATH}" \
+            --output "${TAP_DIR}/Formula/pkl-rs.rb"
+          ruby -c "${TAP_DIR}/Formula/pkl-rs.rb"
+
+          cd "${TAP_DIR}"
+          git config user.name "pkl-rs-release-bot"
+          git config user.email "pkl-rs-release-bot@users.noreply.github.com"
+          git add Formula/pkl-rs.rb
+          if git diff --cached --quiet; then
+            echo "Formula/pkl-rs.rb is already up to date for ${VERSION}."
+          else
+            git commit -m "pkl-rs ${VERSION}"
+            git push origin HEAD
+          fi

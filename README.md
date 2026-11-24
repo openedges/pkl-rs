@@ -3,7 +3,7 @@
 A pure-Rust implementation of **[Apple Pkl 0.32.0](https://pkl-lang.org/)** — zero Java runtime required, `unsafe_code = "deny"` across the entire workspace, and a single shared evaluation engine powering native CLI tools, a Rust library, WebAssembly, and Node.js N-API bindings.
 
 > [!NOTE]
-> **Pre-release status (`0.32.0` preparation)**: Language, standard library, CLI, `pkldoc`, Rust API, `@pkl-rs/wasm`, `@pkl-rs/napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
+> **Release Candidate (`0.32.0-rc.1`)**: Language, standard library, CLI, `pkldoc`, Rust API (`pkl-rs`), `@pkl-rs/wasm`, `@pkl-rs/napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA `0.32.0` sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
 
 ## Products & Capabilities
 
@@ -17,14 +17,24 @@ A pure-Rust implementation of **[Apple Pkl 0.32.0](https://pkl-lang.org/)** — 
 
 For full platform matrices, checksum verification, shell completions, and build options, see [docs/installation.md](docs/installation.md).
 
+### Homebrew (macOS & Linux)
+
+```sh
+brew install openedges/tap/pkl-rs
+pkl --version
+pkldoc --version
+```
+
+*(Installs both `pkl` and `pkldoc`, bundled license/notices, and `bash`/`zsh`/`fish` shell completions.)*
+
 ### Prebuilt CLI Binaries (`pkl` & `pkldoc`)
 
 Download the archive for your platform from [GitHub Releases](https://github.com/openedges/pkl-rs/releases), verify against `SHA256SUMS.txt`, and place `pkl` / `pkldoc` on your `PATH`:
 
 ```sh
 # Example: macOS Apple Silicon (replace version/target for your platform)
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0/pkl-darwin-arm64.tar.gz
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0/SHA256SUMS.txt
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.1/pkl-darwin-arm64.tar.gz
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.1/SHA256SUMS.txt
 shasum -a 256 --check --ignore-missing SHA256SUMS.txt
 tar -xzf pkl-darwin-arm64.tar.gz
 ./pkl --version
@@ -35,17 +45,31 @@ Supported prebuilt CLI targets:
 - **macOS (`arm64`, `x64`)**: `*-darwin-{arm64,x64}.tar.gz`
 - **Windows (`x64`)**: `*-win32-x64.zip`
 
+### Rust Crates (`crates.io`)
+
+```toml
+[dependencies]
+pkl-rs = "0.32.0-rc.1"   # Imports as `use pkl::...;`
+```
+
+Or install CLI binaries from crates.io:
+
+```sh
+cargo install pkl-cli --version 0.32.0-rc.1
+cargo install pkl-doc --version 0.32.0-rc.1
+```
+
 ### Node.js (`@pkl-rs/napi`) & WebAssembly (`@pkl-rs/wasm`)
 
 ```sh
 # Node.js native bindings (Node >= 18, full native Host I/O)
-npm install @pkl-rs/napi
+npm install @pkl-rs/napi@next
 
 # Browser & Node.js WebAssembly bindings (Node >= 20.16, sandboxed VFS + async Host)
-npm install @pkl-rs/wasm
+npm install @pkl-rs/wasm@next
 ```
 
-*(Packages are published via [.github/workflows/release.yml](.github/workflows/release.yml) on release; until initial npm publication, build local tarballs from source as described in [docs/installation.md](docs/installation.md).)*
+*(Release candidates are published under the npm `next` dist-tag via [.github/workflows/release.yml](.github/workflows/release.yml); GA `0.32.0` uses `latest`. To build local tarballs from source, see [docs/installation.md](docs/installation.md).)*
 
 ### Build from Source
 

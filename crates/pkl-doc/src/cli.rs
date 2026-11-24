@@ -1433,7 +1433,7 @@ fn build_effective_settings(
 }
 
 fn default_native_user_agent() -> String {
-    format!("Pkl/{PKL_VERSION} ({}; native)", detect_os_name())
+    format!("pkl-rs/{PKL_VERSION} ({}; native)", detect_os_name())
 }
 
 fn build_native_host(

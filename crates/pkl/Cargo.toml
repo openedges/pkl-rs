@@ -1,5 +1,5 @@
 [package]
-name = "pkl"
+name = "pkl-rs"
 description = "Public Rust evaluator API for Apple Pkl 0.32.0"
 version.workspace = true
 edition.workspace = true
@@ -7,11 +7,19 @@ rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
 homepage.workspace = true
-publish.workspace = true
+readme = "../../README.md"
+keywords = ["pkl", "apple-pkl", "configuration", "config"]
+categories = ["config", "parsing"]
+publish = true
+exclude = ["examples/**"]
+
+[lib]
+name = "pkl"
+path = "src/lib.rs"
 
 [dependencies]
-pkl-host-native = { path = "../pkl-host-native" }
-pkl-runtime = { path = "../pkl-runtime" }
+pkl-host-native.workspace = true
+pkl-runtime.workspace = true
 
 [lints]
 workspace = true
