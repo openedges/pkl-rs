@@ -4043,7 +4043,7 @@ impl Compiler<'_> {
                     | crate::syntax::ObjectMember::Predicate { .. }
             )
         }) {
-            self.project_generator_prefix(&members[..first_generator])?;
+            self.project_generator_prefix(&members[..first_generator]);
         }
         output.push(Instruction::BeginCollection {
             kind,
@@ -4106,59 +4106,24 @@ impl Compiler<'_> {
     }
 
     /// AstBuilder first constructs ordinary members, then revisits the whole
-    /// body when it encounters a generator. Preserve that construction order
-    /// and only its owning scope's entry counters, not abandoned bytecode.
-    fn project_generator_prefix(
-        &mut self,
-        prefix: &[crate::syntax::ObjectMember],
-    ) -> Result<(), RuntimeError> {
-        if prefix.is_empty() {
-            return Ok(());
+    /// body when it encounters a generator. Only direct unlabeled elements and
+    /// entries in the prefix advance this object scope's `entry_counts`, since
+    /// nested object bodies save and restore `entry_counts` around their own scope.
+    fn project_generator_prefix(&mut self, prefix: &[crate::syntax::ObjectMember]) {
+        let mut unlabeled = 0usize;
+        for member in prefix {
+            match member {
+                crate::syntax::ObjectMember::Element { .. } => unlabeled += 1,
+                crate::syntax::ObjectMember::Entry { key, .. }
+                    if Self::entry_key_node_label(key).is_none() =>
+                {
+                    unlabeled += 1;
+                }
+                _ => {}
+            }
         }
-        let mut scratch_program = self.program.clone();
-        let mut scratch = self.fork_for_entry_projection(&mut scratch_program);
-        let mut abandoned = Code::default();
-        scratch.collection_members(prefix, false, &mut abandoned)?;
-        let entry_counts = std::mem::take(&mut scratch.entry_counts);
-        drop(scratch);
-        self.entry_counts = entry_counts;
-        Ok(())
-    }
-
-    fn fork_for_entry_projection<'b>(&'b self, program: &'b mut Program) -> Compiler<'b> {
-        Compiler {
-            program,
-            resolved: self.resolved,
-            type_lookup: self.type_lookup.clone(),
-            unit: self.unit,
-            declaration_base: self.declaration_base,
-            source: self.source.clone(),
-            identity: self.identity.clone(),
-            options: self.options,
-            member: self.member.clone(),
-            super_method_allowed: self.super_method_allowed,
-            module_annotation: self.module_annotation,
-            let_members: self.let_members.clone(),
-            type_scopes: self.type_scopes.clone(),
-            modifiers: self.modifiers.clone(),
-            constraint_module: self.constraint_module,
-            runtime_type_owner: self.runtime_type_owner,
-            runtime_type_fallback: self.runtime_type_fallback,
-            alias_frames: self.alias_frames.clone(),
-            constraint_origins: self.constraint_origins.clone(),
-            active_constraints: self.active_constraints.clone(),
-            shared_constraint_roots: self.shared_constraint_roots.clone(),
-            active_type_parameters: self.active_type_parameters.clone(),
-            constructor_parameters_bound: self.constructor_parameters_bound,
-            parameter_spans: self.parameter_spans.clone(),
-            parameter_label_spans: self.parameter_label_spans.clone(),
-            argument_spans: self.argument_spans.clone(),
-            function_counts: self.function_counts.clone(),
-            entry_counts: self.entry_counts.clone(),
-            function_names: self.function_names.clone(),
-            declared_recipes: self.declared_recipes.clone(),
-            module_recipes: self.module_recipes.clone(),
-            instrument: self.instrument,
+        if unlabeled > 0 {
+            *self.entry_counts.entry(self.member.clone()).or_default() += unlabeled;
         }
     }
 
@@ -4242,13 +4207,23 @@ impl Compiler<'_> {
             *count += 1;
             format!("#{count}").into()
         });
-        self.member = previous
-            .concat(&"[".into())
-            .concat(&label)
-            .concat(&"]".into());
+        self.member = if let (Some(p), Some(l)) = (previous.as_str(), label.as_str()) {
+            let mut s = String::with_capacity(p.len() + l.len() + 2);
+            s.push_str(p);
+            s.push('[');
+            s.push_str(l);
+            s.push(']');
+            PklString::from(s)
+        } else {
+            previous
+                .concat(&"[".into())
+                .concat(&label)
+                .concat(&"]".into())
+        };
         let mut code = Code::default();
         self.expression_with_entry_parent(value, &mut code)?;
-        if self.constant_member_body(value) {
+        let is_constant = self.constant_member_body(value);
+        if is_constant {
             for instruction in &mut code.instructions {
                 if let Instruction::Constant(value) = instruction {
                     *value = value.clone().boxed();
@@ -4258,7 +4233,7 @@ impl Compiler<'_> {
         code.push(Instruction::Return);
         let block = self.block(code, Some(span))?;
         self.program.metadata[block].member_span = Some(span);
-        self.program.metadata[block].value_span = Some(if self.constant_member_body(value) {
+        self.program.metadata[block].value_span = Some(if is_constant {
             self.constant_member_value_span(
                 value,
                 self.executable_value_span(key.unwrap_or(value)).end,

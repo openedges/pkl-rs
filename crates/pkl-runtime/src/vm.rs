@@ -13979,8 +13979,8 @@ fn compile_unit_body_at_with_syntax(
     program.next_declaration = declaration_base
         .checked_add(resolved.module.source.len_bytes() + 2)
         .ok_or_else(|| invalid("declaration identity limit"))?;
-    let mut declared_recipes: BTreeMap<Span, usize> = BTreeMap::new();
-    let mut module_recipes: BTreeMap<Span, usize> = BTreeMap::new();
+    let mut declared_recipes: crate::heap::FastMap<Span, usize> = crate::heap::FastMap::default();
+    let mut module_recipes: crate::heap::FastMap<Span, usize> = crate::heap::FastMap::default();
     if replacement.is_some() {
         for (id, recipe) in program.type_recipes.iter_with_ids() {
             if recipe.unit == unit {
@@ -14017,16 +14017,16 @@ fn compile_unit_body_at_with_syntax(
         runtime_type_fallback: None,
         alias_frames: Vec::new(),
         constraint_origins: BTreeMap::new(),
-        active_constraints: BTreeMap::new(),
-        shared_constraint_roots: BTreeMap::new(),
+        active_constraints: crate::heap::FastMap::default(),
+        shared_constraint_roots: crate::heap::FastMap::default(),
         active_type_parameters: BTreeMap::new(),
         constructor_parameters_bound: false,
         parameter_spans: BTreeMap::new(),
         parameter_label_spans: BTreeMap::new(),
         argument_spans: BTreeMap::new(),
-        function_counts: BTreeMap::new(),
-        entry_counts: BTreeMap::new(),
-        function_names: BTreeMap::new(),
+        function_counts: crate::heap::FastMap::default(),
+        entry_counts: crate::heap::FastMap::default(),
+        function_names: crate::heap::FastMap::default(),
         declared_recipes,
         module_recipes,
         instrument,
@@ -14319,9 +14319,9 @@ struct Compiler<'a> {
     constraint_origins: BTreeMap<usize, (Vec<RuntimeFrame>, Vec<RuntimeFrame>)>,
     /// Constraint bytecode is a graph: a recursive type use can point back to
     /// a reserved block without recursively compiling that expression again.
-    active_constraints: BTreeMap<Span, usize>,
+    active_constraints: crate::heap::FastMap<Span, usize>,
     /// Local-writing constraints retain their declaration call target across substitutions.
-    shared_constraint_roots: BTreeMap<Span, usize>,
+    shared_constraint_roots: crate::heap::FastMap<Span, usize>,
     active_type_parameters: BTreeMap<PklString, TypeCheck>,
     /// Alias cloning visits inline/lambda nodes, but not lazy member call targets.
     constructor_parameters_bound: bool,
@@ -14330,11 +14330,11 @@ struct Compiler<'a> {
     parameter_label_spans: BTreeMap<PklString, Span>,
     /// Constructor parent nodes retain the authored actual, including alias syntax.
     argument_spans: BTreeMap<PklString, Span>,
-    function_counts: BTreeMap<PklString, usize>,
-    entry_counts: BTreeMap<PklString, usize>,
-    function_names: BTreeMap<Span, PklString>,
-    declared_recipes: BTreeMap<Span, usize>,
-    module_recipes: BTreeMap<Span, usize>,
+    function_counts: crate::heap::FastMap<PklString, usize>,
+    entry_counts: crate::heap::FastMap<PklString, usize>,
+    function_names: crate::heap::FastMap<Span, PklString>,
+    declared_recipes: crate::heap::FastMap<Span, usize>,
+    module_recipes: crate::heap::FastMap<Span, usize>,
     instrument: bool,
 }
 
@@ -14396,6 +14396,39 @@ fn reference_constrained_type(check: &TypeCheck) -> Option<&TypeCheck> {
     None
 }
 
+fn append_member_name(
+    previous: &PklString,
+    name: &PklString,
+    module_annotation: bool,
+) -> PklString {
+    let sep = if previous.is_empty() {
+        if module_annotation { '.' } else { '#' }
+    } else {
+        '.'
+    };
+    if let (Some(prev_s), Some(name_s)) = (previous.as_str(), name.as_str()) {
+        let regular = crate::parser::is_regular_identifier(name_s);
+        let mut out =
+            String::with_capacity(prev_s.len() + 1 + name_s.len() + if regular { 0 } else { 2 });
+        out.push_str(prev_s);
+        out.push(sep);
+        if !regular {
+            out.push('`');
+            out.push_str(name_s);
+            out.push('`');
+        } else {
+            out.push_str(name_s);
+        }
+        return PklString::from(out);
+    }
+    let label = crate::diagnostic_names::quote_identifier(name.clone());
+    if previous.is_empty() {
+        PklString::from(if module_annotation { "." } else { "#" }).concat(&label)
+    } else {
+        previous.concat(&".".into()).concat(&label)
+    }
+}
+
 impl<'a> Compiler<'a> {
     /// Source owned by the executable value after Java's grouping removal and
     /// direct numeric negation folding. Authored spans remain the identity for
@@ -14429,6 +14462,28 @@ impl<'a> Compiler<'a> {
         use crate::resolver::Binding;
         use crate::syntax::{ExprKind, UnaryOp};
 
+        match &expression.unparenthesized().kind {
+            ExprKind::Null
+            | ExprKind::Bool(_)
+            | ExprKind::Int(_)
+            | ExprKind::Float(_)
+            | ExprKind::String(_) => return true,
+            ExprKind::Unary {
+                op: UnaryOp::Negate,
+                operand,
+            } if matches!(operand.kind, ExprKind::Float(_)) => return true,
+            ExprKind::Call { callee, arguments }
+                if matches!(
+                    &callee.kind,
+                    ExprKind::Name(name) if matches!(name.as_str(), Some("List" | "Set" | "Map"))
+                ) && self.resolved.names.get(&callee.span) == Some(&Binding::ImplicitMethod) =>
+            {
+                if arguments.is_empty() {
+                    return true;
+                }
+            }
+            _ => return false,
+        }
         let mut pending = vec![expression];
         while let Some(expression) = pending.pop() {
             match &expression.unparenthesized().kind {
@@ -14483,14 +14538,18 @@ impl<'a> Compiler<'a> {
         Span::new(header_end + skip, expression.span.end)
     }
 
-    fn property_value_span(&self, member: &crate::syntax::Member) -> Span {
+    fn property_value_span_with_const(
+        &self,
+        member: &crate::syntax::Member,
+        is_constant: bool,
+    ) -> Span {
         if matches!(member.expr.kind, crate::syntax::ExprKind::Uninitialized) {
             return member.name_span;
         }
         // VmUtils.createObjectProperty retains a member node for local typed
         // properties even when the body is constant, so their lowered body owns
         // the frame. This distinction applies to module, class and object scopes.
-        if !(member.local && member.ty.is_some()) && self.constant_member_body(&member.expr) {
+        if is_constant {
             let header_end = member
                 .ty
                 .as_ref()
@@ -14499,6 +14558,12 @@ impl<'a> Compiler<'a> {
         } else {
             self.executable_value_span(&member.expr)
         }
+    }
+
+    fn property_value_span(&self, member: &crate::syntax::Member) -> Span {
+        let is_constant =
+            !(member.local && member.ty.is_some()) && self.constant_member_body(&member.expr);
+        self.property_value_span_with_const(member, is_constant)
     }
 
     fn object(&mut self, members: &[crate::syntax::Member]) -> Result<usize, RuntimeError> {
@@ -14512,22 +14577,19 @@ impl<'a> Compiler<'a> {
         object_body: bool,
     ) -> Result<usize, RuntimeError> {
         self.type_scopes.push(extract_type_scope(members));
-        let mut result = Vec::new();
+        let mut result = Vec::with_capacity(members.len());
+        let object_method = object_body
+            || (!class
+                && self
+                    .resolved
+                    .module
+                    .declaration
+                    .as_ref()
+                    .and_then(|declaration| declaration.parent.as_ref())
+                    .is_some_and(|parent| parent.kind == crate::syntax::ModuleParentKind::Amends));
         for member in members {
             let scope_count = self.type_scopes.len();
-            let previous_member = self.member.clone();
-            let previous_modifiers = self.modifiers.clone();
-            let object_method = object_body
-                || (!class
-                    && self
-                        .resolved
-                        .module
-                        .declaration
-                        .as_ref()
-                        .and_then(|declaration| declaration.parent.as_ref())
-                        .is_some_and(|parent| {
-                            parent.kind == crate::syntax::ModuleParentKind::Amends
-                        }));
+            let saved_class_state = class.then(|| (self.member.clone(), self.modifiers.clone()));
             match self.object_member(member, object_method) {
                 Ok(compiled) => {
                     self.program.metadata[compiled.code].inline_property_typecheck =
@@ -14535,17 +14597,13 @@ impl<'a> Compiler<'a> {
                     result.push(compiled);
                 }
                 Err(error) if class => {
+                    let (previous_member, previous_modifiers) =
+                        saved_class_state.expect("saved state for class template");
                     // A later declaration's unresolved type must not outrun an earlier
                     // declaration's override error. Replay failures during class
                     // initialization, without running any property initializer.
                     self.type_scopes.truncate(scope_count);
-                    self.member = previous_member.concat(
-                        &format!(
-                            ".{}",
-                            crate::diagnostic_names::quote_identifier(&member.name)
-                        )
-                        .into(),
-                    );
+                    self.member = append_member_name(&previous_member, &member.name, false);
                     let mut code = Code::default();
                     code.push_at(
                         Instruction::Fail(Box::new(error.clone())),
@@ -14606,20 +14664,14 @@ impl<'a> Compiler<'a> {
         member: &crate::syntax::Member,
         object_method: bool,
     ) -> Result<Member, RuntimeError> {
-        let previous_modifiers = std::mem::replace(&mut self.modifiers, member.modifiers.clone());
+        let previous_modifiers = if member.modifiers.is_empty() {
+            std::mem::take(&mut self.modifiers)
+        } else {
+            std::mem::replace(&mut self.modifiers, member.modifiers.clone())
+        };
         self.validate_modifiers(member)?;
         let previous_member = self.member.clone();
-        let label = crate::diagnostic_names::quote_identifier(&member.name);
-        self.member = if previous_member.is_empty() {
-            format!(
-                "{}{}",
-                if self.module_annotation { "." } else { "#" },
-                label
-            )
-            .into()
-        } else {
-            previous_member.concat(&format!(".{label}").into())
-        };
+        self.member = append_member_name(&previous_member, &member.name, self.module_annotation);
         let mut initialization_error = None;
         let compiled_type = member.ty.as_ref().map(|ty| {
             self.compile_type(ty).unwrap_or_else(|error| {
@@ -14699,9 +14751,9 @@ impl<'a> Compiler<'a> {
         } else {
             self.expression_with_property_parent(&member.expr, &mut instructions, Some(member))?;
         }
-        let constant_member = !(member.local && member.ty.is_some())
-            && self.constant_member_body(&member.expr)
-            && instructions.box_constant_result();
+        let is_constant_body =
+            !(member.local && member.ty.is_some()) && self.constant_member_body(&member.expr);
+        let constant_member = is_constant_body && instructions.box_constant_result();
         let property_typecheck = member.ty.as_ref().map(|_| instructions.len());
         if let Some(ty) = &member.ty {
             instructions.push_at(
@@ -14719,20 +14771,19 @@ impl<'a> Compiler<'a> {
                 .map_or(member.name_span.end, |ty| ty.span.end),
         );
         self.block(instructions, Some(header_span))?;
-        self.program.metadata[code].hidden = member
-            .modifiers
-            .iter()
-            .any(|m| m.kind == crate::syntax::ModifierKind::Hidden);
-        self.program.metadata[code].constant_member = constant_member;
-        self.program.metadata[code].value_span = Some(self.property_value_span(member));
-        self.program.metadata[code].member_span = Some(member.span);
-        self.program.metadata[code].initialization_error = initialization_error;
-        self.program.metadata[code].property_typecheck = property_typecheck;
-        self.program.metadata[code].amendment = member.is_amendment();
-        self.program.metadata[code].amendment_parent_span =
-            member.is_amendment().then_some(member.name_span);
-        self.program.metadata[code].fixed_span = member.override_fixed_span;
-        self.program.metadata[code].const_span = member.override_const_span;
+        let mod_flags = crate::syntax::modifier_flags(&member.modifiers);
+        let meta = &mut self.program.metadata[code];
+        meta.hidden = mod_flags & crate::syntax::ModifierKind::Hidden.flag() != 0;
+        meta.constant_member = constant_member;
+        meta.member_span = Some(member.span);
+        meta.initialization_error = initialization_error;
+        meta.property_typecheck = property_typecheck;
+        meta.amendment = member.is_amendment();
+        meta.amendment_parent_span = member.is_amendment().then_some(member.name_span);
+        meta.fixed_span = member.override_fixed_span;
+        meta.const_span = member.override_const_span;
+        let value_span = self.property_value_span_with_const(member, is_constant_body);
+        self.program.metadata[code].value_span = Some(value_span);
         if let crate::syntax::ExprKind::Function {
             parameters,
             method: true,
@@ -14761,17 +14812,11 @@ impl<'a> Compiler<'a> {
             entry: false,
             name: member.name.clone(),
             code,
-            local: crate::syntax::modifier_flags(&member.modifiers)
-                & crate::syntax::ModifierKind::Local.flag()
-                != 0,
+            local: mod_flags & crate::syntax::ModifierKind::Local.flag() != 0,
             ty: compiled_type,
             type_span: member.ty.as_ref().map(|ty| self.type_source_span(ty)),
-            fixed: crate::syntax::modifier_flags(&member.modifiers)
-                & crate::syntax::ModifierKind::Fixed.flag()
-                != 0,
-            constant: crate::syntax::modifier_flags(&member.modifiers)
-                & crate::syntax::ModifierKind::Const.flag()
-                != 0
+            fixed: mod_flags & crate::syntax::ModifierKind::Fixed.flag() != 0,
+            constant: mod_flags & crate::syntax::ModifierKind::Const.flag() != 0
                 || matches!(
                     member.expr.kind,
                     crate::syntax::ExprKind::Class { .. }
@@ -16005,12 +16050,23 @@ impl<'a> Compiler<'a> {
         output: &mut Code,
         use_site: ReferenceUseSite,
     ) -> Result<(), Box<(RuntimeError, Span)>> {
-        use crate::syntax::{ExprKind, TypeKind};
         let reference_start = self.program.type_recipes.next_id();
         let check =
             self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), parameters);
         self.reference_usage_context(reference_start, ty, use_site);
-        if let Ok(check) = check
+        self.type_resolution_plan_with_check(ty, check.as_ref().ok(), parameters, output, use_site)
+    }
+
+    fn type_resolution_plan_with_check(
+        &mut self,
+        ty: &crate::syntax::Type,
+        compiled: Option<&TypeCheck>,
+        parameters: &BTreeMap<PklString, TypeCheck>,
+        output: &mut Code,
+        use_site: ReferenceUseSite,
+    ) -> Result<(), Box<(RuntimeError, Span)>> {
+        use crate::syntax::{ExprKind, TypeKind};
+        if let Some(check) = compiled
             && check.has_declared()
         {
             // An expanded alias can contain a runtime-qualified declaration.
@@ -16078,7 +16134,7 @@ impl<'a> Compiler<'a> {
             // use, before evaluating the value being tested or cast.
             output.push_at(
                 Instruction::ValidateTypeArguments {
-                    ty: Box::new(check),
+                    ty: Box::new(check.clone()),
                     aliases: self.alias_frames.clone(),
                 },
                 ty.span,
@@ -16122,7 +16178,7 @@ impl<'a> Compiler<'a> {
                         output.push(Instruction::Pop);
                     }
                 }
-                if !alias {
+                if !alias && compiled.is_none() {
                     // Class arity and missing base names precede argument resolution.
                     // Unknown placeholders validate only this node, without resolving
                     // its authored arguments ahead of their position in the plan.
@@ -16206,28 +16262,19 @@ impl<'a> Compiler<'a> {
         output: &mut Code,
         use_site: ReferenceUseSite,
     ) -> Option<TypeCheck> {
-        match self.compile_type_at(
-            ty,
-            self.type_scopes.len(),
-            &mut BTreeSet::new(),
-            &self.active_type_parameters.clone(),
-        ) {
-            Ok(check) => {
-                self.initialize_type_resolution_with_parameters(
-                    ty,
-                    &self.active_type_parameters.clone(),
-                    output,
-                    use_site,
-                );
-                Some(check)
-            }
+        let params = self.active_type_parameters.clone();
+        let reference_start = self.program.type_recipes.next_id();
+        let check = self.compile_type_at(ty, self.type_scopes.len(), &mut BTreeSet::new(), &params);
+        self.reference_usage_context(reference_start, ty, use_site);
+        if let Err(failure) =
+            self.type_resolution_plan_with_check(ty, check.as_ref().ok(), &params, output, use_site)
+        {
+            let (error, span) = *failure;
+            output.push_at(Instruction::Fail(Box::new(error.at(span))), span);
+        }
+        match check {
+            Ok(check) => Some(check),
             Err(error) => {
-                self.initialize_type_resolution_with_parameters(
-                    ty,
-                    &self.active_type_parameters.clone(),
-                    output,
-                    use_site,
-                );
                 output.push_at(Instruction::Fail(Box::new(error.at(ty.span))), ty.span);
                 None
             }
@@ -16500,9 +16547,9 @@ impl<'a> Compiler<'a> {
                         | "Uri"
                         | "Mixin"
                 )
-            ) && crate::diagnostic_names::BASE_PROPERTIES
-                .iter()
-                .any(|candidate| path[0] == *candidate)
+            ) && path[0]
+                .as_str()
+                .is_some_and(crate::diagnostic_names::is_base_property)
             {
                 let previous = self.runtime_type_fallback.replace(ty.span);
                 let result = self.compile_type_at(ty, limit, aliases, parameters);
@@ -17018,9 +17065,7 @@ impl<'a> Compiler<'a> {
                             "List" => crate::heap::CollectionKind::List,
                             "Map" => crate::heap::CollectionKind::Map,
                             "Set" => crate::heap::CollectionKind::Set,
-                            _ if crate::diagnostic_names::BASE_PROPERTIES
-                                .contains(&builtin_name) =>
-                            {
+                            _ if crate::diagnostic_names::is_base_property(builtin_name) => {
                                 return Err(unsupported_type("generic builtin types"));
                             }
                             _ => {
@@ -17112,7 +17157,7 @@ impl<'a> Compiler<'a> {
                         "List" => TypeCheck::Collection(crate::heap::CollectionKind::List),
                         "Map" => TypeCheck::Collection(crate::heap::CollectionKind::Map),
                         "Set" => TypeCheck::Collection(crate::heap::CollectionKind::Set),
-                        _ if crate::diagnostic_names::BASE_PROPERTIES.contains(&builtin_name) => {
+                        _ if crate::diagnostic_names::is_base_property(builtin_name) => {
                             return Err(unsupported_type(&format!("type {}", path[0])));
                         }
                         _ => {
