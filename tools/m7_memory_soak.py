@@ -619,7 +619,7 @@ def generate_pkg_pool(pool_dir: Path, count: int = 8) -> Path:
 
 def build_native_probe(root: Path, output: Path, cargo_target_dir: Path | None) -> tuple[Path, dict]:
     """Build and seal `crates/pkl/examples/m7_memory_soak_probe.rs` in release mode."""
-    cmd = ["cargo", "build", "--release", "-p", "pkl-rs", "--example", NATIVE_PROBE_EXAMPLE, "--locked"]
+    cmd = ["cargo", "build", "--release", "-p", "pkl-lang", "--example", NATIVE_PROBE_EXAMPLE, "--locked"]
     env = dict(os.environ)
     if cargo_target_dir is not None:
         env["CARGO_TARGET_DIR"] = str(cargo_target_dir)

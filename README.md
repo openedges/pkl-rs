@@ -3,7 +3,7 @@
 A pure-Rust implementation of **[Apple Pkl 0.32.0](https://pkl-lang.org/)** — zero Java runtime required, `unsafe_code = "deny"` across the entire workspace, and a single shared evaluation engine powering native CLI tools, a Rust library, WebAssembly, and Node.js N-API bindings.
 
 > [!NOTE]
-> **Release Candidate (`0.32.0-rc.2`)**: Language, standard library, CLI, `pkldoc`, Rust API (`pkl-rs`), `@openedges/pkl-wasm`, `@openedges/pkl-napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA `0.32.0` sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
+> **Release Candidate (`0.32.0-rc.3`)**: Language, standard library, CLI, `pkldoc`, Rust API (`pkl-lang`), `@openedges/pkl-wasm`, `@openedges/pkl-napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA `0.32.0` sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
 
 ## Products & Capabilities
 
@@ -33,8 +33,8 @@ Download the archive for your platform from [GitHub Releases](https://github.com
 
 ```sh
 # Example: macOS Apple Silicon (replace version/target for your platform)
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.2/pkl-darwin-arm64.tar.gz
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.2/SHA256SUMS.txt
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.3/pkl-darwin-arm64.tar.gz
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.3/SHA256SUMS.txt
 shasum -a 256 --check --ignore-missing SHA256SUMS.txt
 tar -xzf pkl-darwin-arm64.tar.gz
 ./pkl --version
@@ -49,14 +49,14 @@ Supported prebuilt CLI targets:
 
 ```toml
 [dependencies]
-pkl-rs = "0.32.0-rc.2"   # Imports as `use pkl::...;`
+pkl-lang = "0.32.0-rc.3"   # Imports as `use pkl::...;`
 ```
 
 Or install CLI binaries from crates.io:
 
 ```sh
-cargo install pkl-cli --version 0.32.0-rc.2
-cargo install pkl-doc --version 0.32.0-rc.2
+cargo install pkl-cli --version 0.32.0-rc.3
+cargo install pkl-doc --version 0.32.0-rc.3
 ```
 
 ### Node.js (`@openedges/pkl-napi`) & WebAssembly (`@openedges/pkl-wasm`)

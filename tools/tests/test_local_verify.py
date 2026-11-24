@@ -90,6 +90,7 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("publish_crates:", rel_text)
         self.assertIn("CARGO_REGISTRY_TOKEN", rel_text)
         self.assertIn("cargo publish --locked", rel_text)
+        self.assertIn("pkl-lang", rel_text)
         self.assertIn("publish_homebrew:", rel_text)
         self.assertIn("HOMEBREW_TAP_TOKEN", rel_text)
         self.assertIn("openedges/homebrew-tap", rel_text)

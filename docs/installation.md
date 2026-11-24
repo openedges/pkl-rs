@@ -39,7 +39,7 @@ Prebuilt archives are built by [.github/workflows/release.yml](../.github/workfl
 #### macOS / Linux
 
 ```sh
-VERSION=v0.32.0-rc.2
+VERSION=v0.32.0-rc.3
 ARCHIVE=pkl-darwin-arm64.tar.gz   # Adjust for your platform above
 
 curl -fSLO "https://github.com/openedges/pkl-rs/releases/download/${VERSION}/${ARCHIVE}"
@@ -56,7 +56,7 @@ pkl --version
 #### Windows (PowerShell)
 
 ```powershell
-$Version = "v0.32.0-rc.2"
+$Version = "v0.32.0-rc.3"
 $Archive = "pkl-win32-x64.zip"
 
 Invoke-WebRequest "https://github.com/openedges/pkl-rs/releases/download/$Version/$Archive" -OutFile $Archive
@@ -136,25 +136,25 @@ See [packages/pkl-wasm/README.md](../packages/pkl-wasm/README.md) for browser/No
 
 ## 5. Rust Crates (`crates.io`)
 
-The public Rust evaluator API crate (`crates/pkl`) is published on crates.io as **`pkl-rs`** while exporting its library module as `pkl` (`use pkl::...;`), alongside the modular workspace crates (`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`):
+The public Rust evaluator API crate (`crates/pkl`) is published on crates.io as **`pkl-lang`** while exporting its library module as `pkl` (`use pkl::...;`), alongside the modular workspace crates (`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`):
 
 ```toml
 [dependencies]
-pkl-rs = "0.32.0-rc.2"
+pkl-lang = "0.32.0-rc.3"
 ```
 
 Or install the CLI tools directly via Cargo:
 
 ```sh
-cargo install pkl-cli --version 0.32.0-rc.2
-cargo install pkl-doc --version 0.32.0-rc.2
+cargo install pkl-cli --version 0.32.0-rc.3
+cargo install pkl-doc --version 0.32.0-rc.3
 ```
 
 Git dependency consumption also works directly with zero `[patch.crates-io]` overrides:
 
 ```toml
 [dependencies]
-pkl-rs = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0-rc.2" }
+pkl-lang = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0-rc.3" }
 ```
 
 - **Minimum Supported Rust Version (MSRV)**: Rust `1.98` (workspace pinned to `1.98.1` in [rust-toolchain.toml](../rust-toolchain.toml), Rust 2024 edition).

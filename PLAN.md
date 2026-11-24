@@ -1,6 +1,14 @@
 # 구현 계획
 
-## 현재 상태 — `v0.32.0-rc.2` npm 스코프 `@openedges` 전환 (`@openedges/pkl-wasm`, `@openedges/pkl-napi`) 및 4채널 배포 준비 (`2026-11-24`, `release_ready: false`)
+## 현재 상태 — `v0.32.0-rc.3` crates.io 메인 크레이트 `pkl-lang` 확정 및 4채널 일괄 배포 준비 (`2026-11-24`, `release_ready: false`)
+
+`2026-11-24` crates.io 실시간 API 조회에서 `pkl`(`0.0.0`)·`pkl-rs`(`0.0.0`)·`pklrs`(`0.1.0`)가 타인 선점 상태임을 확인하고, 8개 배포 크레이트 전원이 미선점(`404`)인 **`pkl-lang`** + 기존 7개 `pkl-*`(`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`) 조합으로 확정했다.
+
+### `2026-11-24` `v0.32.0-rc.3` 변경 항목
+- **crates.io 패키지명 변경 (`crates/pkl` → `pkl-lang`, `[lib] name = "pkl"` 유지)**: [Cargo.toml](Cargo.toml), [crates/pkl/Cargo.toml](crates/pkl/Cargo.toml), `Cargo.lock`, [ci.yml](.github/workflows/ci.yml), [release.yml](.github/workflows/release.yml), [m5_differential.py](tools/m5_differential.py), [m6_differential.py](tools/m6_differential.py)(다운스트림 소비자 `package = "pkl-lang"` 명시), [m7_benchmark.py](tools/m7_benchmark.py), [m7_memory_soak.py](tools/m7_memory_soak.py) 및 배포 문서를 일괄 갱신했다.
+- **릴리스 워크플로 발행 순서 개선**: [release.yml](.github/workflows/release.yml)에서 Homebrew Tap 발행을 crates.io 순차 발행보다 먼저 수행하도록 조정하고 전체 매니페스트를 **`0.32.0-rc.3`**으로 잠금 갱신했다. (`v0.32.0-rc.2`는 `openedges/pkl-rs`에서 9/9 잡 전원 통과 및 GitHub Release 발행 검증 완료, 중단된 `workflow_dispatch` `#45408715125`는 업로드 전 정상 취소됨)
+
+## 이전 상태 — `v0.32.0-rc.2` npm 스코프 `@openedges` 전환 (`@openedges/pkl-wasm`, `@openedges/pkl-napi`) 및 4채널 배포 준비 (`2026-11-24`, `release_ready: false`)
 
 `2026-11-24` 사용자 결정에 따라 npm 배포 스코프를 기존 `@pkl-rs` 대신 **`@openedges`** 조직 아래 **`@openedges/pkl-wasm`** 및 **`@openedges/pkl-napi`**로 통일하고, 불변 태그 정책(`docs/versioning.md`)에 따라 전체 워크스페이스 크레이트(`Cargo.toml`·`Cargo.lock`) 및 npm 매니페스트 버전을 **`0.32.0-rc.2`**로 잠금 갱신했다.
 

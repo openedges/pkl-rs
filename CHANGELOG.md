@@ -6,6 +6,13 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 
+## [0.32.0-rc.3] — 2026-11-24
+
+### Changed
+
+- **crates.io Package Name (`pkl-lang`)**: Renamed `crates/pkl`'s Cargo package name from `pkl-rs` (taken on crates.io at `0.0.0`) to **`pkl-lang`** while preserving `[lib] name = "pkl"` (`use pkl::...;` unchanged). All 8 publishable crates (`pkl-runtime`, `pkl-formatter`, `pkl-host-native`, `pkl-lang`, `pkl-repl`, `pkl-server`, `pkl-doc`, `pkl-cli`) are verified available on crates.io.
+- Ordered Homebrew Tap publication ahead of crates.io sequential publishing in [release.yml](.github/workflows/release.yml), fixed the M6 downstream Rust crate consumer check (`tools/m6_differential.py`) to resolve `package = "pkl-lang"`, and bumped all workspace and npm manifests in lockstep to **`0.32.0-rc.3`**.
+
 ## [0.32.0-rc.2] — 2026-11-24
 
 ### Changed

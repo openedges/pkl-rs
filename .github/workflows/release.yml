@@ -446,7 +446,7 @@ jobs:
             -p pkl-runtime \
             -p pkl-formatter \
             -p pkl-host-native \
-            -p pkl-rs \
+            -p pkl-lang \
             -p pkl-repl \
             -p pkl-server \
             -p pkl-doc \
@@ -602,53 +602,6 @@ jobs:
           for TGZ in target/release-bundle/openedges-pkl-wasm-*.tgz target/release-bundle/openedges-pkl-napi-*.tgz; do
             npm publish "${TGZ}" --access public "${DIST_TAG_ARGS[@]}"
           done
-      - name: Publish all 8 workspace crates to crates.io
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
-            echo "ERROR: publish_crates=true requested, but CARGO_REGISTRY_TOKEN secret is not configured" >&2
-            exit 1
-          fi
-          rustup show active-toolchain
-          CRATES=(
-            pkl-runtime
-            pkl-formatter
-            pkl-host-native
-            pkl-rs
-            pkl-repl
-            pkl-server
-            pkl-doc
-            pkl-cli
-          )
-          for CRATE in "${CRATES[@]}"; do
-            PUBLISHED=0
-            for ATTEMPT in 1 2 3 4 5; do
-              echo "Publishing ${CRATE} (attempt ${ATTEMPT}/5)..."
-              LOG_FILE="/tmp/cargo-publish-${CRATE}.log"
-              if cargo publish --locked -p "${CRATE}" 2>&1 | tee "${LOG_FILE}"; then
-                PUBLISHED=1
-                break
-              fi
-              if grep -q "already exists on crates.io index" "${LOG_FILE}"; then
-                echo "${CRATE} already exists at this version on crates.io; continuing."
-                PUBLISHED=1
-                break
-              fi
-              if [ "${ATTEMPT}" -lt 5 ]; then
-                echo "Waiting 25s for crates.io sparse index propagation before retrying ${CRATE}..."
-                sleep 25
-              fi
-            done
-            if [ "${PUBLISHED}" -ne 1 ]; then
-              echo "ERROR: failed to publish ${CRATE} after 5 attempts" >&2
-              exit 1
-            fi
-            sleep 15
-          done
       - name: Publish Homebrew formula to tap repository
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_homebrew }}
         env:
@@ -702,3 +655,50 @@ jobs:
             git commit -m "pkl-rs ${VERSION}"
             git push origin HEAD
           fi
+      - name: Publish all 8 workspace crates to crates.io
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
+            echo "ERROR: publish_crates=true requested, but CARGO_REGISTRY_TOKEN secret is not configured" >&2
+            exit 1
+          fi
+          rustup show active-toolchain
+          CRATES=(
+            pkl-runtime
+            pkl-formatter
+            pkl-host-native
+            pkl-lang
+            pkl-repl
+            pkl-server
+            pkl-doc
+            pkl-cli
+          )
+          for CRATE in "${CRATES[@]}"; do
+            PUBLISHED=0
+            for ATTEMPT in 1 2 3 4 5; do
+              echo "Publishing ${CRATE} (attempt ${ATTEMPT}/5)..."
+              LOG_FILE="/tmp/cargo-publish-${CRATE}.log"
+              if cargo publish --locked -p "${CRATE}" 2>&1 | tee "${LOG_FILE}"; then
+                PUBLISHED=1
+                break
+              fi
+              if grep -q "already exists on crates.io index" "${LOG_FILE}"; then
+                echo "${CRATE} already exists at this version on crates.io; continuing."
+                PUBLISHED=1
+                break
+              fi
+              if [ "${ATTEMPT}" -lt 5 ]; then
+                echo "Waiting 25s for crates.io sparse index propagation before retrying ${CRATE}..."
+                sleep 25
+              fi
+            done
+            if [ "${PUBLISHED}" -ne 1 ]; then
+              echo "ERROR: failed to publish ${CRATE} after 5 attempts" >&2
+              exit 1
+            fi
+            sleep 15
+          done

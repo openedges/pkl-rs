@@ -810,7 +810,7 @@ def run_downstream_rust_crate_check(
     cargo_toml = (
         '[package]\nname = "m6-downstream-consumer"\nversion = "0.1.0"\nedition = "2024"\n\n'
         '[workspace]\n\n'
-        f'[dependencies]\npkl = {{ path = "{pkl_crate_path}" }}\n'
+        f'[dependencies]\npkl = {{ package = "pkl-lang", path = "{pkl_crate_path}" }}\n'
     )
     main_rs = (
         'use pkl::{EvaluatorBuilder, ModuleSource};\n'

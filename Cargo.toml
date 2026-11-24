@@ -15,7 +15,7 @@ members = [
 resolver = "3"
 
 [workspace.package]
-version = "0.32.0-rc.2"
+version = "0.32.0-rc.3"
 edition = "2024"
 rust-version = "1.98"
 license = "Apache-2.0"
@@ -24,13 +24,13 @@ homepage = "https://github.com/openedges/pkl-rs"
 publish = false
 
 [workspace.dependencies]
-pkl-runtime = { version = "0.32.0-rc.2", path = "crates/pkl-runtime" }
-pkl-formatter = { version = "0.32.0-rc.2", path = "crates/pkl-formatter" }
-pkl-host-native = { version = "0.32.0-rc.2", path = "crates/pkl-host-native" }
-pkl = { package = "pkl-rs", version = "0.32.0-rc.2", path = "crates/pkl" }
-pkl-repl = { version = "0.32.0-rc.2", path = "crates/pkl-repl" }
-pkl-server = { version = "0.32.0-rc.2", path = "crates/pkl-server" }
-pkl-doc = { version = "0.32.0-rc.2", path = "crates/pkl-doc" }
+pkl-runtime = { version = "0.32.0-rc.3", path = "crates/pkl-runtime" }
+pkl-formatter = { version = "0.32.0-rc.3", path = "crates/pkl-formatter" }
+pkl-host-native = { version = "0.32.0-rc.3", path = "crates/pkl-host-native" }
+pkl = { package = "pkl-lang", version = "0.32.0-rc.3", path = "crates/pkl" }
+pkl-repl = { version = "0.32.0-rc.3", path = "crates/pkl-repl" }
+pkl-server = { version = "0.32.0-rc.3", path = "crates/pkl-server" }
+pkl-doc = { version = "0.32.0-rc.3", path = "crates/pkl-doc" }
 
 [workspace.lints.rust]
 unsafe_code = "deny"

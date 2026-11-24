@@ -92,7 +92,7 @@ jobs:
           PYTHONPATH=tools python3 -m unittest -v tools/tests/test_local_verify.py
       - name: Run fast Rust unit and product-crate smoke tests
         run: |
-          cargo test -p xtask -p pkl-rs -p pkl-formatter -p pkl-server -p pkl-repl -p pkl-cli -p pkl-doc -p pkl-wasm -p pkl-host-native --locked
+          cargo test -p xtask -p pkl-lang -p pkl-formatter -p pkl-server -p pkl-repl -p pkl-cli -p pkl-doc -p pkl-wasm -p pkl-host-native --locked
           cargo test -p pkl-runtime --lib --locked
       - name: Confirm reference checkouts remain clean
         if: ${{ always() }}
