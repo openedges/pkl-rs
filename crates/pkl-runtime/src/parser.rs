@@ -147,9 +147,9 @@ fn is_keyword(name: &str) -> bool {
 
 #[derive(Clone, Debug, PartialEq)]
 enum Kind {
-    Name(String),
-    Int(String),
-    Float(String),
+    Name,
+    Int,
+    Float,
     QuotedName(PklString),
     Operator(&'static str),
     String(crate::value::PklString),
@@ -211,18 +211,12 @@ impl Lexer<'_> {
             if bytes.get(self.cursor..self.cursor + 2) == Some(b"//") {
                 let start = self.cursor;
                 let doc = !self.skip_doc_comments && bytes.get(start..start + 3) == Some(b"///");
-                if let Some(rest) = self.source.range(self.cursor..).as_str() {
-                    match rest.find(['\n', '\r']) {
-                        Some(offset) => self.cursor += offset,
-                        None => self.cursor = self.source.len_bytes(),
-                    }
-                } else {
-                    while self
-                        .peek_character()
-                        .is_some_and(|ch| !matches!(ch, SourceCharacter::Scalar('\n' | '\r')))
-                    {
-                        self.advance_character();
-                    }
+                match bytes[self.cursor..]
+                    .iter()
+                    .position(|&b| b == b'\n' || b == b'\r')
+                {
+                    Some(offset) => self.cursor += offset,
+                    None => self.cursor = self.source.len_bytes(),
                 }
                 if doc || (comments && !self.skip_doc_comments) {
                     return Ok(Token {
@@ -331,13 +325,7 @@ impl Lexer<'_> {
             {
                 self.cursor += 1;
             }
-            Kind::Name(
-                self.source
-                    .range(start..self.cursor)
-                    .as_str()
-                    .expect("identifier or numeric scalar token")
-                    .to_owned(),
-            )
+            Kind::Name
         } else if ch.is_ascii_digit()
             || (ch == '.' && self.peek().is_some_and(|ch| ch.is_ascii_digit()))
         {
@@ -476,13 +464,7 @@ impl Lexer<'_> {
                 {
                     self.advance();
                 }
-                return Ok(Kind::Int(
-                    self.source
-                        .range(start..self.cursor)
-                        .as_str()
-                        .expect("identifier or numeric scalar token")
-                        .to_owned(),
-                ));
+                return Ok(Kind::Int);
             }
         }
         while self
@@ -536,17 +518,7 @@ impl Lexer<'_> {
                 self.advance();
             }
         }
-        let text = self
-            .source
-            .range(start..self.cursor)
-            .as_str()
-            .expect("identifier or numeric scalar token")
-            .to_owned();
-        Ok(if float {
-            Kind::Float(text)
-        } else {
-            Kind::Int(text)
-        })
+        Ok(if float { Kind::Float } else { Kind::Int })
     }
 
     #[inline]
@@ -744,10 +716,14 @@ impl<'a> Parser<'a> {
             // inter-token newline in the pinned Java lexer; CR alone is not
             // counted either. The string scanner retains its raw token path.
             let token = lexer.next_with_comments(string_start_only, true)?;
-            let newlines = lexer.source.as_bytes()[start..token.span.start]
-                .iter()
-                .filter(|&&byte| byte == b'\n')
-                .count();
+            let newlines = if token.span.start == start {
+                0
+            } else {
+                lexer.source.as_bytes()[start..token.span.start]
+                    .iter()
+                    .filter(|&&byte| byte == b'\n')
+                    .count()
+            };
             if comments {
                 // forceNextComment skips semicolons but reports only the
                 // final lexer's whitespace, unlike normal forceNext.
@@ -845,8 +821,22 @@ impl<'a> Parser<'a> {
         !self.gap.semicolon && self.gap.newlines == 0
     }
 
+    #[inline]
+    fn slice_str(source: SourceSlice<'a>, span: Span) -> &'a str {
+        source
+            .range(span.start..span.end)
+            .as_str()
+            .expect("identifier or numeric scalar token")
+    }
+
+    #[inline]
+    pub(super) fn token_str(&self) -> &'a str {
+        Self::slice_str(self.lexer.source, self.token.span)
+    }
+
+    #[inline]
     fn is_name(&self, expected: &str) -> bool {
-        matches!(&self.token.kind, Kind::Name(name) if name == expected)
+        matches!(self.token.kind, Kind::Name) && self.token_str() == expected
     }
 
     fn diagnostic_token_span(&self) -> Span {
@@ -930,23 +920,32 @@ impl<'a> Parser<'a> {
 
     fn identifier(&mut self) -> Result<(PklString, Span), Diagnostic> {
         let name = match &self.token.kind {
-            Kind::QuotedName(name) => name.clone(),
-            Kind::Name(name) if is_keyword(name) || name == "_" => {
-                let name = if name == "read?" {
-                    "read_question"
-                } else {
-                    name.as_str()
+            Kind::QuotedName(_) => {
+                let token = self.advance()?;
+                let Kind::QuotedName(name) = token.kind else {
+                    unreachable!();
                 };
-                return Err(Diagnostic::language(
-                    DiagnosticOrigin::Parser,
-                    DiagnosticKind::Syntax,
-                    self.token.span,
-                    format!(
-                        "Keyword `{name}` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
-                    ),
-                ));
+                return Ok((name, token.span));
             }
-            Kind::Name(name) => name.clone().into(),
+            Kind::Name => {
+                let name = self.token_str();
+                if is_keyword(name) || name == "_" {
+                    let display = if name == "read?" {
+                        "read_question"
+                    } else {
+                        name
+                    };
+                    return Err(Diagnostic::language(
+                        DiagnosticOrigin::Parser,
+                        DiagnosticKind::Syntax,
+                        self.token.span,
+                        format!(
+                            "Keyword `{display}` is not allowed here.\n\nIf you must use this name as identifier, enclose it in backticks."
+                        ),
+                    ));
+                }
+                PklString::from(name)
+            }
             // ParserImpl.parseIdentifier uses parserError with the raw current
             // FullToken text/span. Only expect() substitutes EOF and inserts a
             // location after the previous token across EOF or a line boundary.
@@ -1161,7 +1160,7 @@ impl<'a> Parser<'a> {
             if !self.is_symbol('@')
                 && !matches!(
                     self.token.kind,
-                    Kind::Name(_) | Kind::QuotedName(_) | Kind::DocComment
+                    Kind::Name | Kind::QuotedName(_) | Kind::DocComment
                 )
             {
                 if context == MemberContext::Class {
@@ -1774,30 +1773,33 @@ impl<'a> Parser<'a> {
             self.expression_step()?;
             let span = self.token.span;
             if self.is_symbol('(') {
-                let mut candidate = self.clone();
-                let mut head = self.clone();
-                head.advance()?;
-                let mut committed = head.is_name("_") || head.is_symbol(')');
-                if (matches!(&head.token.kind, Kind::Name(name) if !is_keyword(name))
-                    || matches!(head.token.kind, Kind::QuotedName(_)))
-                    && !head.is_name("_")
-                {
-                    head.advance()?;
-                    committed = head.is_symbol(',') || head.is_symbol(':');
+                let mut look = self.lexer.clone();
+                let (t1, _) = Self::read_token(&mut look, false, false)?;
+                let t1_is_underscore = matches!(t1.kind, Kind::Name)
+                    && Self::slice_str(self.lexer.source, t1.span) == "_";
+                let t1_is_ident = !t1_is_underscore
+                    && (matches!(t1.kind, Kind::QuotedName(_))
+                        || (matches!(t1.kind, Kind::Name)
+                            && !is_keyword(Self::slice_str(self.lexer.source, t1.span))));
+                let mut committed = t1_is_underscore || t1.kind == Kind::Symbol(')');
+                let mut single_ident_lambda = false;
+                if t1_is_ident {
+                    let (t2, _) = Self::read_token(&mut look, false, false)?;
+                    if matches!(t2.kind, Kind::Symbol(',' | ':')) {
+                        committed = true;
+                    } else if t2.kind == Kind::Symbol(')')
+                        && let Ok((t3, _)) = Self::read_token(&mut look, false, false)
+                    {
+                        single_ident_lambda = matches!(t3.kind, Kind::Operator("->"));
+                    }
                 }
-                let parameters = candidate.parameters();
-                if committed && let Err(error) = &parameters {
-                    return Err(error.clone());
-                }
-                if committed && parameters.is_ok() && !candidate.is_operator("->") {
-                    return Err(candidate.unexpected(Some("->")));
-                }
-                if let Ok(parameters) = parameters
-                    && candidate.is_operator("->")
-                {
-                    let header = Span::new(span.start, candidate.previous_end);
-                    candidate.advance()?;
-                    *self = candidate;
+                if committed || single_ident_lambda {
+                    let parameters = self.parameters()?;
+                    if !self.is_operator("->") {
+                        return Err(self.unexpected(Some("->")));
+                    }
+                    let header = Span::new(span.start, self.previous_end);
+                    self.advance()?;
                     self.enter_expression_scope()?;
                     machine.frames.push((
                         machine.minimum,
@@ -1889,16 +1891,15 @@ impl<'a> Parser<'a> {
             if self.is_symbol('-') || self.is_symbol('!') {
                 let negate = self.is_symbol('-');
                 self.advance()?;
-                if negate && let Kind::Int(text) = self.token.kind.clone() {
-                    let mut following = self.clone();
-                    following.advance()?;
-                    if !following.is_symbol('.')
-                        && !following.is_operator("?.")
-                        && !following.is_operator("!!")
-                        && !following.is_symbol('[')
-                    {
+                if negate && matches!(self.token.kind, Kind::Int) {
+                    let (next, _) = Self::read_token(&mut self.lexer.clone(), false, false)?;
+                    if !matches!(
+                        next.kind,
+                        Kind::Symbol('.' | '[') | Kind::Operator("?." | "!!")
+                    ) {
                         let token_span = self.token.span;
-                        let value = self.integer_literal(&text, true, token_span);
+                        let text = self.token_str();
+                        let value = self.integer_literal(text, true, token_span);
                         let end = self.advance()?.span.end;
                         self.folded_integer_spans
                             .insert(Span::new(span.start, end), token_span);
@@ -2497,13 +2498,33 @@ impl<'a> Parser<'a> {
     fn object_parameters(&mut self) -> Result<Vec<Parameter>, Diagnostic> {
         let underscore = self.is_name("_");
         if !underscore
-            && !match &self.token.kind {
+            && !match self.token.kind {
                 Kind::QuotedName(_) => true,
-                Kind::Name(name) => !is_keyword(name),
+                Kind::Name => !is_keyword(self.token_str()),
                 _ => false,
             }
         {
             return Ok(Vec::new());
+        }
+        let (next, _) = Self::read_token(&mut self.lexer.clone(), false, false)?;
+        if !underscore && !matches!(next.kind, Kind::Symbol(',' | ':') | Kind::Operator("->")) {
+            return Ok(Vec::new());
+        }
+        if matches!(next.kind, Kind::Symbol(',') | Kind::Operator("->")) {
+            let first = self.parameter()?;
+            let mut parameters = vec![first];
+            while self.is_symbol(',') {
+                self.advance()?;
+                if self.is_operator("->") {
+                    break;
+                }
+                parameters.push(self.parameter()?);
+            }
+            if !self.is_operator("->") {
+                return Err(self.unexpected(Some(",` or `->")));
+            }
+            self.advance()?;
+            return Ok(parameters);
         }
         let mut candidate = self.clone();
         let first = candidate.parameter()?;
@@ -2541,9 +2562,9 @@ impl<'a> Parser<'a> {
     }
 
     fn object_property(&mut self) -> Result<bool, Diagnostic> {
-        Ok(match &self.token.kind {
-            Kind::Name(name) if is_keyword(name) => matches!(
-                name.as_str(),
+        Ok(match self.token.kind {
+            Kind::Name if is_keyword(self.token_str()) => matches!(
+                self.token_str(),
                 "function"
                     | "local"
                     | "const"
@@ -2553,7 +2574,7 @@ impl<'a> Parser<'a> {
                     | "abstract"
                     | "open"
             ),
-            Kind::Name(_) | Kind::QuotedName(_) => matches!(
+            Kind::Name | Kind::QuotedName(_) => matches!(
                 Self::read_token(&mut self.lexer.clone(), false, false)?
                     .0
                     .kind,
@@ -2836,90 +2857,97 @@ impl<'a> Parser<'a> {
 
     fn primary(&mut self) -> Result<Expr, Diagnostic> {
         let span = self.token.span;
-        let kind = match self.token.kind.clone() {
-            Kind::Int(text) => {
-                let value = self.integer_literal(&text, false, span);
+        let kind = match &self.token.kind {
+            Kind::Int => {
+                let text = self.token_str();
+                let value = self.integer_literal(text, false, span);
                 self.advance()?;
                 ExprKind::Int(value)
             }
-            Kind::Float(text) => {
-                let value = text
-                    .replace('_', "")
-                    .parse::<f64>()
-                    .map_err(|_| self.unexpected(Some("number")))?;
+            Kind::Float => {
+                let text = self.token_str();
+                let parsed = if text.contains('_') {
+                    text.replace('_', "").parse::<f64>()
+                } else {
+                    text.parse::<f64>()
+                };
+                let value = parsed.map_err(|_| self.unexpected(Some("number")))?;
                 self.advance()?;
                 ExprKind::Float(value)
             }
-            Kind::String(text) => {
-                self.advance()?;
+            Kind::String(_) => {
+                let Kind::String(text) = self.advance()?.kind else {
+                    unreachable!();
+                };
                 ExprKind::String(text)
             }
-            Kind::StringError(error) => return Err(*error),
-            Kind::Name(name) if name == "true" || name == "false" => {
-                self.advance()?;
-                ExprKind::Bool(name == "true")
-            }
-            Kind::Name(name) if name == "null" => {
-                self.advance()?;
-                ExprKind::Null
-            }
-            Kind::Name(name) if name == "outer" || name == "module" => {
-                self.advance()?;
-                if name == "outer" {
-                    ExprKind::Outer
-                } else {
-                    ExprKind::Module
-                }
-            }
-            Kind::Name(name) if name == "import" => {
-                let keyword = self.advance_constant()?;
-                let glob = self.is_symbol('*') && self.token.span.start == keyword.span.end;
-                if glob {
-                    self.advance_constant()?;
-                }
-                self.expect('(')?;
-                let (uri, uri_span) = self.string_constant()?;
-                let end = self.expect(')')?.span.end;
-                return Ok(Expr {
-                    kind: ExprKind::Import {
-                        uri,
-                        glob,
-                        uri_span,
-                        clause_alias: None,
-                    },
-                    span: Span::new(span.start, end),
-                });
-            }
-            Kind::Name(name) if name == "this" => {
-                self.advance()?;
-                ExprKind::This
-            }
-            Kind::Name(name) if name == "super" => {
-                self.advance()?;
-                if !self.is_symbol('.') && !self.is_symbol('[') {
-                    return Err(self.unexpected(Some("[")));
-                }
-                ExprKind::Super
-            }
-            Kind::QuotedName(name) => {
-                self.advance()?;
+            Kind::StringError(error) => return Err((**error).clone()),
+            Kind::QuotedName(_) => {
+                let Kind::QuotedName(name) = self.advance()?.kind else {
+                    unreachable!();
+                };
                 ExprKind::Name(name)
             }
-            Kind::Name(name) => {
-                if is_keyword(&name) || name == "_" {
-                    if name == "import" {
-                        return Err(Diagnostic::unsupported(
-                            DiagnosticOrigin::Parser,
-                            "import-expression",
-                            span,
-                            "Import expressions are not implemented.",
-                        ));
-                    }
-                    return Err(self.unexpected(self.expectation.as_deref()));
+            Kind::Name => match self.token_str() {
+                "true" => {
+                    self.advance()?;
+                    ExprKind::Bool(true)
                 }
-                self.advance()?;
-                ExprKind::Name(name.into())
-            }
+                "false" => {
+                    self.advance()?;
+                    ExprKind::Bool(false)
+                }
+                "null" => {
+                    self.advance()?;
+                    ExprKind::Null
+                }
+                "outer" => {
+                    self.advance()?;
+                    ExprKind::Outer
+                }
+                "module" => {
+                    self.advance()?;
+                    ExprKind::Module
+                }
+                "import" => {
+                    let keyword = self.advance_constant()?;
+                    let glob = self.is_symbol('*') && self.token.span.start == keyword.span.end;
+                    if glob {
+                        self.advance_constant()?;
+                    }
+                    self.expect('(')?;
+                    let (uri, uri_span) = self.string_constant()?;
+                    let end = self.expect(')')?.span.end;
+                    return Ok(Expr {
+                        kind: ExprKind::Import {
+                            uri,
+                            glob,
+                            uri_span,
+                            clause_alias: None,
+                        },
+                        span: Span::new(span.start, end),
+                    });
+                }
+                "this" => {
+                    self.advance()?;
+                    ExprKind::This
+                }
+                "super" => {
+                    self.advance()?;
+                    if !self.is_symbol('.') && !self.is_symbol('[') {
+                        return Err(self.unexpected(Some("[")));
+                    }
+                    ExprKind::Super
+                }
+                name => {
+                    if is_keyword(name) || name == "_" {
+                        return Err(self.unexpected(self.expectation.as_deref()));
+                    }
+                    let owned = PklString::from(name);
+                    self.advance()?;
+                    ExprKind::Name(owned)
+                }
+            },
             Kind::Symbol('[') => {
                 return Err(self.unexpected(self.expectation.as_deref()));
             }
@@ -2935,7 +2963,13 @@ impl<'a> Parser<'a> {
 
 fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
     let literal = text;
-    let text = text.replace('_', "");
+    let cleaned;
+    let text = if text.contains('_') {
+        cleaned = text.replace('_', "");
+        cleaned.as_str()
+    } else {
+        text
+    };
     let (digits, radix) = if let Some(digits) = text.strip_prefix("0x") {
         (digits, 16)
     } else if let Some(digits) = text.strip_prefix("0b") {
@@ -2943,11 +2977,15 @@ fn integer(text: &str, negative: bool, span: Span) -> Result<i64, Diagnostic> {
     } else if let Some(digits) = text.strip_prefix("0o") {
         (digits, 8)
     } else {
-        (text.as_str(), 10)
+        (text, 10)
     };
-    let value = i128::from_str_radix(digits, radix)
-        .ok()
-        .and_then(|value| i64::try_from(if negative { -value } else { value }).ok());
+    let value = if radix == 10 && !negative && digits.len() <= 18 {
+        digits.parse::<i64>().ok()
+    } else {
+        i128::from_str_radix(digits, radix)
+            .ok()
+            .and_then(|value| i64::try_from(if negative { -value } else { value }).ok())
+    };
     value.ok_or_else(|| {
         Diagnostic::language(
             DiagnosticOrigin::DeferredAstValidation,
@@ -3286,14 +3324,13 @@ pub fn parse_repl_input<'a>(
             let span = Span::new(item_start, parser.previous_end);
             items.push(ReplItem::Method { member, span });
         } else {
-            let is_ident = matches!(&parser.token.kind, Kind::QuotedName(_))
-                || matches!(&parser.token.kind, Kind::Name(name) if !is_keyword(name) && name != "_");
+            let is_ident = matches!(parser.token.kind, Kind::QuotedName(_))
+                || (matches!(parser.token.kind, Kind::Name)
+                    && !is_keyword(parser.token_str())
+                    && parser.token_str() != "_");
             if is_ident {
-                let saved = parser.clone();
-                parser.advance()?;
-                let is_property =
-                    parser.is_symbol(':') || parser.is_symbol('=') || parser.is_symbol('{');
-                parser = saved;
+                let (next, _) = Parser::read_token(&mut parser.lexer.clone(), false, false)?;
+                let is_property = matches!(next.kind, Kind::Symbol(':' | '=' | '{'));
                 if is_property {
                     let member = parser.member(
                         MemberContext::Module,

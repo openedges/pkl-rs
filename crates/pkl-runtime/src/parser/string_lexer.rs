@@ -69,6 +69,24 @@ impl Lexer<'_> {
         first: char,
         constant: bool,
     ) -> Result<Kind, Diagnostic> {
+        if first == '"' {
+            let bytes = self.source.as_bytes();
+            let content_start = self.cursor;
+            if bytes.get(content_start..content_start + 2) != Some(b"\"\"") {
+                let mut i = content_start;
+                while let Some(&b) = bytes.get(i) {
+                    if b == b'"' {
+                        let value = self.source.range(content_start..i).to_pkl_string();
+                        self.cursor = i + 1;
+                        return Ok(Kind::String(value));
+                    }
+                    if b == b'\\' || b == b'\n' || b == b'\r' {
+                        break;
+                    }
+                    i += 1;
+                }
+            }
+        }
         let mut frames = vec![self.start_string(start, first)?];
         loop {
             let frame = frames.last_mut().expect("active string scan");
