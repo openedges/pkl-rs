@@ -639,3 +639,192 @@ fn deep_nested_pair_renders_without_unbounded_recursion_in_pcf_and_pkl_binary() 
     // Matches pinned Apple Pkl 0.32.0 (`pkl-macos-aarch64 eval -f pkl-binary -`: 14,644 bytes).
     assert_eq!(bin_out.len(), 14_644);
 }
+
+#[test]
+fn user_module_pkl_base_classes_do_not_stop_forcing_or_hidden_checks() {
+    // Oracle 0.32.0 permits user `module pkl.base` defining `open class Object`/`Typed`/`Any`.
+    let render_src = concat!(
+        "module pkl.base\n",
+        "open class Object { hidden secret = 42; visible = 99 }\n",
+        "class Sub extends Object { secret = 77; x = 1 }\n",
+        "res = new Sub {}\n",
+        "res2 = new Sub { x = 2 }\n",
+    );
+    let pcf_out = eval_output(
+        render_src,
+        "file:///m3-renderers/user-pkl-base-render.pkl",
+        "pkl.base",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        String::from_utf8(pcf_out).expect("UTF-8 PCF"),
+        "res {\n  visible = 99\n  x = 1\n}\nres2 {\n  visible = 99\n  x = 2\n}\n"
+    );
+    let json_out = eval_output(
+        render_src,
+        "file:///m3-renderers/user-pkl-base-render.pkl",
+        "pkl.base",
+        ModuleEvalOptions {
+            properties: vec![("pkl.outputFormat".into(), "json".into())],
+            ..ModuleEvalOptions::default()
+        },
+    );
+    assert_eq!(
+        String::from_utf8(json_out).expect("UTF-8 JSON"),
+        "{\n  \"res\": {\n    \"visible\": 99,\n    \"x\": 1\n  },\n  \"res2\": {\n    \"visible\": 99,\n    \"x\": 2\n  }\n}\n"
+    );
+
+    let eq_src = concat!(
+        "module pkl.base\n",
+        "open class Object { hidden h: Int; visible = h + 1 }\n",
+        "class Sub extends Object { x = 1 }\n",
+        "local a = new Sub { h = 1 }\n",
+        "local b = new Sub { h = 2 }\n",
+        "eq = a == b\n",
+    );
+    let eq_out = eval_output(
+        eq_src,
+        "file:///m3-renderers/user-pkl-base-eq.pkl",
+        "pkl.base",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        String::from_utf8(eq_out).expect("UTF-8 PCF"),
+        "eq = false\n"
+    );
+
+    let hidden_src = concat!(
+        "module pkl.base\n",
+        "open class Object { hidden secret = 42 }\n",
+        "class Sub extends Object { secret = throw(\"must not force hidden\"); x = 1 }\n",
+        "res = new Sub {}\n",
+    );
+    let hidden_out = eval_output(
+        hidden_src,
+        "file:///m3-renderers/user-pkl-base-hidden.pkl",
+        "pkl.base",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        String::from_utf8(hidden_out).expect("UTF-8 PCF"),
+        "res {\n  x = 1\n}\n"
+    );
+}
+
+#[test]
+fn plain_object_sync_force_handles_precached_object_key_rehash() {
+    // Both 4 scalar properties (previously infinite loop) and 5 scalar properties
+    // (previously `economic_map.rs:156` panic) with a pre-cached object entry key.
+    for (tag, extra, extra_line, extra_json) in [
+        ("four", "", "", ""),
+        ("five", "e = 5; ", "    e = 5\n", "  \"e\": 5,\n"),
+    ] {
+        let pcf_src = format!(
+            "local kobj = new Dynamic {{ k = 1 }}\n\
+             local o = new Dynamic {{ a = 1; b = 2; c = 3; d = 4; {extra}[kobj] = 10 }}\n\
+             res = if (o[kobj] == 10) new PcfRenderer {{}}.renderValue(o) else \"nope\"\n\
+             custom = if (o[kobj] == 10) new PcfRenderer {{ indent = \"    \" }}.renderValue(o) else \"nope\"\n"
+        );
+        let pcf_out = eval_output(
+            &pcf_src,
+            &format!("file:///m3-renderers/rehash-{tag}.pkl"),
+            "rehash",
+            ModuleEvalOptions::default(),
+        );
+        let expected_pcf = format!(
+            "res = \"\"\"\n  {{\n    a = 1\n    b = 2\n    c = 3\n    d = 4\n{extra_line}    [new {{\n      k = 1\n    }}] = 10\n  }}\n  \"\"\"\n\
+             custom = \"\"\"\n  {{\n      a = 1\n      b = 2\n      c = 3\n      d = 4\n{custom_extra}      [new {{\n          k = 1\n      }}] = 10\n  }}\n  \"\"\"\n",
+            custom_extra = if extra.is_empty() {
+                ""
+            } else {
+                "      e = 5\n"
+            }
+        );
+        assert_eq!(
+            String::from_utf8(pcf_out).expect("UTF-8 PCF"),
+            expected_pcf,
+            "PCF mismatch for {tag}"
+        );
+
+        // Nested inside a Typed object (exercises `try_force_plain_typed_sync` -> `try_force_plain_object_sync`)
+        // and Mapping container.
+        let nested_src = format!(
+            "class Box {{ inner: Dynamic }}\n\
+             local kobj = new Dynamic {{ k = 1 }}\n\
+             local o = new Dynamic {{ a = 1; b = 2; c = 3; d = 4; {extra}[kobj] = 10 }}\n\
+             local m = new Mapping {{ [\"a\"] = 1; [\"b\"] = 2; [\"c\"] = 3; [\"d\"] = 4; {map_extra}[kobj] = 10 }}\n\
+             boxed = if (o[kobj] == 10) new Box {{ inner = o }} else throw(\"bad\")\n\
+             mapped = if (m[kobj] == 10) new PcfRenderer {{}}.renderValue(m) else \"nope\"\n",
+            map_extra = if extra.is_empty() {
+                ""
+            } else {
+                "[\"e\"] = 5; "
+            }
+        );
+        let nested_out = eval_output(
+            &nested_src,
+            &format!("file:///m3-renderers/rehash-nested-{tag}.pkl"),
+            "rehash_nested",
+            ModuleEvalOptions::default(),
+        );
+        let nested_text = String::from_utf8(nested_out).expect("UTF-8 PCF");
+        assert!(
+            nested_text.contains("boxed {\n  inner {\n    a = 1\n"),
+            "{nested_text}"
+        );
+        assert!(nested_text.contains("mapped = \"\"\""), "{nested_text}");
+        let _ = extra_json;
+    }
+}
+
+#[test]
+fn plain_typed_sync_force_preserves_superclass_property_when_subclass_declares_hidden() {
+    let annot_src = concat!(
+        "import \"pkl:reflect\"\n",
+        "open class Base extends Annotation { x = 1; y = 2 }\n",
+        "class Sub extends Base { hidden x = 99 }\n",
+        "@Sub { y = 3 }\n",
+        "hidden dummy = 0\n",
+        "res = reflect.Module(module).moduleClass.properties[\"dummy\"].annotations[0]\n",
+    );
+    let annot_pcf = eval_output(
+        annot_src,
+        "file:///m3-renderers/hidden-sub-annot.pkl",
+        "hidden_sub_annot",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        String::from_utf8(annot_pcf).expect("UTF-8 PCF"),
+        "res {\n  x = 1\n  y = 3\n}\n"
+    );
+    let annot_json = eval_output(
+        annot_src,
+        "file:///m3-renderers/hidden-sub-annot.pkl",
+        "hidden_sub_annot",
+        ModuleEvalOptions {
+            properties: vec![("pkl.outputFormat".into(), "json".into())],
+            ..ModuleEvalOptions::default()
+        },
+    );
+    assert_eq!(
+        String::from_utf8(annot_json).expect("UTF-8 JSON"),
+        "{\n  \"res\": {\n    \"x\": 1,\n    \"y\": 3\n  }\n}\n"
+    );
+
+    // Three-level case: amending a subclass with a hidden override still renders Base.x.
+    let three_level_src = concat!(
+        "open class Base { x = 1; y = 2 }\n",
+        "class Sub extends Base { hidden x = 99 }\n",
+        "res = new Sub { x = throw(\"must not force hidden\"); y = 4 }\n",
+    );
+    let three_out = eval_output(
+        three_level_src,
+        "file:///m3-renderers/hidden-sub-3level.pkl",
+        "hidden_sub_3level",
+        ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        String::from_utf8(three_out).expect("UTF-8 PCF"),
+        "res {\n  x = 1\n  y = 4\n}\n"
+    );
+}

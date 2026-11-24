@@ -208,7 +208,13 @@ pub(super) struct RenderRun {
     has_value_converters: bool,
     converters: Converters,
     source: Option<RuntimeFrame>,
-    source_overrides: crate::heap::FastMap<PklString, Arc<crate::value::RuntimeSource>>,
+    source_overrides: crate::heap::FastMap<
+        usize,
+        (
+            Arc<crate::value::RuntimeSource>,
+            Arc<crate::value::RuntimeSource>,
+        ),
+    >,
 }
 impl RenderRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
@@ -2184,9 +2190,11 @@ impl Vm {
                     .as_ref()
                     .or(self.context.primary_source.as_ref())
                     .map(|source| {
+                        let key = Arc::as_ptr(source) as usize;
                         if source.module_name == *target_module_name {
                             source.clone()
-                        } else if let Some(cached) = run.source_overrides.get(&source.uri)
+                        } else if let Some((orig, cached)) = run.source_overrides.get(&key)
+                            && Arc::ptr_eq(orig, source)
                             && cached.module_name == *target_module_name
                         {
                             cached.clone()
@@ -2196,7 +2204,7 @@ impl Vm {
                                 ..(**source).clone()
                             });
                             run.source_overrides
-                                .insert(source.uri.clone(), overridden.clone());
+                                .insert(key, (source.clone(), overridden.clone()));
                             overridden
                         }
                     });
@@ -3503,70 +3511,63 @@ impl Vm {
             chain_len += 1;
             cur = anc.parent;
         }
-        let mut hidden_names: Vec<PklString> = Vec::new();
+        let mut prefix_len = 0usize;
         for &anc_id in &chain[..chain_len] {
             let Some(anc) = self.heap.get_fast(anc_id) else {
                 return Ok(false);
             };
-            if anc.class_definition.as_ref().is_some_and(|c| {
-                c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
-                    && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
-            }) {
+            if collections::is_canonical_object_root(anc) {
                 break;
             }
+            prefix_len += 1;
+        }
+        // Walk parent-to-child so a subclass `hidden` property hides only its own
+        // declaration and descendants without erasing a superclass's visible property.
+        let mut ancestor_hidden: Vec<PklString> = Vec::new();
+        let mut visible: Vec<(PklString, ObjectId, Member)> = Vec::new();
+        for &anc_id in chain[..prefix_len].iter().rev() {
+            let Some(anc) = self.heap.get_fast(anc_id) else {
+                return Ok(false);
+            };
             for m in anc.members.iter() {
-                if !m.local
-                    && !m.method
-                    && !m.entry
-                    && m.hidden()
-                    && !hidden_names.contains(&m.name)
-                {
-                    hidden_names.push(m.name.clone());
+                if m.local || m.method || m.entry {
+                    continue;
+                }
+                if m.hidden() {
+                    if !ancestor_hidden.contains(&m.name) {
+                        ancestor_hidden.push(m.name.clone());
+                    }
+                    continue;
+                }
+                if m.external() || m.abstract_member() || m.definition() || m.import() {
+                    continue;
+                }
+                if ancestor_hidden.contains(&m.name) {
+                    continue;
+                }
+                if let Some(entry) = visible.iter_mut().find(|(name, _, _)| *name == m.name) {
+                    entry.1 = anc_id;
+                    entry.2 = m.clone();
+                } else {
+                    visible.push((m.name.clone(), anc_id, m.clone()));
                 }
             }
         }
-        let mut seen_names: Vec<PklString> = Vec::new();
         let mut to_force: Vec<(ObjectId, Member)> = Vec::new();
         let mut nested_children: Vec<ObjectId> = Vec::new();
         {
             let Some(recv_obj) = self.heap.get_fast(id) else {
                 return Ok(false);
             };
-            for &anc_id in &chain[..chain_len] {
-                let Some(anc) = self.heap.get_fast(anc_id) else {
-                    return Ok(false);
-                };
-                if anc.class_definition.as_ref().is_some_and(|c| {
-                    c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
-                        && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
-                }) {
-                    break;
-                }
-                for m in anc.members.iter() {
-                    if m.local
-                        || m.method
-                        || m.entry
-                        || m.external()
-                        || m.abstract_member()
-                        || m.definition()
-                        || m.import()
-                        || m.hidden()
+            for (name, owner_id, member) in visible {
+                if let Some(cached) = fast_lookup_member_cached(recv_obj, &name, false) {
+                    if let Value::Object(child_id) = cached
+                        && *child_id != id
                     {
-                        continue;
+                        nested_children.push(*child_id);
                     }
-                    if hidden_names.contains(&m.name) || seen_names.contains(&m.name) {
-                        continue;
-                    }
-                    seen_names.push(m.name.clone());
-                    if let Some(cached) = fast_lookup_member_cached(recv_obj, &m.name, false) {
-                        if let Value::Object(child_id) = cached
-                            && *child_id != id
-                        {
-                            nested_children.push(*child_id);
-                        }
-                    } else {
-                        to_force.push((anc_id, m.clone()));
-                    }
+                } else {
+                    to_force.push((owner_id, member));
                 }
             }
         }
@@ -3974,7 +3975,22 @@ impl Vm {
     }
 
     fn try_force_plain_object_sync(&mut self, receiver: ObjectId) -> Result<bool, RuntimeError> {
-        let len = self.heap.get(receiver)?.members.len();
+        if self.frames.last().is_some_and(|f| f.equality_run.is_some()) {
+            return Ok(false);
+        }
+        let len = {
+            let object = self.heap.get(receiver)?;
+            if object.forced {
+                return Ok(true);
+            }
+            if object.cache_index.is_rehash_incomplete() {
+                return Ok(false);
+            }
+            object.members.len()
+        };
+        if !self.all_cache_slots_non_object(receiver)? {
+            return Ok(false);
+        }
         for idx in 0..len {
             let next_member = {
                 let object = self.heap.get(receiver)?;
@@ -4049,6 +4065,7 @@ impl Vm {
         mut index: usize,
     ) -> Result<bool, RuntimeError> {
         let len = self.heap.get(receiver)?.members.len();
+        let mut slots_all_non_object: Option<bool> = None;
         while index < len {
             let next_member = {
                 let object = self.heap.get(receiver)?;
@@ -4091,7 +4108,9 @@ impl Vm {
             } else {
                 None
             };
-            if let Some(ref probe) = entry_probe
+            let rehash_incomplete = self.heap.get(receiver)?.cache_index.is_rehash_incomplete();
+            if !rehash_incomplete
+                && let Some(ref probe) = entry_probe
                 && !matches!(probe, Value::Object(_))
             {
                 let obj = self.heap.get(receiver)?;
@@ -4104,9 +4123,29 @@ impl Vm {
                     continue;
                 }
             }
-            if entry_probe
-                .as_ref()
-                .is_none_or(|p| !matches!(p, Value::Object(_)))
+            let can_complete_sync = !rehash_incomplete
+                && self.frames.last().is_none_or(|f| f.equality_run.is_none())
+                && entry_probe
+                    .as_ref()
+                    .is_none_or(|p| !matches!(p, Value::Object(_)))
+                && {
+                    let obj = self.heap.get(receiver)?;
+                    let fast_append = obj.cache_index.len() == obj.cache_slots.len()
+                        && obj.cache_index.can_fast_append_no_rehash();
+                    if fast_append {
+                        true
+                    } else {
+                        match slots_all_non_object {
+                            Some(flag) => flag,
+                            None => {
+                                let flag = self.all_cache_slots_non_object(receiver)?;
+                                slots_all_non_object = Some(flag);
+                                flag
+                            }
+                        }
+                    }
+                };
+            if can_complete_sync
                 && let Some(val) = self.try_eval_pure_member(receiver, &next_member, &cache_key)
             {
                 self.complete_cache_probe(receiver, cache_key, val, entry_probe)?;
@@ -4130,6 +4169,7 @@ impl Vm {
                 if pushed {
                     run.tasks.pop();
                 }
+                slots_all_non_object = None;
                 continue;
             }
             return Ok(false);

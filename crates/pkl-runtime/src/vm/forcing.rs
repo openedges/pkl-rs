@@ -461,15 +461,7 @@ impl Vm {
                             let stop_builtin = self
                                 .heap
                                 .get_fast(parent)
-                                .and_then(|p| p.class_definition.as_ref())
-                                .is_some_and(|c| {
-                                    c.module.as_ref().and_then(PklString::as_str)
-                                        == Some("pkl.base")
-                                        && matches!(
-                                            c.name.as_str(),
-                                            Some("Typed" | "Object" | "Any")
-                                        )
-                                });
+                                .is_some_and(collections::is_canonical_object_root);
                             if stop_builtin {
                                 None
                             } else {

@@ -959,6 +959,20 @@ pub(super) fn forcing_members(
     Ok(result)
 }
 
+/// True only for canonical builtin `pkl.base` roots (`Typed`, `Object`, `Any`),
+/// never for user-defined classes in a user `module pkl.base`.
+#[inline]
+pub(super) fn is_canonical_object_root(object: &Object) -> bool {
+    matches!(
+        object.builtin_type.as_deref(),
+        Some(TypeCheck::Any)
+            | Some(TypeCheck::Class {
+                id: super::classes::TYPED | super::classes::OBJECT,
+                ..
+            })
+    )
+}
+
 /// Class-hidden names stay hidden even when an override lacks the modifier.
 pub(crate) fn hidden_property(
     heap: &Heap,
@@ -995,15 +1009,12 @@ pub(crate) fn hidden_property(
         }
         let object = heap.get(id)?;
         // Builtin collection prototypes (Dynamic/Listing/Mapping) only declare hidden `default`,
-        // and Typed/Object/Any declare no hidden properties at all.
+        // and canonical Typed/Object/Any declare no hidden properties at all.
         if !is_default
             && (matches!(
                 object.builtin_type.as_deref(),
                 Some(TypeCheck::Collection(_))
-            ) || object.class_definition.as_ref().is_some_and(|c| {
-                c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
-                    && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
-            }))
+            ) || is_canonical_object_root(object))
         {
             return Ok(false);
         }
@@ -1047,10 +1058,8 @@ pub(crate) fn owner_has_explicit_hidden(
         if matches!(
             object.builtin_type.as_deref(),
             Some(TypeCheck::Collection(_))
-        ) || object.class_definition.as_ref().is_some_and(|c| {
-            c.module.as_ref().and_then(PklString::as_str) == Some("pkl.base")
-                && matches!(c.name.as_str(), Some("Typed" | "Object" | "Any"))
-        }) {
+        ) || is_canonical_object_root(object)
+        {
             return Ok(false);
         }
         if object

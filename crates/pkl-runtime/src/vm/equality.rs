@@ -515,7 +515,7 @@ impl Vm {
         self.complete_cache_probe(receiver, key, value, probe)
     }
 
-    fn all_cache_slots_non_object(&self, id: ObjectId) -> Result<bool, RuntimeError> {
+    pub(super) fn all_cache_slots_non_object(&self, id: ObjectId) -> Result<bool, RuntimeError> {
         let object = self.heap.get(id)?;
         for slot in &object.cache_slots {
             if let Some(entry_key) = &slot.entry_key {

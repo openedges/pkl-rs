@@ -613,3 +613,35 @@ fn repl_redefining_locals_after_cache_hash_rebuilds_index_without_panic() {
         "148"
     );
 }
+
+#[test]
+fn repl_render_error_uses_per_source_line_when_definitions_share_uri() {
+    let mut host = MockHost::new();
+    let mut session = ReplSession::new(ReplSessionOptions::default());
+
+    let def = host.run(
+        &mut session,
+        ReplRequest::Eval {
+            id: "pkl0".into(),
+            text: "a = new { x = 1 }; b = (a) { y = Int }".into(),
+            eval_definitions: false,
+            force_results: false,
+        },
+    );
+    assert!(def.is_empty(), "unexpected def response: {def:?}");
+
+    let err = eval_single_err(
+        &mut host,
+        &mut session,
+        "pkl1",
+        "new PcfRenderer {}.renderValue(b)",
+    );
+    assert!(
+        err.contains("1 | b = (a) { y = Int }"),
+        "expected error frame from `b`, got:\n{err}"
+    );
+    assert!(
+        !err.contains("a = new { x = 1 }"),
+        "stale source_overrides leaked `a`'s source line:\n{err}"
+    );
+}
