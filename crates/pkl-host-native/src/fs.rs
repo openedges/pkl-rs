@@ -125,8 +125,7 @@ pub fn read_static_local_project_import(
     import_uri: &str,
 ) -> Option<(String, String)> {
     if import_uri.is_empty()
-        || import_uri == "..."
-        || import_uri.starts_with(".../")
+        || import_uri.starts_with("...")
         || import_uri.starts_with("pkl:")
         || import_uri.starts_with("package:")
         || import_uri.starts_with('@')
@@ -173,7 +172,14 @@ pub fn read_static_local_project_import(
         {
             return None;
         }
-        let base_path = strip_windows_uri_leading_slash(file_uri_to_path(&base_uri.into()).ok()?);
+        let base_path = normalize_lexical_buf(&strip_windows_uri_leading_slash(
+            file_uri_to_path(&base_uri.into()).ok()?,
+        ));
+        // Fall back if `base_uri` uses a different encoding than `path_to_file_uri`
+        // (e.g. percent-encoded non-ASCII ancestor dirs from `file_uri_from_path`).
+        if path_to_file_uri(&base_path).to_java_utf8() != base_uri {
+            return None;
+        }
         let parent = base_path.parent()?;
         let norm = normalize_lexical_buf(&parent.join(import_uri));
         if !norm.is_file() {
@@ -656,13 +662,21 @@ mod tests {
         let root = dir.join("root");
         let dep = dir.join("dep");
         let triple = root.join("...");
+        let triple_foo = root.join("...foo");
+        let non_ascii_root = dir.join("테스트").join("proj");
+        let non_ascii_dep = dir.join("테스트").join("dep");
         fs::create_dir_all(&root).unwrap();
         fs::create_dir_all(&dep).unwrap();
         fs::create_dir_all(&triple).unwrap();
+        fs::create_dir_all(&triple_foo).unwrap();
+        fs::create_dir_all(&non_ascii_root).unwrap();
+        fs::create_dir_all(&non_ascii_dep).unwrap();
 
         let dep_file = dep.join("PklProject");
         fs::write(&dep_file, "amends \"pkl:Project\"\n").unwrap();
         fs::write(triple.join("PklProject"), "amends \"pkl:Project\"\n").unwrap();
+        fs::write(triple_foo.join("PklProject"), "amends \"pkl:Project\"\n").unwrap();
+        fs::write(non_ascii_dep.join("PklProject"), "amends \"pkl:Project\"\n").unwrap();
 
         let base_uri = path_to_file_uri(&root.join("PklProject")).to_java_utf8();
         let dep_uri = path_to_file_uri(&dep_file).to_java_utf8();
@@ -685,13 +699,22 @@ mod tests {
         );
         assert!(read_static_local_project_import(&base_uri, "file://../dep/PklProject").is_none());
 
-        // Triple-dot, backslash, absolute POSIX path, query/fragment, and percent-encoded relative must fall back.
+        // Triple-dot (`.../` and `...<non-slash>`), backslash, absolute POSIX path, query/fragment,
+        // percent-encoded relative, and non-ASCII percent-encoded base URI must fall back.
         assert!(read_static_local_project_import(&base_uri, ".../PklProject").is_none());
+        assert!(read_static_local_project_import(&base_uri, "...foo/PklProject").is_none());
         assert!(read_static_local_project_import(&base_uri, "..\\dep\\PklProject").is_none());
         assert!(read_static_local_project_import(&base_uri, "/etc/PklProject").is_none());
         assert!(read_static_local_project_import(&base_uri, "../dep/Pkl%50roject").is_none());
         assert!(read_static_local_project_import(&base_uri, &format!("{dep_uri}?q=1")).is_none());
         assert!(read_static_local_project_import(&base_uri, &format!("{dep_uri}#frag")).is_none());
+
+        let non_ascii_base_uri =
+            pkl_runtime::packages::resolver::file_uri_from_path(&non_ascii_root.join("PklProject"))
+                .unwrap();
+        assert!(
+            read_static_local_project_import(&non_ascii_base_uri, "../dep/PklProject").is_none()
+        );
 
         let _ = fs::remove_dir_all(&dir);
     }
