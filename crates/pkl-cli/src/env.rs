@@ -21,7 +21,7 @@ use pkl_runtime::packages::project::{
     CliSettingsInput, EffectiveSettings, EvaluatorColor, PKL_PROJECT_DEPS_FILENAME,
     PKL_PROJECT_FILENAME, PklSettings, Project, ProjectDependenciesManager, ProjectDeps,
     SETTINGS_ALLOWED_MODULES, SETTINGS_ALLOWED_RESOURCES, find_project_dir_with,
-    resolve_effective_settings,
+    resolve_effective_settings, try_parse_static_project,
 };
 use pkl_runtime::packages::resolver::{PackageResolver, file_uri_from_path};
 use pkl_runtime::pkl_binary_decode::{DecodedObject, DecodedValue, decode_lossless};
@@ -487,6 +487,40 @@ pub fn load_project_file(
         ))
     })?;
 
+    if opts.allowed_modules.is_none()
+        && opts.allowed_resources.is_none()
+        && opts.root_dir.is_none()
+        && opts.timeout_ms.is_none()
+        && let Some(project) = try_parse_static_project(&uri, &text, &mut |base_uri, import_uri| {
+            if import_uri.starts_with("pkl:")
+                || import_uri.starts_with("package:")
+                || import_uri.starts_with('@')
+            {
+                return None;
+            }
+            let target = if let Some(rest) = import_uri.strip_prefix("file://") {
+                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
+            } else if !is_uri_like(import_uri) {
+                let base_path = file_uri_to_path(&base_uri.into()).ok()?;
+                let parent = base_path.parent()?;
+                normalize_lexical(&parent.join(import_uri))
+            } else {
+                return None;
+            };
+            if !target.is_file() {
+                return None;
+            }
+            let target_uri = file_uri_from_path(&target).ok()?;
+            let child_text = std::fs::read_to_string(&target).ok()?;
+            Some((target_uri, child_text))
+        })
+    {
+        return Ok(LoadedProject {
+            project,
+            http_headers: None,
+        });
+    }
+
     let project_env = if opts.has_env {
         opts.env_vars.clone()
     } else {
@@ -515,31 +549,39 @@ pub fn load_project_file(
     let exprs = if direct_project {
         vec![
             "output.value == module || (output.value != null && let (ref = import(\"pkl:reflect\")) ref.Class(output.value.getClass()).isSubclassOf(ref.Class(import(\"pkl:Project\").getClass())))".to_string(),
-            "if (output.value == module) \"pkl.Project\" else if (output.value is Module) (import(\"pkl:reflect\")).Module(output.value).name else output.value.getClass().simpleName".to_string(),
             "output.bytes".to_string(),
         ]
     } else {
         vec![
             "output.value != null && let (ref = import(\"pkl:reflect\")) ref.Class(output.value.getClass()).isSubclassOf(ref.Class(import(\"pkl:Project\").getClass()))".to_string(),
-            "if (output.value is Module) (import(\"pkl:reflect\")).Module(output.value).name else output.value.getClass().simpleName".to_string(),
             "output.bytes".to_string(),
         ]
     };
     let (vals, _) = host
         .evaluate_expressions(&uri, &text, "PklProject", &exprs)
         .map_err(CliError::err)?;
-    host.close();
 
     if !value_is_true(&vals[0]) {
-        let got_type = SourceSession::result_string(vals[1].clone())
+        let type_expr = if direct_project {
+            "if (output.value == module) \"pkl.Project\" else if (output.value is Module) (import(\"pkl:reflect\")).Module(output.value).name else output.value.getClass().simpleName"
+        } else {
+            "if (output.value is Module) (import(\"pkl:reflect\")).Module(output.value).name else output.value.getClass().simpleName"
+        };
+        let got_type = host
+            .evaluate_expressions(&uri, &text, "PklProject", &[type_expr.to_string()])
+            .ok()
+            .and_then(|(v, _)| v.into_iter().next())
+            .and_then(|v| SourceSession::result_string(v).ok())
             .map(|s| s.to_java_utf8())
-            .unwrap_or_else(|_| "Any".to_string());
+            .unwrap_or_else(|| "Any".to_string());
+        host.close();
         return Err(CliError::err(format!(
             "Expected `output.value` of module `{uri}` to be of type `pkl.Project`, but got type `{got_type}`."
         )));
     }
+    host.close();
 
-    let bytes = extract_binary_value(vals[2].clone()).map_err(CliError::err)?;
+    let bytes = extract_binary_value(vals[1].clone()).map_err(CliError::err)?;
     let decoded = decode_lossless(&bytes)
         .map_err(|e| CliError::err(format!("Failed to decode PklProject pkl-binary: {e:?}")))?;
     let project = Project::from_decoded_value(&decoded)
