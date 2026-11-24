@@ -121,6 +121,10 @@ impl Vm {
                     module.members.iter().map(|member| member.code).collect();
             }
         }
+        // Linking a module parent mutates the published receiver/class hierarchy in
+        // place (e.g., amending module adopts its parent's Typed class), invalidating
+        // any cached strict-collection type checks that observed it earlier.
+        self.verified_strict_collections.clear();
         Ok(())
     }
 }

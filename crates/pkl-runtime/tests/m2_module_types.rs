@@ -265,3 +265,77 @@ fn fast_type_checks_resolve_map_val_and_named_alias_arguments() {
         );
     }
 }
+
+#[test]
+fn verified_strict_collections_invalidated_on_amends_receiver_overwrite() {
+    let b_list = concat!(
+        "@ModuleInfo { minPklVersion = if (xs is List<Dynamic>) \"0.1.0\" else \"0.1.0\" }\n",
+        "open module b\n",
+        "import \"a.pkl\" as a\n",
+        "const hidden xs = List(a, a, a, a)\n",
+        "hidden checked: List<Dynamic> = xs\n",
+        "x = checked.length\n",
+    );
+    let b_map = concat!(
+        "@ModuleInfo { minPklVersion = if (xs is Map<Int, Dynamic>) \"0.1.0\" else \"0.1.0\" }\n",
+        "open module b\n",
+        "import \"a.pkl\" as a\n",
+        "const hidden xs = Map(1, a, 2, a, 3, a, 4, a)\n",
+        "hidden checked: Map<Int, Dynamic> = xs\n",
+        "x = checked.length\n",
+    );
+    let a_src = "amends \"b.pkl\"\n";
+
+    for (label, b_src) in [("list", b_list), ("map", b_map)] {
+        let result = evaluate_module_output_with_host(
+            ModuleSourceInput {
+                text: a_src,
+                uri: "file:///corpus/modules/a.pkl",
+                inferred_name: "a",
+            },
+            &ModuleEvalOptions::default(),
+            |request| match &request.kind {
+                ModuleRequestKind::SelectKey { .. }
+                | ModuleRequestKind::QueryCachePolicy { .. }
+                | ModuleRequestKind::QueryFragmentPaths { .. }
+                | ModuleRequestKind::ResolveImportUri { .. } => module_keys::complete(request),
+                ModuleRequestKind::CheckImport { .. } => {
+                    module_keys::defaults(request).expect("default import policy")
+                }
+                ModuleRequestKind::Resolve { original_uri, .. } => {
+                    ModuleCompletion::Resolved(Ok(ResolvedModule {
+                        original_uri: original_uri.clone(),
+                        resolved_uri: original_uri.clone(),
+                        source_uri: original_uri.clone(),
+                    }))
+                }
+                ModuleRequestKind::LoadSource { resolved, .. } => {
+                    let uri = resolved.original_uri.as_str().expect("utf8 uri");
+                    let (name, text) = if uri.ends_with("/b.pkl") {
+                        ("b", b_src)
+                    } else if uri.ends_with("/a.pkl") {
+                        ("a", a_src)
+                    } else {
+                        panic!("unexpected module load: {uri}");
+                    };
+                    ModuleCompletion::Source(Ok(ModuleSource {
+                        text: text.into(),
+                        inferred_name: name.into(),
+                    }))
+                }
+                other => panic!("unexpected module request: {other:?}"),
+            },
+        );
+        assert_ne!(
+            result.exit_code,
+            0,
+            "{label}: expected Pkl 0.32.0 type mismatch error, got stdout:\n{}",
+            String::from_utf8_lossy(&result.stdout)
+        );
+        let stderr = String::from_utf8_lossy(&result.stderr);
+        assert!(
+            stderr.contains("Expected value of type `Dynamic`, but got type `b`."),
+            "{label}: unexpected stderr:\n{stderr}"
+        );
+    }
+}

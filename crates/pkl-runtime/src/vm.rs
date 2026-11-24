@@ -2853,7 +2853,6 @@ impl Vm {
             return false;
         };
         object.cache_clear();
-        object.cache_index = crate::economic_map::EconomicMapIndex::default();
         object.list_elements = None;
         self.fact_tracker = Some((module_uri.clone(), fact_span, BTreeMap::new()));
         self.recompute_active_type_trackers();
@@ -11056,6 +11055,10 @@ impl Vm {
                 let object = if let Some(receiver) = existing {
                     let module_unit = definition.module_unit;
                     *self.heap.get_mut(receiver)? = definition;
+                    // Replacing a pre-allocated module placeholder in place changes
+                    // its runtime kind/class (e.g. Dynamic -> Typed), invalidating
+                    // any cached strict-collection checks that observed it.
+                    self.verified_strict_collections.clear();
                     if let Some(unit_id) = module_unit {
                         self.heap.register_module(unit_id, receiver);
                     }

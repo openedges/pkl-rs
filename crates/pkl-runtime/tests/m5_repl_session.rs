@@ -547,3 +547,69 @@ fn repl_commands_and_backtick_highlighting_match_upstream() {
     assert!(ex.contains("Command+Double-click"));
     assert!(ex.contains("https://pkl-lang.org/main/0.32.0/language-reference/"));
 }
+
+#[test]
+fn repl_redefining_locals_after_cache_hash_rebuilds_index_without_panic() {
+    let mut host = MockHost::new();
+    let mut session = ReplSession::new(ReplSessionOptions::default());
+
+    for i in 1..=5 {
+        let res = host.run(
+            &mut session,
+            ReplRequest::Eval {
+                id: format!("def_{i}"),
+                text: format!("local x{i} = new Dynamic {{ v = {i} }}.v"),
+                eval_definitions: false,
+                force_results: false,
+            },
+        );
+        assert!(res.is_empty(), "unexpected def_{i} response: {res:?}");
+    }
+    assert_eq!(
+        eval_single_ok(&mut host, &mut session, "sum5", "x1 + x2 + x3 + x4 + x5"),
+        "15"
+    );
+
+    // Redefine x1 (removing its cached slot after cache_index has hashed > 4 slots) and force.
+    let redef = host.run(
+        &mut session,
+        ReplRequest::Eval {
+            id: "redef_x1".into(),
+            text: "local x1 = new Dynamic { v = 99 }.v".into(),
+            eval_definitions: false,
+            force_results: false,
+        },
+    );
+    assert!(redef.is_empty(), "unexpected redef response: {redef:?}");
+    assert_eq!(
+        eval_single_ok(&mut host, &mut session, "get_x1", "x1"),
+        "99"
+    );
+
+    // Define and force enough additional locals to trigger cache_index rehashing.
+    for i in 6..=49 {
+        let res = host.run(
+            &mut session,
+            ReplRequest::Eval {
+                id: format!("def_{i}"),
+                text: format!("local x{i} = new Dynamic {{ v = {i} }}.v"),
+                eval_definitions: false,
+                force_results: false,
+            },
+        );
+        assert!(res.is_empty(), "unexpected def_{i} response: {res:?}");
+        assert_eq!(
+            eval_single_ok(
+                &mut host,
+                &mut session,
+                &format!("eval_{i}"),
+                &format!("x{i}")
+            ),
+            i.to_string()
+        );
+    }
+    assert_eq!(
+        eval_single_ok(&mut host, &mut session, "final_check", "x1 + x49"),
+        "148"
+    );
+}

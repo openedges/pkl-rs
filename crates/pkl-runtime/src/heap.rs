@@ -1458,14 +1458,19 @@ impl Object {
     pub(crate) fn cache_clear(&mut self) {
         self.cache_slots.clear();
         self.cache_map.clear();
+        self.cache_index = crate::economic_map::EconomicMapIndex::default();
         self.evaluating_key = None;
         self.evaluating_overflow.clear();
     }
 
     pub(crate) fn cache_remove_key(&mut self, key: &CacheKey) {
         self.cache_clear_evaluating(key);
+        let prev_len = self.cache_slots.len();
         self.cache_slots.retain(|s| &s.key != key);
-        self.rebuild_cache_map();
+        if self.cache_slots.len() != prev_len {
+            self.cache_index = crate::economic_map::EconomicMapIndex::default();
+            self.rebuild_cache_map();
+        }
     }
 
     pub(crate) fn rebuild_cache_map(&mut self) {
@@ -3196,6 +3201,7 @@ impl Heap {
         if reclaimed_this_pass > 0 {
             let slots = &self.slots;
             let identity = self.identity;
+            let prev_classes = self.class_index.len();
             self.class_index.retain(|_, id| {
                 if id.index >= base_len {
                     id.heap == identity
@@ -3206,6 +3212,35 @@ impl Heap {
                     true
                 }
             });
+            if self.class_index.len() < prev_classes {
+                let mut restored = Vec::new();
+                for (local, slot) in self.slots.iter().enumerate() {
+                    if let Some(Entry::Class(class)) = &slot.entry
+                        && let Some(cid) = class.class_id
+                        && !self.class_index.contains_key(&cid)
+                    {
+                        let id = ObjectId {
+                            heap: identity,
+                            index: base_len + local,
+                            generation: slot.generation,
+                        };
+                        if self.get_fast(class.prototype).is_some_and(|object| {
+                            object
+                                .class_definition
+                                .as_ref()
+                                .is_some_and(|def| def.id == cid)
+                                && object.instance_class == Some(id)
+                        }) {
+                            restored.push((cid, id));
+                        }
+                    }
+                }
+                for (cid, id) in restored {
+                    self.class_index.entry(cid).or_insert(id);
+                }
+            }
+            let prev_modules = self.module_index.len();
+            let slots = &self.slots;
             self.module_index.retain(|_, id| {
                 if id.index >= base_len {
                     id.heap == identity
@@ -3216,6 +3251,19 @@ impl Heap {
                     true
                 }
             });
+            if self.module_index.len() < prev_modules {
+                for (local, slot) in self.slots.iter().enumerate() {
+                    if let Some(Entry::Object(object)) = &slot.entry
+                        && let Some(unit) = object.module_unit
+                    {
+                        self.module_index.entry(unit.0).or_insert(ObjectId {
+                            heap: identity,
+                            index: base_len + local,
+                            generation: slot.generation,
+                        });
+                    }
+                }
+            }
         }
         let slot_live_object = |base_slots: Option<&[Slot]>,
                                 base_overrides: &[(usize, Slot)],
@@ -3614,6 +3662,54 @@ mod tests {
         heap.release();
         assert_eq!(heap.find_module(base_unit), None);
         assert_eq!(heap.find_class(101), None);
+    }
+
+    #[test]
+    fn class_and_module_indexes_restore_surviving_duplicates_after_gc() {
+        let mut heap = Heap::new();
+        let unit = crate::modules::UnitId(0);
+        let mod1 = heap.allocate(Object {
+            is_module: true,
+            module_unit: Some(unit),
+            ..Object::default()
+        });
+        let proto1 = heap.allocate(Object {
+            class_definition: Some(Box::new(Class {
+                id: 202,
+                name: "DupClass".into(),
+                module: None,
+                origin_uri: None,
+                open: false,
+                abstract_: false,
+            })),
+            ..Object::default()
+        });
+        let cls1 = heap.allocate_class(proto1);
+
+        let mod2 = heap.allocate(Object {
+            is_module: true,
+            module_unit: Some(unit),
+            ..Object::default()
+        });
+        let proto2 = heap.allocate(Object {
+            class_definition: Some(Box::new(Class {
+                id: 202,
+                name: "DupClass".into(),
+                module: None,
+                origin_uri: None,
+                open: false,
+                abstract_: false,
+            })),
+            ..Object::default()
+        });
+        let cls2 = heap.allocate_class(proto2);
+        assert_eq!(heap.find_module(unit), Some(mod2));
+        assert_eq!(heap.find_class(202), Some(cls2));
+
+        // Reclaiming the newer duplicate must restore the surviving earlier live instance.
+        heap.collect(&[Value::Object(mod1), Value::Class(cls1)]);
+        assert_eq!(heap.find_module(unit), Some(mod1));
+        assert_eq!(heap.find_class(202), Some(cls1));
     }
 
     #[test]
