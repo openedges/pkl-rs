@@ -1,4 +1,4 @@
-//! Product WebAssembly bindings for Apple Pkl 0.32.0 (`@pkl-rs/wasm`).
+//! Product WebAssembly bindings for Apple Pkl 0.32.0 (`@openedges/pkl-wasm`).
 //!
 //! All evaluation, formatting, schema extraction, REPL, static import-graph analysis,
 //! package verification, ZIP decompression, and `pkl-binary` decoding stay inside

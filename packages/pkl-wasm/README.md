@@ -1,11 +1,11 @@
-# `@pkl-rs/wasm`
+# `@openedges/pkl-wasm`
 
 WebAssembly distribution of the pure-Rust **Apple Pkl `0.32.0`** evaluation engine and code formatter (`pkl-runtime` + `pkl-formatter`), targeting modern browsers (ESM) and Node.js with zero Java runtime dependency.
 
 ## Installation
 
 ```sh
-npm install @pkl-rs/wasm
+npm install @openedges/pkl-wasm
 ```
 
 - **Node.js**: `>= 20.16.0` (ES Modules)
@@ -31,7 +31,7 @@ import {
   ModuleSource,
   VirtualFileSystem,
   format,
-} from '@pkl-rs/wasm';
+} from '@openedges/pkl-wasm';
 
 // Required once in browsers before calling sync APIs; optional in Node.js (auto-initialized).
 await init();
@@ -61,7 +61,7 @@ WebAssembly runs in a sandbox without direct OS filesystem access, raw TCP/TLS s
 
 - Calling `capabilities()` reports these boundaries accurately (`nativeFs: false`, `nativeHttp: false`, `externalReaders: false`, `modulePathJar: false`, `projectResolution: false`, `packageCache: false`).
 - Requesting an unprovided capability raises `PklError` with `code === "capability-unavailable"` and the missing `capability` field.
-- For full native Node.js Host I/O (OS filesystem, `rustls` HTTPS, `PklProject`, `package:` disk cache, external readers), use [`@pkl-rs/napi`](https://github.com/openedges/pkl-rs/tree/main/packages/pkl-napi).
+- For full native Node.js Host I/O (OS filesystem, `rustls` HTTPS, `PklProject`, `package:` disk cache, external readers), use [`@openedges/pkl-napi`](https://github.com/openedges/pkl-rs/tree/main/packages/pkl-napi).
 
 ## Compatibility & Versioning
 
@@ -71,4 +71,4 @@ Version `0.32.0` tracks the **Apple Pkl `0.32.0`** compatibility baseline (`PKL_
 
 Licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 The pkl-rs Authors). Attribution and third-party notices are bundled in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
-`@pkl-rs/wasm` is part of the independent open-source `pkl-rs` project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.
+`@openedges/pkl-wasm` is part of the independent open-source `pkl-rs` project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.

@@ -10,13 +10,13 @@
 
 | Component | Location | Current Version | Format / Runtime Output |
 | --- | --- | --- | --- |
-| Rust workspace crates (8 publishable crates + 3 internal/binding crates) | [Cargo.toml](../Cargo.toml) (`[workspace.package]` + `[workspace.dependencies]`) | `0.32.0-rc.1` | Cargo SemVer (`0.32.0-rc.1`); `crates/pkl` published as `pkl-rs` (`[lib] name = "pkl"`) |
+| Rust workspace crates (8 publishable crates + 3 internal/binding crates) | [Cargo.toml](../Cargo.toml) (`[workspace.package]` + `[workspace.dependencies]`) | `0.32.0-rc.2` | Cargo SemVer (`0.32.0-rc.2`); `crates/pkl` published as `pkl-rs` (`[lib] name = "pkl"`) |
 | `pkl` CLI binary | `crates/pkl/src/release.rs` | `0.32.0` (language baseline) | `pkl-rs 0.32.0 (<os>, native)` |
 | `pkldoc` CLI binary | `crates/pkl-doc/src/scope.rs`, `cli.rs` | `0.32.0` (language baseline) | `pkldoc-rs 0.32.0 (<os>, native)` |
-| `@pkl-rs/wasm` npm package | [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) | `0.32.0-rc.1` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
-| `@pkl-rs/napi` npm package | [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) | `0.32.0-rc.1` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
-| Homebrew Tap formula | `openedges/homebrew-tap` (`Formula/pkl-rs.rb`) | `0.32.0-rc.1` | Rendered from `SHA256SUMS.txt` by [tools/render_homebrew_formula.py](../tools/render_homebrew_formula.py) |
-| Git release tags | Git tags (`v*`) | `v0.32.0-rc.1` *(GA: `v0.32.0`)* | Triggers [.github/workflows/release.yml](../.github/workflows/release.yml) |
+| `@openedges/pkl-wasm` npm package | [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) | `0.32.0-rc.2` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
+| `@openedges/pkl-napi` npm package | [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) | `0.32.0-rc.2` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
+| Homebrew Tap formula | `openedges/homebrew-tap` (`Formula/pkl-rs.rb`) | `0.32.0-rc.2` | Rendered from `SHA256SUMS.txt` by [tools/render_homebrew_formula.py](../tools/render_homebrew_formula.py) |
+| Git release tags | Git tags (`v*`) | `v0.32.0-rc.2` *(GA: `v0.32.0`)* | Triggers [.github/workflows/release.yml](../.github/workflows/release.yml) |
 
 ### Version Rules
 
@@ -132,7 +132,7 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
      ```
    - Confirm [.github/workflows/ci.yml](../.github/workflows/ci.yml) is green on the target commit on `main` (or `release/<MAJOR>.<MINOR>`).
 4. **Dry-run & 4-channel tag publication**
-   - Optionally dry-run [.github/workflows/release.yml](../.github/workflows/release.yml) via `workflow_dispatch` (`publish_github_release=false`, `publish_npm=false`, `publish_crates=false`, `publish_homebrew=false`) to verify all 7 CLI targets, `@pkl-rs/wasm` (`<= 2.50 MiB` gzip-9), 7-addon `@pkl-rs/napi`, all 8 `.crate` packages (`<= 10 MiB`), container smoke tests (Debian 12, Rocky 9, Ubuntu 22.04, Alpine 3.21), `SHA256SUMS.txt`, and `Formula/pkl-rs.rb` (`ruby -c`).
+   - Optionally dry-run [.github/workflows/release.yml](../.github/workflows/release.yml) via `workflow_dispatch` (`publish_github_release=false`, `publish_npm=false`, `publish_crates=false`, `publish_homebrew=false`) to verify all 7 CLI targets, `@openedges/pkl-wasm` (`<= 2.50 MiB` gzip-9), 7-addon `@openedges/pkl-napi`, all 8 `.crate` packages (`<= 10 MiB`), container smoke tests (Debian 12, Rocky 9, Ubuntu 22.04, Alpine 3.21), `SHA256SUMS.txt`, and `Formula/pkl-rs.rb` (`ruby -c`).
    - Create and push the annotated tag from the verified commit on `main` (or `release/<MAJOR>.<MINOR>`):
      ```sh
      git tag -a v0.32.0-rc.1 -m "pkl-rs v0.32.0-rc.1"
@@ -150,5 +150,5 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
 
 - **Zero `[patch.crates-io]` blockers**: The checked UTF-16 Java regular expression engine and official Unicode 15.0.0 UCD tables (`Unicode-3.0`) are embedded directly inside `crates/pkl-runtime/src/java_regex/` with zero external regex/Unicode crate dependencies and zero OpenJDK GPLv2 files.
 - **crates.io crates (8 publishable, `publish = true`)**: Published in strict dependency order: `pkl-runtime` → `pkl-formatter` → `pkl-host-native` → `pkl-rs` (`crates/pkl`, `[lib] name = "pkl"`) → `pkl-repl` → `pkl-server` → `pkl-doc` → `pkl-cli`. Binding/internal crates (`pkl-wasm`, `pkl-napi`, `xtask`) remain `publish = false`.
-- **npm packages (2 scoped packages)**: `@pkl-rs/wasm` and `@pkl-rs/napi` (requires npm org `@pkl-rs` and `NPM_TOKEN`). Prereleases (`*-*`) always pass `--tag next` so they never overwrite `latest`.
+- **npm packages (2 scoped packages)**: `@openedges/pkl-wasm` and `@openedges/pkl-napi` (requires npm org `@openedges` and `NPM_TOKEN`). Prereleases (`*-*`) always pass `--tag next` so they never overwrite `latest`.
 - **Homebrew tap (`openedges/homebrew-tap`)**: `Formula/pkl-rs.rb` installs both `pkl` and `pkldoc` from the GitHub Release tarballs (`darwin-arm64`, `darwin-x64`, `linux-arm64-gnu`, `linux-x64-gnu`) with verified SHA-256 checksums, shell completions (`bash`, `zsh`, `fish`), and license/notice files.

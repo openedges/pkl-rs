@@ -46,7 +46,7 @@ function loadNativeAddon() {
     }
   }
   throw new Error(
-    `Unable to load native @pkl-rs/napi addon for ${process.platform}-${process.arch}${linuxLibc ? `-${linuxLibc}` : ""}. Checked: ${candidates.join(", ")}`,
+    `Unable to load native @openedges/pkl-napi addon for ${process.platform}-${process.arch}${linuxLibc ? `-${linuxLibc}` : ""}. Checked: ${candidates.join(", ")}`,
   );
 }
 

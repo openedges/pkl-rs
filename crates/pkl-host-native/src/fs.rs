@@ -35,8 +35,18 @@ pub fn canonicalize_root_dir(path: &Path) -> std::io::Result<PathBuf> {
 }
 
 /// Converts a filesystem path into a canonical `file:///...` URI using Pkl's `IoUtils.toUri` quoting.
+///
+/// Strips Windows extended-length verbatim drive prefixes (`\\?\C:\...`) produced by
+/// `std::fs::canonicalize` so canonical Windows paths yield `file:///C:/...` instead of
+/// `file:/%3F/C:/...`.
 pub fn path_to_file_uri(path: &Path) -> PklString {
-    let raw = path.to_string_lossy().replace('\\', "/");
+    let mut raw = path.to_string_lossy().replace('\\', "/");
+    if let Some(rest) = raw.strip_prefix("//?/") {
+        let b = rest.as_bytes();
+        if b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+            raw = rest.to_string();
+        }
+    }
     let with_slash = if raw.starts_with('/') {
         raw
     } else {
@@ -46,14 +56,14 @@ pub fn path_to_file_uri(path: &Path) -> PklString {
 }
 
 /// Converts a `file:` URI into a local filesystem `PathBuf`, applying NFC normalization
-/// matching JDK 21's Unix path encoding.
+/// matching JDK 21's Unix path encoding and stripping Windows URI leading slashes (`/C:/...`).
 pub fn file_uri_to_path(uri: &PklString) -> Result<PathBuf, PklString> {
     if let Some(s) = uri.as_str()
         && s.starts_with("file:///")
         && s.is_ascii()
         && !s.bytes().any(|b| matches!(b, b'%' | b'?' | b'#'))
     {
-        return Ok(PathBuf::from(&s[7..]));
+        return Ok(strip_windows_uri_leading_slash(PathBuf::from(&s[7..])));
     }
     let info = extract_file_uri_for_root_dir(uri)
         .filter(|i| !i.from_jar)
@@ -64,10 +74,12 @@ pub fn file_uri_to_path(uri: &PklString) -> Result<PathBuf, PklString> {
         )));
     }
     if info.decoded_path.is_ascii() {
-        return Ok(PathBuf::from(info.decoded_path));
+        return Ok(strip_windows_uri_leading_slash(PathBuf::from(
+            info.decoded_path,
+        )));
     }
     let normalized = info.decoded_path.nfc().collect::<String>();
-    Ok(PathBuf::from(normalized))
+    Ok(strip_windows_uri_leading_slash(PathBuf::from(normalized)))
 }
 
 fn is_uri_scheme_prefix(s: &str) -> bool {
@@ -338,7 +350,9 @@ impl NativeFs {
                 is_resource,
             ));
         }
-        let candidate = PathBuf::from(info.decoded_path.nfc().collect::<String>());
+        let candidate = strip_windows_uri_leading_slash(PathBuf::from(
+            info.decoded_path.nfc().collect::<String>(),
+        ));
         let resolved = resolve_canonical_or_ancestor(&candidate);
         self.policy
             .check_real_path_under_root_dir(uri, &resolved.to_string_lossy(), is_resource)
@@ -375,7 +389,9 @@ impl NativeFs {
         if info.from_jar || info.has_non_empty_authority {
             return Ok(None);
         }
-        let path = PathBuf::from(info.decoded_path.nfc().collect::<String>());
+        let path = strip_windows_uri_leading_slash(PathBuf::from(
+            info.decoded_path.nfc().collect::<String>(),
+        ));
         let real = fs::canonicalize(&path).map_err(Err)?;
         if let Err(msg) =
             self.policy
@@ -717,5 +733,24 @@ mod tests {
         );
 
         let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn path_to_file_uri_strips_windows_verbatim_drive_prefix() {
+        assert_eq!(
+            path_to_file_uri(std::path::Path::new(
+                r"\\?\C:\Users\runneradmin\AppData\Local\Temp\proj\PklProject"
+            ))
+            .to_java_utf8(),
+            "file:///C:/Users/runneradmin/AppData/Local/Temp/proj/PklProject"
+        );
+        assert_eq!(
+            path_to_file_uri(std::path::Path::new(r"C:\Users\runneradmin\main.pkl")).to_java_utf8(),
+            "file:///C:/Users/runneradmin/main.pkl"
+        );
+        assert_eq!(
+            path_to_file_uri(std::path::Path::new("/tmp/proj/PklProject")).to_java_utf8(),
+            "file:///tmp/proj/PklProject"
+        );
     }
 }

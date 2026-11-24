@@ -3,14 +3,14 @@
 A pure-Rust implementation of **[Apple Pkl 0.32.0](https://pkl-lang.org/)** — zero Java runtime required, `unsafe_code = "deny"` across the entire workspace, and a single shared evaluation engine powering native CLI tools, a Rust library, WebAssembly, and Node.js N-API bindings.
 
 > [!NOTE]
-> **Release Candidate (`0.32.0-rc.1`)**: Language, standard library, CLI, `pkldoc`, Rust API (`pkl-rs`), `@pkl-rs/wasm`, `@pkl-rs/napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA `0.32.0` sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
+> **Release Candidate (`0.32.0-rc.2`)**: Language, standard library, CLI, `pkldoc`, Rust API (`pkl-rs`), `@openedges/pkl-wasm`, `@openedges/pkl-napi`, and Official Apple Pkl `0.32.0` `native-image` performance parity (`15/15 <= 1.00x` time & peak RSS) have been verified on local macOS `arm64`. Cross-platform hosted CI release verification (`linux-*`, `darwin-x64`, `win32-x64`) and final GA `0.32.0` sign-off remain in progress (`release_ready: false`). See [CHANGELOG.md](CHANGELOG.md) and [docs/development-history.md](docs/development-history.md) for exact verification scope.
 
 ## Products & Capabilities
 
 - **`pkl` CLI & `pkldoc`** (`crates/pkl-cli`, `crates/pkl-doc`): Drop-in native binaries (~14–15 MiB) supporting `eval`, `repl`, `server`, `test`, `project resolve`, `project package`, `download-package`, `analyze imports`, `format`, `run`, `shell-completion`, and HTML documentation generation (`pkldoc`).
 - **Rust Evaluator API** (`crates/pkl`): Ergonomic embedding API (`Evaluator`, `EvaluatorBuilder`, `ModuleSource`, `PklValue`/`FromPklValue`, `ModuleSchema`, `Project`, `Analyzer`, `SecurityManager`, `HttpClient`, custom `ModuleKeyFactory`/`ResourceReader`, cancellation, and timeouts).
-- **Node.js Native Addon** (`@pkl-rs/napi`): Dual ESM/CJS bindings with TypeScript types, non-blocking libuv worker threads (`Promise`) plus `*Sync` APIs, full native Host I/O (filesystem, HTTP/HTTPS, `PklProject`, `package:`, external readers), and custom JS extensions across 7 target platforms.
-- **WebAssembly Package** (`@pkl-rs/wasm`): Browser and Node.js ESM package (`<= 2.50 MiB` gzip-9 `.wasm`), pure-Wasm `VirtualFileSystem`, cooperative async Host callbacks, `createRepl()`, `analyzeImportGraph()`, `evaluateSchema()`, `evaluateTest()`, `format()`, and lossless `decodePklBinary()`.
+- **Node.js Native Addon** (`@openedges/pkl-napi`): Dual ESM/CJS bindings with TypeScript types, non-blocking libuv worker threads (`Promise`) plus `*Sync` APIs, full native Host I/O (filesystem, HTTP/HTTPS, `PklProject`, `package:`, external readers), and custom JS extensions across 7 target platforms.
+- **WebAssembly Package** (`@openedges/pkl-wasm`): Browser and Node.js ESM package (`<= 2.50 MiB` gzip-9 `.wasm`), pure-Wasm `VirtualFileSystem`, cooperative async Host callbacks, `createRepl()`, `analyzeImportGraph()`, `evaluateSchema()`, `evaluateTest()`, `format()`, and lossless `decodePklBinary()`.
 - **Full Pkl `0.32.0` Core**: All 23 `pkl:*` standard library modules (542 builtins), all 9 renderers (`pcf`, `json`, `yaml`, `xml`, `properties`, `plist`, `jsonnet`, `textproto`, `pkl-binary`), `output.bytes`, `output.files`, `pkl:test`, and `pkl:Command`.
 
 ## Installation
@@ -33,8 +33,8 @@ Download the archive for your platform from [GitHub Releases](https://github.com
 
 ```sh
 # Example: macOS Apple Silicon (replace version/target for your platform)
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.1/pkl-darwin-arm64.tar.gz
-curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.1/SHA256SUMS.txt
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.2/pkl-darwin-arm64.tar.gz
+curl -fSLO https://github.com/openedges/pkl-rs/releases/download/v0.32.0-rc.2/SHA256SUMS.txt
 shasum -a 256 --check --ignore-missing SHA256SUMS.txt
 tar -xzf pkl-darwin-arm64.tar.gz
 ./pkl --version
@@ -49,24 +49,24 @@ Supported prebuilt CLI targets:
 
 ```toml
 [dependencies]
-pkl-rs = "0.32.0-rc.1"   # Imports as `use pkl::...;`
+pkl-rs = "0.32.0-rc.2"   # Imports as `use pkl::...;`
 ```
 
 Or install CLI binaries from crates.io:
 
 ```sh
-cargo install pkl-cli --version 0.32.0-rc.1
-cargo install pkl-doc --version 0.32.0-rc.1
+cargo install pkl-cli --version 0.32.0-rc.2
+cargo install pkl-doc --version 0.32.0-rc.2
 ```
 
-### Node.js (`@pkl-rs/napi`) & WebAssembly (`@pkl-rs/wasm`)
+### Node.js (`@openedges/pkl-napi`) & WebAssembly (`@openedges/pkl-wasm`)
 
 ```sh
 # Node.js native bindings (Node >= 18, full native Host I/O)
-npm install @pkl-rs/napi@next
+npm install @openedges/pkl-napi@next
 
 # Browser & Node.js WebAssembly bindings (Node >= 20.16, sandboxed VFS + async Host)
-npm install @pkl-rs/wasm@next
+npm install @openedges/pkl-wasm@next
 ```
 
 *(Release candidates are published under the npm `next` dist-tag via [.github/workflows/release.yml](.github/workflows/release.yml); GA `0.32.0` uses `latest`. To build local tarballs from source, see [docs/installation.md](docs/installation.md).)*
@@ -118,10 +118,10 @@ fn main() -> pkl::Result<()> {
 }
 ```
 
-### Node.js (`@pkl-rs/napi`)
+### Node.js (`@openedges/pkl-napi`)
 
 ```js
-import { createEvaluator, ModuleSource } from '@pkl-rs/napi';
+import { createEvaluator, ModuleSource } from '@openedges/pkl-napi';
 
 const evaluator = await createEvaluator({ outputFormat: 'json' });
 try {
@@ -134,10 +134,10 @@ try {
 }
 ```
 
-### Browser & Node.js (`@pkl-rs/wasm`)
+### Browser & Node.js (`@openedges/pkl-wasm`)
 
 ```js
-import { init, createEvaluator, ModuleSource, VirtualFileSystem } from '@pkl-rs/wasm';
+import { init, createEvaluator, ModuleSource, VirtualFileSystem } from '@openedges/pkl-wasm';
 
 await init(); // Required once in browsers; optional in Node.js
 
@@ -156,7 +156,7 @@ try {
 ## Compatibility & Performance
 
 - **Compatibility baseline**: Targets **Apple Pkl `0.32.0`** raw-byte output, diagnostics, source positions, generated files, and exit codes. Java/Kotlin code generation (`pkl-codegen-java`, `pkl-codegen-kotlin`) and JVM public API adapters are explicitly excluded from scope ([INTENT.md](INTENT.md)).
-- **Performance (local macOS `arm64`)**: All 15 CLI, server, and `pkldoc` workloads run at **`0.073x–0.761x` execution time** and **`0.130x–0.551x` peak RSS** compared against Official Apple Pkl `0.32.0` `native-image` (`<= 1.00x` across every workload) with 100% raw-byte parity. `@pkl-rs/wasm` compiles to `2.03 MiB` (`2,124,981 B`) gzip-9 (`<= 2.50 MiB` budget).
+- **Performance (local macOS `arm64`)**: All 15 CLI, server, and `pkldoc` workloads run at **`0.073x–0.761x` execution time** and **`0.130x–0.551x` peak RSS** compared against Official Apple Pkl `0.32.0` `native-image` (`<= 1.00x` across every workload) with 100% raw-byte parity. `@openedges/pkl-wasm` compiles to `2.03 MiB` (`2,124,981 B`) gzip-9 (`<= 2.50 MiB` budget).
 - Full milestone metrics, differential test counts, soak/fuzz records, and raw evidence archives are preserved separately in [docs/development-history.md](docs/development-history.md).
 
 ## Testing & Verification
@@ -183,7 +183,7 @@ See [TESTING.md](TESTING.md) for the complete verification contract and [docs/ci
 
 ## Versioning
 
-All distributable components (`Cargo.toml` workspace crates, `pkl`/`pkldoc` binaries, `@pkl-rs/wasm`, `@pkl-rs/napi`, and Git release tags) follow a unified `0.32.0` versioning policy aligned with the Apple Pkl compatibility baseline. See [docs/versioning.md](docs/versioning.md) and [CHANGELOG.md](CHANGELOG.md).
+All distributable components (`Cargo.toml` workspace crates, `pkl`/`pkldoc` binaries, `@openedges/pkl-wasm`, `@openedges/pkl-napi`, and Git release tags) follow a unified `0.32.0` versioning policy aligned with the Apple Pkl compatibility baseline. See [docs/versioning.md](docs/versioning.md) and [CHANGELOG.md](CHANGELOG.md).
 
 ## Documentation
 

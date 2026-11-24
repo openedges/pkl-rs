@@ -1,6 +1,15 @@
 # 구현 계획
 
-## 현재 상태 — `v0.32.0-rc.1` 4채널 배포 준비 완료 (GitHub Releases, npm, crates.io, Homebrew; 로컬 커밋 후 태그/푸시 최종 확인 대기, `release_ready: false`)
+## 현재 상태 — `v0.32.0-rc.2` npm 스코프 `@openedges` 전환 (`@openedges/pkl-wasm`, `@openedges/pkl-napi`) 및 4채널 배포 준비 (`2026-11-24`, `release_ready: false`)
+
+`2026-11-24` 사용자 결정에 따라 npm 배포 스코프를 기존 `@pkl-rs` 대신 **`@openedges`** 조직 아래 **`@openedges/pkl-wasm`** 및 **`@openedges/pkl-napi`**로 통일하고, 불변 태그 정책(`docs/versioning.md`)에 따라 전체 워크스페이스 크레이트(`Cargo.toml`·`Cargo.lock`) 및 npm 매니페스트 버전을 **`0.32.0-rc.2`**로 잠금 갱신했다.
+
+### `2026-11-24` `v0.32.0-rc.2` 변경 항목
+- **npm 패키지 스코프 전환**: `packages/pkl-wasm/package.json` → `@openedges/pkl-wasm`, `packages/pkl-napi/package.json` → `@openedges/pkl-napi` (`0.32.0-rc.2`), 빌드 스크립트·클린 설치 테스트(`wasm.test.mjs`, `pack-install.mjs`)·M6 패키징 검증 러너(`run_packaging_check.mjs`, 프리릴리스 `0.32.0-*` 버전 허용 포함)·[m6_differential.py](tools/m6_differential.py)·[release.yml](.github/workflows/release.yml) 타르볼 글롭(`openedges-pkl-wasm-*.tgz`, `openedges-pkl-napi-*.tgz`) 및 배포 문서를 일괄 정렬했다.
+- **Windows verbatim 경로(`\\?\C:\...`) 및 `file:///C:/...` 호스트 결함 수정 (`v0.32.0-rc.1` 실전 Windows CI에서 발견)**: [crates/pkl-host-native/src/fs.rs](crates/pkl-host-native/src/fs.rs)의 `path_to_file_uri`·`file_uri_to_path`·`check_uri`·`resolve_secure_path`, [crates/pkl-runtime/src/host/security.rs](crates/pkl-runtime/src/host/security.rs)의 `normalize_lexical_path`·`is_path_under_root`, [crates/pkl-runtime/src/packages/resolver.rs](crates/pkl-runtime/src/packages/resolver.rs)의 `file_uri_from_path`에서 Windows `std::fs::canonicalize`의 `\\?\<drive>:` 접두사와 `file:///C:/...` 선행 `/`를 일관되게 정규화하고 회귀 단위 테스트를 추가했다.
+- **버전 잠금 (`0.32.0-rc.2`)**: 루트 [Cargo.toml](Cargo.toml)(`[workspace.package]` + `[workspace.dependencies]`), `Cargo.lock`, npm 매니페스트 2종을 `0.32.0-rc.2`로 동기화하고 `m2`–`m7` 매니페스트를 갱신했다.
+
+## 이전 상태 — `v0.32.0-rc.1` 4채널 배포 준비 완료 (GitHub Releases, npm, crates.io, Homebrew; 로컬 커밋 후 태그/푸시 최종 확인 대기, `release_ready: false`)
 
 `2026-11-24` 사용자 확정안(`v0.32.0-rc.1`, GitHub Releases·npm·crates.io·Homebrew 4채널 배포)에 따라 전체 매니페스트 버전을 `0.32.0-rc.1`로 일괄 잠금(언어 기준선 `PKL_VERSION = "0.32.0"`은 유지)하고 4채널 자동 배포 파이프라인과 패키징 검증을 완비했다.
 

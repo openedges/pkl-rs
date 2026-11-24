@@ -137,8 +137,54 @@ pub fn escape_regex_literal(literal: &str) -> String {
 }
 
 /// Normalizes a slash-separated path lexically (resolving `.` and `..`) without FS I/O.
+///
+/// Also canonicalizes Windows verbatim (`\\?\C:\...`), URI-decoded (`/C:/...`), and
+/// drive-letter (`C:\...`) forms into a single consistent `<DRIVE>:/...` form so `rootDir`
+/// confinement matches identically across `fs::canonicalize`, `file:///C:/...`, and OS paths.
 pub fn normalize_lexical_path(path: &str) -> String {
-    let normalized_seps = path.replace('\\', "/");
+    let mut normalized_seps = path.replace('\\', "/");
+    if let Some(rest) = normalized_seps.strip_prefix("//?/") {
+        let b = rest.as_bytes();
+        if b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+            normalized_seps = rest.to_string();
+        }
+    }
+    if let Some(rest) = normalized_seps.strip_prefix('/') {
+        let b = rest.as_bytes();
+        if b.len() >= 2
+            && b[0].is_ascii_alphabetic()
+            && b[1] == b':'
+            && (b.len() == 2 || b[2] == b'/')
+        {
+            normalized_seps = rest.to_string();
+        }
+    }
+
+    let bytes = normalized_seps.as_bytes();
+    if bytes.len() >= 2
+        && bytes[0].is_ascii_alphabetic()
+        && bytes[1] == b':'
+        && (bytes.len() == 2 || bytes[2] == b'/')
+    {
+        let drive = (bytes[0] as char).to_ascii_uppercase();
+        let rest = &normalized_seps[2..];
+        let mut stack: Vec<&str> = Vec::new();
+        for seg in rest.split('/') {
+            match seg {
+                "" | "." => {}
+                ".." => {
+                    stack.pop();
+                }
+                other => stack.push(other),
+            }
+        }
+        return if stack.is_empty() {
+            format!("{drive}:/")
+        } else {
+            format!("{drive}:/{}", stack.join("/"))
+        };
+    }
+
     let is_abs = normalized_seps.starts_with('/');
     let mut stack: Vec<&str> = Vec::new();
     for seg in normalized_seps.split('/') {
@@ -174,6 +220,9 @@ pub fn is_path_under_root(candidate: &str, root: &str) -> bool {
     let root_norm = normalize_lexical_path(root);
     if root_norm == "/" {
         return candidate_norm.starts_with('/');
+    }
+    if root_norm.len() == 3 && root_norm.as_bytes()[1] == b':' && root_norm.ends_with('/') {
+        return candidate_norm.starts_with(&root_norm);
     }
     if candidate_norm == root_norm {
         return true;
@@ -635,6 +684,38 @@ mod tests {
                 .check_resolve_module(&"https://example.com/a.pkl".into())
                 .is_ok()
         );
+    }
+
+    #[test]
+    fn root_dir_handles_windows_verbatim_and_drive_uri_paths() {
+        let root = r"\\?\C:\Users\runneradmin\AppData\Local\Temp\proj";
+        assert_eq!(
+            normalize_lexical_path(root),
+            "C:/Users/runneradmin/AppData/Local/Temp/proj"
+        );
+        assert_eq!(
+            normalize_lexical_path("/c:/Users/runneradmin/AppData/Local/Temp/proj/main.pkl"),
+            "C:/Users/runneradmin/AppData/Local/Temp/proj/main.pkl"
+        );
+        assert_eq!(normalize_lexical_path(r"C:\a\..\..\b"), "C:/b");
+        assert!(is_path_under_root(
+            "/C:/Users/runneradmin/AppData/Local/Temp/proj/main.pkl",
+            root
+        ));
+        assert!(is_path_under_root(
+            r"\\?\C:\Users\runneradmin\AppData\Local\Temp\proj\sub\lib.pkl",
+            r"C:\Users\runneradmin\AppData\Local\Temp\proj"
+        ));
+        assert!(!is_path_under_root(
+            "/C:/Users/runneradmin/AppData/Local/Temp/proj2/secret.pkl",
+            root
+        ));
+        assert!(!is_path_under_root(
+            "/C:/Users/runneradmin/AppData/Local/Temp/proj/../secret.pkl",
+            root
+        ));
+        assert!(is_path_under_root("C:/any/file.pkl", r"\\?\C:\"));
+        assert!(!is_path_under_root("D:/any/file.pkl", r"\\?\C:\"));
     }
 
     #[test]

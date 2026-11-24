@@ -44,12 +44,12 @@ try {
   );
 
   // Verify TypeScript declarations & native addon are packed in installed package
-  const installedRoot = join(consumerDir, "node_modules", "@pkl-rs", "napi");
+  const installedRoot = join(consumerDir, "node_modules", "@openedges", "pkl-napi");
   assert.ok(existsSync(join(installedRoot, "dist", "index.d.ts")), "dist/index.d.ts missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.mjs")), "dist/index.mjs missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.cjs")), "dist/index.cjs missing");
   for (const legalFile of ["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"]) {
-    assert.ok(existsSync(join(installedRoot, legalFile)), `${legalFile} missing from packed @pkl-rs/napi tarball`);
+    assert.ok(existsSync(join(installedRoot, legalFile)), `${legalFile} missing from packed @openedges/pkl-napi tarball`);
   }
   const addonCandidates = [
     process.platform === "linux"
@@ -78,7 +78,7 @@ import {
   format,
   roundtripInteger,
   roundtripBytes,
-} from "@pkl-rs/napi";
+} from "@openedges/pkl-napi";
 
 assert.equal(PKL_VERSION, "0.32.0");
 assert.equal(capabilities().runtime, "napi-node");
@@ -112,7 +112,7 @@ const {
   ModuleSource,
   PklError,
   format,
-} = require("@pkl-rs/napi");
+} = require("@openedges/pkl-napi");
 
 async function main() {
   assert.equal(PKL_VERSION, "0.32.0");

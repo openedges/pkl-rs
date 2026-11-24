@@ -678,12 +678,26 @@ pub fn ensure_package_loaded(
 }
 
 pub fn file_uri_from_path(path: &Path) -> Result<String, ModuleHostError> {
-    let text = path
+    let raw = path
         .to_str()
         .ok_or_else(|| ModuleHostError::Unsupported("Non-UTF-8 path".into()))?;
+    let mut normalized = if raw.contains('\\') {
+        raw.replace('\\', "/")
+    } else {
+        raw.to_string()
+    };
+    if let Some(rest) = normalized.strip_prefix("//?/") {
+        let b = rest.as_bytes();
+        if b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+            normalized = rest.to_string();
+        }
+    }
+    if !normalized.starts_with('/') {
+        normalized.insert(0, '/');
+    }
     let mut uri = String::from("file://");
     use std::fmt::Write;
-    for byte in text.bytes() {
+    for byte in normalized.bytes() {
         if byte.is_ascii_alphanumeric() || b"/-._~!$&'()*+,;=:@".contains(&byte) {
             uri.push(char::from(byte));
         } else {

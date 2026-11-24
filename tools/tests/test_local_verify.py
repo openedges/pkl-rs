@@ -84,6 +84,8 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("SHA256SUMS.txt", rel_text)
         self.assertIn("gh release create", rel_text)
         self.assertIn("npm publish", rel_text)
+        self.assertIn("openedges-pkl-wasm-*.tgz", rel_text)
+        self.assertIn("openedges-pkl-napi-*.tgz", rel_text)
         self.assertIn("--tag next", rel_text)
         self.assertIn("publish_crates:", rel_text)
         self.assertIn("CARGO_REGISTRY_TOKEN", rel_text)

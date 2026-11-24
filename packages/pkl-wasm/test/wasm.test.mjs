@@ -808,24 +808,24 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
     assert.ok(tgzName && tgzName.endsWith('.tgz'), `expected .tgz, got ${tgzName}`);
     const tgzPath = join(packDir, tgzName);
 
-    // Extract tarball directly into node_modules/@pkl-rs/wasm (100% offline clean install)
+    // Extract tarball directly into node_modules/@openedges/pkl-wasm (100% offline clean install)
     // Use relative POSIX paths with cwd=workDir so GNU tar.exe on Windows does not treat `C:\...` as a remote host.
-    const modDir = join(installDir, 'node_modules', '@pkl-rs', 'wasm');
+    const modDir = join(installDir, 'node_modules', '@openedges', 'pkl-wasm');
     mkdirSync(modDir, { recursive: true });
     execFileSync(
       tarBin,
-      ['-xzf', `pack/${tgzName}`, '--strip-components=1', '-C', 'install/node_modules/@pkl-rs/wasm'],
+      ['-xzf', `pack/${tgzName}`, '--strip-components=1', '-C', 'install/node_modules/@openedges/pkl-wasm'],
       { cwd: workDir },
     );
     for (const legalFile of ['LICENSE', 'NOTICE', 'THIRD-PARTY-NOTICES.md']) {
-      assert.ok(existsSync(join(modDir, legalFile)), `${legalFile} missing from packed @pkl-rs/wasm tarball`);
+      assert.ok(existsSync(join(modDir, legalFile)), `${legalFile} missing from packed @openedges/pkl-wasm tarball`);
     }
 
     writeFileSync(
       join(installDir, 'smoke.mjs'),
       `
 import assert from 'node:assert/strict';
-import { PKL_VERSION, capabilities, createEvaluator, format, ModuleSource, VirtualFileSystem } from '@pkl-rs/wasm';
+import { PKL_VERSION, capabilities, createEvaluator, format, ModuleSource, VirtualFileSystem } from '@openedges/pkl-wasm';
 assert.equal(PKL_VERSION, '0.32.0');
 assert.equal(capabilities().runtime, 'wasm-node');
 assert.equal(format('a=1\\n'), 'a = 1\\n');

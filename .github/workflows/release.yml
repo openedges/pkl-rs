@@ -9,8 +9,8 @@ name: Release
 #   for x86_64 and aarch64, smoke-tested across Debian 12, Rocky 9, Ubuntu 22.04,
 #   and Alpine 3.21.
 # - macOS (arm64, x64) and Windows (x64) CLI archives (`pkl`, `pkldoc`).
-# - Publishable `@pkl-rs/wasm` npm tarball (verified gzip-9 <= 2.50 MiB).
-# - Multi-platform `@pkl-rs/napi` npm tarball bundling all 7 native `.node` addons.
+# - Publishable `@openedges/pkl-wasm` npm tarball (verified gzip-9 <= 2.50 MiB).
+# - Multi-platform `@openedges/pkl-napi` npm tarball bundling all 7 native `.node` addons.
 # - Verified `.crate` packaging for all 8 crates.io workspace crates.
 # - Deterministic Homebrew Formula (`Formula/pkl-rs.rb`) rendered from `SHA256SUMS.txt`.
 # - `SHA256SUMS.txt` covering every release archive and npm tarball.
@@ -32,7 +32,7 @@ on:
         default: false
         type: boolean
       publish_npm:
-        description: Publish @pkl-rs/wasm and @pkl-rs/napi tarballs to npm (requires NPM_TOKEN secret)
+        description: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm (requires NPM_TOKEN secret)
         required: false
         default: false
         type: boolean
@@ -119,7 +119,7 @@ jobs:
             /*
             !/reports/m2/
           sparse-checkout-cone-mode: false
-      - name: Build glibc 2.28 compatible pkl, pkldoc, and @pkl-rs/napi (manylinux_2_28)
+      - name: Build glibc 2.28 compatible pkl, pkldoc, and @openedges/pkl-napi (manylinux_2_28)
         shell: bash
         run: |
           set -euo pipefail
@@ -147,7 +147,7 @@ jobs:
               python3 /tmp/src/tools/check_linux_glibc.py --max-glibc 2.28 /out/pkl /out/pkldoc "/out/pkl_napi.linux-${NODE_ARCH}-gnu.node"
               chown -R "${HOST_UID}:${HOST_GID}" /out
             '
-      - name: Build static musl pkl, pkldoc, and Alpine musl @pkl-rs/napi (alpine:3.21)
+      - name: Build static musl pkl, pkldoc, and Alpine musl @openedges/pkl-napi (alpine:3.21)
         shell: bash
         run: |
           set -euo pipefail
@@ -204,7 +204,7 @@ jobs:
                 printf "a = 20 + 22\n" | /musl/pkl eval -f json - | grep -q "\"a\": 42"
               '
           done
-          echo "=== Smoke-testing glibc 2.28 @pkl-rs/napi on Debian 12 ==="
+          echo "=== Smoke-testing glibc 2.28 @openedges/pkl-napi on Debian 12 ==="
           docker run --rm \
             -e NODE_ARCH="$NODE_ARCH" \
             -v "$PWD:/work:ro" \
@@ -219,7 +219,7 @@ jobs:
               cp "/gnu/pkl_napi.linux-${NODE_ARCH}-gnu.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-gnu.node"
               node /tmp/pkl-napi/test/run.mjs
             '
-          echo "=== Smoke-testing static musl CLI + musl @pkl-rs/napi on Alpine 3.21 ==="
+          echo "=== Smoke-testing static musl CLI + musl @openedges/pkl-napi on Alpine 3.21 ==="
           docker run --rm \
             -e NODE_ARCH="$NODE_ARCH" \
             -v "$PWD:/work:ro" \
@@ -260,7 +260,7 @@ jobs:
           retention-days: 14
 
   package-macos-windows:
-    name: Package CLI and @pkl-rs/napi (${{ matrix.target_label }})
+    name: Package CLI and @openedges/pkl-napi (${{ matrix.target_label }})
     needs: verify-tag
     strategy:
       fail-fast: false
@@ -318,7 +318,7 @@ jobs:
           OUT="$(printf 'a = 20 + 22\n' | "./target/release/pkl${EXE}" eval -f json -)"
           echo "${OUT}"
           echo "${OUT}" | grep -q '"a": 42'
-      - name: Build and smoke-test @pkl-rs/napi
+      - name: Build and smoke-test @openedges/pkl-napi
         shell: bash
         run: |
           set -euo pipefail
@@ -351,7 +351,7 @@ jobs:
           retention-days: 14
 
   package-wasm:
-    name: Package @pkl-rs/wasm (wasm-release)
+    name: Package @openedges/pkl-wasm (wasm-release)
     needs: verify-tag
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -387,7 +387,7 @@ jobs:
           if [ ! -x .cache/m1-tools/bin/wasm-bindgen ]; then
             cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
           fi
-      - name: Build, size-check, test, and pack @pkl-rs/wasm
+      - name: Build, size-check, test, and pack @openedges/pkl-wasm
         run: |
           set -euo pipefail
           node packages/pkl-wasm/scripts/build.mjs
@@ -400,7 +400,7 @@ jobs:
           node --test packages/pkl-wasm/test/wasm.test.mjs
           mkdir -p target/release-stage/npm
           npm pack ./packages/pkl-wasm --pack-destination target/release-stage/npm
-      - name: Upload @pkl-rs/wasm tarball
+      - name: Upload @openedges/pkl-wasm tarball
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: release-wasm
@@ -489,7 +489,7 @@ jobs:
         uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           path: target/downloaded-release
-      - name: Assemble multi-platform @pkl-rs/napi tarball, checksums, and Homebrew formula
+      - name: Assemble multi-platform @openedges/pkl-napi tarball, checksums, and Homebrew formula
         shell: bash
         run: |
           set -euo pipefail
@@ -499,7 +499,7 @@ jobs:
           cp packages/pkl-napi/src/index.d.ts packages/pkl-napi/dist/index.d.ts
           cp LICENSE NOTICE THIRD-PARTY-NOTICES.md packages/pkl-napi/
 
-          # Copy all CLI archives and @pkl-rs/wasm tarball into final release-bundle
+          # Copy all CLI archives and @openedges/pkl-wasm tarball into final release-bundle
           find target/downloaded-release -path '*/cli/*' -type f -exec cp {} target/release-bundle/ \;
           find target/downloaded-release -path '*/npm/*.tgz' -type f -exec cp {} target/release-bundle/ \;
 
@@ -514,7 +514,7 @@ jobs:
             pkl_napi.linux-arm64-musl.node \
             pkl_napi.win32-x64.node; do
             if [ ! -f "packages/pkl-napi/native/${ADDON}" ]; then
-              echo "ERROR: missing required @pkl-rs/napi addon: ${ADDON}" >&2
+              echo "ERROR: missing required @openedges/pkl-napi addon: ${ADDON}" >&2
               exit 1
             fi
           done
@@ -581,7 +581,7 @@ jobs:
               --generate-notes \
               "${EXTRA_FLAGS[@]}"
           fi
-      - name: Publish @pkl-rs/wasm and @pkl-rs/napi tarballs to npm
+      - name: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -599,7 +599,7 @@ jobs:
           fi
           printf '//registry.npmjs.org/:_authToken=%s\n' "${NODE_AUTH_TOKEN}" > "${HOME}/.npmrc"
           chmod 600 "${HOME}/.npmrc"
-          for TGZ in target/release-bundle/pkl-rs-wasm-*.tgz target/release-bundle/pkl-rs-napi-*.tgz; do
+          for TGZ in target/release-bundle/openedges-pkl-wasm-*.tgz target/release-bundle/openedges-pkl-napi-*.tgz; do
             npm publish "${TGZ}" --access public "${DIST_TAG_ARGS[@]}"
           done
       - name: Publish all 8 workspace crates to crates.io

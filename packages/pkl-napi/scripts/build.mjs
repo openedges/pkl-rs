@@ -77,7 +77,7 @@ function sharedLibName() {
   if (process.platform === "darwin") return "libpkl_napi.dylib";
   if (process.platform === "linux") return "libpkl_napi.so";
   if (process.platform === "win32") return "pkl_napi.dll";
-  throw new Error(`Unsupported platform for @pkl-rs/napi build: ${process.platform}`);
+  throw new Error(`Unsupported platform for @openedges/pkl-napi build: ${process.platform}`);
 }
 
 function platformBinaryName() {
@@ -136,7 +136,7 @@ for (const legalFile of ["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"]) {
 
 console.log(
   JSON.stringify({
-    package: "@pkl-rs/napi",
+    package: "@openedges/pkl-napi",
     platform: process.platform,
     arch: process.arch,
     profile: profileDir,

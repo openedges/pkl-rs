@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "7b861b2f6064b4b17e9b68ae01e2aea97f5164803759b6efe6d78b6506dce198"
+      "sha256": "29c7f6823e75211e184a4a54dc9147517efbd8816bb49057fdecf50c8f21175e"
     },
     {
       "bytes": 111079,
@@ -330,7 +330,7 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "093545537ad4a2c8d8ffc0bbce8b72d67f2bfee45e94913592b0bfc62277661d"
+      "sha256": "1c4ded5cee0e0a6d40207dd4271420c86385b7d759d3cfa77775e65b71c75b25"
     },
     {
       "bytes": 64484,
@@ -434,7 +434,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "2715d05de7a1bac20375477b90ae65beca4932310896909b752344e12764efbd"
+      "sha256": "6472bc5c50af9362e27061f125edcfc90937eb9713e90cc42475b95698a429ef"
     }
   ],
   "requirements": {
@@ -599,7 +599,7 @@
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "293a775f0bb24172625de9e6c383c66902d018a3286d1ea76f7e13210ce4252e",
+          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
           "symbol": "tryDecodePklBinaryFast"
         }
       ],
@@ -710,12 +710,12 @@
         },
         {
           "path": ".github/workflows/ci.yml",
-          "sha256": "80ff1bd4a5186243959df939d5084476a54c435540e88cf13ab6f9eb7de898b4",
+          "sha256": "bb18ecf2c46353cd45c83f8467d12583fe25ddbdb0524c10eb3bd20a8e13c8af",
           "symbol": "package-smoke"
         },
         {
           "path": ".github/workflows/release.yml",
-          "sha256": "d1db17e8888cd1edbce13850e5ea883d6742acf4249ef87c2da3dd3c49290886",
+          "sha256": "97896e80437105aaf573b34ddaddc0586a7b6fab6482aaf6b4d459f62ced377b",
           "symbol": "assemble-and-release"
         },
         {
@@ -804,11 +804,11 @@
   "sources": {
     "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "7b861b2f6064b4b17e9b68ae01e2aea97f5164803759b6efe6d78b6506dce198",
+    "compatibility/m2-language.json": "29c7f6823e75211e184a4a54dc9147517efbd8816bb49057fdecf50c8f21175e",
     "compatibility/m3-stdlib-output.json": "f1226e285cc4da4e8c24975f33fb4b187a3bddb0ed648ec1b9d6c087befd5635",
-    "compatibility/m4-io-packages.json": "093545537ad4a2c8d8ffc0bbce8b72d67f2bfee45e94913592b0bfc62277661d",
+    "compatibility/m4-io-packages.json": "1c4ded5cee0e0a6d40207dd4271420c86385b7d759d3cfa77775e65b71c75b25",
     "compatibility/m5-product-tools.json": "7fb580ec45c12d1653227107dfb888742e82a16fb94f835944c0443168ee0a93",
-    "compatibility/m6-wasm-napi.json": "2715d05de7a1bac20375477b90ae65beca4932310896909b752344e12764efbd",
+    "compatibility/m6-wasm-napi.json": "6472bc5c50af9362e27061f125edcfc90937eb9713e90cc42475b95698a429ef",
     "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",

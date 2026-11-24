@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: Apache-2.0
-// Clean-directory install & live execution check for packed @pkl-rs/wasm and @pkl-rs/napi tarballs.
+// Clean-directory install & live execution check for packed @openedges/pkl-wasm and @openedges/pkl-napi tarballs.
 // Note: when executed for wasm-node or napi-esm-cjs, this script is staged inside the clean
 // temp install root (`install_base/<role>/run_packaging_check.mjs`) so bare ESM `import()` and
-// CJS `require()` genuinely resolve through `install_base/<role>/node_modules/@pkl-rs/*`.
+// CJS `require()` genuinely resolve through `install_base/<role>/node_modules/@openedges/*`.
 import { createRequire } from "node:module";
 import { access, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
+const PKL_BASELINE_VERSION_RE = /^0\.32\.0(?:-[0-9A-Za-z.-]+)?$/;
 const [mode, pkgDirArg, samplePklArg, resultPathArg] = process.argv.slice(2);
 if (!resultPathArg) {
   throw new Error("usage: run_packaging_check.mjs <wasm-node|napi-esm-cjs|matrix> PKG_DIR SAMPLE_PKL RESULT_JSON");
@@ -28,14 +29,14 @@ let stdout = "";
 
 if (mode === "wasm-node") {
   const pkgJson = JSON.parse(await readFile(resolve(pkgDir, "package.json"), "utf8"));
-  if (pkgJson.name !== "@pkl-rs/wasm") assertions.push(`unexpected_name:${pkgJson.name}`);
-  if (pkgJson.version !== "0.32.0") assertions.push(`unexpected_version:${pkgJson.version}`);
+  if (pkgJson.name !== "@openedges/pkl-wasm") assertions.push(`unexpected_name:${pkgJson.name}`);
+  if (!PKL_BASELINE_VERSION_RE.test(String(pkgJson.version || ""))) assertions.push(`unexpected_version:${pkgJson.version}`);
   if (!pkgJson.exports || !pkgJson.exports["."]) assertions.push("missing_exports");
   const typesRel = pkgJson.exports?.["."]?.types || pkgJson.types;
   if (!typesRel || !(await fileExists(resolve(pkgDir, typesRel)))) {
     assertions.push(`missing_types_file:${typesRel || "none"}`);
   }
-  const mod = await import("@pkl-rs/wasm");
+  const mod = await import("@openedges/pkl-wasm");
   if (typeof mod.init === "function") await mod.init();
   const ev = await mod.createEvaluator();
   try {
@@ -45,8 +46,8 @@ if (mode === "wasm-node") {
   }
 } else if (mode === "napi-esm-cjs") {
   const pkgJson = JSON.parse(await readFile(resolve(pkgDir, "package.json"), "utf8"));
-  if (pkgJson.name !== "@pkl-rs/napi") assertions.push(`unexpected_name:${pkgJson.name}`);
-  if (pkgJson.version !== "0.32.0") assertions.push(`unexpected_version:${pkgJson.version}`);
+  if (pkgJson.name !== "@openedges/pkl-napi") assertions.push(`unexpected_name:${pkgJson.name}`);
+  if (!PKL_BASELINE_VERSION_RE.test(String(pkgJson.version || ""))) assertions.push(`unexpected_version:${pkgJson.version}`);
   if (!pkgJson.exports?.["."]?.import || !pkgJson.exports?.["."]?.require) {
     assertions.push("missing_dual_esm_cjs_exports");
   }
@@ -54,9 +55,9 @@ if (mode === "wasm-node") {
   if (!typesRel || !(await fileExists(resolve(pkgDir, typesRel)))) {
     assertions.push(`missing_types_file:${typesRel || "none"}`);
   }
-  const esmMod = await import("@pkl-rs/napi");
+  const esmMod = await import("@openedges/pkl-napi");
   const require = createRequire(import.meta.url);
-  const cjsMod = require("@pkl-rs/napi");
+  const cjsMod = require("@openedges/pkl-napi");
 
   const evEsm = await esmMod.createEvaluator();
   let esmOut = "";
@@ -79,8 +80,12 @@ if (mode === "wasm-node") {
   const napiDir = resolve(pkgDir, "packages/pkl-napi");
   const wasmPkg = JSON.parse(await readFile(resolve(wasmDir, "package.json"), "utf8"));
   const napiPkg = JSON.parse(await readFile(resolve(napiDir, "package.json"), "utf8"));
-  if (wasmPkg.name !== "@pkl-rs/wasm" || wasmPkg.version !== "0.32.0") assertions.push("wasm_pkg_metadata_invalid");
-  if (napiPkg.name !== "@pkl-rs/napi" || napiPkg.version !== "0.32.0") assertions.push("napi_pkg_metadata_invalid");
+  if (wasmPkg.name !== "@openedges/pkl-wasm" || !PKL_BASELINE_VERSION_RE.test(String(wasmPkg.version || ""))) {
+    assertions.push("wasm_pkg_metadata_invalid");
+  }
+  if (napiPkg.name !== "@openedges/pkl-napi" || !PKL_BASELINE_VERSION_RE.test(String(napiPkg.version || ""))) {
+    assertions.push("napi_pkg_metadata_invalid");
+  }
   const wasmTypes = wasmPkg.exports?.["."]?.types || wasmPkg.types;
   const napiTypes = napiPkg.exports?.["."]?.types || napiPkg.types;
   if (!wasmTypes || !(await fileExists(resolve(wasmDir, wasmTypes)))) assertions.push("wasm_missing_types_file");

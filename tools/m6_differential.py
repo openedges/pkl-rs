@@ -1229,8 +1229,8 @@ def execute(
                         "packaging_matrix": "matrix",
                     }[emode]
                     target_dir_arg = {
-                        "packaging_wasm": str(install_base / "wasm_pkg/node_modules/@pkl-rs/wasm"),
-                        "packaging_napi": str(install_base / "napi_pkg/node_modules/@pkl-rs/napi"),
+                        "packaging_wasm": str(install_base / "wasm_pkg/node_modules/@openedges/pkl-wasm"),
+                        "packaging_napi": str(install_base / "napi_pkg/node_modules/@openedges/pkl-napi"),
                         "packaging_matrix": str(root),
                     }[emode]
                     res_json = p["case_work"] / f"pack_{emode}.json"

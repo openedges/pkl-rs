@@ -6,6 +6,17 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ## [Unreleased]
 
+## [0.32.0-rc.2] — 2026-11-24
+
+### Changed
+
+- **npm Scope Alignment (`@openedges`)**: Renamed the two npm packages from `@pkl-rs/wasm` and `@pkl-rs/napi` to **`@openedges/pkl-wasm`** and **`@openedges/pkl-napi`**, updated [release.yml](.github/workflows/release.yml) tarball publish globs (`openedges-pkl-wasm-*.tgz`, `openedges-pkl-napi-*.tgz`), clean-install tests, M6 packaging runner (also accepting `0.32.0-*` prerelease versions), and release documentation.
+- Bumped all workspace crates (`Cargo.toml` / `Cargo.lock`) and npm manifests in lockstep to **`0.32.0-rc.2`** (preserving strict tag immutability after `v0.32.0-rc.1`; language baseline `PKL_VERSION = "0.32.0"` unchanged).
+
+### Fixed
+
+- **Windows Verbatim Paths & `file:///` Drive URIs (`crates/pkl-host-native`, `crates/pkl-runtime`)**: Stripped Windows `\\?\<drive>:` extended-length prefixes emitted by `std::fs::canonicalize` in `path_to_file_uri`, `file_uri_from_path`, and `normalize_lexical_path`, and stripped leading `/` on Windows drive URIs (`/C:/...`) inside `file_uri_to_path`, `check_uri`, and `resolve_secure_path` (fixing `Project.load` and `rootDir` confinement failures on `win32-x64` observed during `v0.32.0-rc.1` CI).
+
 ## [0.32.0-rc.1] — 2026-11-24
 
 First release candidate targeting **Apple Pkl `0.32.0`** across all 4 distribution channels (GitHub Releases, npm, crates.io, and Homebrew).

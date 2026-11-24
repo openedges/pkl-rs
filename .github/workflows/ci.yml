@@ -3,7 +3,7 @@ name: CI
 # Minimal, low-cost Ubuntu-only CI for push / pull_request:
 # - Static verification, formatting, lint, Wasm compilation, manifest freshness,
 #   and fast Rust unit/product tests.
-# - Release-mode packaging smoke for @pkl-rs/wasm, @pkl-rs/napi, pkl, and pkldoc.
+# - Release-mode packaging smoke for @openedges/pkl-wasm, @openedges/pkl-napi, pkl, and pkldoc.
 #
 # Expensive Java differential suites (M0-M6), Playwright cross-browser matrices,
 # seeded differential fuzzing, long-running memory soak, and full 34-workload
@@ -134,7 +134,7 @@ jobs:
           if [ ! -x .cache/m1-tools/bin/wasm-bindgen ]; then
             cargo install wasm-bindgen-cli --version 0.2.108 --locked --root .cache/m1-tools
           fi
-      - name: Build, size-check, and smoke-test @pkl-rs/wasm (includes npm pack install)
+      - name: Build, size-check, and smoke-test @openedges/pkl-wasm (includes npm pack install)
         run: |
           node packages/pkl-wasm/scripts/build.mjs
           GZIP_BYTES="$(gzip -9 -c packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm | wc -c | tr -d ' ')"
@@ -144,7 +144,7 @@ jobs:
             exit 1
           fi
           node --test packages/pkl-wasm/test/wasm.test.mjs
-      - name: Build and smoke-test @pkl-rs/napi
+      - name: Build and smoke-test @openedges/pkl-napi
         run: |
           node packages/pkl-napi/scripts/build.mjs
           node packages/pkl-napi/test/run.mjs

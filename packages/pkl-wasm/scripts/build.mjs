@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Builds the self-contained `@pkl-rs/wasm` distribution into `packages/pkl-wasm/dist/`
+ * Builds the self-contained `@openedges/pkl-wasm` distribution into `packages/pkl-wasm/dist/`
  * using the pinned `.cache/m1-tools/bin/wasm-bindgen` (0.2.108) binary.
  */
 import { execFileSync } from 'node:child_process';
@@ -182,7 +182,7 @@ for (const rel of [
 console.log(
   JSON.stringify(
     {
-      package: '@pkl-rs/wasm',
+      package: '@openedges/pkl-wasm',
       profile: WASM_PROFILE,
       wasm_opt_applied: wasmOptApplied,
       dist: DIST_DIR,
