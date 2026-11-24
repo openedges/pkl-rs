@@ -13868,12 +13868,12 @@ fn compile_unit_into_with_syntax(
                 .cloned()
                 .collect(),
             preparation_is_evaluation: resolved.preparation_is_evaluation,
-            function_owners: BTreeMap::new(),
+            function_owners: Default::default(),
             preparation_failure: None,
-            names: BTreeMap::new(),
-            const_names: BTreeSet::new(),
-            custom_this: BTreeSet::new(),
-            custom_functions: BTreeSet::new(),
+            names: Default::default(),
+            const_names: Default::default(),
+            custom_this: Default::default(),
+            custom_functions: Default::default(),
         };
         let unit = compile_unit_body(program, &shell, options, instrument, source, identity)?;
         program.units[unit.0 as usize].build = Some(modules::ModuleBuild {

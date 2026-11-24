@@ -4,6 +4,7 @@
 //! An absent lexical declaration resolves to the current receiver, rather than
 //! searching enclosing objects dynamically. See Pkl 0.32 SymbolTable.resolveVariable.
 use crate::diagnostic::{Diagnostic, DiagnosticKind, DiagnosticOrigin};
+use crate::heap::{FastMap, FastSet};
 use crate::source::{SourceSlice, SourceText, Span};
 use crate::syntax::{
     Expr, ExprKind, Member, Modifier, ModifierKind, Module, ModuleParentKind, ObjectMember,
@@ -241,22 +242,92 @@ pub struct ResolvedModule {
     pub(crate) standard_library: bool,
     pub(crate) preparation: Vec<AstPreparation>,
     pub(crate) preparation_is_evaluation: bool,
-    pub(crate) function_owners: BTreeMap<Span, crate::value::PklString>,
+    pub(crate) function_owners: FastMap<Span, crate::value::PklString>,
     pub(crate) preparation_failure: Option<Diagnostic>,
-    pub names: BTreeMap<Span, Binding>,
-    pub const_names: std::collections::BTreeSet<Span>,
+    pub names: FastMap<Span, Binding>,
+    pub const_names: FastSet<Span>,
     /// Direct custom-this reads; lambda bodies use their captured normal receiver.
-    pub custom_this: std::collections::BTreeSet<Span>,
+    pub custom_this: FastSet<Span>,
     /// Lambda literals that capture the constraint's input as their receiver.
-    pub custom_functions: std::collections::BTreeSet<Span>,
+    pub custom_functions: FastSet<Span>,
 }
 
 fn is_method(member: &Member) -> bool {
     matches!(member.expr.kind, ExprKind::Function { method: true, .. })
 }
 
+#[derive(Clone, Copy)]
+enum ObjectMemberEntry {
+    Method { local: bool },
+    Property { first_local: bool, ambiguous: bool },
+}
+
+enum ObjectScope<'a> {
+    Small(Vec<&'a Member>),
+    Indexed(FastMap<(&'a PklString, bool), ObjectMemberEntry>),
+}
+
+impl<'a> ObjectScope<'a> {
+    fn new(members: Vec<&'a Member>) -> Self {
+        if members.len() <= 8 {
+            Self::Small(members)
+        } else {
+            let mut index = FastMap::with_capacity_and_hasher(members.len(), Default::default());
+            for member in members {
+                let method = is_method(member);
+                index
+                    .entry((&member.name, method))
+                    .and_modify(|entry| {
+                        if let ObjectMemberEntry::Property {
+                            first_local,
+                            ambiguous,
+                        } = entry
+                            && *first_local != member.local
+                        {
+                            *ambiguous = true;
+                        }
+                    })
+                    .or_insert(if method {
+                        ObjectMemberEntry::Method {
+                            local: member.local,
+                        }
+                    } else {
+                        ObjectMemberEntry::Property {
+                            first_local: member.local,
+                            ambiguous: false,
+                        }
+                    });
+            }
+            Self::Indexed(index)
+        }
+    }
+
+    #[inline]
+    fn lookup(&self, name: &PklString, method: bool) -> Option<ObjectMemberEntry> {
+        match self {
+            Self::Small(members) => {
+                let first = members
+                    .iter()
+                    .find(|member| &member.name == name && is_method(member) == method)?;
+                Some(if method {
+                    ObjectMemberEntry::Method { local: first.local }
+                } else {
+                    let ambiguous = members.iter().any(|other| {
+                        &other.name == name && !is_method(other) && other.local != first.local
+                    });
+                    ObjectMemberEntry::Property {
+                        first_local: first.local,
+                        ambiguous,
+                    }
+                })
+            }
+            Self::Indexed(index) => index.get(&(name, method)).copied(),
+        }
+    }
+}
+
 enum Scope<'a> {
-    Object(Vec<&'a Member>),
+    Object(ObjectScope<'a>),
     Let(&'a PklString),
     Parameters(&'a [Parameter]),
     ObjectParameters(&'a [Parameter], bool),
@@ -290,7 +361,7 @@ struct ConstScope {
 }
 
 struct Resolver<'a> {
-    function_owners: BTreeMap<Span, crate::value::PklString>,
+    function_owners: FastMap<Span, crate::value::PklString>,
     source: SourceSlice<'a>,
     preparation: Vec<AstPreparation>,
     deferred_diagnostics: &'a [Diagnostic],
@@ -298,17 +369,17 @@ struct Resolver<'a> {
     standard_library: bool,
     scopes: Vec<Scope<'a>>,
     folded_integer_spans: &'a BTreeMap<Span, Span>,
-    names: BTreeMap<Span, Binding>,
-    const_names: std::collections::BTreeSet<Span>,
-    custom_this: std::collections::BTreeSet<Span>,
-    custom_functions: std::collections::BTreeSet<Span>,
+    names: FastMap<Span, Binding>,
+    const_names: FastSet<Span>,
+    custom_this: FastSet<Span>,
+    custom_functions: FastSet<Span>,
     const_level: ConstLevel,
     object_levels: Vec<ConstLevel>,
     module_const_owners: Vec<&'static str>,
     object_receiver_lambdas: Vec<bool>,
     receiver_is_lambda: bool,
     const_scopes: Vec<ConstScope>,
-    entry_counts: BTreeMap<crate::value::PklString, usize>,
+    entry_counts: FastMap<crate::value::PklString, usize>,
     member_path: Vec<PklString>,
     diagnostic_path: Vec<crate::value::PklString>,
     diagnostic_owners: diagnostic_owner::OwnerScopes,
@@ -371,7 +442,7 @@ enum Work<'a> {
     MembersNext {
         members: Vec<&'a Member>,
         index: usize,
-        seen: std::collections::BTreeSet<(&'a PklString, bool)>,
+        seen: FastSet<(&'a PklString, bool)>,
         object: bool,
     },
     Member(&'a Member, bool),
@@ -383,7 +454,7 @@ enum Work<'a> {
     SpecializedBody {
         members: &'a [ObjectMember],
         index: usize,
-        seen: std::collections::BTreeSet<(&'a PklString, bool)>,
+        seen: FastSet<(&'a PklString, bool)>,
     },
     ObjectMember(&'a ObjectMember, Option<Span>),
     ConstantEntries(&'a [ObjectMember]),
@@ -400,11 +471,7 @@ enum Work<'a> {
     EntryValue(&'a Expr, &'a Expr),
     PredicateValue(&'a Expr, &'a Expr),
     EndPredicate(crate::value::PklString),
-    ForHeader(
-        &'a ObjectMember,
-        usize,
-        std::collections::BTreeSet<&'a PklString>,
-    ),
+    ForHeader(&'a ObjectMember, usize, FastSet<&'a PklString>),
     ForBody(&'a [Parameter], &'a [ObjectMember], Span),
     EndFor,
     LetBody(&'a PklString, &'a Expr, bool),
@@ -459,27 +526,24 @@ impl<'a> Resolver<'a> {
                         owner_depth -= 1;
                     }
                 }
-                Scope::Object(members) => {
-                    if let Some(member) = members
-                        .iter()
-                        .find(|member| &member.name == name && is_method(member) == method)
-                    {
-                        return if method {
-                            Binding::Method {
-                                owner_depth: owner_depth.max(0) as usize,
-                                local: member.local,
-                            }
-                        } else if members.iter().any(|other| {
-                            &other.name == name && !is_method(other) && other.local != member.local
-                        }) {
-                            Binding::AmbiguousProperty {
-                                owner_depth: owner_depth.max(0) as usize,
-                            }
-                        } else {
-                            Binding::Property {
-                                owner_depth: owner_depth.max(0) as usize,
-                                local: member.local,
-                            }
+                Scope::Object(object_scope) => {
+                    if let Some(entry) = object_scope.lookup(name, method) {
+                        let depth = owner_depth.max(0) as usize;
+                        return match entry {
+                            ObjectMemberEntry::Method { local } => Binding::Method {
+                                owner_depth: depth,
+                                local,
+                            },
+                            ObjectMemberEntry::Property {
+                                ambiguous: true, ..
+                            } => Binding::AmbiguousProperty { owner_depth: depth },
+                            ObjectMemberEntry::Property {
+                                first_local,
+                                ambiguous: false,
+                            } => Binding::Property {
+                                owner_depth: depth,
+                                local: first_local,
+                            },
                         };
                     }
                     owner_depth += 1;
@@ -509,7 +573,7 @@ impl<'a> Resolver<'a> {
     /// declaration order. A class/alias is fully visited before its local check.
     fn amending_members(&mut self, members: &'a [Member]) -> Result<(), Diagnostic> {
         let previous = self.enter_object(members.iter().collect());
-        let mut seen = std::collections::BTreeSet::new();
+        let mut seen = FastSet::default();
         for category in 0..5 {
             for member in members
                 .iter()
@@ -545,7 +609,7 @@ impl<'a> Resolver<'a> {
 
     fn enter_object(&mut self, names: Vec<&'a Member>) -> bool {
         self.diagnostic_owners.enter_inherited();
-        self.scopes.push(Scope::Object(names));
+        self.scopes.push(Scope::Object(ObjectScope::new(names)));
         self.object_levels.push(self.const_level);
         self.const_scopes.push(ConstScope {
             level: self.const_level,
@@ -752,7 +816,7 @@ impl<'a> Resolver<'a> {
                     work.push(Work::MembersNext {
                         members: ordered,
                         index: 0,
-                        seen: std::collections::BTreeSet::new(),
+                        seen: FastSet::default(),
                         object,
                     });
                 }
@@ -851,7 +915,7 @@ impl<'a> Resolver<'a> {
                             type_parameters, ..
                         } = &member.expr.kind
                     {
-                        let mut seen = std::collections::BTreeSet::new();
+                        let mut seen = FastSet::default();
                         for parameter in type_parameters {
                             if !seen.insert(&parameter.name) {
                                 let mut error = Diagnostic::language(
@@ -983,7 +1047,7 @@ impl<'a> Resolver<'a> {
                             )
                         })
                     {
-                        let mut seen = std::collections::BTreeSet::new();
+                        let mut seen = FastSet::default();
                         for member in &names {
                             if !seen.insert((&member.name, is_method(member))) {
                                 let mut error = Diagnostic::language(
@@ -1151,11 +1215,9 @@ impl<'a> Resolver<'a> {
                         work.push(Work::ObjectBody(then_members, for_span));
                         work.push(Work::CheckGeneratorParameters(then_parameters));
                     }
-                    ObjectMember::For { .. } => work.push(Work::ForHeader(
-                        member,
-                        0,
-                        std::collections::BTreeSet::new(),
-                    )),
+                    ObjectMember::For { .. } => {
+                        work.push(Work::ForHeader(member, 0, FastSet::default()))
+                    }
                 },
                 Work::EntryValue(key, value) => {
                     self.entry_label(Some(key));
@@ -1378,24 +1440,26 @@ impl<'a> Resolver<'a> {
                         return Err(error);
                     }
                     if !parameter {
-                        let objects = self
-                            .scopes
-                            .iter()
-                            .filter_map(|scope| match scope {
-                                Scope::Object(members) => Some(members),
-                                _ => None,
-                            })
-                            .collect::<Vec<_>>();
-                        let binding = objects
-                            .first()
-                            .and_then(|members| {
-                                members
-                                    .iter()
-                                    .find(|member| member.name == path[0] && !is_method(member))
-                            })
-                            .map_or(Binding::ImplicitThis, |member| Binding::Property {
-                                owner_depth: objects.len() - 1,
-                                local: member.local,
+                        let mut first_object: Option<&ObjectScope<'a>> = None;
+                        let mut object_count = 0usize;
+                        for scope in &self.scopes {
+                            if let Scope::Object(obj) = scope {
+                                if first_object.is_none() {
+                                    first_object = Some(obj);
+                                }
+                                object_count += 1;
+                            }
+                        }
+                        let binding = first_object
+                            .and_then(|obj| obj.lookup(&path[0], false))
+                            .map_or(Binding::ImplicitThis, |entry| match entry {
+                                ObjectMemberEntry::Property { first_local, .. } => {
+                                    Binding::Property {
+                                        owner_depth: object_count - 1,
+                                        local: first_local,
+                                    }
+                                }
+                                ObjectMemberEntry::Method { .. } => unreachable!(),
                             });
                         self.names.insert(ty.span, binding);
                     }
@@ -1592,7 +1656,7 @@ impl<'a> Resolver<'a> {
                                 .map(Into::into);
                             return Err(error);
                         }
-                        let mut seen = std::collections::BTreeSet::new();
+                        let mut seen = FastSet::default();
                         for parameter in parameters {
                             if !self.evaluation_preparation
                                 && parameter.name != "_"
@@ -1689,7 +1753,7 @@ impl<'a> Resolver<'a> {
                         ty,
                         ..
                     } => {
-                        let mut seen = std::collections::BTreeSet::new();
+                        let mut seen = FastSet::default();
                         for parameter in type_parameters {
                             if !seen.insert(&parameter.name) {
                                 return Err(Diagnostic::language(
@@ -1827,7 +1891,7 @@ impl<'a> Resolver<'a> {
                 "Only standard library members can have type parameters.",
             ));
         }
-        let mut seen = std::collections::BTreeSet::new();
+        let mut seen = FastSet::default();
         for parameter in parameters {
             if !seen.insert(&parameter.name) {
                 return Err(Diagnostic::language(
@@ -2393,7 +2457,7 @@ fn resolve_module_inner(
     standard_library: bool,
 ) -> (ResolvedModule, Option<Diagnostic>, bool) {
     let mut resolver = Resolver {
-        function_owners: BTreeMap::new(),
+        function_owners: FastMap::default(),
         preparation: Vec::new(),
         deferred_diagnostics: &module.deferred_diagnostics,
         source: module.source.entire(),
@@ -2401,17 +2465,17 @@ fn resolve_module_inner(
         standard_library,
         scopes: Vec::new(),
         folded_integer_spans: &module.folded_integer_spans,
-        names: BTreeMap::new(),
-        const_names: std::collections::BTreeSet::new(),
-        custom_this: std::collections::BTreeSet::new(),
-        custom_functions: std::collections::BTreeSet::new(),
+        names: FastMap::default(),
+        const_names: FastSet::default(),
+        custom_this: FastSet::default(),
+        custom_functions: FastSet::default(),
         const_level: ConstLevel::None,
         object_levels: Vec::new(),
         module_const_owners: Vec::new(),
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
         const_scopes: Vec::new(),
-        entry_counts: BTreeMap::new(),
+        entry_counts: FastMap::default(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),
         diagnostic_owners: diagnostic_owner::OwnerScopes::new(capture_diagnostic_owner),
@@ -2489,7 +2553,7 @@ fn resolve_module_inner(
                         .filter(move |m| member_category(m) == category)
                 })
                 .collect();
-            let mut seen = std::collections::BTreeSet::new();
+            let mut seen = FastSet::default();
             for member in module.members.iter().filter(|m| member_category(m) == 0) {
                 if !seen.insert((&member.name, false)) {
                     return Err(Diagnostic::language(
@@ -2571,7 +2635,7 @@ pub(crate) fn resolve_session_expression<'a>(
 ) -> Result<ResolvedModule, Diagnostic> {
     let text = text.into();
     let mut resolver = Resolver {
-        function_owners: BTreeMap::new(),
+        function_owners: FastMap::default(),
         preparation: Vec::new(),
         deferred_diagnostics: &parsed.deferred_diagnostics,
         source: text,
@@ -2579,7 +2643,7 @@ pub(crate) fn resolve_session_expression<'a>(
         standard_library: false,
         scopes: Vec::new(),
         folded_integer_spans: &parsed.folded_integer_spans,
-        names: BTreeMap::new(),
+        names: FastMap::default(),
         const_names: Default::default(),
         custom_this: Default::default(),
         custom_functions: Default::default(),
@@ -2589,7 +2653,7 @@ pub(crate) fn resolve_session_expression<'a>(
         object_receiver_lambdas: Vec::new(),
         receiver_is_lambda: false,
         const_scopes: Vec::new(),
-        entry_counts: BTreeMap::new(),
+        entry_counts: FastMap::default(),
         member_path: Vec::new(),
         diagnostic_path: Vec::new(),
         diagnostic_owners: diagnostic_owner::OwnerScopes::new(true),

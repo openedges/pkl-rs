@@ -77,6 +77,7 @@ impl Hasher for FxHasher {
 
 pub type FxBuildHasher = BuildHasherDefault<FxHasher>;
 pub type FastMap<K, V> = HashMap<K, V, FxBuildHasher>;
+pub type FastSet<T> = std::collections::HashSet<T, FxBuildHasher>;
 
 use crate::value::{ErrorKind, ObjectId, PklString, RuntimeError, Value};
 

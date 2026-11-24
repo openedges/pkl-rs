@@ -1,5 +1,6 @@
 //! Heap-backed emission continuations for ordinary authored expression trees.
 use super::*;
+use crate::heap::FastMap;
 use crate::resolver::Binding;
 use crate::syntax::{BinaryOp, Expr, ExprKind, UnaryOp};
 
@@ -28,7 +29,7 @@ enum InferredParent {
 fn register_inferred_parents(
     body: &Expr,
     parent: InferredParent,
-    parents: &mut BTreeMap<Span, InferredParent>,
+    parents: &mut FastMap<Span, InferredParent>,
 ) {
     let mut bodies = vec![body];
     while let Some(body) = bodies.pop() {
@@ -100,7 +101,7 @@ struct ExpressionContextState<'a, 'b> {
     output: &'b mut Code,
     work: &'b mut Vec<Work<'a>>,
     pending_spans: &'b mut Vec<usize>,
-    inferred_parents: &'b mut BTreeMap<Span, InferredParent>,
+    inferred_parents: &'b mut FastMap<Span, InferredParent>,
     emitted_start: &'b mut usize,
 }
 
@@ -197,7 +198,7 @@ impl Compiler<'_> {
     fn register_property_parents(
         &mut self,
         member: &crate::syntax::Member,
-        parents: &mut BTreeMap<Span, InferredParent>,
+        parents: &mut FastMap<Span, InferredParent>,
     ) -> Result<(), RuntimeError> {
         let parent = if let Some(ty) = &member.ty {
             let check = self.compile_type(ty)?;
@@ -265,7 +266,7 @@ impl Compiler<'_> {
         // Only the new expressions connected directly to a method body through
         // if/let nodes inherit its return type. Nested properties and lambdas
         // establish their own inference contexts.
-        let mut inferred_parents = BTreeMap::new();
+        let mut inferred_parents = FastMap::default();
         if let Some(member) = property_parent {
             self.register_property_parents(member, &mut inferred_parents)?;
         } else if entry_parent {

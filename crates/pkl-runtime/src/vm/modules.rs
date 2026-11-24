@@ -318,16 +318,26 @@ struct CachedFrontendEntry {
 }
 
 pub(crate) fn source_text_hash(text: &SourceText) -> u64 {
+    const K: u64 = 0x517cc1b727220a95;
     let mut hash: u64 = 0xcbf29ce484222325;
     if let Some(s) = text.as_str() {
-        for &b in s.as_bytes() {
-            hash ^= u64::from(b);
-            hash = hash.wrapping_mul(0x100000001b3);
+        let bytes = s.as_bytes();
+        let (chunks, rem) = bytes.as_chunks::<8>();
+        for &chunk in chunks {
+            let word = u64::from_le_bytes(chunk);
+            hash = (hash.rotate_left(5) ^ word).wrapping_mul(K);
         }
+        if !rem.is_empty() {
+            let mut tail = 0u64;
+            for (i, &b) in rem.iter().enumerate() {
+                tail |= u64::from(b) << (i * 8);
+            }
+            hash = (hash.rotate_left(5) ^ tail).wrapping_mul(K);
+        }
+        hash = (hash.rotate_left(5) ^ (bytes.len() as u64)).wrapping_mul(K);
     } else {
         for u in text.original().encode_utf16() {
-            hash ^= u64::from(u);
-            hash = hash.wrapping_mul(0x100000001b3);
+            hash = (hash.rotate_left(5) ^ u64::from(u)).wrapping_mul(K);
         }
     }
     hash
