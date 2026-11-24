@@ -3542,7 +3542,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/platform.rs",
-          "sha256": "21092bddb497f6bd37b1b4f2a02934c471408c30f882d6e16508516db1653de4",
+          "sha256": "9383aaf34435a0323f397a641367af022c044e278d5c92f06b75233fd9b77e7d",
           "symbol": "benchmark"
         }
       ]
@@ -3555,7 +3555,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3568,7 +3568,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3581,7 +3581,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3608,7 +3608,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3638,17 +3638,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/primitives.rs",
-          "sha256": "1b97027e0cd85c2ebacab8f8d38e14405332b72ab9de523554e1cfa40234ccc1",
+          "sha256": "9ab5efa2948208c5b35fd78142470c2db1275c259f1df12d8c8419a53b1bb66d",
           "symbol": "Operation"
         },
         {
           "path": "crates/pkl-runtime/src/vm/output.rs",
-          "sha256": "fd5be95b8093c9eb974df8a084c32afb33b3ec834d882f76425ec1f3ff5c55d1",
+          "sha256": "55056eae35fb014d81220cbdac8f2f84f0927f27f3589e3f69fe92ca251b18b7",
           "symbol": "output_renderer"
         },
         {
           "path": "crates/pkl-runtime/src/vm/rendering.rs",
-          "sha256": "73655a2afaed8c7c2588403b67698cf422bacdc0473817f212589f9fff2b3049",
+          "sha256": "42cd3d43692cec0cd4fc1baf1c3967010a810601aaf0daf6ac93bfe62f3d44cd",
           "symbol": "PcfRenderer"
         }
       ]
@@ -3688,7 +3688,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/math_module.rs",
-          "sha256": "a885cec8052a8e104013ce526ba294842790aa1bb2bd0361d379c13190e68461",
+          "sha256": "1f986aa11ba1aeda74d65af3f0f46f38a39ff54414621414f4a595c95c33892d",
           "symbol": "Operation"
         }
       ]
@@ -3704,7 +3704,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
-          "sha256": "5d3f930d2653d1c2229a8f57f4fe1fd18253592bd304ec78d568b040a8c29615",
+          "sha256": "c8dc0287d765baae5fe5c4496c7e5eef0a9e93af6fdb290e767569a7ae3709e9",
           "symbol": "begin_pkl_binary_render"
         },
         {
@@ -3722,7 +3722,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/platform.rs",
-          "sha256": "21092bddb497f6bd37b1b4f2a02934c471408c30f882d6e16508516db1653de4",
+          "sha256": "9383aaf34435a0323f397a641367af022c044e278d5c92f06b75233fd9b77e7d",
           "symbol": "platform"
         }
       ]
@@ -3737,7 +3737,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/protobuf_rendering.rs",
-          "sha256": "e0d19b6b7b0f549fd0ff9f61061c8ba86aa2aeede2234a542711cfb94c2692a7",
+          "sha256": "d85648e9143fb0b452e6f2d1ddd5f06a5682b3486b4d4b6df8376449588505de",
           "symbol": "protobuf"
         },
         {
@@ -3757,7 +3757,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/reference.rs",
-          "sha256": "f8afe813dc24d6755920e7d85daa352188a1008396e75a75b59d1c4559e28a46",
+          "sha256": "61ef5f334e4db533af5ce5df74f22d2becf986f4dccc793de4e1e5195658c28d",
           "symbol": "Reference"
         }
       ]
@@ -3770,7 +3770,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/reflection.rs",
-          "sha256": "5a2e2a29975a66385f4e96eef5b22159609954050bf86d9173c87e8ac9774d17",
+          "sha256": "fc46b04ef7cc3e82dcb8556aa3ba27edc3ed5b61f3b8141ad8752ee3072f48aa",
           "symbol": "reflect"
         }
       ]
@@ -3796,7 +3796,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3809,7 +3809,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3822,7 +3822,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3834,7 +3834,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/stdlib_modules.rs",
-          "sha256": "f009179cb39f7b681b1d4d3733279d421f83d71f20550ecce06c40bf9d1dfb7b",
+          "sha256": "8ea57f805efeae4f4d3adf62eeb869d3b0599cb38f93ce6264b8a9a5cb0a9671",
           "symbol": "stdlib_source"
         }
       ]
@@ -3848,7 +3848,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/vm/xml_rendering.rs",
-          "sha256": "7b3d9047d930d76f1d5665910676a3c2619098b2df5074a93de718140a573f5f",
+          "sha256": "50e04a399afa1862cf866b657fb1f01b346478c54ef0ae8d04682d4be5ea7a0d",
           "symbol": "xml"
         }
       ]
