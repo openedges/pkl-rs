@@ -1461,6 +1461,9 @@ impl WasmHostCore {
     // -----------------------------------------------------------------------
 
     pub fn handle_read(&mut self, token: String, req: &ReadRequest) -> WasmHostOutcome {
+        if let Some(resolved_uri) = &req.resolved_uri {
+            return self.continue_read_resource(token, resolved_uri.clone(), false);
+        }
         let authored_raw = req.uri.to_java_utf8();
 
         let resolved_uri = if !has_uri_scheme(&authored_raw)

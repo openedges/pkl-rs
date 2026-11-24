@@ -125,7 +125,9 @@ public final class M4HttpFixtureServer {
     if (includeUserAgent) {
       sb.append("userAgent = ").append(customUa == null ? "null" : pklString(customUa)).append('\n');
     } else {
-      boolean isDefaultPklUa = customUa != null && customUa.startsWith("Pkl/0.32.0 (");
+      boolean isDefaultPklUa =
+          customUa != null
+              && (customUa.startsWith("Pkl/0.32.0 (") || customUa.startsWith("pkl-rs/0.32.0 ("));
       sb.append("hasDefaultPklUserAgent = ").append(isDefaultPklUa ? "true" : "false").append('\n');
     }
     return sb.toString().getBytes(StandardCharsets.UTF_8);

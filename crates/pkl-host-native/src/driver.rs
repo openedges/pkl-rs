@@ -54,6 +54,7 @@ use pkl_runtime::packages::{PackageAssetUri, PackageUriError, PackageUriFailure}
 use pkl_runtime::resources::{ReadResult, Resource};
 use pkl_runtime::source::SourceText;
 use pkl_runtime::value::{ErrorKind, PklString, RuntimeError, Value};
+use pkl_runtime::vm::ReadRequest;
 use std::collections::BTreeMap;
 use std::fmt;
 use std::path::{Path, PathBuf};
@@ -1111,7 +1112,7 @@ impl NativeHost {
                     HostPoll::Yielded => continue,
                     HostPoll::Read { token, .. } => {
                         let req = session.read_request(&token)?;
-                        let result = self.handle_read(&req.uri, req.module_uri.as_ref());
+                        let result = self.handle_read_request(&req);
                         let t = now_ms();
                         if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                             session.cancel();
@@ -1319,7 +1320,7 @@ impl NativeHost {
             Ok(keys) => keys,
             Err(err) => {
                 let timed_out = watchdog.stop();
-                let mut res = if timed_out {
+                let mut res = if timed_out || err.kind == ErrorKind::Timeout {
                     self.format_timeout_output(self.timeout_ms.unwrap_or(0))
                 } else {
                     session.output_failure(err).into()
@@ -1357,7 +1358,7 @@ impl NativeHost {
 
         let timed_out = watchdog.stop();
         if let Some(err) = eval_failure {
-            let mut res = if timed_out {
+            let mut res = if timed_out || err.kind == ErrorKind::Timeout {
                 self.format_timeout_output(self.timeout_ms.unwrap_or(0))
             } else {
                 session.output_failure(err).into()
@@ -1413,7 +1414,7 @@ impl NativeHost {
         for idx in 0..expressions.len() {
             if let Err(err) = session.start_path(idx, now_ms(), self.timeout_ms) {
                 let timed_out = watchdog.stop();
-                let msg = if timed_out {
+                let msg = if timed_out || err.kind == ErrorKind::Timeout {
                     format_timeout_message(self.timeout_ms.unwrap_or(0))
                 } else {
                     session.format_error(err)
@@ -1425,7 +1426,7 @@ impl NativeHost {
                 Ok(val) => values.push(val),
                 Err(err) => {
                     let timed_out = watchdog.stop();
-                    let msg = if timed_out {
+                    let msg = if timed_out || err.kind == ErrorKind::Timeout {
                         format_timeout_message(self.timeout_ms.unwrap_or(0))
                     } else {
                         session.format_error(err)
@@ -1820,7 +1821,7 @@ impl NativeHost {
                 exit_code: 0,
             },
             Err(error) => {
-                if timed_out {
+                if timed_out || error.kind == ErrorKind::Timeout {
                     self.format_timeout_output(self.timeout_ms.unwrap_or(0))
                 } else if expression.is_some() {
                     session.output_expression_failure(error).into()
@@ -1859,7 +1860,7 @@ impl NativeHost {
                 HostPoll::Yielded => {}
                 HostPoll::Read { token, .. } => {
                     let req = session.read_request(&token)?;
-                    let result = self.handle_read(&req.uri, req.module_uri.as_ref());
+                    let result = self.handle_read_request(&req);
                     let t = current_ms();
                     if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
                         session.cancel();
@@ -2645,6 +2646,22 @@ impl NativeHost {
     // Unified Host Effect Dispatchers (`Read`, `Module`, `Glob`)
     // =========================================================================
 
+    /// Handles a VM [`ReadRequest`], honoring any pre-resolved URI (such as triple-dot
+    /// `read(".../...")` resolved against enclosing module hierarchy) before falling back
+    /// to authored URI resolution in [`Self::handle_read`].
+    pub fn handle_read_request(&self, req: &ReadRequest) -> Result<ReadResult, ReadFailure> {
+        if let Some(resolved_uri) = &req.resolved_uri {
+            if self.internal_pkl_binary_eval
+                && resolved_uri.as_str() == Some("prop:pkl.outputFormat")
+                && req.module_uri.as_ref().and_then(|u| u.as_str()) == Some("pkl:base")
+            {
+                return Ok(ReadResult::Text(PklString::from("pkl-binary")));
+            }
+            return self.handle_resolved_read(resolved_uri.clone());
+        }
+        self.handle_read(&req.uri, req.module_uri.as_ref())
+    }
+
     /// Handles a resource read request across custom readers, external readers, `@dep`,
     /// `package:`, `projectpackage:`, `http:`, `https:`, `env:`, `prop:`, `file:`,
     /// `modulepath:`, `jar:file:`.
@@ -2747,6 +2764,10 @@ impl NativeHost {
             )?
         };
 
+        self.handle_resolved_read(resolved_uri)
+    }
+
+    fn handle_resolved_read(&self, resolved_uri: PklString) -> Result<ReadResult, ReadFailure> {
         let raw = resolved_uri.to_java_utf8();
         let scheme = raw.split_once(':').map(|(s, _)| s).unwrap_or("");
 

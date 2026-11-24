@@ -820,9 +820,68 @@ fn stalled_http_aborts_on_cancel_flag_and_monotonic_timeout_enforces_deadline() 
         "function spin(n) = if (n == 0) 0 else spin(n - 1) + spin(n - 1)\noutput { text = spin(40).toString() }\n",
     );
     assert_ne!(code, 0);
+    assert_eq!(
+        stderr, "Evaluation timed out after 0.15 second(s).\n",
+        "expected exact timeout diagnostic without Pkl Error banner, got: {stderr:?}"
+    );
+}
+
+#[test]
+fn native_host_triple_dot_resource_read_and_nullable_read() {
+    let tmp = TempDir::new("triple_dot_read");
+    let nested = tmp.path().join("a").join("b");
+    fs::create_dir_all(&nested).unwrap();
+
+    let resource_path = tmp.path().join("shared.txt");
+    fs::write(&resource_path, "triple-dot-content\n").unwrap();
+    let module_path = nested.join("child.pkl");
+    fs::write(
+        &module_path,
+        concat!(
+            "found = read(\".../shared.txt\").text\n",
+            "foundNullable = read?(\".../shared.txt\")?.text\n",
+        ),
+    )
+    .unwrap();
+    let missing_path = nested.join("missing.pkl");
+    fs::write(&missing_path, "missing = read(\".../missing.txt\")\n").unwrap();
+
+    let host = NativeHost::new(NativeHostConfig {
+        ca_certs: CaCertSource::bundled_only(),
+        ..Default::default()
+    })
+    .unwrap();
+    let module_uri = path_to_file_uri(&fs::canonicalize(&module_path).unwrap());
+    let res = host.eval_uri_output(
+        &module_uri.to_java_utf8(),
+        None,
+        None,
+        &ModuleEvalOptions::default(),
+    );
+    assert_eq!(
+        res.exit_code,
+        0,
+        "stderr: {}",
+        String::from_utf8_lossy(&res.stderr)
+    );
+    let stdout = String::from_utf8(res.stdout).unwrap();
+    assert_eq!(
+        stdout,
+        "found = \"\"\"\n  triple-dot-content\n  \n  \"\"\"\nfoundNullable = \"\"\"\n  triple-dot-content\n  \n  \"\"\"\n"
+    );
+
+    let missing_uri = path_to_file_uri(&fs::canonicalize(&missing_path).unwrap());
+    let missing_res = host.eval_uri_output(
+        &missing_uri.to_java_utf8(),
+        None,
+        None,
+        &ModuleEvalOptions::default(),
+    );
+    assert_eq!(missing_res.exit_code, 1);
+    let missing_stderr = String::from_utf8(missing_res.stderr).unwrap();
     assert!(
-        stderr.contains("Evaluation timed out after 0.15 second(s)."),
-        "expected exact timeout diagnostic, got: {stderr}"
+        missing_stderr.contains("Cannot find resource `.../missing.txt`."),
+        "unexpected missing triple-dot stderr: {missing_stderr}"
     );
 }
 

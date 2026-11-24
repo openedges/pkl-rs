@@ -29,10 +29,11 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
   - Cross-platform release workflow ([.github/workflows/release.yml](.github/workflows/release.yml)) producing Linux (`glibc <= 2.28` + static `musl`, `x64`/`arm64`), macOS (`arm64`/`x64`), and Windows (`x64`) CLI archives, `@pkl-rs/wasm`, 7-platform `@pkl-rs/napi`, and `SHA256SUMS.txt`, with `LICENSE`, `NOTICE`, and `THIRD-PARTY-NOTICES.md` bundled into every archive and npm tarball.
   - Local verification runner ([tools/local_verify.py](tools/local_verify.py)) covering 18 suites across Rust, Python, Node.js, M0–M6 differential gates, and M7 fuzz/soak/benchmark suites.
 
-### Performance (Local macOS `arm64`)
+### Performance & Stability (Local macOS `arm64`)
 
-- Achieved **15 / 15 `<= 1.00x` execution time (`0.055x–0.935x`) and `<= 1.00x` peak RSS (`0.136x–0.662x`)** against SHA-256 pinned Official Apple Pkl `0.32.0` `native-image` across all CLI, server, and `pkldoc` workloads with 100% raw-byte parity.
-- `@pkl-rs/wasm` compressed binary reduced to `2.498 MiB` gzip-9 (`<= 2.50 MiB` budget) via `[profile.wasm-release]`.
+- Achieved **15 / 15 `<= 1.00x` execution time (`0.073x–0.761x`) and `<= 1.00x` peak RSS (`0.130x–0.551x`)** against SHA-256 pinned Official Apple Pkl `0.32.0` `native-image` across all CLI, server, and `pkldoc` workloads (`18 / 18 PASS` vs archived M0 GraalVM CE `25.0.1` Core-6; `33 / 34 PASS` vs live Temurin `21.0.13.1+2-LTS`, with `wasm-node-typed-conversion` faster at `0.386x` time and `5.9 MiB` Wasm linear memory while Node v26.13.1 process peak RSS measured `230.2 MiB` vs `207.3 MiB` JVM = `1.111x`).
+- `@pkl-rs/wasm` compressed binary reduced to `2.027 MiB` (`2,124,981 B`) gzip-9 (`6,703,884 B` raw, 18.9% under the `2.50 MiB` budget) via `[profile.wasm-release]` (`opt-level = "z"`, fat LTO, single codegen unit).
+- Verified **18 / 18 bounded** long-running memory reclamation soak runs (`native` 6/6, `napi-node` 6/6, `wasm-node` 6/6; 0 leaks, 0 FD/orphan leaks), **215 / 215** seeded differential fuzzing cases, **889 / 889** upstream `LanguageSnippetTests` raw-byte parity on product `pkl` CLI (including triple-dot `read(".../...")` across Native, N-API, REPL, and Wasm hosts), **118 / 118** M3, **429 / 429** M4 (all 29 Pantry packages), **153 / 153** M5, and **80 / 80** (+ 6 explicit `capability-blocked`) M6 differential gates.
 
 ### Legal, Licensing & Brand Separation
 
@@ -42,5 +43,6 @@ This changelog follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 ### Known Pre-Release Boundaries
 
-- Prebuilt cross-platform release artifacts (`darwin-x64`, `linux-x64-gnu`, `linux-arm64-gnu`, `linux-x64-musl`, `linux-arm64-musl`, `win32-x64-msvc`) and hosted GitHub Actions release verification have not yet been captured for GA (`release_ready: false`).
+- Prebuilt cross-platform release artifacts (`darwin-x64`, `linux-x64-gnu`, `linux-arm64-gnu`, `linux-x64-musl`, `linux-arm64-musl`, `win32-x64-msvc`), post-optimization Firefox/WebKit browser captures, and hosted GitHub Actions release verification have not yet been captured for GA (`release_ready: false`).
+- On Node.js v26.13.1 (`darwin-arm64`), `wasm-node-typed-conversion` beats Temurin 21 on execution time (`0.386x`, `12.60 us` vs `32.67 us`) and Wasm linear memory (`5.9 MiB`, `0.030x`), while whole-process V8 RSS reached `230.2 MiB` vs `207.3 MiB` JVM (`1.111x`, `heapTotal` ~`80 MiB` / `heapUsed` `23.6 MiB`).
 - Workspace crates remain `publish = false` until GA crates.io publication is explicitly enabled (Git dependency consumption works directly with zero `[patch.crates-io]` overrides).

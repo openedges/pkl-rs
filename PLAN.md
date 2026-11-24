@@ -1,6 +1,37 @@
 # 구현 계획
 
-## 현재 상태 — 공식 Apple Pkl 0.32.0 `native-image` 기준선 고정 및 CLI/서버/`pkldoc` 15/15 전 항목 `<= 1.00x` 달성 (`2026-11-23`, 로컬 macOS `arm64`, `release_ready: false`)
+## 현재 상태 — `0.32.0` 배포 전 코드 리뷰·결함 수정 및 전체 로컬 재검증 완료 (`2026-11-24`, 로컬 macOS `arm64`, `release_ready: false`)
+
+`2026-11-24` 배포 전 최종 감사에서 식별된 릴리스 차단 결함·식별자 정리·호환성/메모리 회귀를 모두 수정하고, 동결 소스 기준 로컬 macOS `arm64`(Apple Silicon, `rustc 1.98.1`, 핀 Temurin `21.0.13.1+2-LTS` + 핀 공식 Apple Pkl `0.32.0` `native-image`, **호스티드 CI 아님**)에서 전체 정적·단위·차분·소크·퍼징·34-워크로드 벤치마크·Chromium 분석을 재실행했다.
+
+### `2026-11-24` 배포 전 수정 항목
+- **CI/릴리스 워크플로 결함 수정**: [.github/workflows/release.yml](.github/workflows/release.yml)의 Linux `manylinux_2_28` 및 `alpine:3.21` Docker 빌드 단계에서 삭제된 `/work/vendor` 복사를 제거하고 `packages/pkl-napi/scripts/build.mjs`가 요구하는 `/work/LICENSE`, `/work/NOTICE`, `/work/THIRD-PARTY-NOTICES.md` 복사를 추가했다. [.github/workflows/ci.yml](.github/workflows/ci.yml) 빠른 Rust 테스트 명령에 공개 API 크레이트 `-p pkl`을 추가했다.
+- **내부/비공개 식별자 정리**: [crates/pkl-runtime/src/packages/project.rs](crates/pkl-runtime/src/packages/project.rs)·[crates/pkl-host-native/src/cli.rs](crates/pkl-host-native/src/cli.rs) 테스트 픽스처의 비공개 프로젝트/이메일 식별자를 중립 예시(`example-lib`, `example.com`)로 교체하고, [docs/developer-note.md](docs/developer-note.md) 및 [docs/developer-note.pptx](docs/developer-note.pptx)(`slide2`, `slide16`, `slide18`)의 사내 GitLab 호스트 경로를 제거했다(`reticast`/`chipsketch`/`research-team` 0건 검증).
+- **Triple-dot `read(".../...")` 전 호스트 수정**: `ReadRequest.resolved_uri`를 무시하고 원문 `&req.uri`를 재해석하던 결함을 `NativeHost::handle_read_request`([crates/pkl-host-native/src/driver.rs](crates/pkl-host-native/src/driver.rs)), `@pkl-rs/napi`([crates/pkl-napi/src/product.rs](crates/pkl-napi/src/product.rs), [crates/pkl-napi/src/repl.rs](crates/pkl-napi/src/repl.rs)), `pkl-repl`([crates/pkl-repl/src/runner.rs](crates/pkl-repl/src/runner.rs)), `@pkl-rs/wasm`([crates/pkl-wasm/src/product/host_core.rs](crates/pkl-wasm/src/product/host_core.rs))에서 일괄 수정하고 회귀 테스트를 추가했다 → 제품 `target/release/pkl` CLI 업스트림 `LanguageSnippetTests` **`887/888` → `889/889` 100% 원시 바이트 일치** 달성.
+- **M4 하네스 2건 해소 (`84/86` → `86/86`, 전체 5-레인 `429/429`)**:
+  - [crates/pkl-host-native/src/driver.rs](crates/pkl-host-native/src/driver.rs): VM 자체 마감(`ErrorKind::Timeout`)이 워치독 스레드보다 먼저 발생해도 `format_timeout_output`을 사용해 Apple Pkl `0.32.0`과 동일하게 `–– Pkl Error ––` 배너 없이 `Evaluation timed out after ... second(s).\n`을 출력하도록 수정(`m4:lifecycle:timeout-eval` 해결 + 회귀 단언 강화).
+  - [tools/java/M4HttpFixtureServer.java](tools/java/M4HttpFixtureServer.java): `/echo-headers` 기본 UA 검사(`hasDefaultPklUserAgent`)가 상표 분리된 `pkl-rs/0.32.0 (`과 Java `Pkl/0.32.0 (`을 모두 인식하도록 갱신(`/echo-ua`는 원문 그대로 유지, `m4:http:custom-headers-and-redirect-scoping` 해결).
+- **장기 소크 중 발견된 Wasm 선형 메모리 회귀 수정 (`13/18` → `18/18 bounded`)**: [crates/pkl-runtime/src/vm/modules.rs](crates/pkl-runtime/src/vm/modules.rs)에서 `b31e4ae8e`로 8배 확대되었던 전역 `frontend_cache`·`compiled_unit_cache` 상한(`256` 엔트리 / `262,144` 블록)이 수축 불가능한 Wasm 선형 메모리(+26.9 MiB)와 N-API RSS(+41.7 MiB)를 과도하게 고정시키는 문제를 발견해 `Arc<Module>`·LRU 승격·O(1) `CodeStorage::seal()`은 유지하면서 상한을 `32` 엔트리 / `8,192`·`32,768` 블록으로 복원했다.
+- **핀 JDK 주석 동기화 및 매니페스트 갱신**: [crates/pkl-runtime/src/parser/unicode_identifier.rs](crates/pkl-runtime/src/parser/unicode_identifier.rs) 헤더 JDK 버전 주석을 `21.0.13.1+2-LTS`로 갱신(원시 인터벌 SHA-256 동일)하고 `m2`–`m7` 매니페스트 12/12 `--check` 정합을 맞췄다.
+
+### `2026-11-24` 최종 로컬 재검증 결과 (`target/*/release-032-final/*`, 로컬 macOS `arm64`, 호스티드 CI 아님)
+- **정적·매니페스트·단위 테스트**: `cargo xtask verify`, `cargo fmt --all -- --check`, workspace/`wasm32` `clippy -D warnings`, `wasm32 check`, 12/12 매니페스트 `--check`, 2종 벤치마크 계약, `check_release_version.py`, `oracle.py verify`, 전체 Rust 워크스페이스(`--workspace --locked`, `pkl-host-native` 포함), Python 활성 59개 모듈 **`529/529`**, Node 플랫폼 **`384/384`**, `@pkl-rs/wasm` **`10/10`** (`pkl_wasm_bg.wasm` 원시 `6,703,884 B` / **`gzip-9 = 2,124,981 B` = `2.027 MiB`**, 예산 대비 `-18.9%`), `@pkl-rs/napi` **`11/11` + `pack-install`** 전원 통과.
+- **전 마일스톤 차분 게이트**:
+  - 제품 `target/release/pkl` CLI 업스트림 `LanguageSnippetTests`: **`889/889`** (`module_eval_probe` `888/888`, `selected-regression` `3/3`, `m2_class_lifecycle` `2,782/2,782`, `m2_identifier_tables` PASS)
+  - **M3 strict**: **`118/118`** + 1,781개 커버리지 프로브 실패 `0`건 (`target/m3/release-032-final`)
+  - **M4 전체 5-레인 (Pantry 29개 패키지 포함)**: **`429/429`** (`host-io-http-security` 48 + `external-readers` 11 + `projects-packages-cache` 27 + `pantry-dev` 126 + `pantry-packaged` 217; 16/16 요구사항 그룹, `target/m4/release-032-final/diff2`)
+  - **M5 strict**: **`153/153`** (16/16 요구사항 그룹, `target/m5/release-032-final/diff2`)
+  - **M6 strict**: **`80/80` 실행 PASS + `6/6` `capability-blocked`** (14/14 요구사항 그룹, `target/m6/release-032-final/diff2`)
+  - **M7 시드 차분 퍼징**: **`215/215`** (`target/m7/release-032-final/fuzz2`, `--verify-strict` PASS)
+- **M7 장기 메모리 회수 소크 (`target/m7/release-032-final/soak-all18`, `--profile standard`)**: **`18/18 bounded`** (`native` 6/6, `napi-node` 6/6, `wasm-node` 6/6; 누수 0건, 오류 0건, `--verify-strict` PASS).
+- **M7 전체 34-워크로드 벤치마크 (`target/m7/release-032-final/bench2`, `--profile full --baseline both`)**:
+  - **공식 Apple Pkl `0.32.0` `native-image` (15개 CLI·서버·`pkldoc`)**: **`15/15 PASS`** — 실행 시간 **`0.073x–0.761x`**, peak RSS **`0.130x–0.551x`** (전 항목 100% 원시 바이트 일치).
+  - **보관 M0 GraalVM CE `25.0.1` Core-6**: **`18/18 PASS`**.
+  - **라이브 Temurin `21.0.13.1+2-LTS` (34개)**: **`33/34 PASS`** (`wasm-browser-eval-text` `0.450x` / `wasm-browser-typed-conversion` `0.400x` 신규 브라우저 계약 포함 통과). 유일한 1건 실패는 `wasm-node-typed-conversion:wasm-node`로, 실행 시간 **`0.386x`**(`12.60 us` vs `32.67 us`) 및 Wasm 선형 메모리 **`5.9 MiB` (`0.030x`)**는 대폭 우위이나 Node v26.13.1 V8 전체 프로세스 peak RSS(`heapTotal` ~80 MiB / `heapUsed` 23.6 MiB)가 `230.2 MiB` vs JVM `207.3 MiB` (**`1.111x`**)를 기록했다.
+- **크로스-브라우저 Playwright 분석 (`target/m7/release-032-final/js-analysis2`)**: Chromium 스모크·분석 **`PASS`** (`eval-text` `0.457x` / Wasm `13.9 MiB` / JS heap `13.4 MiB`; `typed-conversion` `0.411x` / Wasm `5.9 MiB` / JS heap `17.2 MiB`). 로컬 Playwright 캐시에 `firefox-1555`/`webkit-2370` 바이너리가 미설치되어 Firefox·WebKit은 미실측으로 정직하게 보존한다.
+- **통합 릴리스 게이트 (`m7_manifest.py`)**: `integrity_passed: true`, `soak_strict_passed: true`, `fuzz_strict_passed: true`, `unmet_performance_workloads_official_native_image: []`, `unmet_performance_workloads_m0_graalvm_25_0_1: []`, 단 `wasm-node-typed-conversion` Node v26 RSS `1.111x` 및 미검증 릴리스 OS/브라우저/호스티드 CI 매트릭스 때문에 **`release_ready: false`** 유지.
+
+## 이전 상태 — 공식 Apple Pkl 0.32.0 `native-image` 기준선 고정 및 CLI/서버/`pkldoc` 15/15 전 항목 `<= 1.00x` 달성 (`2026-11-23`, 로컬 macOS `arm64`, `release_ready: false`)
 
 `2026-11-23` 사용자 결정(**성능 측정 비교에 공식 Apple Pkl 0.32.0 `native-image`를 기준으로 삼고 전 항목 `<= 1.00x` 최적화**)에 따라 락파일·오라클 검증 도구·벤치마크 하네스·릴리스 매니페스트·문서 계약을 갱신하고, 공유 런타임·CLI·렌더러·`pkl:reflect`·`pkldoc`·파서 최적화를 통합해 로컬 macOS `arm64`(Apple Silicon, `rustc 1.98.1`, **호스티드 CI 아님**)에서 **CLI·서버·`pkldoc` 15/15 전 항목 실행 시간 `<= 1.00x` (`0.055x–0.935x`) 및 `os.wait4` peak RSS `<= 1.00x` (`0.136x–0.662x`)**와 100% 원시 바이트 일치를 달성했다.
 

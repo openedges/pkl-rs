@@ -132,7 +132,7 @@ try {
 ## Compatibility & Performance
 
 - **Compatibility baseline**: Targets **Apple Pkl `0.32.0`** raw-byte output, diagnostics, source positions, generated files, and exit codes. Java/Kotlin code generation (`pkl-codegen-java`, `pkl-codegen-kotlin`) and JVM public API adapters are explicitly excluded from scope ([INTENT.md](INTENT.md)).
-- **Performance (local macOS `arm64`)**: All 15 CLI, server, and `pkldoc` workloads run at **`0.055x–0.935x` execution time** and **`0.136x–0.662x` peak RSS** compared against Official Apple Pkl `0.32.0` `native-image` (`<= 1.00x` across every workload) with 100% raw-byte parity. `@pkl-rs/wasm` compiles to `2.498 MiB` gzip-9 (`<= 2.50 MiB` budget).
+- **Performance (local macOS `arm64`)**: All 15 CLI, server, and `pkldoc` workloads run at **`0.073x–0.761x` execution time** and **`0.130x–0.551x` peak RSS** compared against Official Apple Pkl `0.32.0` `native-image` (`<= 1.00x` across every workload) with 100% raw-byte parity. `@pkl-rs/wasm` compiles to `2.03 MiB` (`2,124,981 B`) gzip-9 (`<= 2.50 MiB` budget).
 - Full milestone metrics, differential test counts, soak/fuzz records, and raw evidence archives are preserved separately in [docs/development-history.md](docs/development-history.md).
 
 ## Testing & Verification

@@ -6,8 +6,8 @@
 
 Apple Pkl을 Rust로 다시 구현하는 일을 코딩 에이전트로 두 번 시도했고, 두 번째에 완성했다. 결과물은 CLI, Rust API, Node.js N-API 애드온, WebAssembly 패키지다.
 
-- **첫 구현** (`gitlab.chipsketch.com/research-team/pkl-rs-0.31.0`)은 12일 만에 호환성 테스트를 통과했지만, 9개월 반이 지나도록 성능과 안정화를 끝내지 못했다.
-- **재작성판** (`gitlab.chipsketch.com/research-team/pkl-rs`)은 빈 저장소에서 다시 시작해 5주 만에 전 제품을 만들었다. Apple의 native-image보다 빠르고 메모리를 덜 쓴다.
+- **첫 구현** (`pkl-rs-0.31.0`)은 12일 만에 호환성 테스트를 통과했지만, 9개월 반이 지나도록 성능과 안정화를 끝내지 못했다.
+- **재작성판** (`pkl-rs`)은 빈 저장소에서 다시 시작해 5주 만에 전 제품을 만들었다. Apple의 native-image보다 빠르고 메모리를 덜 쓴다.
 
 | 날짜 | 구현 | 전환점 |
 | --- | --- | --- |
@@ -173,7 +173,7 @@ pkl-rs는 Java로 구현된 설정 언어 Apple Pkl을 JVM 없이 쓸 수 있도
 
 | 항목 | 첫 구현 | 재작성판 |
 | --- | --- | --- |
-| 저장소 | `research-team/pkl-rs-0.31.0` | `research-team/pkl-rs` |
+| 저장소 | `pkl-rs-0.31.0` | `pkl-rs` |
 | 대상 버전 | Pkl 0.31.0 | Pkl 0.32.0 |
 | 출발점의 오라클 | Pkl의 기본 테스트 | 기본 테스트에 더해, 첫 구현이 쌓은 테스트 목록과 회귀 입력 |
 | 기간 | 9개월 반 | 5주 |
@@ -237,7 +237,7 @@ pkl-rs는 Java로 구현된 설정 언어 Apple Pkl을 JVM 없이 쓸 수 있도
 
 ## 부록: 근거 자료
 
-두 저장소는 `gitlab.chipsketch.com/research-team` 아래에 있다. 첫 구현의 최신 상태는 `pkl-rs-0.31.0`의 `gate/conformance-034-all-blockers` 브랜치에, 재작성판은 `pkl-rs`의 `main` 브랜치에 있다.
+첫 구현의 최신 상태는 `pkl-rs-0.31.0`의 `gate/conformance-034-all-blockers` 브랜치에, 재작성판은 `pkl-rs`의 `main` 브랜치에 있다.
 
 | 저장소 | 경로 | 볼 수 있는 것 |
 | --- | --- | --- |

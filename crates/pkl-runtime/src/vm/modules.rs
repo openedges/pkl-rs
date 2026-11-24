@@ -343,10 +343,12 @@ pub(crate) fn source_text_hash(text: &SourceText) -> u64 {
     hash
 }
 
+const MAX_FRONTEND_ENTRIES: usize = 32;
+
 fn frontend_cache() -> &'static std::sync::Mutex<Vec<CachedFrontendEntry>> {
     static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedFrontendEntry>>> =
         std::sync::OnceLock::new();
-    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(256)))
+    CACHE.get_or_init(|| std::sync::Mutex::new(Vec::with_capacity(MAX_FRONTEND_ENTRIES)))
 }
 
 pub(crate) fn cached_user_resolved(
@@ -389,7 +391,7 @@ pub(crate) fn store_user_resolved(
             }
             return;
         }
-        if cache.len() >= 256 {
+        if cache.len() >= MAX_FRONTEND_ENTRIES {
             cache.remove(0);
         }
         cache.push(CachedFrontendEntry {
@@ -434,9 +436,9 @@ struct CachedCompiledUnit {
     constraint_origins: ConstraintOriginsVec,
 }
 
-const MAX_CACHED_UNIT_BLOCKS: usize = 16384;
-const MAX_TOTAL_CACHED_UNIT_BLOCKS: usize = 262144;
-const MAX_CACHED_UNITS: usize = 256;
+const MAX_CACHED_UNIT_BLOCKS: usize = 8192;
+const MAX_TOTAL_CACHED_UNIT_BLOCKS: usize = 32768;
+const MAX_CACHED_UNITS: usize = 32;
 
 fn compiled_unit_cache() -> &'static std::sync::Mutex<Vec<CachedCompiledUnit>> {
     static CACHE: std::sync::OnceLock<std::sync::Mutex<Vec<CachedCompiledUnit>>> =

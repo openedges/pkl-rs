@@ -2761,13 +2761,13 @@ mod static_project_tests {
 amends "pkl:Project"
 
 package {
-  name = "reticast"
-  baseUri = "package://pkg.pkl-lang.org/github.com/openedges/reticast/reticast"
+  name = "example-lib"
+  baseUri = "package://pkg.pkl-lang.org/github.com/example/example-lib/example-lib"
   version = "2.0.0-rc.1"
-  packageZipUrl = "https://github.com/openedges/reticast/releases/download/\(version)/reticast@\(version).zip"
+  packageZipUrl = "https://github.com/example/example-lib/releases/download/\(version)/example-lib@\(version).zip"
   description = "Core Library"
   authors {
-    "OPENEDGES <info@openedges.com>"
+    "Example Authors <info@example.com>"
   }
   license = "MIT"
 }
@@ -2776,7 +2776,7 @@ package {
 amends "pkl:Project"
 
 dependencies {
-  ["reticast"] = import("../spec/PklProject")
+  ["example-lib"] = import("../spec/PklProject")
   ["remote"] {
     uri = "package://example.com/foo@1.2.3"
   }
@@ -2805,10 +2805,10 @@ dependencies {
         assert_eq!(project.local_project_dependencies.len(), 1);
         let (_, child) = &project.local_project_dependencies[0];
         let pkg = child.package.as_ref().unwrap();
-        assert_eq!(pkg.name, "reticast");
+        assert_eq!(pkg.name, "example-lib");
         assert_eq!(
             pkg.package_zip_url,
-            "https://github.com/openedges/reticast/releases/download/2.0.0-rc.1/reticast@2.0.0-rc.1.zip"
+            "https://github.com/example/example-lib/releases/download/2.0.0-rc.1/example-lib@2.0.0-rc.1.zip"
         );
         assert_eq!(
             pkg.exclude,

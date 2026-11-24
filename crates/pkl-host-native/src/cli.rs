@@ -3083,15 +3083,15 @@ mod static_project_parity_tests {
 amends "pkl:Project"
 
 package {
-  name = "reticast"
-  baseUri = "package://pkg.pkl-lang.org/github.com/openedges/reticast/reticast"
+  name = "example-lib"
+  baseUri = "package://pkg.pkl-lang.org/github.com/example/example-lib/example-lib"
   version = "2.0.0-rc.1"
-  packageZipUrl = "https://github.com/openedges/reticast/releases/download/\(version)/reticast@\(version).zip"
+  packageZipUrl = "https://github.com/example/example-lib/releases/download/\(version)/example-lib@\(version).zip"
   description = "Core Library"
   authors {
-    "OPENEDGES <info@openedges.com>"
+    "Example Authors <info@example.com>"
   }
-  sourceCode = "https://example.com/reticast"
+  sourceCode = "https://example.com/example-lib"
   sourceCodeUrlScheme = "\(sourceCode)/blob/\(version)%{path}#L%{line}-L%{endLine}"
   license = "MIT"
   exclude {
@@ -3103,7 +3103,7 @@ package {
 amends "pkl:Project"
 
 dependencies {
-  ["reticast"] = import("../spec/PklProject")
+  ["example-lib"] = import("../spec/PklProject")
   ["remote"] {
     uri = "package://example.com/foo@1.2.3"
     checksums {

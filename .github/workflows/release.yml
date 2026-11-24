@@ -121,7 +121,7 @@ jobs:
               curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
               mkdir -p /tmp/src
-              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               cargo build --release --locked -p pkl-cli -p pkl-doc -p pkl-napi
               cp /tmp/target/release/pkl /out/pkl
@@ -150,7 +150,7 @@ jobs:
               curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
               mkdir -p /tmp/src
-              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/crates /work/vendor /work/packages /work/xtask /work/tools /tmp/src/
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --locked -p pkl-cli -p pkl-doc
               cp /tmp/target/release/pkl /out/pkl

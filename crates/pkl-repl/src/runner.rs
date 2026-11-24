@@ -273,7 +273,7 @@ impl<E: Write> ReplRunner<E> {
                 ReplPoll::Yielded => {}
                 ReplPoll::Read { token, .. } => match self.session.read_request(&token) {
                     Ok(req) => {
-                        let result = self.host.handle_read(&req.uri, req.module_uri.as_ref());
+                        let result = self.host.handle_read_request(&req);
                         if let Err(err) =
                             self.session
                                 .complete_read(&token, result, self.host.clock_ms())

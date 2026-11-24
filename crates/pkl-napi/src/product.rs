@@ -1205,7 +1205,7 @@ impl EvaluatorShared {
                 HostPoll::Yielded => {}
                 HostPoll::Read { token, .. } => {
                     let req = session.read_request(&token)?;
-                    let result = self.host.handle_read(&req.uri, req.module_uri.as_ref());
+                    let result = self.host.handle_read_request(&req);
                     if let Some(err) =
                         self.check_drive_abort(session, call_cancel, watchdog, timeout_ms)
                     {

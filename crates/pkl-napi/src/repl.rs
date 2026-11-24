@@ -398,7 +398,7 @@ impl<'task> ScopedTask<'task> for ReplOpTask {
                     ReplPoll::Yielded => {}
                     ReplPoll::Read { token, .. } => match guard.session.read_request(&token) {
                         Ok(req) => {
-                            let res = self.host.handle_read(&req.uri, req.module_uri.as_ref());
+                            let res = self.host.handle_read_request(&req);
                             if self.closed_flag.load(Ordering::SeqCst) {
                                 guard.session.cancel();
                                 break Err(NativeError::closed("REPL session has been closed."));
