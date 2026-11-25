@@ -83,13 +83,21 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
             self.assertIn(addon, rel_text)
         self.assertIn("SHA256SUMS.txt", rel_text)
         self.assertIn("gh release create", rel_text)
+        # Manual workflow_dispatch on a tag must respect publish_github_release=false
+        # instead of clobbering live release assets (and desyncing Homebrew SHA-256).
+        self.assertIn(
+            "(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_github_release)",
+            rel_text,
+        )
         self.assertIn("npm publish", rel_text)
+        self.assertIn('npm view "${PKG_NAME}@${VERSION}" version', rel_text)
         self.assertIn("openedges-pkl-wasm-*.tgz", rel_text)
         self.assertIn("openedges-pkl-napi-*.tgz", rel_text)
         self.assertIn("--tag next", rel_text)
         self.assertIn("publish_crates:", rel_text)
         self.assertIn("CARGO_REGISTRY_TOKEN", rel_text)
         self.assertIn("cargo publish --locked", rel_text)
+        self.assertIn("already exists on crates\\.io index|is already uploaded", rel_text)
         self.assertIn("pkl-lang", rel_text)
         self.assertIn("publish_homebrew:", rel_text)
         self.assertIn("HOMEBREW_TAP_TOKEN", rel_text)
