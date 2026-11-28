@@ -103,7 +103,7 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertNotIn("secrets.NPM_TOKEN", rel_text)
         self.assertNotIn(":_authToken=", rel_text)
         self.assertIn("publish_crates:", rel_text)
-        self.assertIn("environment: crates", rel_text)
+        self.assertIn("environment: crates.io\n", rel_text)
         self.assertIn(
             "(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_crates)",
             rel_text,
