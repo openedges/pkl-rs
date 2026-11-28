@@ -386,7 +386,7 @@ evaluatorSettings {
     assert.equal(graph.resolvedImports["pkl:math"], "pkl:math");
     rmSync(outsideDir, { recursive: true, force: true });
   } finally {
-    rmSync(dir, { recursive: true, force: true });
+    rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
   }
 });
 
@@ -520,13 +520,17 @@ await test("non-blocking event loop, 64-bit timeouts, AbortSignal, cancel(), and
     await maxU64Ev.close();
   }
 
-  // Non-blocking event loop proof: setInterval MUST keep ticking while Rust runs CPU work
+  // Non-blocking event loop proof: the Node event loop MUST keep turning while Rust runs CPU work.
+  // Count loop turns with setImmediate, not a timer: timer callbacks are quantized to the host
+  // timer resolution (~15.6 ms on Windows), so a 5 ms setInterval can fire only once during this
+  // evaluation there. A blocking evaluation yields zero turns under either counter.
   const cpuEv = await createEvaluator();
   try {
     let ticks = 0;
-    const timer = setInterval(() => {
+    let turn = setImmediate(function countTurn() {
       ticks += 1;
-    }, 5);
+      turn = setImmediate(countTurn);
+    });
     try {
       const fib = await cpuEv.evaluateExpression(
         ModuleSource.text(`
@@ -537,9 +541,9 @@ await test("non-blocking event loop, 64-bit timeouts, AbortSignal, cancel(), and
       );
       assert.equal(fib, "514229");
     } finally {
-      clearInterval(timer);
+      clearImmediate(turn);
     }
-    assert.ok(ticks >= 2, `Expected Node event loop to tick during evaluation, got ticks=${ticks}`);
+    assert.ok(ticks >= 2, `Expected Node event loop to turn during evaluation, got ticks=${ticks}`);
   } finally {
     await cpuEv.close();
   }
@@ -891,7 +895,7 @@ process.stdin.on("data", (chunk) => {
     }
     assert.equal(alive, false, `External reader PID ${childPid} leaked after close()`);
   } finally {
-    rmSync(dir, { recursive: true, force: true });
+    rmSync(dir, { recursive: true, force: true, maxRetries: 5, retryDelay: 50 });
   }
 });
 
