@@ -668,7 +668,7 @@ jobs:
   publish-npm:
     name: Publish @openedges/pkl-wasm and @openedges/pkl-napi to npm
     needs: assemble-and-release
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
+    if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_npm) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     environment: npm
@@ -723,7 +723,7 @@ jobs:
           # When publishing npm from an existing GitHub Release without re-uploading it,
           # require and SHA-256-verify the exact published tarballs from that GitHub Release
           # so npm and GitHub Releases distribute identical bytes.
-          if [ "${INPUT_PUBLISH_GH}" = "false" ]; then
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ "${INPUT_PUBLISH_GH}" = "false" ]; then
             if ! gh release view "${TAG}" >/dev/null 2>&1; then
               echo "ERROR: publish_github_release=false requested, but GitHub Release ${TAG} does not exist" >&2
               exit 1
@@ -762,7 +762,7 @@ jobs:
   publish-homebrew:
     name: Publish Homebrew formula to tap repository
     needs: assemble-and-release
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_homebrew }}
+    if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')) || (github.event_name == 'workflow_dispatch' && inputs.publish_homebrew) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
     permissions:
@@ -786,7 +786,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
-          TAP_REPO: ${{ inputs.homebrew_tap_repo }}
+          TAP_REPO: ${{ inputs.homebrew_tap_repo || 'openedges/homebrew-tap' }}
           INPUT_TAG: ${{ inputs.tag }}
           INPUT_PUBLISH_GITHUB_RELEASE: ${{ inputs.publish_github_release }}
         shell: bash
@@ -812,7 +812,7 @@ jobs:
 
           # Always anchor Formula checksums to the live GitHub Release when not uploaded in this run.
           CHECKSUMS_PATH="target/release-bundle/SHA256SUMS.txt"
-          if [ "${INPUT_PUBLISH_GITHUB_RELEASE}" != "true" ]; then
+          if [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ] && [ "${INPUT_PUBLISH_GITHUB_RELEASE}" != "true" ]; then
             mkdir -p target/homebrew-release-checksums
             gh release download "${TAG}" -p SHA256SUMS.txt -D target/homebrew-release-checksums --clobber
             CHECKSUMS_PATH="target/homebrew-release-checksums/SHA256SUMS.txt"
@@ -848,7 +848,7 @@ jobs:
   publish-crates:
     name: Publish all 8 workspace crates to crates.io
     needs: assemble-and-release
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
+    if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_crates) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     environment: crates

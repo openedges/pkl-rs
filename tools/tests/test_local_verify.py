@@ -96,10 +96,18 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("--tag next", rel_text)
         self.assertIn("unset NODE_AUTH_TOKEN NPM_TOKEN", rel_text)
         self.assertIn("environment: npm", rel_text)
+        self.assertIn(
+            "(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_npm)",
+            rel_text,
+        )
         self.assertNotIn("secrets.NPM_TOKEN", rel_text)
         self.assertNotIn(":_authToken=", rel_text)
         self.assertIn("publish_crates:", rel_text)
         self.assertIn("environment: crates", rel_text)
+        self.assertIn(
+            "(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_crates)",
+            rel_text,
+        )
         self.assertIn("rust-lang/crates-io-auth-action@", rel_text)
         self.assertIn("CARGO_REGISTRY_TOKEN: ${{ steps.crates-auth.outputs.token }}", rel_text)
         self.assertNotIn("secrets.CARGO_REGISTRY_TOKEN", rel_text)
@@ -107,6 +115,11 @@ class LocalVerifyAndWorkflowContractTests(unittest.TestCase):
         self.assertIn("already exists on crates\\.io index|is already uploaded", rel_text)
         self.assertIn("pkl-lang", rel_text)
         self.assertIn("publish_homebrew:", rel_text)
+        self.assertIn(
+            "(github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-')) || (github.event_name == 'workflow_dispatch' && inputs.publish_homebrew)",
+            rel_text,
+        )
+        self.assertIn("TAP_REPO: ${{ inputs.homebrew_tap_repo || 'openedges/homebrew-tap' }}", rel_text)
         self.assertIn("HOMEBREW_TAP_TOKEN", rel_text)
         self.assertIn("openedges/homebrew-tap", rel_text)
         self.assertIn("render_homebrew_formula.py", rel_text)

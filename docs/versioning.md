@@ -138,11 +138,11 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
      git tag -a v0.32.0 -m "pkl-rs v0.32.0"
      git push origin v0.32.0
      ```
-     Pushing a `v*` tag automatically publishes the **GitHub Release** (marking `-*` tags as prereleases).
-   - Once the GitHub Release and `SHA256SUMS.txt` are verified, run `workflow_dispatch` on `main` (or the tagged commit) with the desired channel toggles enabled:
-     - `publish_npm=true` (uses GitHub Actions OIDC Trusted Publishing via `environment: npm`, `id-token: write` + `--provenance`, requiring `@openedges/pkl-wasm` and `@openedges/pkl-napi` to configure `openedges/pkl-rs` / `release.yml` / environment `npm` as Trusted Publisher on npmjs.com; prereleases automatically publish with `--tag next`)
-     - `publish_crates=true` (uses GitHub Actions OIDC Trusted Publishing via `environment: crates`, `id-token: write` + `rust-lang/crates-io-auth-action`, requiring all 8 crates to configure `openedges/pkl-rs` / `release.yml` / environment `crates` as Trusted Publisher on crates.io; publishes all 8 crates in topological order)
-     - `publish_homebrew=true` (requires `HOMEBREW_TAP_TOKEN` secret with write access to `openedges/homebrew-tap`; downloads the authoritative `SHA256SUMS.txt` from the live GitHub Release when `publish_github_release=false`)
+     Pushing a `v*` tag automatically publishes across all 4 channels (marking `-*` tags as prereleases on GitHub Releases, publishing npm with `--tag next`, publishing all 8 crates to crates.io, and automatically updating Homebrew on stable non-`-` tags):
+   - Channel authentication & manual `workflow_dispatch` re-run overrides:
+     - `publish_npm` (uses GitHub Actions OIDC Trusted Publishing via `environment: npm`, `id-token: write` + `--provenance`, requiring `@openedges/pkl-wasm` and `@openedges/pkl-napi` to configure `openedges/pkl-rs` / `release.yml` / environment `npm` as Trusted Publisher on npmjs.com; prereleases automatically publish with `--tag next`)
+     - `publish_crates` (uses GitHub Actions OIDC Trusted Publishing via `environment: crates`, `id-token: write` + `rust-lang/crates-io-auth-action`, requiring all 8 crates to configure `openedges/pkl-rs` / `release.yml` / environment `crates` as Trusted Publisher on crates.io; publishes all 8 crates in topological order)
+     - `publish_homebrew` (runs automatically on stable `v*` tags without `-`, or manually via `publish_homebrew=true`; requires `HOMEBREW_TAP_TOKEN` secret with write access to `openedges/homebrew-tap`; downloads the authoritative `SHA256SUMS.txt` from the live GitHub Release when `workflow_dispatch` runs with `publish_github_release=false`)
 
 ---
 
