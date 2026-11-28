@@ -32,12 +32,12 @@ on:
         default: false
         type: boolean
       publish_npm:
-        description: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm (requires NPM_TOKEN secret)
+        description: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm via GitHub Actions OIDC Trusted Publishing
         required: false
         default: false
         type: boolean
       publish_crates:
-        description: Publish all 8 workspace crates to crates.io in topological order (requires CARGO_REGISTRY_TOKEN secret)
+        description: Publish all 8 workspace crates to crates.io in topological order via GitHub Actions OIDC Trusted Publishing
         required: false
         default: false
         type: boolean
@@ -671,6 +671,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    environment: npm
     permissions:
       contents: read
       id-token: write
@@ -691,19 +692,25 @@ jobs:
         with:
           name: release-bundle
           path: target/release-bundle
-      - name: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm
+      - name: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm via OIDC
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INPUT_TAG: ${{ inputs.tag }}
           INPUT_PUBLISH_GH: ${{ inputs.publish_github_release }}
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "${NODE_AUTH_TOKEN}" ]; then
-            echo "ERROR: publish_npm=true requested, but NPM_TOKEN secret is not configured" >&2
-            exit 1
-          fi
+          # Ensure no static npm token overrides OIDC Trusted Publishing.
+          unset NODE_AUTH_TOKEN NPM_TOKEN
+          NPM_VER="$(npm --version)"
+          echo "Using npm CLI ${NPM_VER} for OIDC Trusted Publishing"
+          node -e '
+            const [maj, min, pat] = process.argv[1].split(".").map((n) => Number.parseInt(n, 10));
+            if (!(maj > 11 || (maj === 11 && (min > 5 || (min === 5 && pat >= 1))))) {
+              console.error(`ERROR: npm OIDC Trusted Publishing requires npm >= 11.5.1, found ${process.argv[1]}`);
+              process.exit(1);
+            }
+          ' "${NPM_VER}"
           VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             TAG="${GITHUB_REF#refs/tags/}"
@@ -743,9 +750,6 @@ jobs:
           if [[ "${VERSION}" == *-* ]]; then
             DIST_TAG_ARGS=(--tag next)
           fi
-          trap 'rm -f "${HOME}/.npmrc"' EXIT
-          printf '//registry.npmjs.org/:_authToken=%s\n' "${NODE_AUTH_TOKEN}" > "${HOME}/.npmrc"
-          chmod 600 "${HOME}/.npmrc"
           for TGZ in "${BUNDLE_DIR}/openedges-pkl-wasm-${VERSION}.tgz" "${BUNDLE_DIR}/openedges-pkl-napi-${VERSION}.tgz"; do
             PKG_NAME="$(node -e 'const cp = require("child_process"); const pkg = JSON.parse(cp.execFileSync("tar", ["-xOf", process.argv[1], "package/package.json"], {encoding: "utf8"})); console.log(pkg.name);' "${TGZ}")"
             if [ "$(npm view "${PKG_NAME}@${VERSION}" version 2>/dev/null || true)" = "${VERSION}" ]; then
@@ -847,8 +851,10 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    environment: crates
     permissions:
       contents: read
+      id-token: write
     env:
       CARGO_INCREMENTAL: '0'
     steps:
@@ -871,14 +877,19 @@ jobs:
             target
           key: cargo-rel-crates-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
           restore-keys: cargo-rel-crates-
-      - name: Publish all 8 workspace crates to crates.io
+      - name: Pre-fetch workspace crates before minting short-lived OIDC token
+        run: cargo fetch --locked
+      - name: Authenticate with crates.io via OIDC
+        id: crates-auth
+        uses: rust-lang/crates-io-auth-action@3268eb413133e2960fa4ae0e963ca76380c54cd9 # v1.0.6
+      - name: Publish all 8 workspace crates to crates.io via OIDC
         env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ steps.crates-auth.outputs.token }}
         shell: bash
         run: |
           set -euo pipefail
           if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
-            echo "ERROR: publish_crates=true requested, but CARGO_REGISTRY_TOKEN secret is not configured" >&2
+            echo "ERROR: publish_crates=true requested, but crates.io OIDC token exchange returned an empty token" >&2
             exit 1
           fi
           rustup show active-toolchain

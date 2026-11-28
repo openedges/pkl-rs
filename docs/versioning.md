@@ -139,9 +139,9 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
      git push origin v0.32.0
      ```
      Pushing a `v*` tag automatically publishes the **GitHub Release** (marking `-*` tags as prereleases).
-   - Once the GitHub Release and `SHA256SUMS.txt` are verified, run `workflow_dispatch` on the tagged commit with the desired channel toggles enabled:
-     - `publish_npm=true` (requires `NPM_TOKEN` secret; prereleases automatically publish with `--tag next`)
-     - `publish_crates=true` (requires `CARGO_REGISTRY_TOKEN` secret; publishes all 8 crates in topological order)
+   - Once the GitHub Release and `SHA256SUMS.txt` are verified, run `workflow_dispatch` on `main` (or the tagged commit) with the desired channel toggles enabled:
+     - `publish_npm=true` (uses GitHub Actions OIDC Trusted Publishing via `environment: npm`, `id-token: write` + `--provenance`, requiring `@openedges/pkl-wasm` and `@openedges/pkl-napi` to configure `openedges/pkl-rs` / `release.yml` / environment `npm` as Trusted Publisher on npmjs.com; prereleases automatically publish with `--tag next`)
+     - `publish_crates=true` (uses GitHub Actions OIDC Trusted Publishing via `environment: crates`, `id-token: write` + `rust-lang/crates-io-auth-action`, requiring all 8 crates to configure `openedges/pkl-rs` / `release.yml` / environment `crates` as Trusted Publisher on crates.io; publishes all 8 crates in topological order)
      - `publish_homebrew=true` (requires `HOMEBREW_TAP_TOKEN` secret with write access to `openedges/homebrew-tap`; downloads the authoritative `SHA256SUMS.txt` from the live GitHub Release when `publish_github_release=false`)
 
 ---
@@ -149,6 +149,6 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
 ## 5. Multi-Channel Publishing Configuration
 
 - **Zero `[patch.crates-io]` blockers**: The checked UTF-16 Java regular expression engine and official Unicode 15.0.0 UCD tables (`Unicode-3.0`) are embedded directly inside `crates/pkl-runtime/src/java_regex/` with zero external regex/Unicode crate dependencies and zero OpenJDK GPLv2 files.
-- **crates.io crates (8 publishable, `publish = true`)**: Published in strict dependency order: `pkl-runtime` → `pkl-formatter` → `pkl-host-native` → `pkl-lang` (`crates/pkl`, `[lib] name = "pkl"`) → `pkl-repl` → `pkl-server` → `pkl-doc` → `pkl-cli`. Binding/internal crates (`pkl-wasm`, `pkl-napi`, `xtask`) remain `publish = false`.
-- **npm packages (2 scoped packages)**: `@openedges/pkl-wasm` and `@openedges/pkl-napi` (requires npm org `@openedges` and `NPM_TOKEN`). Prereleases (`*-*`) always pass `--tag next` so they never overwrite `latest`.
+- **crates.io crates (8 publishable, `publish = true`)**: Published in strict dependency order via GitHub Actions OIDC Trusted Publishing (`rust-lang/crates-io-auth-action`): `pkl-runtime` → `pkl-formatter` → `pkl-host-native` → `pkl-lang` (`crates/pkl`, `[lib] name = "pkl"`) → `pkl-repl` → `pkl-server` → `pkl-doc` → `pkl-cli`. Binding/internal crates (`pkl-wasm`, `pkl-napi`, `xtask`) remain `publish = false`.
+- **npm packages (2 scoped packages)**: `@openedges/pkl-wasm` and `@openedges/pkl-napi` (published via GitHub Actions OIDC Trusted Publishing + `--provenance` under npm org `@openedges`). Prereleases (`*-*`) always pass `--tag next` so they never overwrite `latest`.
 - **Homebrew tap (`openedges/homebrew-tap`)**: `Formula/pkl-rs.rb` installs both `pkl` and `pkldoc` from the GitHub Release tarballs (`darwin-arm64`, `darwin-x64`, `linux-arm64-gnu`, `linux-x64-gnu`) with verified SHA-256 checksums, shell completions (`bash`, `zsh`, `fish`), and license/notice files.
