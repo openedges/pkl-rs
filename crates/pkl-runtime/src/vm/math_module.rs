@@ -213,6 +213,7 @@ fn extreme(left: Value, right: Value, maximum: bool) -> Result<Value, RuntimeErr
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn math_module_operation(
         &mut self,
         operation: Operation,

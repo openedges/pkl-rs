@@ -70,6 +70,14 @@ impl BufferedLogger {
     }
 }
 
+impl std::fmt::Debug for BufferedLogger {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("BufferedLogger")
+            .field("buffered_bytes", &self.logs().len())
+            .finish()
+    }
+}
+
 impl Logger for BufferedLogger {
     fn trace(&self, message: &str, frame: &StackFrame) {
         {
@@ -91,6 +99,7 @@ impl Logger for BufferedLogger {
 }
 
 /// Factory helpers mirroring `org.pkl.core.Loggers`.
+#[derive(Clone, Copy, Debug, Default)]
 pub struct Loggers;
 
 impl Loggers {

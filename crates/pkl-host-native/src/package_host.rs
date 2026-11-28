@@ -1,6 +1,7 @@
 //! Native package transport, disk cache (`package-2`), and packager host adapters
 //! backed directly by [`NativeHttpClient`] (zero `/usr/bin/curl`, zero `unsafe`).
 
+use crate::driver::CustomSecurityChecker;
 use crate::http::NativeHttpClient;
 use pkl_runtime::host::IoFailure;
 use pkl_runtime::host::http::HttpError;
@@ -13,11 +14,12 @@ use pkl_runtime::packages::packager::PackagerHost;
 use pkl_runtime::packages::project::PKL_PROJECT_DEPS_FILENAME;
 use pkl_runtime::packages::zip::{ZipArchive, ZipError};
 use pkl_runtime::value::PklString;
-use std::fs;
+use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 static NEXT_TMP_ID: AtomicU64 = AtomicU64::new(1);
 
@@ -39,16 +41,37 @@ pub fn default_module_cache_dir() -> Option<PathBuf> {
 pub struct NativePackageTransport {
     http: Arc<NativeHttpClient>,
     policy: Arc<SecurityPolicy>,
+    custom_security: Option<Arc<dyn CustomSecurityChecker>>,
 }
 
 impl NativePackageTransport {
     pub fn new(http: Arc<NativeHttpClient>, policy: Arc<SecurityPolicy>) -> Self {
-        Self { http, policy }
+        Self {
+            http,
+            policy,
+            custom_security: None,
+        }
+    }
+
+    pub fn with_custom_security(
+        http: Arc<NativeHttpClient>,
+        policy: Arc<SecurityPolicy>,
+        custom_security: Option<Arc<dyn CustomSecurityChecker>>,
+    ) -> Self {
+        Self {
+            http,
+            policy,
+            custom_security,
+        }
     }
 
     fn check_resource_uri(&self, uri: &str) -> Result<(), PklString> {
         let pkl_uri = PklString::from(uri);
-        self.policy.check_allowlist_only(&pkl_uri, true)
+        if let Some(ref checker) = self.custom_security {
+            checker.check_read_resource(&pkl_uri)
+        } else {
+            self.policy.check_allowlist_only(&pkl_uri, true)
+        }
     }
 
     fn fetch_bytes(&self, url: &str) -> Result<Vec<u8>, PackageHttpError> {
@@ -180,45 +203,80 @@ impl DiskPackageCache {
             )
         })?;
 
-        let seq = NEXT_TMP_ID.fetch_add(1, Ordering::Relaxed);
         let pid = std::process::id();
         let leaf = target_path
             .file_name()
             .and_then(|s| s.to_str())
             .unwrap_or("pkg");
-        let tmp_path = tmp_dir.join(format!("{leaf}.{pid}.{seq}.tmp"));
 
-        {
-            let mut file = fs::File::create(&tmp_path).map_err(|err| {
-                ModuleHostError::Io(
-                    format!(
-                        "Failed to create cache temp file `{}`: {err}",
-                        tmp_path.display()
-                    )
-                    .into(),
-                )
-            })?;
-            file.write_all(bytes).map_err(|err| {
-                let _ = fs::remove_file(&tmp_path);
-                ModuleHostError::Io(
-                    format!(
-                        "Failed to write cache temp file `{}`: {err}",
-                        tmp_path.display()
-                    )
-                    .into(),
-                )
-            })?;
-            file.flush().map_err(|err| {
-                let _ = fs::remove_file(&tmp_path);
-                ModuleHostError::Io(
-                    format!(
-                        "Failed to flush cache temp file `{}`: {err}",
-                        tmp_path.display()
-                    )
-                    .into(),
-                )
-            })?;
+        // Use unpredictable suffix + `create_new(true)` (`O_EXCL`, never follows symlinks)
+        // with restrictive 0o600 initial mode on Unix before flipping to 0o444 and renaming.
+        let mut created: Option<(PathBuf, fs::File)> = None;
+        let mut last_err = None;
+        for _ in 0..16 {
+            let seq = NEXT_TMP_ID.fetch_add(1, Ordering::Relaxed);
+            let nanos = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .map_or(0, |d| d.as_nanos());
+            // Mix pid, timestamp, and monotonic counter to avoid predictable filenames.
+            let nonce = (nanos as u64)
+                .wrapping_mul(0x9e37_79b9_7f4a_7c15)
+                .wrapping_add(seq)
+                ^ u64::from(pid).rotate_left(17);
+            let candidate = tmp_dir.join(format!("{leaf}.{pid}.{seq}.{nonce:016x}.tmp"));
+            let mut opts = OpenOptions::new();
+            opts.write(true).create_new(true);
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::OpenOptionsExt;
+                opts.mode(0o600);
+            }
+            match opts.open(&candidate) {
+                Ok(file) => {
+                    created = Some((candidate, file));
+                    break;
+                }
+                Err(err) if err.kind() == std::io::ErrorKind::AlreadyExists => {
+                    last_err = Some(err);
+                    continue;
+                }
+                Err(err) => {
+                    return Err(ModuleHostError::Io(
+                        format!(
+                            "Failed to create cache temp file `{}`: {err}",
+                            candidate.display()
+                        )
+                        .into(),
+                    ));
+                }
+            }
         }
+        let (tmp_path, mut file) = created.ok_or_else(|| {
+            ModuleHostError::Io(
+                format!(
+                    "Failed to create unique cache temp file in `{}`: {}",
+                    tmp_dir.display(),
+                    last_err
+                        .map(|e| e.to_string())
+                        .unwrap_or_else(|| "exhausted attempts".to_string())
+                )
+                .into(),
+            )
+        })?;
+
+        let write_result = file.write_all(bytes).and_then(|()| file.flush());
+        // Close the file handle before changing permissions, renaming, or removing on Windows.
+        drop(file);
+        write_result.map_err(|err| {
+            let _ = fs::remove_file(&tmp_path);
+            ModuleHostError::Io(
+                format!(
+                    "Failed to write cache temp file `{}`: {err}",
+                    tmp_path.display()
+                )
+                .into(),
+            )
+        })?;
 
         // Set read-only permissions (0444) matching `DiskCachedPackageResolver.java:636-641`.
         #[cfg(unix)]
@@ -261,17 +319,24 @@ fn remove_possibly_readonly(path: &Path) -> std::io::Result<()> {
         if err.kind() == std::io::ErrorKind::NotFound {
             return Ok(());
         }
-        // Make writable and retry (cached files are 0444).
-        #[cfg(unix)]
-        {
-            use std::os::unix::fs::PermissionsExt;
-            let _ = fs::set_permissions(path, fs::Permissions::from_mode(0o644));
-        }
-        #[cfg(not(unix))]
-        {
-            if let Ok(mut perms) = fs::metadata(path).map(|m| m.permissions()) {
-                perms.set_readonly(false);
-                let _ = fs::set_permissions(path, perms);
+        // Only adjust permissions when the entry itself is NOT a symlink (never chmod
+        // through a symlink onto an arbitrary target in a shared cache directory).
+        let is_symlink = fs::symlink_metadata(path)
+            .map(|m| m.file_type().is_symlink())
+            .unwrap_or(true);
+        if !is_symlink {
+            // Make writable and retry (cached files are 0444).
+            #[cfg(unix)]
+            {
+                use std::os::unix::fs::PermissionsExt;
+                let _ = fs::set_permissions(path, fs::Permissions::from_mode(0o644));
+            }
+            #[cfg(not(unix))]
+            {
+                if let Ok(mut perms) = fs::symlink_metadata(path).map(|m| m.permissions()) {
+                    perms.set_readonly(false);
+                    let _ = fs::set_permissions(path, perms);
+                }
             }
         }
         match fs::remove_file(path) {
@@ -292,7 +357,7 @@ impl PackageCacheStore for DiskPackageCache {
         let Some((_, meta_path, _)) = self.resolve_paths(package) else {
             return Ok(None);
         };
-        match fs::read(&meta_path) {
+        match crate::fs::read_path_nofollow_bounded(&meta_path) {
             Ok(bytes) => Ok(Some(bytes)),
             Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
             Err(err) => Err(ModuleHostError::Io(
@@ -331,25 +396,29 @@ impl PackageCacheStore for DiskPackageCache {
         })
     }
 
+    fn read_zip_bytes(&self, package: &PackageUri) -> Result<Option<Vec<u8>>, ModuleHostError> {
+        let Some((_, _, zip_path)) = self.resolve_paths(package) else {
+            return Ok(None);
+        };
+        match crate::fs::read_path_nofollow_bounded(&zip_path) {
+            Ok(b) => Ok(Some(b)),
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(err) => Err(ModuleHostError::Io(
+                format!(
+                    "Failed to read cached ZIP archive `{}`: {err}",
+                    zip_path.display()
+                )
+                .into(),
+            )),
+        }
+    }
+
     fn read_zip_archive(
         &self,
         package: &PackageUri,
     ) -> Result<Option<ZipArchive>, ModuleHostError> {
-        let Some((_, _, zip_path)) = self.resolve_paths(package) else {
+        let Some(bytes) = self.read_zip_bytes(package)? else {
             return Ok(None);
-        };
-        let bytes = match fs::read(&zip_path) {
-            Ok(b) => b,
-            Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
-            Err(err) => {
-                return Err(ModuleHostError::Io(
-                    format!(
-                        "Failed to read cached ZIP archive `{}`: {err}",
-                        zip_path.display()
-                    )
-                    .into(),
-                ));
-            }
         };
         let archive = ZipArchive::parse(&bytes).map_err(|err| {
             let reason = match err {
@@ -412,7 +481,7 @@ impl PackagerHost for NativePackagerHost {
         if !path.is_file() {
             return Ok(None);
         }
-        let text = fs::read_to_string(&path).map_err(|err| {
+        let text = crate::fs::read_path_to_string_bounded(&path).map_err(|err| {
             ModuleHostError::Io(
                 format!("Failed to read deps file `{}`: {err}", path.display()).into(),
             )
@@ -434,7 +503,7 @@ impl PackagerHost for NativePackagerHost {
                 )
             })?;
         }
-        fs::write(path, bytes).map_err(|err| {
+        crate::fs::write_file_nofollow(path, bytes).map_err(|err| {
             ModuleHostError::Io(
                 format!("Failed to write artifact `{}`: {err}", path.display()).into(),
             )
@@ -462,6 +531,9 @@ fn walk_regular_files(
         let meta = fs::symlink_metadata(&path).map_err(|err| {
             ModuleHostError::Io(format!("Failed to stat `{}`: {err}", path.display()).into())
         })?;
+        if crate::fs::is_symlink_or_junction(&path, &meta) {
+            continue;
+        }
         if meta.is_dir() {
             walk_regular_files(root, &path, out)?;
         } else if meta.is_file() {
@@ -469,7 +541,7 @@ fn walk_regular_files(
                 ModuleHostError::Io(format!("Failed to strip prefix: {err}").into())
             })?;
             let rel_str = rel.to_string_lossy().replace('\\', "/");
-            let bytes = fs::read(&path).map_err(|err| {
+            let bytes = crate::fs::read_path_nofollow_bounded(&path).map_err(|err| {
                 ModuleHostError::Io(format!("Failed to read `{}`: {err}", path.display()).into())
             })?;
             out.push((rel_str, bytes));

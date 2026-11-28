@@ -7,7 +7,7 @@ use super::{
         parse_module_host_error,
     },
     util::{
-        StructuredError, bytes_from_js, js_string_from_pkl, pkl_string_from_js,
+        StructuredError, bytes_from_js, define_own_prop, js_string_from_pkl, pkl_string_from_js,
         rust_string_from_js, set_prop, source_text_from_js,
     },
 };
@@ -18,7 +18,21 @@ use pkl_runtime::{
     },
     value::PklString,
 };
+use std::collections::VecDeque;
 use wasm_bindgen::prelude::*;
+
+enum AnalyzerGlobSecurityState {
+    CheckingPattern {
+        token: String,
+        base_uri: PklString,
+        pattern_uri: PklString,
+    },
+    CheckingResults {
+        token: String,
+        pending: VecDeque<PklString>,
+        checked: Vec<PklString>,
+    },
+}
 
 #[wasm_bindgen(js_name = WasmImportAnalyzer)]
 pub struct WasmImportAnalyzer {
@@ -27,6 +41,9 @@ pub struct WasmImportAnalyzer {
     pending_request_id: Option<u64>,
     pending_suspend: Option<WasmSuspendRequest>,
     pending_capability_error: Option<(&'static str, String)>,
+    pending_glob_security: Option<AnalyzerGlobSecurityState>,
+    pending_glob_emit: Option<(PklString, PklString)>,
+    glob_check_seq: u64,
     closed: bool,
 }
 
@@ -53,6 +70,9 @@ impl WasmImportAnalyzer {
             pending_request_id: None,
             pending_suspend: None,
             pending_capability_error: None,
+            pending_glob_security: None,
+            pending_glob_emit: None,
+            glob_check_seq: 0,
             closed: false,
         })
     }
@@ -64,6 +84,9 @@ impl WasmImportAnalyzer {
         if let Some(suspend) = self.pending_suspend.take() {
             return suspend.to_js();
         }
+        if let Some((base_uri, pattern_uri)) = self.pending_glob_emit.take() {
+            return make_resolve_analysis_glob_event(&base_uri, &pattern_uri);
+        }
         if let Some((cap, msg)) = self.pending_capability_error.take() {
             return make_error_event(&StructuredError::capability_unavailable(cap, msg));
         }
@@ -71,20 +94,33 @@ impl WasmImportAnalyzer {
         const MAX_STEPS: usize = 512;
         for _ in 0..MAX_STEPS {
             if let Some(glob_info) = self.analysis.take_pending_glob() {
-                let obj = Object::new();
-                set_prop(&obj, "kind", JsValue::from_str("resolveAnalysisGlob"))?;
-                set_prop(&obj, "token", JsValue::from_str("glob"))?;
-                set_prop(
-                    &obj,
-                    "baseUri",
-                    js_string_from_pkl(&glob_info.base_uri).into(),
-                )?;
-                set_prop(
-                    &obj,
-                    "patternUri",
-                    js_string_from_pkl(&glob_info.pattern_uri).into(),
-                )?;
-                return Ok(obj.into());
+                if self.core.config.has_custom_security_check_resolve {
+                    self.glob_check_seq += 1;
+                    let token = format!("analyze-glob-pat:{}", self.glob_check_seq);
+                    let pattern_uri = glob_info.pattern_uri.clone();
+                    self.pending_glob_security = Some(AnalyzerGlobSecurityState::CheckingPattern {
+                        token: token.clone(),
+                        base_uri: glob_info.base_uri,
+                        pattern_uri: glob_info.pattern_uri,
+                    });
+                    return WasmSuspendRequest::CheckResolveModule {
+                        token,
+                        uri: pattern_uri,
+                    }
+                    .to_js();
+                }
+                if let Err(err) = self
+                    .core
+                    .policy
+                    .check_resolve_module(&glob_info.pattern_uri)
+                {
+                    self.analysis.fail_glob(FailureCause::Host(err));
+                    continue;
+                }
+                return make_resolve_analysis_glob_event(
+                    &glob_info.base_uri,
+                    &glob_info.pattern_uri,
+                );
             }
 
             match self.analysis.poll() {
@@ -259,6 +295,58 @@ impl WasmImportAnalyzer {
     ) -> Result<(), JsValue> {
         let tok = rust_string_from_js(&token)?;
         let err_msg = opt_pkl_string(&error_message)?;
+        if let Some(state) = self.pending_glob_security.take() {
+            match state {
+                AnalyzerGlobSecurityState::CheckingPattern {
+                    token: expected,
+                    base_uri,
+                    pattern_uri,
+                } if expected == tok => {
+                    if let Some(msg) = err_msg {
+                        self.analysis.fail_glob(FailureCause::Host(
+                            pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                                message: Some(msg),
+                            },
+                        ));
+                    } else {
+                        self.pending_glob_emit = Some((base_uri, pattern_uri));
+                    }
+                    return Ok(());
+                }
+                AnalyzerGlobSecurityState::CheckingResults {
+                    token: expected,
+                    mut pending,
+                    checked,
+                } if expected == tok => {
+                    if let Some(msg) = err_msg {
+                        self.analysis.fail_glob(FailureCause::Host(
+                            pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                                message: Some(msg),
+                            },
+                        ));
+                    } else if let Some(next_uri) = pending.pop_front() {
+                        self.glob_check_seq += 1;
+                        let next_tok = format!("analyze-glob-res:{}", self.glob_check_seq);
+                        self.pending_glob_security =
+                            Some(AnalyzerGlobSecurityState::CheckingResults {
+                                token: next_tok.clone(),
+                                pending,
+                                checked,
+                            });
+                        self.pending_suspend = Some(WasmSuspendRequest::CheckResolveModule {
+                            token: next_tok,
+                            uri: next_uri,
+                        });
+                    } else {
+                        self.analysis.complete_glob(checked);
+                    }
+                    return Ok(());
+                }
+                other => {
+                    self.pending_glob_security = Some(other);
+                }
+            }
+        }
         let outcome = self.core.complete_security_check(&tok, err_msg)?;
         self.apply_resumed(outcome)
     }
@@ -275,6 +363,29 @@ impl WasmImportAnalyzer {
         for item in Array::from(&uris).iter() {
             out.push(pkl_string_from_js(&item)?);
         }
+        if self.core.config.has_custom_security_check_resolve {
+            let mut pending: VecDeque<PklString> = out.iter().cloned().collect();
+            if let Some(first) = pending.pop_front() {
+                self.glob_check_seq += 1;
+                let token = format!("analyze-glob-res:{}", self.glob_check_seq);
+                self.pending_glob_security = Some(AnalyzerGlobSecurityState::CheckingResults {
+                    token: token.clone(),
+                    pending,
+                    checked: out,
+                });
+                self.pending_suspend =
+                    Some(WasmSuspendRequest::CheckResolveModule { token, uri: first });
+            } else {
+                self.analysis.complete_glob(out);
+            }
+            return Ok(());
+        }
+        for uri in &out {
+            if let Err(err) = self.core.policy.check_resolve_module(uri) {
+                self.analysis.fail_glob(FailureCause::Host(err));
+                return Ok(());
+            }
+        }
         self.analysis.complete_glob(out);
         Ok(())
     }
@@ -284,9 +395,30 @@ impl WasmImportAnalyzer {
         &mut self,
         error_kind: JsValue,
         message: JsValue,
+        capability: JsValue,
     ) -> Result<(), JsValue> {
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
+        if kind == "capability-unavailable" {
+            let cap_raw = if capability.is_null() || capability.is_undefined() {
+                None
+            } else {
+                Some(rust_string_from_js(&capability)?)
+            };
+            let cap: &'static str = match cap_raw.as_deref() {
+                Some("nativeHttp") => "nativeHttp",
+                Some("externalReaders") => "externalReaders",
+                Some("modulePathJar") => "modulePathJar",
+                Some("projectResolution") => "projectResolution",
+                Some("packageCache") => "packageCache",
+                _ => "nativeFs",
+            };
+            let text = msg
+                .map(|m| m.to_java_utf8())
+                .unwrap_or_else(|| "Required capability is unavailable in Wasm.".to_string());
+            self.pending_capability_error = Some((cap, text));
+            return Ok(());
+        }
         self.analysis
             .fail_glob(FailureCause::Host(parse_module_host_error(&kind, msg)));
         Ok(())
@@ -298,6 +430,8 @@ impl WasmImportAnalyzer {
             self.core.close();
             self.pending_request_id = None;
             self.pending_suspend = None;
+            self.pending_glob_security = None;
+            self.pending_glob_emit = None;
             self.analysis.close();
         }
     }
@@ -333,6 +467,18 @@ impl WasmImportAnalyzer {
     }
 }
 
+fn make_resolve_analysis_glob_event(
+    base_uri: &PklString,
+    pattern_uri: &PklString,
+) -> Result<JsValue, JsValue> {
+    let obj = Object::new();
+    set_prop(&obj, "kind", JsValue::from_str("resolveAnalysisGlob"))?;
+    set_prop(&obj, "token", JsValue::from_str("glob"))?;
+    set_prop(&obj, "baseUri", js_string_from_pkl(base_uri).into())?;
+    set_prop(&obj, "patternUri", js_string_from_pkl(pattern_uri).into())?;
+    Ok(obj.into())
+}
+
 fn opt_pkl_string(val: &JsValue) -> Result<Option<PklString>, StructuredError> {
     if val.is_null() || val.is_undefined() {
         Ok(None)
@@ -351,8 +497,8 @@ fn import_graph_to_ready_js(graph: &ImportGraph) -> Result<JsValue, JsValue> {
         for imp in &node.imports {
             arr.push(js_string_from_pkl(imp).as_ref());
         }
-        set_prop(&imports, &uri, arr.into())?;
-        set_prop(&resolved_imports, &uri, JsValue::from_str(&resolved))?;
+        define_own_prop(&imports, &uri, arr.into())?;
+        define_own_prop(&resolved_imports, &uri, JsValue::from_str(&resolved))?;
     }
     let obj = Object::new();
     set_prop(&obj, "kind", JsValue::from_str("ready"))?;

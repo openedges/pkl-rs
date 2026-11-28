@@ -39,6 +39,7 @@ impl Vm {
         Err(error)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(in crate::vm) fn initialize_module_parent(&mut self) -> Result<(), RuntimeError> {
         let parent = self.pop()?.as_object()?;
         let receiver = self

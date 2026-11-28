@@ -7,6 +7,7 @@ import { dirname, join, resolve } from 'node:path';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
+import * as topLevelApi from '../dist/index.mjs';
 import {
   PKL_VERSION,
   PklClass,
@@ -17,6 +18,7 @@ import {
   PklIntSeq,
   PklObject,
   PklPair,
+  PklReference,
   PklRegex,
   PklTypeAlias,
   ModuleSource,
@@ -28,12 +30,14 @@ import {
   decodePklBinary,
   format,
   init,
+} from '../dist/index.mjs';
+import {
   measureConversion,
   roundtripBytes,
   roundtripInteger,
   roundtripString,
   roundtripValue,
-} from '../dist/index.mjs';
+} from '../dist/testing.mjs';
 
 const PKG_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -143,6 +147,17 @@ test('metadata, capabilities, and idempotent init', async () => {
   // Sync auto-init in Node works before explicit await init()
   assert.equal(format('x=1+2\n'), 'x = 1 + 2\n');
   assert.equal(format('x=1+2\n', { grammarVersion: 1 }), 'x = 1 + 2\n');
+
+  // Testing helpers live on `./testing`, not on top-level public exports.
+  for (const internalName of [
+    'roundtripValue',
+    'roundtripInteger',
+    'roundtripBytes',
+    'roundtripString',
+    'measureConversion',
+  ]) {
+    assert.equal(internalName in topLevelApi, false, `${internalName} must not be on top-level export`);
+  }
 
   // Idempotent init
   await init();
@@ -314,6 +329,20 @@ seq = IntSeq(1, 5).step(2)
   assert.equal(rt.properties.big, 9007199254740993n);
   assert.ok(rt.entries instanceof Map);
   assert.equal(rt.entries.get(1n), 'one');
+
+  // Lazy PklObject empty entries/elements remain isolated mutable containers per instance
+  const lazyA = new PklObject('Lazy#A', 'repl:a', { x: 1n });
+  const lazyB = new PklObject('Lazy#A', 'repl:a', { x: 1n });
+  assert.deepStrictEqual(lazyA, lazyB);
+  assert.ok(lazyA.entries instanceof Map);
+  assert.ok(Array.isArray(lazyA.elements));
+  lazyA.entries.set('k', 99n);
+  lazyA.elements.push('item');
+  assert.equal(lazyB.entries.size, 0);
+  assert.equal(lazyB.elements.length, 0);
+  const lazyRt = roundtripValue(lazyA);
+  assert.equal(lazyRt.entries.get('k'), 99n);
+  assert.deepEqual(lazyRt.elements, ['item']);
 
   const bench = measureConversion(50);
   assert.equal(bench.iterations, 50);
@@ -779,6 +808,474 @@ test('fast UTF-8 string decoder and columnar viewCache preserve strict RFC 3629 
   assert.equal(decodePklBinary(surrogate, { strict: true }), '\ufffd');
 });
 
+test('Wave 2 security/stability regressions: decoder DoS, cyclic values, __proto__ schema, VFS invariants', async () => {
+  // 1. P1-16: Truncated 4B-element List header must reject cleanly without OOM preallocation.
+  const hugeList = new Uint8Array([0x92, 0x04, 0xdd, 0x7f, 0xff, 0xff, 0xff]);
+  assert.throws(() => decodePklBinary(hugeList), (e) => e instanceof PklError && e.code === 'decode');
+
+  // 2. P1-18: Cyclic JS objects must reject cleanly instead of overflowing the stack.
+  const cyclic = [];
+  cyclic.push(cyclic);
+  assert.throws(
+    () => roundtripValue(cyclic),
+    (e) => e instanceof PklError && e.code === 'invalid-argument',
+  );
+
+  // 3. P1-19: `__proto__` property name in Pkl schema must be defined as an own property without prototype mutation.
+  const ev = await createEvaluator();
+  try {
+    const schema = await ev.evaluateSchema(ModuleSource.text('`__proto__`: Int = 42\n'));
+    const props = schema.moduleClass.properties;
+    assert.equal(Object.getPrototypeOf(props), Object.prototype);
+    assert.ok(Object.prototype.hasOwnProperty.call(props, '__proto__'));
+    assert.equal(props['__proto__'].simpleName, '__proto__');
+  } finally {
+    ev.close();
+  }
+
+  // 4. VFS file/dir ancestor conflict + ReDoS-immune glob matching.
+  const vfs = new VirtualFileSystem({ '/a': 'file-content' });
+  assert.throws(
+    () => vfs.write('/a/b', 'nested'),
+    (e) => e instanceof PklError && e.code === 'io',
+  );
+  assert.equal(vfs.isFile('/a'), true);
+  assert.equal(vfs.isDirectory('/a'), false);
+  vfs.write('/dir/sub/leaf.pkl', 'x = 1');
+  const t0 = performance.now();
+  const matched = vfs.glob('/**/**/**/**/**/**/**/**/**/**/*.txt');
+  const elapsed = performance.now() - t0;
+  assert.deepEqual(matched, []);
+  assert.ok(elapsed < 200, `glob took too long (${elapsed}ms)`);
+  assert.deepEqual(vfs.glob('/**/*.pkl'), ['/dir/sub/leaf.pkl']);
+});
+
+test('Round 2 regressions: PklObject reassignment, VFS security, hung callback timeout', async () => {
+  // 1. PklObject entries/elements setters can be reassigned repeatedly and survive roundtripValue.
+  const obj = new PklObject('Mod#Obj', 'repl:r2', { a: 1n });
+  obj.entries = new Map([['k1', 10n]]);
+  obj.entries = new Map([['k2', 20n]]);
+  obj.elements = [1n, 2n];
+  obj.elements = [3n];
+  assert.equal(obj.entries.get('k2'), 20n);
+  assert.equal(obj.entries.has('k1'), false);
+  assert.deepEqual(obj.elements, [3n]);
+  const rt = roundtripValue(obj);
+  assert.equal(rt.entries.get('k2'), 20n);
+  assert.deepEqual(rt.elements, [3n]);
+
+  // 2. VFS rejects NUL bytes, clamps Windows drive-letter `..`, protects rootDir from delete(),
+  //    anchors relative globs at rootDir, and prevents negated char classes from matching '/'.
+  const vfs = new VirtualFileSystem(
+    {
+      '/work/a.pkl': 'x = 1',
+      '/work/sub/b.pkl': 'y = 2',
+      '/outside.pkl': 'secret = 3',
+    },
+    { rootDir: '/work' },
+  );
+  assert.throws(
+    () => vfs.write('/work/bad\0.pkl', 'x = 1'),
+    (e) => e instanceof PklError && e.kind === 'invalid-argument',
+  );
+  assert.throws(
+    () => vfs.delete('/work'),
+    (e) => e instanceof PklError && e.kind === 'io',
+  );
+  assert.deepEqual(vfs.glob('*.pkl'), ['/work/a.pkl']);
+  assert.deepEqual(vfs.glob('/work/[!x].pkl'), ['/work/a.pkl']);
+
+  const winVfs = new VirtualFileSystem(
+    { 'C:/work/ok.pkl': 'x = 1', 'C:/secret.pkl': 'secret = 42' },
+    { rootDir: 'C:/work' },
+  );
+  // Windows drive-letter `..` clamping keeps `/C:/secret.pkl` under drive `C:` (not `/secret.pkl`).
+  assert.equal(winVfs.readText('C:/work/../../secret.pkl'), 'secret = 42');
+  const winEv = await createEvaluator({ vfs: winVfs });
+  try {
+    await assert.rejects(
+      winEv.evaluateOutputText(ModuleSource.text('s = read("file:///C:/work/../../secret.pkl")\n')),
+      (e) => e instanceof PklError && e.kind === 'security',
+    );
+  } finally {
+    winEv.close();
+  }
+
+  // 3. Hung async custom moduleReader Promise is interrupted immediately by timeoutMs.
+  const ev = await createEvaluator({
+    timeoutMs: 40,
+    allowedModules: ['pkl:', 'repl:', 'hang:'],
+    moduleReaders: [
+      {
+        scheme: 'hang',
+        hasHierarchicalUris: true,
+        isLocal: true,
+        read() {
+          return new Promise(() => {});
+        },
+      },
+    ],
+  });
+  try {
+    const start = performance.now();
+    await assert.rejects(
+      ev.evaluateOutputText(ModuleSource.text('import "hang:/forever.pkl" as h\nv = h.x\n')),
+      (e) => e instanceof PklError && e.kind === 'timeout',
+    );
+    const elapsed = performance.now() - start;
+    assert.ok(elapsed < 1000, `hung callback timeout took too long (${elapsed}ms)`);
+  } finally {
+    ev.close();
+  }
+});
+
+test('Round 3 regressions: API unification, non-closing timeout/cancel, BOM, security, REPL isolation', async () => {
+  // 1. ModuleSource.modulePath normalizes bare `modulepath:` prefix.
+  assert.equal(ModuleSource.modulePath('modulepath:foo/bar.pkl').uri, 'modulepath:/foo/bar.pkl');
+  assert.equal(ModuleSource.modulePath('modulepath:/foo/bar.pkl').uri, 'modulepath:/foo/bar.pkl');
+
+  // 2. Hardened PklObject: empty collection identity, frozen getters, setter validation, toJSON, undefined rejection.
+  const emptyMap = new Map();
+  const emptyArr = [];
+  const obj = new PklObject('Mod#Obj', 'repl:r3', { a: 1n }, emptyMap, emptyArr);
+  assert.equal(obj.entries, emptyMap);
+  assert.equal(obj.elements, emptyArr);
+  assert.deepEqual(obj.toJSON(), {
+    className: 'Mod#Obj',
+    moduleUri: 'repl:r3',
+    properties: { a: 1n },
+    entries: [],
+    elements: [],
+  });
+  const frozen = Object.freeze(new PklObject('Mod#Frozen', 'repl:r3', {}));
+  assert.ok(frozen.entries instanceof Map);
+  assert.ok(Array.isArray(frozen.elements));
+  assert.throws(
+    () => {
+      obj.entries = /** @type {any} */ ('bad');
+    },
+    (e) => e instanceof PklError && e.kind === 'invalid-argument',
+  );
+  assert.throws(
+    () => {
+      obj.elements = /** @type {any} */ ({});
+    },
+    (e) => e instanceof PklError && e.kind === 'invalid-argument',
+  );
+  assert.throws(
+    () => roundtripValue(undefined),
+    (e) => e instanceof PklError && e.kind === 'invalid-argument',
+  );
+
+  // 3. Unified measureConversion overloads & superset telemetry fields.
+  const m1 = measureConversion(5);
+  assert.equal(m1.iterations, 5);
+  assert.equal(typeof m1.totalMs, 'number');
+  assert.equal(typeof m1.elapsedMs, 'number');
+  assert.equal(typeof m1.avgUs, 'number');
+  assert.equal(typeof m1.perIterationUs, 'number');
+  assert.equal(typeof m1.opsPerSec, 'number');
+  assert.ok(m1.sample !== undefined && m1.lastValue !== undefined);
+  const m2 = measureConversion(42n, 5);
+  assert.equal(m2.iterations, 5);
+  assert.equal(m2.sample, 42n);
+  assert.equal(m2.lastValue, 42n);
+
+  // 4. Unified schema & test results + BOM preservation + typed security error (no substring false positive).
+  const ev = await createEvaluator();
+  try {
+    const schema = await ev.evaluateSchema(
+      ModuleSource.text(`
+        module example.Unified
+        typealias Port = Int(isBetween(1, 65535))
+        class Server { host: String }
+      `),
+    );
+    assert.equal(schema.classes.Server.info.simpleName, 'Server');
+    assert.equal(schema.classes.Server.moduleUri, schema.classes.Server.info.moduleUri);
+    assert.equal(schema.typeAliases.Port.info.simpleName, 'Port');
+
+    const testRes = await ev.evaluateTest(
+      ModuleSource.text(`
+        amends "pkl:test"
+        facts {
+          ["ok"] { 1 + 1 == 2 }
+          ["bad"] { 1 == 2 }
+        }
+      `),
+    );
+    assert.equal(testRes.facts.failed, true);
+    assert.equal(testRes.facts.totalTests, 2);
+    assert.equal(testRes.facts.totalFailures, 1);
+    assert.equal(testRes.facts.totalAsserts, 2);
+    assert.equal(testRes.facts.results[0].failed, false);
+    assert.equal(testRes.facts.results[1].failed, true);
+
+    // Leading UTF-8 BOM U+FEFF must be preserved in both short and long (>64B) strings.
+    const longBom = await ev.evaluateExpressionValue(
+      ModuleSource.text(`s = "\\u{feff}" + "a".repeat(80)\n`),
+      's',
+    );
+    assert.equal(longBom.charCodeAt(0), 0xfeff);
+    assert.equal(longBom.length, 81);
+
+    // Substring "Refusing to " in user throw() must stay kind === 'evaluation', not 'security'.
+    await assert.rejects(
+      ev.evaluateOutputText(ModuleSource.text('x = throw("Refusing to eat broccoli")\n')),
+      (e) => e instanceof PklError && e.kind === 'evaluation',
+    );
+  } finally {
+    ev.close();
+  }
+
+  // 5. Non-closing timeout & cancel reuse on Evaluator and ReplSession.
+  const timeoutEv = await createEvaluator({ timeoutMs: 25 });
+  try {
+    await assert.rejects(
+      timeoutEv.evaluateExpression(
+        ModuleSource.text('function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nx = fib(32)\n'),
+        'x',
+      ),
+      (e) => e instanceof PklError && e.kind === 'timeout',
+    );
+    assert.equal(timeoutEv.isClosed, false);
+    assert.equal(
+      await timeoutEv.evaluateExpression(ModuleSource.text('x = 20 + 22\n'), 'x'),
+      '42',
+    );
+  } finally {
+    timeoutEv.close();
+  }
+
+  const replVfs = new VirtualFileSystem({ '/existing.pkl': 'v = 1\n' });
+  const repl = await createRepl({ vfs: replVfs, timeoutMs: 25 });
+  try {
+    await assert.rejects(
+      repl.eval('function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nfib(32)'),
+      (e) => e instanceof PklError && e.kind === 'timeout',
+    );
+    assert.equal(repl.isClosed, false);
+    const okResps = await repl.eval('1 + 2');
+    assert.equal(okResps[0].kind, 'evalSuccess');
+    assert.equal(okResps[0].result, '3');
+
+    // ReplSession.load(ModuleSource.text(...)) must NOT mutate caller's VFS.
+    const loadResps = await repl.load(ModuleSource.text('loadedVal = 99\n', 'file:///ephemeral.pkl'));
+    assert.ok(loadResps.every((r) => r.kind !== 'evalError'));
+    assert.equal(replVfs.has('/ephemeral.pkl'), false);
+  } finally {
+    const closePromise = repl.close();
+    assert.ok(closePromise && typeof closePromise.then === 'function', 'repl.close() must return a Promise');
+    await closePromise;
+  }
+
+  // 5b. Round 4: Wasm custom moduleReaders scheme auto-allowed, sync cancel(), ModuleSource class, format(null), and CapabilityUnavailable non-wedging.
+  assert.throws(() => new ModuleSource(''), (e) => e instanceof PklError && e.kind === 'invalid-argument');
+  assert.throws(() => ModuleSource.uri(''), (e) => e instanceof PklError && e.kind === 'invalid-argument');
+  assert.throws(() => format(null), (e) => e instanceof PklError);
+
+  const customEv = await createEvaluator({
+    outputFormat: 'json',
+    moduleReaders: [
+      {
+        scheme: 'mem',
+        isLocal: true,
+        isGlobbable: false,
+        hasHierarchicalUris: true,
+        async read(uri) {
+          return uri === 'mem:/ok.pkl' ? 'answer = 42\n' : null;
+        },
+      },
+    ],
+  });
+  try {
+    // Custom scheme `mem:` must be auto-allowed without manual allowedModules.
+    const txt = await customEv.evaluateOutputText(ModuleSource.uri('mem:/ok.pkl'));
+    assert.equal(txt, '{\n  "answer": 42\n}\n');
+
+    // CapabilityUnavailable (e.g. unprovided file reader / http) must NOT wedge subsequent evaluation.
+    await assert.rejects(
+      customEv.evaluateOutputText(ModuleSource.text('x = read("http://127.0.0.1:1/x").text\n', 'file:///cap.pkl')),
+      (e) => e instanceof PklError && (e.kind === 'capability-unavailable' || e.kind === 'security' || e.kind === 'evaluation'),
+    );
+    const afterCap = await customEv.evaluateOutputText(ModuleSource.text('ok = 7\n', 'file:///ok2.pkl'));
+    assert.equal(afterCap, '{\n  "ok": 7\n}\n');
+
+    // Sync cancel() must cancel queued work.
+    const slowP = customEv.evaluateOutputText(
+      ModuleSource.text('function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nv = fib(32)\n', 'file:///slow.pkl'),
+    );
+    const queuedP = customEv.evaluateOutputText(ModuleSource.text('q = 1\n', 'file:///q.pkl'));
+    customEv.cancel();
+    await assert.rejects(slowP, (e) => e instanceof PklError && e.kind === 'cancelled');
+    await assert.rejects(queuedP, (e) => e instanceof PklError && e.kind === 'cancelled');
+  } finally {
+    const closePromise = customEv.close();
+    assert.ok(closePromise && typeof closePromise.then === 'function', 'ev.close() must return a Promise');
+    await closePromise;
+  }
+
+  // 6. analyzeImportGraph accepts ModuleSource[] and enforces custom securityManager.
+  const secVfs = new VirtualFileSystem({
+    '/a.pkl': 'import "/b.pkl"\nx = 1\n',
+    '/b.pkl': 'y = 2\n',
+  });
+  const graph = await analyzeImportGraph([ModuleSource.uri('file:///a.pkl')], { vfs: secVfs });
+  assert.ok('file:///a.pkl' in graph.imports);
+  await assert.rejects(
+    analyzeImportGraph([ModuleSource.uri('file:///a.pkl')], {
+      vfs: secVfs,
+      securityManager: {
+        checkResolveModule(uri) {
+          if (uri.endsWith('/b.pkl')) {
+            throw new PklError('blocked b.pkl', 'security');
+          }
+        },
+      },
+    }),
+    (e) => e instanceof PklError && e.kind === 'security',
+  );
+
+  // 7. Round 5 regressions: P0-1 VFS %5c rootDir escape, P0-2 package HTTP(S)/allowedResources,
+  //    P1-19 ReplSession.load(repl:text) reload & relative URI, P1-20 analyzeImportGraph
+  //    capability-unavailable & single checkResolveModule, P2-8/P2-9 source & PklReference checks.
+  const r5Vfs = new VirtualFileSystem({
+    '/sandbox/ok.pkl': 'x = 1\n',
+    '/secret.txt': 'TOP_SECRET\n',
+  });
+  const r5Ev = await createEvaluator({ vfs: r5Vfs, rootDir: '/sandbox' });
+  try {
+    await assert.rejects(
+      r5Ev.evaluateOutputText(
+        ModuleSource.text('s = read("file:///sandbox/%5c..%5c..%5csecret.txt").text\n', 'file:///sandbox/test.pkl'),
+      ),
+      (e) => e instanceof PklError && !e.message.includes('TOP_SECRET'),
+    );
+    await assert.rejects(
+      r5Ev.evaluateExpressionValue({ uri: '' }, 'module'),
+      (e) => e instanceof PklError && e.kind === 'invalid-argument',
+    );
+  } finally {
+    await r5Ev.close();
+  }
+
+  // P0-2: package:// metadata must enforce allowedResources before calling packageTransport.
+  let pkgTransportCalls = 0;
+  const r5PkgDenied = await createEvaluator({
+    allowedResources: ['prop:'],
+    packageTransport: async () => {
+      pkgTransportCalls += 1;
+      return new Uint8Array();
+    },
+  });
+  try {
+    await assert.rejects(
+      r5PkgDenied.evaluateOutputText(
+        ModuleSource.text('import "package://example.com/demo@1.0.0#/a.pkl"\nx = a\n'),
+      ),
+      (e) => e instanceof PklError && e.kind === 'security',
+    );
+    assert.equal(pkgTransportCalls, 0, 'packageTransport must not be called when allowedResources denies https:');
+  } finally {
+    await r5PkgDenied.close();
+  }
+
+  // P0-2: non-HTTP(S) packageZipUrl in metadata JSON must be rejected before fetching archive.
+  const r5PkgBadZipCalls = [];
+  const r5PkgBadZip = await createEvaluator({
+    allowedResources: ['prop:', 'https:'],
+    packageTransport: async (url) => {
+      r5PkgBadZipCalls.push(url);
+      const meta = JSON.stringify({
+        name: 'demo',
+        packageUri: 'package://example.com/demo@1.0.0',
+        version: '1.0.0',
+        packageZipUrl: 'file:///etc/passwd',
+        packageZipChecksums: { sha256: '0'.repeat(64) },
+        dependencies: {},
+      });
+      return new TextEncoder().encode(meta);
+    },
+  });
+  try {
+    await assert.rejects(
+      r5PkgBadZip.evaluateOutputText(
+        ModuleSource.text('import "package://example.com/demo@1.0.0#/a.pkl"\nx = a\n'),
+      ),
+      (e) => e instanceof PklError,
+    );
+    assert.equal(
+      r5PkgBadZipCalls.some((u) => u.startsWith('file:')),
+      false,
+      'non-HTTP(S) packageZipUrl must never be passed to packageTransport',
+    );
+  } finally {
+    await r5PkgBadZip.close();
+  }
+
+  // P1-19: Wasm ReplSession.load(ModuleSource.text(...)) supports default repl:text, reload, and relative URI.
+  const r5Repl = await createRepl();
+  try {
+    const l1 = await r5Repl.load(ModuleSource.text('v = 1\n'));
+    assert.ok(l1.every((r) => r.kind !== 'evalError'), JSON.stringify(l1));
+    assert.equal((await r5Repl.eval('v'))[0].result, '1');
+    const l2 = await r5Repl.load(ModuleSource.text('v = 2\n'));
+    assert.ok(l2.every((r) => r.kind !== 'evalError'), JSON.stringify(l2));
+    assert.equal((await r5Repl.eval('v'))[0].result, '2');
+    const l3 = await r5Repl.load(ModuleSource.text('w = 3\n', 'rel_mod.pkl'));
+    assert.ok(l3.every((r) => r.kind !== 'evalError'), JSON.stringify(l3));
+    assert.equal((await r5Repl.eval('w'))[0].result, '3');
+    await assert.rejects(
+      r5Repl.load(''),
+      (e) => e instanceof PklError && e.kind === 'invalid-argument',
+    );
+  } finally {
+    await r5Repl.close();
+  }
+
+  // P1-20: analyzeImportGraph preserves capability-unavailable on glob without VFS and calls checkResolveModule once.
+  const globVfs = new VirtualFileSystem({
+    '/g/root.pkl': 'import* "/g/item*.pkl"\n',
+    '/g/item1.pkl': 'x = 1\n',
+  });
+  const resolveCalls = [];
+  await analyzeImportGraph([ModuleSource.uri('file:///g/root.pkl')], {
+    vfs: globVfs,
+    securityManager: {
+      checkResolveModule(uri) {
+        resolveCalls.push(uri);
+      },
+    },
+  });
+  assert.equal(
+    resolveCalls.filter((u) => u === 'file:///g/item*.pkl').length,
+    1,
+    `expected checkResolveModule to be called once for glob pattern, got ${JSON.stringify(resolveCalls)}`,
+  );
+  await assert.rejects(
+    analyzeImportGraph(['mem:/globroot.pkl'], {
+      moduleReaders: [
+        {
+          scheme: 'mem',
+          isLocal: true,
+          isGlobbable: false,
+          hasHierarchicalUris: true,
+          read: async () => 'import* "file:///missing/*.pkl"\n',
+        },
+      ],
+    }),
+    (e) => e instanceof PklError && e.kind === 'capability-unavailable' && e.capability === 'nativeFs',
+  );
+
+  // P2-9: PklReference accepts iterable path and rejects invalid non-iterable path.
+  const refFromSet = new PklReference('d', 1n, new Set(['p1', 'p2']));
+  assert.deepEqual(refFromSet.path, ['p1', 'p2']);
+  assert.throws(
+    () => new PklReference('d', 1n, null),
+    (e) => e instanceof PklError && e.kind === 'invalid-argument',
+  );
+});
+
 test('npm pack tarball installs cleanly in isolated temp directory and executes in Node', () => {
   const workDir = mkdtempSync(join(tmpdir(), 'pkl-wasm-pack-test-'));
   try {
@@ -825,8 +1322,12 @@ test('npm pack tarball installs cleanly in isolated temp directory and executes 
       join(installDir, 'smoke.mjs'),
       `
 import assert from 'node:assert/strict';
+import * as pklWasm from '@openedges/pkl-wasm';
 import { PKL_VERSION, capabilities, createEvaluator, format, ModuleSource, VirtualFileSystem } from '@openedges/pkl-wasm';
+import { roundtripInteger } from '@openedges/pkl-wasm/testing';
 assert.equal(PKL_VERSION, '0.32.0');
+assert.equal('roundtripInteger' in pklWasm, false);
+assert.equal(roundtripInteger(42n), 42n);
 assert.equal(capabilities().runtime, 'wasm-node');
 assert.equal(format('a=1\\n'), 'a = 1\\n');
 const vfs = new VirtualFileSystem({ '/x.pkl': 'v = 21 * 2\\n' });

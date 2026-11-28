@@ -80,6 +80,7 @@ pub struct WasmHostConfig {
     pub has_custom_security_check_import: bool,
     pub has_custom_security_check_read: bool,
     pub has_custom_security_check_resolve: bool,
+    pub has_custom_security_check_resolve_resource: bool,
     pub platform_metadata: Option<PlatformMetadata>,
     pub custom_module_readers: Vec<CustomModuleReaderMeta>,
     pub custom_resource_readers: Vec<CustomResourceReaderMeta>,
@@ -261,6 +262,10 @@ pub enum WasmSuspendRequest {
         token: String,
         uri: PklString,
     },
+    CheckResolveResource {
+        token: String,
+        uri: PklString,
+    },
     Log {
         token: String,
         level: LogLevel,
@@ -286,6 +291,7 @@ impl WasmSuspendRequest {
             | Self::CheckImportModule { token, .. }
             | Self::CheckResolveModule { token, .. }
             | Self::CheckReadResource { token, .. }
+            | Self::CheckResolveResource { token, .. }
             | Self::Log { token, .. }
             | Self::TransformFrame { token, .. } => token,
         }
@@ -416,6 +422,11 @@ impl WasmSuspendRequest {
                 set_prop(&obj, "token", JsValue::from_str(token))?;
                 set_prop(&obj, "uri", js_string_from_pkl(uri).into())?;
             }
+            Self::CheckResolveResource { token, uri } => {
+                set_prop(&obj, "kind", JsValue::from_str("checkResolveResource"))?;
+                set_prop(&obj, "token", JsValue::from_str(token))?;
+                set_prop(&obj, "uri", js_string_from_pkl(uri).into())?;
+            }
             Self::Log {
                 token,
                 level,
@@ -502,6 +513,10 @@ pub enum PendingContinuation {
     TransformFrame {
         token: String,
     },
+    PackageUrlCheck {
+        next_suspend: Box<WasmSuspendRequest>,
+        after_fetch: Box<PendingContinuation>,
+    },
 }
 
 impl PendingContinuation {
@@ -516,6 +531,7 @@ impl PendingContinuation {
             | Self::GlobListElements { token, .. }
             | Self::Log { token }
             | Self::TransformFrame { token } => token,
+            Self::PackageUrlCheck { next_suspend, .. } => next_suspend.token(),
         }
     }
 }
@@ -535,12 +551,32 @@ pub struct WasmHostCore {
 
 impl WasmHostCore {
     pub fn new(config: WasmHostConfig) -> Result<Self, StructuredError> {
-        let policy = SecurityPolicy::new(
+        let mut policy = SecurityPolicy::new(
             config.allowed_modules.as_deref(),
             config.allowed_resources.as_deref(),
             config.root_dir.clone(),
         )
         .map_err(StructuredError::configuration)?;
+        if !config.custom_module_readers.is_empty() {
+            let schemes: Vec<String> = config
+                .custom_module_readers
+                .iter()
+                .map(|r| r.scheme.clone())
+                .collect();
+            policy = policy
+                .with_external_module_schemes(&schemes)
+                .map_err(StructuredError::configuration)?;
+        }
+        if !config.custom_resource_readers.is_empty() {
+            let schemes: Vec<String> = config
+                .custom_resource_readers
+                .iter()
+                .map(|r| r.scheme.clone())
+                .collect();
+            policy = policy
+                .with_external_resource_schemes(&schemes)
+                .map_err(StructuredError::configuration)?;
+        }
 
         let mut properties = config.properties.clone();
         if let Some(ref output_format) = config.output_format {
@@ -693,6 +729,49 @@ impl WasmHostCore {
         res
     }
 
+    /// Validates an HTTP(S) package metadata/archive URL and enforces `allowedResources`
+    /// or custom `securityManager.checkReadResource` before suspending to JS transport
+    /// (matching upstream `PackageResolvers.java:195-207` and native `package_host.rs:78-92`).
+    fn suspend_package_http(
+        &mut self,
+        url: &PklString,
+        suspend: WasmSuspendRequest,
+        after_fetch: PendingContinuation,
+    ) -> Result<WasmHostOutcome, ModuleHostError> {
+        let url_str = url.as_str().unwrap_or("");
+        let lower = url_str.to_ascii_lowercase();
+        if !lower.starts_with("http://") && !lower.starts_with("https://") {
+            let err = ModuleHostError::Io(IoFailure::from(format!(
+                "Expected HTTP(S) URL, but got: {url_str}"
+            )));
+            self.record_module_err(&err);
+            return Err(err);
+        }
+        if self.config.has_custom_security_check_read {
+            let check_req = WasmSuspendRequest::CheckReadResource {
+                token: suspend.token().to_string(),
+                uri: url.clone(),
+            };
+            self.pending = Some(PendingContinuation::PackageUrlCheck {
+                next_suspend: Box::new(suspend),
+                after_fetch: Box::new(after_fetch),
+            });
+            return Ok(WasmHostOutcome::Suspend(check_req));
+        }
+        if let Err(err) = self.check_policy_read_resource(url) {
+            let mod_err = match err {
+                ReadFailure::SecurityManagerException { message } => {
+                    ModuleHostError::SecurityManagerException { message }
+                }
+                other => ModuleHostError::Io(IoFailure::from(format!("{other:?}"))),
+            };
+            self.record_module_err(&mod_err);
+            return Err(mod_err);
+        }
+        self.pending = Some(after_fetch);
+        Ok(WasmHostOutcome::Suspend(suspend))
+    }
+
     // -----------------------------------------------------------------------
     // Entry points for HostPoll events
     // -----------------------------------------------------------------------
@@ -717,11 +796,26 @@ impl WasmHostCore {
                 if let Some(comp) = standard_key_completion_with_policy(&request, &self.policy) {
                     return WasmHostOutcome::CompleteModule(comp);
                 }
+                if self.staged_sources.contains_key(uri) {
+                    return WasmHostOutcome::CompleteModule(ModuleCompletion::KeySelected(Ok(
+                        ModuleKey {
+                            id: *id,
+                            uri: uri.clone(),
+                            kind: ModuleKeyKind::Synthetic,
+                            handle: "staged:inline".into(),
+                        },
+                    )));
+                }
                 WasmHostOutcome::CompleteModule(ModuleCompletion::KeySelected(Err(
                     ModuleHostError::NoLoader,
                 )))
             }
             ModuleRequestKind::QueryCachePolicy { key } => {
+                if self.staged_sources.contains_key(&key.uri) {
+                    return WasmHostOutcome::CompleteModule(ModuleCompletion::CachePolicy(Ok(
+                        false,
+                    )));
+                }
                 if let Some((_, reader)) = self
                     .custom_module_reader_by_handle(&key.handle)
                     .or_else(|| self.find_custom_module_reader(&key.uri))
@@ -965,15 +1059,23 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::ModuleResolveDepImport {
-                    token,
-                    asset_uri,
-                    dep_name,
-                    encoded_asset,
-                });
-                WasmHostOutcome::Suspend(suspend)
+                match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::ModuleResolveDepImport {
+                        token,
+                        asset_uri,
+                        dep_name,
+                        encoded_asset,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => {
+                        WasmHostOutcome::CompleteModule(ModuleCompletion::ImportUri(Err(err)))
+                    }
+                }
             }
             Err(err) => {
                 self.record_module_err(&err);
@@ -1054,6 +1156,17 @@ impl WasmHostCore {
             if let Err(err) = self.check_policy_resolve_module(&key.uri) {
                 return self.finish_module_resolve_err(&request, err);
             }
+        }
+
+        // Staged inline source (e.g. `ReplSession.load(ModuleSource.text(...))`), served
+        // after security checks without mutating any caller-supplied VFS.
+        if self.staged_sources.contains_key(&key.uri) {
+            let resolved = ResolvedModule {
+                original_uri: key.uri.clone(),
+                resolved_uri: key.uri.clone(),
+                source_uri: key.uri.clone(),
+            };
+            return self.finish_module_resolve_ok(&request, resolved, None);
         }
 
         // Builtin Pkl 0.32.0 standard library (`pkl:*`), supporting both VM evaluation (`Resolve`)
@@ -1227,14 +1340,20 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::ModuleResolve {
-                    token,
-                    request,
-                    security_checked: true,
-                });
-                return WasmHostOutcome::Suspend(suspend);
+                return match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::ModuleResolve {
+                        token,
+                        request: request.clone(),
+                        security_checked: true,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => self.finish_module_resolve_err(&request, err),
+                };
             }
             Err(err) => return self.finish_module_resolve_err(&request, err),
         };
@@ -1249,17 +1368,24 @@ impl WasmHostCore {
                     ),
                 };
             }
+            let zip_url = meta.package_zip_url.clone();
             let suspend = WasmSuspendRequest::PackageArchive {
                 token: token.clone(),
                 package_uri: asset_uri.package.uri.clone(),
-                zip_url: meta.package_zip_url.clone(),
+                zip_url: zip_url.clone(),
             };
-            self.pending = Some(PendingContinuation::ModuleResolve {
-                token,
-                request,
-                security_checked: true,
-            });
-            return WasmHostOutcome::Suspend(suspend);
+            return match self.suspend_package_http(
+                &zip_url,
+                suspend,
+                PendingContinuation::ModuleResolve {
+                    token,
+                    request: request.clone(),
+                    security_checked: true,
+                },
+            ) {
+                Ok(outcome) => outcome,
+                Err(err) => self.finish_module_resolve_err(&request, err),
+            };
         };
 
         let asset_path = asset_uri.asset_path.as_str().unwrap_or("");
@@ -1423,14 +1549,22 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::ModuleHasElement {
-                    token,
-                    request,
-                    security_checked: true,
-                });
-                return WasmHostOutcome::Suspend(suspend);
+                return match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::ModuleHasElement {
+                        token,
+                        request,
+                        security_checked: true,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => {
+                        WasmHostOutcome::CompleteModule(ModuleCompletion::HasElement(Err(err)))
+                    }
+                };
             }
             Err(err) => {
                 self.record_module_err(&err);
@@ -1439,17 +1573,33 @@ impl WasmHostCore {
         };
 
         let Some(archive) = self.packages.get_archive(&asset_uri.package) else {
+            if !self.has_package_transport() {
+                return WasmHostOutcome::CapabilityUnavailable {
+                    capability: "nativeHttp",
+                    message: format!(
+                        "Package archive fetch for `{}` requires `packageTransport` or `httpFetch` in Wasm.",
+                        asset_uri.package.uri
+                    ),
+                };
+            }
+            let zip_url = meta.package_zip_url.clone();
             let suspend = WasmSuspendRequest::PackageArchive {
                 token: token.clone(),
                 package_uri: asset_uri.package.uri.clone(),
-                zip_url: meta.package_zip_url.clone(),
+                zip_url: zip_url.clone(),
             };
-            self.pending = Some(PendingContinuation::ModuleHasElement {
-                token,
-                request,
-                security_checked: true,
-            });
-            return WasmHostOutcome::Suspend(suspend);
+            return match self.suspend_package_http(
+                &zip_url,
+                suspend,
+                PendingContinuation::ModuleHasElement {
+                    token,
+                    request,
+                    security_checked: true,
+                },
+            ) {
+                Ok(outcome) => outcome,
+                Err(err) => WasmHostOutcome::CompleteModule(ModuleCompletion::HasElement(Err(err))),
+            };
         };
 
         let exists = archive.has_element(asset_uri.asset_path.as_str().unwrap_or(""));
@@ -1707,14 +1857,20 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::ReadResource {
-                    token,
-                    resolved_uri,
-                    security_checked: true,
-                });
-                return WasmHostOutcome::Suspend(suspend);
+                return match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::ReadResource {
+                        token,
+                        resolved_uri,
+                        security_checked: true,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => WasmHostOutcome::CompleteRead(Err(module_err_to_read_failure(err))),
+                };
             }
             Err(err) => {
                 self.record_module_err(&err);
@@ -1723,17 +1879,33 @@ impl WasmHostCore {
         };
 
         let Some(archive) = self.packages.get_archive(&asset_uri.package) else {
+            if !self.has_package_transport() {
+                return WasmHostOutcome::CapabilityUnavailable {
+                    capability: "nativeHttp",
+                    message: format!(
+                        "Package archive fetch for `{}` requires `packageTransport` or `httpFetch` in Wasm.",
+                        asset_uri.package.uri
+                    ),
+                };
+            }
+            let zip_url = meta.package_zip_url.clone();
             let suspend = WasmSuspendRequest::PackageArchive {
                 token: token.clone(),
                 package_uri: asset_uri.package.uri.clone(),
-                zip_url: meta.package_zip_url.clone(),
+                zip_url: zip_url.clone(),
             };
-            self.pending = Some(PendingContinuation::ReadResource {
-                token,
-                resolved_uri,
-                security_checked: true,
-            });
-            return WasmHostOutcome::Suspend(suspend);
+            return match self.suspend_package_http(
+                &zip_url,
+                suspend,
+                PendingContinuation::ReadResource {
+                    token,
+                    resolved_uri,
+                    security_checked: true,
+                },
+            ) {
+                Ok(outcome) => outcome,
+                Err(err) => WasmHostOutcome::CompleteRead(Err(module_err_to_read_failure(err))),
+            };
         };
 
         match archive.read_bytes(asset_uri.asset_path.as_str().unwrap_or(""), true) {
@@ -1767,8 +1939,8 @@ impl WasmHostCore {
                         },
                     )));
                 }
-                if uri.starts_with("package:") || uri.starts_with("projectpackage:") {
-                    let scheme = if uri.starts_with("package:") {
+                if uri_scheme_eq(uri, "package") || uri_scheme_eq(uri, "projectpackage") {
+                    let scheme = if uri_scheme_eq(uri, "package") {
                         "package"
                     } else {
                         "projectpackage"
@@ -1781,11 +1953,21 @@ impl WasmHostCore {
                         },
                     )));
                 }
+                let allow_all =
+                    SecurityPolicy::new(Some(&[".*".into()]), Some(&[".*".into()]), None)
+                        .expect("valid wildcard policy");
+                let effective_policy = if self.config.has_custom_security_check_read
+                    || self.config.has_custom_security_check_resolve_resource
+                {
+                    &allow_all
+                } else {
+                    &self.policy
+                };
                 if let Some(comp) = configured_completion_with_policy(
                     &request,
                     &self.properties,
                     &self.environment,
-                    &self.policy,
+                    effective_policy,
                 ) {
                     return WasmHostOutcome::CompleteGlob(comp);
                 }
@@ -1815,7 +1997,7 @@ impl WasmHostCore {
                         return WasmHostOutcome::CompleteGlob(comp);
                     }
                     let globbable =
-                        key.kind == ModuleKeyKind::StandardFile || key.uri.starts_with("file:");
+                        key.kind == ModuleKeyKind::StandardFile || uri_scheme_eq(&key.uri, "file");
                     WasmHostOutcome::CompleteGlob(GlobCompletion::Globbable(Ok(globbable)))
                 }
                 GlobReader::Resource(res) => {
@@ -1860,10 +2042,10 @@ impl WasmHostCore {
                     }
                     let hierarchical = key.kind == ModuleKeyKind::StandardFile
                         || key.handle == "builtin:modulepath"
-                        || key.uri.starts_with("file:")
-                        || key.uri.starts_with("modulepath:")
-                        || key.uri.starts_with("http:")
-                        || key.uri.starts_with("https:");
+                        || uri_scheme_eq(&key.uri, "file")
+                        || uri_scheme_eq(&key.uri, "modulepath")
+                        || uri_scheme_eq(&key.uri, "http")
+                        || uri_scheme_eq(&key.uri, "https");
                     WasmHostOutcome::CompleteGlob(GlobCompletion::Hierarchical(Ok(hierarchical)))
                 }
                 GlobReader::Resource(res) => {
@@ -1934,6 +2116,18 @@ impl WasmHostCore {
         let uri = uri.clone();
 
         if !security_checked {
+            if self.config.has_custom_security_check_resolve_resource {
+                let suspend = WasmSuspendRequest::CheckResolveResource {
+                    token: token.clone(),
+                    uri,
+                };
+                self.pending = Some(PendingContinuation::GlobHasElement {
+                    token,
+                    request,
+                    security_checked: true,
+                });
+                return WasmHostOutcome::Suspend(suspend);
+            }
             if self.config.has_custom_security_check_read {
                 let suspend = WasmSuspendRequest::CheckReadResource {
                     token: token.clone(),
@@ -1968,7 +2162,16 @@ impl WasmHostCore {
             return WasmHostOutcome::Suspend(suspend);
         }
 
-        if uri.starts_with("package:") || uri.starts_with("projectpackage:") {
+        if uri_scheme_eq(&uri, "projectpackage") {
+            return WasmHostOutcome::CapabilityUnavailable {
+                capability: "projectResolution",
+                message: format!(
+                    "Project package URI `{uri}` requires `PklProject` resolution, which is unavailable in Wasm."
+                ),
+            };
+        }
+
+        if uri_scheme_eq(&uri, "package") {
             let asset_uri = match PackageAssetUri::parse(uri) {
                 Ok(u) => u,
                 Err(e) => {
@@ -1980,7 +2183,7 @@ impl WasmHostCore {
             return self.continue_package_glob_has_element(token, request, asset_uri);
         }
 
-        if uri.starts_with("file:") {
+        if uri_scheme_eq(&uri, "file") {
             if !self.config.has_vfs {
                 return WasmHostOutcome::CapabilityUnavailable {
                     capability: "nativeFs",
@@ -2002,7 +2205,7 @@ impl WasmHostCore {
             return WasmHostOutcome::Suspend(suspend);
         }
 
-        if uri.starts_with("modulepath:") || uri.starts_with("jar:") {
+        if uri_scheme_eq(&uri, "modulepath") || uri_scheme_eq(&uri, "jar") {
             return WasmHostOutcome::CapabilityUnavailable {
                 capability: "modulePathJar",
                 message: format!(
@@ -2045,14 +2248,22 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::GlobHasElement {
-                    token,
-                    request,
-                    security_checked: true,
-                });
-                return WasmHostOutcome::Suspend(suspend);
+                return match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::GlobHasElement {
+                        token,
+                        request,
+                        security_checked: true,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => {
+                        WasmHostOutcome::CompleteGlob(GlobCompletion::HasElement(Err(err.into())))
+                    }
+                };
             }
             Err(err) => {
                 self.record_module_err(&err);
@@ -2061,17 +2272,35 @@ impl WasmHostCore {
         };
 
         let Some(archive) = self.packages.get_archive(&asset_uri.package) else {
+            if !self.has_package_transport() {
+                return WasmHostOutcome::CapabilityUnavailable {
+                    capability: "nativeHttp",
+                    message: format!(
+                        "Package archive fetch for `{}` requires `packageTransport` or `httpFetch` in Wasm.",
+                        asset_uri.package.uri
+                    ),
+                };
+            }
+            let zip_url = meta.package_zip_url.clone();
             let suspend = WasmSuspendRequest::PackageArchive {
                 token: token.clone(),
                 package_uri: asset_uri.package.uri.clone(),
-                zip_url: meta.package_zip_url.clone(),
+                zip_url: zip_url.clone(),
             };
-            self.pending = Some(PendingContinuation::GlobHasElement {
-                token,
-                request,
-                security_checked: true,
-            });
-            return WasmHostOutcome::Suspend(suspend);
+            return match self.suspend_package_http(
+                &zip_url,
+                suspend,
+                PendingContinuation::GlobHasElement {
+                    token,
+                    request,
+                    security_checked: true,
+                },
+            ) {
+                Ok(outcome) => outcome,
+                Err(err) => {
+                    WasmHostOutcome::CompleteGlob(GlobCompletion::HasElement(Err(err.into())))
+                }
+            };
         };
 
         let exists = archive.has_element(asset_uri.asset_path.as_str().unwrap_or(""));
@@ -2091,6 +2320,18 @@ impl WasmHostCore {
         let uri = uri.clone();
 
         if !security_checked {
+            if is_resource && self.config.has_custom_security_check_resolve_resource {
+                let suspend = WasmSuspendRequest::CheckResolveResource {
+                    token: token.clone(),
+                    uri,
+                };
+                self.pending = Some(PendingContinuation::GlobListElements {
+                    token,
+                    request,
+                    security_checked: true,
+                });
+                return WasmHostOutcome::Suspend(suspend);
+            }
             if is_resource && self.config.has_custom_security_check_read {
                 let suspend = WasmSuspendRequest::CheckReadResource {
                     token: token.clone(),
@@ -2167,11 +2408,18 @@ impl WasmHostCore {
             }
         }
 
-        // `package:` / `projectpackage:`
-        if uri.starts_with("package:")
-            || uri.starts_with("projectpackage:")
-            || is_package_glob_reader(reader)
-        {
+        // `projectpackage:` is unavailable in Wasm
+        if uri_scheme_eq(&uri, "projectpackage") {
+            return WasmHostOutcome::CapabilityUnavailable {
+                capability: "projectResolution",
+                message: format!(
+                    "Project package URI `{uri}` requires `PklProject` resolution, which is unavailable in Wasm."
+                ),
+            };
+        }
+
+        // `package:`
+        if uri_scheme_eq(&uri, "package") || is_package_glob_reader(reader) {
             let asset_uri = match PackageAssetUri::parse(uri) {
                 Ok(u) => u,
                 Err(e) => {
@@ -2184,17 +2432,26 @@ impl WasmHostCore {
         }
 
         // Builtin `env:` / `prop:`
+        let allow_all = SecurityPolicy::new(Some(&[".*".into()]), Some(&[".*".into()]), None)
+            .expect("valid wildcard policy");
+        let effective_policy = if self.config.has_custom_security_check_read
+            || self.config.has_custom_security_check_resolve_resource
+        {
+            &allow_all
+        } else {
+            &self.policy
+        };
         if let Some(comp) = configured_completion_with_policy(
             &request,
             &self.properties,
             &self.environment,
-            &self.policy,
+            effective_policy,
         ) {
             return WasmHostOutcome::CompleteGlob(comp);
         }
 
         // `file:` via VFS
-        if uri.starts_with("file:") {
+        if uri_scheme_eq(&uri, "file") {
             if !self.config.has_vfs {
                 return WasmHostOutcome::CapabilityUnavailable {
                     capability: "nativeFs",
@@ -2251,14 +2508,22 @@ impl WasmHostCore {
                 let suspend = WasmSuspendRequest::PackageMetadata {
                     token: token.clone(),
                     package_uri: asset_uri.package.uri.clone(),
-                    request_url,
+                    request_url: request_url.clone(),
                 };
-                self.pending = Some(PendingContinuation::GlobListElements {
-                    token,
-                    request,
-                    security_checked: true,
-                });
-                return WasmHostOutcome::Suspend(suspend);
+                return match self.suspend_package_http(
+                    &request_url,
+                    suspend,
+                    PendingContinuation::GlobListElements {
+                        token,
+                        request,
+                        security_checked: true,
+                    },
+                ) {
+                    Ok(outcome) => outcome,
+                    Err(err) => {
+                        WasmHostOutcome::CompleteGlob(GlobCompletion::Elements(Err(err.into())))
+                    }
+                };
             }
             Err(err) => {
                 self.record_module_err(&err);
@@ -2267,17 +2532,35 @@ impl WasmHostCore {
         };
 
         let Some(archive) = self.packages.get_archive(&asset_uri.package) else {
+            if !self.has_package_transport() {
+                return WasmHostOutcome::CapabilityUnavailable {
+                    capability: "nativeHttp",
+                    message: format!(
+                        "Package archive fetch for `{}` requires `packageTransport` or `httpFetch` in Wasm.",
+                        asset_uri.package.uri
+                    ),
+                };
+            }
+            let zip_url = meta.package_zip_url.clone();
             let suspend = WasmSuspendRequest::PackageArchive {
                 token: token.clone(),
                 package_uri: asset_uri.package.uri.clone(),
-                zip_url: meta.package_zip_url.clone(),
+                zip_url: zip_url.clone(),
             };
-            self.pending = Some(PendingContinuation::GlobListElements {
-                token,
-                request,
-                security_checked: true,
-            });
-            return WasmHostOutcome::Suspend(suspend);
+            return match self.suspend_package_http(
+                &zip_url,
+                suspend,
+                PendingContinuation::GlobListElements {
+                    token,
+                    request,
+                    security_checked: true,
+                },
+            ) {
+                Ok(outcome) => outcome,
+                Err(err) => {
+                    WasmHostOutcome::CompleteGlob(GlobCompletion::Elements(Err(err.into())))
+                }
+            };
         };
 
         let elements = archive
@@ -2426,6 +2709,50 @@ impl WasmHostCore {
                     )));
                 }
                 Ok(self.continue_glob_list_elements(token, request, true))
+            }
+            PendingContinuation::PackageUrlCheck {
+                next_suspend,
+                after_fetch,
+            } => {
+                if let Some(msg) = error_message {
+                    self.saw_security_denial = true;
+                    let mod_err = ModuleHostError::SecurityManagerException {
+                        message: Some(msg.clone()),
+                    };
+                    return Ok(match *after_fetch {
+                        PendingContinuation::ModuleResolveDepImport { .. } => {
+                            WasmHostOutcome::CompleteModule(ModuleCompletion::ImportUri(Err(
+                                mod_err,
+                            )))
+                        }
+                        PendingContinuation::ModuleResolve { request, .. } => {
+                            self.finish_module_resolve_err(&request, mod_err)
+                        }
+                        PendingContinuation::ModuleHasElement { .. } => {
+                            WasmHostOutcome::CompleteModule(ModuleCompletion::HasElement(Err(
+                                mod_err,
+                            )))
+                        }
+                        PendingContinuation::ReadResource { .. } => WasmHostOutcome::CompleteRead(
+                            Err(ReadFailure::SecurityManagerException { message: Some(msg) }),
+                        ),
+                        PendingContinuation::GlobHasElement { .. } => {
+                            WasmHostOutcome::CompleteGlob(GlobCompletion::HasElement(Err(
+                                mod_err.into()
+                            )))
+                        }
+                        PendingContinuation::GlobListElements { .. } => {
+                            WasmHostOutcome::CompleteGlob(GlobCompletion::Elements(Err(
+                                mod_err.into()
+                            )))
+                        }
+                        _ => WasmHostOutcome::CompleteRead(Err(
+                            ReadFailure::SecurityManagerException { message: Some(msg) },
+                        )),
+                    });
+                }
+                self.pending = Some(*after_fetch);
+                Ok(WasmHostOutcome::Suspend(*next_suspend))
             }
             other => {
                 self.pending = Some(other);
@@ -3093,7 +3420,12 @@ pub fn parse_host_config_js(value: &JsValue) -> Result<WasmHostConfig, Structure
     let platform_metadata = if platform_val.is_null() || platform_val.is_undefined() {
         None
     } else if platform_val.is_object() {
-        let mut meta = PlatformMetadata::default();
+        let mut meta = PlatformMetadata {
+            os_name: "unknown".into(),
+            os_version: "".into(),
+            cpu_architecture: "wasm32".into(),
+            java_version: "native".into(),
+        };
         let os = get_prop(&platform_val, "os")?;
         if !os.is_null() && !os.is_undefined() {
             meta.os_name = rust_string_from_js(&os)?.into();
@@ -3197,6 +3529,10 @@ pub fn parse_host_config_js(value: &JsValue) -> Result<WasmHostConfig, Structure
         has_custom_security_check_import: opt_bool("hasCustomSecurityCheckImport", false)?,
         has_custom_security_check_read: opt_bool("hasCustomSecurityCheckRead", false)?,
         has_custom_security_check_resolve: opt_bool("hasCustomSecurityCheckResolve", false)?,
+        has_custom_security_check_resolve_resource: opt_bool(
+            "hasCustomSecurityCheckResolveResource",
+            false,
+        )?,
         platform_metadata,
         custom_module_readers,
         custom_resource_readers,
@@ -3255,12 +3591,20 @@ pub fn parse_path_elements_js(value: &JsValue) -> Result<Vec<PathElement>, Struc
     Ok(out)
 }
 
+fn uri_scheme_eq(uri: &PklString, expected: &str) -> bool {
+    let raw = uri.to_java_utf8();
+    raw.split_once(':')
+        .is_some_and(|(scheme, _)| scheme.eq_ignore_ascii_case(expected))
+}
+
 pub fn is_package_glob_reader(reader: &GlobReader) -> bool {
     match reader {
         GlobReader::Module(key) => {
-            key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:")
+            uri_scheme_eq(&key.uri, "package") || uri_scheme_eq(&key.uri, "projectpackage")
         }
-        GlobReader::Resource(r) => r.scheme == "package" || r.scheme == "projectpackage",
+        GlobReader::Resource(r) => r.scheme.as_str().is_some_and(|s| {
+            s.eq_ignore_ascii_case("package") || s.eq_ignore_ascii_case("projectpackage")
+        }),
     }
 }
 

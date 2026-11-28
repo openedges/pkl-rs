@@ -9,7 +9,8 @@ use crate::bridge::{
     JsResourceReaderSpec, JsSecurityAdapter, JsSecurityHooks,
 };
 use crate::error::{
-    NativeError, js_pkl_string, parse_u64_bigint, to_js_outcome, utf16_to_pkl, utf16_to_string,
+    NativeError, NativeErrorKind, define_own_prop, js_pkl_string, parse_u64_bigint, to_js_outcome,
+    utf16_to_pkl, utf16_to_string,
 };
 use crate::schema::module_schema_to_js;
 use crate::values::decoded_value_to_js;
@@ -24,9 +25,9 @@ use napi_derive::napi;
 use pkl::{Color, ModuleSource, Project, TraceMode};
 use pkl_formatter::{GrammarVersion, format_str};
 use pkl_host_native::{
-    CaCertSource, HostFrameTransformer, HostLogger, NativeHost, NativeHostConfig,
-    NativeHostExtensions, canonicalize_root_dir, default_module_cache_dir, file_uri_to_path,
-    path_to_file_uri,
+    CaCertSource, CancelFlag, HostFrameTransformer, HostLogger, NativeHost, NativeHostConfig,
+    NativeHostExtensions, ScopedEvalCancel, canonicalize_root_dir, default_module_cache_dir,
+    file_uri_to_path, path_to_file_uri, write_file_nofollow,
 };
 use pkl_runtime::{
     diagnostic::TypeDiagnostic,
@@ -35,7 +36,6 @@ use pkl_runtime::{
     host::{
         HostPoll, format_timeout_message,
         http::{HttpClientConfig, NoProxyRule, ProxyAddress, ProxyConfig},
-        quote_uri_path,
         security::SecurityPolicy,
     },
     logging::FrameTransformer,
@@ -84,13 +84,7 @@ pub(crate) fn path_to_dir_uri(dir: &Path) -> PklString {
             .map(|cwd| cwd.join(dir))
             .unwrap_or_else(|_| dir.to_path_buf())
     };
-    let raw = abs.to_string_lossy().replace('\\', "/");
-    let quoted = quote_uri_path(&PklString::from(raw.as_str())).to_java_utf8();
-    let mut uri = if quoted.starts_with('/') {
-        format!("file://{quoted}")
-    } else {
-        format!("file:///{quoted}")
-    };
+    let mut uri = path_to_file_uri(&abs).to_java_utf8();
     if !uri.ends_with('/') {
         uri.push('/');
     }
@@ -110,6 +104,7 @@ impl SafeTimeoutWatchdog {
     pub(crate) fn start(
         timeout_ms: Option<u64>,
         call_cancel: Arc<AtomicBool>,
+        http_cancel: Arc<CancelFlag>,
         host: Arc<NativeHost>,
         bridge: Option<Arc<JsBridge>>,
     ) -> Self {
@@ -155,6 +150,7 @@ impl SafeTimeoutWatchdog {
                     if now >= deadline {
                         timed_out_bg.store(true, Ordering::SeqCst);
                         call_cancel.store(true, Ordering::SeqCst);
+                        http_cancel.cancel();
                         host.external_readers().cancel_all();
                         if let Some(ref b) = bridge {
                             b.wake_all();
@@ -169,6 +165,7 @@ impl SafeTimeoutWatchdog {
                     if res.timed_out() && !*done {
                         timed_out_bg.store(true, Ordering::SeqCst);
                         call_cancel.store(true, Ordering::SeqCst);
+                        http_cancel.cancel();
                         host.external_readers().cancel_all();
                         if let Some(ref b) = bridge {
                             b.wake_all();
@@ -257,6 +254,7 @@ pub struct NativeModuleReaderSpecIn {
     pub is_local: Option<bool>,
     pub is_globbable: Option<bool>,
     pub has_hierarchical_uris: Option<bool>,
+    pub has_fragment_paths: Option<bool>,
     pub is_cached: Option<bool>,
     pub has_has_element: Option<bool>,
     pub has_list_elements: Option<bool>,
@@ -310,7 +308,7 @@ pub(crate) struct BuiltNativeHost {
     pub(crate) host: Arc<NativeHost>,
     pub(crate) bridge: Option<Arc<JsBridge>>,
     pub(crate) logger: Arc<CapturingHostLogger>,
-    pub(crate) frame_transformer: Option<Arc<dyn HostFrameTransformer>>,
+    pub(crate) frame_transformer: Option<Arc<JsFrameTransformerAdapter>>,
     pub(crate) default_timeout_ms: Option<u64>,
     pub(crate) use_color: bool,
     pub(crate) trace_mode: TraceMode,
@@ -354,7 +352,8 @@ pub(crate) fn build_native_host(
     let mut external_module_readers: BTreeMap<String, ExternalReaderConfig> = BTreeMap::new();
     let mut external_resource_readers: BTreeMap<String, ExternalReaderConfig> = BTreeMap::new();
 
-    // Pre-parse env and properties for optional `projectDir` loading.
+    // Pre-parse caller security, timeout, env, and properties BEFORE optional `projectDir` loading
+    // so `PklProject` evaluation honors the caller's policy and timeout instead of permissive defaults.
     let explicit_env: Option<Vec<(String, String)>> = match opts.env {
         Some(entries) => {
             let mut out = Vec::with_capacity(entries.len());
@@ -375,21 +374,89 @@ pub(crate) fn build_native_host(
         }
         None => None,
     };
+    let explicit_allowed_modules: Option<Vec<String>> = match opts.allowed_modules {
+        Some(mods) => {
+            let mut parsed = Vec::with_capacity(mods.len());
+            for m in mods {
+                parsed.push(utf16_to_string(&m)?);
+            }
+            Some(parsed)
+        }
+        None => None,
+    };
+    let explicit_allowed_resources: Option<Vec<String>> = match opts.allowed_resources {
+        Some(res) => {
+            let mut parsed = Vec::with_capacity(res.len());
+            for r in res {
+                parsed.push(utf16_to_string(&r)?);
+            }
+            Some(parsed)
+        }
+        None => None,
+    };
+    let explicit_root_dir: Option<PathBuf> = match opts.root_dir {
+        Some(root) => Some(PathBuf::from(utf16_to_string(&root)?)),
+        None => None,
+    };
+    let explicit_timeout_ms: Option<u64> = match opts.timeout_ms {
+        Some(ref t) => Some(parse_u64_bigint(t)?),
+        None => None,
+    };
+    let security_hooks = JsSecurityHooks {
+        has_resolve_module: opts.has_security_resolve_module.unwrap_or(false),
+        has_import_module: opts.has_security_import_module.unwrap_or(false),
+        has_read_resource: opts.has_security_read_resource.unwrap_or(false),
+        has_resolve_resource: opts.has_security_resolve_resource.unwrap_or(false),
+    };
 
     // 1. Apply project settings first (either explicit `project` handle or `projectDir`).
     let loaded_dir_project: Option<Project> = if project.is_none()
         && let Some(ref pdir) = opts.project_dir
     {
+        if security_hooks.any() {
+            return Err(NativeError::configuration(
+                "`projectDir` cannot be combined with a custom `securityManager` during synchronous evaluator initialization; load the project explicitly with `Project.load(...)` or configure `allowedModules`/`allowedResources`/`rootDir` directly.",
+            ));
+        }
         let pdir_str = utf16_to_string(pdir)?;
+        let dir_or_file = Path::new(&pdir_str);
+        let project_file = if dir_or_file.is_dir() {
+            dir_or_file.join("PklProject")
+        } else {
+            dir_or_file.to_path_buf()
+        };
         let p_env = explicit_env
             .clone()
             .unwrap_or_else(|| std::env::vars().collect());
         let p_props = explicit_props.clone().unwrap_or_default();
-        Some(load_project_from_dir_or_file(
-            Path::new(&pdir_str),
-            p_env,
-            p_props,
-        )?)
+        let proj_config = NativeHostConfig {
+            allowed_modules: explicit_allowed_modules.clone().or_else(|| {
+                Some(
+                    pkl_runtime::host::security::DEFAULT_ALLOWED_MODULES
+                        .iter()
+                        .map(|s| (*s).to_string())
+                        .collect(),
+                )
+            }),
+            allowed_resources: explicit_allowed_resources.clone().or_else(|| {
+                Some(
+                    pkl_runtime::host::security::DEFAULT_ALLOWED_RESOURCES
+                        .iter()
+                        .map(|s| (*s).to_string())
+                        .collect(),
+                )
+            }),
+            root_dir: explicit_root_dir.clone(),
+            timeout_ms: explicit_timeout_ms,
+            properties: p_props,
+            environment: p_env,
+            internal_pkl_binary_eval: true,
+            ..Default::default()
+        };
+        Some(
+            Project::load_from_path_with_host_config(&project_file, proj_config, None)
+                .map_err(NativeError::from_pkl)?,
+        )
     } else {
         None
     };
@@ -481,22 +548,14 @@ pub(crate) fn build_native_host(
     }
 
     // 2. Apply explicit JS options (overriding project defaults).
-    if let Some(mods) = opts.allowed_modules {
-        let mut parsed = Vec::with_capacity(mods.len());
-        for m in mods {
-            parsed.push(utf16_to_string(&m)?);
-        }
-        allowed_modules = Some(parsed);
+    if let Some(mods) = explicit_allowed_modules {
+        allowed_modules = Some(mods);
     }
-    if let Some(res) = opts.allowed_resources {
-        let mut parsed = Vec::with_capacity(res.len());
-        for r in res {
-            parsed.push(utf16_to_string(&r)?);
-        }
-        allowed_resources = Some(parsed);
+    if let Some(res) = explicit_allowed_resources {
+        allowed_resources = Some(res);
     }
-    if let Some(root) = opts.root_dir {
-        root_dir = Some(PathBuf::from(utf16_to_string(&root)?));
+    if let Some(root) = explicit_root_dir {
+        root_dir = Some(root);
     }
     if let Some(paths) = opts.module_paths {
         let mut parsed = Vec::with_capacity(paths.len());
@@ -516,8 +575,8 @@ pub(crate) fn build_native_host(
     } else if let Some(dir) = opts.cache_dir {
         module_cache_dir = Some(PathBuf::from(utf16_to_string(&dir)?));
     }
-    if let Some(ref t) = opts.timeout_ms {
-        timeout_ms = Some(parse_u64_bigint(t)?);
+    if let Some(t) = explicit_timeout_ms {
+        timeout_ms = Some(t);
     }
     if let Some(ref mode) = opts.trace_mode {
         trace_mode = match mode.as_str() {
@@ -676,6 +735,7 @@ pub(crate) fn build_native_host(
                 is_local: r.is_local.unwrap_or(false),
                 is_globbable: r.is_globbable.unwrap_or(false),
                 has_hierarchical_uris: r.has_hierarchical_uris.unwrap_or(false),
+                has_fragment_paths: r.has_fragment_paths.unwrap_or(false),
                 is_cached: r.is_cached.unwrap_or(true),
                 has_has_element: r.has_has_element.unwrap_or(false),
                 has_list_elements: r.has_list_elements.unwrap_or(false),
@@ -700,12 +760,6 @@ pub(crate) fn build_native_host(
         }
     }
 
-    let security_hooks = JsSecurityHooks {
-        has_resolve_module: opts.has_security_resolve_module.unwrap_or(false),
-        has_import_module: opts.has_security_import_module.unwrap_or(false),
-        has_read_resource: opts.has_security_read_resource.unwrap_or(false),
-        has_resolve_resource: opts.has_security_resolve_resource.unwrap_or(false),
-    };
     let has_custom_logger = opts.has_custom_logger.unwrap_or(false);
     let has_logger_trace = opts.has_logger_trace.unwrap_or(false);
     let has_logger_warn = opts.has_logger_warn.unwrap_or(false);
@@ -804,17 +858,18 @@ pub(crate) fn build_native_host(
         !has_custom_logger,
     );
 
-    let frame_transformer: Option<Arc<dyn HostFrameTransformer>> = if has_frame_transformer {
+    let frame_transformer: Option<Arc<JsFrameTransformerAdapter>> = if has_frame_transformer {
         bridge
             .as_ref()
-            .map(|b| JsFrameTransformerAdapter::new(Arc::clone(b)) as Arc<dyn HostFrameTransformer>)
+            .map(|b| JsFrameTransformerAdapter::new(Arc::clone(b)))
     } else {
         None
     };
 
     let mut ext = NativeHostExtensions::default()
         .with_color(use_color)
-        .with_logger(Arc::clone(&logger) as Arc<dyn HostLogger>);
+        .with_logger(Arc::clone(&logger) as Arc<dyn HostLogger>)
+        .with_cancel_flag(Arc::clone(&shared_bridge_cancel));
     ext.extra_allowed_module_schemes = extra_module_schemes;
     ext.extra_allowed_resource_schemes = extra_resource_schemes;
 
@@ -822,7 +877,7 @@ pub(crate) fn build_native_host(
         ext = ext.with_output_format(fmt);
     }
     if let Some(ref tf) = frame_transformer {
-        ext = ext.with_frame_transformer(Arc::clone(tf), false);
+        ext = ext.with_frame_transformer(Arc::clone(tf) as Arc<dyn HostFrameTransformer>, false);
     }
     if let (Some(b), Some(policy)) = (bridge.as_ref(), fallback_policy) {
         ext = ext.with_custom_security(JsSecurityAdapter::new(
@@ -1050,7 +1105,8 @@ fn project_info_to_js<'env>(env: &'env Env, proj: &Project) -> Result<Object<'en
             if settings.env_is_set {
                 let mut eo = Object::new(env)?;
                 for (k, v) in &settings.env {
-                    eo.set(k.as_str(), v.as_str())?;
+                    let js_v = env.create_string(v.as_str())?;
+                    define_own_prop(env, &mut eo, k.as_str(), &js_v)?;
                 }
                 so.set("env", eo)?;
             } else {
@@ -1059,7 +1115,8 @@ fn project_info_to_js<'env>(env: &'env Env, proj: &Project) -> Result<Object<'en
             if settings.external_properties_is_set {
                 let mut po = Object::new(env)?;
                 for (k, v) in &settings.external_properties {
-                    po.set(k.as_str(), v.as_str())?;
+                    let js_v = env.create_string(v.as_str())?;
+                    define_own_prop(env, &mut po, k.as_str(), &js_v)?;
                 }
                 so.set("externalProperties", po)?;
             } else {
@@ -1093,16 +1150,23 @@ struct SessionState {
     pending_continue: bool,
 }
 
+pub(crate) type CallCancelPair = (Arc<AtomicBool>, Arc<CancelFlag>);
+type InFlightCancelMap = Arc<Mutex<HashMap<u64, CallCancelPair>>>;
+pub(crate) type ActiveCallCancelSlot = Arc<Mutex<Option<CallCancelPair>>>;
+
 #[derive(Clone)]
 struct EvaluatorShared {
     host: Arc<NativeHost>,
     state: Arc<Mutex<SessionState>>,
+    pending_continue_cvar: Arc<Condvar>,
+    abort_pending_continue: Arc<AtomicBool>,
     bridge: Option<Arc<JsBridge>>,
     logger: Arc<CapturingHostLogger>,
-    frame_transformer: Option<Arc<dyn HostFrameTransformer>>,
+    frame_transformer: Option<Arc<JsFrameTransformerAdapter>>,
     closed_flag: Arc<AtomicBool>,
     cancel_generation: Arc<AtomicU64>,
-    in_flight_cancels: Arc<Mutex<HashMap<u64, Arc<AtomicBool>>>>,
+    active_call_id: Arc<AtomicU64>,
+    in_flight_cancels: InFlightCancelMap,
     default_timeout_ms: Option<u64>,
     use_color: bool,
     power_assertions: bool,
@@ -1130,13 +1194,7 @@ impl EvaluatorShared {
             ErrorKind::Closed => NativeError::closed("Evaluator has been closed."),
             ErrorKind::Cancelled => NativeError::cancelled("Evaluation was cancelled."),
             _ => {
-                let is_security = err.kind == ErrorKind::Host
-                    && err.message.as_str().is_some_and(|m| {
-                        m.starts_with("Refusing to ")
-                            || m.contains("allowlist")
-                            || m.contains("root directory")
-                            || m.contains("SecurityManager")
-                    });
+                let is_security = err.is_security_error();
                 let text = session.format_error_text(err);
                 if is_security {
                     NativeError::security(text)
@@ -1155,7 +1213,7 @@ impl EvaluatorShared {
         timeout_ms: Option<u64>,
     ) -> Option<RuntimeError> {
         if self.closed_flag.load(Ordering::SeqCst) {
-            session.cancel();
+            session.close();
             let _ = session.drain_cancelled_reads();
             let _ = session.drain_cancelled_modules();
             let _ = session.drain_cancelled_globs();
@@ -1165,7 +1223,7 @@ impl EvaluatorShared {
             ));
         }
         if watchdog.triggered() {
-            session.cancel();
+            session.abort_active_operation();
             let _ = session.drain_cancelled_reads();
             let _ = session.drain_cancelled_modules();
             let _ = session.drain_cancelled_globs();
@@ -1175,7 +1233,7 @@ impl EvaluatorShared {
             ));
         }
         if call_cancel.load(Ordering::SeqCst) {
-            session.cancel();
+            session.abort_active_operation();
             let _ = session.drain_cancelled_reads();
             let _ = session.drain_cancelled_modules();
             let _ = session.drain_cancelled_globs();
@@ -1232,36 +1290,42 @@ impl EvaluatorShared {
                     session.complete_glob(&token, completion, self.host.clock_ms())?;
                 }
                 HostPoll::Log { token, event } => {
-                    self.logger.log(event.level, &event.message, &event.frame);
+                    let log_res =
+                        self.logger
+                            .log_checked(event.level, &event.message, &event.frame);
                     if let Some(err) =
                         self.check_drive_abort(session, call_cancel, watchdog, timeout_ms)
                     {
                         break Err(err);
                     }
-                    session.acknowledge_log(&token, Ok(()), self.host.clock_ms())?;
+                    session.acknowledge_log(&token, log_res, self.host.clock_ms())?;
                 }
                 HostPoll::TransformFrame { token, frame } => {
-                    let base = FrameTransformer::Default.transform((*frame).clone());
+                    let base = if self.test_mode {
+                        (*frame).clone()
+                    } else {
+                        FrameTransformer::Default.transform((*frame).clone())
+                    };
                     let transformed = match &self.frame_transformer {
-                        Some(tf) => tf.transform(base),
-                        None => base,
+                        Some(tf) => tf.transform_checked(base),
+                        None => Ok(base),
                     };
                     if let Some(err) =
                         self.check_drive_abort(session, call_cancel, watchdog, timeout_ms)
                     {
                         break Err(err);
                     }
-                    session.complete_frame_transform(
-                        &token,
-                        Ok(transformed),
-                        self.host.clock_ms(),
-                    )?;
+                    session.complete_frame_transform(&token, transformed, self.host.clock_ms())?;
                 }
             }
         };
         match res {
             Ok(v) => Ok(v),
             Err(err) if watchdog.triggered() && err.kind != ErrorKind::Timeout => {
+                session.abort_active_operation();
+                let _ = session.drain_cancelled_reads();
+                let _ = session.drain_cancelled_modules();
+                let _ = session.drain_cancelled_globs();
                 Err(RuntimeError::new(
                     ErrorKind::Timeout,
                     format_timeout_message(timeout_ms.unwrap_or(0)),
@@ -1276,11 +1340,12 @@ impl EvaluatorShared {
         op: EvalOp,
         call_timeout_override: Option<u64>,
         call_cancel: Arc<AtomicBool>,
+        http_cancel: Arc<CancelFlag>,
         start_gen: u64,
         call_id: Option<u64>,
     ) -> std::result::Result<EvalOutput, NativeError> {
         struct InFlightGuard {
-            map: Arc<Mutex<HashMap<u64, Arc<AtomicBool>>>>,
+            map: InFlightCancelMap,
             id: Option<u64>,
         }
         impl Drop for InFlightGuard {
@@ -1296,45 +1361,112 @@ impl EvaluatorShared {
             id: call_id,
         };
 
-        if self.closed_flag.load(Ordering::SeqCst) {
-            return Err(NativeError::closed("Evaluator has been closed."));
-        }
-        if call_cancel.load(Ordering::SeqCst)
-            || self.cancel_generation.load(Ordering::SeqCst) != start_gen
-        {
-            return Err(NativeError::cancelled("Evaluation was cancelled."));
+        let is_continue = matches!(op, EvalOp::ContinueRunning { .. });
+
+        if !is_continue {
+            if self.closed_flag.load(Ordering::SeqCst) {
+                return Err(NativeError::closed("Evaluator has been closed."));
+            }
+            if call_cancel.load(Ordering::SeqCst)
+                || self.cancel_generation.load(Ordering::SeqCst) != start_gen
+            {
+                return Err(NativeError::cancelled("Evaluation was cancelled."));
+            }
         }
 
         let mut guard = self.state.lock().unwrap_or_else(|e| e.into_inner());
+
+        // If a fast try-poll left `pending_continue = true`, wait for its paired
+        // `ContinueRunning` task to finish before starting an unrelated operation on
+        // the shared `SourceSession`.
+        if !is_continue {
+            while guard.pending_continue
+                && !guard.closed
+                && !self.closed_flag.load(Ordering::SeqCst)
+                && !call_cancel.load(Ordering::SeqCst)
+                && self.cancel_generation.load(Ordering::SeqCst) == start_gen
+            {
+                if self.abort_pending_continue.swap(false, Ordering::SeqCst) {
+                    guard.session.abort_active_operation();
+                    let _ = guard.session.drain_cancelled_reads();
+                    let _ = guard.session.drain_cancelled_modules();
+                    let _ = guard.session.drain_cancelled_globs();
+                    guard.pending_continue = false;
+                    self.pending_continue_cvar.notify_all();
+                    break;
+                }
+                let (next, _) = self
+                    .pending_continue_cvar
+                    .wait_timeout(guard, Duration::from_millis(20))
+                    .unwrap_or_else(|e| e.into_inner());
+                guard = next;
+            }
+        }
+
         if guard.closed || self.closed_flag.load(Ordering::SeqCst) || guard.session.is_closed() {
+            if is_continue && guard.pending_continue {
+                guard.pending_continue = false;
+                self.abort_pending_continue.store(false, Ordering::SeqCst);
+                self.pending_continue_cvar.notify_all();
+            }
             if !guard.closed {
                 guard.closed = true;
+                guard.columnar_buf.clear_and_release();
                 guard.session.close();
                 self.host.close();
+                self.pending_continue_cvar.notify_all();
             }
             return Err(NativeError::closed("Evaluator has been closed."));
         }
         if call_cancel.load(Ordering::SeqCst)
             || self.cancel_generation.load(Ordering::SeqCst) != start_gen
+            || (is_continue && self.abort_pending_continue.swap(false, Ordering::SeqCst))
         {
+            if is_continue && guard.pending_continue {
+                guard.pending_continue = false;
+                self.abort_pending_continue.store(false, Ordering::SeqCst);
+                guard.session.abort_active_operation();
+                let _ = guard.session.drain_cancelled_reads();
+                let _ = guard.session.drain_cancelled_modules();
+                let _ = guard.session.drain_cancelled_globs();
+                self.pending_continue_cvar.notify_all();
+            }
             return Err(NativeError::cancelled("Evaluation was cancelled."));
         }
+
+        struct ActiveCallIdGuard {
+            slot: Arc<AtomicU64>,
+        }
+        impl Drop for ActiveCallIdGuard {
+            fn drop(&mut self) {
+                self.slot.store(0, Ordering::SeqCst);
+            }
+        }
+        self.active_call_id
+            .store(call_id.unwrap_or(0), Ordering::SeqCst);
+        let _active_call_id_guard = ActiveCallIdGuard {
+            slot: Arc::clone(&self.active_call_id),
+        };
 
         let effective_timeout = call_timeout_override.or(self.default_timeout_ms);
         let watchdog = SafeTimeoutWatchdog::start(
             effective_timeout,
             Arc::clone(&call_cancel),
+            Arc::clone(&http_cancel),
             Arc::clone(&self.host),
             self.bridge.clone(),
         );
+        let _scoped_http_cancel =
+            ScopedEvalCancel::push_with_deadline(Arc::clone(&http_cancel), watchdog.deadline());
         let _bridge_guard = self
             .bridge
             .as_ref()
             .map(|b| b.enter_call(Arc::clone(&call_cancel), watchdog.deadline()));
 
-        let is_continue = matches!(op, EvalOp::ContinueRunning { .. });
         if is_continue {
             guard.pending_continue = false;
+            self.abort_pending_continue.store(false, Ordering::SeqCst);
+            self.pending_continue_cvar.notify_all();
         }
         let outcome = self.run_op_locked(
             &mut guard.session,
@@ -1349,8 +1481,10 @@ impl EvaluatorShared {
         if self.closed_flag.load(Ordering::SeqCst) {
             if !guard.closed {
                 guard.closed = true;
+                guard.columnar_buf.clear_and_release();
                 guard.session.close();
                 self.host.close();
+                self.pending_continue_cvar.notify_all();
             }
             return Err(NativeError::closed("Evaluator has been closed."));
         }
@@ -1358,6 +1492,9 @@ impl EvaluatorShared {
             return Err(NativeError::timeout(format_timeout_message(
                 effective_timeout.unwrap_or(0),
             )));
+        }
+        if call_cancel.load(Ordering::SeqCst) && outcome.is_err() {
+            return Err(NativeError::cancelled("Evaluation was cancelled."));
         }
         outcome
     }
@@ -1371,9 +1508,14 @@ impl EvaluatorShared {
             uri: uri.clone(),
             contents: contents.cloned().map(SourceText::from),
         };
-        self.host
-            .resolve_module_source_spec(raw)
-            .map_err(|err| NativeError::evaluation(format!("{err:?}")))
+        self.host.resolve_module_source_spec(raw).map_err(|err| {
+            let msg = format_module_host_error_for_napi(&err);
+            if matches!(err, ModuleHostError::SecurityManagerException { .. }) {
+                NativeError::security(msg)
+            } else {
+                NativeError::evaluation(msg)
+            }
+        })
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -1497,18 +1639,18 @@ impl EvaluatorShared {
                     watchdog,
                     timeout_ms,
                 )?;
-                let decoded = decode_lossless(&bytes).map_err(|err| {
+                let mut decoded = decode_lossless(&bytes).map_err(|err| {
                     NativeError::decode(format!("Failed to decode output.files: {err}"))
                 })?;
                 let mut files = Vec::new();
-                if let DecodedValue::Map(entries) | DecodedValue::Mapping(entries) = decoded {
-                    for (k, v) in entries {
-                        let key = match k {
-                            DecodedValue::String(s) => s,
+                if let DecodedValue::Map(entries) | DecodedValue::Mapping(entries) = &mut decoded {
+                    for (k, mut v) in entries.drain(..) {
+                        let key = match &k {
+                            DecodedValue::String(s) => s.clone(),
                             other => other.to_java_key_string(),
                         };
-                        let raw_bytes = match v {
-                            DecodedValue::Bytes(b) => b,
+                        let raw_bytes = match &mut v {
+                            DecodedValue::Bytes(b) => std::mem::take(b),
                             DecodedValue::String(s) => s.to_java_utf8().into_bytes(),
                             other => {
                                 return Err(NativeError::decode(format!(
@@ -1785,9 +1927,23 @@ new Mapping {
         let module_source_text: Option<String> = if let Some(inline) = contents {
             Some(inline.to_java_utf8())
         } else if module_uri.starts_with("file:") {
-            file_uri_to_path(&PklString::from(module_uri.as_str()))
+            let mod_uri_pkl = PklString::from(module_uri.as_str());
+            self.host
+                .fs()
+                .resolve_file_module(&mod_uri_pkl)
                 .ok()
-                .and_then(|p| std::fs::read_to_string(p).ok())
+                .and_then(|(resolved, real_path)| {
+                    if resolved.resolved_uri != mod_uri_pkl
+                        && self
+                            .host
+                            .check_resolve_module(&resolved.resolved_uri)
+                            .is_err()
+                    {
+                        return None;
+                    }
+                    self.host.fs().read_file_module_bytes(&real_path).ok()
+                })
+                .and_then(|bytes| String::from_utf8(bytes).ok())
         } else {
             None
         };
@@ -1850,7 +2006,7 @@ new Mapping {
         )?;
         let shape_decoded = decode_lossless(&shape_bytes)
             .map_err(|err| NativeError::decode(format!("Failed to decode facts shape: {err}")))?;
-        let groups = match shape_decoded {
+        let groups = match &shape_decoded {
             DecodedValue::Null => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
             DecodedValue::Map(entries) | DecodedValue::Mapping(entries) => entries,
             _ => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
@@ -1864,7 +2020,7 @@ new Mapping {
         for (group_key, len_val) in groups {
             let group_name = group_key.to_java_key_string().to_java_utf8();
             let count = match len_val {
-                DecodedValue::Int(n) if n >= 0 => n as usize,
+                DecodedValue::Int(n) if *n >= 0 => *n as usize,
                 _ => 0,
             };
             let group_locs = fact_spans.get(&group_name);
@@ -1899,11 +2055,19 @@ new Mapping {
                                 call_cancel,
                                 watchdog,
                                 timeout_ms,
-                            );
+                            )?;
                             failures.push(failure);
                         }
                     }
                     Err(err) => {
+                        if matches!(
+                            err.kind,
+                            NativeErrorKind::Cancelled
+                                | NativeErrorKind::Timeout
+                                | NativeErrorKind::Closed
+                        ) {
+                            return Err(err);
+                        }
                         let rendered = err.message.to_java_utf8();
                         let short = extract_short_error_message(&rendered);
                         errors.push(TestError {
@@ -1941,10 +2105,14 @@ new Mapping {
         call_cancel: &Arc<AtomicBool>,
         watchdog: &SafeTimeoutWatchdog,
         timeout_ms: Option<u64>,
-    ) -> TestFailure {
+    ) -> std::result::Result<TestFailure, NativeError> {
         let Some((expr_text, line, _span)) = loc_info else {
             let loc = self.format_test_location(module_uri, None);
-            return format_fact_failure(&format!("fact #{idx} == false"), &loc, self.use_color);
+            return Ok(format_fact_failure(
+                &format!("fact #{idx} == false"),
+                &loc,
+                self.use_color,
+            ));
         };
         let location = self.format_test_location(module_uri, Some(*line));
 
@@ -1962,26 +2130,34 @@ new Mapping {
                     .is_ok()
                 {
                     let res = self.drive_session(session, call_cancel, watchdog, timeout_ms);
-                    if let Err(err) = res
-                        && let Some(ref td) = err.type_diagnostic
-                        && let Some((body_span, observations)) = extract_constraint_observations(td)
-                    {
-                        let mut sm = SourceMap::default();
-                        let sid = sm.add("repl:text", probe_expr.as_str());
-                        if let Some(src) = sm.get(sid) {
-                            return format_fact_failure_with_power_assertions(
-                                src,
-                                body_span,
-                                observations,
-                                &location,
-                                self.use_color,
-                            );
+                    if let Err(err) = res {
+                        if matches!(
+                            err.kind,
+                            ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                        ) {
+                            return Err(self.map_runtime_err(session, err, timeout_ms));
+                        }
+                        if let Some(ref td) = err.type_diagnostic
+                            && let Some((body_span, observations)) =
+                                extract_constraint_observations(td)
+                        {
+                            let mut sm = SourceMap::default();
+                            let sid = sm.add("repl:text", probe_expr.as_str());
+                            if let Some(src) = sm.get(sid) {
+                                return Ok(format_fact_failure_with_power_assertions(
+                                    src,
+                                    body_span,
+                                    observations,
+                                    &location,
+                                    self.use_color,
+                                ));
+                            }
                         }
                     }
                 }
             }
         }
-        format_fact_failure(expr_text, &location, self.use_color)
+        Ok(format_fact_failure(expr_text, &location, self.use_color))
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -2024,7 +2200,12 @@ new Mapping {
             )));
         }
 
-        let module_path = file_uri_to_path(&PklString::from(module_uri)).map_err(|err| {
+        let module_uri_pkl = PklString::from(module_uri);
+        self.host
+            .check_resolve_module(&module_uri_pkl)
+            .map_err(|err| NativeError::security(format_module_host_error_for_napi(&err)))?;
+
+        let module_path = file_uri_to_path(&module_uri_pkl).map_err(|err| {
             NativeError::evaluation(format!("Invalid file URI `{module_uri}`: {err}"))
         })?;
         let file_name = module_path
@@ -2033,22 +2214,62 @@ new Mapping {
             .unwrap_or_default();
         let expected_path = module_path.with_file_name(format!("{file_name}-expected.pcf"));
         let actual_path = module_path.with_file_name(format!("{file_name}-actual.pcf"));
+        let expected_uri_pkl = path_to_file_uri(&expected_path);
+        let actual_uri_pkl = path_to_file_uri(&actual_path);
+        self.host
+            .check_resolve_module(&expected_uri_pkl)
+            .map_err(|err| NativeError::security(format_module_host_error_for_napi(&err)))?;
+        self.host
+            .check_resolve_module(&actual_uri_pkl)
+            .map_err(|err| NativeError::security(format_module_host_error_for_napi(&err)))?;
+        let canon_expected = pkl_host_native::try_resolve_canonical_or_ancestor(&expected_path)
+            .map_err(|()| {
+                NativeError::security(
+                    pkl_runtime::host::security::root_dir_denied_message(&expected_uri_pkl, false)
+                        .to_java_utf8(),
+                )
+            })?;
+        let canon_expected_uri = path_to_file_uri(&canon_expected);
+        if canon_expected_uri != expected_uri_pkl {
+            self.host
+                .check_resolve_module(&canon_expected_uri)
+                .map_err(|err| NativeError::security(format_module_host_error_for_napi(&err)))?;
+        }
+        let canon_actual = pkl_host_native::try_resolve_canonical_or_ancestor(&actual_path)
+            .map_err(|()| {
+                NativeError::security(
+                    pkl_runtime::host::security::root_dir_denied_message(&actual_uri_pkl, false)
+                        .to_java_utf8(),
+                )
+            })?;
+        let canon_actual_uri = path_to_file_uri(&canon_actual);
+        if canon_actual_uri != actual_uri_pkl {
+            self.host
+                .check_resolve_module(&canon_actual_uri)
+                .map_err(|err| NativeError::security(format_module_host_error_for_napi(&err)))?;
+        }
 
-        if actual_path.exists() {
-            std::fs::remove_file(&actual_path).map_err(|err| {
-                NativeError::io(format!(
+        match std::fs::remove_file(&actual_path) {
+            Ok(()) => {}
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+            Err(err) => {
+                return Err(NativeError::io(format!(
                     "I/O error writing test output file `{}`: {err}",
                     actual_path.display()
-                ))
-            })?;
+                )));
+            }
         }
-        if overwrite && expected_path.exists() {
-            std::fs::remove_file(&expected_path).map_err(|err| {
-                NativeError::io(format!(
-                    "I/O error writing test output file `{}`: {err}",
-                    expected_path.display()
-                ))
-            })?;
+        if overwrite {
+            match std::fs::remove_file(&expected_path) {
+                Ok(()) => {}
+                Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+                Err(err) => {
+                    return Err(NativeError::io(format!(
+                        "I/O error writing test output file `{}`: {err}",
+                        expected_path.display()
+                    )));
+                }
+            }
         }
 
         let actual_map_expr = r#"
@@ -2087,20 +2308,81 @@ examples.toMap().mapValues((_, g) ->
         let expected_uri = path_to_file_uri(&expected_path).to_java_utf8();
         let actual_uri = path_to_file_uri(&actual_path).to_java_utf8();
 
-        let (expected_groups, expected_source) = if expected_path.is_file() {
-            let exp_text = std::fs::read_to_string(&expected_path).map_err(|err| {
-                NativeError::io(format!(
+        let (expected_groups, expected_source) = match std::fs::symlink_metadata(&expected_path) {
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => (None, None),
+            Err(err) => {
+                return Err(NativeError::io(format!(
                     "I/O error reading test output file `{}`: {err}",
                     expected_path.display()
-                ))
-            })?;
-            let exp_uri_pkl = PklString::from(expected_uri.as_str());
-            let exp_text_pkl = PklString::from(exp_text.as_str());
-            let exp_bytes = self.eval_pkl_binary_locked(
-                session,
-                &exp_uri_pkl,
-                Some(&exp_text_pkl),
-                r#"
+                )));
+            }
+            Ok(meta) if meta.is_dir() => (None, None),
+            Ok(_) => {
+                let raw_bytes_opt = match self.host.fs().resolve_file_module(&expected_uri_pkl) {
+                    Ok((resolved, real_path)) => {
+                        if resolved.resolved_uri != expected_uri_pkl {
+                            self.host
+                                .check_resolve_module(&resolved.resolved_uri)
+                                .map_err(|err| {
+                                    NativeError::security(format_module_host_error_for_napi(&err))
+                                })?;
+                        }
+                        match self.host.fs().read_file_module_bytes(&real_path) {
+                            Ok(b) => Some(b),
+                            Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                            Err(
+                                err @ pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                                    ..
+                                },
+                            ) => {
+                                return Err(NativeError::security(
+                                    format_module_host_error_for_napi(&err),
+                                ));
+                            }
+                            Err(err) => {
+                                return Err(NativeError::io(format!(
+                                    "I/O error reading test output file `{}`: {}",
+                                    expected_path.display(),
+                                    format_module_host_error_for_napi(&err)
+                                )));
+                            }
+                        }
+                    }
+                    Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                    Err(
+                        err @ pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                            ..
+                        },
+                    ) => {
+                        return Err(NativeError::security(format_module_host_error_for_napi(
+                            &err,
+                        )));
+                    }
+                    Err(err) => {
+                        return Err(NativeError::io(format!(
+                            "I/O error reading test output file `{}`: {}",
+                            expected_path.display(),
+                            format_module_host_error_for_napi(&err)
+                        )));
+                    }
+                };
+                if let Some(raw_bytes) = raw_bytes_opt {
+                    let exp_text = String::from_utf8(raw_bytes).map_err(|err| {
+                        NativeError::io(format!(
+                            "I/O error reading test output file `{}`: {err}",
+                            expected_path.display()
+                        ))
+                    })?;
+                    let exp_uri_pkl = PklString::from(expected_uri.as_str());
+                    let exp_text_pkl = PklString::from(exp_text.as_str());
+                    let mut exp_session = self.host.new_public_session(
+                        pkl_runtime::evaluation::frontend::DiagnosticProfile::ApiIdentity,
+                    );
+                    let exp_bytes_res = self.eval_pkl_binary_locked(
+                        &mut exp_session,
+                        &exp_uri_pkl,
+                        Some(&exp_text_pkl),
+                        r#"
 let (r = new PcfRenderer { omitNullProperties = false })
 let (ex = examples)
 if (ex == null) throw("Invalid output file structure")
@@ -2111,19 +2393,23 @@ else ex.toMap().mapValues((_, g) ->
   )
 )
 "#,
-                call_cancel,
-                watchdog,
-                timeout_ms,
-            )?;
-            let exp_decoded = decode_lossless(&exp_bytes).map_err(|err| {
-                NativeError::decode(format!("Failed to decode expected examples: {err}"))
-            })?;
-            (
-                Some(decode_rendered_examples_map(Some(&exp_decoded))),
-                Some(exp_text),
-            )
-        } else {
-            (None, None)
+                        call_cancel,
+                        watchdog,
+                        timeout_ms,
+                    );
+                    exp_session.close();
+                    let exp_bytes = exp_bytes_res?;
+                    let exp_decoded = decode_lossless(&exp_bytes).map_err(|err| {
+                        NativeError::decode(format!("Failed to decode expected examples: {err}"))
+                    })?;
+                    (
+                        Some(decode_rendered_examples_map(Some(&exp_decoded))),
+                        Some(exp_text),
+                    )
+                } else {
+                    (None, None)
+                }
+            }
         };
 
         let (section, gen_expected, gen_actual) = evaluate_examples_rendered_detailed(
@@ -2140,7 +2426,7 @@ else ex.toMap().mapValues((_, g) ->
         );
 
         if let Some(ref content) = gen_expected {
-            std::fs::write(&expected_path, content).map_err(|err| {
+            write_file_nofollow(&expected_path, content.as_bytes()).map_err(|err| {
                 NativeError::io(format!(
                     "I/O error writing test output file `{}`: {err}",
                     expected_path.display()
@@ -2148,7 +2434,7 @@ else ex.toMap().mapValues((_, g) ->
             })?;
         }
         if let Some(ref content) = gen_actual {
-            std::fs::write(&actual_path, content).map_err(|err| {
+            write_file_nofollow(&actual_path, content.as_bytes()).map_err(|err| {
                 NativeError::io(format!(
                     "I/O error writing test output file `{}`: {err}",
                     actual_path.display()
@@ -2341,8 +2627,10 @@ pub struct EvalAsyncTask {
     shared: EvaluatorShared,
     op: Option<std::result::Result<(EvalOp, Option<u64>), NativeError>>,
     call_cancel: Arc<AtomicBool>,
+    http_cancel: Arc<CancelFlag>,
     start_gen: u64,
     call_id: Option<u64>,
+    is_continue: bool,
 }
 
 impl<'task> ScopedTask<'task> for EvalAsyncTask {
@@ -2366,6 +2654,20 @@ impl<'task> ScopedTask<'task> for EvalAsyncTask {
                         .unwrap_or_else(|e| e.into_inner());
                     map.remove(&id);
                 }
+                if self.is_continue {
+                    let mut guard = self.shared.state.lock().unwrap_or_else(|e| e.into_inner());
+                    if guard.pending_continue {
+                        guard.session.abort_active_operation();
+                        let _ = guard.session.drain_cancelled_reads();
+                        let _ = guard.session.drain_cancelled_modules();
+                        let _ = guard.session.drain_cancelled_globs();
+                        guard.pending_continue = false;
+                        self.shared
+                            .abort_pending_continue
+                            .store(false, Ordering::SeqCst);
+                        self.shared.pending_continue_cvar.notify_all();
+                    }
+                }
                 return Ok(Err(e));
             }
         };
@@ -2373,6 +2675,7 @@ impl<'task> ScopedTask<'task> for EvalAsyncTask {
             op,
             timeout_override,
             Arc::clone(&self.call_cancel),
+            Arc::clone(&self.http_cancel),
             self.start_gen,
             self.call_id,
         ))
@@ -2386,6 +2689,7 @@ impl<'task> ScopedTask<'task> for EvalAsyncTask {
 pub struct EvalCloseTask {
     host: Arc<NativeHost>,
     state: Arc<Mutex<SessionState>>,
+    pending_continue_cvar: Arc<Condvar>,
 }
 
 impl<'task> ScopedTask<'task> for EvalCloseTask {
@@ -2396,9 +2700,11 @@ impl<'task> ScopedTask<'task> for EvalCloseTask {
         let mut guard = self.state.lock().unwrap_or_else(|e| e.into_inner());
         if !guard.closed {
             guard.closed = true;
+            guard.pending_continue = false;
             guard.columnar_buf.clear_and_release();
             guard.session.close();
             self.host.close();
+            self.pending_continue_cvar.notify_all();
         }
         Ok(())
     }
@@ -2437,11 +2743,14 @@ impl NativeEvaluator {
                 closed: false,
                 pending_continue: false,
             })),
+            pending_continue_cvar: Arc::new(Condvar::new()),
+            abort_pending_continue: Arc::new(AtomicBool::new(false)),
             bridge: built.bridge,
             logger: built.logger,
             frame_transformer: built.frame_transformer,
             closed_flag: Arc::new(AtomicBool::new(false)),
             cancel_generation: Arc::new(AtomicU64::new(0)),
+            active_call_id: Arc::new(AtomicU64::new(0)),
             in_flight_cancels: Arc::new(Mutex::new(HashMap::new())),
             default_timeout_ms: built.default_timeout_ms,
             use_color: built.use_color,
@@ -2476,7 +2785,7 @@ impl NativeEvaluator {
     #[napi]
     pub fn cancel(&self) {
         self.shared.cancel_generation.fetch_add(1, Ordering::SeqCst);
-        let flags: Vec<Arc<AtomicBool>> = {
+        let flags: Vec<(Arc<AtomicBool>, Arc<CancelFlag>)> = {
             let map = self
                 .shared
                 .in_flight_cancels
@@ -2484,11 +2793,13 @@ impl NativeEvaluator {
                 .unwrap_or_else(|e| e.into_inner());
             map.values().cloned().collect()
         };
+        self.shared.pending_continue_cvar.notify_all();
         if !flags.is_empty() {
-            for flag in flags {
+            for (flag, http_cancel) in flags {
                 flag.store(true, Ordering::SeqCst);
+                http_cancel.cancel();
             }
-            self.shared.host.cancel();
+            self.shared.host.external_readers().cancel_all();
             if let Some(ref bridge) = self.shared.bridge {
                 bridge.wake_all();
             }
@@ -2496,9 +2807,30 @@ impl NativeEvaluator {
     }
 
     #[napi]
+    pub fn abort_pending_fast(&self) {
+        self.shared
+            .abort_pending_continue
+            .store(true, Ordering::SeqCst);
+        self.shared.pending_continue_cvar.notify_all();
+        if let Ok(mut guard) = self.shared.state.try_lock()
+            && guard.pending_continue
+        {
+            guard.session.abort_active_operation();
+            let _ = guard.session.drain_cancelled_reads();
+            let _ = guard.session.drain_cancelled_modules();
+            let _ = guard.session.drain_cancelled_globs();
+            guard.pending_continue = false;
+            self.shared
+                .abort_pending_continue
+                .store(false, Ordering::SeqCst);
+            self.shared.pending_continue_cvar.notify_all();
+        }
+    }
+
+    #[napi]
     pub fn cancel_call(&self, call_id: BigInt) {
         if let Ok(id) = parse_u64_bigint(&call_id) {
-            let flag = {
+            let entry = {
                 let map = self
                     .shared
                     .in_flight_cancels
@@ -2506,12 +2838,16 @@ impl NativeEvaluator {
                     .unwrap_or_else(|e| e.into_inner());
                 map.get(&id).cloned()
             };
-            if let Some(flag) = flag {
+            if let Some((flag, http_cancel)) = entry {
                 flag.store(true, Ordering::SeqCst);
-                self.shared.host.external_readers().cancel_all();
-                if let Some(ref bridge) = self.shared.bridge {
-                    bridge.wake_all();
+                http_cancel.cancel();
+                if self.shared.active_call_id.load(Ordering::SeqCst) == id {
+                    self.shared.host.external_readers().cancel_all();
+                    if let Some(ref bridge) = self.shared.bridge {
+                        bridge.wake_all();
+                    }
                 }
+                self.shared.pending_continue_cvar.notify_all();
             }
         }
     }
@@ -2525,15 +2861,20 @@ impl NativeEvaluator {
         if let Some(ref bridge) = self.shared.bridge {
             bridge.abort_all();
         }
+        self.shared.pending_continue_cvar.notify_all();
         if let Ok(mut guard) = self.shared.state.try_lock() {
             if !guard.closed {
                 guard.closed = true;
+                guard.pending_continue = false;
                 guard.columnar_buf.clear_and_release();
                 guard.session.close();
                 self.shared.host.close();
             }
             return true;
         }
+        // Only force-cancel the host (including immediate external reader termination)
+        // when a worker still holds `state`; idle close must deliver graceful `0x32`.
+        self.shared.host.cancel();
         false
     }
 
@@ -2544,9 +2885,14 @@ impl NativeEvaluator {
         if let Some(ref bridge) = self.shared.bridge {
             bridge.abort_all();
         }
+        self.shared.pending_continue_cvar.notify_all();
+        if self.shared.state.try_lock().is_err() {
+            self.shared.host.cancel();
+        }
         AsyncTask::new(EvalCloseTask {
             host: Arc::clone(&self.shared.host),
             state: Arc::clone(&self.shared.state),
+            pending_continue_cvar: Arc::clone(&self.shared.pending_continue_cvar),
         })
     }
 
@@ -2555,8 +2901,18 @@ impl NativeEvaluator {
         op: std::result::Result<(EvalOp, Option<u64>), NativeError>,
         call_id: Option<BigInt>,
     ) -> AsyncTask<EvalAsyncTask> {
+        self.spawn_task_inner(op, call_id, false)
+    }
+
+    fn spawn_task_inner(
+        &self,
+        op: std::result::Result<(EvalOp, Option<u64>), NativeError>,
+        call_id: Option<BigInt>,
+        is_continue: bool,
+    ) -> AsyncTask<EvalAsyncTask> {
         let start_gen = self.shared.cancel_generation.load(Ordering::SeqCst);
         let call_cancel = Arc::new(AtomicBool::new(false));
+        let http_cancel = CancelFlag::new();
         let parsed_id = call_id.as_ref().and_then(|bi| parse_u64_bigint(bi).ok());
         if let Some(id) = parsed_id {
             let mut map = self
@@ -2564,14 +2920,16 @@ impl NativeEvaluator {
                 .in_flight_cancels
                 .lock()
                 .unwrap_or_else(|e| e.into_inner());
-            map.insert(id, Arc::clone(&call_cancel));
+            map.insert(id, (Arc::clone(&call_cancel), Arc::clone(&http_cancel)));
         }
         AsyncTask::new(EvalAsyncTask {
             shared: self.shared.clone(),
             op: Some(op),
             call_cancel,
+            http_cancel,
             start_gen,
             call_id: parsed_id,
+            is_continue,
         })
     }
 
@@ -2590,9 +2948,10 @@ impl NativeEvaluator {
         }
         let start_gen = self.shared.cancel_generation.load(Ordering::SeqCst);
         let call_cancel = Arc::new(AtomicBool::new(false));
+        let http_cancel = CancelFlag::new();
         let outcome = op.and_then(|(op, timeout)| {
             self.shared
-                .execute_op(op, timeout, call_cancel, start_gen, None)
+                .execute_op(op, timeout, call_cancel, http_cancel, start_gen, None)
         });
         eval_output_to_js(env, outcome)
     }
@@ -2609,7 +2968,7 @@ impl NativeEvaluator {
         env: &'env Env,
         uri: &Utf16String,
         contents: Option<&Utf16String>,
-        expression: &str,
+        expression: SourceText,
         binary: bool,
     ) -> Result<Option<Object<'env>>> {
         if self.shared.has_js_callbacks
@@ -2691,7 +3050,7 @@ impl NativeEvaluator {
     ) -> AsyncTask<EvalAsyncTask> {
         let parsed =
             parse_opt_timeout(&timeout_ms).map(|t| (EvalOp::ContinueRunning { binary }, t));
-        self.spawn_task(parsed, call_id)
+        self.spawn_task_inner(parsed, call_id, true)
     }
 
     #[napi]
@@ -2701,7 +3060,13 @@ impl NativeEvaluator {
         uri: Utf16String,
         contents: Option<Utf16String>,
     ) -> Result<Option<Object<'env>>> {
-        self.try_poll_cached_fast(env, &uri, contents.as_ref(), "output.text", false)
+        self.try_poll_cached_fast(
+            env,
+            &uri,
+            contents.as_ref(),
+            SourceText::from("output.text"),
+            false,
+        )
     }
 
     #[napi]
@@ -2712,8 +3077,8 @@ impl NativeEvaluator {
         contents: Option<Utf16String>,
         expression: Utf16String,
     ) -> Result<Option<Object<'env>>> {
-        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
-        self.try_poll_cached_fast(env, &uri, contents.as_ref(), &expr_str, false)
+        let expr_src = SourceText::from(utf16_to_pkl(&expression));
+        self.try_poll_cached_fast(env, &uri, contents.as_ref(), expr_src, false)
     }
 
     #[napi]
@@ -2724,8 +3089,8 @@ impl NativeEvaluator {
         contents: Option<Utf16String>,
         expression: Utf16String,
     ) -> Result<Option<Object<'env>>> {
-        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
-        self.try_poll_cached_fast(env, &uri, contents.as_ref(), &expr_str, true)
+        let expr_src = SourceText::from(utf16_to_pkl(&expression));
+        self.try_poll_cached_fast(env, &uri, contents.as_ref(), expr_src, true)
     }
 
     #[napi]
@@ -2757,13 +3122,16 @@ impl NativeEvaluator {
             Ok(spec) => spec,
             Err(_) => return Ok(None),
         };
-        let expr_str = utf16_to_pkl(&expression).to_java_utf8();
+        let expr_pkl = utf16_to_pkl(&expression);
+        let Some(expr_str) = expr_pkl.as_str() else {
+            return Ok(None);
+        };
         let SessionState {
             session,
             columnar_buf,
             ..
         } = &mut *guard;
-        if !session.try_pack_warm_expression_columnar(&spec.uri, &expr_str, columnar_buf) {
+        if !session.try_pack_warm_expression_columnar(&spec.uri, expr_str, columnar_buf) {
             return Ok(None);
         }
         let copied = BufferSlice::copy_from(env, columnar_buf.as_bytes())?;
@@ -3156,16 +3524,25 @@ impl NativeEvaluator {
 
 impl Drop for NativeEvaluator {
     fn drop(&mut self) {
+        // Never block on `self.shared.state.lock()` on the V8 main thread: a libuv worker holding
+        // `state` may be waiting on a JS callback or unwinding. Signal abort and try_lock only;
+        // if a worker still holds `state`, it checks `closed_flag` on exit and closes resources.
         self.shared.closed_flag.store(true, Ordering::SeqCst);
+        self.cancel();
         if let Some(ref bridge) = self.shared.bridge {
             bridge.abort_all();
         }
-        if let Ok(mut guard) = self.shared.state.lock()
-            && !guard.closed
-        {
-            guard.closed = true;
-            guard.session.close();
-            self.shared.host.close();
+        self.shared.pending_continue_cvar.notify_all();
+        if let Ok(mut guard) = self.shared.state.try_lock() {
+            if !guard.closed {
+                guard.closed = true;
+                guard.pending_continue = false;
+                guard.columnar_buf.clear_and_release();
+                guard.session.close();
+                self.shared.host.close();
+            }
+        } else {
+            self.shared.host.cancel();
         }
     }
 }
@@ -3186,7 +3563,8 @@ pub struct NativeAnalyzer {
     host: Arc<NativeHost>,
     bridge: Option<Arc<JsBridge>>,
     timeout_ms: Option<u64>,
-    active_cancel: Arc<Mutex<Option<Arc<AtomicBool>>>>,
+    cancelled: Arc<AtomicBool>,
+    active_cancel: ActiveCallCancelSlot,
 }
 
 #[napi]
@@ -3209,6 +3587,7 @@ impl NativeAnalyzer {
                 host: built.host,
                 bridge: built.bridge,
                 timeout_ms: built.default_timeout_ms,
+                cancelled: Arc::new(AtomicBool::new(false)),
                 active_cancel: Arc::new(Mutex::new(None)),
             }),
         )
@@ -3230,17 +3609,49 @@ impl NativeAnalyzer {
 
     #[napi]
     pub fn cancel(&self) {
-        if let Some(c) = self
+        self.cancelled.store(true, Ordering::SeqCst);
+        if let Some((c, http_c)) = self
             .active_cancel
             .lock()
             .unwrap_or_else(|e| e.into_inner())
             .clone()
         {
             c.store(true, Ordering::SeqCst);
+            http_c.cancel();
+            self.host.external_readers().cancel_all();
         }
-        self.host.cancel();
         if let Some(ref bridge) = self.bridge {
             bridge.wake_all();
+        }
+    }
+
+    #[napi]
+    pub fn close(&self) {
+        self.cancelled.store(true, Ordering::SeqCst);
+        let had_active = {
+            let slot = self
+                .active_cancel
+                .lock()
+                .unwrap_or_else(|e| e.into_inner())
+                .clone();
+            if let Some((c, http_c)) = slot {
+                c.store(true, Ordering::SeqCst);
+                http_c.cancel();
+                true
+            } else {
+                false
+            }
+        };
+        if let Some(ref bridge) = self.bridge {
+            bridge.abort_all();
+        }
+        if had_active {
+            // Do not block the V8 main thread closing host resources while an async
+            // analysis worker is still unwinding; signal cancellation and let the worker's
+            // cleanup block call `self.host.close()`.
+            self.host.cancel();
+        } else {
+            self.host.close();
         }
     }
 
@@ -3251,6 +3662,7 @@ impl NativeAnalyzer {
             host: Arc::clone(&self.host),
             bridge: self.bridge.clone(),
             timeout_ms: self.timeout_ms,
+            cancelled: Arc::clone(&self.cancelled),
             active_cancel: Arc::clone(&self.active_cancel),
             roots,
         })
@@ -3259,10 +3671,7 @@ impl NativeAnalyzer {
 
 impl Drop for NativeAnalyzer {
     fn drop(&mut self) {
-        if let Some(ref bridge) = self.bridge {
-            bridge.abort_all();
-        }
-        self.host.close();
+        self.close();
     }
 }
 
@@ -3270,7 +3679,8 @@ pub struct AnalyzeImportGraphTask {
     host: Arc<NativeHost>,
     bridge: Option<Arc<JsBridge>>,
     timeout_ms: Option<u64>,
-    active_cancel: Arc<Mutex<Option<Arc<AtomicBool>>>>,
+    cancelled: Arc<AtomicBool>,
+    active_cancel: ActiveCallCancelSlot,
     roots: Vec<PklString>,
 }
 
@@ -3305,7 +3715,7 @@ fn stdlib_analysis_source(uri: &str) -> Option<&'static str> {
              import \"pkl:platform\"\n\
              import \"pkl:Project\"\n",
         ),
-        "pkl:Project" => Some(
+        "pkl:Project" | "pkl:project" => Some(
             "import \"pkl:EvaluatorSettings\" as EvaluatorSettingsModule\n\
              import \"pkl:Project\"\n\
              import \"pkl:reflect\"\n\
@@ -3318,6 +3728,79 @@ fn stdlib_analysis_source(uri: &str) -> Option<&'static str> {
         "pkl:json" | "pkl:jsonnet" | "pkl:math" | "pkl:pklbinary" | "pkl:platform" | "pkl:ref"
         | "pkl:semver" | "pkl:shell" | "pkl:test" | "pkl:xml" | "pkl:yaml" => Some(""),
         _ => None,
+    }
+}
+
+fn format_module_host_error_for_napi(err: &ModuleHostError) -> String {
+    match err {
+        ModuleHostError::NotFound => "Module not found.".to_string(),
+        ModuleHostError::NoLoader => "No module loader is registered for this URI.".to_string(),
+        ModuleHostError::UriSyntax { reason } => {
+            format!("Invalid module URI syntax: {}", reason.to_java_utf8())
+        }
+        ModuleHostError::ExternalReaderProcess { message } => match message {
+            Some(msg) => format!(
+                "Failed to communicate with external reader process: {}",
+                msg.to_java_utf8()
+            ),
+            None => "Failed to communicate with external reader process.".to_string(),
+        },
+        ModuleHostError::Io(io) => match &io.message {
+            Some(msg) => msg.to_java_utf8(),
+            None => "I/O error loading module.".to_string(),
+        },
+        ModuleHostError::Denied(msg) | ModuleHostError::Unsupported(msg) => msg.to_java_utf8(),
+        ModuleHostError::SecurityManagerException { message } => message
+            .as_ref()
+            .map(PklString::to_java_utf8)
+            .unwrap_or_else(|| "Module access denied by security manager.".to_string()),
+        ModuleHostError::HttpClientException { message } => message
+            .as_ref()
+            .map(PklString::to_java_utf8)
+            .unwrap_or_else(|| "HTTP client error loading module.".to_string()),
+        ModuleHostError::EvalError { message, hint } => match hint {
+            Some(hint) => format!("{}\n{}", message.to_java_utf8(), hint.to_java_utf8()),
+            None => message.to_java_utf8(),
+        },
+    }
+}
+
+fn format_analysis_failure_for_napi(
+    failure: &pkl_runtime::modules::analyze::AnalysisFailure,
+) -> NativeError {
+    use pkl_runtime::modules::analyze::{FailureCause, UriFailure};
+    let uri = failure.module_uri.to_java_utf8();
+    match &failure.cause {
+        FailureCause::Host(err) => {
+            let msg = format!(
+                "Failed to analyze module `{uri}`: {}",
+                format_module_host_error_for_napi(err)
+            );
+            if matches!(err, ModuleHostError::SecurityManagerException { .. }) {
+                NativeError::security(msg)
+            } else {
+                NativeError::evaluation(msg)
+            }
+        }
+        FailureCause::Syntax(diag) => NativeError::evaluation(format!(
+            "Syntax error while analyzing module `{uri}`: {}",
+            diag.message.to_java_utf8()
+        )),
+        FailureCause::Uri { input, reason } => {
+            let input_str = input.to_java_utf8();
+            let detail = match reason {
+                UriFailure::Relative => "URI must be absolute.".to_string(),
+                UriFailure::Syntax { reason, .. } => reason.to_java_utf8(),
+                UriFailure::Unsupported(msg) => msg.to_java_utf8(),
+            };
+            NativeError::evaluation(format!(
+                "Invalid URI `{input_str}` while analyzing `{uri}`: {detail}"
+            ))
+        }
+        FailureCause::Unsupported(msg) => NativeError::evaluation(format!(
+            "Unsupported import construct while analyzing `{uri}`: {}",
+            msg.to_java_utf8()
+        )),
     }
 }
 
@@ -3354,7 +3837,7 @@ fn analyze_import_graph_with_stdlib(
                 });
             }
             AnalysisPoll::Ready(Err(failure)) => {
-                break Err(NativeError::evaluation(format!("{failure:?}")));
+                break Err(format_analysis_failure_for_napi(&failure));
             }
             AnalysisPoll::Closed => {
                 break Err(NativeError::closed("Analysis closed unexpectedly."));
@@ -3366,20 +3849,24 @@ fn analyze_import_graph_with_stdlib(
                         resolved_key_id,
                         ..
                     } if key.kind == ModuleKeyKind::StandardLibrary => {
-                        let uri_str = key.uri.to_java_utf8();
-                        if stdlib_analysis_source(&uri_str).is_some() {
-                            ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
-                                id: *resolved_key_id,
-                                key: key.clone(),
-                                handle: PklString::default(),
-                                module: ResolvedModule {
-                                    original_uri: key.uri.clone(),
-                                    resolved_uri: key.uri.clone(),
-                                    source_uri: key.uri.clone(),
-                                },
-                            }))
+                        if let Err(err) = host.check_resolve_module(&key.uri) {
+                            ModuleCompletion::KeyResolved(Err(err))
                         } else {
-                            ModuleCompletion::KeyResolved(Err(ModuleHostError::NotFound))
+                            let uri_str = key.uri.to_java_utf8();
+                            if stdlib_analysis_source(&uri_str).is_some() {
+                                ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                                    id: *resolved_key_id,
+                                    key: key.clone(),
+                                    handle: PklString::default(),
+                                    module: ResolvedModule {
+                                        original_uri: key.uri.clone(),
+                                        resolved_uri: key.uri.clone(),
+                                        source_uri: key.uri.clone(),
+                                    },
+                                }))
+                            } else {
+                                ModuleCompletion::KeyResolved(Err(ModuleHostError::NotFound))
+                            }
                         }
                     }
                     ModuleRequestKind::LoadSource { key, resolved }
@@ -3420,17 +3907,34 @@ impl<'task> ScopedTask<'task> for AnalyzeImportGraphTask {
     type JsValue = Object<'task>;
 
     fn compute(&mut self) -> Result<Self::Output> {
+        if self.cancelled.load(Ordering::SeqCst) {
+            self.host.close();
+            if let Some(ref bridge) = self.bridge {
+                bridge.abort_all();
+            }
+            return Ok(Err(NativeError::cancelled(
+                "Import graph analysis was cancelled.",
+            )));
+        }
         let call_cancel = Arc::new(AtomicBool::new(false));
+        let http_cancel = CancelFlag::new();
         {
             let mut active = self.active_cancel.lock().unwrap_or_else(|e| e.into_inner());
-            *active = Some(Arc::clone(&call_cancel));
+            *active = Some((Arc::clone(&call_cancel), Arc::clone(&http_cancel)));
+        }
+        if self.cancelled.load(Ordering::SeqCst) {
+            call_cancel.store(true, Ordering::SeqCst);
+            http_cancel.cancel();
         }
         let watchdog = SafeTimeoutWatchdog::start(
             self.timeout_ms,
             Arc::clone(&call_cancel),
+            Arc::clone(&http_cancel),
             Arc::clone(&self.host),
             self.bridge.clone(),
         );
+        let _scoped_http_cancel =
+            ScopedEvalCancel::push_with_deadline(Arc::clone(&http_cancel), watchdog.deadline());
         let _bridge_guard = self
             .bridge
             .as_ref()
@@ -3453,10 +3957,17 @@ impl<'task> ScopedTask<'task> for AnalyzeImportGraphTask {
             bridge.abort_all();
         }
 
-        if timed_out {
+        if timed_out && res.is_err() {
             return Ok(Err(NativeError::timeout(format_timeout_message(
                 self.timeout_ms.unwrap_or(0),
             ))));
+        }
+        if (call_cancel.load(Ordering::SeqCst) || self.cancelled.load(Ordering::SeqCst))
+            && res.is_err()
+        {
+            return Ok(Err(NativeError::cancelled(
+                "Import graph analysis was cancelled.",
+            )));
         }
 
         Ok(res)
@@ -3471,11 +3982,13 @@ impl<'task> ScopedTask<'task> for AnalyzeImportGraphTask {
                     for t in targets {
                         arr.push(js_pkl_string(env, &t)?);
                     }
-                    imports_obj.set(uri.to_java_utf8(), Array::from_vec(env, arr)?)?;
+                    let js_arr = Array::from_vec(env, arr)?;
+                    define_own_prop(env, &mut imports_obj, &uri.to_java_utf8(), &js_arr)?;
                 }
                 let mut resolved_obj = Object::new(env)?;
                 for (uri, resolved) in data.resolved_imports {
-                    resolved_obj.set(uri.to_java_utf8(), js_pkl_string(env, &resolved)?)?;
+                    let js_resolved = js_pkl_string(env, &resolved)?;
+                    define_own_prop(env, &mut resolved_obj, &uri.to_java_utf8(), &js_resolved)?;
                 }
                 let mut graph_obj = Object::new(env)?;
                 graph_obj.set("imports", imports_obj)?;

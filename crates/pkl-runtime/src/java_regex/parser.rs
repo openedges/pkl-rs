@@ -1,8 +1,8 @@
 use std::collections::BTreeMap;
+use std::sync::Arc;
 
 use super::types::*;
 use super::unicode::CodePointExt;
-use super::unicode::is_valid_unicode_property;
 use super::{CompileError as PatternSyntaxError, input::Input};
 
 /// Compute the maximum match length of a Pattern, or None if the engine cannot
@@ -47,12 +47,13 @@ fn pattern_max_length(pattern: &Pattern) -> Option<usize> {
             }
             Work::Repetition(max) => {
                 let inner = values.pop().expect("quantified node length");
-                // Retain the former TreeInfo approximation and overflow rule.
+                // An unbounded quantifier (`*`, `+`, `{n,}`) has no finite maximum length
+                // whenever its body can consume >= 1 char (matching `TreeInfo.maxValid`).
                 let value = if max == u32::MAX {
-                    if inner > 1 {
+                    if inner > 0 {
                         return None;
                     }
-                    inner
+                    0
                 } else {
                     inner.checked_mul(max as usize)?
                 };
@@ -61,10 +62,11 @@ fn pattern_max_length(pattern: &Pattern) -> Option<usize> {
             Work::Node(node) => match node {
                 Node::Literal(_) | Node::Dot | Node::CharClass(_) => values.push(1),
                 Node::LinebreakMatcher => values.push(2),
-                Node::Anchor(_)
-                | Node::NfcCharClass(_)
+                // Mirror JDK 21 `Pattern.NfcCharProperty`: does not override `study()`,
+                // leaving `maxLength` unchanged (+0) so `(?c)(?<=[\u{00e9}]+)x` compiles.
+                Node::NfcCharClass(_)
+                | Node::Anchor(_)
                 | Node::SetFlags(_)
-                | Node::RestoreFlags(_)
                 | Node::Lookahead { .. }
                 | Node::Lookbehind { .. }
                 | Node::GraphemeBoundary => values.push(0),
@@ -177,6 +179,7 @@ pub struct Parser {
     chars: Vec<u32>,
     source: Vec<u16>,
     start_s: bool,
+    last_supplementary_pos: Option<usize>,
     depth: usize,
     pos: usize,
     pub flags: Flags,
@@ -194,11 +197,13 @@ impl Parser {
             chars.push(input.at(pos));
             pos = input.next(pos);
         }
-        let start_s = chars
+        let last_supplementary_pos = chars
             .iter()
-            .any(|&c| c >= 0x10000 || (0xd800..=0xdfff).contains(&c));
+            .rposition(|&c| c >= 0x10000 || (0xd800..=0xdfff).contains(&c));
+        let start_s = last_supplementary_pos.is_some();
         Self {
             start_s,
+            last_supplementary_pos,
             depth: 0,
             chars,
             source: pattern.to_vec(),
@@ -300,9 +305,7 @@ impl Parser {
                 None | Some(0x29) => {
                     let mut frame = frames.pop().expect("active pattern frame");
                     self.finish_branch(&mut frame);
-                    let inner = Pattern {
-                        branches: frame.branches,
-                    };
+                    let inner = Pattern::new(std::sync::Arc::from(frame.branches));
                     self.depth -= 1;
                     let Some((kind, saved_flags)) = frame.group else {
                         return Ok(inner);
@@ -494,9 +497,7 @@ impl Parser {
                         let empty = Node::Group {
                             index: None,
                             name: None,
-                            inner: Pattern {
-                                branches: vec![vec![]],
-                            },
+                            inner: Pattern::new(std::sync::Arc::from(vec![vec![]])),
                         };
                         Ok(Node::Quantified {
                             inner: Box::new(empty),
@@ -629,9 +630,11 @@ impl Parser {
         if self.peek() == Some(0x7b) {
             self.advance();
             let mut hex = String::new();
+            let mut closed = false;
             while let Some(c) = self.peek() {
                 if c == 0x7d {
                     self.advance();
+                    closed = true;
                     break;
                 }
                 hex.push(
@@ -639,6 +642,9 @@ impl Parser {
                         .ok_or_else(|| self.error("Invalid syntax code point".to_string()))?,
                 );
                 self.advance();
+            }
+            if !closed {
+                return Err(self.error("Unclosed hexadecimal escape sequence".to_string()));
             }
             let code = u32::from_str_radix(&hex, 16)
                 .map_err(|_| self.error(format!("Invalid hex escape: {}", hex)))?;
@@ -718,6 +724,9 @@ impl Parser {
                 }
             }
         }
+        if hex.len() != 4 {
+            return Err(self.error(format!("Invalid unicode escape: {}", hex)));
+        }
         u32::from_str_radix(&hex, 16)
             .map_err(|_| self.error(format!("Invalid unicode escape: {}", hex)))
     }
@@ -778,18 +787,22 @@ impl Parser {
     }
 
     fn predefined_node(&self, pc: PredefinedClass) -> Node {
-        Node::CharClass(CharClass {
+        Node::CharClass(Arc::new(CharClass {
             negated: false,
             items: vec![CharClassItem::Predefined(pc)],
-        })
+        }))
     }
 
     fn parse_unicode_property_node(&mut self, negated: bool) -> Result<Node, PatternSyntaxError> {
-        let (name, neg) = self.parse_property_name(negated)?;
-        let cc = CharClass {
+        let (compiled, neg, supplementary) = self.parse_compiled_property(negated)?;
+        let cc = Arc::new(CharClass {
             negated: false,
-            items: vec![CharClassItem::UnicodeProperty { name, negated: neg }],
-        };
+            items: vec![CharClassItem::UnicodeProperty {
+                compiled,
+                negated: neg,
+                supplementary,
+            }],
+        });
         if self.flags.canon_eq && !self.flags.literal {
             Ok(Node::NfcCharClass(cc))
         } else {
@@ -797,9 +810,12 @@ impl Parser {
         }
     }
 
-    /// Parse a unicode property name (shared between node and char class contexts).
-    /// Returns (name, negated).
-    fn parse_property_name(&mut self, negated: bool) -> Result<(String, bool), PatternSyntaxError> {
+    /// Parse and pre-compile a unicode property name (shared between node and char class contexts).
+    /// Returns `(compiled, negated, supplementary)`.
+    fn parse_compiled_property(
+        &mut self,
+        negated: bool,
+    ) -> Result<(super::unicode::CompiledProperty, bool, bool), PatternSyntaxError> {
         let mut name = String::new();
         let index;
         if self.peek() == Some(0x7b) {
@@ -824,7 +840,11 @@ impl Parser {
             name.push_str(&super::unicode::display_codepoint(cp));
             index = self.pos - 1;
         }
-        if !is_valid_unicode_property(&name, self.flags.unicode_class) {
+        let Some(compiled) = super::unicode::compile_unicode_property(
+            &name,
+            self.flags.unicode_class,
+            self.flags.case_insensitive,
+        ) else {
             let message = if let Some((key, value)) = name.split_once('=') {
                 format!(
                     "Unknown Unicode property {{name=<{}>, value=<{}>}}",
@@ -835,8 +855,10 @@ impl Parser {
                 format!("Unknown character property name {{{name}}}")
             };
             return Err(self.error_at(message, index));
-        }
-        Ok((name, negated))
+        };
+        let supplementary =
+            super::unicode::property_is_supplementary(&name, self.flags.unicode_class);
+        Ok((compiled, negated, supplementary))
     }
 
     fn parse_named_character(&mut self) -> Result<u32, PatternSyntaxError> {
@@ -909,9 +931,10 @@ impl Parser {
                     match self.peek() {
                         Some(c @ (0x3d | 0x21)) => {
                             self.advance();
-                            let supplementary = self.chars[self.pos..]
-                                .iter()
-                                .any(|&c| c >= 0x10000 || (0xd800..=0xdfff).contains(&c));
+                            // Matches OpenJDK 21 `Pattern.hasSupplementary(start, end)` raw-unit
+                            // scan in O(1) using precomputed `last_supplementary_pos`.
+                            let supplementary =
+                                self.last_supplementary_pos.is_some_and(|i| i >= self.pos);
                             GroupKind::Lookbehind {
                                 supplementary,
                                 positive: c == 0x3d,
@@ -1174,7 +1197,7 @@ impl Parser {
     // ==================== Character Class Parsing ====================
 
     fn parse_char_class_node(&mut self) -> Result<Node, PatternSyntaxError> {
-        let cc = self.parse_char_class()?;
+        let cc = Arc::new(self.parse_char_class()?);
         if self.flags.canon_eq && !self.flags.literal {
             Ok(Node::NfcCharClass(cc))
         } else {
@@ -1369,12 +1392,22 @@ impl Parser {
                         PredefinedClass::NonVertWhitespace,
                     )),
                     0x70 => {
-                        let (name, negated) = self.parse_property_name(false)?;
-                        Ok(CharClassItem::UnicodeProperty { name, negated })
+                        let (compiled, negated, supplementary) =
+                            self.parse_compiled_property(false)?;
+                        Ok(CharClassItem::UnicodeProperty {
+                            compiled,
+                            negated,
+                            supplementary,
+                        })
                     }
                     0x50 => {
-                        let (name, negated) = self.parse_property_name(true)?;
-                        Ok(CharClassItem::UnicodeProperty { name, negated })
+                        let (compiled, negated, supplementary) =
+                            self.parse_compiled_property(true)?;
+                        Ok(CharClassItem::UnicodeProperty {
+                            compiled,
+                            negated,
+                            supplementary,
+                        })
                     }
                     0x74 => Ok(CharClassItem::Single(0x09)),
                     0x6e => Ok(CharClassItem::Single(0x0a)),
@@ -1458,9 +1491,11 @@ fn class_starts_s(item: &CharClassItem, flags: Flags) -> bool {
             CharClassItem::Range(a, b) => {
                 *b >= 0x10000 || (*a <= 0xdfff && *b >= 0xd800) || flags.case_insensitive
             }
-            CharClassItem::UnicodeProperty { name, negated } => {
-                *negated || super::unicode::property_is_supplementary(name, flags.unicode_class)
-            }
+            CharClassItem::UnicodeProperty {
+                negated,
+                supplementary,
+                ..
+            } => *negated || *supplementary,
             CharClassItem::Predefined(pc) => match pc {
                 PredefinedClass::Digit | PredefinedClass::Word | PredefinedClass::Whitespace => {
                     flags.unicode_class

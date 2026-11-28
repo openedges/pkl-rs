@@ -273,7 +273,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-cli"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-formatter",
  "pkl-host-native",
@@ -285,7 +285,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-doc"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-host-native",
  "pkl-runtime",
@@ -293,11 +293,11 @@ dependencies = [
 
 [[package]]
 name = "pkl-formatter"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 
 [[package]]
 name = "pkl-host-native"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-runtime",
  "rcgen",
@@ -309,7 +309,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-lang"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-host-native",
  "pkl-runtime",
@@ -317,7 +317,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-napi"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "napi",
  "napi-build",
@@ -332,7 +332,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-repl"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-host-native",
  "pkl-runtime",
@@ -340,7 +340,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-runtime"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "libm",
  "md-5",
@@ -351,7 +351,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-server"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "pkl-host-native",
  "pkl-runtime",
@@ -359,7 +359,7 @@ dependencies = [
 
 [[package]]
 name = "pkl-wasm"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 dependencies = [
  "js-sys",
  "pkl-formatter",
@@ -754,7 +754,7 @@ checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "xtask"
-version = "0.32.0-rc.3"
+version = "0.32.0"
 
 [[package]]
 name = "yasna"

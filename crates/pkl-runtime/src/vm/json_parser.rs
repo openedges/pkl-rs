@@ -10,6 +10,7 @@ enum Container {
     Array(Vec<Value>),
     Object {
         members: Vec<(PklString, Value)>,
+        index: crate::heap::FastMap<PklString, usize>,
         key: Option<PklString>,
     },
 }
@@ -56,13 +57,19 @@ impl Run {
     fn insert_child(&mut self, value: Value) -> Result<(), RuntimeError> {
         match self.containers.last_mut() {
             Some(Container::Array(values)) => values.push(value),
-            Some(Container::Object { members, key }) => {
+            Some(Container::Object {
+                members,
+                index,
+                key,
+            }) => {
                 let key = key.take().ok_or_else(|| invalid("JSON object key"))?;
                 // EconomicMap.put replaces the value in its original position.
                 // The converter has already run even for an overwritten key.
-                if let Some((_, old)) = members.iter_mut().find(|(name, _)| name == &key) {
-                    *old = value;
+                if let Some(&slot) = index.get(&key) {
+                    members[slot].1 = value;
                 } else {
+                    let slot = members.len();
+                    index.insert(key.clone(), slot);
                     members.push((key, value));
                 }
                 self.path.pop();
@@ -80,6 +87,7 @@ fn parse_error(hint: PklString) -> RuntimeError {
     error
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_json_parse(&mut self) -> Result<(), RuntimeError> {
         let receiver = self.this_receiver()?.as_object()?;
         let source = self
@@ -104,6 +112,7 @@ impl Vm {
         }));
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_json_parse(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.len() - 1;
         let mut run = self.frames[frame]
@@ -222,6 +231,7 @@ impl Vm {
             Event::StartObject => {
                 run.containers.push(Container::Object {
                     members: Vec::new(),
+                    index: crate::heap::FastMap::default(),
                     key: None,
                 });
                 return Ok(false);

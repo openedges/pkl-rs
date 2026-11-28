@@ -1,11 +1,14 @@
 //! Exact port of `DocMigrator.kt`: migrates a Pkldoc v1 website to v2.
 
 use crate::assets::copy_resource;
-use crate::json::{JsonValue, parse_json, push_json_string};
+use crate::json::{JsonValue, parse_json};
 use crate::model::DocGeneratorError;
 use crate::package_data::{ElementRef, ModuleRef, PackageData, PackageRef, TypeRef};
 use crate::runtime_data::{RuntimeData, RuntimeDataLink};
-use crate::util::{compare_versions_desc, encode_path, relativize_uri};
+use crate::util::{
+    compare_versions_desc, encode_path, ensure_path_under_output_dir, join_confined_output_path,
+    push_safe_inline_script_json_string, relativize_uri,
+};
 use std::collections::HashSet;
 use std::fs;
 use std::io::Write;
@@ -79,7 +82,7 @@ impl<'a> DocMigrator<'a> {
         if !vp.is_file() {
             return 1;
         }
-        fs::read_to_string(&vp)
+        pkl_host_native::read_path_to_string_bounded(&vp)
             .ok()
             .and_then(|s| s.trim().parse::<i32>().ok())
             .unwrap_or(1)
@@ -93,15 +96,17 @@ impl<'a> DocMigrator<'a> {
     }
 
     pub fn update_docsite_version(&self) -> Result<(), DocGeneratorError> {
-        let vp = self.version_path();
+        let vp = join_confined_output_path(&self.output_dir, ".pkldoc/VERSION")?;
         if let Some(parent) = vp.parent() {
             fs::create_dir_all(parent).map_err(|e| {
                 DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", vp.display()))
             })?;
         }
-        fs::write(&vp, CURRENT_VERSION.to_string().as_bytes()).map_err(|e| {
-            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", vp.display()))
-        })
+        let checked = ensure_path_under_output_dir(&self.output_dir, &vp)?;
+        pkl_host_native::write_file_nofollow(&checked, CURRENT_VERSION.to_string().as_bytes())
+            .map_err(|e| {
+                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", vp.display()))
+            })
     }
 
     pub fn run(&mut self) -> Result<(), DocGeneratorError> {
@@ -116,6 +121,7 @@ impl<'a> DocMigrator<'a> {
         let mut package_datas = Vec::new();
         collect_package_data_files(&self.output_dir, &mut package_datas)?;
 
+        // Match upstream `DocMigrator.kt:149` (`val count = AtomicInteger(1)`).
         let mut count = 1usize;
         for path in package_datas {
             let pkg_data = PackageData::read(&path)?;
@@ -161,15 +167,21 @@ impl<'a> DocMigrator<'a> {
             } else {
                 r.clone()
             };
-            let html_path = self.output_dir.join(effective.as_element_ref().html_path());
+            let html_path = join_confined_output_path(
+                &self.output_dir,
+                &effective.as_element_ref().html_path(),
+            )?;
             do_migrate_html(r.as_element_ref(), &html_path)?;
         }
         Ok(())
     }
 
     fn get_latest_package_data(&self, pkg: &str) -> Result<PackageData, DocGeneratorError> {
-        let pkg_dir = self.output_dir.join(encode_path(pkg));
-        let current_pkg = pkg_dir.join("current/package-data.json");
+        let pkg_dir = join_confined_output_path(&self.output_dir, &encode_path(pkg))?;
+        let current_pkg = ensure_path_under_output_dir(
+            &self.output_dir,
+            &pkg_dir.join("current/package-data.json"),
+        )?;
         if current_pkg.is_file() {
             return PackageData::read(&current_pkg);
         }
@@ -187,7 +199,11 @@ impl<'a> DocMigrator<'a> {
         let latest = versions.first().ok_or_else(|| {
             DocGeneratorError::bug(format!("No versions found under `{}`", pkg_dir.display()))
         })?;
-        PackageData::read(&pkg_dir.join(latest).join("package-data.json"))
+        let latest_path = ensure_path_under_output_dir(
+            &self.output_dir,
+            &pkg_dir.join(latest).join("package-data.json"),
+        )?;
+        PackageData::read(&latest_path)
     }
 
     fn migrate_runtime_data(
@@ -215,7 +231,8 @@ impl<'a> DocMigrator<'a> {
         &self,
         r: &dyn ElementRef,
     ) -> Result<Option<RuntimeData>, DocGeneratorError> {
-        let legacy_path = self.output_dir.join(r.legacy_versioned_runtime_data_path());
+        let legacy_path =
+            join_confined_output_path(&self.output_dir, &r.legacy_versioned_runtime_data_path())?;
         if !legacy_path.exists() {
             return Ok(None);
         }
@@ -227,8 +244,9 @@ impl<'a> DocMigrator<'a> {
         let Some(data) = self.load_legacy_runtime_data(r)? else {
             return Ok(());
         };
-        data.per_package()
-            .write_to(&self.output_dir.join(r.per_package_runtime_data_path()))
+        let target =
+            join_confined_output_path(&self.output_dir, &r.per_package_runtime_data_path())?;
+        data.per_package().write_to(&self.output_dir, &target)
     }
 
     fn do_migrate_per_package_version_data(
@@ -238,11 +256,12 @@ impl<'a> DocMigrator<'a> {
         let Some(data) = self.load_legacy_runtime_data(r)? else {
             return Ok(());
         };
-        data.per_package_version().write_to(
-            &self
-                .output_dir
-                .join(r.per_package_version_runtime_data_path()),
-        )
+        let target = join_confined_output_path(
+            &self.output_dir,
+            &r.per_package_version_runtime_data_path(),
+        )?;
+        data.per_package_version()
+            .write_to(&self.output_dir, &target)
     }
 
     fn delete_legacy_runtime_data(
@@ -250,9 +269,10 @@ impl<'a> DocMigrator<'a> {
         package_data: &PackageData,
     ) -> Result<(), DocGeneratorError> {
         for r in package_data_refs(package_data) {
-            let legacy_path = self
-                .output_dir
-                .join(r.as_element_ref().legacy_versioned_runtime_data_path());
+            let legacy_path = join_confined_output_path(
+                &self.output_dir,
+                &r.as_element_ref().legacy_versioned_runtime_data_path(),
+            )?;
             if legacy_path.exists() {
                 fs::remove_file(&legacy_path).map_err(|e| {
                     DocGeneratorError::bug(format!(
@@ -271,7 +291,7 @@ pub fn parse_legacy_runtime_data(
     path: &Path,
     my_version_href: &str,
 ) -> Result<RuntimeData, DocGeneratorError> {
-    let content = fs::read_to_string(path).map_err(|e| {
+    let content = pkl_host_native::read_path_to_string_bounded(path).map_err(|e| {
         DocGeneratorError::bug(format!("I/O error reading `{}`: {e}", path.display()))
     })?;
     let mut data = RuntimeData::default();
@@ -306,12 +326,14 @@ fn read_legacy_line(
     prefix: &str,
     suffix: &str,
 ) -> Result<Vec<RuntimeDataLink>, DocGeneratorError> {
-    if !line.starts_with(prefix) || !line.ends_with(suffix) {
+    let Some(json_str) = line
+        .strip_prefix(prefix)
+        .and_then(|rest| rest.strip_suffix(suffix))
+    else {
         return Err(DocGeneratorError::bug(format!(
             "Malformed legacy runtimeData line: {line}"
         )));
-    }
-    let json_str = &line[prefix.len()..line.len() - suffix.len()];
+    };
     let val = parse_json(json_str)?;
     let arr = val
         .as_array()
@@ -345,7 +367,7 @@ fn read_legacy_line(
 }
 
 fn do_migrate_html(r: &dyn ElementRef, path: &Path) -> Result<(), DocGeneratorError> {
-    let content = fs::read_to_string(path).map_err(|e| {
+    let content = pkl_host_native::read_path_to_string_bounded(path).map_err(|e| {
         DocGeneratorError::bug(format!("I/O error reading `{}`: {e}", path.display()))
     })?;
     let lines: Vec<&str> = content.lines().collect();
@@ -368,15 +390,19 @@ fn do_migrate_html(r: &dyn ElementRef, path: &Path) -> Result<(), DocGeneratorEr
                 relativize_uri(&r.per_package_runtime_data_path(), &html_path);
             let per_package_version_url =
                 relativize_uri(&r.per_package_version_runtime_data_path(), &html_path);
+            let mut pkg_url_js = String::new();
+            push_safe_inline_script_json_string(&mut pkg_url_js, &package_version_url);
+            let mut per_pkg_ver_url_js = String::new();
+            push_safe_inline_script_json_string(&mut per_pkg_ver_url_js, &per_package_version_url);
             let mut version_json = String::new();
-            push_json_string(&mut version_json, r.version());
+            push_safe_inline_script_json_string(&mut version_json, r.version());
 
             new_html.push_str("    <script type=\"module\">\n");
             new_html.push_str(&format!(
-                "      import perPackageData from \"{package_version_url}\" with {{ type: \"json\" }}\n"
+                "      import perPackageData from {pkg_url_js} with {{ type: \"json\" }}\n"
             ));
             new_html.push_str(&format!(
-                "      import perPackageVersionData from \"{per_package_version_url}\" with {{ type: \"json\" }}\n"
+                "      import perPackageVersionData from {per_pkg_ver_url_js} with {{ type: \"json\" }}\n"
             ));
             new_html.push('\n');
             new_html.push_str(&format!(
@@ -392,7 +418,7 @@ fn do_migrate_html(r: &dyn ElementRef, path: &Path) -> Result<(), DocGeneratorEr
         }
     }
 
-    fs::write(path, new_html.as_bytes())
+    pkl_host_native::write_file_nofollow(path, new_html.as_bytes())
         .map_err(|e| DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display())))
 }
 
@@ -425,7 +451,7 @@ pub fn collect_package_data_files(
         let meta = fs::symlink_metadata(&path).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error stat `{}`: {e}", path.display()))
         })?;
-        if meta.file_type().is_symlink() {
+        if pkl_host_native::is_symlink_or_junction(&path, &meta) {
             continue;
         }
         if meta.is_dir() {
@@ -437,4 +463,18 @@ pub fn collect_package_data_files(
         }
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod security_tests {
+    use super::*;
+
+    #[test]
+    fn read_legacy_line_handles_overlapping_prefix_suffix_without_panic() {
+        let short = "runtimeData.links('known-versions','');";
+        // Valid empty string inside quotes fails JSON parse cleanly (no slice panic).
+        assert!(read_legacy_line(short, LEGACY_KNOWN_VERSIONS_PREFIX, LEGACY_SUFFIX).is_err());
+        // Even shorter overlapping prefix+suffix (`prefix = "a'"`, `suffix = "'a"`, line = `"a'a"`).
+        assert!(read_legacy_line("a'a", "a'", "'a").is_err());
+    }
 }

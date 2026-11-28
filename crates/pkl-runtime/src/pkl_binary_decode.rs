@@ -237,12 +237,27 @@ impl DecodedObject {
     /// `LinkedHashMap<String, Object>`.
     pub fn properties(&self) -> Vec<(PklString, &DecodedValue)> {
         let mut ordered: Vec<(PklString, &DecodedValue)> = Vec::with_capacity(self.members.len());
-        for member in &self.members {
-            let key = member.key.to_java_key_string();
-            if let Some((_, slot)) = ordered.iter_mut().find(|(existing, _)| *existing == key) {
-                *slot = &member.value;
-            } else {
-                ordered.push((key, &member.value));
+        if self.members.len() <= 16 {
+            for member in &self.members {
+                let key = member.key.to_java_key_string();
+                if let Some((_, slot)) = ordered.iter_mut().find(|(existing, _)| *existing == key) {
+                    *slot = &member.value;
+                } else {
+                    ordered.push((key, &member.value));
+                }
+            }
+        } else {
+            let mut index = crate::heap::FastMap::<PklString, usize>::default();
+            index.reserve(self.members.len());
+            for member in &self.members {
+                let key = member.key.to_java_key_string();
+                if let Some(&slot) = index.get(&key) {
+                    ordered[slot].1 = &member.value;
+                } else {
+                    let slot = ordered.len();
+                    index.insert(key.clone(), slot);
+                    ordered.push((key, &member.value));
+                }
             }
         }
         ordered
@@ -282,7 +297,7 @@ pub struct DecodedReference {
 }
 
 /// Decoded value produced by [`PklBinaryDecoder`].
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Debug)]
 pub enum DecodedValue {
     Null,
     Bool(bool),
@@ -313,92 +328,574 @@ pub enum DecodedValue {
     Reference(DecodedReference),
 }
 
+impl Drop for DecodedValue {
+    fn drop(&mut self) {
+        let mut stack = Vec::new();
+        Self::drain_children(self, &mut stack);
+        while let Some(mut val) = stack.pop() {
+            Self::drain_children(&mut val, &mut stack);
+        }
+    }
+}
+
+impl DecodedValue {
+    /// Moves the inner [`DecodedObject`] out if this is `DecodedValue::Object`.
+    #[allow(clippy::result_large_err)]
+    pub fn into_object(mut self) -> Result<DecodedObject, Self> {
+        match &mut self {
+            Self::Object(obj) => Ok(std::mem::replace(
+                obj,
+                DecodedObject {
+                    class_name: PklString::default(),
+                    module_uri: PklString::default(),
+                    class_info: DecodedClassInfo::from_wire(
+                        &PklString::default(),
+                        &PklString::default(),
+                    ),
+                    members: Vec::new(),
+                },
+            )),
+            _ => Err(self),
+        }
+    }
+
+    fn drain_children(val: &mut Self, stack: &mut Vec<Self>) {
+        match val {
+            Self::Object(obj) => {
+                for member in obj.members.drain(..) {
+                    stack.push(member.key);
+                    stack.push(member.value);
+                }
+            }
+            Self::Map(entries) | Self::Mapping(entries) => {
+                for (k, v) in entries.drain(..) {
+                    stack.push(k);
+                    stack.push(v);
+                }
+            }
+            Self::List(items) | Self::Listing(items) | Self::Set(items) => {
+                stack.append(items);
+            }
+            Self::Pair(a, b) => {
+                stack.push(std::mem::replace(a.as_mut(), Self::Null));
+                stack.push(std::mem::replace(b.as_mut(), Self::Null));
+            }
+            Self::Reference(r) => {
+                stack.push(std::mem::replace(r.domain.as_mut(), Self::Null));
+                stack.push(std::mem::replace(r.data.as_mut(), Self::Null));
+                stack.append(&mut r.path);
+            }
+            _ => {}
+        }
+    }
+}
+
+impl Clone for DecodedValue {
+    fn clone(&self) -> Self {
+        enum Build<'a> {
+            Visit(&'a DecodedValue),
+            FinishObject {
+                class_name: PklString,
+                module_uri: PklString,
+                class_info: DecodedClassInfo,
+                kinds: Vec<ObjectMemberKind>,
+            },
+            FinishMap {
+                is_mapping: bool,
+                len: usize,
+            },
+            FinishList {
+                kind: u8,
+                len: usize,
+            },
+            FinishPair,
+            FinishReference {
+                path_len: usize,
+            },
+        }
+        let mut work = vec![Build::Visit(self)];
+        let mut out: Vec<DecodedValue> = Vec::new();
+        while let Some(step) = work.pop() {
+            match step {
+                Build::Visit(val) => match val {
+                    Self::Null => out.push(Self::Null),
+                    Self::Bool(b) => out.push(Self::Bool(*b)),
+                    Self::Int(n) => out.push(Self::Int(*n)),
+                    Self::Float(f) => out.push(Self::Float(*f)),
+                    Self::String(s) => out.push(Self::String(s.clone())),
+                    Self::Duration(d) => out.push(Self::Duration(*d)),
+                    Self::DataSize(d) => out.push(Self::DataSize(*d)),
+                    Self::IntSeq(s) => out.push(Self::IntSeq(*s)),
+                    Self::Regex(p) => out.push(Self::Regex(p.clone())),
+                    Self::Class {
+                        qualified_name,
+                        module_uri,
+                    } => out.push(Self::Class {
+                        qualified_name: qualified_name.clone(),
+                        module_uri: module_uri.clone(),
+                    }),
+                    Self::TypeAlias {
+                        qualified_name,
+                        module_uri,
+                    } => out.push(Self::TypeAlias {
+                        qualified_name: qualified_name.clone(),
+                        module_uri: module_uri.clone(),
+                    }),
+                    Self::Function => out.push(Self::Function),
+                    Self::Bytes(b) => out.push(Self::Bytes(b.clone())),
+                    Self::Object(obj) => {
+                        let kinds = obj.members.iter().map(|m| m.kind).collect();
+                        work.push(Build::FinishObject {
+                            class_name: obj.class_name.clone(),
+                            module_uri: obj.module_uri.clone(),
+                            class_info: obj.class_info.clone(),
+                            kinds,
+                        });
+                        for member in obj.members.iter().rev() {
+                            work.push(Build::Visit(&member.value));
+                            work.push(Build::Visit(&member.key));
+                        }
+                    }
+                    Self::Map(entries) | Self::Mapping(entries) => {
+                        work.push(Build::FinishMap {
+                            is_mapping: matches!(val, Self::Mapping(_)),
+                            len: entries.len(),
+                        });
+                        for (k, v) in entries.iter().rev() {
+                            work.push(Build::Visit(v));
+                            work.push(Build::Visit(k));
+                        }
+                    }
+                    Self::List(items) | Self::Listing(items) | Self::Set(items) => {
+                        let kind = match val {
+                            Self::List(_) => 0,
+                            Self::Listing(_) => 1,
+                            _ => 2,
+                        };
+                        work.push(Build::FinishList {
+                            kind,
+                            len: items.len(),
+                        });
+                        for item in items.iter().rev() {
+                            work.push(Build::Visit(item));
+                        }
+                    }
+                    Self::Pair(a, b) => {
+                        work.push(Build::FinishPair);
+                        work.push(Build::Visit(b));
+                        work.push(Build::Visit(a));
+                    }
+                    Self::Reference(r) => {
+                        work.push(Build::FinishReference {
+                            path_len: r.path.len(),
+                        });
+                        for p in r.path.iter().rev() {
+                            work.push(Build::Visit(p));
+                        }
+                        work.push(Build::Visit(&r.data));
+                        work.push(Build::Visit(&r.domain));
+                    }
+                },
+                Build::FinishObject {
+                    class_name,
+                    module_uri,
+                    class_info,
+                    kinds,
+                } => {
+                    let count = kinds.len();
+                    let start = out.len() - count * 2;
+                    let mut drained = out.drain(start..);
+                    let mut members = Vec::with_capacity(count);
+                    for kind in kinds {
+                        let key = drained.next().unwrap();
+                        let value = drained.next().unwrap();
+                        members.push(DecodedObjectMember { kind, key, value });
+                    }
+                    drop(drained);
+                    out.push(Self::Object(DecodedObject {
+                        class_name,
+                        module_uri,
+                        class_info,
+                        members,
+                    }));
+                }
+                Build::FinishMap { is_mapping, len } => {
+                    let start = out.len() - len * 2;
+                    let mut drained = out.drain(start..);
+                    let mut entries = Vec::with_capacity(len);
+                    for _ in 0..len {
+                        let k = drained.next().unwrap();
+                        let v = drained.next().unwrap();
+                        entries.push((k, v));
+                    }
+                    drop(drained);
+                    out.push(if is_mapping {
+                        Self::Mapping(entries)
+                    } else {
+                        Self::Map(entries)
+                    });
+                }
+                Build::FinishList { kind, len } => {
+                    let start = out.len() - len;
+                    let items: Vec<DecodedValue> = out.drain(start..).collect();
+                    out.push(match kind {
+                        0 => Self::List(items),
+                        1 => Self::Listing(items),
+                        _ => Self::Set(items),
+                    });
+                }
+                Build::FinishPair => {
+                    let b = out.pop().unwrap();
+                    let a = out.pop().unwrap();
+                    out.push(Self::Pair(Box::new(a), Box::new(b)));
+                }
+                Build::FinishReference { path_len } => {
+                    let start = out.len() - path_len;
+                    let path: Vec<DecodedValue> = out.drain(start..).collect();
+                    let data = Box::new(out.pop().unwrap());
+                    let domain = Box::new(out.pop().unwrap());
+                    out.push(Self::Reference(DecodedReference { domain, data, path }));
+                }
+            }
+        }
+        out.pop().unwrap()
+    }
+}
+
+impl PartialEq for DecodedValue {
+    fn eq(&self, other: &Self) -> bool {
+        let mut stack = vec![(self, other)];
+        while let Some((lhs, rhs)) = stack.pop() {
+            match (lhs, rhs) {
+                (Self::Null, Self::Null) | (Self::Function, Self::Function) => {}
+                (Self::Bool(a), Self::Bool(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::Int(a), Self::Int(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::Float(a), Self::Float(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::String(a), Self::String(b)) | (Self::Regex(a), Self::Regex(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::Duration(a), Self::Duration(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::DataSize(a), Self::DataSize(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::IntSeq(a), Self::IntSeq(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (
+                    Self::Class {
+                        qualified_name: q1,
+                        module_uri: u1,
+                    },
+                    Self::Class {
+                        qualified_name: q2,
+                        module_uri: u2,
+                    },
+                )
+                | (
+                    Self::TypeAlias {
+                        qualified_name: q1,
+                        module_uri: u1,
+                    },
+                    Self::TypeAlias {
+                        qualified_name: q2,
+                        module_uri: u2,
+                    },
+                ) => {
+                    if q1 != q2 || u1 != u2 {
+                        return false;
+                    }
+                }
+                (Self::Bytes(a), Self::Bytes(b)) => {
+                    if a != b {
+                        return false;
+                    }
+                }
+                (Self::Object(a), Self::Object(b)) => {
+                    if a.class_name != b.class_name
+                        || a.module_uri != b.module_uri
+                        || a.class_info != b.class_info
+                        || a.members.len() != b.members.len()
+                    {
+                        return false;
+                    }
+                    for (ma, mb) in a.members.iter().zip(&b.members) {
+                        if ma.kind != mb.kind {
+                            return false;
+                        }
+                        stack.push((&ma.value, &mb.value));
+                        stack.push((&ma.key, &mb.key));
+                    }
+                }
+                (Self::Map(a), Self::Map(b)) | (Self::Mapping(a), Self::Mapping(b)) => {
+                    if a.len() != b.len() {
+                        return false;
+                    }
+                    for ((ka, va), (kb, vb)) in a.iter().zip(b) {
+                        stack.push((va, vb));
+                        stack.push((ka, kb));
+                    }
+                }
+                (Self::List(a), Self::List(b))
+                | (Self::Listing(a), Self::Listing(b))
+                | (Self::Set(a), Self::Set(b)) => {
+                    if a.len() != b.len() {
+                        return false;
+                    }
+                    for (ia, ib) in a.iter().zip(b) {
+                        stack.push((ia, ib));
+                    }
+                }
+                (Self::Pair(a1, a2), Self::Pair(b1, b2)) => {
+                    stack.push((a2, b2));
+                    stack.push((a1, b1));
+                }
+                (Self::Reference(a), Self::Reference(b)) => {
+                    if a.path.len() != b.path.len() {
+                        return false;
+                    }
+                    for (pa, pb) in a.path.iter().zip(&b.path) {
+                        stack.push((pa, pb));
+                    }
+                    stack.push((&a.data, &b.data));
+                    stack.push((&a.domain, &b.domain));
+                }
+                _ => return false,
+            }
+        }
+        true
+    }
+}
+
 impl DecodedValue {
     /// Java `Object.toString()` projection used by `AbstractPklBinaryDecoder`
     /// path formatting and `PklBinaryDecoder.doDecodeObject`'s `member.key().toString()`.
     pub fn to_java_key_string(&self) -> PklString {
-        match self {
-            Self::Null => "null".into(),
-            Self::Bool(b) => if *b { "true" } else { "false" }.into(),
-            Self::Int(n) => n.to_string().into(),
-            Self::Float(f) => crate::numeric::double_to_string(*f).into(),
-            Self::String(s) => s.clone(),
-            Self::Duration(d) => d.to_string().into(),
-            Self::DataSize(d) => d.to_string().into(),
-            Self::Regex(p) => p.clone(),
-            Self::Pair(first, second) => PklString::from("Pair(")
-                .concat(&first.to_java_key_string())
-                .concat(&", ".into())
-                .concat(&second.to_java_key_string())
-                .concat(&")".into()),
-            Self::List(items) | Self::Listing(items) | Self::Set(items) => {
-                let mut out = PklString::from("[");
-                for (idx, item) in items.iter().enumerate() {
-                    if idx > 0 {
-                        out = out.concat(&", ".into());
-                    }
-                    out = out.concat(&item.to_java_key_string());
-                }
-                out.concat(&"]".into())
-            }
-            Self::Map(entries) | Self::Mapping(entries) => {
-                let mut out = PklString::from("{");
-                for (idx, (k, v)) in entries.iter().enumerate() {
-                    if idx > 0 {
-                        out = out.concat(&", ".into());
-                    }
-                    out = out
-                        .concat(&k.to_java_key_string())
-                        .concat(&"=".into())
-                        .concat(&v.to_java_key_string());
-                }
-                out.concat(&"}".into())
-            }
-            Self::Object(obj) => {
-                let prefix = if obj.class_info.is_module {
-                    obj.class_info.module_name.clone()
-                } else {
-                    obj.class_info.display_name()
-                };
-                let mut out = prefix.concat(&" { ".into());
-                for (idx, (k, v)) in obj.properties().into_iter().enumerate() {
-                    if idx > 0 {
-                        out = out.concat(&"; ".into());
-                    }
-                    out = out
-                        .concat(&k)
-                        .concat(&" = ".into())
-                        .concat(&v.to_java_key_string());
-                }
-                out.concat(&" }".into())
-            }
-            Self::IntSeq(seq) => match seq.to_int_seq() {
-                Some(int_seq) => int_seq.to_string().into(),
-                None => format!("IntSeq({}, {}).step({})", seq.start, seq.end, seq.step).into(),
-            },
-            Self::Class { qualified_name, .. } | Self::TypeAlias { qualified_name, .. } => {
-                qualified_name.clone()
-            }
-            Self::Function => "function".into(),
-            Self::Bytes(bytes) => {
-                let mut out = String::from("Bytes(");
-                for (idx, b) in bytes.iter().enumerate() {
-                    if idx > 0 {
-                        out.push_str(", ");
-                    }
-                    out.push_str(&b.to_string());
-                }
-                out.push(')');
-                out.into()
-            }
-            Self::Reference(reference) => PklString::from("Reference(")
-                .concat(&reference.domain.to_java_key_string())
-                .concat(&", ".into())
-                .concat(&reference.data.to_java_key_string())
-                .concat(&")".into()),
+        enum KeyPart<'a> {
+            Value(&'a DecodedValue),
+            Str(&'static str),
+            Owned(PklString),
+            PushBuilder,
+            PopKeyIntoObject,
+            FinishObjectKeys(&'a DecodedObject),
         }
+        let mut builders = vec![crate::pkl_string::PklStringBuilder::default()];
+        let mut pending_obj_keys: Vec<Vec<PklString>> = Vec::new();
+        let mut stack = vec![KeyPart::Value(self)];
+        while let Some(part) = stack.pop() {
+            match part {
+                KeyPart::Str(s) => builders.last_mut().unwrap().push_str(s),
+                KeyPart::Owned(s) => builders.last_mut().unwrap().push_value(&s),
+                KeyPart::PushBuilder => {
+                    builders.push(crate::pkl_string::PklStringBuilder::default());
+                }
+                KeyPart::PopKeyIntoObject => {
+                    let key = builders.pop().unwrap().finish();
+                    pending_obj_keys.last_mut().unwrap().push(key);
+                }
+                KeyPart::FinishObjectKeys(obj) => {
+                    let keys = pending_obj_keys.pop().unwrap();
+                    let mut ordered: Vec<(PklString, &DecodedValue)> =
+                        Vec::with_capacity(obj.members.len());
+                    if obj.members.len() <= 16 {
+                        for (key, member) in keys.into_iter().zip(&obj.members) {
+                            if let Some((_, slot)) =
+                                ordered.iter_mut().find(|(existing, _)| *existing == key)
+                            {
+                                *slot = &member.value;
+                            } else {
+                                ordered.push((key, &member.value));
+                            }
+                        }
+                    } else {
+                        let mut index = crate::heap::FastMap::<PklString, usize>::default();
+                        index.reserve(obj.members.len());
+                        for (key, member) in keys.into_iter().zip(&obj.members) {
+                            if let Some(&slot) = index.get(&key) {
+                                ordered[slot].1 = &member.value;
+                            } else {
+                                let slot = ordered.len();
+                                index.insert(key.clone(), slot);
+                                ordered.push((key, &member.value));
+                            }
+                        }
+                    }
+                    for (idx, (k, v)) in ordered.into_iter().enumerate().rev() {
+                        stack.push(KeyPart::Value(v));
+                        stack.push(KeyPart::Str(" = "));
+                        stack.push(KeyPart::Owned(k));
+                        if idx > 0 {
+                            stack.push(KeyPart::Str("; "));
+                        }
+                    }
+                }
+                KeyPart::Value(val) => match val {
+                    Self::Null => builders.last_mut().unwrap().push_str("null"),
+                    Self::Bool(b) => {
+                        builders
+                            .last_mut()
+                            .unwrap()
+                            .push_str(if *b { "true" } else { "false" })
+                    }
+                    Self::Int(n) => builders.last_mut().unwrap().push_str(&n.to_string()),
+                    Self::Float(f) => builders
+                        .last_mut()
+                        .unwrap()
+                        .push_str(&crate::numeric::double_to_string(*f)),
+                    Self::String(s) => builders.last_mut().unwrap().push_value(s),
+                    Self::Duration(d) => builders.last_mut().unwrap().push_str(&d.to_string()),
+                    Self::DataSize(d) => builders.last_mut().unwrap().push_str(&d.to_string()),
+                    Self::Regex(p) => builders.last_mut().unwrap().push_value(p),
+                    Self::Pair(first, second) => {
+                        builders.last_mut().unwrap().push_str("Pair(");
+                        stack.push(KeyPart::Str(")"));
+                        stack.push(KeyPart::Value(second));
+                        stack.push(KeyPart::Str(", "));
+                        stack.push(KeyPart::Value(first));
+                    }
+                    Self::List(items) | Self::Listing(items) | Self::Set(items) => {
+                        builders.last_mut().unwrap().push_str("[");
+                        stack.push(KeyPart::Str("]"));
+                        for (idx, item) in items.iter().enumerate().rev() {
+                            stack.push(KeyPart::Value(item));
+                            if idx > 0 {
+                                stack.push(KeyPart::Str(", "));
+                            }
+                        }
+                    }
+                    Self::Map(entries) | Self::Mapping(entries) => {
+                        builders.last_mut().unwrap().push_str("{");
+                        stack.push(KeyPart::Str("}"));
+                        for (idx, (k, v)) in entries.iter().enumerate().rev() {
+                            stack.push(KeyPart::Value(v));
+                            stack.push(KeyPart::Str("="));
+                            stack.push(KeyPart::Value(k));
+                            if idx > 0 {
+                                stack.push(KeyPart::Str(", "));
+                            }
+                        }
+                    }
+                    Self::Object(obj) => {
+                        let prefix = if obj.class_info.is_module {
+                            obj.class_info.module_name.clone()
+                        } else {
+                            obj.class_info.display_name()
+                        };
+                        let builder = builders.last_mut().unwrap();
+                        builder.push_value(&prefix);
+                        builder.push_str(" { ");
+                        stack.push(KeyPart::Str(" }"));
+                        if obj.members.iter().all(|m| matches!(m.key, Self::String(_))) {
+                            let mut ordered: Vec<(PklString, &DecodedValue)> =
+                                Vec::with_capacity(obj.members.len());
+                            if obj.members.len() <= 16 {
+                                for member in &obj.members {
+                                    let Self::String(key) = &member.key else {
+                                        unreachable!()
+                                    };
+                                    if let Some((_, slot)) =
+                                        ordered.iter_mut().find(|(existing, _)| existing == key)
+                                    {
+                                        *slot = &member.value;
+                                    } else {
+                                        ordered.push((key.clone(), &member.value));
+                                    }
+                                }
+                            } else {
+                                let mut index = crate::heap::FastMap::<PklString, usize>::default();
+                                index.reserve(obj.members.len());
+                                for member in &obj.members {
+                                    let Self::String(key) = &member.key else {
+                                        unreachable!()
+                                    };
+                                    if let Some(&slot) = index.get(key) {
+                                        ordered[slot].1 = &member.value;
+                                    } else {
+                                        let slot = ordered.len();
+                                        index.insert(key.clone(), slot);
+                                        ordered.push((key.clone(), &member.value));
+                                    }
+                                }
+                            }
+                            for (idx, (k, v)) in ordered.into_iter().enumerate().rev() {
+                                stack.push(KeyPart::Value(v));
+                                stack.push(KeyPart::Str(" = "));
+                                stack.push(KeyPart::Owned(k));
+                                if idx > 0 {
+                                    stack.push(KeyPart::Str("; "));
+                                }
+                            }
+                        } else {
+                            pending_obj_keys.push(Vec::with_capacity(obj.members.len()));
+                            stack.push(KeyPart::FinishObjectKeys(obj));
+                            for member in obj.members.iter().rev() {
+                                stack.push(KeyPart::PopKeyIntoObject);
+                                stack.push(KeyPart::Value(&member.key));
+                                stack.push(KeyPart::PushBuilder);
+                            }
+                        }
+                    }
+                    Self::IntSeq(seq) => match seq.to_int_seq() {
+                        Some(int_seq) => {
+                            builders.last_mut().unwrap().push_str(&int_seq.to_string())
+                        }
+                        None => builders.last_mut().unwrap().push_str(&format!(
+                            "IntSeq({}, {}).step({})",
+                            seq.start, seq.end, seq.step
+                        )),
+                    },
+                    Self::Class { qualified_name, .. } | Self::TypeAlias { qualified_name, .. } => {
+                        builders.last_mut().unwrap().push_value(qualified_name);
+                    }
+                    Self::Function => builders.last_mut().unwrap().push_str("function"),
+                    Self::Bytes(bytes) => {
+                        let builder = builders.last_mut().unwrap();
+                        builder.push_str("Bytes(");
+                        for (idx, b) in bytes.iter().enumerate() {
+                            if idx > 0 {
+                                builder.push_str(", ");
+                            }
+                            builder.push_str(&b.to_string());
+                        }
+                        builder.push_str(")");
+                    }
+                    Self::Reference(reference) => {
+                        builders.last_mut().unwrap().push_str("Reference(");
+                        stack.push(KeyPart::Str(")"));
+                        stack.push(KeyPart::Value(&reference.data));
+                        stack.push(KeyPart::Str(", "));
+                        stack.push(KeyPart::Value(&reference.domain));
+                    }
+                },
+            }
+        }
+        builders.pop().unwrap().finish()
     }
 }
+
+/// Default maximum container nesting depth for `pkl-binary` decoding.
+pub const DEFAULT_MAX_DECODE_DEPTH: usize = 1024;
 
 /// Decoder policy controlling strict `PklBinaryDecoder` compatibility vs full
 /// lossless wire decoding.
@@ -411,6 +908,7 @@ pub struct DecodeOptions {
     pub allow_reference: bool,
     pub validate_uri: bool,
     pub validate_regex: bool,
+    pub max_depth: usize,
 }
 
 impl DecodeOptions {
@@ -424,6 +922,7 @@ impl DecodeOptions {
             allow_reference: false,
             validate_uri: true,
             validate_regex: true,
+            max_depth: DEFAULT_MAX_DECODE_DEPTH,
         }
     }
 
@@ -438,6 +937,7 @@ impl DecodeOptions {
             allow_reference: true,
             validate_uri: true,
             validate_regex: true,
+            max_depth: DEFAULT_MAX_DECODE_DEPTH,
         }
     }
 }
@@ -1052,15 +1552,27 @@ enum PathSegment {
     Index(usize),
     Int(i64),
     Owned(PklString),
+    FrameKey(usize),
 }
 
 impl PathSegment {
-    fn to_pkl_string(&self) -> PklString {
+    fn to_pkl_string(&self, frames: &[Frame]) -> PklString {
         match self {
             Self::Static(s) => PklString::from(*s),
             Self::Index(i) => PklString::from(i.to_string()),
             Self::Int(i) => PklString::from(i.to_string()),
             Self::Owned(s) => s.clone(),
+            Self::FrameKey(idx) => match frames.get(*idx) {
+                Some(Frame::Object {
+                    step: ObjectMemberStep::Value { key, .. },
+                    ..
+                })
+                | Some(Frame::Map {
+                    step: MapStep::Value(key),
+                    ..
+                }) => key.to_java_key_string(),
+                _ => PklString::default(),
+            },
         }
     }
 }
@@ -1104,7 +1616,7 @@ impl<'a> Decoder<'a> {
             .curr_path
             .iter()
             .rev()
-            .map(PathSegment::to_pkl_string)
+            .map(|seg| seg.to_pkl_string(&self.frames))
             .collect();
         let offset = self.unpacker.offset();
         let message = if raw.wrapped {
@@ -1145,8 +1657,8 @@ impl<'a> Decoder<'a> {
                         iter_active: _,
                     } => match step {
                         ObjectMemberStep::EntryKey => {
-                            self.curr_path
-                                .push(PathSegment::Owned(value.to_java_key_string()));
+                            let frame_idx = self.frames.len();
+                            self.curr_path.push(PathSegment::FrameKey(frame_idx));
                             self.frames.push(Frame::Object {
                                 class_name,
                                 module_uri,
@@ -1202,8 +1714,8 @@ impl<'a> Decoder<'a> {
                         iter_active: _,
                     } => match step {
                         MapStep::Key => {
-                            self.curr_path
-                                .push(PathSegment::Owned(value.to_java_key_string()));
+                            let frame_idx = self.frames.len();
+                            self.curr_path.push(PathSegment::FrameKey(frame_idx));
                             self.frames.push(Frame::Map {
                                 kind,
                                 total,
@@ -1488,7 +2000,19 @@ impl<'a> Decoder<'a> {
         }
     }
 
+    fn check_depth(&self) -> Result<(), RawError> {
+        let effective_max = self.options.max_depth.min(4096);
+        if self.frames.len() >= effective_max {
+            return Err(RawError::decode(
+                DecodeErrorKind::InvalidStructure,
+                format!("Maximum nesting depth ({effective_max}) exceeded"),
+            ));
+        }
+        Ok(())
+    }
+
     fn start_object(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
+        self.check_depth()?;
         self.assert_length(PklBinaryCode::Object, len, 3)?;
         self.curr_path.push(PathSegment::Static("'object"));
 
@@ -1615,6 +2139,7 @@ impl<'a> Decoder<'a> {
         path_label: &'static str,
         len: usize,
     ) -> Result<Option<DecodedValue>, RawError> {
+        self.check_depth()?;
         self.assert_length(code, len, 1)?;
         self.curr_path.push(PathSegment::Static(path_label));
         let total = self.unpacker.unpack_map_header()?;
@@ -1647,6 +2172,7 @@ impl<'a> Decoder<'a> {
         path_label: &'static str,
         len: usize,
     ) -> Result<Option<DecodedValue>, RawError> {
+        self.check_depth()?;
         self.assert_length(code, len, 1)?;
         self.curr_path.push(PathSegment::Static(path_label));
         let total = self.unpacker.unpack_array_header()?;
@@ -1678,6 +2204,7 @@ impl<'a> Decoder<'a> {
     }
 
     fn start_pair(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
+        self.check_depth()?;
         self.assert_length(PklBinaryCode::Pair, len, 2)?;
         self.curr_path.push(PathSegment::Static("'pair"));
         self.curr_path.push(PathSegment::Static("'first"));
@@ -1689,6 +2216,7 @@ impl<'a> Decoder<'a> {
     }
 
     fn start_reference(&mut self, len: usize) -> Result<Option<DecodedValue>, RawError> {
+        self.check_depth()?;
         self.assert_length(PklBinaryCode::Reference, len, 3)?;
         self.curr_path.push(PathSegment::Static("'reference"));
         self.curr_path.push(PathSegment::Static("'domain"));
@@ -1998,4 +2526,48 @@ fn validate_java_uri(uri: &PklString) -> Result<(), RawError> {
         return Err(RawError::direct(DecodeErrorKind::InvalidUri, message));
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod round2_tests {
+    use super::*;
+
+    #[test]
+    fn to_java_key_string_is_iterative_on_deep_objects_and_max_depth_is_clamped() {
+        // Construct a deeply nested DecodedValue::Object (depth 600) and format its Java key string.
+        let mut val = DecodedValue::Int(42);
+        let class_name = PklString::from("Dynamic");
+        let module_uri = PklString::from("pkl:base");
+        let class_info = DecodedClassInfo::from_wire(&class_name, &module_uri);
+        for i in 0..600 {
+            val = DecodedValue::Object(DecodedObject {
+                class_name: class_name.clone(),
+                module_uri: module_uri.clone(),
+                class_info: class_info.clone(),
+                members: vec![DecodedObjectMember {
+                    kind: ObjectMemberKind::Property,
+                    key: DecodedValue::String(PklString::from(format!("p{i}"))),
+                    value: val,
+                }],
+            });
+        }
+        let s = val.to_java_key_string();
+        assert!(s.to_java_utf8().contains("p599 = "));
+        assert!(s.to_java_utf8().contains("p0 = 42"));
+
+        // Even with caller max_depth = usize::MAX, decoder clamps effective depth safely (<= 4096).
+        let depth = 5000usize;
+        let mut bytes = Vec::with_capacity(depth * 3 + 1);
+        for _ in 0..depth {
+            // [PklBinaryCode::List (0x04), [child]]
+            bytes.extend_from_slice(&[0x92, 0x04, 0x91]);
+        }
+        bytes.push(0x01);
+        let opts = DecodeOptions {
+            max_depth: usize::MAX,
+            ..DecodeOptions::lossless()
+        };
+        let err = decode_with_options(&bytes, opts).expect_err("depth 5000 must be rejected");
+        assert_eq!(err.kind, DecodeErrorKind::InvalidStructure);
+    }
 }

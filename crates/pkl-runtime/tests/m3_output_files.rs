@@ -897,13 +897,16 @@ fn cli_multiple_file_output_validation_escapes_collisions_and_directories() {
             "escape.pkl",
         ],
     );
+    let file_uri = |p: &Path| -> String {
+        pkl_runtime::packages::resolver::file_uri_from_path(p).expect("file URI")
+    };
     assert_eq!(res.exit_code, 1);
     assert!(res.stdout.is_empty());
     assert_eq!(
         String::from_utf8(res.stderr).unwrap(),
         format!(
-            "Output file conflict: `output.files` entry `\"../esc.txt\"` in module `file://{}` resolves to file path `{}`, which is outside output directory `{}`.\n",
-            dir.path().join("escape.pkl").display(),
+            "Output file conflict: `output.files` entry `\"../esc.txt\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.\n",
+            file_uri(&dir.path().join("escape.pkl")),
             dir.path().join("esc.txt").display(),
             dir.path().join(".out_esc").display(),
         )
@@ -937,8 +940,8 @@ fn cli_multiple_file_output_validation_escapes_collisions_and_directories() {
         assert_eq!(
             String::from_utf8(res.stderr).unwrap(),
             format!(
-                "Output file conflict: `output.files` entry `\"link/evil.txt\"` in module `file://{}` resolves to file path `{}`, which is outside output directory `{}`.\n",
-                dir.path().join("sym.pkl").display(),
+                "Output file conflict: `output.files` entry `\"link/evil.txt\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.\n",
+                file_uri(&dir.path().join("sym.pkl")),
                 outside.join("evil.txt").display(),
                 out_sym.display(),
             )
@@ -1009,9 +1012,10 @@ output {
         ],
     );
     assert_eq!(res.exit_code, 0, "{}", String::from_utf8_lossy(&res.stderr));
+    let sep = std::path::MAIN_SEPARATOR;
     assert_eq!(
         String::from_utf8(res.stdout).unwrap(),
-        ".out_slash/abs.txt\n"
+        format!(".out_slash{sep}abs.txt\n")
     );
     assert_eq!(
         fs::read_to_string(dir.path().join(".out_slash/abs.txt")).unwrap(),
@@ -1044,15 +1048,15 @@ output {
     assert_eq!(res.exit_code, 1);
     assert_eq!(
         String::from_utf8(res.stdout).unwrap(),
-        ".out_intra/foo.txt\n"
+        format!(".out_intra{sep}foo.txt\n")
     );
     assert_eq!(
         String::from_utf8(res.stderr).unwrap(),
         format!(
-            "Output file conflict: `output.files` entries `\"foo.txt\"` in module `file://{}` and `\"./foo.txt\"` in module `file://{}` resolve to the same file path `{}`.\n",
-            dir.path().join("intra.pkl").display(),
-            dir.path().join("intra.pkl").display(),
-            dir.path().join(".out_intra/foo.txt").display(),
+            "Output file conflict: `output.files` entries `\"foo.txt\"` in module `{}` and `\"./foo.txt\"` in module `{}` resolve to the same file path `{}`.\n",
+            file_uri(&dir.path().join("intra.pkl")),
+            file_uri(&dir.path().join("intra.pkl")),
+            dir.path().join(".out_intra").join("foo.txt").display(),
         )
     );
 
@@ -1080,15 +1084,15 @@ output {
     assert_eq!(res.exit_code, 1);
     assert_eq!(
         String::from_utf8(res.stdout).unwrap(),
-        ".out_cross/same.txt\n"
+        format!(".out_cross{sep}same.txt\n")
     );
     assert_eq!(
         String::from_utf8(res.stderr).unwrap(),
         format!(
-            "Output file conflict: `output.files` entries `\"same.txt\"` in module `file://{}` and `\"same.txt\"` in module `file://{}` resolve to the same file path `{}`.\n",
-            dir.path().join("bar.pkl").display(),
-            dir.path().join("foo.pkl").display(),
-            dir.path().join(".out_cross/same.txt").display(),
+            "Output file conflict: `output.files` entries `\"same.txt\"` in module `{}` and `\"same.txt\"` in module `{}` resolve to the same file path `{}`.\n",
+            file_uri(&dir.path().join("bar.pkl")),
+            file_uri(&dir.path().join("foo.pkl")),
+            dir.path().join(".out_cross").join("same.txt").display(),
         )
     );
 
@@ -1104,7 +1108,11 @@ output {
     );
     for (file, spec, target) in [
         ("dot.pkl", ".", dir.path().join(".out_dir")),
-        ("subdir.pkl", "myDir", dir.path().join(".out_dir/myDir")),
+        (
+            "subdir.pkl",
+            "myDir",
+            dir.path().join(".out_dir").join("myDir"),
+        ),
     ] {
         let res = run_cli(
             dir.path(),
@@ -1122,8 +1130,8 @@ output {
         assert_eq!(
             String::from_utf8(res.stderr).unwrap(),
             format!(
-                "Output file conflict: `output.files` entry `\"{spec}\"` in module `file://{}` resolves to file path `{}`, which is a directory.\n",
-                dir.path().join(file).display(),
+                "Output file conflict: `output.files` entry `\"{spec}\"` in module `{}` resolves to file path `{}`, which is a directory.\n",
+                file_uri(&dir.path().join(file)),
                 target.display(),
             )
         );

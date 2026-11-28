@@ -46,9 +46,6 @@ def glob_source_paths(root: Path, directory: str, pattern: str):
 
 def source_paths(root: Path):
     paths = set(INPUTS) | {MANIFEST, 'tools/m2_source_inputs.py', 'tools/m2_manifest.py',
-        'crates/pkl-runtime/src/vm/string_word_break.bin',
-        'crates/pkl-runtime/src/vm/string_word_break.provenance.json',
-        'crates/pkl-runtime/src/vm/string_word_break.README.md',
         'tools/m2_language.py', 'tools/m2_module_eval.py', 'tools/m2_historical.py', 'tools/m2_selected_regressions.py', 'tools/m2_workspace.py', 'tools/m2_jvm_classpath.py',
         'tools/tests/test_m2_source_inputs.py',
         'tools/m2_execution_profiles.py', 'tools/compat.py', 'tools/m2_generate.py',

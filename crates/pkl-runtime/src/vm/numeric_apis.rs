@@ -204,6 +204,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn numeric_api_operation(
         &mut self,
         receiver: Value,

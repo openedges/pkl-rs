@@ -227,7 +227,7 @@ pub fn parse_options(
                 Some((k, v)) => (k, Some(v)),
                 None => (raw.as_str(), None),
             }
-        } else if raw.len() > 2 {
+        } else if raw.len() > 2 && raw.is_char_boundary(2) {
             let short = &raw[..2];
             if is_known_short_value_flag(kind, short) {
                 let rest = &raw[2..];

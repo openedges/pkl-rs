@@ -4,13 +4,13 @@
 
 Lanes:
   1. wasm-browser          : Real Chromium via pinned Playwright 1.64.1 loading clean-installed
-                             packed `@pkl-rs/wasm` (language, stdlib, all 9 renderers, output.bytes,
+                             packed `@openedges/pkl-wasm` (language, stdlib, all 9 renderers, output.bytes,
                              output.files, formatter, schema, REPL, analyze, test, VFS + rootDir,
                              async custom loaders, localhost HTTP fetch, pure-Wasm package archive,
                              lossless BigInt/Uint8Array/UTF-16, 64-bit clock, cancel/timeout/close,
                              conversion telemetry, plus explicit capability-blocked host-gap probes)
-  2. wasm-node             : Node.js importing clean-installed packed `@pkl-rs/wasm`
-  3. napi-node             : Node.js ESM import & CJS require of clean-installed packed `@pkl-rs/napi`
+  2. wasm-node             : Node.js importing clean-installed packed `@openedges/pkl-wasm`
+  3. napi-node             : Node.js ESM import & CJS require of clean-installed packed `@openedges/pkl-napi`
                              (full shared corpus + real Node FS/env/prop/modulepath dir+JAR,
                              localhost HTTP/HTTPS/CA/headers/rewrites/proxy/noProxy, PklProject &
                              package:// + package-2 disk cache, external readers 0x26-0x32 with
@@ -22,8 +22,8 @@ Lanes:
                              (reporting per-target match counts separately without masking gaps)
   5. packaging-and-install : Reproducible build, pack, clean isolated temp install & live execution
                              for native `pkl`/`pkldoc` + standalone downstream Rust crate linking
-                             `crates/pkl`, packed `@pkl-rs/wasm` (Node + Chromium), packed
-                             `@pkl-rs/napi` (ESM + CJS), and platform support matrix metadata.
+                             `crates/pkl`, packed `@openedges/pkl-wasm` (Node + Chromium), packed
+                             `@openedges/pkl-napi` (ESM + CJS), and platform support matrix metadata.
 
 Reuses `tools/oracle.py` (pinned Eclipse Adoptium Temurin 21.0.13.1+2-LTS,
 `exact_jdk_lock_match == true`, zero `PKL_ALLOW_LOCAL_JDK`), `tools/compat.py`,

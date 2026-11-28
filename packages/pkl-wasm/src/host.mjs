@@ -1,11 +1,11 @@
 import { PklError, toPklError } from './errors.mjs';
-import { fileUriToPath, pathToFileUri } from './vfs.mjs';
+import { fileUriToPath, isUnderRootDir, normalizeVfsPath, pathToFileUri } from './vfs.mjs';
 
 const U64_MAX = 18446744073709551615n;
 const MAX_TIMER_DELAY_MS = 2_147_483_647n;
 const DEFAULT_POLL_BUDGET = 65536;
 const textEncoder = new TextEncoder();
-const textDecoder = new TextDecoder('utf-8', { fatal: true });
+const textDecoder = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true });
 
 /**
  * Strictly validates a 64-bit unsigned millisecond clock or timeout value.
@@ -173,9 +173,7 @@ export function buildRustHostConfig(options = {}) {
     securityManager && typeof securityManager.checkImportModule === 'function',
   );
   const hasCustomSecurityCheckResolve = Boolean(
-    securityManager &&
-      (typeof securityManager.checkResolveModule === 'function' ||
-        typeof securityManager.checkImportModule === 'function'),
+    securityManager && typeof securityManager.checkResolveModule === 'function',
   );
 
   return {
@@ -206,6 +204,9 @@ export function buildRustHostConfig(options = {}) {
         securityManager && typeof securityManager.checkReadResource === 'function',
       ),
       hasCustomSecurityCheckResolve,
+      hasCustomSecurityCheckResolveResource: Boolean(
+        securityManager && typeof securityManager.checkResolveResource === 'function',
+      ),
       platform: options.platform ?? null,
       moduleReaders: moduleReaders.map((r) => ({
         scheme: String(r.scheme),
@@ -223,6 +224,7 @@ export function buildRustHostConfig(options = {}) {
     },
     hostHooks: {
       vfs,
+      rootDir: effectiveRootDir ? normalizeVfsPath(effectiveRootDir) : null,
       httpFetch: typeof options.httpFetch === 'function' ? options.httpFetch : null,
       packageTransport:
         typeof options.packageTransport === 'function' ? options.packageTransport : null,
@@ -243,7 +245,7 @@ export function buildRustHostConfig(options = {}) {
  * @param {bigint} timeoutMs
  * @returns {string}
  */
-function formatTimeoutMessage(timeoutMs) {
+export function formatTimeoutMessage(timeoutMs) {
   const quotient = timeoutMs / 10n;
   const remainder = timeoutMs % 10n;
   const hundredths =
@@ -301,8 +303,24 @@ export async function driveWasmSession({
   const inFlight = new Map();
   let abortedKind = /** @type {"cancelled" | "closed" | "timeout" | null} */ (null);
   let timerId = /** @type {any} */ (null);
+  let rejectAbort = /** @type {((err: Error) => void) | null} */ (null);
+  const abortPromise = new Promise((_, reject) => {
+    rejectAbort = reject;
+  });
+  // Prevent unhandled rejection when abort fires outside a pending Promise.race.
+  abortPromise.catch(() => {});
   const startNow = monotonicNowMs(clockState);
   const deadline = timeoutMs !== null ? startNow + timeoutMs : null;
+
+  const makeAbortError = (kind) => {
+    if (kind === 'timeout') {
+      return new PklError(formatTimeoutMessage(timeoutMs ?? 0n), 'timeout');
+    }
+    if (kind === 'closed') {
+      return new PklError('Evaluator has been closed.', 'closed');
+    }
+    return new PklError('Evaluation was cancelled.', 'cancelled');
+  };
 
   const abortAllInFlight = () => {
     if (typeof wasmObj.drainCancelledOperations === 'function') {
@@ -334,6 +352,10 @@ export async function driveWasmSession({
       wasmObj.cancel();
     }
     abortAllInFlight();
+    if (rejectAbort) {
+      rejectAbort(makeAbortError(kind));
+      rejectAbort = null;
+    }
   };
 
   const armTimer = () => {
@@ -378,6 +400,7 @@ export async function driveWasmSession({
     }
   };
 
+  let completedCleanly = false;
   try {
     throwIfAborted();
     armTimer();
@@ -404,10 +427,12 @@ export async function driveWasmSession({
       }
 
       if (event.kind === 'ready') {
+        completedCleanly = true;
         return event;
       }
 
       if (event.kind === 'error') {
+        completedCleanly = true;
         throw new PklError(
           event.message,
           event.errorKind || 'evaluation',
@@ -415,20 +440,30 @@ export async function driveWasmSession({
         );
       }
 
-      await dispatchSuspendEvent({
-        event,
-        wasmObj,
-        hostHooks,
-        clockState,
-        inFlight,
-        isAnalyzer,
-        onCapturedLog,
-        isAborted: () => abortedKind !== null,
-      });
+      await Promise.race([
+        dispatchSuspendEvent({
+          event,
+          wasmObj,
+          hostHooks,
+          clockState,
+          inFlight,
+          isAnalyzer,
+          onCapturedLog,
+          isAborted: () => abortedKind !== null,
+        }),
+        abortPromise,
+      ]);
     }
   } catch (err) {
     if (abortedKind !== null) {
       throwIfAborted();
+    }
+    if (!completedCleanly && typeof wasmObj.cancel === 'function') {
+      try {
+        wasmObj.cancel();
+      } catch {
+        // Ignore if already closed
+      }
     }
     throw toPklError(err);
   } finally {
@@ -532,11 +567,7 @@ async function dispatchSuspendEvent({
       case 'checkResolveModule': {
         let errorMsg = null;
         try {
-          if (typeof hostHooks.securityManager.checkResolveModule === 'function') {
-            await hostHooks.securityManager.checkResolveModule(event.uri);
-          } else if (typeof hostHooks.securityManager.checkImportModule === 'function') {
-            await hostHooks.securityManager.checkImportModule('', event.uri);
-          }
+          await hostHooks.securityManager.checkResolveModule(event.uri);
         } catch (err) {
           errorMsg = err instanceof Error ? err.message : String(err);
         }
@@ -549,6 +580,18 @@ async function dispatchSuspendEvent({
         let errorMsg = null;
         try {
           await hostHooks.securityManager.checkReadResource(event.uri);
+        } catch (err) {
+          errorMsg = err instanceof Error ? err.message : String(err);
+        }
+        if (!isAborted()) {
+          passNow(wasmObj.completeSecurityCheck.bind(wasmObj), token, errorMsg);
+        }
+        return;
+      }
+      case 'checkResolveResource': {
+        let errorMsg = null;
+        try {
+          await hostHooks.securityManager.checkResolveResource(event.uri);
         } catch (err) {
           errorMsg = err instanceof Error ? err.message : String(err);
         }
@@ -584,10 +627,14 @@ async function dispatchSuspendEvent({
         try {
           transformed = await hostHooks.frameTransformer(event.frame);
         } catch (err) {
-          errorMsg = err instanceof Error ? err.message : String(err);
+          errorMsg = safeErrMessage(err);
         }
         if (!isAborted()) {
-          wasmObj.completeFrameTransform(token, transformed, errorMsg, now());
+          try {
+            wasmObj.completeFrameTransform(token, transformed, errorMsg, now());
+          } catch (marshalErr) {
+            wasmObj.completeFrameTransform(token, null, safeErrMessage(marshalErr), now());
+          }
         }
         return;
       }
@@ -600,7 +647,13 @@ async function dispatchSuspendEvent({
         } catch (err) {
           if (!isAborted()) {
             const msg = err instanceof Error ? err.message : String(err);
-            wasmObj.rejectAnalysisGlob('io', msg);
+            if (err instanceof PklError && err.kind === 'capability-unavailable') {
+              wasmObj.rejectAnalysisGlob('capability-unavailable', msg, err.capability ?? 'nativeFs');
+            } else {
+              const errKind =
+                err instanceof PklError && err.kind === 'security' ? 'security' : 'io';
+              wasmObj.rejectAnalysisGlob(errKind, msg, null);
+            }
           }
         }
         return;
@@ -613,12 +666,24 @@ async function dispatchSuspendEvent({
   }
 }
 
+function assertVfsUnderRootDir(vfsPath, uri, hostHooks, isResource) {
+  const rootDir = hostHooks.rootDir ?? hostHooks.vfs?.rootDir;
+  if (rootDir && !isUnderRootDir(vfsPath, rootDir)) {
+    const noun = isResource ? 'resource' : 'module';
+    throw new PklError(
+      `Refusing to load ${noun} \`${uri}\` because it is outside the root directory.`,
+      'security',
+    );
+  }
+}
+
 async function handleReadModule({ event, wasmObj, hostHooks, controller, isAborted, passNow }) {
   const token = event.token;
   try {
     if (event.backend === 'vfs') {
       const vfs = hostHooks.vfs;
       const vfsPath = fileUriToPath(event.uri);
+      assertVfsUnderRootDir(vfsPath, event.uri, hostHooks, false);
       if (vfs.isDirectory(vfsPath)) {
         if (!isAborted()) {
           passNow(wasmObj.rejectReadModule.bind(wasmObj), token, 'io', 'Is a directory');
@@ -702,6 +767,7 @@ async function handleModuleHasElement({ event, wasmObj, hostHooks, isAborted, pa
   try {
     if (event.backend === 'vfs') {
       const vfsPath = fileUriToPath(event.uri);
+      assertVfsUnderRootDir(vfsPath, event.uri, hostHooks, false);
       const exists = hostHooks.vfs.has(vfsPath);
       if (!isAborted()) {
         passNow(wasmObj.completeModuleHasElement.bind(wasmObj), token, exists);
@@ -731,6 +797,10 @@ async function handleModuleHasElement({ event, wasmObj, hostHooks, isAborted, pa
     }
   } catch (err) {
     if (isAborted()) return;
+    if (err instanceof PklError && err.kind === 'security') {
+      passNow(wasmObj.rejectModuleHasElement.bind(wasmObj), token, 'security', err.message);
+      return;
+    }
     const msg = err instanceof Error ? err.message : String(err);
     passNow(wasmObj.rejectModuleHasElement.bind(wasmObj), token, 'io', msg);
   }
@@ -742,6 +812,7 @@ async function handleReadResource({ event, wasmObj, hostHooks, controller, isAbo
     if (event.backend === 'vfs') {
       const vfs = hostHooks.vfs;
       const vfsPath = fileUriToPath(event.uri);
+      assertVfsUnderRootDir(vfsPath, event.uri, hostHooks, true);
       if (vfs.isDirectory(vfsPath)) {
         const bytes = vfs.readDirectoryResourceBytes(vfsPath);
         if (!isAborted()) {
@@ -823,6 +894,7 @@ async function handleResourceHasElement({ event, wasmObj, hostHooks, isAborted, 
   try {
     if (event.backend === 'vfs') {
       const vfsPath = fileUriToPath(event.uri);
+      assertVfsUnderRootDir(vfsPath, event.uri, hostHooks, true);
       const exists = hostHooks.vfs.has(vfsPath);
       if (!isAborted()) {
         passNow(wasmObj.completeResourceHasElement.bind(wasmObj), token, exists);
@@ -848,6 +920,10 @@ async function handleResourceHasElement({ event, wasmObj, hostHooks, isAborted, 
     }
   } catch (err) {
     if (isAborted()) return;
+    if (err instanceof PklError && err.kind === 'security') {
+      passNow(wasmObj.rejectResourceHasElement.bind(wasmObj), token, 'security', err.message);
+      return;
+    }
     const msg = err instanceof Error ? err.message : String(err);
     passNow(wasmObj.rejectResourceHasElement.bind(wasmObj), token, 'io', msg);
   }
@@ -858,6 +934,7 @@ async function handleListElements({ event, wasmObj, hostHooks, isAborted, passNo
   try {
     if (event.backend === 'vfs') {
       const vfsPath = fileUriToPath(event.uri);
+      assertVfsUnderRootDir(vfsPath, event.uri, hostHooks, event.kind === 'listResources');
       const elements = hostHooks.vfs.list(vfsPath);
       if (!isAborted()) {
         passNow(wasmObj.completeListElements.bind(wasmObj), token, elements);
@@ -891,6 +968,10 @@ async function handleListElements({ event, wasmObj, hostHooks, isAborted, passNo
     }
   } catch (err) {
     if (isAborted()) return;
+    if (err instanceof PklError && err.kind === 'security') {
+      passNow(wasmObj.rejectListElements.bind(wasmObj), token, 'security', err.message);
+      return;
+    }
     const msg = err instanceof Error ? err.message : String(err);
     passNow(wasmObj.rejectListElements.bind(wasmObj), token, 'io', msg);
   }
@@ -924,7 +1005,7 @@ async function handlePackageFetch({
         passNow(
           rejectFn,
           token,
-          'security',
+          'http',
           `Received HTTP status code ${resp.status} when requesting \`${url}\`.`,
         );
         return;
@@ -942,12 +1023,23 @@ async function handlePackageFetch({
     passNow(completeFn, token, bytes);
   } catch (err) {
     if (isAborted()) return;
-    const msg = err instanceof Error ? err.message : String(err);
+    const msg = safeErrMessage(err);
     passNow(rejectFn, token, 'http', msg);
   }
 }
 
+function safeErrMessage(err) {
+  try {
+    if (err instanceof Error && typeof err.message === 'string') return err.message;
+    return String(err);
+  } catch {
+    return 'Unknown callback error';
+  }
+}
+
 async function resolveAnalysisGlobPattern(patternUri, hostHooks) {
+  // Security checks on `patternUri` and each returned URI are enforced once in Rust
+  // (`WasmImportAnalyzer::poll` and `WasmImportAnalyzer::complete_analysis_glob`).
   if (patternUri.toLowerCase().startsWith('file:')) {
     if (!hostHooks.vfs) {
       throw new PklError(
@@ -957,7 +1049,11 @@ async function resolveAnalysisGlobPattern(patternUri, hostHooks) {
       );
     }
     const vfsPattern = fileUriToPath(patternUri);
-    return hostHooks.vfs.glob(vfsPattern).map((p) => pathToFileUri(p));
+    const rootDir = hostHooks.rootDir ?? hostHooks.vfs.rootDir;
+    const matchedPaths = hostHooks.vfs
+      .glob(vfsPattern)
+      .filter((p) => !rootDir || isUnderRootDir(p, rootDir));
+    return matchedPaths.map((p) => pathToFileUri(p));
   }
   throw new PklError(
     `Unsupported glob pattern in import analyzer: \`${patternUri}\``,

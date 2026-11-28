@@ -156,12 +156,29 @@ impl PackageResolver {
             }
         }
 
-        // 1. Check persistent disk cache first (`PackageResolvers.java:512-556`)
+        // 1. Check persistent disk cache first (`PackageResolvers.java:512-556`).
+        //    Parse JSON first so corrupt cached `.json` files are deleted and report the exact
+        //    JSON syntax error, then verify any explicit expected checksum against cached bytes
+        //    to prevent unpinned->pinned cache poisoning.
         if let Some(store) = &self.cache_store
             && let Some(cached_bytes) = store.read_metadata_bytes(package)?
         {
             match parse_metadata_bytes(package, &request_uri, &cached_bytes) {
                 Ok(meta) => {
+                    if let Some(expected) = effective_expected {
+                        accept_metadata(
+                            package,
+                            &request_uri,
+                            &cached_bytes,
+                            Some(expected),
+                            self.test_mode,
+                        )
+                        .map_err(|failure| {
+                            ModuleHostError::SecurityManagerException {
+                                message: Some(failure.message()),
+                            }
+                        })?;
+                    }
                     let mut guard = self.memory_cache.write().unwrap_or_else(|e| e.into_inner());
                     guard.insert_metadata(package, meta.clone());
                     guard.insert_metadata_bytes(package, cached_bytes.clone());
@@ -222,15 +239,34 @@ impl PackageResolver {
             return Ok((metadata, archive));
         }
 
-        // 1. Check persistent disk cache (corrupt cached ZIP propagates error!)
-        if let Some(store) = &self.cache_store
-            && let Some(archive) = store.read_zip_archive(package)?
-        {
-            self.memory_cache
-                .write()
-                .unwrap_or_else(|e| e.into_inner())
-                .insert_archive(package, archive.clone());
-            return Ok((metadata, archive));
+        // 1. Check persistent disk cache (corrupt cached ZIP propagates ZipException first,
+        //    and valid cached ZIP bytes are verified against `metadata.package_zip_sha256`).
+        if let Some(store) = &self.cache_store {
+            if let Some(zip_bytes) = store.read_zip_bytes(package)? {
+                let archive = ZipArchive::parse(&zip_bytes).map_err(|err| {
+                    let reason = match err {
+                        crate::packages::zip::ZipError::UnexpectedEof
+                        | crate::packages::zip::ZipError::InvalidSignature => {
+                            "zip END header not found".to_string()
+                        }
+                        other => other.to_string(),
+                    };
+                    ModuleHostError::Io(crate::host::IoFailure::with_class("ZipException", reason))
+                })?;
+                verify_zip_checksum(package, &metadata, &zip_bytes)?;
+                self.memory_cache
+                    .write()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .insert_archive(package, archive.clone());
+                return Ok((metadata, archive));
+            }
+            if let Some(archive) = store.read_zip_archive(package)? {
+                self.memory_cache
+                    .write()
+                    .unwrap_or_else(|e| e.into_inner())
+                    .insert_archive(package, archive.clone());
+                return Ok((metadata, archive));
+            }
         }
 
         // 2. Download ZIP over HTTPS & strictly verify SHA-256 (`PackageResolvers.java:181-194`)
@@ -343,14 +379,9 @@ impl PackageResolver {
         downloaded.push(package.to_external_package_uri().without_checksums());
         if !no_transitive {
             for dep in &metadata.dependencies {
-                let dep_expected = if dep.sha256.is_empty() {
-                    None
-                } else {
-                    Some(&dep.sha256)
-                };
                 self.download_recursive(
                     &dep.package_uri,
-                    dep_expected,
+                    Some(&dep.sha256),
                     false,
                     visited,
                     downloaded,
@@ -549,13 +580,27 @@ pub fn ensure_package_metadata_loaded(
     package: &PackageUri,
     expected_checksum: Option<&PklString>,
 ) -> Result<(DependencyMetadata, Option<Vec<u8>>), ModuleHostError> {
-    if let Some(metadata) = SESSION_CACHE.with(|c| c.borrow().get_metadata(package)) {
-        let bytes = SESSION_CACHE.with(|c| c.borrow().get_metadata_bytes(package));
-        return Ok((metadata, bytes));
-    }
-
     let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
     let metadata_request_uri = crate::packages::http::get_metadata_request_uri(package);
+    let effective_expected = expected_checksum.or(package.sha256.as_ref());
+    let is_test_mode = host_opt.as_ref().is_some_and(|h| h.is_test_mode());
+
+    if let Some(metadata) = SESSION_CACHE.with(|c| c.borrow().get_metadata(package)) {
+        let bytes = SESSION_CACHE.with(|c| c.borrow().get_metadata_bytes(package));
+        if let (Some(expected), Some(raw_bytes)) = (effective_expected, &bytes) {
+            accept_metadata(
+                package,
+                &metadata_request_uri,
+                raw_bytes,
+                Some(expected),
+                is_test_mode,
+            )
+            .map_err(|failure| ModuleHostError::SecurityManagerException {
+                message: Some(failure.message()),
+            })?;
+        }
+        return Ok((metadata, bytes));
+    }
 
     // 1. Check disk cache for metadata JSON first
     if let Some(host) = &host_opt
@@ -563,6 +608,20 @@ pub fn ensure_package_metadata_loaded(
     {
         match parse_metadata_bytes(package, &metadata_request_uri, &cached_bytes) {
             Ok(meta) => {
+                if let Some(expected) = effective_expected {
+                    accept_metadata(
+                        package,
+                        &metadata_request_uri,
+                        &cached_bytes,
+                        Some(expected),
+                        is_test_mode,
+                    )
+                    .map_err(|failure| {
+                        ModuleHostError::SecurityManagerException {
+                            message: Some(failure.message()),
+                        }
+                    })?;
+                }
                 SESSION_CACHE.with(|c| {
                     let mut cache = c.borrow_mut();
                     cache.insert_metadata(package, meta.clone());
@@ -582,7 +641,6 @@ pub fn ensure_package_metadata_loaded(
     // 2. Fetch over HTTPS
     crate::packages::http::validate_metadata_url(metadata_request_uri.as_str().unwrap_or(""))?;
     crate::packages::http::record_metadata_request();
-    let is_test_mode = host_opt.as_ref().is_some_and(|h| h.is_test_mode());
 
     let metadata_bytes = if let Some(host) = &host_opt {
         host.fetch_metadata(package, &metadata_request_uri)?
@@ -623,11 +681,25 @@ pub fn ensure_package_loaded(
     package: &PackageUri,
     expected_checksum: Option<&PklString>,
 ) -> Result<(DependencyMetadata, ZipArchive), ModuleHostError> {
-    // 1. Check session in-memory cache
+    let effective_expected = expected_checksum.or(package.sha256.as_ref());
+    // 1. Check session in-memory cache (still verifying any explicit expected checksum
+    //    against cached metadata bytes to prevent unpinned->pinned cache poisoning).
     if let (Some(archive), Some(metadata)) = (
         SESSION_CACHE.with(|c| c.borrow().get_archive(package)),
         SESSION_CACHE.with(|c| c.borrow().get_metadata(package)),
     ) {
+        if let Some(expected) = effective_expected {
+            let cached_bytes = SESSION_CACHE.with(|c| c.borrow().get_metadata_bytes(package));
+            if let Some(bytes) = cached_bytes {
+                let request_uri = crate::packages::http::get_metadata_request_uri(package);
+                let is_test_mode = CURRENT_HOST
+                    .with(|h| h.borrow().as_ref().is_some_and(|host| host.is_test_mode()));
+                accept_metadata(package, &request_uri, &bytes, Some(expected), is_test_mode)
+                    .map_err(|failure| ModuleHostError::SecurityManagerException {
+                        message: Some(failure.message()),
+                    })?;
+            }
+        }
         return Ok((metadata, archive));
     }
 
@@ -723,15 +795,73 @@ fn map_package_uri_error(failure: crate::packages::PackageUriError) -> ModuleHos
     }
 }
 
-pub fn normalize_local_subpath(raw_asset_path: &str) -> PathBuf {
+/// Strictly validates and normalizes a `projectpackage:` local dependency subpath,
+/// rejecting NUL bytes, backslashes, Windows drive prefixes, and root/parent escapes.
+pub fn validate_local_subpath(raw_asset_path: &str) -> Result<PathBuf, ModuleHostError> {
     let decoded = crate::packages::zip::percent_decode(raw_asset_path);
+    if decoded.contains('\0') || decoded.contains('\\') {
+        return Err(ModuleHostError::SecurityManagerException {
+            message: Some(format!("Invalid local package asset path `{raw_asset_path}`.").into()),
+        });
+    }
     let mut components = Vec::new();
     for part in decoded.split('/') {
         if part.is_empty() || part == "." {
             continue;
         } else if part == ".." {
+            if components.pop().is_none() {
+                return Err(ModuleHostError::SecurityManagerException {
+                    message: Some(
+                        format!(
+                            "Local package asset path `{raw_asset_path}` escapes package root."
+                        )
+                        .into(),
+                    ),
+                });
+            }
+        } else {
+            let b = part.as_bytes();
+            if components.is_empty() && b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+                return Err(ModuleHostError::SecurityManagerException {
+                    message: Some(
+                        format!("Invalid local package asset path `{raw_asset_path}`.").into(),
+                    ),
+                });
+            }
+            components.push(part);
+        }
+    }
+    let mut path = PathBuf::new();
+    for comp in components {
+        let seg = Path::new(comp);
+        if seg
+            .components()
+            .any(|c| !matches!(c, std::path::Component::Normal(_)))
+        {
+            return Err(ModuleHostError::SecurityManagerException {
+                message: Some(
+                    format!("Invalid local package asset path `{raw_asset_path}`.").into(),
+                ),
+            });
+        }
+        path.push(comp);
+    }
+    Ok(path)
+}
+
+pub fn normalize_local_subpath(raw_asset_path: &str) -> PathBuf {
+    let decoded = crate::packages::zip::percent_decode(raw_asset_path);
+    let mut components = Vec::new();
+    for part in decoded.split(['/', '\\']) {
+        if part.is_empty() || part == "." || part.contains('\0') {
+            continue;
+        } else if part == ".." {
             components.pop();
         } else {
+            let b = part.as_bytes();
+            if components.is_empty() && b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+                continue;
+            }
             components.push(part);
         }
     }
@@ -1129,9 +1259,23 @@ pub fn resolve_import_uri(
         // Otherwise resolve from project
         let host_opt = CURRENT_HOST.with(|h| h.borrow().clone());
         let base_path = if base_str.starts_with("file://") {
-            PathBuf::from(crate::packages::zip::percent_decode(
+            let decoded = crate::packages::zip::percent_decode(
                 base_str.strip_prefix("file://").unwrap_or(base_str),
-            ))
+            );
+            #[cfg(windows)]
+            let decoded = {
+                let bytes = decoded.as_bytes();
+                if bytes.len() >= 3
+                    && bytes[0] == b'/'
+                    && bytes[1].is_ascii_alphabetic()
+                    && bytes[2] == b':'
+                {
+                    decoded[1..].to_string()
+                } else {
+                    decoded
+                }
+            };
+            PathBuf::from(decoded)
         } else {
             PathBuf::from(".")
         };

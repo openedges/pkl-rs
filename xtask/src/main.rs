@@ -80,7 +80,48 @@ fn verify(root: &Path) -> Result<String> {
         &pantry_version,
         &lock["pkl-pantry.pkl-version"],
     )?;
+    if root.join("crates").is_dir() {
+        verify_publishable_crate_legal_files(root)?;
+    }
     Ok(lock["baseline.pkl"].clone())
+}
+
+const PUBLISHABLE_CRATES: &[&str] = &[
+    "pkl-runtime",
+    "pkl-formatter",
+    "pkl-host-native",
+    "pkl",
+    "pkl-repl",
+    "pkl-server",
+    "pkl-doc",
+    "pkl-cli",
+];
+
+const REQUIRED_LEGAL_FILES: &[&str] = &["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"];
+
+fn verify_publishable_crate_legal_files(root: &Path) -> Result<()> {
+    for legal_file in REQUIRED_LEGAL_FILES {
+        let root_path = root.join(legal_file);
+        let expected = fs::read(&root_path)
+            .map_err(|error| format!("failed to read {}: {error}", root_path.display()))?;
+        for crate_dir in PUBLISHABLE_CRATES {
+            let crate_file = root.join("crates").join(crate_dir).join(legal_file);
+            let actual = fs::read(&crate_file).map_err(|error| {
+                format!(
+                    "publishable crate missing required legal file {}: {error}",
+                    crate_file.display()
+                )
+            })?;
+            if actual != expected {
+                return Err(format!(
+                    "{} is out of sync with root {}",
+                    crate_file.display(),
+                    root_path.display()
+                ));
+            }
+        }
+    }
+    Ok(())
 }
 
 fn parse_lock(contents: &str) -> Result<BTreeMap<String, String>> {
@@ -471,5 +512,45 @@ mod tests {
             pantry_pkl_version("[versions]\npkl = \"0.32.0\"\n[plugins]\npkl = {}").unwrap(),
             "0.32.0"
         );
+    }
+
+    #[test]
+    fn legal_files_verification_checks_presence_and_sync() {
+        let dir = std::env::temp_dir().join(format!("pkl-xtask-legal-test-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+        for f in REQUIRED_LEGAL_FILES {
+            fs::write(dir.join(f), format!("root-{f}")).unwrap();
+        }
+        for crate_dir in PUBLISHABLE_CRATES {
+            let cdir = dir.join("crates").join(crate_dir);
+            fs::create_dir_all(&cdir).unwrap();
+            for f in REQUIRED_LEGAL_FILES {
+                fs::write(cdir.join(f), format!("root-{f}")).unwrap();
+            }
+        }
+        verify_publishable_crate_legal_files(&dir).unwrap();
+
+        // Out-of-sync content must fail.
+        let target = dir
+            .join("crates")
+            .join(PUBLISHABLE_CRATES[0])
+            .join("THIRD-PARTY-NOTICES.md");
+        fs::write(&target, "stale").unwrap();
+        assert!(
+            verify_publishable_crate_legal_files(&dir)
+                .unwrap_err()
+                .contains("out of sync")
+        );
+
+        // Missing file must fail.
+        fs::remove_file(&target).unwrap();
+        assert!(
+            verify_publishable_crate_legal_files(&dir)
+                .unwrap_err()
+                .contains("missing required legal file")
+        );
+
+        let _ = fs::remove_dir_all(&dir);
     }
 }

@@ -55,6 +55,7 @@ impl Parser<'_> {
         let mut work = vec![Work::Type(expectation)];
         let mut values = Vec::new();
         while let Some(task) = work.pop() {
+            self.expression_step()?;
             // The step's larger match frame is gone before constraints enter
             // the expression parser. Both parsers retain the shared depth.
             if let Some(request) = self.type_step(task, &mut work, &mut values, base_depth)? {

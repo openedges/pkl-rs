@@ -58,6 +58,7 @@ pub struct ResolvedProjectDep {
     pub sha256: Option<PklString>,
 }
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum EvaluatorColor {
     Never,
@@ -1134,9 +1135,14 @@ impl ProjectDependenciesManager {
         Ok(resolved)
     }
 
+    /// Computes the local dependency's root directory path.
+    pub fn resolve_local_root_path(&self, local_rel_path: &str) -> PathBuf {
+        normalize_path_lexical(&self.project_dir.join(local_rel_path))
+    }
+
     /// Computes the local filesystem path for a `Local` dependency asset (`Dependency.java:55-69`).
     pub fn resolve_local_asset_path(&self, local_rel_path: &str, asset_path: &str) -> PathBuf {
-        let dep_root = normalize_path_lexical(&self.project_dir.join(local_rel_path));
+        let dep_root = self.resolve_local_root_path(local_rel_path);
         let sub = crate::packages::resolver::normalize_local_subpath(asset_path);
         dep_root.join(sub)
     }
@@ -1723,7 +1729,23 @@ fn strip_file_scheme_to_path(raw: &str) -> PathBuf {
         .strip_prefix("file://")
         .or_else(|| raw.strip_prefix("file:"))
         .unwrap_or(raw);
-    PathBuf::from(crate::packages::zip::percent_decode(path_part))
+    let decoded = crate::packages::zip::percent_decode(path_part);
+    PathBuf::from(strip_windows_drive_leading_slash(&decoded))
+}
+
+fn strip_windows_drive_leading_slash(path: &str) -> &str {
+    let b = path.as_bytes();
+    if cfg!(windows)
+        && b.len() >= 3
+        && b[0] == b'/'
+        && b[1].is_ascii_alphabetic()
+        && b[2] == b':'
+        && (b.len() == 3 || b[3] == b'/' || b[3] == b'\\')
+    {
+        &path[1..]
+    } else {
+        path
+    }
 }
 
 fn resolve_parent_uri(file_uri: &str) -> String {
@@ -1743,7 +1765,8 @@ fn file_uri_to_dir_path(base_uri: &str) -> PathBuf {
     } else {
         raw
     };
-    PathBuf::from(crate::packages::zip::percent_decode(trimmed))
+    let decoded = crate::packages::zip::percent_decode(trimmed);
+    PathBuf::from(strip_windows_drive_leading_slash(&decoded))
 }
 
 fn parse_hierarchical_uri(uri: &str) -> Option<(&str, &str, &str)> {
@@ -1876,7 +1899,10 @@ pub fn resolve_project_dependency(
     if let Some(dep) = project.dependencies.get(dep_name) {
         let base_uri = dep.uri.as_str().unwrap_or("");
         if let Some(decl) = declared {
-            let project_file_uri = format!("file://{}/PklProject", project.project_dir.display());
+            let project_file_uri = crate::packages::resolver::file_uri_from_path(
+                &project.project_dir.join("PklProject"),
+            )
+            .unwrap_or_else(|_| format!("file://{}/PklProject", project.project_dir.display()));
             let resolved_uri_clean = base_uri.replace("projectpackage:", "package:");
             if decl.is_local {
                 if let Some(local_uri) = &decl.local_package_uri {

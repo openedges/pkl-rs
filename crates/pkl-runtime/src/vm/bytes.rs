@@ -3,6 +3,7 @@ use super::strings::diagnostic_integer;
 use super::*;
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_byte(&self) -> Result<(), RuntimeError> {
         let value = self.stack.last().ok_or_else(|| invalid("Bytes argument"))?;
         if matches!(value, Value::Int(value) if (0..=255).contains(&value.get())) {
@@ -195,14 +196,64 @@ pub(super) fn blocks(
     result
 }
 
+const MAX_BYTES_HEX_INPUT: usize = 64 * 1024 * 1024;
+const MAX_BYTES_BASE64_INPUT: usize = 96 * 1024 * 1024;
+const MAX_BYTES_TO_LIST_LEN: usize = 16 * 1024 * 1024;
+
 fn hex(bytes: &[u8]) -> PklString {
     const HEX: &[u8; 16] = b"0123456789abcdef";
-    let mut output = String::with_capacity(bytes.len() * 2);
+    let mut output = String::with_capacity(bytes.len().saturating_mul(2));
     for byte in bytes {
         output.push(HEX[(byte >> 4) as usize] as char);
         output.push(HEX[(byte & 15) as usize] as char);
     }
     output.into()
+}
+
+fn try_hex(bytes: &[u8]) -> Result<PklString, RuntimeError> {
+    if bytes.len() > MAX_BYTES_HEX_INPUT {
+        return Err(RuntimeError::new(
+            ErrorKind::Host,
+            "Bytes.hex output exceeds maximum supported length.",
+        ));
+    }
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut output = String::new();
+    output
+        .try_reserve_exact(bytes.len().saturating_mul(2))
+        .map_err(|_| RuntimeError::new(ErrorKind::Host, "Bytes.hex allocation failed."))?;
+    for byte in bytes {
+        output.push(HEX[(byte >> 4) as usize] as char);
+        output.push(HEX[(byte & 15) as usize] as char);
+    }
+    Ok(output.into())
+}
+
+fn try_base64(bytes: &[u8]) -> Result<PklString, RuntimeError> {
+    if bytes.len() > MAX_BYTES_BASE64_INPUT {
+        return Err(RuntimeError::new(
+            ErrorKind::Host,
+            "Bytes.base64 output exceeds maximum supported length.",
+        ));
+    }
+    const ALPHABET: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let encoded_len = bytes.len().div_ceil(3).saturating_mul(4);
+    let mut text = String::new();
+    text.try_reserve_exact(encoded_len)
+        .map_err(|_| RuntimeError::new(ErrorKind::Host, "Bytes.base64 allocation failed."))?;
+    for chunk in bytes.chunks(3) {
+        let value = (u32::from(chunk[0]) << 16)
+            | (u32::from(*chunk.get(1).unwrap_or(&0)) << 8)
+            | u32::from(*chunk.get(2).unwrap_or(&0));
+        for (position, shift) in [18, 12, 6, 0].into_iter().enumerate() {
+            text.push(if position > chunk.len() {
+                '='
+            } else {
+                ALPHABET[((value >> shift) & 63) as usize] as char
+            });
+        }
+    }
+    Ok(text.into())
 }
 
 impl Vm {
@@ -215,14 +266,24 @@ impl Vm {
         let result = match name {
             "length" => Value::Int((bytes.len() as i64).into()),
             "size" => Value::DataSize(bytes.size()),
-            "hex" => Value::String(bytes.cache.hex.get_or_init(|| hex(bytes)).clone()),
-            "base64" => Value::String(
-                bytes
-                    .cache
-                    .base64
-                    .get_or_init(|| resources::base64(bytes))
-                    .clone(),
-            ),
+            "hex" => {
+                let s = if let Some(cached) = bytes.cache.hex.get() {
+                    cached.clone()
+                } else {
+                    let computed = try_hex(bytes)?;
+                    bytes.cache.hex.get_or_init(|| computed).clone()
+                };
+                Value::String(s)
+            }
+            "base64" => {
+                let s = if let Some(cached) = bytes.cache.base64.get() {
+                    cached.clone()
+                } else {
+                    let computed = try_base64(bytes)?;
+                    bytes.cache.base64.get_or_init(|| computed).clone()
+                };
+                Value::String(s)
+            }
             "md5" => Value::String(hex(&md5::Md5::digest(bytes))),
             "sha1" => Value::String(hex(&sha1::Sha1::digest(bytes))),
             "sha256" => Value::String(hex(&sha2::Sha256::digest(bytes))),
@@ -236,6 +297,7 @@ impl Vm {
         Ok(true)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn bytes_operation(
         &mut self,
         receiver: Value,
@@ -283,12 +345,18 @@ impl Vm {
         if let Some((_, id, _)) = self.heap.bytes_lists.get(&bytes.reference()) {
             return Ok(*id);
         }
-        let id = self.build_strict_list(
-            bytes
-                .iter()
-                .map(|byte| Value::Int(i64::from(*byte).into()))
-                .collect(),
-        );
+        if bytes.len() > MAX_BYTES_TO_LIST_LEN {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "Bytes.toList() exceeds maximum supported list length.",
+            ));
+        }
+        let mut elems = Vec::new();
+        elems
+            .try_reserve_exact(bytes.len())
+            .map_err(|_| RuntimeError::new(ErrorKind::Host, "Bytes.toList() allocation failed."))?;
+        elems.extend(bytes.iter().map(|byte| Value::Int(i64::from(*byte).into())));
+        let id = self.build_strict_list(elems);
         // Constant carriers live with the immutable code, independently of VM frames.
         let code_constant = self.program.blocks.iter().flatten().any(|instruction| {
             matches!(instruction, Instruction::Constant(Value::Bytes(value)) if value.reference() == bytes.reference())
@@ -299,6 +367,7 @@ impl Vm {
         Ok(id)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn subscript_bytes(
         &self,
         bytes: &crate::value::Bytes,

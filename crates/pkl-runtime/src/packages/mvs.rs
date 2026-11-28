@@ -6,7 +6,7 @@ use crate::packages::metadata::DependencyMetadata;
 use crate::packages::project::{DeclaredDependenciesTree, Project, ProjectDepEntry, ProjectDeps};
 use crate::packages::{CanonicalPackageUri, PackageUri};
 use crate::value::PklString;
-use std::collections::BTreeSet;
+use std::collections::BTreeMap;
 use std::path::{Component, Path, PathBuf};
 
 /// Metadata + computed SHA-256 provider for MVS dependency resolution.
@@ -32,7 +32,7 @@ pub struct ProjectDependenciesResolver<'a, P: MetadataChecksumProvider + ?Sized>
     project: &'a Project,
     provider: &'a P,
     resolved_dependencies: Vec<(CanonicalPackageUri, ProjectDepEntry)>,
-    already_handled_dependencies: BTreeSet<PackageUri>,
+    already_handled_dependencies: BTreeMap<PackageUri, PklString>,
     warnings: Vec<String>,
 }
 
@@ -42,7 +42,7 @@ impl<'a, P: MetadataChecksumProvider + ?Sized> ProjectDependenciesResolver<'a, P
             project,
             provider,
             resolved_dependencies: Vec::new(),
-            already_handled_dependencies: BTreeSet::new(),
+            already_handled_dependencies: BTreeMap::new(),
             warnings: Vec::new(),
         }
     }
@@ -95,7 +95,20 @@ impl<'a, P: MetadataChecksumProvider + ?Sized> ProjectDependenciesResolver<'a, P
         package_uri: PackageUri,
         expected_sha256: Option<&PklString>,
     ) -> Result<(), ModuleHostError> {
-        if self.already_handled_dependencies.contains(&package_uri) {
+        if let Some(prev_sha256) = self.already_handled_dependencies.get(&package_uri) {
+            if let Some(expected) = expected_sha256
+                && prev_sha256 != expected
+            {
+                return Err(ModuleHostError::SecurityManagerException {
+                    message: Some(
+                        format!(
+                            "Computed checksum did not match declared checksum for dependency `{}`.\n\nComputed: \"{prev_sha256}\"\nDeclared: \"{expected}\"",
+                            package_uri.display_name()
+                        )
+                        .into(),
+                    ),
+                });
+            }
             return Ok(());
         }
         let (metadata, computed_sha256) = self
@@ -116,20 +129,16 @@ impl<'a, P: MetadataChecksumProvider + ?Sized> ProjectDependenciesResolver<'a, P
         }
         let dep_with_checksum = ProjectDepEntry::Remote {
             uri: package_uri.clone(),
-            sha256: computed_sha256,
+            sha256: computed_sha256.clone(),
         };
         self.update_dependency(dep_with_checksum);
-        self.already_handled_dependencies.insert(package_uri);
+        self.already_handled_dependencies
+            .insert(package_uri, computed_sha256);
 
         for transitive in &metadata.dependencies {
-            let expected = if transitive.sha256.is_empty() {
-                None
-            } else {
-                Some(&transitive.sha256)
-            };
             self.resolve_dependencies_of_package_uri(
                 transitive.package_uri.to_project_package_uri(),
-                expected,
+                Some(&transitive.sha256),
             )?;
         }
         Ok(())
@@ -182,7 +191,21 @@ fn project_dir_from_file_uri(file_uri: &str) -> PathBuf {
         .or_else(|| file_uri.strip_prefix("file:"))
         .unwrap_or(file_uri);
     let decoded = crate::packages::zip::percent_decode(raw);
-    let path = PathBuf::from(decoded);
+    let trimmed = {
+        let b = decoded.as_bytes();
+        if cfg!(windows)
+            && b.len() >= 3
+            && b[0] == b'/'
+            && b[1].is_ascii_alphabetic()
+            && b[2] == b':'
+            && (b.len() == 3 || b[3] == b'/' || b[3] == b'\\')
+        {
+            &decoded[1..]
+        } else {
+            decoded.as_str()
+        }
+    };
+    let path = PathBuf::from(trimmed);
     path.parent().map_or(path.clone(), Path::to_path_buf)
 }
 
@@ -215,22 +238,30 @@ pub fn relativize_paths(target: &Path, base: &Path) -> String {
 
 fn normalize_components(path: &Path) -> Vec<String> {
     let mut out: Vec<String> = Vec::new();
+    let mut has_prefix = false;
     for comp in path.components() {
         match comp {
             Component::CurDir => {}
             Component::ParentDir => {
-                if out.last().is_some_and(|s| s != "..") {
+                let min_len = usize::from(has_prefix);
+                if out.len() > min_len && out.last().is_some_and(|s| s != ".." && !s.is_empty()) {
                     out.pop();
-                } else {
+                } else if !out.last().is_some_and(|s| s.is_empty()) {
                     out.push("..".to_string());
                 }
             }
             Component::RootDir => {
-                out.clear();
+                if has_prefix {
+                    out.truncate(1);
+                } else {
+                    out.clear();
+                }
                 out.push(String::new());
             }
             Component::Prefix(p) => {
+                out.clear();
                 out.push(p.as_os_str().to_string_lossy().into_owned());
+                has_prefix = true;
             }
             Component::Normal(s) => {
                 out.push(s.to_string_lossy().into_owned());

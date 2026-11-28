@@ -70,3 +70,20 @@ fn pinned_jdk_slice_and_lookbehind_raw_output() {
         include_bytes!("../../tests/fixtures/utf16-authority/jdk-slice-behind.stdout.bin")
     );
 }
+
+#[test]
+fn round5_looking_at_region_does_not_cross_split_surrogate_end() {
+    let text = [0xd83d, 0xde00]; // U+1F600 😀 split at region end = 1
+    let pat: Vec<u16> = ".".encode_utf16().collect();
+    let re = Utf16Regex::with_flags(&pat, "").unwrap();
+    let mut matcher = re.matcher(&text, Limits::default());
+    let matched = matcher
+        .looking_at_region(0, 1)
+        .expect("looking_at_region must succeed")
+        .expect("single high surrogate within [0, 1) must match `.`");
+    assert_eq!(matched.start, 0);
+    assert_eq!(
+        matched.end, 1,
+        "looking_at_region(0, 1) must not consume low surrogate past text_end=1"
+    );
+}

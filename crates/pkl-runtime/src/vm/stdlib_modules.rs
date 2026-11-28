@@ -137,6 +137,7 @@ impl Vm {
         })
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn bootstrap_stdlib(&mut self) -> Result<(), RuntimeError> {
         let root = self.pop()?;
         self.force_stdlib_frame(root)
@@ -170,6 +171,13 @@ impl Vm {
         program.seal_code_segment();
         program.units[unit.0 as usize].syntax = Some(Arc::clone(&parsed));
         let template_members = program.objects[program.units[unit.0 as usize].template].clone();
+        let mut template_index = crate::heap::FastMap::default();
+        template_index.reserve(template_members.len());
+        for member in &template_members {
+            template_index
+                .entry((&member.name, member.method, member.import()))
+                .or_insert(member.code);
+        }
         let mut upgraded_decls = BTreeMap::new();
         for declaration in &parsed.members {
             let method = matches!(
@@ -177,12 +185,8 @@ impl Vm {
                 ExprKind::Function { method: true, .. }
             );
             let is_import = matches!(declaration.expr.kind, ExprKind::Import { .. });
-            if let Some(member) = template_members.iter().find(|member| {
-                member.name == declaration.name
-                    && member.method == method
-                    && member.import() == is_import
-            }) {
-                upgraded_decls.insert(member.code, declaration.declaration_source());
+            if let Some(&code) = template_index.get(&(&declaration.name, method, is_import)) {
+                upgraded_decls.insert(code, declaration.declaration_source());
             }
         }
         if let Some(base_decls) = &mut program.base_declaration_sources {
@@ -1054,6 +1058,8 @@ fn compile_base_synthetic_annotations_only(
         module_recipes,
         instrument: false,
         replaying_prefix_error: false,
+        type_compile_depth: 0,
+        type_compile_nodes: 0,
     };
     let mut publish = Code::default();
     for &(index, code, method) in synthetic_annotated {
@@ -1137,6 +1143,8 @@ fn compile_reflection_annotations(
         module_recipes,
         instrument: false,
         replaying_prefix_error: false,
+        type_compile_depth: 0,
+        type_compile_nodes: 0,
     };
     if !synthetic_annotated.is_empty() {
         let mut publish = Code::default();

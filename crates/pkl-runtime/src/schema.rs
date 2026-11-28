@@ -24,6 +24,7 @@ pub struct TypeAliasId(pub usize);
 ///
 /// Order matches Java's `EnumSet<Modifier>` iteration order:
 /// `abstract`, `open`, `hidden`, `external` (`external` is exported on classes/typealiases only).
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Modifier {
     Abstract,
@@ -50,6 +51,7 @@ impl fmt::Display for Modifier {
 }
 
 /// Type parameter variance (`org.pkl.core.TypeParameter.Variance`).
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum Variance {
     Invariant,
@@ -149,6 +151,7 @@ impl TypeAliasInfo {
 }
 
 /// Exported Pkl type annotation (`org.pkl.core.PType`).
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum PType {
     Unknown,

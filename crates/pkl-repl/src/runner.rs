@@ -63,7 +63,7 @@ fn run_with_editor<L: LineEditor, E: Write>(
     };
 
     let working_dir_uri = path_to_dir_uri(&config.working_dir);
-    let session = ReplSession::new(ReplSessionOptions {
+    let mut session = ReplSession::new(ReplSessionOptions {
         working_dir_uri,
         color: config.color,
         trace_mode,
@@ -72,6 +72,8 @@ fn run_with_editor<L: LineEditor, E: Write>(
         power_assertions,
         platform_data: true,
     });
+    session.set_reusable_timeouts(true);
+    session.set_platform_metadata(Some(pkl_host_native::detect_native_platform_metadata()));
 
     let mut runner = ReplRunner {
         host,
@@ -111,12 +113,7 @@ impl<E: Write> ReplRunner<E> {
         let faint_prompt = editor.supports_faint_prompt(self.color);
 
         while !self.quit {
-            let prompt = if self.continuation {
-                self.next_request_id = self.next_request_id.saturating_sub(1);
-                format_prompt(self.next_request_id, true, faint_prompt)
-            } else {
-                format_prompt(self.next_request_id, false, faint_prompt)
-            };
+            let prompt = format_prompt(self.next_request_id, self.continuation, faint_prompt);
 
             let line = match editor.read_line(&prompt) {
                 Ok(Some(line)) => line,
@@ -205,9 +202,29 @@ impl<E: Write> ReplRunner<E> {
             }
             ReplCommandKind::Reset => {
                 let id = self.take_request_id();
-                let _ = self.drive_request(ReplRequest::Reset { id });
-                editor.clear_screen().map_err(|_| 1)?;
-                self.next_request_id = 0;
+                let responses = self.drive_request(ReplRequest::Reset { id });
+                let mut had_error = false;
+                for response in responses {
+                    match response {
+                        ReplResponse::EvalError { message } => {
+                            had_error = true;
+                            self.println_highlighted(editor, &message).map_err(|_| 1)?;
+                        }
+                        ReplResponse::InternalError { message } => {
+                            let _ = writeln!(self.stderr, "Internal REPL error: {message}");
+                            return Err(1);
+                        }
+                        ReplResponse::InvalidRequest { message } => {
+                            let _ = writeln!(self.stderr, "Invalid REPL request: {message}");
+                            return Err(1);
+                        }
+                        _ => {}
+                    }
+                }
+                if !had_error {
+                    editor.clear_screen().map_err(|_| 1)?;
+                    self.next_request_id = 0;
+                }
                 Ok(())
             }
         }
@@ -241,6 +258,7 @@ impl<E: Write> ReplRunner<E> {
                     self.println_highlighted(editor, &message).map_err(|_| 1)?;
                 }
                 ReplResponse::IncompleteInput => {
+                    self.next_request_id = self.next_request_id.saturating_sub(1);
                     self.continuation = true;
                 }
                 ReplResponse::InternalError { message } => {
@@ -260,55 +278,95 @@ impl<E: Write> ReplRunner<E> {
     fn drive_request(&mut self, request: ReplRequest) -> Vec<ReplResponse> {
         let now_ms = self.host.clock_ms();
         let timeout_ms = self.host.timeout_ms();
+        let timeout_guard = self.host.start_eval_timeout_guard(timeout_ms);
+        let timeout_response = |ms: Option<u64>| {
+            vec![ReplResponse::EvalError {
+                message: format!(
+                    "–– Pkl Error ––\n{}\n",
+                    pkl_runtime::host::format_timeout_message(ms.unwrap_or(0))
+                ),
+            }]
+        };
+        let map_host_err = |session: &mut ReplSession,
+                            err: pkl_runtime::value::RuntimeError,
+                            timed_out: bool,
+                            ms: Option<u64>| {
+            session.abort_active_operation();
+            if timed_out || err.kind == pkl_runtime::value::ErrorKind::Timeout {
+                timeout_response(ms)
+            } else {
+                vec![ReplResponse::InternalError {
+                    message: err.message.to_java_utf8(),
+                }]
+            }
+        };
         if let Err(err) = self.session.start_request(request, now_ms, timeout_ms) {
-            return vec![ReplResponse::InternalError {
-                message: err.message.to_java_utf8(),
-            }];
+            let timed_out = timeout_guard.stop();
+            return map_host_err(&mut self.session, err, timed_out, timeout_ms);
         }
         let step_budget = if timeout_ms.is_some() { 4096 } else { 32_768 };
         loop {
+            if timeout_guard.triggered() {
+                self.session.abort_active_operation();
+                let _ = timeout_guard.stop();
+                return timeout_response(timeout_ms);
+            }
             let t = self.host.clock_ms();
             match self.session.poll(t, step_budget) {
-                ReplPoll::Ready(responses) => return responses,
+                ReplPoll::Ready(responses) => {
+                    let _ = timeout_guard.stop();
+                    return responses;
+                }
                 ReplPoll::Yielded => {}
                 ReplPoll::Read { token, .. } => match self.session.read_request(&token) {
                     Ok(req) => {
                         let result = self.host.handle_read_request(&req);
+                        if timeout_guard.triggered() {
+                            self.session.abort_active_operation();
+                            let _ = timeout_guard.stop();
+                            return timeout_response(timeout_ms);
+                        }
                         if let Err(err) =
                             self.session
                                 .complete_read(&token, result, self.host.clock_ms())
                         {
-                            return vec![ReplResponse::InternalError {
-                                message: err.message.to_java_utf8(),
-                            }];
+                            let timed_out = timeout_guard.stop();
+                            return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                         }
                     }
                     Err(err) => {
-                        return vec![ReplResponse::InternalError {
-                            message: err.message.to_java_utf8(),
-                        }];
+                        let timed_out = timeout_guard.stop();
+                        return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                     }
                 },
                 ReplPoll::Module { token, request } => {
                     let completion = self.host.handle_module_request(&request);
+                    if timeout_guard.triggered() {
+                        self.session.abort_active_operation();
+                        let _ = timeout_guard.stop();
+                        return timeout_response(timeout_ms);
+                    }
                     if let Err(err) =
                         self.session
                             .complete_module(&token, completion, self.host.clock_ms())
                     {
-                        return vec![ReplResponse::InternalError {
-                            message: err.message.to_java_utf8(),
-                        }];
+                        let timed_out = timeout_guard.stop();
+                        return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                     }
                 }
                 ReplPoll::Glob { token, request } => {
                     let completion = self.host.handle_glob_request(&request);
+                    if timeout_guard.triggered() {
+                        self.session.abort_active_operation();
+                        let _ = timeout_guard.stop();
+                        return timeout_response(timeout_ms);
+                    }
                     if let Err(err) =
                         self.session
                             .complete_glob(&token, completion, self.host.clock_ms())
                     {
-                        return vec![ReplResponse::InternalError {
-                            message: err.message.to_java_utf8(),
-                        }];
+                        let timed_out = timeout_guard.stop();
+                        return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                     }
                 }
                 ReplPoll::Log { token, event } => {
@@ -321,25 +379,33 @@ impl<E: Write> ReplRunner<E> {
                     let space = if message.ends_with('\n') { "" } else { " " };
                     let _ = writeln!(self.stderr, "pkl: {level}: {message}{space}({uri})");
                     let _ = self.stderr.flush();
+                    if timeout_guard.triggered() {
+                        self.session.abort_active_operation();
+                        let _ = timeout_guard.stop();
+                        return timeout_response(timeout_ms);
+                    }
                     if let Err(err) =
                         self.session
                             .acknowledge_log(&token, Ok(()), self.host.clock_ms())
                     {
-                        return vec![ReplResponse::InternalError {
-                            message: err.message.to_java_utf8(),
-                        }];
+                        let timed_out = timeout_guard.stop();
+                        return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                     }
                 }
                 ReplPoll::TransformFrame { token, frame } => {
                     let transformed = FrameTransformer::Default.transform((*frame).clone());
+                    if timeout_guard.triggered() {
+                        self.session.abort_active_operation();
+                        let _ = timeout_guard.stop();
+                        return timeout_response(timeout_ms);
+                    }
                     if let Err(err) = self.session.complete_frame_transform(
                         &token,
                         Ok(transformed),
                         self.host.clock_ms(),
                     ) {
-                        return vec![ReplResponse::InternalError {
-                            message: err.message.to_java_utf8(),
-                        }];
+                        let timed_out = timeout_guard.stop();
+                        return map_host_err(&mut self.session, err, timed_out, timeout_ms);
                     }
                 }
             }
@@ -369,13 +435,7 @@ fn path_to_dir_uri(dir: &Path) -> PklString {
             .map(|cwd| cwd.join(dir))
             .unwrap_or_else(|_| dir.to_path_buf())
     };
-    let raw = abs.to_string_lossy().replace('\\', "/");
-    let quoted = quote_uri_path(&PklString::from(raw.as_str())).to_java_utf8();
-    let mut uri = if quoted.starts_with('/') {
-        format!("file://{quoted}")
-    } else {
-        format!("file:///{quoted}")
-    };
+    let mut uri = pkl_host_native::path_to_file_uri(&abs).to_java_utf8();
     if !uri.ends_with('/') {
         uri.push('/');
     }
@@ -385,21 +445,26 @@ fn path_to_dir_uri(dir: &Path) -> PklString {
 /// Converts a `:load <arg>` argument into a URI string matching `IoUtils.toUri(String)`.
 fn arg_to_uri(raw: &str) -> String {
     let trimmed = raw.trim();
-    if has_uri_scheme(trimmed) {
+    if pkl_host_native::is_uri_like(trimmed) {
         return trimmed.to_string();
     }
-    let slash_path = trimmed.replace('\\', "/");
+    let path = Path::new(trimmed);
+    let b = trimmed.as_bytes();
+    let is_windows_drive_abs = b.len() >= 3
+        && b[0].is_ascii_alphabetic()
+        && b[1] == b':'
+        && (b[2] == b'\\' || b[2] == b'/');
+    if path.is_absolute() || is_windows_drive_abs {
+        return pkl_host_native::path_to_file_uri(path).to_java_utf8();
+    }
+    if cfg!(windows) && b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+        let abs = std::path::absolute(path).unwrap_or_else(|_| path.to_path_buf());
+        return pkl_host_native::path_to_file_uri(&abs).to_java_utf8();
+    }
+    let slash_path = if cfg!(windows) {
+        trimmed.replace('\\', "/")
+    } else {
+        trimmed.to_string()
+    };
     quote_uri_path(&PklString::from(slash_path.as_str())).to_java_utf8()
-}
-
-fn has_uri_scheme(s: &str) -> bool {
-    let Some((scheme, _)) = s.split_once(':') else {
-        return false;
-    };
-    let mut bytes = scheme.bytes();
-    let Some(first) = bytes.next() else {
-        return false;
-    };
-    first.is_ascii_alphabetic()
-        && bytes.all(|b| b.is_ascii_alphanumeric() || matches!(b, b'+' | b'-' | b'.'))
 }

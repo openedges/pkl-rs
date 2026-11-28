@@ -34,6 +34,7 @@ impl Run {
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_collection_addition(
         &mut self,
         left: &Value,
@@ -58,16 +59,88 @@ impl Vm {
             self.stack.push(Value::Object(*left));
             return Ok(true);
         }
-        if kind == CollectionKind::List
-            && let Some(left_elems) = &source.list_elements
-            && let Some(right_elems) = &self.heap.get(*right)?.list_elements
-        {
-            let mut combined = Vec::with_capacity(left_elems.len() + right_elems.len());
-            combined.extend_from_slice(left_elems);
-            combined.extend_from_slice(right_elems);
-            let built = self.build_strict_list(combined);
-            self.stack.push(Value::Object(built));
-            return Ok(true);
+        if kind == CollectionKind::List {
+            let right_obj = self.heap.get(*right)?;
+            if let Some(left_elems) = &source.list_elements
+                && let Some(right_elems) = &right_obj.list_elements
+            {
+                let total_len =
+                    left_elems
+                        .len()
+                        .checked_add(right_elems.len())
+                        .ok_or_else(|| {
+                            RuntimeError::new(ErrorKind::Type, "List size exceeds maximum length.")
+                        })?;
+                if total_len > collections::MAX_MATERIALIZED_REPEAT_LIST {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "List of length {} exceeds maximum materialized length ({}).",
+                            total_len,
+                            collections::MAX_MATERIALIZED_REPEAT_LIST
+                        ),
+                    ));
+                }
+                let mut combined = Vec::new();
+                combined.try_reserve_exact(total_len).map_err(|_| {
+                    RuntimeError::new(ErrorKind::Type, "List size exceeds available memory.")
+                })?;
+                combined.extend_from_slice(left_elems);
+                combined.extend_from_slice(right_elems);
+                let built = self.build_strict_list(combined);
+                self.stack.push(Value::Object(built));
+                return Ok(true);
+            }
+            // Virtual repeated list + List/Set: materialize left prefix (bounded) so
+            // `repeat_base_len` is never silently dropped while preserving `length`.
+            if let Some(base_len) = source.repeat_base_len
+                && source.list_elements.is_none()
+                && source.collection_members.len() < source.length
+            {
+                let right_len = right_obj.length;
+                let total_len = source.length.checked_add(right_len).ok_or_else(|| {
+                    RuntimeError::new(ErrorKind::Type, "List size exceeds maximum length.")
+                })?;
+                if total_len > collections::MAX_MATERIALIZED_REPEAT_LIST {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "List of length {} exceeds maximum materialized length ({}).",
+                            total_len,
+                            collections::MAX_MATERIALIZED_REPEAT_LIST
+                        ),
+                    ));
+                }
+                let mut combined = Vec::new();
+                combined.try_reserve_exact(total_len).map_err(|_| {
+                    RuntimeError::new(ErrorKind::Type, "List size exceeds available memory.")
+                })?;
+                if base_len > 0 {
+                    for idx in 0..source.length {
+                        let val = source
+                            .cache_slots
+                            .get(idx % base_len)
+                            .map(|s| s.value.clone())
+                            .ok_or_else(|| invalid("missing virtual repeated list slot"))?;
+                        combined.push(val);
+                    }
+                }
+                if let Some(right_elems) = &right_obj.list_elements {
+                    combined.extend_from_slice(right_elems);
+                    let built = self.build_strict_list(combined);
+                    self.stack.push(Value::Object(built));
+                    return Ok(true);
+                }
+                let right_members = collections::ordered_members(&self.heap, *right)?;
+                for member in &right_members {
+                    let val = collections::cached_render_value(&self.heap, *right, member)?
+                        .ok_or_else(|| invalid("addition strict element"))?;
+                    combined.push(val);
+                }
+                let built = self.build_strict_list(combined);
+                self.stack.push(Value::Object(built));
+                return Ok(true);
+            }
         }
         // Copy persistent strict storage, not the producer's environment,
         // executable owner, generic cast, default, or structural/hash caches.
@@ -106,6 +179,7 @@ impl Vm {
         Ok(true)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_collection_addition(&mut self) -> Result<(), RuntimeError> {
         let run = self
             .frames

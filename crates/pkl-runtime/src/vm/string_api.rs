@@ -404,6 +404,7 @@ impl Vm {
         }
         Ok(false)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn string_api_operation(
         &mut self,
         receiver: Value,
@@ -471,12 +472,30 @@ impl Vm {
                             ),
                         ));
                     }
-                    let mut units = Vec::new();
+                    const MAX_PAD_UTF16_UNITS: usize = 128 * 1024 * 1024;
                     let pad = padding.encode_utf16().collect::<Vec<_>>();
+                    let text_units_len = text.encode_utf16().count();
+                    let pad_count = (width - length) as usize;
+                    let pad_units = pad_count.checked_mul(pad.len()).ok_or_else(|| {
+                        RuntimeError::new(ErrorKind::Host, "String.pad allocation overflow.")
+                    })?;
+                    let total_units = text_units_len.checked_add(pad_units).ok_or_else(|| {
+                        RuntimeError::new(ErrorKind::Host, "String.pad allocation overflow.")
+                    })?;
+                    if total_units > MAX_PAD_UTF16_UNITS {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Host,
+                            "String.pad result exceeds maximum supported size.",
+                        ));
+                    }
+                    let mut units = Vec::new();
+                    units.try_reserve_exact(total_units).map_err(|_| {
+                        RuntimeError::new(ErrorKind::Host, "String.pad allocation failed.")
+                    })?;
                     if end {
                         units.extend(text.encode_utf16());
                     }
-                    for _ in length..width {
+                    for _ in 0..pad_count {
                         units.extend_from_slice(&pad);
                     }
                     if !end {
@@ -520,13 +539,24 @@ impl Vm {
                 let suffix = text
                     .substring_code_points(end.get(), text.code_point_len() as i64)
                     .expect("checked range suffix");
-                Value::String(PklString::from_utf16(
-                    prefix
-                        .encode_utf16()
-                        .chain(replacement.encode_utf16())
-                        .chain(suffix.encode_utf16())
-                        .collect::<Vec<_>>(),
-                ))
+                let total_bytes = prefix
+                    .len_bytes()
+                    .saturating_add(replacement.len_bytes())
+                    .saturating_add(suffix.len_bytes());
+                if total_bytes > super::MAX_STRING_CONCAT_BYTES {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "String exceeds maximum allowed length.",
+                    ));
+                }
+                let mut units = Vec::new();
+                units.try_reserve(total_bytes).map_err(|_| {
+                    RuntimeError::new(ErrorKind::Type, "String size exceeds available memory.")
+                })?;
+                units.extend(prefix.encode_utf16());
+                units.extend(replacement.encode_utf16());
+                units.extend(suffix.encode_utf16());
+                Value::String(PklString::from_utf16(units))
             }
             Operation::Capitalize { lower } => Value::String(first_case(&text, lower)),
             Operation::Trim { start, end, jdk } => Value::String(trimmed(&text, start, end, jdk)),

@@ -141,6 +141,7 @@ impl Vm {
             type_parent_defaults: snap.type_parent_defaults.clone(),
             verified_strict_collections: crate::heap::FastMap::default(),
             executable_roots: snap.executable_roots.clone(),
+            schema_roots: Vec::new(),
             code_arenas: Vec::new(),
             declaration_roots_dirty: snap.declaration_roots_dirty,
             declaration_roots_lens: snap.declaration_roots_lens,
@@ -160,7 +161,7 @@ impl Vm {
             fast_int_vals: Vec::new(),
             fast_int_locals: Vec::new(),
             fast_int_calls: Vec::new(),
-            scratch_utf8: String::with_capacity(256),
+            scratch_utf8: String::new(),
             platform_metadata,
             monotonic_clock: None,
         }

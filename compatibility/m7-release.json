@@ -251,7 +251,7 @@
       "description": "Whole-language 4,586-case (4,575 ready) and 475-requirement differential inventory",
       "manifest": "compatibility/m2-language.json",
       "milestone": "M2",
-      "sha256": "29c7f6823e75211e184a4a54dc9147517efbd8816bb49057fdecf50c8f21175e"
+      "sha256": "3e7e519e79650e3d96e0c09f66589874ac44a48ed47a5ed249431c74e24edd64"
     },
     {
       "bytes": 111079,
@@ -277,10 +277,10 @@
       "description": "1,781 stdlib/builtin/renderer mechanical census + 118 3-lane output/binary differential cases",
       "manifest": "compatibility/m3-stdlib-output.json",
       "milestone": "M3",
-      "sha256": "f1226e285cc4da4e8c24975f33fb4b187a3bddb0ed648ec1b9d6c087befd5635"
+      "sha256": "1b8cb8fd693a90bece564773b2af4f7a6f2b3d143ebaeb5a46e1d46c63537160"
     },
     {
-      "bytes": 41462,
+      "bytes": 41463,
       "counts": {
         "bundled_ca_roots_exact_match": true,
         "functional_stdlib_items": 104,
@@ -330,7 +330,7 @@
       "description": "16 requirement groups, 429 5-lane offline Host I/O, packages, and all 29 Pantry packages",
       "manifest": "compatibility/m4-io-packages.json",
       "milestone": "M4",
-      "sha256": "1c4ded5cee0e0a6d40207dd4271420c86385b7d759d3cfa77775e65b71c75b25"
+      "sha256": "a246fcdd810df63a7be9f0cd0ee7bc74e9ed18c0ac92d43d55f59715560821ce"
     },
     {
       "bytes": 64484,
@@ -398,10 +398,10 @@
       "description": "16 requirement groups, 142 5-lane Rust API, CLI, REPL, server, formatter, and pkldoc cases",
       "manifest": "compatibility/m5-product-tools.json",
       "milestone": "M5",
-      "sha256": "7fb580ec45c12d1653227107dfb888742e82a16fb94f835944c0443168ee0a93"
+      "sha256": "5a9d6fb9d7275fac08b5f0e4403f7d3c2f7b4251ac4a90c7f1771e5ec2a6d275"
     },
     {
-      "bytes": 37108,
+      "bytes": 37159,
       "counts": {
         "m6_capability_boundary_cases": 6,
         "m6_capability_boundary_cases_by_lane": {
@@ -434,7 +434,7 @@
       "description": "14 requirement groups, 80 executable + 6 capability-blocked Wasm/N-API & packaging cases",
       "manifest": "compatibility/m6-wasm-napi.json",
       "milestone": "M6",
-      "sha256": "40ddda86a3b5810da3b1d1f6d190ddc843a6bc0cd46628cdf78925e4a6f758a8"
+      "sha256": "acbae63c7bbc8cfd7042b3009d00c9d3aa5d9f7465371d54888b4c72cfeeb2e6"
     }
   ],
   "requirements": {
@@ -452,17 +452,17 @@
       "implementation_links": [
         {
           "path": "tools/m7_fuzz.py",
-          "sha256": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
+          "sha256": "1ad23468e84b2692b56082e12dda0d98e5e36e66340ab82618c72582678ee910",
           "symbol": "verify_report"
         },
         {
           "path": "tools/m7_fuzz.py",
-          "sha256": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
+          "sha256": "1ad23468e84b2692b56082e12dda0d98e5e36e66340ab82618c72582678ee910",
           "symbol": "classify_fuzz_case"
         },
         {
           "path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs",
-          "sha256": "8607f51fe38580a83f51d3892a8dce3c0fde44d598a7a6b727433cce2a4878cf",
+          "sha256": "5daf153a6bef00692a6139c459d53c97a0a7590dcfb503dabbad7dc7ef3d4632",
           "symbol": "eval_single"
         }
       ],
@@ -479,12 +479,12 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_cold_cli_pair"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "evaluate_ratio_verdict"
         }
       ],
@@ -509,12 +509,12 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "parse_probe_series"
         },
         {
           "path": "crates/pkl-runtime/src/vm/base_snapshot.rs",
-          "sha256": "94dd943ad0bfbbc54c6cb8e327c38c8f627da8d5d87d5ec277a40606152ca318",
+          "sha256": "4a8a793ddbf1b3e4e4bd75964aed67dfcc19ceb149a495168e4b0c9f0951e4ec",
           "symbol": "BaseSnapshot"
         }
       ],
@@ -539,12 +539,12 @@
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_api_probe_pair"
         },
         {
           "path": "crates/pkl-runtime/src/vm/fast_int.rs",
-          "sha256": "713692a5e99806b3d4719e3f749886de65331683a17bb7dbeffc4454d68ad2d0",
+          "sha256": "ff70aeed0d90078bee0fe57e72589b3e38c02a072db34539add93fce2add43a5",
           "symbol": "FastIntOp"
         }
       ],
@@ -564,7 +564,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_js_binding_workload"
         },
         {
@@ -584,22 +584,22 @@
         },
         {
           "path": "crates/pkl-runtime/src/vm/pkl_binary_render.rs",
-          "sha256": "c8dc0287d765baae5fe5c4496c7e5eef0a9e93af6fdb290e767569a7ae3709e9",
+          "sha256": "65cb81dceb09457933ce6e624cdb4b015be1620af95081fcebad41136134cbfb",
           "symbol": "try_fast_encode_pkl_binary"
         },
         {
           "path": "crates/pkl-runtime/src/vm/columnar_value.rs",
-          "sha256": "06a53bc3e298af875dd12009822d0cdc613f30a0e40909793925a67b3f2a73a6",
+          "sha256": "404c1af1a9d9f14ae5d854fe878ab699385151dfe6a135aaa6500e87b5ff366a",
           "symbol": "ColumnarValueBuffer"
         },
         {
           "path": "packages/pkl-wasm/src/values.mjs",
-          "sha256": "228163bd0ca8e2388565c0b574df9744db02af4a0a1e9016efa6b0a568a98ccd",
+          "sha256": "bdfcbf54b483b64b5195c7921717bc41d19f21662eab2e26425a25244a75fdb1",
           "symbol": "tryDecodePklBinaryFast"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "sha256": "3d9a903c9d86ee857cbb182bb6cab44b8d8fef0bf996ecb9faa55784754212e1",
           "symbol": "tryDecodePklBinaryFast"
         }
       ],
@@ -619,7 +619,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_packages_http_workload"
         }
       ],
@@ -635,7 +635,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "run_suite"
         },
         {
@@ -656,12 +656,12 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_output_files_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_cold_cli_pair"
         }
       ],
@@ -677,17 +677,17 @@
       "implementation_links": [
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_server_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "_run_pkldoc_workload"
         },
         {
           "path": "tools/m7_benchmark.py",
-          "sha256": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
+          "sha256": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
           "symbol": "is_benign_jline_repl_stderr"
         }
       ],
@@ -705,7 +705,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_manifest.py",
-          "sha256": "e555006362b6a9421644f2ce087dcf2f46714f032e0113c0dcecbe7491283efc",
+          "sha256": "8df17f2def6fae55565afa458ffcc000b5d7a92f10078651486fd0cedcd506a5",
           "symbol": "verify_release"
         },
         {
@@ -715,12 +715,12 @@
         },
         {
           "path": ".github/workflows/release.yml",
-          "sha256": "df3a5dad1ab873e2d6c59248d4849aae9b4ec37ffeea796d5bd968cc3893dbf0",
+          "sha256": "e78fd325bbc6b6da64da013a291977b40518ed991a3eb6a64e430424d996faac",
           "symbol": "assemble-and-release"
         },
         {
           "path": "tools/local_verify.py",
-          "sha256": "f8e1e73423ff1533f54e82d9bf203738a4a26a9a79613f0ae1814f98339776ac",
+          "sha256": "023419204b242a059336c1748ce5c08f58ad411db7b4401ff9685ca1f263dcb2",
           "symbol": "run_suites"
         }
       ],
@@ -728,11 +728,11 @@
       "track": "release-matrix"
     },
     "m7:soak:napi-and-wasm-memory-reclamation": {
-      "description": "All 6 long-running memory reclamation scenarios bounded on @pkl-rs/napi and @pkl-rs/wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
+      "description": "All 6 long-running memory reclamation scenarios bounded on @openedges/pkl-napi and @openedges/pkl-wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "86adb6ada3f4eda919e90c7fa9d54267fa2c277fef6f3cf9cac4a7e030d08d0b",
+          "sha256": "a3084976a4b90ce63047af95c106f7215343733d2765c2b3e3e277877ffcb9e6",
           "symbol": "analyze_series"
         },
         {
@@ -742,12 +742,12 @@
         },
         {
           "path": "tests/fixtures/m7/soak/run_wasm_soak.mjs",
-          "sha256": "9bcf1c7f64578673f4a5b30106d730ccfb89192f0d5be90acbe2af3a239a54c8",
+          "sha256": "1e0f201e0af89a556c224c423ab8fd05814d2eba6a6a2b09b19a82b8875faeb7",
           "symbol": "runScenario"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "_disposeWasmIfClosed"
         }
       ],
@@ -773,7 +773,7 @@
       "implementation_links": [
         {
           "path": "tools/m7_memory_soak.py",
-          "sha256": "86adb6ada3f4eda919e90c7fa9d54267fa2c277fef6f3cf9cac4a7e030d08d0b",
+          "sha256": "a3084976a4b90ce63047af95c106f7215343733d2765c2b3e3e277877ffcb9e6",
           "symbol": "verify_report"
         },
         {
@@ -783,7 +783,7 @@
         },
         {
           "path": "crates/pkl-runtime/tests/m7_fuzz_and_gc_regressions.rs",
-          "sha256": "8607f51fe38580a83f51d3892a8dce3c0fde44d598a7a6b727433cce2a4878cf",
+          "sha256": "5daf153a6bef00692a6139c459d53c97a0a7590dcfb503dabbad7dc7ef3d4632",
           "symbol": "eval_single"
         }
       ],
@@ -802,20 +802,20 @@
   "schema_version": 1,
   "scope": "Unified M7 Release Verification manifest aggregating M0-M6 compatibility inventories with M7 performance & peak RSS parity (pinned Official Apple Pkl 0.32.0 native-image <= 1.00x time & peak RSS primary gate for all 15 CLI/server/pkldoc workloads; pinned Temurin 21 JVM + M0 GraalVM CE 25.0.1 + 2026-11-22 browser Wasm contract for all 19 embedded API and JS/Wasm workloads), long-running memory reclamation soak across Native/N-API/Wasm, seeded differential fuzzing, and release OS/browser/CI matrix accounting.",
   "sources": {
-    "benchmarks/m7_workloads.json": "a0013e79df17dfd220297196fdac2265a661a5f088a721ce7a8ae71ba0b5216c",
+    "benchmarks/m7_workloads.json": "d27c06612d2debe875c038591e39ebad1de9d36b5ab4087487b570570709f0ac",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m2-language.json": "29c7f6823e75211e184a4a54dc9147517efbd8816bb49057fdecf50c8f21175e",
-    "compatibility/m3-stdlib-output.json": "f1226e285cc4da4e8c24975f33fb4b187a3bddb0ed648ec1b9d6c087befd5635",
-    "compatibility/m4-io-packages.json": "1c4ded5cee0e0a6d40207dd4271420c86385b7d759d3cfa77775e65b71c75b25",
-    "compatibility/m5-product-tools.json": "7fb580ec45c12d1653227107dfb888742e82a16fb94f835944c0443168ee0a93",
-    "compatibility/m6-wasm-napi.json": "40ddda86a3b5810da3b1d1f6d190ddc843a6bc0cd46628cdf78925e4a6f758a8",
-    "compatibility/m7-mappings.json": "f2c4f15ee629622cae1dcb1a09f61aa4b5aa687e3c221cd5d5ec217adb727079",
+    "compatibility/m2-language.json": "3e7e519e79650e3d96e0c09f66589874ac44a48ed47a5ed249431c74e24edd64",
+    "compatibility/m3-stdlib-output.json": "1b8cb8fd693a90bece564773b2af4f7a6f2b3d143ebaeb5a46e1d46c63537160",
+    "compatibility/m4-io-packages.json": "a246fcdd810df63a7be9f0cd0ee7bc74e9ed18c0ac92d43d55f59715560821ce",
+    "compatibility/m5-product-tools.json": "5a9d6fb9d7275fac08b5f0e4403f7d3c2f7b4251ac4a90c7f1771e5ec2a6d275",
+    "compatibility/m6-wasm-napi.json": "acbae63c7bbc8cfd7042b3009d00c9d3aa5d9f7465371d54888b4c72cfeeb2e6",
+    "compatibility/m7-mappings.json": "ac5a5739be98fad703fa15027b40484caa6f046078b614201c0d7a87f855b82b",
     "oracle.lock.json": "698cf7c5dffa9acff5dce343225933d5ef836c0f24ba31b315bda7bd2418baf8",
     "references.lock": "278f48fd7697459281aa78a706c9ca57222f36a8c0785d838a6449fbaf26d30b",
     "reports/m0/benchmarks.json": "ecab898e432e0fcd0ae81e1cda44fa2789df20c6a158531b6d42389173251914",
-    "tools/m7_benchmark.py": "688480676e15e357e7fd1c13ec069ccfe535c8993a2ef0cea713dfe5220e8e7d",
-    "tools/m7_fuzz.py": "44323cd9e5245d076049f8bcce977a5bd6bfa93d3f03369cea39e038dc3e997b",
-    "tools/m7_memory_soak.py": "86adb6ada3f4eda919e90c7fa9d54267fa2c277fef6f3cf9cac4a7e030d08d0b",
+    "tools/m7_benchmark.py": "e5291da931a371cfa5064b424bc625d04f0e3c196b0306a5a184bde2273fcaa4",
+    "tools/m7_fuzz.py": "1ad23468e84b2692b56082e12dda0d98e5e36e66340ab82618c72582678ee910",
+    "tools/m7_memory_soak.py": "a3084976a4b90ce63047af95c106f7215343733d2765c2b3e3e277877ffcb9e6",
     "tools/oracle.py": "9ebd3ae84eb69eb2c2d158c11f703a18cd59ce6b487af8218ca17591a74dcf5e"
   },
   "target_ratios": {

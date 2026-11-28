@@ -3,9 +3,9 @@
 
 use crate::options::{CliError, HttpHeaderMap, ParsedCliOptions};
 use pkl_host_native::{
-    CaCertSource, CancelFlag, DiskPackageCache, NativeHost, NativeHostConfig, NativeHostExtensions,
-    NativeHttpClient, NativePackageTransport, default_module_cache_dir, file_uri_to_path,
-    path_to_file_uri, read_static_local_project_import,
+    CaCertSource, CancelFlag, DiskPackageCache, NativeFs, NativeHost, NativeHostConfig,
+    NativeHostExtensions, NativeHttpClient, NativePackageTransport, canonicalize_root_dir,
+    default_module_cache_dir, file_uri_to_path, path_to_file_uri, read_static_local_project_import,
 };
 use pkl_runtime::evaluation::session::SourceSession;
 use pkl_runtime::host::http::{HttpClientConfig, ProxyConfig};
@@ -26,7 +26,7 @@ use pkl_runtime::packages::project::{
 use pkl_runtime::packages::resolver::{PackageResolver, file_uri_from_path};
 use pkl_runtime::pkl_binary_decode::{DecodedObject, DecodedValue, decode_lossless};
 use pkl_runtime::source::SourceText;
-use pkl_runtime::value::Value;
+use pkl_runtime::value::{PklString, Value};
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{self, IsTerminal, Read};
 use std::path::{Component, Path, PathBuf};
@@ -90,15 +90,7 @@ pub fn pkl_home_dir() -> Option<PathBuf> {
 }
 
 pub fn is_uri_like(s: &str) -> bool {
-    let Some((scheme, _)) = s.split_once(':') else {
-        return false;
-    };
-    let mut chars = scheme.chars();
-    let Some(first) = chars.next() else {
-        return false;
-    };
-    first.is_ascii_alphabetic()
-        && chars.all(|c| c.is_ascii_alphanumeric() || matches!(c, '+' | '-' | '.'))
+    pkl_host_native::is_uri_like(s)
 }
 
 pub fn normalize_source_module(
@@ -149,6 +141,7 @@ pub fn resolve_use_color(color: EvaluatorColor) -> bool {
         EvaluatorColor::Never => false,
         EvaluatorColor::Always => true,
         EvaluatorColor::Auto => io::stdin().is_terminal() && io::stdout().is_terminal(),
+        _ => io::stdin().is_terminal() && io::stdout().is_terminal(),
     }
 }
 
@@ -288,7 +281,35 @@ fn extract_binary_value(value: Value) -> Result<Vec<u8>, String> {
     decode_base64(b64.as_str().unwrap_or(""))
 }
 
-fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
+fn build_project_cycle_fs_guard(
+    opts: &ParsedCliOptions,
+    working_dir: &Path,
+) -> Result<Option<NativeFs>, CliError> {
+    if opts.allowed_modules.is_none() && opts.root_dir.is_none() {
+        return Ok(None);
+    }
+    let normalized_root = match opts.root_dir.as_deref() {
+        Some(dir) => {
+            let resolved = resolve_path(working_dir, dir);
+            let canon = canonicalize_root_dir(&resolved).map_err(|e| {
+                CliError::err(format!(
+                    "Failed to normalize rootDir `{}`: {e}",
+                    resolved.display()
+                ))
+            })?;
+            Some(canon.to_string_lossy().into_owned())
+        }
+        None => None,
+    };
+    let policy = SecurityPolicy::new(opts.allowed_modules.as_deref(), None, normalized_root)
+        .map_err(CliError::err)?;
+    Ok(Some(NativeFs::new(policy)))
+}
+
+fn check_project_import_cycles(
+    project_file: &Path,
+    fs_guard: Option<&NativeFs>,
+) -> Result<(), CliError> {
     let norm = normalize_lexical(project_file);
     let root_uri =
         file_uri_from_path(&norm).map_err(|e| CliError::err(format_module_host_error(&e)))?;
@@ -297,16 +318,34 @@ fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
     let mut visited: BTreeSet<PathBuf> = BTreeSet::new();
 
     while let Some(path) = queue.pop() {
-        let canon = std::fs::canonicalize(&path).unwrap_or_else(|_| path.clone());
-        if !visited.insert(canon) {
-            continue;
-        }
         let Ok(uri) = file_uri_from_path(&path) else {
             continue;
         };
-        let Ok(src) = std::fs::read_to_string(&path) else {
-            continue;
+        let (canon, src) = if let Some(fs) = fs_guard {
+            let Ok((_, real_path)) = fs.resolve_file_module(&PklString::from(uri.as_str())) else {
+                continue;
+            };
+            if !visited.insert(real_path.clone()) {
+                continue;
+            }
+            let Ok(bytes) = fs.read_file_module_bytes(&real_path) else {
+                continue;
+            };
+            let Ok(src) = String::from_utf8(bytes) else {
+                continue;
+            };
+            (real_path, src)
+        } else {
+            let canon = std::fs::canonicalize(&path).unwrap_or_else(|_| path.clone());
+            if !visited.insert(canon.clone()) {
+                continue;
+            }
+            let Ok(src) = std::fs::read_to_string(&path) else {
+                continue;
+            };
+            (canon, src)
         };
+        let _ = canon;
         let Ok(entries) = parse_imports_and_reads(&SourceText::from(src)) else {
             continue;
         };
@@ -320,20 +359,29 @@ fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
             if s.starts_with("pkl:") || s.starts_with("package:") || s.starts_with('@') {
                 continue;
             }
-            let target = if let Some(rest) = s.strip_prefix("file://") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
+            let target = if s.starts_with("file:") {
+                let Ok(p) = file_uri_to_path(&PklString::from(s)) else {
+                    continue;
+                };
+                normalize_lexical(&p)
             } else if !is_uri_like(s) {
                 normalize_lexical(&parent.join(s))
             } else {
                 continue;
             };
-            if target.is_file()
-                && let Ok(target_uri) = file_uri_from_path(&target)
-            {
-                if !edges.contains(&target_uri) {
-                    edges.push(target_uri);
+            if let Ok(target_uri) = file_uri_from_path(&target) {
+                let allowed = match fs_guard {
+                    Some(fs) => fs
+                        .resolve_file_module(&PklString::from(target_uri.as_str()))
+                        .is_ok(),
+                    None => target.is_file(),
+                };
+                if allowed {
+                    if !edges.contains(&target_uri) {
+                        edges.push(target_uri);
+                    }
+                    queue.push(target);
                 }
-                queue.push(target);
             }
         }
         graph.insert(uri, edges);
@@ -360,12 +408,10 @@ pub fn load_user_settings(
             });
         }
         Some(uri) => {
-            if let Some(rest) = uri.strip_prefix("file://") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
-            } else if uri.starts_with("file:/") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(
-                    uri.strip_prefix("file:").unwrap_or(uri),
-                )))
+            if uri.starts_with("file:") {
+                let path = file_uri_to_path(&PklString::from(uri))
+                    .map_err(|e| CliError::err(e.to_java_utf8()))?;
+                normalize_lexical(&path)
             } else if is_uri_like(uri) {
                 return Err(CliError::err(format!("Unsupported settings URI `{uri}`.")));
             } else {
@@ -477,15 +523,31 @@ pub fn load_project_file(
     host_env: &[(String, String)],
 ) -> Result<LoadedProject, CliError> {
     let norm = normalize_lexical(project_file);
-    check_project_import_cycles(&norm)?;
+    let fs_guard = build_project_cycle_fs_guard(opts, working_dir)?;
+    check_project_import_cycles(&norm, fs_guard.as_ref())?;
 
     let uri = file_uri_from_path(&norm).map_err(|e| CliError::err(format_module_host_error(&e)))?;
-    let text = std::fs::read_to_string(&norm).map_err(|e| {
-        CliError::err(format!(
-            "Cannot read PklProject file `{}`: {e}",
-            norm.display()
-        ))
-    })?;
+    let text = if let Some(ref fs) = fs_guard {
+        let (_, real_path) = fs
+            .resolve_file_module(&PklString::from(uri.as_str()))
+            .map_err(|e| CliError::err(format_module_host_error(&e)))?;
+        let bytes = fs
+            .read_file_module_bytes(&real_path)
+            .map_err(|e| CliError::err(format_module_host_error(&e)))?;
+        String::from_utf8(bytes).map_err(|e| {
+            CliError::err(format!(
+                "Cannot read PklProject file `{}`: {e}",
+                norm.display()
+            ))
+        })?
+    } else {
+        std::fs::read_to_string(&norm).map_err(|e| {
+            CliError::err(format!(
+                "Cannot read PklProject file `{}`: {e}",
+                norm.display()
+            ))
+        })?
+    };
 
     if opts.allowed_modules.is_none()
         && opts.allowed_resources.is_none()
@@ -613,7 +675,7 @@ pub fn load_project_dependencies_manager(
     let deps_file = project.project_dir.join(PKL_PROJECT_DEPS_FILENAME);
     if deps_file.is_file() {
         let deps_uri = mgr.project_deps_file_uri();
-        let text = std::fs::read_to_string(&deps_file).map_err(|e| {
+        let text = pkl_host_native::read_path_to_string_bounded(&deps_file).map_err(|e| {
             CliError::err(format!(
                 "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{e}\n\nTry running `pkl project resolve` within the project directory to create a new set of dependencies."
             ))

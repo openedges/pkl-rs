@@ -223,6 +223,25 @@ impl ServerMessage {
         }
     }
 
+    pub const fn evaluator_id(&self) -> Option<i64> {
+        match self {
+            Self::CreateEvaluatorRequest { .. } => None,
+            Self::CreateEvaluatorResponse { evaluator_id, .. } => *evaluator_id,
+            Self::CloseEvaluator { evaluator_id }
+            | Self::EvaluateRequest { evaluator_id, .. }
+            | Self::EvaluateResponse { evaluator_id, .. }
+            | Self::LogMessage { evaluator_id, .. }
+            | Self::ReadResourceRequest { evaluator_id, .. }
+            | Self::ReadResourceResponse { evaluator_id, .. }
+            | Self::ReadModuleRequest { evaluator_id, .. }
+            | Self::ReadModuleResponse { evaluator_id, .. }
+            | Self::ListResourcesRequest { evaluator_id, .. }
+            | Self::ListResourcesResponse { evaluator_id, .. }
+            | Self::ListModulesRequest { evaluator_id, .. }
+            | Self::ListModulesResponse { evaluator_id, .. } => Some(*evaluator_id),
+        }
+    }
+
     pub const fn is_request(&self) -> bool {
         matches!(
             self,

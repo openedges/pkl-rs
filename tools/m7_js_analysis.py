@@ -4,15 +4,15 @@
 
 Two modes:
   1. `--smoke-browsers chromium,firefox,webkit`:
-     Runs end-to-end functional verification of `@pkl-rs/wasm` inside real headless
+     Runs end-to-end functional verification of `@openedges/pkl-wasm` inside real headless
      browsers via pinned Playwright (`tools/platform/package.json`) without relaxing any
      raw compatibility contract.
   2. `--profile quick|full --browsers chromium,firefox,webkit`:
      Measures head-to-head execution time AND decomposed OS/runtime memory across:
        - Empty Node.js baseline (`os.wait4` peak RSS)
-       - `@pkl-rs/napi` (`eval-text`, `typed-conversion`)
-       - `@pkl-rs/wasm` on Node.js (`eval-text`, `typed-conversion`, Wasm linear memory, `.wasm` size)
-       - `@pkl-rs/wasm` on real headless browsers (`chromium`, `firefox`, `webkit`, plus optional
+       - `@openedges/pkl-napi` (`eval-text`, `typed-conversion`)
+       - `@openedges/pkl-wasm` on Node.js (`eval-text`, `typed-conversion`, Wasm linear memory, `.wasm` size)
+       - `@openedges/pkl-wasm` on real headless browsers (`chromium`, `firefox`, `webkit`, plus optional
          `chromium-no-gpu`) with per-process RSS breakdown (`browser_main`, `renderer`, `gpu`,
          `utility_network`, `other`), in-page Wasm linear memory, and JS heap
        - Live pinned Java 0.32.0 (`Temurin 21.0.13.1+2-LTS`) reference baselines
@@ -157,6 +157,7 @@ try {
   const summary = await page.evaluate(async () => {
     const t0 = performance.now();
     const api = await import("/pkg/dist/index.mjs");
+    const testing = await import("/pkg/dist/testing.mjs");
     const rt = await import("/pkg/dist/runtime.mjs");
     await api.init();
     const initMs = performance.now() - t0;
@@ -206,12 +207,12 @@ try {
     await runCheck("lossless-bigint-bytes-utf16", async () => {
       const MIN_I64 = -(1n << 63n);
       const MAX_I64 = (1n << 63n) - 1n;
-      assertEq(api.roundtripInteger(MIN_I64), MIN_I64, "MIN_I64");
-      assertEq(api.roundtripInteger(MAX_I64), MAX_I64, "MAX_I64");
+      assertEq(testing.roundtripInteger(MIN_I64), MIN_I64, "MIN_I64");
+      assertEq(testing.roundtripInteger(MAX_I64), MAX_I64, "MAX_I64");
       const tricky = "a\uD800b🚀c\uDC00d";
-      assertEq(api.roundtripString(tricky), tricky, "UTF-16 unpaired surrogates");
+      assertEq(testing.roundtripString(tricky), tricky, "UTF-16 unpaired surrogates");
       const orig = new Uint8Array([0, 127, 255]);
-      const rtBytes = api.roundtripBytes(orig);
+      const rtBytes = testing.roundtripBytes(orig);
       orig[0] = 99;
       assertEq(rtBytes[0], 0, "Uint8Array owned copy");
       assertEq(rtBytes[2], 255, "Uint8Array last byte");
@@ -318,7 +319,7 @@ def run_smoke_browsers(root: Path, browsers: list[str], output_dir: Path) -> dic
         raise RuntimeError("node executable not found on PATH")
     wasm_pkg = root / "packages/pkl-wasm"
     if not (wasm_pkg / "dist/wasm/pkl_wasm_bg.wasm").is_file():
-        raise RuntimeError("packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm missing; build @pkl-rs/wasm first")
+        raise RuntimeError("packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm missing; build @openedges/pkl-wasm first")
 
     driver_path = output_dir / "smoke_browser_driver.mjs"
     driver_path.write_text(SMOKE_DRIVER_JS, encoding="utf-8")
@@ -389,7 +390,7 @@ def run_js_analysis(
     napi_pkg = root / "packages/pkl-napi"
     wasm_bg = wasm_pkg / "dist/wasm/pkl_wasm_bg.wasm"
     if not wasm_bg.is_file():
-        raise RuntimeError("Missing packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm; build @pkl-rs/wasm first")
+        raise RuntimeError("Missing packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm; build @openedges/pkl-wasm first")
     wasm_raw = wasm_bg.read_bytes()
     wasm_gzip_bytes = len(gzip.compress(wasm_raw, compresslevel=9))
 
@@ -664,8 +665,23 @@ def run_js_analysis(
                 }
             )
 
+    git_head: str | None = None
+    try:
+        head_proc = subprocess.run(
+            ["git", "-C", str(ROOT), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        cand = head_proc.stdout.strip()
+        if head_proc.returncode == 0 and len(cand) == 40:
+            git_head = cand
+    except OSError:
+        git_head = None
+
     report = {
         "schema_version": 1,
+        "source": {"git_head": git_head} if git_head else {},
         "mode": "js-analysis",
         "profile": profile,
         "host": {"system": platform.system(), "machine": platform.machine(), "release": platform.release()},

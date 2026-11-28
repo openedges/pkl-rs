@@ -305,6 +305,17 @@ pub fn set_prop(target: &Object, key: &str, value: JsValue) -> Result<(), JsValu
     Reflect::set(target, &JsValue::from_str(key), &value).map(|_| ())
 }
 
+/// Defines an own enumerable/writable/configurable data property on `target` without
+/// invoking inherited setters such as `Object.prototype.__proto__`.
+pub fn define_own_prop(target: &Object, key: &str, value: JsValue) -> Result<(), JsValue> {
+    let desc = Object::new();
+    Reflect::set(&desc, &JsValue::from_str("value"), &value)?;
+    Reflect::set(&desc, &JsValue::from_str("writable"), &JsValue::TRUE)?;
+    Reflect::set(&desc, &JsValue::from_str("enumerable"), &JsValue::TRUE)?;
+    Reflect::set(&desc, &JsValue::from_str("configurable"), &JsValue::TRUE)?;
+    Reflect::define_property(target, &JsValue::from_str(key), &desc).map(|_| ())
+}
+
 pub fn get_prop(target: &JsValue, key: &str) -> Result<JsValue, StructuredError> {
     Reflect::get(target, &JsValue::from_str(key))
         .map_err(|_| StructuredError::invalid_argument(format!("failed to read property `{key}`")))

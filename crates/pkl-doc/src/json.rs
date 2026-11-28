@@ -80,11 +80,14 @@ fn hex_digit(n: u32) -> char {
     }
 }
 
+const MAX_JSON_DEPTH: usize = 128;
+
 /// Parses a JSON document into [`JsonValue`].
 pub fn parse_json(input: &str) -> Result<JsonValue, DocGeneratorError> {
     let mut parser = Parser {
         bytes: input.as_bytes(),
         pos: 0,
+        depth: 0,
     };
     parser.skip_ws();
     let val = parser.parse_value()?;
@@ -101,6 +104,7 @@ pub fn parse_json(input: &str) -> Result<JsonValue, DocGeneratorError> {
 struct Parser<'a> {
     bytes: &'a [u8],
     pos: usize,
+    depth: usize,
 }
 
 impl<'a> Parser<'a> {
@@ -157,6 +161,18 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_object(&mut self) -> Result<JsonValue, DocGeneratorError> {
+        if self.depth >= MAX_JSON_DEPTH {
+            return Err(DocGeneratorError::bug(
+                "JSON nesting depth exceeded maximum limit (128)",
+            ));
+        }
+        self.depth += 1;
+        let res = self.parse_object_inner();
+        self.depth -= 1;
+        res
+    }
+
+    fn parse_object_inner(&mut self) -> Result<JsonValue, DocGeneratorError> {
         self.pos += 1; // '{'
         let mut entries = Vec::new();
         self.skip_ws();
@@ -201,6 +217,18 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_array(&mut self) -> Result<JsonValue, DocGeneratorError> {
+        if self.depth >= MAX_JSON_DEPTH {
+            return Err(DocGeneratorError::bug(
+                "JSON nesting depth exceeded maximum limit (128)",
+            ));
+        }
+        self.depth += 1;
+        let res = self.parse_array_inner();
+        self.depth -= 1;
+        res
+    }
+
+    fn parse_array_inner(&mut self) -> Result<JsonValue, DocGeneratorError> {
         self.pos += 1; // '['
         let mut items = Vec::new();
         self.skip_ws();

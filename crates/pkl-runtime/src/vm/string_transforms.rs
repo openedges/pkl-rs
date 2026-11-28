@@ -211,19 +211,65 @@ fn replacement_error(regex: &PklString, replacement: &PklString, message: String
         ),
     )
 }
-fn literal_replace(input: &[u16], pattern: &[u16], replacement: &[u16], mode: Mode) -> Vec<u16> {
+const MAX_STRING_RESULT_UTF16_UNITS: usize = 128 * 1024 * 1024;
+
+fn extend_utf16_bounded(dst: &mut Vec<u16>, src: &[u16]) -> Result<(), RuntimeError> {
+    let next_len = dst.len().checked_add(src.len()).ok_or_else(|| {
+        RuntimeError::new(ErrorKind::Host, "String replacement exceeds maximum size.")
+    })?;
+    if next_len > MAX_STRING_RESULT_UTF16_UNITS {
+        return Err(RuntimeError::new(
+            ErrorKind::Host,
+            "String replacement exceeds maximum supported size.",
+        ));
+    }
+    if dst.capacity() < next_len {
+        dst.try_reserve(src.len()).map_err(|_| {
+            RuntimeError::new(ErrorKind::Host, "String replacement allocation failed.")
+        })?;
+    }
+    dst.extend_from_slice(src);
+    Ok(())
+}
+
+fn literal_replace(
+    input: &[u16],
+    pattern: &[u16],
+    replacement: &[u16],
+    mode: Mode,
+) -> Result<Vec<u16>, RuntimeError> {
     let mut result = Vec::new();
     if pattern.is_empty() {
         match mode {
             Mode::First => {
-                result.extend_from_slice(replacement);
-                result.extend_from_slice(input);
+                extend_utf16_bounded(&mut result, replacement)?;
+                extend_utf16_bounded(&mut result, input)?;
             }
             Mode::Last => {
-                result.extend_from_slice(input);
-                result.extend_from_slice(replacement);
+                extend_utf16_bounded(&mut result, input)?;
+                extend_utf16_bounded(&mut result, replacement)?;
             }
             Mode::All => {
+                let total = input
+                    .len()
+                    .checked_add(1)
+                    .and_then(|slots| slots.checked_mul(replacement.len()))
+                    .and_then(|rep| rep.checked_add(input.len()))
+                    .ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::Host,
+                            "String replacement exceeds maximum supported size.",
+                        )
+                    })?;
+                if total > MAX_STRING_RESULT_UTF16_UNITS {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Host,
+                        "String replacement exceeds maximum supported size.",
+                    ));
+                }
+                result.try_reserve_exact(total).map_err(|_| {
+                    RuntimeError::new(ErrorKind::Host, "String replacement allocation failed.")
+                })?;
                 result.extend_from_slice(replacement);
                 for unit in input {
                     result.push(*unit);
@@ -231,19 +277,19 @@ fn literal_replace(input: &[u16], pattern: &[u16], replacement: &[u16], mode: Mo
                 }
             }
         }
-        return result;
+        return Ok(result);
     }
     if matches!(mode, Mode::Last) {
         if let Some(start) = input
             .windows(pattern.len())
             .rposition(|window| window == pattern)
         {
-            result.extend_from_slice(&input[..start]);
-            result.extend_from_slice(replacement);
-            result.extend_from_slice(&input[start + pattern.len()..]);
-            return result;
+            extend_utf16_bounded(&mut result, &input[..start])?;
+            extend_utf16_bounded(&mut result, replacement)?;
+            extend_utf16_bounded(&mut result, &input[start + pattern.len()..])?;
+            return Ok(result);
         }
-        return input.to_vec();
+        return Ok(input.to_vec());
     }
     let mut copied = 0;
     while let Some(relative) = input[copied..]
@@ -251,15 +297,15 @@ fn literal_replace(input: &[u16], pattern: &[u16], replacement: &[u16], mode: Mo
         .position(|window| window == pattern)
     {
         let start = copied + relative;
-        result.extend_from_slice(&input[copied..start]);
-        result.extend_from_slice(replacement);
+        extend_utf16_bounded(&mut result, &input[copied..start])?;
+        extend_utf16_bounded(&mut result, replacement)?;
         copied = start + pattern.len();
         if matches!(mode, Mode::First) {
             break;
         }
     }
-    result.extend_from_slice(&input[copied..]);
-    result
+    extend_utf16_bounded(&mut result, &input[copied..])?;
+    Ok(result)
 }
 
 impl Vm {
@@ -335,7 +381,7 @@ impl Vm {
                         &literal.encode_utf16().collect::<Vec<_>>(),
                         &replacement.encode_utf16().collect::<Vec<_>>(),
                         mode,
-                    )
+                    )?
                 } else {
                     let regex = pattern(source, false)?;
                     let mut cursor = regex.cursor(&text);
@@ -354,14 +400,17 @@ impl Vm {
                             cursor.expand(&matched, &replacement).map_err(|message| {
                                 replacement_error(regex.pattern(), &replacement, message)
                             })?;
-                        output.extend_from_slice(&cursor.input()[copied..matched.start()]);
-                        output.extend(expanded);
+                        extend_utf16_bounded(
+                            &mut output,
+                            &cursor.input()[copied..matched.start()],
+                        )?;
+                        extend_utf16_bounded(&mut output, &expanded)?;
                         copied = matched.end();
                         if !matches!(mode, Mode::All) {
                             break;
                         }
                     }
-                    output.extend_from_slice(&cursor.input()[copied..]);
+                    extend_utf16_bounded(&mut output, &cursor.input()[copied..])?;
                     output
                 };
                 self.stack.push(Value::String(PklString::from_utf16(value)));
@@ -440,15 +489,17 @@ impl Vm {
                     .current
                     .take()
                     .ok_or_else(|| invalid("missing mapped match"))?;
-                run.output
-                    .extend_from_slice(&run.cursor.input()[run.copied..matched.start()]);
+                extend_utf16_bounded(
+                    &mut run.output,
+                    &run.cursor.input()[run.copied..matched.start()],
+                )?;
                 for unit in replacement.encode_utf16() {
                     // Pinned first/last concatenate quoteReplacement's output directly;
                     // all uses appendReplacement, which consumes these quoting slashes.
                     if !matches!(run.mode, Mode::All) && matches!(unit, 0x24 | 0x5c) {
-                        run.output.push(0x5c);
+                        extend_utf16_bounded(&mut run.output, &[0x5c])?;
                     }
-                    run.output.push(unit);
+                    extend_utf16_bounded(&mut run.output, &[unit])?;
                 }
                 run.copied = matched.end();
                 run.current_object = None;

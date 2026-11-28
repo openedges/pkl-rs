@@ -117,6 +117,7 @@ pub struct HostSession {
     cancelled_globs: Vec<String>,
     terminal: Option<RuntimeError>,
     active: bool,
+    reusable_timeouts: bool,
     intermediate_result: Option<Result<Value, RuntimeError>>,
 }
 
@@ -140,6 +141,7 @@ impl HostSession {
             cancelled_globs: Vec::new(),
             terminal: None,
             active: false,
+            reusable_timeouts: false,
             intermediate_result: None,
         }
     }
@@ -159,8 +161,23 @@ impl HostSession {
             cancelled_globs: Vec::new(),
             terminal: None,
             active: false,
+            reusable_timeouts: false,
             intermediate_result: None,
         }
+    }
+
+    /// Configures whether per-call timeouts abort only the active operation instead of
+    /// permanently closing the session and its warm module cache.
+    pub fn set_reusable_timeouts(&mut self, reusable: bool) {
+        self.reusable_timeouts = reusable;
+    }
+
+    pub fn reusable_timeouts(&self) -> bool {
+        self.reusable_timeouts
+    }
+
+    pub fn is_active(&self) -> bool {
+        self.active
     }
 
     #[inline]
@@ -180,6 +197,29 @@ impl HostSession {
             && self
                 .vm
                 .try_pack_warm_expression_columnar(uri, expression, out)
+    }
+
+    pub(crate) fn try_start_warm_cached_public_op_str(
+        &mut self,
+        uri: &str,
+        op: crate::vm::WarmPublicOp<'_>,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<bool, RuntimeError> {
+        self.open()?;
+        self.admit_new()?;
+        self.clock(now_ms)?;
+        if self.active {
+            return Err(error(ErrorKind::Busy, "evaluation is already active"));
+        }
+        let context = self.context(now_ms, timeout_ms)?;
+        if !self.vm.try_start_warm_cached_public_op_str(uri, op)? {
+            return Ok(false);
+        }
+        self.intermediate_result = None;
+        self.contexts.push(context);
+        self.active = true;
+        Ok(true)
     }
 
     pub(crate) fn try_start_warm_cached_public_op(
@@ -269,8 +309,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now)?;
-        if self.expire(now) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now) {
+            return Err(err);
         }
         self.admit_new()?;
         let request = self.request_id(token)?;
@@ -367,8 +407,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         self.admit_new()?;
         let request = self.request_id(parent_token)?;
@@ -385,8 +425,8 @@ impl HostSession {
         if let Err(error) = self.clock(now_ms) {
             return HostPoll::Ready(Err(error));
         }
-        if self.expire(now_ms) {
-            return HostPoll::Ready(Err(self.terminal.clone().unwrap()));
+        if let Some(err) = self.expire(now_ms) {
+            return HostPoll::Ready(Err(err));
         }
         if budget == 0 {
             return HostPoll::Ready(Err(error(
@@ -453,8 +493,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.request_id(token)?;
         self.vm.resume(request, result)
@@ -470,8 +510,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let id = self.request_id(token)?;
         let Some(Some(PendingRequest::Read(request))) = self.vm.pending_requests().pop() else {
@@ -494,8 +534,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.read_request(token)?;
         let result = result.map_err(|error| match resources::resolved_uri(&request) {
@@ -524,8 +564,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let id = self.request_id(token)?;
         let Some(Some(PendingRequest::Read(request))) = self.vm.pending_requests().pop() else {
@@ -570,8 +610,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.request_id(token)?;
         self.vm.complete_glob(request, completion)
@@ -588,8 +628,8 @@ impl HostSession {
     ) -> Result<bool, RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.glob_request(token)?;
         let Some(completion) =
@@ -626,8 +666,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.request_id(token)?;
         self.vm.complete_module(request, completion)
@@ -642,8 +682,8 @@ impl HostSession {
     ) -> Result<bool, RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.module_request(token)?;
         let Some(completion) = crate::modules::default_completion(&request) else {
@@ -666,8 +706,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.request_id(token)?;
         self.vm.acknowledge_log(request, completion)
@@ -681,8 +721,8 @@ impl HostSession {
     ) -> Result<(), RuntimeError> {
         self.open()?;
         self.clock(now_ms)?;
-        if self.expire(now_ms) {
-            return Err(self.terminal.clone().unwrap());
+        if let Some(err) = self.expire(now_ms) {
+            return Err(err);
         }
         let request = self.request_id(token)?;
         self.vm.complete_frame_transform(request, completion)
@@ -703,6 +743,22 @@ impl HostSession {
         self.open()?;
         let request = self.request_id(token)?;
         self.vm.close_from_callback(request)
+    }
+
+    /// Aborts only the currently active operation (recording any pending Host
+    /// tokens as cancelled and unwinding VM frames via `Vm::cancel`) WITHOUT
+    /// closing the session or evicting its warm module cache.
+    pub fn abort_active_operation(&mut self) {
+        if self.terminal.is_some() || self.vm.is_closed() {
+            return;
+        }
+        self.record_cancelled_pending();
+        self.vm.cancel();
+        self.active = false;
+        self.contexts.clear();
+        if matches!(self.intermediate_result, Some(Ok(_))) {
+            self.intermediate_result = None;
+        }
     }
 
     /// Public cancellation permanently closes the evaluator, like Java close.
@@ -881,7 +937,7 @@ impl HostSession {
         self.last_clock = now;
         Ok(())
     }
-    fn expire(&mut self, now: u64) -> bool {
+    fn expire(&mut self, now: u64) -> Option<RuntimeError> {
         if self.active
             && let Some(expired) = self
                 .contexts
@@ -892,50 +948,56 @@ impl HostSession {
                 Some(ms) => format_timeout_message(ms),
                 None => "Evaluation timed out.".to_string(),
             };
-            self.terminate(ErrorKind::Timeout, &message);
-            true
+            if self.reusable_timeouts {
+                self.abort_active_operation();
+                Some(error(ErrorKind::Timeout, &message))
+            } else {
+                self.terminate(ErrorKind::Timeout, &message);
+                self.terminal.clone()
+            }
         } else {
-            false
+            None
         }
     }
+
+    fn record_cancelled_pending(&mut self) {
+        self.cancelled_reads.extend(
+            self.contexts
+                .iter()
+                .zip(self.vm.pending_requests())
+                .filter_map(|(context, request)| match request {
+                    Some(PendingRequest::Read(request)) => Some(self.token(context.id, request.id)),
+                    _ => None,
+                })
+                .collect::<Vec<_>>(),
+        );
+        self.cancelled_modules.extend(
+            self.contexts
+                .iter()
+                .zip(self.vm.pending_requests())
+                .filter_map(|(context, request)| match request {
+                    Some(PendingRequest::Module(request)) => {
+                        Some(self.token(context.id, request.id))
+                    }
+                    _ => None,
+                })
+                .collect::<Vec<_>>(),
+        );
+        self.cancelled_globs.extend(
+            self.contexts
+                .iter()
+                .zip(self.vm.pending_requests())
+                .filter_map(|(context, request)| match request {
+                    Some(PendingRequest::Glob(request)) => Some(self.token(context.id, request.id)),
+                    _ => None,
+                })
+                .collect::<Vec<_>>(),
+        );
+    }
+
     fn terminate(&mut self, kind: ErrorKind, message: &str) {
         if self.terminal.is_none() {
-            self.cancelled_reads.extend(
-                self.contexts
-                    .iter()
-                    .zip(self.vm.pending_requests())
-                    .filter_map(|(context, request)| match request {
-                        Some(PendingRequest::Read(request)) => {
-                            Some(self.token(context.id, request.id))
-                        }
-                        _ => None,
-                    })
-                    .collect::<Vec<_>>(),
-            );
-            self.cancelled_modules.extend(
-                self.contexts
-                    .iter()
-                    .zip(self.vm.pending_requests())
-                    .filter_map(|(context, request)| match request {
-                        Some(PendingRequest::Module(request)) => {
-                            Some(self.token(context.id, request.id))
-                        }
-                        _ => None,
-                    })
-                    .collect::<Vec<_>>(),
-            );
-            self.cancelled_globs.extend(
-                self.contexts
-                    .iter()
-                    .zip(self.vm.pending_requests())
-                    .filter_map(|(context, request)| match request {
-                        Some(PendingRequest::Glob(request)) => {
-                            Some(self.token(context.id, request.id))
-                        }
-                        _ => None,
-                    })
-                    .collect::<Vec<_>>(),
-            );
+            self.record_cancelled_pending();
             self.vm.close();
             self.active = false;
             self.contexts.clear();

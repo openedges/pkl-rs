@@ -131,7 +131,16 @@ pub(super) fn write_string(
     }
     let indent_pkl = PklString::from(indent);
     let current_pkl = if !indent.is_empty() && s.as_bytes().contains(&b'\n') {
-        let mut cur = String::with_capacity(indent.len() * depth);
+        let Some(total) = indent.len().checked_mul(depth) else {
+            return false;
+        };
+        if total > 16 * 1024 * 1024 {
+            return false;
+        }
+        let mut cur = String::new();
+        if cur.try_reserve_exact(total).is_err() {
+            return false;
+        }
         for _ in 0..depth {
             cur.push_str(indent);
         }

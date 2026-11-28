@@ -22,6 +22,7 @@ struct MapWork {
     path: Vec<PathPart>,
     index: usize,
     keys: Vec<(Value, Option<i32>)>,
+    hash_buckets: crate::heap::FastMap<i32, Vec<usize>>,
 }
 enum Task {
     Construct(NodeId, Vec<PathPart>),
@@ -154,6 +155,8 @@ pub(super) struct Run {
     cache: Vec<Option<Value>>,
     active: BTreeSet<NodeId>,
     declaration_maps: BTreeMap<ObjectId, Option<crate::economic_map::EconomicMapIndex>>,
+    property_maps: BTreeMap<ObjectId, crate::heap::FastMap<PklString, usize>>,
+    has_non_safe_entry: BTreeSet<ObjectId>,
     tasks: Vec<Task>,
     values: Vec<Value>,
     documents: Vec<Value>,
@@ -286,6 +289,7 @@ fn duplicate_key_error(
     Ok(engine_error(error, run.max_aliases))
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_yaml_parse(&mut self, all: bool) -> Result<(), RuntimeError> {
         let receiver = self.this_receiver()?.as_object()?;
         let source = self
@@ -313,6 +317,8 @@ impl Vm {
             cache: Vec::new(),
             active: BTreeSet::new(),
             declaration_maps: BTreeMap::new(),
+            property_maps: BTreeMap::new(),
+            has_non_safe_entry: BTreeSet::new(),
             tasks: Vec::new(),
             values: Vec::new(),
             documents: Vec::new(),
@@ -326,6 +332,7 @@ impl Vm {
         }));
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_yaml_parse(&mut self) -> Result<(), RuntimeError> {
         let index = self.frames.len() - 1;
         let mut run = self.frames[index]
@@ -745,6 +752,7 @@ impl Vm {
                         path,
                         index: 0,
                         keys: Vec::new(),
+                        hash_buckets: crate::heap::FastMap::default(),
                     }));
                 }
             }
@@ -858,33 +866,52 @@ impl Vm {
                 let hash = self.java_hash(&key)?;
                 if scan == 0
                     && let Some(h) = hash
-                    && work.keys.iter().filter(|(_, ch)| *ch == Some(h)).count() >= 7
+                    && let Some(bucket) = work.hash_buckets.get(&h)
+                    && bucket.len() >= 7
                     && (matches!(key, Value::Object(_))
-                        || work
-                            .keys
+                        || bucket
                             .iter()
-                            .any(|(k, ch)| *ch == Some(h) && matches!(k, Value::Object(_))))
+                            .any(|&idx| matches!(work.keys[idx].0, Value::Object(_))))
                 {
                     return Err(unsupported(
                         "HashMap tree-bin duplicate-key comparison order for colliding guest objects",
                     ));
                 }
-                if let Some((candidate, candidate_hash)) = work.keys.get(scan).cloned() {
+                let (candidate_opt, next_scan) = if let Some(h) = hash {
+                    if let Some(bucket) = work.hash_buckets.get(&h) {
+                        if let Some(&key_idx) = bucket.get(scan) {
+                            (Some(work.keys[key_idx].0.clone()), scan)
+                        } else {
+                            (None, scan)
+                        }
+                    } else {
+                        (None, scan)
+                    }
+                } else {
+                    let mut next = scan;
+                    while let Some((_, candidate_hash)) = work.keys.get(next) {
+                        if candidate_hash.is_some() {
+                            next += 1;
+                        } else {
+                            break;
+                        }
+                    }
+                    (work.keys.get(next).map(|(k, _)| k.clone()), next)
+                };
+                if let Some(candidate) = candidate_opt {
                     run.tasks.push(Task::DuplicateResult {
                         work,
                         key: key.clone(),
-                        scan,
+                        scan: next_scan,
                     });
-                    if let (Some(h1), Some(h2)) = (hash, candidate_hash)
-                        && h1 != h2
-                    {
-                        run.returned = Some(false);
-                    } else {
-                        run.awaiting = Some(Await::Compared);
-                        self.begin_boxed_equality(key, candidate);
-                    }
+                    run.awaiting = Some(Await::Compared);
+                    self.begin_boxed_equality(key, candidate);
                 } else {
+                    let inserted_idx = work.keys.len();
                     work.keys.push((key, hash));
+                    if let Some(h) = hash {
+                        work.hash_buckets.entry(h).or_default().push(inserted_idx);
+                    }
                     work.index += 1;
                     run.tasks.push(Task::Preflight(work));
                 }
@@ -968,36 +995,52 @@ impl Vm {
                 run.tasks.push(Task::Pairs(work));
                 let property = self.heap.get(object)?.collection_kind == CollectionKind::Dynamic
                     && matches!(&converted, Value::String(_));
+                let safe = |v: &Value| {
+                    matches!(
+                        v,
+                        Value::Null
+                            | Value::Bool(_)
+                            | Value::Int(_)
+                            | Value::Float(_)
+                            | Value::String(_)
+                    )
+                };
                 // Java Identifier hashes are identity based. Property-only or
-                // scalar mixed dictionaries can use a side-effect-free scan;
+                // scalar mixed dictionaries can use a side-effect-free lookup;
                 // do not guess bucket order when a guest object key is present.
                 if property {
                     run.declaration_maps.insert(object, None);
-                }
-                let indexed = run.declaration_maps.get(&object).and_then(Option::as_ref);
-                if indexed.is_none() && self.heap.get(object)?.collection_members.len() >= 4 {
-                    let safe = |v: &Value| {
-                        matches!(
-                            v,
-                            Value::Null
-                                | Value::Bool(_)
-                                | Value::Int(_)
-                                | Value::Float(_)
-                                | Value::String(_)
-                        )
-                    };
-                    if !safe(&converted)
-                        || self
-                            .heap
-                            .get(object)?
-                            .collection_members
-                            .iter()
-                            .any(|m| !safe(&m.key))
+                    if self.heap.get(object)?.collection_members.len() >= 4
+                        && run.has_non_safe_entry.contains(&object)
                     {
                         return Err(unsupported(
                             "hashed declaration map mixing Identifier and guest object keys",
                         ));
                     }
+                    let Value::String(prop_name) = &converted else {
+                        unreachable!()
+                    };
+                    let prop_map = run.property_maps.entry(object).or_default();
+                    if let Some(&slot) = prop_map.get(prop_name) {
+                        self.yaml_insert(object, converted, value, Some(slot))?;
+                    } else {
+                        let slot = self.heap.get(object)?.collection_members.len();
+                        prop_map.insert(prop_name.clone(), slot);
+                        self.yaml_insert(object, converted, value, None)?;
+                    }
+                    return Ok(());
+                }
+                if !safe(&converted) {
+                    run.has_non_safe_entry.insert(object);
+                }
+                let indexed = run.declaration_maps.get(&object).and_then(Option::as_ref);
+                if indexed.is_none()
+                    && self.heap.get(object)?.collection_members.len() >= 4
+                    && (!safe(&converted) || run.has_non_safe_entry.contains(&object))
+                {
+                    return Err(unsupported(
+                        "hashed declaration map mixing Identifier and guest object keys",
+                    ));
                 }
                 let needs_hash = indexed.is_some_and(|m| m.has_hash());
                 run.tasks.push(Task::Put {
@@ -1151,6 +1194,8 @@ impl Vm {
                 run.cache.clear();
                 run.active.clear();
                 run.declaration_maps.clear();
+                run.property_maps.clear();
+                run.has_non_safe_entry.clear();
                 run.document = None;
                 run.tasks.push(Task::Convert(if run.all {
                     vec![PathPart::Root]

@@ -65,32 +65,32 @@ impl BinaryWire {
             if value <= u8::MAX.into() {
                 self.put(&[0xcc, value as u8])
             } else if value <= u16::MAX.into() {
-                self.put(&[0xcd])?;
-                self.put(&(value as u16).to_be_bytes())
+                let b = (value as u16).to_be_bytes();
+                self.put(&[0xcd, b[0], b[1]])
             } else if value <= u32::MAX.into() {
-                self.put(&[0xce])?;
-                self.put(&(value as u32).to_be_bytes())
+                let b = (value as u32).to_be_bytes();
+                self.put(&[0xce, b[0], b[1], b[2], b[3]])
             } else {
-                self.put(&[0xcf])?;
-                self.put(&value.to_be_bytes())
+                let b = value.to_be_bytes();
+                self.put(&[0xcf, b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7]])
             }
         } else if value >= i8::MIN.into() {
             self.put(&[0xd0, value as u8])
         } else if value >= i16::MIN.into() {
-            self.put(&[0xd1])?;
-            self.put(&(value as i16).to_be_bytes())
+            let b = (value as i16).to_be_bytes();
+            self.put(&[0xd1, b[0], b[1]])
         } else if value >= i32::MIN.into() {
-            self.put(&[0xd2])?;
-            self.put(&(value as i32).to_be_bytes())
+            let b = (value as i32).to_be_bytes();
+            self.put(&[0xd2, b[0], b[1], b[2], b[3]])
         } else {
-            self.put(&[0xd3])?;
-            self.put(&value.to_be_bytes())
+            let b = value.to_be_bytes();
+            self.put(&[0xd3, b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7]])
         }
     }
 
     pub(super) fn float(&mut self, value: f64) -> Result<(), WireError> {
-        self.put(&[0xcb])?;
-        self.put(&value.to_bits().to_be_bytes())
+        let b = value.to_bits().to_be_bytes();
+        self.put(&[0xcb, b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7]])
     }
 
     fn len32(length: usize) -> Result<u32, WireError> {
@@ -102,11 +102,11 @@ impl BinaryWire {
         if value <= 15 {
             self.put(&[0x90 | value as u8])
         } else if value <= u16::MAX.into() {
-            self.put(&[0xdc])?;
-            self.put(&(value as u16).to_be_bytes())
+            let b = (value as u16).to_be_bytes();
+            self.put(&[0xdc, b[0], b[1]])
         } else {
-            self.put(&[0xdd])?;
-            self.put(&value.to_be_bytes())
+            let b = value.to_be_bytes();
+            self.put(&[0xdd, b[0], b[1], b[2], b[3]])
         }
     }
 
@@ -115,11 +115,11 @@ impl BinaryWire {
         if value <= 15 {
             self.put(&[0x80 | value as u8])
         } else if value <= u16::MAX.into() {
-            self.put(&[0xde])?;
-            self.put(&(value as u16).to_be_bytes())
+            let b = (value as u16).to_be_bytes();
+            self.put(&[0xde, b[0], b[1]])
         } else {
-            self.put(&[0xdf])?;
-            self.put(&value.to_be_bytes())
+            let b = value.to_be_bytes();
+            self.put(&[0xdf, b[0], b[1], b[2], b[3]])
         }
     }
 
@@ -131,11 +131,11 @@ impl BinaryWire {
         } else if length <= u8::MAX.into() {
             self.put(&[0xd9, length as u8])?;
         } else if length <= u16::MAX.into() {
-            self.put(&[0xda])?;
-            self.put(&(length as u16).to_be_bytes())?;
+            let b = (length as u16).to_be_bytes();
+            self.put(&[0xda, b[0], b[1]])?;
         } else {
-            self.put(&[0xdb])?;
-            self.put(&length.to_be_bytes())?;
+            let b = length.to_be_bytes();
+            self.put(&[0xdb, b[0], b[1], b[2], b[3]])?;
         }
         self.put(bytes)
     }
@@ -155,11 +155,11 @@ impl BinaryWire {
         if length <= u8::MAX.into() {
             self.put(&[0xc4, length as u8])?;
         } else if length <= u16::MAX.into() {
-            self.put(&[0xc5])?;
-            self.put(&(length as u16).to_be_bytes())?;
+            let b = (length as u16).to_be_bytes();
+            self.put(&[0xc5, b[0], b[1]])?;
         } else {
-            self.put(&[0xc6])?;
-            self.put(&length.to_be_bytes())?;
+            let b = length.to_be_bytes();
+            self.put(&[0xc6, b[0], b[1], b[2], b[3]])?;
         }
         self.put(bytes)
     }

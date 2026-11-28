@@ -141,15 +141,61 @@ pub fn escape_regex_literal(literal: &str) -> String {
 /// Also canonicalizes Windows verbatim (`\\?\C:\...`), URI-decoded (`/C:/...`), and
 /// drive-letter (`C:\...`) forms into a single consistent `<DRIVE>:/...` form so `rootDir`
 /// confinement matches identically across `fs::canonicalize`, `file:///C:/...`, and OS paths.
+fn is_windows_style_path(path: &str) -> bool {
+    if cfg!(windows) {
+        return true;
+    }
+    if path.starts_with(r"\\") || path.starts_with("//?/") || path.starts_with("//./") {
+        return true;
+    }
+    let b = path.as_bytes();
+    if b.len() >= 3 && b[0].is_ascii_alphabetic() && b[1] == b':' && (b[2] == b'\\' || b[2] == b'/')
+    {
+        return true;
+    }
+    b.len() >= 4
+        && b[0] == b'/'
+        && b[1].is_ascii_alphabetic()
+        && b[2] == b':'
+        && (b[3] == b'\\' || b[3] == b'/')
+}
+
 pub fn normalize_lexical_path(path: &str) -> String {
-    let mut normalized_seps = path.replace('\\', "/");
-    if let Some(rest) = normalized_seps.strip_prefix("//?/") {
+    let raw_backslash_unc =
+        path.starts_with(r"\\") && !path.starts_with(r"\\?\") && !path.starts_with(r"\\.\");
+    let mut normalized_seps = if is_windows_style_path(path) {
+        path.replace('\\', "/")
+    } else {
+        path.to_string()
+    };
+    let mut unc_prefix = false;
+    if let Some(rest) = normalized_seps
+        .strip_prefix("//?/UNC/")
+        .or_else(|| normalized_seps.strip_prefix("//?/unc/"))
+        .or_else(|| normalized_seps.strip_prefix("//./UNC/"))
+        .or_else(|| normalized_seps.strip_prefix("//./unc/"))
+    {
+        unc_prefix = true;
+        normalized_seps = format!("/{rest}");
+    } else if let Some(rest) = normalized_seps.strip_prefix("//?/") {
         let b = rest.as_bytes();
-        if b.len() >= 2 && b[0].is_ascii_alphabetic() && b[1] == b':' {
+        if b.len() >= 2
+            && b[0].is_ascii_alphabetic()
+            && b[1] == b':'
+            && (b.len() == 2 || b[2] == b'/')
+        {
             normalized_seps = rest.to_string();
         }
+    } else if raw_backslash_unc
+        || (cfg!(windows)
+            && normalized_seps.starts_with("//")
+            && !normalized_seps.starts_with("///")
+            && !normalized_seps.starts_with("//./"))
+    {
+        unc_prefix = true;
+        normalized_seps = format!("/{}", &normalized_seps[2..]);
     }
-    if let Some(rest) = normalized_seps.strip_prefix('/') {
+    if !unc_prefix && let Some(rest) = normalized_seps.strip_prefix('/') {
         let b = rest.as_bytes();
         if b.len() >= 2
             && b[0].is_ascii_alphabetic()
@@ -161,7 +207,8 @@ pub fn normalize_lexical_path(path: &str) -> String {
     }
 
     let bytes = normalized_seps.as_bytes();
-    if bytes.len() >= 2
+    if !unc_prefix
+        && bytes.len() >= 2
         && bytes[0].is_ascii_alphabetic()
         && bytes[1] == b':'
         && (bytes.len() == 2 || bytes[2] == b'/')
@@ -191,7 +238,12 @@ pub fn normalize_lexical_path(path: &str) -> String {
         match seg {
             "" | "." => {}
             ".." => {
-                if is_abs || stack.last().is_some_and(|&top| top != "..") {
+                if unc_prefix {
+                    // Never collapse server/share root components of a UNC path.
+                    if stack.len() > 2 {
+                        stack.pop();
+                    }
+                } else if is_abs || stack.last().is_some_and(|&top| top != "..") {
                     stack.pop();
                 } else {
                     stack.push("..");
@@ -199,6 +251,9 @@ pub fn normalize_lexical_path(path: &str) -> String {
             }
             other => stack.push(other),
         }
+    }
+    if unc_prefix {
+        return format!("//{}", stack.join("/"));
     }
     if is_abs {
         if stack.is_empty() {
@@ -738,5 +793,28 @@ mod tests {
                 .check_resolve_module(&"custom+ext:/a.pkl".into())
                 .is_err()
         );
+    }
+
+    #[test]
+    fn round4_posix_root_dir_preserves_literal_backslash() {
+        #[cfg(not(windows))]
+        {
+            assert_eq!(
+                normalize_lexical_path("/tmp/sandbox\\secret.pkl"),
+                "/tmp/sandbox\\secret.pkl"
+            );
+            assert!(!is_path_under_root(
+                "/tmp/sandbox\\secret.pkl",
+                "/tmp/sandbox"
+            ));
+            let policy =
+                SecurityPolicy::default_standard().with_root_dir(Some("/tmp/sandbox".into()));
+            assert!(
+                policy
+                    .check_resolve_module(&"file:///tmp/sandbox%5Csecret.pkl".into())
+                    .is_err(),
+                "POSIX literal backslash must not escape rootDir boundary"
+            );
+        }
     }
 }

@@ -44,6 +44,7 @@ use pkl_runtime::packages::test_runner::{
 };
 use pkl_runtime::pkl_binary_decode::{DecodedObject, DecodedValue, decode_lossless};
 use pkl_runtime::source::SourceText;
+use pkl_runtime::value::PklString;
 use pkl_runtime::value::Value;
 use std::collections::{BTreeMap, BTreeSet, HashMap, HashSet};
 use std::io::{self, Read, Write};
@@ -554,15 +555,7 @@ fn pkl_home_dir() -> Option<PathBuf> {
 }
 
 fn is_uri_like(s: &str) -> bool {
-    let Some((scheme, _)) = s.split_once(':') else {
-        return false;
-    };
-    let mut chars = scheme.chars();
-    let Some(first) = chars.next() else {
-        return false;
-    };
-    first.is_ascii_alphabetic()
-        && chars.all(|c| c.is_ascii_alphanumeric() || matches!(c, '+' | '-' | '.'))
+    crate::fs::is_uri_like(s)
 }
 
 #[derive(Clone, Debug)]
@@ -732,8 +725,36 @@ fn extract_binary_value(value: Value) -> Result<Vec<u8>, String> {
     decode_base64(b64.as_str().unwrap_or(""))
 }
 
+fn build_project_cycle_fs_guard(
+    opts: &ParsedCliOptions,
+    working_dir: &Path,
+) -> Result<Option<crate::fs::NativeFs>, CliError> {
+    if opts.allowed_modules.is_none() && opts.root_dir.is_none() {
+        return Ok(None);
+    }
+    let normalized_root = match opts.root_dir.as_deref() {
+        Some(dir) => {
+            let resolved = resolve_path(working_dir, dir);
+            let canon = crate::fs::canonicalize_root_dir(&resolved).map_err(|e| {
+                CliError::err(format!(
+                    "Failed to normalize rootDir `{}`: {e}",
+                    resolved.display()
+                ))
+            })?;
+            Some(canon.to_string_lossy().into_owned())
+        }
+        None => None,
+    };
+    let policy = SecurityPolicy::new(opts.allowed_modules.as_deref(), None, normalized_root)
+        .map_err(CliError::err)?;
+    Ok(Some(crate::fs::NativeFs::new(policy)))
+}
+
 /// Detects local-project import cycles before evaluating `PklProject` (`Project.java:149-236`).
-fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
+fn check_project_import_cycles(
+    project_file: &Path,
+    fs_guard: Option<&crate::fs::NativeFs>,
+) -> Result<(), CliError> {
     let norm = normalize_lexical(project_file);
     let root_uri =
         file_uri_from_path(&norm).map_err(|e| CliError::err(format_module_host_error(&e)))?;
@@ -742,15 +763,32 @@ fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
     let mut visited: BTreeSet<PathBuf> = BTreeSet::new();
 
     while let Some(path) = queue.pop() {
-        let canon = std::fs::canonicalize(&path).unwrap_or_else(|_| path.clone());
-        if !visited.insert(canon) {
-            continue;
-        }
         let Ok(uri) = file_uri_from_path(&path) else {
             continue;
         };
-        let Ok(src) = std::fs::read_to_string(&path) else {
-            continue;
+        let src = if let Some(fs) = fs_guard {
+            let Ok((_, real_path)) = fs.resolve_file_module(&PklString::from(uri.as_str())) else {
+                continue;
+            };
+            if !visited.insert(real_path.clone()) {
+                continue;
+            }
+            let Ok(bytes) = fs.read_file_module_bytes(&real_path) else {
+                continue;
+            };
+            let Ok(src) = String::from_utf8(bytes) else {
+                continue;
+            };
+            src
+        } else {
+            let canon = std::fs::canonicalize(&path).unwrap_or_else(|_| path.clone());
+            if !visited.insert(canon) {
+                continue;
+            }
+            let Ok(src) = std::fs::read_to_string(&path) else {
+                continue;
+            };
+            src
         };
         let Ok(entries) = parse_imports_and_reads(&SourceText::from(src)) else {
             continue;
@@ -765,20 +803,29 @@ fn check_project_import_cycles(project_file: &Path) -> Result<(), CliError> {
             if s.starts_with("pkl:") || s.starts_with("package:") || s.starts_with('@') {
                 continue;
             }
-            let target = if let Some(rest) = s.strip_prefix("file://") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
+            let target = if s.starts_with("file:") {
+                let Ok(p) = crate::fs::file_uri_to_path(&PklString::from(s)) else {
+                    continue;
+                };
+                normalize_lexical(&p)
             } else if !is_uri_like(s) {
                 normalize_lexical(&parent.join(s))
             } else {
                 continue;
             };
-            if target.is_file()
-                && let Ok(target_uri) = file_uri_from_path(&target)
-            {
-                if !edges.contains(&target_uri) {
-                    edges.push(target_uri);
+            if let Ok(target_uri) = file_uri_from_path(&target) {
+                let allowed = match fs_guard {
+                    Some(fs) => fs
+                        .resolve_file_module(&PklString::from(target_uri.as_str()))
+                        .is_ok(),
+                    None => target.is_file(),
+                };
+                if allowed {
+                    if !edges.contains(&target_uri) {
+                        edges.push(target_uri);
+                    }
+                    queue.push(target);
                 }
-                queue.push(target);
             }
         }
         graph.insert(uri, edges);
@@ -805,12 +852,10 @@ fn load_user_settings(
             });
         }
         Some(uri) => {
-            if let Some(rest) = uri.strip_prefix("file://") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
-            } else if uri.starts_with("file:/") {
-                normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(
-                    uri.strip_prefix("file:").unwrap_or(uri),
-                )))
+            if uri.starts_with("file:") {
+                let path = crate::fs::file_uri_to_path(&PklString::from(uri))
+                    .map_err(|e| CliError::err(e.to_java_utf8()))?;
+                normalize_lexical(&path)
             } else if is_uri_like(uri) {
                 return Err(CliError::err(format!("Unsupported settings URI `{uri}`.")));
             } else {
@@ -922,15 +967,31 @@ fn load_project_file(
     host_env: &[(String, String)],
 ) -> Result<LoadedProject, CliError> {
     let norm = normalize_lexical(project_file);
-    check_project_import_cycles(&norm)?;
+    let fs_guard = build_project_cycle_fs_guard(opts, working_dir)?;
+    check_project_import_cycles(&norm, fs_guard.as_ref())?;
 
     let uri = file_uri_from_path(&norm).map_err(|e| CliError::err(format_module_host_error(&e)))?;
-    let text = std::fs::read_to_string(&norm).map_err(|e| {
-        CliError::err(format!(
-            "Cannot read PklProject file `{}`: {e}",
-            norm.display()
-        ))
-    })?;
+    let text = if let Some(ref fs) = fs_guard {
+        let (_, real_path) = fs
+            .resolve_file_module(&PklString::from(uri.as_str()))
+            .map_err(|e| CliError::err(format_module_host_error(&e)))?;
+        let bytes = fs
+            .read_file_module_bytes(&real_path)
+            .map_err(|e| CliError::err(format_module_host_error(&e)))?;
+        String::from_utf8(bytes).map_err(|e| {
+            CliError::err(format!(
+                "Cannot read PklProject file `{}`: {e}",
+                norm.display()
+            ))
+        })?
+    } else {
+        std::fs::read_to_string(&norm).map_err(|e| {
+            CliError::err(format!(
+                "Cannot read PklProject file `{}`: {e}",
+                norm.display()
+            ))
+        })?
+    };
 
     if opts.allowed_modules.is_none()
         && opts.allowed_resources.is_none()
@@ -1313,6 +1374,18 @@ fn infer_module_name_for_placeholder(uri: &str) -> String {
     decoded.strip_suffix(".pkl").unwrap_or(&decoded).to_string()
 }
 
+fn validate_output_placeholder_segment(placeholder: &str, value: &str) -> Result<(), CliError> {
+    if value.contains(['/', '\\', '\0'])
+        || (cfg!(windows) && value.contains(':'))
+        || matches!(value, "." | "..")
+    {
+        return Err(CliError::err(format!(
+            "Cannot substitute output path placeholder `{placeholder}` with invalid path segment `{value}`."
+        )));
+    }
+    Ok(())
+}
+
 fn resolve_output_template(
     working_dir: &Path,
     template: &str,
@@ -1326,35 +1399,52 @@ fn resolve_output_template(
         Some(if rel.is_empty() { ".".to_string() } else { rel })
     });
 
-    let mut substituted = template.replace("%{moduleName}", &module_name);
-    if let Some(fmt) = output_format {
-        substituted = substituted.replace("%{outputFormat}", fmt);
+    // Single-pass substitution so placeholder values containing `%{...}` are never rescanned.
+    let mut substituted = String::with_capacity(template.len());
+    let mut rest = template;
+    while let Some(pos) = rest.find("%{") {
+        substituted.push_str(&rest[..pos]);
+        let tail = &rest[pos..];
+        if let Some(after) = tail.strip_prefix("%{moduleName}") {
+            validate_output_placeholder_segment("%{moduleName}", &module_name)?;
+            substituted.push_str(&module_name);
+            rest = after;
+        } else if let Some(after) = tail.strip_prefix("%{outputFormat}") {
+            if let Some(fmt) = output_format {
+                validate_output_placeholder_segment("%{outputFormat}", fmt)?;
+                substituted.push_str(fmt);
+            } else {
+                substituted.push_str("%{outputFormat}");
+            }
+            rest = after;
+        } else if let Some(after) = tail.strip_prefix("%{moduleDir}") {
+            let Some(ref dir) = module_dir else {
+                return Err(CliError::err(format!(
+                    "Cannot substitute output path placeholder `%{{moduleDir}}` because module `{}` does not have a file system path.",
+                    src.uri
+                )));
+            };
+            substituted.push_str(dir);
+            rest = after;
+        } else {
+            substituted.push_str("%{");
+            rest = &tail[2..];
+        }
     }
-    if let Some(dir) = module_dir {
-        substituted = substituted.replace("%{moduleDir}", &dir);
-    }
-    if substituted.contains("%{moduleDir}") {
-        return Err(CliError::err(format!(
-            "Cannot substitute output path placeholder `%{{moduleDir}}` because module `{}` does not have a file system path.",
-            src.uri
-        )));
-    }
+    substituted.push_str(rest);
     Ok(resolve_path(working_dir, Path::new(&substituted)))
 }
 
-fn resolve_real_output_path(base: &Path, rel: &str) -> (PathBuf, PathBuf) {
-    let mut resolved = base.to_path_buf();
-    let mut real = base.to_path_buf();
-    for comp in Path::new(rel).components() {
-        resolved.push(comp);
-        real.push(comp);
-        if real.exists()
-            && let Ok(canon) = std::fs::canonicalize(&real)
-        {
-            real = canon;
-        }
-    }
-    (normalize_lexical(&real), normalize_lexical(&resolved))
+fn resolve_real_output_path(
+    real_base: &Path,
+    display_base: &Path,
+    rel: &str,
+) -> Result<(PathBuf, PathBuf), ()> {
+    let joined_real = crate::fs::join_relative_path_segments(real_base, rel);
+    let real = crate::fs::try_resolve_canonical_or_ancestor(&joined_real)?;
+    let joined_display = crate::fs::join_relative_path_segments(display_base, rel);
+    let resolved = normalize_lexical(&joined_display);
+    Ok((real, resolved))
 }
 
 fn cmd_eval(args: &[String]) -> Result<i32, CliError> {
@@ -1462,10 +1552,12 @@ fn run_eval_modes(
                     output_dir.display()
                 )));
             }
-            let real_output_dir = if output_dir.exists() {
-                std::fs::canonicalize(&output_dir).unwrap_or_else(|_| output_dir.clone())
+            let real_output_dir = crate::fs::canonicalize_root_dir(&output_dir)
+                .unwrap_or_else(|_| output_dir.clone());
+            let display_output_dir = if output_dir.exists() {
+                crate::fs::strip_windows_verbatim_prefix(&real_output_dir)
             } else {
-                output_dir.clone()
+                crate::fs::strip_windows_verbatim_prefix(&output_dir)
             };
             let stdin_text = if module.is_stdin {
                 Some(read_stdin_utf8()?)
@@ -1483,13 +1575,27 @@ fn run_eval_modes(
                     }
                     let path_spec_str = path_spec.to_java_utf8();
                     let (real_path, resolved_path) =
-                        resolve_real_output_path(&real_output_dir, &path_spec_str);
+                        resolve_real_output_path(&real_output_dir, &display_output_dir, &path_spec_str)
+                            .map_err(|()| {
+                                MultiFileError::Cli(format!(
+                                    "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves outside output directory `{}`.",
+                                    module.uri,
+                                    real_output_dir.display()
+                                ))
+                            })?;
                     if !real_path.starts_with(&real_output_dir) {
                         return Err(MultiFileError::Cli(format!(
                             "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
                             module.uri,
                             real_path.display(),
                             real_output_dir.display()
+                        )));
+                    }
+                    if real_path == real_output_dir || real_path.is_dir() {
+                        return Err(MultiFileError::Cli(format!(
+                            "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is a directory.",
+                            module.uri,
+                            real_path.display()
                         )));
                     }
                     if let Some((prev_spec, prev_uri)) = written_files.get(&real_path) {
@@ -1499,22 +1605,47 @@ fn run_eval_modes(
                             real_path.display()
                         )));
                     }
-                    if real_path.is_dir() {
-                        return Err(MultiFileError::Cli(format!(
-                            "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is a directory.",
-                            module.uri,
-                            real_path.display()
-                        )));
-                    }
-                    written_files.insert(real_path.clone(), (path_spec_str, module.uri.clone()));
-                    if let Some(parent) = real_path.parent()
-                        && !parent.as_os_str().is_empty()
-                    {
+                    written_files.insert(real_path.clone(), (path_spec_str.clone(), module.uri.clone()));
+                    let parent = real_path.parent().filter(|p| !p.as_os_str().is_empty());
+                    if let Some(parent) = parent {
                         std::fs::create_dir_all(parent)
                             .map_err(|e| MultiFileError::Io(e.to_string()))?;
                     }
                     let bytes = eval_bytes().map_err(|_| MultiFileError::Eval)?;
-                    std::fs::write(&real_path, &bytes)
+                    let write_target = if let (Some(parent), Some(file_name)) =
+                        (parent, real_path.file_name())
+                    {
+                        let canon = std::fs::canonicalize(parent)
+                            .map_err(|e| MultiFileError::Io(e.to_string()))?;
+                        if !canon.starts_with(&real_output_dir) {
+                            return Err(MultiFileError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
+                                module.uri,
+                                canon.display(),
+                                real_output_dir.display()
+                            )));
+                        }
+                        canon.join(file_name)
+                    } else {
+                        let verified = crate::fs::try_resolve_canonical_or_ancestor(&real_path)
+                            .map_err(|()| {
+                                MultiFileError::Cli(format!(
+                                    "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves outside output directory `{}`.",
+                                    module.uri,
+                                    real_output_dir.display()
+                                ))
+                            })?;
+                        if !verified.starts_with(&real_output_dir) || verified == real_output_dir {
+                            return Err(MultiFileError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
+                                module.uri,
+                                verified.display(),
+                                real_output_dir.display()
+                            )));
+                        }
+                        verified
+                    };
+                    crate::fs::write_file_nofollow(&write_target, &bytes)
                         .map_err(|e| MultiFileError::Io(e.to_string()))?;
                     let relative = relativize_paths(&resolved_path, working_dir);
                     let line = format!("{relative}{LINE_SEP}");
@@ -1592,24 +1723,22 @@ fn run_eval_modes(
                     .map_err(|e| CliError::err(format!("Failed to create parent dir: {e}")))?;
             }
             if !written_non_empty.contains(&output_file) {
-                std::fs::write(&output_file, &eval_res.stdout).map_err(|e| {
+                crate::fs::write_file_nofollow(&output_file, &eval_res.stdout).map_err(|e| {
                     CliError::err(format!("Failed to write `{}`: {e}", output_file.display()))
                 })?;
                 if !eval_res.stdout.is_empty() {
                     written_non_empty.insert(output_file);
                 }
             } else if !eval_res.stdout.is_empty() {
-                let mut file = std::fs::OpenOptions::new()
-                    .append(true)
-                    .open(&output_file)
-                    .map_err(|e| {
-                        CliError::err(format!("Failed to open `{}`: {e}", output_file.display()))
-                    })?;
-                file.write_all(format!("{}\n", opts.module_output_separator).as_bytes())
-                    .and_then(|()| file.write_all(&eval_res.stdout))
-                    .map_err(|e| {
-                        CliError::err(format!("Failed to append `{}`: {e}", output_file.display()))
-                    })?;
+                let mut combined = Vec::with_capacity(
+                    opts.module_output_separator.len() + 1 + eval_res.stdout.len(),
+                );
+                combined.extend_from_slice(opts.module_output_separator.as_bytes());
+                combined.push(b'\n');
+                combined.extend_from_slice(&eval_res.stdout);
+                crate::fs::append_file_nofollow(&output_file, &combined).map_err(|e| {
+                    CliError::err(format!("Failed to append `{}`: {e}", output_file.display()))
+                })?;
             }
         }
         return Ok(0);
@@ -1733,7 +1862,7 @@ fn cmd_project_resolve(args: &[String]) -> Result<i32, CliError> {
             .unwrap_or(&loaded.project.project_dir)
             .join(PKL_PROJECT_DEPS_FILENAME);
         let json = resolved.deps.write_json();
-        std::fs::write(&deps_file, json.as_bytes()).map_err(|e| {
+        crate::fs::write_file_nofollow(&deps_file, json.as_bytes()).map_err(|e| {
             resolver.close();
             http.close();
             CliError::err(format!("Failed to write to {}: {e}", deps_file.display()))
@@ -2042,7 +2171,7 @@ fn cmd_analyze_imports(args: &[String]) -> Result<i32, CliError> {
             std::fs::create_dir_all(parent)
                 .map_err(|e| CliError::err(format!("Failed to create output directory: {e}")))?;
         }
-        std::fs::write(&resolved, &res.stdout)
+        crate::fs::write_file_nofollow(&resolved, &res.stdout)
             .map_err(|e| CliError::err(format!("Failed to write `{}`: {e}", resolved.display())))?;
     } else {
         let mut stdout = io::stdout().lock();
@@ -2465,10 +2594,54 @@ fn run_single_test_module(
         .unwrap_or("test")
         .to_string();
 
-    let test_text = match std::fs::read_to_string(&norm) {
-        Ok(t) => t,
+    let test_text = match shared_host
+        .fs()
+        .resolve_file_module(&PklString::from(uri.as_str()))
+    {
+        Ok((_, real_path)) => match shared_host
+            .fs()
+            .read_file_module_bytes(&real_path)
+            .and_then(|bytes| {
+                String::from_utf8(bytes).map_err(|err| ModuleHostError::Io(err.to_string().into()))
+            }) {
+            Ok(t) => t,
+            Err(err) => {
+                let msg = format!("Cannot read `{}`: {err:?}", norm.display());
+                return Ok(TestResults {
+                    module_name: inferred_name,
+                    display_uri: uri,
+                    facts: TestSectionResults::empty(TestSectionName::Facts),
+                    examples: TestSectionResults::empty(TestSectionName::Examples),
+                    logs: String::new(),
+                    error: Some(TestError {
+                        message: msg.clone(),
+                        rendered: msg,
+                    }),
+                    generated_expected_pcf: None,
+                    generated_actual_pcf: None,
+                });
+            }
+        },
+        Err(ModuleHostError::SecurityManagerException { message }) => {
+            let msg = message
+                .map(|m| m.to_java_utf8())
+                .unwrap_or_else(|| format!("Security manager denied `{uri}`."));
+            return Ok(TestResults {
+                module_name: inferred_name,
+                display_uri: uri,
+                facts: TestSectionResults::empty(TestSectionName::Facts),
+                examples: TestSectionResults::empty(TestSectionName::Examples),
+                logs: String::new(),
+                error: Some(TestError {
+                    message: first_error_headline(&msg),
+                    rendered: msg,
+                }),
+                generated_expected_pcf: None,
+                generated_actual_pcf: None,
+            });
+        }
         Err(err) => {
-            let msg = format!("Cannot read `{}`: {err}", norm.display());
+            let msg = format!("Cannot read `{}`: {err:?}", norm.display());
             return Ok(TestResults {
                 module_name: inferred_name,
                 display_uri: uri,
@@ -2615,12 +2788,34 @@ fn run_single_test_module(
 
     let expected_uri = file_uri_from_path(&expected_file).unwrap_or_default();
     let actual_uri = file_uri_from_path(&actual_file).unwrap_or_default();
+    let expected_uri_pkl = PklString::from(expected_uri.as_str());
+    let actual_uri_pkl = PklString::from(actual_uri.as_str());
 
     let load_expected_groups = || -> Result<Option<ExampleGroups>, CliError> {
-        if !expected_file.is_file() {
-            return Ok(None);
+        match std::fs::symlink_metadata(&expected_file) {
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
+            Err(err) => {
+                return Err(CliError::err(format!(
+                    "Failed to read `{}`: {err}",
+                    expected_file.display()
+                )));
+            }
+            Ok(meta) if meta.is_dir() => return Ok(None),
+            Ok(_) => {}
         }
-        let exp_text = std::fs::read_to_string(&expected_file).map_err(|e| {
+        let Some(raw_bytes) = shared_host
+            .fs()
+            .read_file_resource(&expected_uri_pkl)
+            .map_err(|e| {
+                CliError::err(format!(
+                    "Failed to read `{}`: {e:?}",
+                    expected_file.display()
+                ))
+            })?
+        else {
+            return Ok(None);
+        };
+        let exp_text = String::from_utf8(raw_bytes).map_err(|e| {
             CliError::err(format!("Failed to read `{}`: {e}", expected_file.display()))
         })?;
         let exp_exprs = vec![RENDER_EXAMPLES_JSON_EXPR.to_string()];
@@ -2692,7 +2887,13 @@ fn run_single_test_module(
     };
 
     if let Some(ref content) = gen_expected {
-        std::fs::write(&expected_file, content).map_err(|e| {
+        if shared_host.fs().policy().root_dir().is_some() {
+            shared_host
+                .fs()
+                .check_uri(&expected_uri_pkl, true)
+                .map_err(|msg| CliError::err(msg.to_java_utf8()))?;
+        }
+        crate::fs::write_file_nofollow(&expected_file, content.as_bytes()).map_err(|e| {
             CliError::err(format!(
                 "Failed to write `{}`: {e}",
                 expected_file.display()
@@ -2700,7 +2901,13 @@ fn run_single_test_module(
         })?;
     }
     if let Some(ref content) = gen_actual {
-        std::fs::write(&actual_file, content).map_err(|e| {
+        if shared_host.fs().policy().root_dir().is_some() {
+            shared_host
+                .fs()
+                .check_uri(&actual_uri_pkl, true)
+                .map_err(|msg| CliError::err(msg.to_java_utf8()))?;
+        }
+        crate::fs::write_file_nofollow(&actual_file, content.as_bytes()).map_err(|e| {
             CliError::err(format!("Failed to write `{}`: {e}", actual_file.display()))
         })?;
     }
@@ -2944,8 +3151,17 @@ fn cmd_test(args: &[String]) -> Result<i32, CliError> {
         let mut list: Vec<PathBuf> = positionals
             .iter()
             .map(|p| {
-                if let Some(rest) = p.strip_prefix("file://") {
-                    normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(rest)))
+                if p.len() >= 5 && p[..5].eq_ignore_ascii_case("file:") {
+                    let uri = PklString::from(p.as_str());
+                    if let Ok(path) = crate::fs::file_uri_to_path(&uri) {
+                        normalize_lexical(&path)
+                    } else if let Some(rest) = p.strip_prefix("file://") {
+                        normalize_lexical(Path::new(&pkl_runtime::packages::zip::percent_decode(
+                            rest,
+                        )))
+                    } else {
+                        resolve_path(&working_dir, Path::new(p))
+                    }
                 } else {
                     resolve_path(&working_dir, Path::new(p))
                 }

@@ -72,10 +72,11 @@ impl Scanner {
                     };
                     self.reader.forward(1)?;
                     let hex = self.reader.prefix(len)?;
-                    if !hex
-                        .units()
-                        .iter()
-                        .all(|&u| matches!(u,48..=57|65..=70|97..=102))
+                    if hex.units().len() != len
+                        || !hex
+                            .units()
+                            .iter()
+                            .all(|&u| matches!(u,48..=57|65..=70|97..=102))
                     {
                         return Err(self.error(Some("while scanning a double-quoted scalar"),Some(start.clone()),format!("expected escape sequence of {len} hexadecimal numbers, but found: {}",text_string(&hex))));
                     }

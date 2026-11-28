@@ -41,21 +41,26 @@ impl WasmReplSession {
         } else {
             pkl_string_from_js(&working_dir_uri)?
         };
+        let platform_metadata = config.platform_metadata.clone();
         let repl_opts = ReplSessionOptions {
             working_dir_uri: working_dir,
             color: config.use_color,
             trace_mode: config.trace_mode,
             log_delivery: LogDelivery::Host,
-            frame_transformer: if config.has_custom_frame_transformer {
+            frame_transformer: if config.has_custom_frame_transformer || config.test_mode {
                 FrameTransformer::Host
             } else {
                 FrameTransformer::Default
             },
             power_assertions: config.power_assertions,
-            platform_data: config.platform_metadata.is_some(),
+            platform_data: platform_metadata.is_some(),
         };
         let core = WasmHostCore::new(config)?;
-        let repl = ReplSession::new(repl_opts);
+        let mut repl = ReplSession::new(repl_opts);
+        repl.set_reusable_timeouts(true);
+        if let Some(meta) = platform_metadata {
+            repl.set_platform_metadata(Some(meta));
+        }
         Ok(Self {
             core,
             repl,
@@ -67,7 +72,24 @@ impl WasmReplSession {
 
     #[wasm_bindgen(js_name = isClosed)]
     pub fn is_closed(&self) -> bool {
-        self.closed
+        self.closed || self.repl.is_closed()
+    }
+
+    #[wasm_bindgen(js_name = checkResolveModule)]
+    pub fn check_resolve_module(&self, uri: JsValue) -> Result<(), JsValue> {
+        let pkl_uri = pkl_string_from_js(&uri)?;
+        self.core
+            .policy
+            .check_resolve_module(&pkl_uri)
+            .map_err(|err| {
+                let msg = match err {
+                    ModuleHostError::SecurityManagerException { message } => message
+                        .map(|m| m.to_java_utf8())
+                        .unwrap_or_else(|| "Module access denied by security manager.".to_string()),
+                    other => format!("{other:?}"),
+                };
+                StructuredError::security(msg).into_js_value()
+            })
     }
 
     #[wasm_bindgen(js_name = startEval)]
@@ -82,6 +104,7 @@ impl WasmReplSession {
         timeout_ms: JsValue,
     ) -> Result<(), JsValue> {
         self.ensure_open()?;
+        self.core.staged_sources.clear();
         let req = ReplRequest::Eval {
             id: rust_string_from_js(&id)?,
             text: rust_string_from_js(&text)?,
@@ -96,13 +119,37 @@ impl WasmReplSession {
         &mut self,
         id: JsValue,
         uri: JsValue,
+        contents: JsValue,
         now: JsValue,
         timeout_ms: JsValue,
     ) -> Result<(), JsValue> {
         self.ensure_open()?;
+        let uri_str = rust_string_from_js(&uri)?;
+        let inline_text = if contents.is_null() || contents.is_undefined() {
+            None
+        } else {
+            Some(source_text_from_js(&contents)?)
+        };
+        self.core.staged_sources.clear();
+        if let Some(text) = inline_text {
+            let raw_uri = PklString::from(uri_str.as_str());
+            let resolved_uri =
+                pkl_runtime::host::resolve_module_key_uri(&raw_uri, self.repl.working_dir_uri())
+                    .unwrap_or_else(|_| raw_uri.clone());
+            let source = pkl_runtime::modules::ModuleSource {
+                text,
+                inferred_name: PklString::default(),
+            };
+            self.core
+                .staged_sources
+                .insert(resolved_uri.clone(), source.clone());
+            if raw_uri != resolved_uri {
+                self.core.staged_sources.insert(raw_uri, source);
+            }
+        }
         let req = ReplRequest::Load {
             id: rust_string_from_js(&id)?,
-            uri: rust_string_from_js(&uri)?,
+            uri: uri_str,
         };
         self.start_request(req, now, timeout_ms)
     }
@@ -116,6 +163,7 @@ impl WasmReplSession {
         timeout_ms: JsValue,
     ) -> Result<(), JsValue> {
         self.ensure_open()?;
+        self.core.staged_sources.clear();
         let req = ReplRequest::Completion {
             id: rust_string_from_js(&id)?,
             text: rust_string_from_js(&text)?,
@@ -131,6 +179,7 @@ impl WasmReplSession {
         timeout_ms: JsValue,
     ) -> Result<(), JsValue> {
         self.ensure_open()?;
+        self.core.staged_sources.clear();
         let req = ReplRequest::Reset {
             id: rust_string_from_js(&id)?,
         };
@@ -138,6 +187,7 @@ impl WasmReplSession {
     }
 
     pub fn poll(&mut self, now: JsValue, budget: JsValue) -> Result<JsValue, JsValue> {
+        self.ensure_open()?;
         let now_ms = parse_u64_js(&now)?;
         let budget_u64 = parse_u64_js(&budget)?;
         let step_budget = usize::try_from(budget_u64)
@@ -150,6 +200,9 @@ impl WasmReplSession {
             return suspend.to_js();
         }
         if let Some((cap, msg)) = self.pending_capability_error.take() {
+            self.core.cancel_pending();
+            self.core.staged_sources.clear();
+            self.repl.abort_active_operation();
             return make_repl_error_event(&StructuredError::capability_unavailable(cap, msg));
         }
 
@@ -162,6 +215,7 @@ impl WasmReplSession {
                     return Ok(obj.into());
                 }
                 ReplPoll::Ready(responses) => {
+                    self.core.staged_sources.clear();
                     if let Some((cap, msg)) = self.pending_capability_error.take() {
                         return make_repl_error_event(&StructuredError::capability_unavailable(
                             cap, msg,
@@ -186,7 +240,7 @@ impl WasmReplSession {
                     let req = self
                         .repl
                         .read_request(&token)
-                        .map_err(|err| StructuredError::evaluation(err.message.clone()))?;
+                        .map_err(|err| self.map_runtime_error(err))?;
                     let outcome = self.core.handle_read(token.clone(), &req);
                     if let Some(ev) = self.apply_outcome(&token, outcome, now_ms)? {
                         return Ok(ev);
@@ -234,6 +288,7 @@ impl WasmReplSession {
         text: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let resolved = pkl_string_from_js(&resolved_uri)?;
         let source = source_text_from_js(&text)?;
@@ -252,6 +307,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -269,6 +325,7 @@ impl WasmReplSession {
         exists: bool,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let now_ms = parse_u64_js(&now)?;
         let outcome = self.core.complete_module_has_element(&tok, Ok(exists))?;
@@ -283,6 +340,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -300,6 +358,7 @@ impl WasmReplSession {
         bytes_or_null: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let now_ms = parse_u64_js(&now)?;
         let data = if bytes_or_null.is_null() || bytes_or_null.is_undefined() {
@@ -319,6 +378,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -336,6 +396,7 @@ impl WasmReplSession {
         exists: bool,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let now_ms = parse_u64_js(&now)?;
         let outcome = self.core.complete_glob_has_element(&tok, Ok(exists))?;
@@ -350,6 +411,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -367,6 +429,7 @@ impl WasmReplSession {
         elements: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let parsed = parse_path_elements_js(&elements)?;
         let now_ms = parse_u64_js(&now)?;
@@ -382,6 +445,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -399,6 +463,7 @@ impl WasmReplSession {
         bytes: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let data = bytes_from_js(&bytes)?;
         let now_ms = parse_u64_js(&now)?;
@@ -414,6 +479,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -431,6 +497,7 @@ impl WasmReplSession {
         bytes: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let data = bytes_from_js(&bytes)?;
         let now_ms = parse_u64_js(&now)?;
@@ -446,6 +513,7 @@ impl WasmReplSession {
         message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let kind = rust_string_from_js(&error_kind)?;
         let msg = opt_pkl_string(&message)?;
@@ -463,6 +531,7 @@ impl WasmReplSession {
         error_message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let err_msg = opt_pkl_string(&error_message)?;
         let now_ms = parse_u64_js(&now)?;
@@ -477,6 +546,7 @@ impl WasmReplSession {
         error_message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let err_msg = opt_pkl_string(&error_message)?;
         let now_ms = parse_u64_js(&now)?;
@@ -487,7 +557,7 @@ impl WasmReplSession {
         };
         self.repl
             .acknowledge_log(&tok, res, now_ms)
-            .map_err(|err| StructuredError::evaluation(err.message).into())
+            .map_err(|err| self.map_runtime_error(err).into())
     }
 
     #[wasm_bindgen(js_name = completeFrameTransform)]
@@ -498,24 +568,27 @@ impl WasmReplSession {
         error_message: JsValue,
         now: JsValue,
     ) -> Result<(), JsValue> {
+        self.ensure_open()?;
         let tok = rust_string_from_js(&token)?;
         let err_msg = opt_pkl_string(&error_message)?;
         let now_ms = parse_u64_js(&now)?;
-        self.core.take_pending_frame_transform(&tok)?;
         let completion = if let Some(msg) = err_msg {
             Err(LoggerFailure::new(msg))
         } else {
             Ok(log_frame_from_js(&frame)?)
         };
+        self.core.take_pending_frame_transform(&tok)?;
         self.repl
             .complete_frame_transform(&tok, completion, now_ms)
-            .map_err(|err| StructuredError::evaluation(err.message).into())
+            .map_err(|err| self.map_runtime_error(err).into())
     }
 
     pub fn cancel(&mut self) {
         self.core.cancel_pending();
+        self.core.staged_sources.clear();
         self.pending_suspend = None;
-        self.repl.cancel();
+        self.pending_capability_error = None;
+        self.repl.abort_active_operation();
     }
 
     pub fn close(&mut self) {
@@ -560,7 +633,16 @@ impl WasmReplSession {
         self.pending_capability_error = None;
         self.repl
             .start_request(request, now_ms, timeout)
-            .map_err(|err| StructuredError::evaluation(err.message).into())
+            .map_err(|err| self.map_runtime_error(err).into())
+    }
+
+    fn map_runtime_error(&self, err: pkl_runtime::value::RuntimeError) -> StructuredError {
+        match err.kind {
+            pkl_runtime::value::ErrorKind::Timeout => StructuredError::timeout(err.message),
+            pkl_runtime::value::ErrorKind::Cancelled => StructuredError::cancelled(err.message),
+            pkl_runtime::value::ErrorKind::Closed => StructuredError::closed(err.message),
+            _ => StructuredError::evaluation(err.message),
+        }
     }
 
     fn apply_outcome(
@@ -573,31 +655,31 @@ impl WasmReplSession {
             WasmHostOutcome::CompleteModule(comp) => {
                 self.repl
                     .complete_module(token, comp, now_ms)
-                    .map_err(|err| StructuredError::evaluation(err.message))?;
+                    .map_err(|err| self.map_runtime_error(err))?;
                 Ok(None)
             }
             WasmHostOutcome::CompleteRead(res) => {
                 self.repl
                     .complete_read(token, res, now_ms)
-                    .map_err(|err| StructuredError::evaluation(err.message))?;
+                    .map_err(|err| self.map_runtime_error(err))?;
                 Ok(None)
             }
             WasmHostOutcome::CompleteGlob(comp) => {
                 self.repl
                     .complete_glob(token, comp, now_ms)
-                    .map_err(|err| StructuredError::evaluation(err.message))?;
+                    .map_err(|err| self.map_runtime_error(err))?;
                 Ok(None)
             }
             WasmHostOutcome::AckLog => {
                 self.repl
                     .acknowledge_log(token, Ok(()), now_ms)
-                    .map_err(|err| StructuredError::evaluation(err.message))?;
+                    .map_err(|err| self.map_runtime_error(err))?;
                 Ok(None)
             }
             WasmHostOutcome::CompleteFrame(frame) => {
                 self.repl
                     .complete_frame_transform(token, Ok(frame), now_ms)
-                    .map_err(|err| StructuredError::evaluation(err.message))?;
+                    .map_err(|err| self.map_runtime_error(err))?;
                 Ok(None)
             }
             WasmHostOutcome::Suspend(req) => Ok(Some(req.to_js()?)),
@@ -606,7 +688,16 @@ impl WasmReplSession {
                 message,
             } => {
                 self.inject_capability_unwind(token, capability, message, now_ms);
-                Ok(None)
+                self.core.cancel_pending();
+                self.core.staged_sources.clear();
+                self.repl.abort_active_operation();
+                let (cap, msg) = self
+                    .pending_capability_error
+                    .take()
+                    .expect("pending capability error");
+                Ok(Some(make_repl_error_event(
+                    &StructuredError::capability_unavailable(cap, msg),
+                )?))
             }
         }
     }
@@ -621,23 +712,23 @@ impl WasmReplSession {
             WasmHostOutcome::CompleteModule(comp) => self
                 .repl
                 .complete_module(token, comp, now_ms)
-                .map_err(|err| StructuredError::evaluation(err.message).into()),
+                .map_err(|err| self.map_runtime_error(err).into()),
             WasmHostOutcome::CompleteRead(res) => self
                 .repl
                 .complete_read(token, res, now_ms)
-                .map_err(|err| StructuredError::evaluation(err.message).into()),
+                .map_err(|err| self.map_runtime_error(err).into()),
             WasmHostOutcome::CompleteGlob(comp) => self
                 .repl
                 .complete_glob(token, comp, now_ms)
-                .map_err(|err| StructuredError::evaluation(err.message).into()),
+                .map_err(|err| self.map_runtime_error(err).into()),
             WasmHostOutcome::AckLog => self
                 .repl
                 .acknowledge_log(token, Ok(()), now_ms)
-                .map_err(|err| StructuredError::evaluation(err.message).into()),
+                .map_err(|err| self.map_runtime_error(err).into()),
             WasmHostOutcome::CompleteFrame(frame) => self
                 .repl
                 .complete_frame_transform(token, Ok(frame), now_ms)
-                .map_err(|err| StructuredError::evaluation(err.message).into()),
+                .map_err(|err| self.map_runtime_error(err).into()),
             WasmHostOutcome::Suspend(req) => {
                 self.pending_suspend = Some(req);
                 Ok(())
@@ -647,6 +738,9 @@ impl WasmReplSession {
                 message,
             } => {
                 self.inject_capability_unwind(token, capability, message, now_ms);
+                self.core.cancel_pending();
+                self.core.staged_sources.clear();
+                self.repl.abort_active_operation();
                 Ok(())
             }
         }
@@ -688,6 +782,13 @@ impl WasmReplSession {
                 self.repl.complete_module(
                     token,
                     ModuleCompletion::HasElement(Err(err.clone())),
+                    now_ms,
+                )
+            })
+            .or_else(|_| {
+                self.repl.complete_module(
+                    token,
+                    ModuleCompletion::ImportUri(Err(err.clone())),
                     now_ms,
                 )
             })

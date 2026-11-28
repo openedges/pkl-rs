@@ -625,6 +625,7 @@ impl Vm {
         Ok(self.heap.allocate(object))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn load_glob_member(&mut self) -> Result<(), RuntimeError> {
         let frame = self
             .frames

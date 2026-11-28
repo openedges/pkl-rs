@@ -9,7 +9,7 @@ pub const PKL_MINOR: u32 = 32;
 pub const PKL_PATCH: u32 = 0;
 
 /// Metadata describing the current Pkl release and host platform.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Release {
     version: String,
     os_name: String,

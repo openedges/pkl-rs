@@ -2,9 +2,221 @@
 //! summary/overflow splitting, and semver comparison matching Apple Pkl 0.32.0
 //! `org.pkl.doc.Util`, `org.pkl.core.util.IoUtils`, and `org.pkl.parser.Lexer`.
 
+use crate::model::DocGeneratorError;
 use pkl_runtime::packages::PackageVersion;
 use std::cmp::Ordering;
-use std::path::Path;
+use std::path::{Component, Path, PathBuf};
+
+/// Validates and joins a relative path under `output_dir`, rejecting absolute paths,
+/// Windows drive prefixes, NUL bytes, backslashes, `..` traversal, and symlinks resolving
+/// outside `output_dir`.
+pub fn join_confined_output_path(
+    output_dir: &Path,
+    rel: &str,
+) -> Result<PathBuf, DocGeneratorError> {
+    if rel.contains('\0') || rel.contains('\\') {
+        return Err(DocGeneratorError::user(format!(
+            "Invalid documentation output path `{rel}`: path contains forbidden character."
+        )));
+    }
+    let rel_path = Path::new(rel);
+    if rel_path.is_absolute() {
+        return Err(DocGeneratorError::user(format!(
+            "Invalid documentation output path `{rel}`: path must be relative to output directory."
+        )));
+    }
+    for comp in rel_path.components() {
+        match comp {
+            Component::Normal(_) | Component::CurDir => {}
+            Component::ParentDir | Component::RootDir | Component::Prefix(_) => {
+                return Err(DocGeneratorError::user(format!(
+                    "Invalid documentation output path `{rel}`: path escapes output directory."
+                )));
+            }
+        }
+    }
+    let candidate = output_dir.join(rel_path);
+    ensure_path_under_output_dir(output_dir, &candidate)
+}
+
+/// Ensures `candidate` resolves inside `output_dir` (following symlinks including dangling
+/// symlinks before `..`) without escaping the documentation output root.
+pub fn ensure_path_under_output_dir(
+    output_dir: &Path,
+    candidate: &Path,
+) -> Result<PathBuf, DocGeneratorError> {
+    let canon_root = pkl_host_native::canonicalize_root_dir(output_dir)
+        .unwrap_or_else(|_| output_dir.to_path_buf());
+    ensure_path_under_canon_root(output_dir, &canon_root, candidate, false)
+}
+
+/// Fast confinement check against a pre-canonicalized `canon_root`.
+///
+/// When `candidate` lies lexically beneath `output_dir` or `canon_root` without `..`,
+/// walks only the relative tail below `canon_root` via `symlink_metadata`, falling back
+/// to full `resolve_canonical_or_ancestor` whenever an existing symlink or `..` is seen.
+pub(crate) fn ensure_path_under_canon_root(
+    output_dir: &Path,
+    canon_root: &Path,
+    candidate: &Path,
+    allow_equal_root: bool,
+) -> Result<PathBuf, DocGeneratorError> {
+    if candidate.to_string_lossy().contains('\0') {
+        return Err(DocGeneratorError::user(format!(
+            "Invalid documentation output path `{}`: contains NUL byte.",
+            candidate.display()
+        )));
+    }
+    let rel_fast = candidate
+        .strip_prefix(output_dir)
+        .or_else(|_| candidate.strip_prefix(canon_root))
+        .ok();
+    let mut resolved_fast: Option<PathBuf> = None;
+    if let Some(rel) = rel_fast {
+        let mut cur = canon_root.to_path_buf();
+        let mut fallback = false;
+        let mut missing_subtree = false;
+        for comp in rel.components() {
+            match comp {
+                Component::CurDir => {}
+                Component::Normal(seg) => {
+                    cur.push(seg);
+                    if !missing_subtree {
+                        match std::fs::symlink_metadata(&cur) {
+                            Ok(meta) => {
+                                if is_symlink_or_reparse_point(&meta) {
+                                    fallback = true;
+                                    break;
+                                }
+                            }
+                            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+                                // Neither `cur` nor any descendant under it exists yet, so
+                                // remaining `Normal` components cannot traverse a symlink.
+                                missing_subtree = true;
+                            }
+                            Err(_) => {
+                                fallback = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                Component::ParentDir | Component::RootDir | Component::Prefix(_) => {
+                    fallback = true;
+                    break;
+                }
+            }
+        }
+        if !fallback {
+            resolved_fast = Some(cur);
+        }
+    }
+    let resolved = match resolved_fast {
+        Some(path) => path,
+        None => pkl_host_native::try_resolve_canonical_or_ancestor(candidate).map_err(|()| {
+            DocGeneratorError::user(format!(
+                "Refusing to access path `{}` outside output directory `{}`.",
+                candidate.display(),
+                output_dir.display()
+            ))
+        })?,
+    };
+    if !resolved.starts_with(canon_root) || (!allow_equal_root && resolved == canon_root) {
+        return Err(DocGeneratorError::user(format!(
+            "Refusing to access path `{}` outside output directory `{}`.",
+            candidate.display(),
+            output_dir.display()
+        )));
+    }
+    Ok(candidate.to_path_buf())
+}
+
+fn is_symlink_or_reparse_point(meta: &std::fs::Metadata) -> bool {
+    #[cfg(windows)]
+    {
+        use std::os::windows::fs::MetadataExt;
+        meta.file_type().is_symlink() || (meta.file_attributes() & 0x0400 != 0)
+    }
+    #[cfg(not(windows))]
+    {
+        meta.file_type().is_symlink()
+    }
+}
+
+/// Validates a single relative filename/version path segment (no separators, NUL, `.`, or `..`).
+pub fn validate_single_path_segment(label: &str, seg: &str) -> Result<(), DocGeneratorError> {
+    if seg.is_empty()
+        || matches!(seg, "." | "..")
+        || seg.contains(['/', '\\', '\0'])
+        || (cfg!(windows) && seg.contains(':'))
+    {
+        return Err(DocGeneratorError::user(format!(
+            "Invalid {label} `{seg}`: contains path separator or traversal segment."
+        )));
+    }
+    Ok(())
+}
+
+/// Sanitizes an HTML `href` / `src` URL by neutralizing dangerous executable schemes
+/// (`javascript:`, `vbscript:`, `data:`), matching HTML5 leading/embedded ASCII control
+/// and whitespace stripping while preserving all safe relative and http(s)/mailto URLs verbatim.
+pub fn sanitize_href_url(href: &str) -> &str {
+    let trimmed =
+        href.trim_start_matches(|c: char| c.is_ascii_control() || c.is_ascii_whitespace());
+    let mut scheme = String::new();
+    let mut saw_colon = false;
+    for ch in trimmed.chars() {
+        if ch.is_ascii_control() || ch.is_ascii_whitespace() {
+            continue;
+        }
+        if ch == ':' {
+            saw_colon = true;
+            break;
+        }
+        if ch == '/' || ch == '?' || ch == '#' {
+            break;
+        }
+        if scheme.len() < 16 {
+            scheme.push(ch.to_ascii_lowercase());
+        } else {
+            break;
+        }
+    }
+    if saw_colon && matches!(scheme.as_str(), "javascript" | "vbscript" | "data") {
+        ""
+    } else {
+        href
+    }
+}
+
+/// Serializes `s` as a double-quoted JS/JSON string literal safe to embed inside an inline
+/// HTML `<script>` block (escapes `<`, `>`, U+2028, U+2029 in addition to standard JSON escapes).
+pub fn push_safe_inline_script_json_string(out: &mut String, s: &str) {
+    out.push('"');
+    for ch in s.chars() {
+        match ch {
+            '"' => out.push_str("\\\""),
+            '\\' => out.push_str("\\\\"),
+            '\u{0008}' => out.push_str("\\b"),
+            '\u{0009}' => out.push_str("\\t"),
+            '\u{000A}' => out.push_str("\\n"),
+            '\u{000C}' => out.push_str("\\f"),
+            '\u{000D}' => out.push_str("\\r"),
+            '<' => out.push_str("\\u003c"),
+            '>' => out.push_str("\\u003e"),
+            '\u{2028}' => out.push_str("\\u2028"),
+            '\u{2029}' => out.push_str("\\u2029"),
+            c if (c as u32) < 0x20 => {
+                let code = c as u32;
+                out.push_str("\\u00");
+                out.push(hex_lower(((code >> 4) & 0xF) as u8));
+                out.push(hex_lower((code & 0xF) as u8));
+            }
+            c => out.push(c),
+        }
+    }
+    out.push('"');
+}
 
 /// Mirrors `IoUtils.encodePath(String)`:
 /// Encodes Windows-reserved filename characters (`0..=31`, `<>:"\|?*`, excluding `/`)
@@ -746,5 +958,39 @@ mod tests {
             get_doc_comment_overflow(Some(doc2)).as_deref(),
             Some("Overflow.")
         );
+    }
+
+    #[test]
+    fn security_helpers_block_traversal_xss_and_unsafe_hrefs() {
+        let base = std::env::temp_dir().join(format!("pkl-doc-sec-test-{}", std::process::id()));
+        let _ = std::fs::remove_dir_all(&base);
+        std::fs::create_dir_all(&base).unwrap();
+
+        assert!(join_confined_output_path(&base, "pkg/1.0.0/index.html").is_ok());
+        assert!(join_confined_output_path(&base, "../escape.html").is_err());
+        assert!(join_confined_output_path(&base, "/etc/passwd").is_err());
+        assert!(join_confined_output_path(&base, "a\\b.html").is_err());
+        assert!(join_confined_output_path(&base, "a\0b.html").is_err());
+
+        let mut script_str = String::new();
+        push_safe_inline_script_json_string(&mut script_str, "</script><img src=x>\u{2028}");
+        assert!(!script_str.contains("</script>"));
+        assert!(script_str.contains("\\u003c/script\\u003e"));
+        assert!(script_str.contains("\\u2028"));
+
+        assert_eq!(
+            sanitize_href_url("https://pkl-lang.org"),
+            "https://pkl-lang.org"
+        );
+        assert_eq!(sanitize_href_url("../Foo.html#bar"), "../Foo.html#bar");
+        assert_eq!(sanitize_href_url("javascript:alert(1)"), "");
+        assert_eq!(sanitize_href_url(" \tJaVa\tScRiPt:alert(1)"), "");
+        assert_eq!(sanitize_href_url("vbscript:msgbox(1)"), "");
+        assert_eq!(
+            sanitize_href_url("data:text/html,<script>alert(1)</script>"),
+            ""
+        );
+
+        let _ = std::fs::remove_dir_all(&base);
     }
 }

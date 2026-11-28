@@ -44,6 +44,33 @@ OUTPUT_PATH = Path("compatibility/m7-release.json")
 
 ALLOWED_LINK_SUFFIXES = {".rs", ".py", ".mjs", ".cjs", ".js", ".ts", ".yml", ".yaml", ".json"}
 VALID_TRACKS = {"benchmark", "soak", "fuzz", "release-matrix"}
+HEX_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+HEX_COMMIT_RE = re.compile(r"^[0-9a-f]{40}$")
+REQUIRED_CI_NATIVE_PLATFORMS = (
+    "darwin-arm64",
+    "darwin-x64",
+    "linux-x64-gnu",
+    "linux-arm64-gnu",
+    "linux-x64-musl",
+    "linux-arm64-musl",
+    "win32-x64-msvc",
+)
+REQUIRED_PUBLISHABLE_CRATES = (
+    "pkl-runtime",
+    "pkl-formatter",
+    "pkl-host-native",
+    "pkl-lang",
+    "pkl-repl",
+    "pkl-server",
+    "pkl-doc",
+    "pkl-cli",
+)
+REQUIRED_JS_BROWSER_WORKLOADS = ("eval-text", "typed-conversion")
+BROWSER_TO_PLATFORM_ID = {
+    "chromium": "browser-chromium",
+    "firefox": "browser-firefox",
+    "webkit": "browser-webkit",
+}
 
 
 def digest(data: bytes) -> str:
@@ -398,12 +425,232 @@ def _detect_platforms(
     return verified, observed_non_passing
 
 
+def verify_js_analysis_report(
+    js_analysis_dir: Path,
+    *,
+    browser_smoke_dir: Path | None = None,
+) -> dict[str, Any]:
+    """Verify a multi-browser `tools/m7_js_analysis.py` output directory.
+
+    Each browser (`chromium`, `firefox`, `webkit`) is promoted to `verified_platforms`
+    ONLY when both required browser workloads (`eval-text`, `typed-conversion`) pass the
+    2026-11-22 browser Wasm contract with `preflight_verified == True`, and (if smoke
+    results are supplied or present under `<dir>/smoke/report.json`) the functional smoke
+    passed for that browser.
+    """
+    report_path = js_analysis_dir / "report.json"
+    if not report_path.is_file():
+        raise ValueError(f"missing JS analysis report: {report_path}")
+    raw = report_path.read_bytes()
+    doc = json.loads(raw)
+    if doc.get("schema_version") != 1 or doc.get("mode") != "js-analysis":
+        raise ValueError(f"invalid JS analysis report header in {report_path}")
+    results = doc.get("results")
+    if not isinstance(results, list) or not results:
+        raise ValueError(f"JS analysis report has empty results: {report_path}")
+
+    smoke_by_browser: dict[str, str] = {}
+    smoke_path = None
+    if browser_smoke_dir is not None:
+        smoke_path = browser_smoke_dir / "report.json"
+        if not smoke_path.is_file():
+            raise ValueError(f"missing browser smoke report: {smoke_path}")
+    elif (js_analysis_dir / "smoke" / "report.json").is_file():
+        smoke_path = js_analysis_dir / "smoke" / "report.json"
+    if smoke_path is not None:
+        smoke_doc = json.loads(smoke_path.read_bytes())
+        if smoke_doc.get("schema_version") != 1 or smoke_doc.get("mode") != "smoke-browsers":
+            raise ValueError(f"invalid browser smoke report header in {smoke_path}")
+        for bname, brow in (smoke_doc.get("results") or {}).items():
+            smoke_by_browser[str(bname)] = str(brow.get("status", "unknown"))
+
+    by_browser: dict[str, dict[str, dict[str, Any]]] = {}
+    for row in results:
+        if row.get("kind") != "wasm-browser":
+            continue
+        engine = row.get("browser_engine")
+        if engine not in BROWSER_TO_PLATFORM_ID:
+            continue
+        # Ignore diagnostic `--chromium-no-gpu` rows when gating standard browser targets.
+        if row.get("launch_args"):
+            continue
+        workload = str(row.get("workload", ""))
+        by_browser.setdefault(engine, {})[workload] = row
+
+    verified_browsers: set[str] = set()
+    non_passing_browsers: set[str] = set()
+    browser_details: dict[str, Any] = {}
+    for engine, pid in sorted(BROWSER_TO_PLATFORM_ID.items()):
+        wmap = by_browser.get(engine)
+        if not wmap:
+            continue
+        smoke_ok = (engine not in smoke_by_browser) or (smoke_by_browser[engine] == "pass")
+        all_workloads_ok = all(
+            (w in wmap)
+            and wmap[w].get("status") == "ok"
+            and bool(wmap[w].get("preflight_verified"))
+            and (wmap[w].get("contract_verdict") or {}).get("verdict") == "pass"
+            for w in REQUIRED_JS_BROWSER_WORKLOADS
+        )
+        passed = smoke_ok and all_workloads_ok
+        browser_details[pid] = {
+            "engine": engine,
+            "workloads": {
+                w: {
+                    "status": wmap[w].get("status") if w in wmap else "missing",
+                    "verdict": (wmap[w].get("contract_verdict") or {}).get("verdict") if w in wmap else "missing",
+                    "time_ratio_vs_java": wmap[w].get("time_ratio_vs_java") if w in wmap else None,
+                    "wasm_linear_memory_bytes": wmap[w].get("wasm_linear_memory_bytes") if w in wmap else None,
+                }
+                for w in REQUIRED_JS_BROWSER_WORKLOADS
+            },
+            "smoke_status": smoke_by_browser.get(engine),
+            "passed": passed,
+        }
+        if passed:
+            verified_browsers.add(pid)
+        else:
+            non_passing_browsers.add(pid)
+
+    return {
+        "report_path": str(report_path),
+        "report_sha256": digest(raw),
+        "profile": doc.get("profile"),
+        "wasm_binary_gzip_bytes": doc.get("wasm_binary_gzip_bytes"),
+        "verified_platforms": verified_browsers,
+        "observed_non_passing_platforms": non_passing_browsers,
+        "browsers": browser_details,
+    }
+
+
+def verify_ci_attestation(
+    attestation_path: Path,
+    *,
+    expected_commit: str | None = None,
+) -> dict[str, Any]:
+    """Verify a structured hosted-CI release attestation generated by `.github/workflows/release.yml`.
+
+    Never accepts local provenance as `hosted-ci`, requires valid SHA-256 digests for
+    built artifacts on every declared platform, and enforces exact `source_commit` match
+    when cross-checked against local benchmark/soak/fuzz evidence.
+    """
+    if not attestation_path.is_file():
+        raise ValueError(f"missing CI attestation file: {attestation_path}")
+    raw = attestation_path.read_bytes()
+    doc = json.loads(raw)
+    if doc.get("schema_version") != 1:
+        raise ValueError("CI attestation schema_version must be 1")
+    if doc.get("provenance") != "hosted-ci":
+        raise ValueError(f"CI attestation provenance must be 'hosted-ci', got {doc.get('provenance')!r}")
+    if doc.get("workflow") != "Release":
+        raise ValueError(f"CI attestation workflow must be 'Release', got {doc.get('workflow')!r}")
+
+    repo = doc.get("github_repository")
+    if not isinstance(repo, str) or "/" not in repo or not repo.strip():
+        raise ValueError("CI attestation missing valid github_repository")
+    run_id = str(doc.get("github_run_id", "")).strip()
+    if not run_id.isdigit():
+        raise ValueError(f"CI attestation missing numeric github_run_id: {run_id!r}")
+    commit = doc.get("source_commit")
+    if not isinstance(commit, str) or not HEX_COMMIT_RE.match(commit):
+        raise ValueError(f"CI attestation invalid source_commit: {commit!r}")
+    if expected_commit and commit != expected_commit:
+        raise ValueError(
+            f"CI attestation source_commit ({commit}) does not match local verification git_head ({expected_commit})"
+        )
+    checksums_sha = doc.get("checksums_sha256")
+    if not isinstance(checksums_sha, str) or not HEX_SHA256_RE.match(checksums_sha):
+        raise ValueError("CI attestation missing valid checksums_sha256")
+
+    wasm_pkg = doc.get("wasm_package")
+    if not isinstance(wasm_pkg, dict):
+        raise ValueError("CI attestation missing wasm_package section")
+    if not wasm_pkg.get("tests_passed"):
+        raise ValueError("CI attestation wasm_package.tests_passed is not true")
+    if not HEX_SHA256_RE.match(str(wasm_pkg.get("sha256", ""))):
+        raise ValueError("CI attestation wasm_package missing valid sha256")
+    gzip_bytes = wasm_pkg.get("gzip_bytes")
+    if not isinstance(gzip_bytes, int) or gzip_bytes <= 0 or gzip_bytes > 2_621_440:
+        raise ValueError(f"CI attestation wasm_package gzip_bytes out of budget: {gzip_bytes!r}")
+
+    crates = doc.get("crates_packaged")
+    if not isinstance(crates, list) or not set(REQUIRED_PUBLISHABLE_CRATES).issubset(set(crates)):
+        missing_crates = sorted(set(REQUIRED_PUBLISHABLE_CRATES) - set(crates or []))
+        raise ValueError(f"CI attestation missing packaged crates: {missing_crates}")
+
+    platforms = doc.get("platforms")
+    if not isinstance(platforms, dict) or not platforms:
+        raise ValueError("CI attestation missing platforms map")
+
+    verified: set[str] = set()
+    non_passing: set[str] = set()
+    for pid in REQUIRED_CI_NATIVE_PLATFORMS:
+        entry = platforms.get(pid)
+        if not isinstance(entry, dict):
+            continue
+        ok = (
+            entry.get("status") == "pass"
+            and bool(entry.get("smoke_verified"))
+            and isinstance(entry.get("cli_archive"), dict)
+            and HEX_SHA256_RE.match(str(entry["cli_archive"].get("sha256", "")))
+            and isinstance(entry.get("pkldoc_archive"), dict)
+            and HEX_SHA256_RE.match(str(entry["pkldoc_archive"].get("sha256", "")))
+            and isinstance(entry.get("napi_addon"), dict)
+            and HEX_SHA256_RE.match(str(entry["napi_addon"].get("sha256", "")))
+        )
+        if ok:
+            verified.add(pid)
+        else:
+            non_passing.add(pid)
+
+    if set(REQUIRED_CI_NATIVE_PLATFORMS).issubset(verified) and not non_passing:
+        verified.add("hosted-ci")
+    else:
+        non_passing.add("hosted-ci")
+
+    return {
+        "attestation_path": str(attestation_path),
+        "attestation_sha256": digest(raw),
+        "provenance": "hosted-ci",
+        "workflow": doc["workflow"],
+        "github_repository": repo,
+        "github_run_id": run_id,
+        "source_commit": commit,
+        "checksums_sha256": checksums_sha,
+        "verified_platforms": verified,
+        "observed_non_passing_platforms": non_passing,
+    }
+
+
+def _extract_bundle_git_head(
+    bench_rep: dict[str, Any] | None,
+    soak_rep: dict[str, Any] | None,
+    fuzz_rep: dict[str, Any] | None,
+    js_rep: dict[str, Any] | None = None,
+) -> tuple[str | None, list[str]]:
+    heads: set[str] = set()
+    for rep in (bench_rep, soak_rep, fuzz_rep, js_rep):
+        if not isinstance(rep, dict):
+            continue
+        head = (rep.get("source") or {}).get("git_head") or rep.get("git_head")
+        if isinstance(head, str) and HEX_COMMIT_RE.match(head):
+            heads.add(head)
+    if len(heads) == 1:
+        return next(iter(heads)), []
+    if len(heads) > 1:
+        return None, [f"mismatched git_head commits across M7 reports: {sorted(heads)}"]
+    return None, []
+
+
 def verify_release(
     root: Path,
     *,
     benchmark_dir: Path | None = None,
     soak_dir: Path | None = None,
     fuzz_dir: Path | None = None,
+    js_analysis_dir: Path | None = None,
+    browser_smoke_dir: Path | None = None,
+    ci_attestation_path: Path | None = None,
     bundle_dir: Path | None = None,
     local_checkpoint: bool = False,
 ) -> dict[str, Any]:
@@ -419,6 +666,12 @@ def verify_release(
             soak_dir = b / "soak"
         if fuzz_dir is None and (b / "fuzz").is_dir():
             fuzz_dir = b / "fuzz"
+        if js_analysis_dir is None and (b / "js-analysis").is_dir():
+            js_analysis_dir = b / "js-analysis"
+        if browser_smoke_dir is None and (b / "browser-smoke").is_dir():
+            browser_smoke_dir = b / "browser-smoke"
+        if ci_attestation_path is None and (b / "ci-attestation.json").is_file():
+            ci_attestation_path = b / "ci-attestation.json"
 
     integrity_failures: list[str] = []
     strict_failures: list[str] = []
@@ -542,6 +795,75 @@ def verify_release(
         soak_strict_ok=soak_strict_ok,
         fuzz_strict_ok=fuzz_strict_ok,
     )
+
+    # 4. Optional multi-browser JS analysis verification (Chromium/Firefox/WebKit)
+    js_analysis_summary: dict[str, Any] | None = None
+    if js_analysis_dir is not None:
+        try:
+            js_res = verify_js_analysis_report(
+                js_analysis_dir,
+                browser_smoke_dir=browser_smoke_dir,
+            )
+            verified_set.update(js_res["verified_platforms"])
+            observed_non_passing_set.update(js_res["observed_non_passing_platforms"])
+            js_analysis_summary = {
+                "report_sha256": js_res["report_sha256"],
+                "profile": js_res["profile"],
+                "wasm_binary_gzip_bytes": js_res["wasm_binary_gzip_bytes"],
+                "browsers": js_res["browsers"],
+            }
+            if js_res["observed_non_passing_platforms"]:
+                strict_failures.append(
+                    "JS multi-browser verification had non-passing browsers: "
+                    + ", ".join(sorted(js_res["observed_non_passing_platforms"]))
+                )
+        except ValueError as err:
+            integrity_failures.append(f"JS analysis verification failed: {err}")
+            strict_failures.append(f"JS analysis verification failed: {err}")
+
+    # 5. Optional hosted-CI 7-platform release attestation (distinct provenance from local)
+    js_raw_rep = (
+        load_json(js_analysis_dir / "report.json")
+        if js_analysis_dir is not None and (js_analysis_dir / "report.json").is_file()
+        else None
+    )
+    expected_commit, head_mismatch_errors = _extract_bundle_git_head(
+        bench_rep, soak_rep, fuzz_rep, js_raw_rep
+    )
+    if head_mismatch_errors:
+        integrity_failures.extend(head_mismatch_errors)
+        strict_failures.extend(head_mismatch_errors)
+
+    ci_attestation_summary: dict[str, Any] | None = None
+    if ci_attestation_path is not None:
+        try:
+            ci_res = verify_ci_attestation(
+                ci_attestation_path,
+                expected_commit=expected_commit,
+            )
+            verified_set.update(ci_res["verified_platforms"])
+            observed_non_passing_set.update(ci_res["observed_non_passing_platforms"])
+            ci_attestation_summary = {
+                "attestation_sha256": ci_res["attestation_sha256"],
+                "provenance": ci_res["provenance"],
+                "workflow": ci_res["workflow"],
+                "github_repository": ci_res["github_repository"],
+                "github_run_id": ci_res["github_run_id"],
+                "source_commit": ci_res["source_commit"],
+                "checksums_sha256": ci_res["checksums_sha256"],
+                "verified_platforms": sorted(ci_res["verified_platforms"]),
+            }
+            if ci_res["observed_non_passing_platforms"]:
+                strict_failures.append(
+                    "hosted-CI attestation had non-passing platforms: "
+                    + ", ".join(sorted(ci_res["observed_non_passing_platforms"]))
+                )
+        except ValueError as err:
+            integrity_failures.append(f"CI attestation verification failed: {err}")
+            strict_failures.append(f"CI attestation verification failed: {err}")
+
+    # Never report a platform as both verified and non-passing; non-passing takes precedence.
+    verified_set.difference_update(observed_non_passing_set)
     verified_platforms = sorted(verified_set)
     observed_non_passing_platforms = sorted(observed_non_passing_set)
     all_required_platforms = [
@@ -551,7 +873,7 @@ def verify_release(
 
     integrity_passed = len(integrity_failures) == 0
     local_strict_passed = integrity_passed and bench_strict_ok and soak_strict_ok and fuzz_strict_ok
-    release_ready = local_strict_passed and len(unverified_platforms) == 0
+    release_ready = local_strict_passed and len(strict_failures) == 0 and len(unverified_platforms) == 0
 
     return {
         "schema_version": 1,
@@ -564,6 +886,16 @@ def verify_release(
         "fuzz_strict_passed": fuzz_strict_ok,
         "local_strict_gates_passed": local_strict_passed,
         "release_ready": release_ready,
+        "provenance": {
+            "local_verification": {
+                "benchmark_strict_passed": bench_strict_ok,
+                "soak_strict_passed": soak_strict_ok,
+                "fuzz_strict_passed": fuzz_strict_ok,
+                "git_head": expected_commit,
+            },
+            "js_multi_browser": js_analysis_summary,
+            "hosted_ci_attestation": ci_attestation_summary,
+        },
         "pinned_native_image_reference": {
             "id": manifest["pinned_native_image_reference"]["id"],
             "status": manifest["pinned_native_image_reference"]["status"],
@@ -597,6 +929,24 @@ def main() -> int:
     parser.add_argument("--soak-dir", type=Path, default=None)
     parser.add_argument("--fuzz-dir", type=Path, default=None)
     parser.add_argument(
+        "--js-analysis-dir",
+        type=Path,
+        default=None,
+        help="verified tools/m7_js_analysis.py multi-browser output directory",
+    )
+    parser.add_argument(
+        "--browser-smoke-dir",
+        type=Path,
+        default=None,
+        help="optional tools/m7_js_analysis.py --smoke-browsers output directory",
+    )
+    parser.add_argument(
+        "--ci-attestation",
+        type=Path,
+        default=None,
+        help="hosted-CI release attestation JSON generated by .github/workflows/release.yml",
+    )
+    parser.add_argument(
         "--local-checkpoint",
         action="store_true",
         help="gate exit code on local strict gates while STILL reporting unverified platforms and release_ready=false honestly",
@@ -613,6 +963,9 @@ def main() -> int:
                 benchmark_dir=args.benchmark_dir,
                 soak_dir=args.soak_dir,
                 fuzz_dir=args.fuzz_dir,
+                js_analysis_dir=args.js_analysis_dir,
+                browser_smoke_dir=args.browser_smoke_dir,
+                ci_attestation_path=args.ci_attestation,
                 bundle_dir=bundle,
                 local_checkpoint=args.local_checkpoint,
             )

@@ -146,6 +146,19 @@ pub enum TestSuiteOutcome {
     Failed,
 }
 
+fn validate_junit_filename_stem(label: &str, stem: &str) -> Result<(), CliError> {
+    if stem.is_empty()
+        || matches!(stem, "." | "..")
+        || stem.contains(['/', '\\', '\0'])
+        || (cfg!(windows) && stem.contains(':'))
+    {
+        return Err(CliError::err(format!(
+            "Cannot generate JUnit report: invalid {label} `{stem}` contains path separator or traversal segment."
+        )));
+    }
+    Ok(())
+}
+
 #[allow(clippy::too_many_arguments)]
 pub fn run_test_suite(
     sources: &[(String, PathBuf)],
@@ -209,6 +222,11 @@ pub fn run_test_suite(
                 let _ = stdout.flush();
 
                 if let Some(dir) = junit_dir {
+                    if let Err(err) = validate_junit_filename_stem("module name", &res.module_name)
+                    {
+                        session.close();
+                        return Err(err);
+                    }
                     let file_name = format!("{}.xml", res.module_name);
                     if !module_names.insert(file_name.clone()) {
                         session.close();
@@ -219,12 +237,14 @@ pub fn run_test_suite(
                     if !junit_aggregate_reports {
                         let xml = render_junit_report(&res);
                         let target = dir.join(&file_name);
-                        std::fs::write(&target, xml.as_bytes()).map_err(|e| {
-                            CliError::err(format!(
-                                "Failed to write JUnit report `{}`: {e}",
-                                target.display()
-                            ))
-                        })?;
+                        pkl_host_native::write_file_nofollow(&target, xml.as_bytes()).map_err(
+                            |e| {
+                                CliError::err(format!(
+                                    "Failed to write JUnit report `{}`: {e}",
+                                    target.display()
+                                ))
+                            },
+                        )?;
                     }
                 }
                 all_results.push(res);
@@ -249,10 +269,11 @@ pub fn run_test_suite(
     session.close();
 
     if junit_aggregate_reports && let Some(dir) = junit_dir {
+        validate_junit_filename_stem("aggregate suite name", junit_aggregate_suite_name)?;
         let file_name = format!("{junit_aggregate_suite_name}.xml");
         let xml = render_junit_aggregate_report(junit_aggregate_suite_name, &all_results);
         let target = dir.join(&file_name);
-        std::fs::write(&target, xml.as_bytes()).map_err(|e| {
+        pkl_host_native::write_file_nofollow(&target, xml.as_bytes()).map_err(|e| {
             CliError::err(format!(
                 "Failed to write aggregated JUnit report `{}`: {e}",
                 target.display()
@@ -364,12 +385,31 @@ fn run_single_test_module(
         .unwrap_or("test")
         .to_string();
 
-    let test_text = std::fs::read_to_string(&norm)
-        .map_err(|err| format!("Cannot read `{}`: {err}", norm.display()))?;
-
     let spec = ModuleSourceSpec {
         uri: PklString::from(uri),
         contents: None,
+    };
+
+    let test_text = match host.fs().resolve_file_module(&spec.uri) {
+        Ok((_, real_path)) => {
+            let bytes = host
+                .fs()
+                .read_file_module_bytes(&real_path)
+                .map_err(|err| format!("Cannot read `{}`: {err:?}", norm.display()))?;
+            String::from_utf8(bytes)
+                .map_err(|err| format!("Cannot read `{}`: {err}", norm.display()))?
+        }
+        Err(pkl_runtime::modules::ModuleHostError::SecurityManagerException { .. }) => {
+            // Do not read the file directly; let the VM emit the exact Pkl 0.32.0
+            // SecurityManagerException diagnostic.
+            let _ = host
+                .evaluate_expression_pkl_binary_on(session, spec.clone(), "true")
+                .map_err(|e| strip_trailing_repl_frames(&e))?;
+            return Err(format!("Security manager rejected `{uri}`."));
+        }
+        Err(err) => {
+            return Err(format!("Cannot read `{}`: {err:?}", norm.display()));
+        }
     };
 
     // Fast path for direct `amends "pkl:test"` / `extends "pkl:test"` modules.
@@ -398,11 +438,11 @@ new Mapping {
             .map_err(|e| format!("Failed to decode test module check: {e:?}"))?;
         let mut mod_name = inferred_name;
         let mut amends_test = false;
-        if let DecodedValue::Mapping(entries) | DecodedValue::Map(entries) = decoded {
+        if let DecodedValue::Mapping(entries) | DecodedValue::Map(entries) = &decoded {
             for (k, v) in entries {
                 match (k.to_java_key_string().as_str(), v) {
                     (Some("moduleName"), DecodedValue::String(s)) => mod_name = s.to_java_utf8(),
-                    (Some("isTest"), DecodedValue::Bool(b)) => amends_test = b,
+                    (Some("isTest"), DecodedValue::Bool(b)) => amends_test = *b,
                     _ => {}
                 }
             }
@@ -494,7 +534,7 @@ fn run_test_facts(
         .map_err(|e| strip_trailing_repl_frames(&e))?;
     let shape_decoded = decode_lossless(&shape_bytes)
         .map_err(|e| format!("Failed to decode facts shape: {e:?}"))?;
-    let groups = match shape_decoded {
+    let groups = match &shape_decoded {
         DecodedValue::Null => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
         DecodedValue::Map(entries) | DecodedValue::Mapping(entries) => entries,
         _ => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
@@ -506,7 +546,7 @@ fn run_test_facts(
     for (group_key, len_val) in groups {
         let group_name = group_key.to_java_key_string().to_java_utf8();
         let count = match len_val {
-            DecodedValue::Int(n) if n >= 0 => n as usize,
+            DecodedValue::Int(n) if *n >= 0 => *n as usize,
             _ => 0,
         };
         let group_locs = fact_spans.get(&group_name);
@@ -594,8 +634,12 @@ fn build_fact_failure(
         let mod_uri = PklString::from(module_uri);
         let grp_name = PklString::from(group_name);
         if session.begin_fact_trace(&mod_uri, &grp_name, *fact_span) {
-            let now = host.clock_ms();
             let timeout_ms = host.timeout_ms();
+            let now = if timeout_ms.is_some() {
+                host.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
             let mut stderr = Vec::new();
             let _ = session
                 .start_evaluation_pkl_binary(spec.clone(), fact_expr.as_str(), now, timeout_ms)
@@ -652,48 +696,130 @@ fn run_test_examples(
     let expected_path = module_path.with_file_name(format!("{file_name}-expected.pcf"));
     let actual_path = module_path.with_file_name(format!("{file_name}-actual.pcf"));
 
-    if actual_path.exists() {
-        std::fs::remove_file(&actual_path).map_err(|err| {
-            format!(
-                "I/O error writing test output file `{}`: {err}",
-                actual_path.display()
-            )
-        })?;
-    }
-    if overwrite && expected_path.exists() {
-        std::fs::remove_file(&expected_path).map_err(|err| {
-            format!(
-                "I/O error writing test output file `{}`: {err}",
-                expected_path.display()
-            )
-        })?;
-    }
-
     let expected_uri = path_to_file_uri(&expected_path).to_java_utf8();
     let actual_uri = path_to_file_uri(&actual_path).to_java_utf8();
+    let expected_uri_pkl = PklString::from(expected_uri.as_str());
+    let actual_uri_pkl = PklString::from(actual_uri.as_str());
 
-    let (expected_groups, expected_source) = if expected_path.is_file() {
-        let exp_text = std::fs::read_to_string(&expected_path).map_err(|err| {
-            format!(
+    host.check_resolve_module(&expected_uri_pkl)
+        .map_err(|err| format!("{err:?}"))?;
+    host.check_resolve_module(&actual_uri_pkl)
+        .map_err(|err| format!("{err:?}"))?;
+    let canon_expected = pkl_host_native::try_resolve_canonical_or_ancestor(&expected_path)
+        .map_err(|()| {
+            pkl_runtime::host::security::root_dir_denied_message(&expected_uri_pkl, false)
+                .to_java_utf8()
+        })?;
+    let canon_expected_uri = path_to_file_uri(&canon_expected);
+    if canon_expected_uri != expected_uri_pkl {
+        host.check_resolve_module(&canon_expected_uri)
+            .map_err(|err| format!("{err:?}"))?;
+    }
+    let canon_actual =
+        pkl_host_native::try_resolve_canonical_or_ancestor(&actual_path).map_err(|()| {
+            pkl_runtime::host::security::root_dir_denied_message(&actual_uri_pkl, false)
+                .to_java_utf8()
+        })?;
+    let canon_actual_uri = path_to_file_uri(&canon_actual);
+    if canon_actual_uri != actual_uri_pkl {
+        host.check_resolve_module(&canon_actual_uri)
+            .map_err(|err| format!("{err:?}"))?;
+    }
+
+    // Unlink any existing file or dangling symlink before generating test outputs.
+    match std::fs::remove_file(&actual_path) {
+        Ok(()) => {}
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+        Err(err) => {
+            return Err(format!(
+                "I/O error writing test output file `{}`: {err}",
+                actual_path.display()
+            ));
+        }
+    }
+    if overwrite {
+        match std::fs::remove_file(&expected_path) {
+            Ok(()) => {}
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+            Err(err) => {
+                return Err(format!(
+                    "I/O error writing test output file `{}`: {err}",
+                    expected_path.display()
+                ));
+            }
+        }
+    }
+
+    let (expected_groups, expected_source) = match std::fs::symlink_metadata(&expected_path) {
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => (None, None),
+        Err(err) => {
+            return Err(format!(
                 "I/O error reading test output file `{}`: {err}",
                 expected_path.display()
-            )
-        })?;
-        let exp_spec = ModuleSourceSpec {
-            uri: PklString::from(expected_uri.as_str()),
-            contents: Some(exp_text.as_str().into()),
-        };
-        let exp_bytes = host
-            .evaluate_expression_pkl_binary_on(session, exp_spec, EXPECTED_EXAMPLES_MAP_EXPR)
-            .map_err(|e| strip_trailing_repl_frames(&e))?;
-        let exp_decoded = decode_lossless(&exp_bytes)
-            .map_err(|e| format!("Failed to decode expected examples: {e:?}"))?;
-        (
-            Some(decode_rendered_examples_map(Some(&exp_decoded))),
-            Some(exp_text),
-        )
-    } else {
-        (None, None)
+            ));
+        }
+        Ok(meta) if meta.is_dir() => (None, None),
+        Ok(_) => {
+            let exp_bytes_opt = match host.fs().resolve_file_module(&expected_uri_pkl) {
+                Ok((resolved, real_path)) => {
+                    if resolved.resolved_uri != expected_uri_pkl {
+                        host.check_resolve_module(&resolved.resolved_uri)
+                            .map_err(|err| format!("{err:?}"))?;
+                    }
+                    match host.fs().read_file_module_bytes(&real_path) {
+                        Ok(b) => Some(b),
+                        Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                        Err(err) => {
+                            return Err(format!(
+                                "I/O error reading test output file `{}`: {err:?}",
+                                expected_path.display()
+                            ));
+                        }
+                    }
+                }
+                Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                Err(pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                    message,
+                }) => {
+                    return Err(message.map(|m| m.to_java_utf8()).unwrap_or_else(|| {
+                        format!("Security violation reading `{}`", expected_path.display())
+                    }));
+                }
+                Err(err) => {
+                    return Err(format!(
+                        "I/O error reading test output file `{}`: {err:?}",
+                        expected_path.display()
+                    ));
+                }
+            };
+            if let Some(raw_bytes) = exp_bytes_opt {
+                let exp_text = String::from_utf8(raw_bytes).map_err(|err| {
+                    format!(
+                        "I/O error reading test output file `{}`: {err}",
+                        expected_path.display()
+                    )
+                })?;
+                let exp_spec = ModuleSourceSpec {
+                    uri: expected_uri_pkl.clone(),
+                    contents: Some(exp_text.as_str().into()),
+                };
+                let exp_bytes = host
+                    .evaluate_expression_pkl_binary_on(
+                        session,
+                        exp_spec,
+                        EXPECTED_EXAMPLES_MAP_EXPR,
+                    )
+                    .map_err(|e| strip_trailing_repl_frames(&e))?;
+                let exp_decoded = decode_lossless(&exp_bytes)
+                    .map_err(|e| format!("Failed to decode expected examples: {e:?}"))?;
+                (
+                    Some(decode_rendered_examples_map(Some(&exp_decoded))),
+                    Some(exp_text),
+                )
+            } else {
+                (None, None)
+            }
+        }
     };
 
     // Fast path: bulk evaluate all example groups. Fallback to isolated per-example on error.
@@ -741,15 +867,27 @@ fn run_test_examples(
     };
 
     if let Some(ref content) = gen_expected {
-        std::fs::write(&expected_path, content).map_err(|err| {
-            format!(
-                "I/O error writing test output file `{}`: {err}",
-                expected_path.display()
-            )
-        })?;
+        if host.fs().policy().root_dir().is_some() {
+            host.fs()
+                .check_uri(&expected_uri_pkl, true)
+                .map_err(|msg| msg.to_java_utf8())?;
+        }
+        pkl_host_native::write_file_nofollow(&expected_path, content.as_bytes()).map_err(
+            |err| {
+                format!(
+                    "I/O error writing test output file `{}`: {err}",
+                    expected_path.display()
+                )
+            },
+        )?;
     }
     if let Some(ref content) = gen_actual {
-        std::fs::write(&actual_path, content).map_err(|err| {
+        if host.fs().policy().root_dir().is_some() {
+            host.fs()
+                .check_uri(&actual_uri_pkl, true)
+                .map_err(|msg| msg.to_java_utf8())?;
+        }
+        pkl_host_native::write_file_nofollow(&actual_path, content.as_bytes()).map_err(|err| {
             format!(
                 "I/O error writing test output file `{}`: {err}",
                 actual_path.display()
@@ -780,7 +918,7 @@ fn evaluate_examples_isolated(
         .map_err(|e| strip_trailing_repl_frames(&e))?;
     let shape_decoded = decode_lossless(&shape_bytes)
         .map_err(|e| format!("Failed to decode examples shape: {e:?}"))?;
-    let groups = match shape_decoded {
+    let groups = match &shape_decoded {
         DecodedValue::Map(entries) | DecodedValue::Mapping(entries) => entries,
         _ => return Ok(TestSectionResults::empty(TestSectionName::Examples)),
     };
@@ -789,7 +927,7 @@ fn evaluate_examples_isolated(
     for (group_key, len_val) in groups {
         let group_name = group_key.to_java_key_string().to_java_utf8();
         let count = match len_val {
-            DecodedValue::Int(n) if n >= 0 => n as usize,
+            DecodedValue::Int(n) if *n >= 0 => *n as usize,
             _ => 0,
         };
         let mut failures = Vec::new();

@@ -1,13 +1,15 @@
 //! UTF-16 StringReader path of Engine 3.0.1 StreamReader.
 //! Reader marks snapshot the rolling code-point window, including zero padding.
 use super::{Mark, Text, YamlError};
+use std::cell::RefCell;
 use std::sync::Arc;
 #[derive(Clone)]
 pub(crate) struct Reader {
     input: Text,
     label: Text,
     input_pos: usize,
-    window: Arc<[u32]>,
+    window: Vec<u32>,
+    mark_snapshot: RefCell<Option<Arc<[u32]>>>,
     data_length: usize,
     pointer: usize,
     eof: bool,
@@ -22,7 +24,8 @@ impl Reader {
             input,
             label,
             input_pos: 0,
-            window: Arc::from([]),
+            window: Vec::new(),
+            mark_snapshot: RefCell::new(None),
             data_length: 0,
             pointer: 0,
             eof: false,
@@ -33,12 +36,16 @@ impl Reader {
         }
     }
     pub fn mark(&self) -> Mark {
+        let mut cached = self.mark_snapshot.borrow_mut();
+        let buffer = cached
+            .get_or_insert_with(|| Arc::from(self.window.as_slice()))
+            .clone();
         Mark {
             label: self.label.clone(),
             index: self.index,
             line: self.line,
             column: self.column,
-            buffer: self.window.clone(),
+            buffer,
             pointer: self.pointer,
         }
     }
@@ -49,8 +56,6 @@ impl Reader {
             return Ok(());
         }
         let remaining = self.data_length - self.pointer;
-        let mut window = self.window[self.pointer..self.data_length].to_vec();
-        window.resize(remaining + read, 0);
         if (0xd800..=0xdbff).contains(&self.input.units()[self.input_pos + read - 1]) {
             // StringReader checks the destination range before EOF. Engine's
             // bufferSize+1 read can fill all 1025 slots, making this extension
@@ -72,6 +77,11 @@ impl Reader {
             }
             read += 1;
         }
+        if self.pointer > 0 {
+            self.window.copy_within(self.pointer..self.data_length, 0);
+        }
+        self.window.truncate(remaining);
+        self.window.resize(remaining + read, 0);
         let mut i = 0;
         let mut cp_index = remaining;
         while i < read {
@@ -94,16 +104,16 @@ impl Reader {
                     "special characters are not allowed",
                 ));
             }
-            if cp_index == window.len() {
-                window.push(cp);
+            if cp_index == self.window.len() {
+                self.window.push(cp);
             } else {
-                window[cp_index] = cp;
+                self.window[cp_index] = cp;
             }
             cp_index += 1;
             i += 1;
         }
         self.input_pos += read;
-        self.window = window.into();
+        *self.mark_snapshot.borrow_mut() = None;
         self.data_length = cp_index;
         self.pointer = 0;
         Ok(())

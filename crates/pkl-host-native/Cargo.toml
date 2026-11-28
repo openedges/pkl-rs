@@ -18,7 +18,7 @@ pkl-runtime.workspace = true
 rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12"] }
 rustls-pemfile = "2"
 rustls-pki-types = "1"
-unicode-normalization = { version = "=0.1.22", default-features = false }
+unicode-normalization = { version = "0.1.22", default-features = false }
 
 [dev-dependencies]
 rcgen = { version = "0.13", default-features = false, features = ["crypto", "ring", "pem"] }

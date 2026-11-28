@@ -17,9 +17,11 @@ import shutil
 import signal
 import ssl
 import stat
+import struct
 import subprocess
 import time
 import zipfile
+import zlib
 
 import compat
 
@@ -34,7 +36,11 @@ ALL_PACKAGES = (
 )
 EXPECTED_METADATA = {
     'birds@0.5.0': 'b27206b80f4f227752b6f02143887f3ea41e554542cec38f7b572b987566c4de',
+    'birds@0.6.0': 'd18c8c248a64adf4ca77631b713e6a77782b62bc8faf02aa44558676de7c8149',
+    'birds@0.7.0': 'bf920484106d197c27c558efc75c67db3da33ccb06d7141605dcfc73c2789ec4',
+    'deprecated@1.0.0': '7589f1b802d6b5b93c468fb6399d2235d44d83f27409da2b036455ccb6e07ce5',
     'fruit@1.0.5': '8ff80e5ac882650e817f261c8af024bf0db9b07888c9d18c20017457e04ffe06',
+    'fruit@1.1.0': '8d982761d182f2185e4180c82190791d9a60c721cb3393bb2e946fab90131e8c',
 }
 SERVER_SOURCE = ROOT / 'tools/java/PackageFixtureServer.java'
 RECIPE = ROOT / 'tools/fixtures/package-fixture.gradle'
@@ -383,71 +389,114 @@ class FixtureServer:
             raise RuntimeError('fixture shutdown or postcheck failed; evidence retained')
 
 
+def _build_reproducible_gradle_zip(source_dir: Path) -> bytes:
+    """Build a reproducible ZIP byte-identical to Gradle's Zip task.
+
+    Matches Apple Pkl 0.32.0 `pkl-commons-test.gradle.kts` (`preserveFileTimestamps = false`,
+    `reproducibleFileOrder = true`): DOS timestamp 1980-02-01 00:00:00 (`0x0041`/`0x0000`),
+    UTF-8 flag (`0x0800`), Unix creator `0x0314`, directory mode `0o040755` + DOS `0x10`
+    deflated empty stream (`b'\\x03\\x00'`), file mode `0o100644` DEFLATE level 6, sorted
+    lexicographically by POSIX relative path. Zero Gradle or network dependency.
+    """
+    source_dir = safe_path(source_dir)
+    if source_dir.is_symlink() or not source_dir.is_dir():
+        raise ValueError(f'package source directory must be a regular directory: {source_dir}')
+    entries: list[tuple[str, bool, bytes]] = []
+    for current, dirs, files in os.walk(source_dir, followlinks=False):
+        cur = Path(current)
+        for name in dirs:
+            path = cur / name
+            if path.is_symlink():
+                raise ValueError(f'symlink entry not permitted in package fixture: {path}')
+            rel = path.relative_to(source_dir).as_posix() + '/'
+            entries.append((rel, True, b''))
+        for name in files:
+            path = cur / name
+            info = path.lstat()
+            if not stat.S_ISREG(info.st_mode):
+                raise ValueError(f'non-regular entry not permitted in package fixture: {path}')
+            rel = path.relative_to(source_dir).as_posix()
+            entries.append((rel, False, path.read_bytes()))
+    entries.sort(key=lambda item: item[0])
+
+    dos_time = 0x0000
+    dos_date = 0x0041  # 1980-02-01 00:00:00 (Gradle CONSTANT_TIME_FOR_ZIP_ENTRIES)
+    flags = 0x0800     # UTF-8 filename encoding
+    method = 8         # DEFLATE
+    out = bytearray()
+    central = bytearray()
+    for name, is_dir, data in entries:
+        name_bytes = name.encode('utf-8')
+        offset = len(out)
+        if is_dir:
+            comp = b'\x03\x00'
+            crc = 0
+            uncomp_len = 0
+            comp_len = 2
+            ext_attr = (0o040755 << 16) | 0x10
+        else:
+            compressor = zlib.compressobj(6, zlib.DEFLATED, -zlib.MAX_WBITS)
+            comp = compressor.compress(data) + compressor.flush()
+            crc = zlib.crc32(data) & 0xFFFFFFFF
+            uncomp_len = len(data)
+            comp_len = len(comp)
+            ext_attr = 0o100644 << 16
+        out += struct.pack(
+            '<IHHHHHIIIHH',
+            0x04034B50, 20, flags, method, dos_time, dos_date,
+            crc, comp_len, uncomp_len, len(name_bytes), 0,
+        )
+        out += name_bytes
+        out += comp
+        central += struct.pack(
+            '<IHHHHHHIIIHHHHHII',
+            0x02014B50, 0x0314, 20, flags, method, dos_time, dos_date,
+            crc, comp_len, uncomp_len, len(name_bytes), 0, 0, 0, 0, ext_attr, offset,
+        )
+        central += name_bytes
+
+    cd_offset = len(out)
+    out += central
+    out += struct.pack(
+        '<IHHHHIIH',
+        0x06054B50, 0, 0, len(entries), len(entries), len(central), cd_offset, 0,
+    )
+    return bytes(out)
+
+
 def build_upstream_packages(stage_dir, java_home=None):
-    """Build all 12 upstream test packages into a staged fixture root."""
+    """Build all 12 upstream test packages into a staged fixture root without Gradle."""
+    del java_home  # Unused; pure-Python reproducible ZIP builder has zero JVM/Gradle dependency.
     stage_dir = safe_path(stage_dir)
     stage_dir.mkdir(parents=True, exist_ok=True)
-    work_dir = stage_dir / 'gradle_build'
-    work_dir.mkdir(parents=True, exist_ok=True)
-    (work_dir / 'settings.gradle').write_text("rootProject.name = 'test-packages-build'\n")
-    inputs_dir = work_dir / 'inputs/packages'
-    inputs_dir.mkdir(parents=True, exist_ok=True)
     src_base = ROOT / 'external/pkl/pkl-commons-test/src/main/files/packages'
+
     for name in ALL_PACKAGES:
         pkg_src = src_base / name
-        pkg_dst = inputs_dir / name
-        if not pkg_dst.exists():
-            shutil.copytree(pkg_src, pkg_dst)
+        zip_bytes = _build_reproducible_gradle_zip(pkg_src / 'package')
+        zip_sha = hashlib.sha256(zip_bytes).hexdigest()
+        source_json = (pkg_src / f'{name}.json').read_bytes()
+        # Match Gradle Copy's LF line filter verbatim (see inspect_generated).
+        metadata_bytes = b''.join(
+            line.replace(b'$computedChecksum', zip_sha.encode('ascii'), 1) + b'\n'
+            for line in source_json.splitlines()
+        )
+        meta_sha = hashlib.sha256(metadata_bytes).hexdigest()
 
-    recipe_text = RECIPE.read_text(encoding='utf-8')
-    pkg_list_str = 'packageNames = ' + json.dumps(list(ALL_PACKAGES))
-    new_recipe = re.sub(r'packageNames\s*=\s*\[[^\]]+\]', pkg_list_str, recipe_text)
-    new_recipe = re.sub(r'tasks\.register\(\'verifyFixtureMetadata\'\)\s*\{.*?\}\s*$', '', new_recipe, flags=re.DOTALL)
-    (work_dir / 'build.gradle').write_text(new_recipe, encoding='utf-8')
-
-    gradle_candidates = [
-        Path('/Users/cody.ij.hwang/.gradle/wrapper/dists/gradle-9.1.0-bin/9agqghryom9wkf8r80qlhnts3/gradle-9.1.0/bin/gradle'),
-    ]
-    gradle_bin = next((p for p in gradle_candidates if p.is_file()), None)
-    if not gradle_bin:
-        raise RuntimeError('Gradle distribution not found')
-
-    if java_home is None:
-        default_home = Path('/Library/Java/JavaVirtualMachines/temurin-21.jdk/Contents/Home')
-        if default_home.is_dir():
-            java_home = default_home
-        else:
-            configured = os.environ.get('JAVA_HOME')
-            if configured and Path(configured).is_dir():
-                java_home = Path(configured)
-
-    cmd = [
-        str(gradle_bin), '--no-daemon', '--offline', '-p', str(work_dir),
-        '--gradle-user-home', str(work_dir / 'gradle_home'),
-        'createTestPackages'
-    ]
-    env = {
-        'JAVA_HOME': str(java_home) if java_home else '',
-        'PATH': '/usr/bin:/bin',
-        'GRADLE_OPTS': '-XX:MaxMetaspaceSize=384m -XX:+HeapDumpOnOutOfMemoryError -Xms256m -Xmx512m -Dfile.encoding=UTF-8',
-    }
-    res = subprocess.run(cmd, cwd=work_dir, env=env, capture_output=True, text=True)
-    if res.returncode != 0:
-        raise RuntimeError('Gradle build failed: ' + res.stderr)
-
-    built_dir = work_dir / 'build/test-packages'
-    for name in ALL_PACKAGES:
         target = stage_dir / name
         if target.exists():
             shutil.rmtree(target)
-        shutil.copytree(built_dir / name, target)
+        target.mkdir(parents=True, exist_ok=False)
+        (target / f'{name}.zip').write_bytes(zip_bytes)
+        (target / f'{name}.json').write_bytes(metadata_bytes)
+        (target / f'{name}.json.sha256').write_bytes(meta_sha.encode('ascii'))
 
-    birds_sha = hashlib.sha256((stage_dir / 'birds@0.5.0/birds@0.5.0.json').read_bytes()).hexdigest()
-    fruit_sha = hashlib.sha256((stage_dir / 'fruit@1.0.5/fruit@1.0.5.json').read_bytes()).hexdigest()
-    if birds_sha != EXPECTED_METADATA.get('birds@0.5.0'):
-        raise ValueError(f'birds@0.5.0 metadata checksum mismatch: expected {EXPECTED_METADATA.get("birds@0.5.0")}, got {birds_sha}')
-    if fruit_sha != EXPECTED_METADATA.get('fruit@1.0.5'):
-        raise ValueError(f'fruit@1.0.5 metadata checksum mismatch: expected {EXPECTED_METADATA.get("fruit@1.0.5")}, got {fruit_sha}')
+    for pkg_name, expected_sha in EXPECTED_METADATA.items():
+        actual_sha = hashlib.sha256((stage_dir / pkg_name / f'{pkg_name}.json').read_bytes()).hexdigest()
+        if actual_sha != expected_sha:
+            raise ValueError(
+                f'{pkg_name} metadata checksum mismatch: expected {expected_sha}, got {actual_sha}'
+            )
     return stage_dir
 
 

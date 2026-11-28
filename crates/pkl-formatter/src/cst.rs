@@ -6,7 +6,10 @@ impl FullSpan {
     pub(crate) const fn end_with(self, end: Self) -> Self {
         Self {
             char_index: self.char_index,
-            length: end.char_index - self.char_index + end.length,
+            length: end
+                .char_index
+                .saturating_sub(self.char_index)
+                .saturating_add(end.length),
             line_begin: self.line_begin,
             col_begin: self.col_begin,
             line_end: end.line_end,
@@ -207,11 +210,51 @@ impl NodeType {
     }
 }
 
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq)]
 pub(crate) struct Node {
     pub(crate) kind: NodeType,
     pub(crate) span: FullSpan,
     pub(crate) children: Vec<Node>,
+}
+
+impl Clone for Node {
+    fn clone(&self) -> Self {
+        enum Work<'a> {
+            Visit(&'a Node),
+            Finish {
+                kind: NodeType,
+                span: FullSpan,
+                start: usize,
+            },
+        }
+        let mut work = vec![Work::Visit(self)];
+        let mut out: Vec<Node> = Vec::new();
+        while let Some(task) = work.pop() {
+            match task {
+                Work::Visit(node) => {
+                    if node.children.is_empty() {
+                        out.push(Node::leaf(node.kind, node.span));
+                    } else {
+                        work.push(Work::Finish {
+                            kind: node.kind,
+                            span: node.span,
+                            start: out.len(),
+                        });
+                        work.extend(node.children.iter().rev().map(Work::Visit));
+                    }
+                }
+                Work::Finish { kind, span, start } => {
+                    let children = out.split_off(start);
+                    out.push(Node {
+                        kind,
+                        span,
+                        children,
+                    });
+                }
+            }
+        }
+        out.pop().expect("cloned Node")
+    }
 }
 
 impl Node {
@@ -250,5 +293,14 @@ impl Node {
 
     pub(crate) fn find_child_by_type(&self, kind: NodeType) -> Option<&Node> {
         self.children.iter().find(|child| child.kind == kind)
+    }
+}
+
+impl Drop for Node {
+    fn drop(&mut self) {
+        let mut stack = std::mem::take(&mut self.children);
+        while let Some(mut child) = stack.pop() {
+            stack.extend(std::mem::take(&mut child.children));
+        }
     }
 }

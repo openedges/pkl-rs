@@ -8,8 +8,10 @@
 //! - Real monotonic `Instant` clock, timeout watchdog, `CancelFlag` abort, and `close()`/`Drop` cleanup.
 
 use crate::certs::CaCertSource;
-use crate::fs::{NativeFs, canonicalize_root_dir, path_to_file_uri};
-use crate::http::{CancelFlag, NativeHttpClient};
+use crate::fs::{
+    NativeFs, canonicalize_root_dir, file_uri_to_path, open_file_nofollow, path_to_file_uri,
+};
+use crate::http::{CancelFlag, NativeHttpClient, ScopedEvalCancel};
 use crate::modulepath::{
     NativeModulePathResolver, read_generic_jar_resource, resolve_generic_jar_module,
 };
@@ -230,6 +232,7 @@ pub struct NativeHostExtensions {
     pub custom_module_readers: Vec<Arc<dyn CustomModuleReader>>,
     pub custom_resource_readers: Vec<Arc<dyn CustomResourceReader>>,
     pub http_client: Option<Arc<NativeHttpClient>>,
+    pub cancel_flag: Option<Arc<CancelFlag>>,
     pub extra_allowed_module_schemes: Vec<String>,
     pub extra_allowed_resource_schemes: Vec<String>,
 }
@@ -312,6 +315,11 @@ impl NativeHostExtensions {
         self.http_client = Some(client);
         self
     }
+
+    pub fn with_cancel_flag(mut self, flag: Arc<CancelFlag>) -> Self {
+        self.cancel_flag = Some(flag);
+        self
+    }
 }
 
 /// Summary of cancelled/cleaned-up Host tokens observed on termination.
@@ -375,7 +383,14 @@ impl TimeoutWatchdog {
             .spawn(move || {
                 let (lock, cvar) = &*state_bg;
                 let guard = lock.lock().unwrap_or_else(|e| e.into_inner());
-                let deadline = Instant::now() + Duration::from_millis(ms);
+                let Some(deadline) = Instant::now().checked_add(Duration::from_millis(ms)) else {
+                    // Far-future timeout (> Instant max): wait until evaluation finishes.
+                    let mut g = guard;
+                    while !*g {
+                        g = cvar.wait(g).unwrap_or_else(|e| e.into_inner());
+                    }
+                    return;
+                };
                 let mut g = guard;
                 while !*g {
                     let now = Instant::now();
@@ -477,6 +492,23 @@ pub struct NativeHost {
     staged_custom_sources: Mutex<BTreeMap<PklString, ModuleSource>>,
 }
 
+/// Scoped timeout watchdog + thread-local cancellation guard for driving a
+/// native `SourceSession` or `ReplSession` request with cooperative/blocking timeout.
+pub struct EvalTimeoutGuard {
+    watchdog: TimeoutWatchdog,
+    _scoped_cancel: ScopedEvalCancel,
+}
+
+impl EvalTimeoutGuard {
+    pub fn triggered(&self) -> bool {
+        self.watchdog.triggered()
+    }
+
+    pub fn stop(self) -> bool {
+        self.watchdog.stop()
+    }
+}
+
 impl NativeHost {
     pub fn new(config: NativeHostConfig) -> Result<Self, String> {
         Self::with_extensions(config, NativeHostExtensions::default())
@@ -520,6 +552,7 @@ impl NativeHost {
             }
         }
 
+        let enforce_nofollow = normalized_root.is_some();
         let policy = if ext.custom_security.is_some() {
             let allow_all = vec![".*".to_string()];
             SecurityPolicy::new(Some(&allow_all), Some(&allow_all), None)?
@@ -539,7 +572,7 @@ impl NativeHost {
             http_cfg.request_timeout_ms = http_cfg.request_timeout_ms.min(ms);
         }
 
-        let cancel_flag = CancelFlag::new();
+        let cancel_flag = ext.cancel_flag.unwrap_or_default();
         let (http, owns_http_client) = match ext.http_client {
             Some(shared) => (shared, false),
             None => (
@@ -582,10 +615,12 @@ impl NativeHost {
             Arc::new(registry)
         };
 
-        let pkg_transport: Arc<dyn PackageTransport> = Arc::new(NativePackageTransport::new(
-            http.clone(),
-            Arc::new(policy.clone()),
-        ));
+        let pkg_transport: Arc<dyn PackageTransport> =
+            Arc::new(NativePackageTransport::with_custom_security(
+                http.clone(),
+                Arc::new(policy.clone()),
+                ext.custom_security.clone(),
+            ));
         let package_resolver = Arc::new(match config.module_cache_dir {
             Some(cache_dir) => PackageResolver::disk_cached(
                 pkg_transport,
@@ -605,7 +640,7 @@ impl NativeHost {
         }
 
         Ok(Self {
-            fs: NativeFs::new(policy),
+            fs: NativeFs::new(policy).with_enforce_nofollow(enforce_nofollow),
             modulepath: NativeModulePathResolver::new(config.module_paths),
             http,
             owns_http_client,
@@ -653,6 +688,10 @@ impl NativeHost {
 
     pub fn external_readers(&self) -> &ExternalReaderRegistry {
         &self.external_readers
+    }
+
+    pub fn external_readers_arc(&self) -> Arc<ExternalReaderRegistry> {
+        self.external_readers.clone()
     }
 
     pub fn cancel_flag(&self) -> Arc<CancelFlag> {
@@ -721,13 +760,13 @@ impl NativeHost {
         custom_staged.clear();
     }
 
-    fn check_resolve_module(&self, uri: &PklString) -> Result<(), ModuleHostError> {
+    pub fn check_resolve_module(&self, uri: &PklString) -> Result<(), ModuleHostError> {
         if let Some(ref checker) = self.custom_security {
             checker
                 .check_resolve_module(uri)
                 .map_err(|msg| ModuleHostError::SecurityManagerException { message: Some(msg) })
         } else {
-            self.fs.policy().check_resolve_module(uri)
+            self.fs.check_resolve_module(uri)
         }
     }
 
@@ -853,12 +892,13 @@ impl NativeHost {
             frame_transformer: if diagnostic_profile == DiagnosticProfile::CliBundledSettings
                 || self.frame_transformer.is_some()
                 || self.skip_default_frame_transform
+                || self.test_mode
             {
                 FrameTransformer::Host
             } else {
                 FrameTransformer::Default
             },
-            platform_data: diagnostic_profile == DiagnosticProfile::CliBundledSettings,
+            platform_data: true,
         }
     }
 
@@ -868,9 +908,12 @@ impl NativeHost {
         let pure_standard = self.custom_security.is_none()
             && self.custom_module_readers.is_empty()
             && self.external_readers.is_empty();
-        SourceSession::module_evaluator(self.session_options(diagnostic_profile))
+        let mut session = SourceSession::module_evaluator(self.session_options(diagnostic_profile))
             .with_color(self.use_color)
             .with_pure_standard_host(pure_standard)
+            .with_reusable_timeouts(true);
+        session.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
+        session
     }
 
     /// Normalizes a top-level [`ModuleSourceSpec`], expanding `@dep/...` URIs when
@@ -895,26 +938,90 @@ impl NativeHost {
     /// Drives an already-started operation on a reusable `SourceSession` using this host's
     /// monotonic clock, custom/external/built-in handlers, and per-call timeout watchdog,
     /// without closing `session` or `self`.
+    fn start_eval_watchdog(&self, timeout_ms: Option<u64>) -> (TimeoutWatchdog, ScopedEvalCancel) {
+        if let Some(ms) = timeout_ms {
+            let eval_cancel = CancelFlag::new();
+            let deadline = Instant::now().checked_add(Duration::from_millis(ms));
+            let guard = ScopedEvalCancel::push_pair(
+                self.cancel_flag.clone(),
+                Some(eval_cancel.clone()),
+                deadline,
+            );
+            (
+                TimeoutWatchdog::start(timeout_ms, eval_cancel, self.external_readers.clone()),
+                guard,
+            )
+        } else {
+            let guard = ScopedEvalCancel::push(self.cancel_flag.clone());
+            (TimeoutWatchdog::none(), guard)
+        }
+    }
+
+    #[inline]
+    pub fn reset_cancel_flag_if_set(&self) {
+        if self.cancel_flag.is_cancelled() {
+            self.cancel_flag.reset();
+        }
+    }
+
+    /// Starts a scoped timeout watchdog and thread-local cancellation guard for
+    /// a single request (e.g. from `pkl-repl`).
+    pub fn start_eval_timeout_guard(&self, timeout_ms: Option<u64>) -> EvalTimeoutGuard {
+        let (watchdog, scoped_cancel) = self.start_eval_watchdog(timeout_ms);
+        EvalTimeoutGuard {
+            watchdog,
+            _scoped_cancel: scoped_cancel,
+        }
+    }
+
     pub fn drive_public_session(
         &self,
         session: &mut SourceSession,
         stderr: &mut Vec<u8>,
     ) -> Result<Value, RuntimeError> {
-        let watchdog = if self.timeout_ms.is_some() {
-            let eval_cancel = CancelFlag::new();
-            TimeoutWatchdog::start(self.timeout_ms, eval_cancel, self.external_readers.clone())
+        self.drive_public_session_with_timeout(session, self.timeout_ms, stderr)
+    }
+
+    pub fn drive_public_session_with_timeout(
+        &self,
+        session: &mut SourceSession,
+        timeout_ms: Option<u64>,
+        stderr: &mut Vec<u8>,
+    ) -> Result<Value, RuntimeError> {
+        let (watchdog, _scoped_cancel) = if timeout_ms.is_some() {
+            let (wd, guard) = self.start_eval_watchdog(timeout_ms);
+            (wd, Some(guard))
         } else {
-            TimeoutWatchdog::none()
+            (TimeoutWatchdog::none(), None)
         };
-        let now_ms = || self.clock_ms();
-        let result = self.drive_source_session(session, &now_ms, &watchdog, stderr);
+        let frozen_clock = session.host_session().last_clock();
+        let now_ms = || {
+            if timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                frozen_clock
+            }
+        };
+        let result = self.drive_source_session(
+            session,
+            &now_ms,
+            &watchdog,
+            timeout_ms.is_some(),
+            _scoped_cancel.is_none(),
+            stderr,
+        );
         let timed_out = watchdog.stop();
         match result {
             Ok(value) => Ok(value),
-            Err(err) if timed_out && err.kind != ErrorKind::Timeout => Err(RuntimeError::new(
-                ErrorKind::Timeout,
-                format_timeout_message(self.timeout_ms.unwrap_or(0)),
-            )),
+            Err(err) if timed_out && err.kind != ErrorKind::Timeout => {
+                if session.reusable_timeouts() {
+                    session.abort_active_operation();
+                }
+                Err(RuntimeError::new(
+                    ErrorKind::Timeout,
+                    format_timeout_message(timeout_ms.unwrap_or(0)),
+                ))
+            }
             Err(err) => Err(err),
         }
     }
@@ -938,12 +1045,12 @@ impl NativeHost {
         };
         let mut stderr = Vec::new();
         let outcome = (|| -> Result<Vec<u8>, RuntimeError> {
-            session.start_evaluation_pkl_binary(
-                spec,
-                expression,
-                self.clock_ms(),
-                self.timeout_ms,
-            )?;
+            let now = if self.timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            session.start_evaluation_pkl_binary(spec, expression, now, self.timeout_ms)?;
             let val = self.drive_public_session(session, &mut stderr)?;
             SourceSession::result_bytes(val).map(|b| b.to_vec())
         })();
@@ -982,7 +1089,12 @@ impl NativeHost {
         })?;
         let mut stderr = Vec::new();
         let outcome = (|| -> Result<String, RuntimeError> {
-            session.start_evaluation(spec, "output.text", self.clock_ms(), self.timeout_ms)?;
+            let now = if self.timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            session.start_evaluation(spec, "output.text", now, self.timeout_ms)?;
             let val = self.drive_public_session(session, &mut stderr)?;
             SourceSession::result_string(val).map(|s| s.to_java_utf8())
         })();
@@ -1009,7 +1121,12 @@ impl NativeHost {
         })?;
         let mut stderr = Vec::new();
         let outcome = (|| -> Result<Vec<u8>, RuntimeError> {
-            session.start_evaluation_output_bytes(spec, self.clock_ms(), self.timeout_ms)?;
+            let now = if self.timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            session.start_evaluation_output_bytes(spec, now, self.timeout_ms)?;
             let val = self.drive_public_session(session, &mut stderr)?;
             SourceSession::result_bytes(val).map(|b| b.to_vec())
         })();
@@ -1037,7 +1154,12 @@ impl NativeHost {
         })?;
         let mut stderr = Vec::new();
         let outcome = (|| -> Result<String, RuntimeError> {
-            session.start_evaluation(spec, expression, self.clock_ms(), self.timeout_ms)?;
+            let now = if self.timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            session.start_evaluation(spec, expression, now, self.timeout_ms)?;
             let val = self.drive_public_session(session, &mut stderr)?;
             SourceSession::result_string(val).map(|s| s.to_java_utf8())
         })();
@@ -1065,7 +1187,12 @@ impl NativeHost {
         })?;
         let mut stderr = Vec::new();
         let outcome = (|| -> Result<Value, RuntimeError> {
-            session.start_load_module(spec, self.clock_ms(), self.timeout_ms)?;
+            let now = if self.timeout_ms.is_some() {
+                self.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            session.start_load_module(spec, now, self.timeout_ms)?;
             self.drive_public_session(session, &mut stderr)
         })();
         match outcome {
@@ -1088,18 +1215,16 @@ impl NativeHost {
         step_budget: usize,
     ) -> (Result<Value, RuntimeError>, CleanupReport) {
         let start = Instant::now();
+        let frozen_clock = session.last_clock();
         let now_ms = || {
             if self.timeout_ms.is_some() {
-                start.elapsed().as_millis().min(u64::MAX as u128) as u64
+                frozen_clock
+                    .saturating_add(start.elapsed().as_millis().min(u64::MAX as u128) as u64)
             } else {
-                0
+                frozen_clock
             }
         };
-        let watchdog = TimeoutWatchdog::start(
-            self.timeout_ms,
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(self.timeout_ms);
 
         let outcome = (|| -> Result<Value, RuntimeError> {
             session.start(entry, inputs, now_ms(), self.timeout_ms)?;
@@ -1275,6 +1400,9 @@ impl NativeHost {
             inferred_name: primary.inferred_name,
         };
 
+        let pure_standard = self.custom_security.is_none()
+            && self.custom_module_readers.is_empty()
+            && self.external_readers.is_empty();
         let mut session = match SourceSession::compile_output_colored(
             input,
             &[],
@@ -1282,7 +1410,10 @@ impl NativeHost {
             self.session_options(sanitized.diagnostic_profile),
             self.use_color,
         ) {
-            Ok(s) => s,
+            Ok(mut s) => {
+                s.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
+                s.with_pure_standard_host(pure_standard)
+            }
             Err(error) => return NativeStreamingOutputFilesOutcome::EvalFailure(error.into()),
         };
 
@@ -1296,11 +1427,7 @@ impl NativeHost {
             );
         }
 
-        let watchdog = TimeoutWatchdog::start(
-            remaining_ms,
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(remaining_ms);
         let mut stderr = Vec::new();
         let now_ms = || {
             if self.timeout_ms.is_some() {
@@ -1311,8 +1438,23 @@ impl NativeHost {
         };
 
         let keys_result = (|| -> Result<Vec<PklString>, RuntimeError> {
-            session.start_output_file_keys(now_ms(), self.timeout_ms)?;
-            let val = self.drive_source_session(&mut session, &now_ms, &watchdog, &mut stderr)?;
+            let now = now_ms();
+            let rem = self.timeout_ms.map(|limit| limit.saturating_sub(now));
+            if watchdog.triggered() || (self.timeout_ms.is_some() && rem == Some(0) && now > 0) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Timeout,
+                    format_timeout_message(self.timeout_ms.unwrap_or(0)),
+                ));
+            }
+            session.start_output_file_keys(now, rem)?;
+            let val = self.drive_source_session(
+                &mut session,
+                &now_ms,
+                &watchdog,
+                self.timeout_ms.is_some(),
+                false,
+                &mut stderr,
+            )?;
             SourceSession::result_output_file_keys(val)
         })();
 
@@ -1338,9 +1480,25 @@ impl NativeHost {
         for key in &keys {
             let mut eval_bytes = || -> Result<Vec<u8>, ()> {
                 match (|| -> Result<Vec<u8>, RuntimeError> {
-                    session.start_output_file_bytes(key.clone(), now_ms(), self.timeout_ms)?;
-                    let val =
-                        self.drive_source_session(&mut session, &now_ms, &watchdog, &mut stderr)?;
+                    let now = now_ms();
+                    let rem = self.timeout_ms.map(|limit| limit.saturating_sub(now));
+                    if watchdog.triggered()
+                        || (self.timeout_ms.is_some() && rem == Some(0) && now > 0)
+                    {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Timeout,
+                            format_timeout_message(self.timeout_ms.unwrap_or(0)),
+                        ));
+                    }
+                    session.start_output_file_bytes(key.clone(), now, rem)?;
+                    let val = self.drive_source_session(
+                        &mut session,
+                        &now_ms,
+                        &watchdog,
+                        self.timeout_ms.is_some(),
+                        false,
+                        &mut stderr,
+                    )?;
                     SourceSession::result_bytes(val).map(|b| b.to_vec())
                 })() {
                     Ok(bytes) => Ok(bytes),
@@ -1393,11 +1551,7 @@ impl NativeHost {
                 0
             }
         };
-        let watchdog = TimeoutWatchdog::start(
-            self.timeout_ms,
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(self.timeout_ms);
 
         let mut session = SourceSession::compile_expressions_text(
             SourceText::from(text),
@@ -1408,11 +1562,19 @@ impl NativeHost {
         )
         .map_err(|e| e.to_java_utf8())?
         .with_color(self.use_color);
+        session.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
 
         let mut logs = Vec::new();
         let mut values = Vec::with_capacity(expressions.len());
         for idx in 0..expressions.len() {
-            if let Err(err) = session.start_path(idx, now_ms(), self.timeout_ms) {
+            let now = now_ms();
+            let rem = self.timeout_ms.map(|limit| limit.saturating_sub(now));
+            if watchdog.triggered() || (self.timeout_ms.is_some() && rem == Some(0) && now > 0) {
+                let _ = watchdog.stop();
+                session.close();
+                return Err(format_timeout_message(self.timeout_ms.unwrap_or(0)));
+            }
+            if let Err(err) = session.start_path(idx, now, rem) {
                 let timed_out = watchdog.stop();
                 let msg = if timed_out || err.kind == ErrorKind::Timeout {
                     format_timeout_message(self.timeout_ms.unwrap_or(0))
@@ -1422,7 +1584,14 @@ impl NativeHost {
                 session.close();
                 return Err(msg);
             }
-            match self.drive_source_session(&mut session, &now_ms, &watchdog, &mut logs) {
+            match self.drive_source_session(
+                &mut session,
+                &now_ms,
+                &watchdog,
+                self.timeout_ms.is_some(),
+                false,
+                &mut logs,
+            ) {
                 Ok(val) => values.push(val),
                 Err(err) => {
                     let timed_out = watchdog.stop();
@@ -1461,11 +1630,7 @@ impl NativeHost {
                 0
             }
         };
-        let watchdog = TimeoutWatchdog::start(
-            self.timeout_ms,
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(self.timeout_ms);
 
         let mut session = SourceSession::compile_expressions_text(
             SourceText::from(text),
@@ -1476,11 +1641,19 @@ impl NativeHost {
         )
         .map_err(|e| e.to_java_utf8())?
         .with_color(self.use_color);
+        session.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
 
         let mut logs = Vec::new();
         let mut results = Vec::with_capacity(expressions.len());
         for idx in 0..expressions.len() {
-            if let Err(err) = session.start_path(idx, now_ms(), self.timeout_ms) {
+            let now = now_ms();
+            let rem = self.timeout_ms.map(|limit| limit.saturating_sub(now));
+            if watchdog.triggered() || (self.timeout_ms.is_some() && rem == Some(0) && now > 0) {
+                let _ = watchdog.stop();
+                session.close();
+                return Err(format_timeout_message(self.timeout_ms.unwrap_or(0)));
+            }
+            if let Err(err) = session.start_path(idx, now, rem) {
                 if watchdog.triggered() {
                     let _ = watchdog.stop();
                     session.close();
@@ -1489,7 +1662,14 @@ impl NativeHost {
                 results.push(Err(session.format_error(err)));
                 continue;
             }
-            match self.drive_source_session(&mut session, &now_ms, &watchdog, &mut logs) {
+            match self.drive_source_session(
+                &mut session,
+                &now_ms,
+                &watchdog,
+                self.timeout_ms.is_some(),
+                false,
+                &mut logs,
+            ) {
                 Ok(val) => results.push(Ok(val)),
                 Err(err) => {
                     if watchdog.triggered() || err.kind == pkl_runtime::value::ErrorKind::Timeout {
@@ -1520,11 +1700,7 @@ impl NativeHost {
         start: Instant,
         options: &ModuleEvalOptions,
     ) -> Result<PrimaryModuleSource, ModuleOutputResult> {
-        let watchdog = TimeoutWatchdog::start(
-            self.remaining_timeout_ms(start),
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(self.remaining_timeout_ms(start));
 
         let resolved_uri_pkl = if raw_uri.starts_with('@') {
             match self.resolve_top_level_dependency_uri(raw_uri) {
@@ -1643,6 +1819,7 @@ impl NativeHost {
         let mut session =
             SourceSession::module_evaluator(self.session_options(options.diagnostic_profile))
                 .with_color(self.use_color);
+        session.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
         let spec = ModuleSourceSpec {
             uri: PklString::from(uri),
             contents: None,
@@ -1768,6 +1945,7 @@ impl NativeHost {
                 Err(error) => return (error.into(), Vec::new(), Vec::new(), Vec::new()),
             },
         };
+        session.set_platform_metadata(Some(crate::fs::detect_native_platform_metadata()));
 
         let remaining_ms = self.remaining_timeout_ms(start);
         if let Some(limit) = self.timeout_ms
@@ -1782,11 +1960,7 @@ impl NativeHost {
             );
         }
 
-        let watchdog = TimeoutWatchdog::start(
-            remaining_ms,
-            self.cancel_flag.clone(),
-            self.external_readers.clone(),
-        );
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(remaining_ms);
         let now_ms = || {
             if self.timeout_ms.is_some() {
                 start.elapsed().as_millis().min(u64::MAX as u128) as u64
@@ -1797,15 +1971,35 @@ impl NativeHost {
         let mut stderr = Vec::new();
 
         let run = (|| -> Result<Vec<u8>, RuntimeError> {
+            let now = now_ms();
+            let rem = self.timeout_ms.map(|limit| limit.saturating_sub(now));
+            if watchdog.triggered() || (self.timeout_ms.is_some() && rem == Some(0) && now > 0) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Timeout,
+                    format_timeout_message(self.timeout_ms.unwrap_or(0)),
+                ));
+            }
             if expression.is_some() {
-                session.start_path(0, now_ms(), self.timeout_ms)?;
-                let val =
-                    self.drive_source_session(&mut session, &now_ms, &watchdog, &mut stderr)?;
+                session.start_path(0, now, rem)?;
+                let val = self.drive_source_session(
+                    &mut session,
+                    &now_ms,
+                    &watchdog,
+                    self.timeout_ms.is_some(),
+                    false,
+                    &mut stderr,
+                )?;
                 SourceSession::result_string(val).map(|s| s.to_java_utf8().into_bytes())
             } else {
-                session.start_output_bytes(now_ms(), self.timeout_ms)?;
-                let val =
-                    self.drive_source_session(&mut session, &now_ms, &watchdog, &mut stderr)?;
+                session.start_output_bytes(now, rem)?;
+                let val = self.drive_source_session(
+                    &mut session,
+                    &now_ms,
+                    &watchdog,
+                    self.timeout_ms.is_some(),
+                    false,
+                    &mut stderr,
+                )?;
                 SourceSession::result_bytes(val).map(|b| b.to_vec())
             }
         })();
@@ -1845,47 +2039,89 @@ impl NativeHost {
         session: &mut SourceSession,
         now_ms: &dyn Fn() -> u64,
         watchdog: &TimeoutWatchdog,
+        has_timeout: bool,
+        lazy_scoped_cancel: bool,
         stderr: &mut Vec<u8>,
     ) -> Result<Value, RuntimeError> {
-        let has_timeout = self.timeout_ms.is_some();
         let step_budget = if has_timeout { 4096 } else { 1_048_576 };
         let base_clock = session.host_session().last_clock();
         let current_ms = || if has_timeout { now_ms() } else { base_clock };
-        loop {
-            if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
+        let mut _lazy_cancel: Option<ScopedEvalCancel> = None;
+        let check_abort = |session: &mut SourceSession| -> Option<RuntimeError> {
+            if watchdog.triggered() {
+                if session.reusable_timeouts() {
+                    session.abort_active_operation();
+                } else {
+                    session.cancel();
+                }
+                return Some(RuntimeError::new(
+                    ErrorKind::Timeout,
+                    format_timeout_message(self.timeout_ms.unwrap_or(0)),
+                ));
+            }
+            if self.cancel_flag.is_cancelled() {
+                if session.reusable_timeouts() {
+                    session.abort_active_operation();
+                    return Some(RuntimeError::new(
+                        ErrorKind::Cancelled,
+                        "evaluation cancelled",
+                    ));
+                }
                 session.cancel();
+            }
+            None
+        };
+        loop {
+            if let Some(err) = check_abort(session) {
+                return Err(err);
             }
             match session.poll(current_ms(), step_budget) {
                 HostPoll::Ready(result) => return result,
                 HostPoll::Yielded => {}
                 HostPoll::Read { token, .. } => {
+                    if lazy_scoped_cancel && _lazy_cancel.is_none() {
+                        _lazy_cancel = Some(ScopedEvalCancel::push(self.cancel_flag.clone()));
+                    }
                     let req = session.read_request(&token)?;
                     let result = self.handle_read_request(&req);
                     let t = current_ms();
-                    if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
-                        session.cancel();
+                    if let Some(err) = check_abort(session) {
+                        return Err(err);
                     }
                     session.complete_read(&token, result, t)?;
                 }
                 HostPoll::Module { token, request } => {
+                    if lazy_scoped_cancel && _lazy_cancel.is_none() {
+                        _lazy_cancel = Some(ScopedEvalCancel::push(self.cancel_flag.clone()));
+                    }
                     let completion = self.handle_module_request(&request);
                     let t = current_ms();
-                    if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
-                        session.cancel();
+                    if let Some(err) = check_abort(session) {
+                        return Err(err);
                     }
                     session.complete_module(&token, completion, t)?;
                 }
                 HostPoll::Glob { token, request } => {
+                    if lazy_scoped_cancel && _lazy_cancel.is_none() {
+                        _lazy_cancel = Some(ScopedEvalCancel::push(self.cancel_flag.clone()));
+                    }
                     let completion = self.handle_glob_request(&request);
                     let t = current_ms();
-                    if self.cancel_flag.is_cancelled() && !watchdog.triggered() {
-                        session.cancel();
+                    if let Some(err) = check_abort(session) {
+                        return Err(err);
                     }
                     session.complete_glob(&token, completion, t)?;
                 }
                 HostPoll::TransformFrame { token, frame } => {
+                    if lazy_scoped_cancel && _lazy_cancel.is_none() {
+                        _lazy_cancel = Some(ScopedEvalCancel::push(self.cancel_flag.clone()));
+                    }
                     let transformed = self.transform_log_frame((*frame).clone());
-                    session.complete_frame_transform(&token, Ok(transformed), current_ms())?;
+                    let t = current_ms();
+                    if let Some(err) = check_abort(session) {
+                        return Err(err);
+                    }
+                    session.complete_frame_transform(&token, Ok(transformed), t)?;
                 }
                 HostPoll::Log { token, event } => {
                     self.emit_log_event(&event, stderr);
@@ -1900,8 +2136,31 @@ impl NativeHost {
         &self,
         root_uris: impl IntoIterator<Item = PklString>,
     ) -> Result<ImportGraph, Box<AnalysisFailure>> {
+        let (watchdog, _scoped_cancel) = self.start_eval_watchdog(self.timeout_ms);
         let mut analysis = ImportGraphAnalysis::new(root_uris);
         let result = loop {
+            if watchdog.triggered() {
+                break Err(Box::new(AnalysisFailure {
+                    phase: "timeout",
+                    module_uri: PklString::default(),
+                    site: None,
+                    cause: pkl_runtime::modules::analyze::FailureCause::Unsupported(
+                        format_timeout_message(self.timeout_ms.unwrap_or(0)).into(),
+                    ),
+                    traversal_order_qualified: true,
+                }));
+            }
+            if self.cancel_flag.is_cancelled() {
+                break Err(Box::new(AnalysisFailure {
+                    phase: "cancelled",
+                    module_uri: PklString::default(),
+                    site: None,
+                    cause: pkl_runtime::modules::analyze::FailureCause::Unsupported(
+                        "Evaluation was cancelled.".into(),
+                    ),
+                    traversal_order_qualified: true,
+                }));
+            }
             match analysis.poll() {
                 AnalysisPoll::Ready(res) => break res,
                 AnalysisPoll::Closed => {
@@ -1917,6 +2176,28 @@ impl NativeHost {
                 }
                 AnalysisPoll::Request(request) => {
                     let completion = self.handle_module_request(&request);
+                    if watchdog.triggered() {
+                        break Err(Box::new(AnalysisFailure {
+                            phase: "timeout",
+                            module_uri: PklString::default(),
+                            site: None,
+                            cause: pkl_runtime::modules::analyze::FailureCause::Unsupported(
+                                format_timeout_message(self.timeout_ms.unwrap_or(0)).into(),
+                            ),
+                            traversal_order_qualified: true,
+                        }));
+                    }
+                    if self.cancel_flag.is_cancelled() {
+                        break Err(Box::new(AnalysisFailure {
+                            phase: "cancelled",
+                            module_uri: PklString::default(),
+                            site: None,
+                            cause: pkl_runtime::modules::analyze::FailureCause::Unsupported(
+                                "Evaluation was cancelled.".into(),
+                            ),
+                            traversal_order_qualified: true,
+                        }));
+                    }
                     if let Err(msg) = analysis.complete(request.id, completion) {
                         break Err(Box::new(AnalysisFailure {
                             phase: "host",
@@ -1931,6 +2212,7 @@ impl NativeHost {
                 }
             }
         };
+        let _ = watchdog.stop();
         analysis.close();
         result
     }
@@ -2134,23 +2416,123 @@ impl NativeHost {
         mgr.get_resolved_dependency(&asset_uri.package).cloned()
     }
 
+    fn check_local_project_file_uri(
+        &self,
+        file_uri: &PklString,
+        check: LocalProjectAssetCheck,
+    ) -> Result<(), ModuleHostError> {
+        match check {
+            LocalProjectAssetCheck::Module => self.check_resolve_module(file_uri),
+            LocalProjectAssetCheck::ResourceRead => {
+                self.check_read_resource(file_uri).map_err(|err| match err {
+                    ReadFailure::SecurityManagerException { message } => {
+                        ModuleHostError::SecurityManagerException { message }
+                    }
+                    ReadFailure::Io(io) => ModuleHostError::Io(io),
+                    ReadFailure::UriSyntax { reason } => ModuleHostError::UriSyntax { reason },
+                    ReadFailure::HttpClientException { message } => {
+                        ModuleHostError::HttpClientException { message }
+                    }
+                    ReadFailure::ExternalReaderProcess { message } => {
+                        ModuleHostError::ExternalReaderProcess { message }
+                    }
+                    ReadFailure::EvalError { message, hint } => {
+                        ModuleHostError::EvalError { message, hint }
+                    }
+                })
+            }
+            LocalProjectAssetCheck::ResourceGlob => self.check_resolve_resource_for_glob(file_uri),
+        }
+    }
+
+    fn resolve_confined_local_project_asset(
+        &self,
+        mgr: &ProjectDependenciesManager,
+        local_rel_path: &str,
+        asset_path: &str,
+        uri: &PklString,
+        check: LocalProjectAssetCheck,
+    ) -> Result<PathBuf, ModuleHostError> {
+        let is_resource = !matches!(check, LocalProjectAssetCheck::Module);
+        let sub = pkl_runtime::packages::resolver::validate_local_subpath(asset_path)?;
+        let dep_root = mgr.resolve_local_root_path(local_rel_path);
+        let canonical_root = crate::fs::try_resolve_canonical_or_ancestor(&dep_root).map_err(|()| {
+            ModuleHostError::SecurityManagerException {
+                message: Some(
+                    format!(
+                        "Refusing to access local project package asset `{uri}`: unable to resolve package root safely."
+                    )
+                    .into(),
+                ),
+            }
+        })?;
+        let candidate = dep_root.join(&sub);
+        let resolved = crate::fs::try_resolve_canonical_or_ancestor(&candidate).map_err(|()| {
+            ModuleHostError::SecurityManagerException {
+                message: Some(
+                    format!(
+                        "Refusing to access local project package asset `{uri}`: unable to resolve asset path safely."
+                    )
+                    .into(),
+                ),
+            }
+        })?;
+        if !pkl_runtime::host::security::is_path_under_root(
+            &resolved.to_string_lossy(),
+            &canonical_root.to_string_lossy(),
+        ) {
+            return Err(ModuleHostError::SecurityManagerException {
+                message: Some(
+                    format!(
+                        "Refusing to access local project package asset `{uri}` outside package root `{}`.",
+                        canonical_root.display()
+                    )
+                    .into(),
+                ),
+            });
+        }
+        // Mirror Apple Pkl 0.32.0 `ModuleKeys.ProjectPackage` / `ResourceReaders.ProjectPackageResource`:
+        // local project dependencies delegate to `file:` and must pass full security policy
+        // (`allowedModules`/`allowedResources`, `rootDir`, and `CustomSecurityChecker`).
+        let resolved_uri = path_to_file_uri(&resolved);
+        if candidate.is_absolute() {
+            let candidate_uri = path_to_file_uri(&candidate);
+            self.check_local_project_file_uri(&candidate_uri, check)?;
+            if resolved_uri != candidate_uri {
+                self.check_local_project_file_uri(&resolved_uri, check)?;
+            }
+        } else {
+            self.check_local_project_file_uri(&resolved_uri, check)?;
+        }
+        if let Err(msg) = self.fs.policy().check_real_path_under_root_dir(
+            uri,
+            &resolved.to_string_lossy(),
+            is_resource,
+        ) {
+            return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
+        }
+        Ok(resolved)
+    }
+
     fn resolve_package_module_key(
         &self,
         uri: &PklString,
     ) -> Result<ResolvedModule, ModuleHostError> {
         self.check_resolve_module(uri)?;
-        let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
 
-        if raw_uri.starts_with("projectpackage:") {
+        if has_scheme_ignore_ascii_case(uri, "projectpackage:") {
             let entry = self.resolve_projectpackage_entry(&asset_uri)?;
             match entry {
                 ProjectDepEntry::Local { path, .. } => {
                     let mgr = self.project_deps.as_ref().expect("project_deps checked");
-                    let file_path = mgr.resolve_local_asset_path(
+                    let file_path = self.resolve_confined_local_project_asset(
+                        mgr,
                         &path,
                         asset_uri.asset_path.as_str().unwrap_or(""),
-                    );
+                        uri,
+                        LocalProjectAssetCheck::Module,
+                    )?;
                     let bytes = read_local_module_bytes(&file_path)?;
                     // Mirror Java `LocalDependency.resolveAssetUri` (`Dependency.java:64`):
                     // `projectBaseUri.resolve(relativeUri)` produces single-slash `file:/abs/path`.
@@ -2194,21 +2576,25 @@ impl NativeHost {
     fn read_package_resource(&self, resolved_uri: &PklString) -> Result<ReadResult, ReadFailure> {
         self.check_read_resource(resolved_uri)?;
 
-        let raw_uri = resolved_uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(resolved_uri.clone())
             .map_err(|err| module_err_to_read_failure(map_package_uri_error(err)))?;
 
-        let expected_sha = if raw_uri.starts_with("projectpackage:") {
+        let expected_sha = if has_scheme_ignore_ascii_case(resolved_uri, "projectpackage:") {
             let entry = self
                 .resolve_projectpackage_entry(&asset_uri)
                 .map_err(module_err_to_read_failure)?;
             match entry {
                 ProjectDepEntry::Local { path, .. } => {
                     let mgr = self.project_deps.as_ref().expect("project_deps checked");
-                    let file_path = mgr.resolve_local_asset_path(
-                        &path,
-                        asset_uri.asset_path.as_str().unwrap_or(""),
-                    );
+                    let file_path = self
+                        .resolve_confined_local_project_asset(
+                            mgr,
+                            &path,
+                            asset_uri.asset_path.as_str().unwrap_or(""),
+                            resolved_uri,
+                            LocalProjectAssetCheck::ResourceRead,
+                        )
+                        .map_err(module_err_to_read_failure)?;
                     return read_local_project_resource(&file_path, resolved_uri);
                 }
                 ProjectDepEntry::Remote { sha256, .. } => Some(sha256),
@@ -2258,16 +2644,23 @@ impl NativeHost {
         } else {
             self.check_resolve_module(uri)?;
         }
-        let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
-        let expected_sha = if raw_uri.starts_with("projectpackage:") {
+        let expected_sha = if has_scheme_ignore_ascii_case(uri, "projectpackage:") {
             match self.resolve_projectpackage_entry(&asset_uri)? {
                 ProjectDepEntry::Local { path, .. } => {
                     let mgr = self.project_deps.as_ref().expect("project_deps checked");
-                    let file_path = mgr.resolve_local_asset_path(
+                    let check = if is_resource {
+                        LocalProjectAssetCheck::ResourceGlob
+                    } else {
+                        LocalProjectAssetCheck::Module
+                    };
+                    let file_path = self.resolve_confined_local_project_asset(
+                        mgr,
                         &path,
                         asset_uri.asset_path.as_str().unwrap_or(""),
-                    );
+                        uri,
+                        check,
+                    )?;
                     return Ok(file_path.exists());
                 }
                 ProjectDepEntry::Remote { sha256, .. } => Some(sha256),
@@ -2289,16 +2682,23 @@ impl NativeHost {
         } else {
             self.check_resolve_module(uri)?;
         }
-        let raw_uri = uri.as_str().unwrap_or("");
         let asset_uri = PackageAssetUri::parse(uri.clone()).map_err(map_package_uri_error)?;
-        let expected_sha = if raw_uri.starts_with("projectpackage:") {
+        let expected_sha = if has_scheme_ignore_ascii_case(uri, "projectpackage:") {
             match self.resolve_projectpackage_entry(&asset_uri)? {
                 ProjectDepEntry::Local { path, .. } => {
                     let mgr = self.project_deps.as_ref().expect("project_deps checked");
-                    let dir_path = mgr.resolve_local_asset_path(
+                    let check = if is_resource {
+                        LocalProjectAssetCheck::ResourceGlob
+                    } else {
+                        LocalProjectAssetCheck::Module
+                    };
+                    let dir_path = self.resolve_confined_local_project_asset(
+                        mgr,
                         &path,
                         asset_uri.asset_path.as_str().unwrap_or(""),
-                    );
+                        uri,
+                        check,
+                    )?;
                     return list_local_dir_elements(&dir_path);
                 }
                 ProjectDepEntry::Remote { sha256, .. } => Some(sha256),
@@ -2812,8 +3212,52 @@ impl NativeHost {
             });
         }
 
+        let mut verified_file_path: Option<PathBuf> = None;
         if self.custom_security.is_some() {
             self.check_read_resource(&resolved_uri)?;
+            if scheme.eq_ignore_ascii_case("file") {
+                let raw_path = file_uri_to_path(&resolved_uri)
+                    .map_err(|msg| ReadFailure::SecurityManagerException { message: Some(msg) })?;
+                let canon_path =
+                    crate::fs::try_resolve_canonical_or_ancestor(&raw_path).map_err(|()| {
+                        ReadFailure::SecurityManagerException {
+                            message: Some(pkl_runtime::host::security::root_dir_denied_message(
+                                &resolved_uri,
+                                true,
+                            )),
+                        }
+                    })?;
+                let canon_uri = path_to_file_uri(&canon_path);
+                if canon_uri != resolved_uri {
+                    self.check_read_resource(&canon_uri)?;
+                }
+                verified_file_path = Some(canon_path);
+            } else if scheme.eq_ignore_ascii_case("jar")
+                && let Some(raw_str) = resolved_uri.as_str()
+                && let Some(rest) = raw_str.get(4..)
+                && let Some((archive_uri_str, entry)) = rest.split_once("!/")
+            {
+                let archive_uri = PklString::from(archive_uri_str);
+                if has_scheme_ignore_ascii_case(&archive_uri, "file:") {
+                    let raw_path = file_uri_to_path(&archive_uri).map_err(|msg| {
+                        ReadFailure::SecurityManagerException { message: Some(msg) }
+                    })?;
+                    let canon_path = crate::fs::try_resolve_canonical_or_ancestor(&raw_path)
+                        .map_err(|()| ReadFailure::SecurityManagerException {
+                            message: Some(pkl_runtime::host::security::root_dir_denied_message(
+                                &resolved_uri,
+                                true,
+                            )),
+                        })?;
+                    let canon_jar = PklString::from(format!(
+                        "jar:{}!/{entry}",
+                        path_to_file_uri(&canon_path).to_java_utf8()
+                    ));
+                    if canon_jar != resolved_uri {
+                        self.check_read_resource(&canon_jar)?;
+                    }
+                }
+            }
         }
 
         // 4. Scalar `env:` / `prop:` + SecurityPolicy check BEFORE `noResourceReaderRegistered` (`ResourceManager.java:105-118`).
@@ -2828,7 +3272,13 @@ impl NativeHost {
 
         // 5. `file:`
         if scheme.eq_ignore_ascii_case("file") {
-            return Ok(match self.fs.read_file_resource(&resolved_uri)? {
+            let bytes_opt = if let Some(ref verified) = verified_file_path {
+                self.fs
+                    .read_file_resource_from_verified_path(verified, &resolved_uri)?
+            } else {
+                self.fs.read_file_resource(&resolved_uri)?
+            };
+            return Ok(match bytes_opt {
                 Some(bytes) => ReadResult::Resource(Resource {
                     uri: resolved_uri,
                     bytes: bytes.into(),
@@ -2886,16 +3336,14 @@ impl NativeHost {
 
         // 2. `@dep/...`, `package:`, `projectpackage:` import URI resolution (session-owned, zero thread_local!).
         if let ModuleRequestKind::ResolveImportUri { key, authored_uri } = &request.kind
-            && (authored_uri.starts_with("@")
-                || key.uri.starts_with("package:")
-                || key.uri.starts_with("projectpackage:"))
+            && (authored_uri.starts_with("@") || has_package_scheme(&key.uri))
         {
             let uri_str = key.uri.as_str().unwrap_or("");
             let is_hierarchical = key.kind == ModuleKeyKind::StandardFile
                 || key.kind == ModuleKeyKind::StandardHttp
                 || uri_str.contains("://")
-                || uri_str.starts_with("file:/")
-                || uri_str.starts_with("modulepath:");
+                || has_scheme_ignore_ascii_case(&key.uri, "file:/")
+                || has_scheme_ignore_ascii_case(&key.uri, "modulepath:");
             return ModuleCompletion::ImportUri(self.resolve_package_or_dep_import_uri(
                 &key.uri,
                 is_hierarchical,
@@ -2905,10 +3353,7 @@ impl NativeHost {
 
         // 3. Check `jar:file:` -> `modulepath:` roundtrip on SelectKey BEFORE standard_keys.
         if let ModuleRequestKind::SelectKey { id, uri, .. } = &request.kind
-            && uri
-                .to_java_utf8()
-                .to_ascii_lowercase()
-                .starts_with("jar:file:")
+            && has_scheme_ignore_ascii_case(uri, "jar:file:")
         {
             match self.modulepath.modulepath_uri_for_jar(uri) {
                 Ok(Some(mp_uri)) => {
@@ -2939,16 +3384,14 @@ impl NativeHost {
         //    BEFORE `standard_key_completion_with_policy` so we use our session-owned
         //    `PackageResolver` + `ProjectDependenciesManager` (zero `thread_local!`).
         match &request.kind {
-            ModuleRequestKind::Resolve { key, .. }
-                if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") =>
-            {
+            ModuleRequestKind::Resolve { key, .. } if has_package_scheme(&key.uri) => {
                 return ModuleCompletion::Resolved(self.resolve_package_module_key(&key.uri));
             }
             ModuleRequestKind::ResolveKey {
                 key,
                 resolved_key_id,
                 ..
-            } if key.uri.starts_with("package:") || key.uri.starts_with("projectpackage:") => {
+            } if has_package_scheme(&key.uri) => {
                 return ModuleCompletion::KeyResolved(
                     self.resolve_package_module_key(&key.uri)
                         .map(|module| ResolvedModuleKey {
@@ -2960,17 +3403,15 @@ impl NativeHost {
                 );
             }
             ModuleRequestKind::LoadSource { resolved, .. }
-                if resolved.original_uri.starts_with("package:")
-                    || resolved.original_uri.starts_with("projectpackage:")
-                    || resolved.resolved_uri.starts_with("package:")
-                    || resolved.resolved_uri.starts_with("projectpackage:") =>
+                if has_package_scheme(&resolved.original_uri)
+                    || has_package_scheme(&resolved.resolved_uri) =>
             {
                 return ModuleCompletion::Source(self.load_module_source(resolved));
             }
             ModuleRequestKind::Capabilities { key, module }
                 if {
                     let u = key.as_ref().map(|k| &k.uri).unwrap_or(&module.original_uri);
-                    u.starts_with("package:") || u.starts_with("projectpackage:")
+                    has_package_scheme(u)
                 } =>
             {
                 // Mirrors `ModuleKeys.AbstractPackage` (`ModuleKeys.java:598-610`):
@@ -2982,8 +3423,7 @@ impl NativeHost {
                 }));
             }
             ModuleRequestKind::HasElement { element_uri, .. }
-                if element_uri.starts_with("package:")
-                    || element_uri.starts_with("projectpackage:") =>
+                if has_package_scheme(element_uri) =>
             {
                 return ModuleCompletion::HasElement(self.package_has_element(element_uri, false));
             }
@@ -2991,13 +3431,27 @@ impl NativeHost {
         }
 
         // 6. Synthetic inline/query modules (`ModuleKeys.Synthetic.resolve`, `ModuleKeys.java:250-254`)
+        // and standard-library modules (`ModuleKeys.StandardLibrary.resolve`, `ModuleKeys.java:293-297`)
         // must pass `SecurityManager.checkResolveModule(uri)` before `default_completion` resolves them.
         match &request.kind {
-            ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
-                if key.kind == ModuleKeyKind::Synthetic =>
+            ModuleRequestKind::Resolve { key, .. }
+                if matches!(
+                    key.kind,
+                    ModuleKeyKind::Synthetic | ModuleKeyKind::StandardLibrary
+                ) =>
             {
                 if let Err(err) = self.check_resolve_module(&key.uri) {
                     return ModuleCompletion::Resolved(Err(err));
+                }
+            }
+            ModuleRequestKind::ResolveKey { key, .. }
+                if matches!(
+                    key.kind,
+                    ModuleKeyKind::Synthetic | ModuleKeyKind::StandardLibrary
+                ) =>
+            {
+                if let Err(err) = self.check_resolve_module(&key.uri) {
+                    return ModuleCompletion::KeyResolved(Err(err));
                 }
             }
             _ => {}
@@ -3040,19 +3494,45 @@ impl NativeHost {
                 module,
                 element_uri,
             } => {
-                if self.custom_security.is_some()
-                    && let Err(err) = self.check_resolve_module(element_uri)
-                {
-                    return ModuleCompletion::HasElement(Err(err));
+                if self.custom_security.is_some() {
+                    if let Err(err) = self.check_resolve_module(element_uri) {
+                        return ModuleCompletion::HasElement(Err(err));
+                    }
+                    if has_scheme_ignore_ascii_case(element_uri, "file:")
+                        && let Ok(raw_path) = file_uri_to_path(element_uri)
+                    {
+                        let canon_path =
+                            match crate::fs::try_resolve_canonical_or_ancestor(&raw_path) {
+                                Ok(p) => p,
+                                Err(()) => {
+                                    return ModuleCompletion::HasElement(Err(
+                                    ModuleHostError::SecurityManagerException {
+                                        message: Some(
+                                            pkl_runtime::host::security::root_dir_denied_message(
+                                                element_uri,
+                                                false,
+                                            ),
+                                        ),
+                                    },
+                                ));
+                                }
+                            };
+                        let canon_uri = path_to_file_uri(&canon_path);
+                        if canon_uri != *element_uri
+                            && let Err(err) = self.check_resolve_module(&canon_uri)
+                        {
+                            return ModuleCompletion::HasElement(Err(err));
+                        }
+                    }
                 }
                 let is_modulepath = key
                     .as_ref()
                     .is_some_and(|k| k.handle == "builtin:modulepath")
-                    || module.original_uri.starts_with("modulepath:")
-                    || element_uri.starts_with("modulepath:");
+                    || has_scheme_ignore_ascii_case(&module.original_uri, "modulepath:")
+                    || has_scheme_ignore_ascii_case(element_uri, "modulepath:");
                 let result = if is_modulepath {
                     self.modulepath.has_element(element_uri, &self.fs, false)
-                } else if element_uri.starts_with("file:") {
+                } else if has_scheme_ignore_ascii_case(element_uri, "file:") {
                     self.fs.has_element(element_uri, false)
                 } else {
                     Ok(false)
@@ -3083,7 +3563,9 @@ impl NativeHost {
 
     fn resolve_module_key(&self, key: &ModuleKey) -> Result<ResolvedModule, ModuleHostError> {
         // `modulepath:`
-        if key.handle == "builtin:modulepath" || key.uri.starts_with("modulepath:") {
+        if key.handle == "builtin:modulepath"
+            || has_scheme_ignore_ascii_case(&key.uri, "modulepath:")
+        {
             if self.custom_security.is_some() {
                 self.check_resolve_module(&key.uri)?;
             }
@@ -3093,7 +3575,9 @@ impl NativeHost {
         }
 
         // `file:`
-        if key.kind == ModuleKeyKind::StandardFile || key.uri.starts_with("file:") {
+        if key.kind == ModuleKeyKind::StandardFile
+            || has_scheme_ignore_ascii_case(&key.uri, "file:")
+        {
             if self.custom_security.is_some() {
                 self.check_resolve_module(&key.uri)?;
             }
@@ -3116,8 +3600,8 @@ impl NativeHost {
 
         // `http:` / `https:`
         if key.kind == ModuleKeyKind::StandardHttp
-            || key.uri.starts_with("http:")
-            || key.uri.starts_with("https:")
+            || has_scheme_ignore_ascii_case(&key.uri, "http:")
+            || has_scheme_ignore_ascii_case(&key.uri, "https:")
         {
             let raw = key.uri.to_java_utf8();
             let bytes = self.http.fetch_module(&raw, |hop_uri| {
@@ -3140,16 +3624,14 @@ impl NativeHost {
         }
 
         // `jar:file:` (`ModuleKeys.GenericUrl`)
-        if key
-            .uri
-            .to_java_utf8()
-            .to_ascii_lowercase()
-            .starts_with("jar:file:")
-        {
+        if has_scheme_ignore_ascii_case(&key.uri, "jar:file:") {
             if self.custom_security.is_some() {
                 self.check_resolve_module(&key.uri)?;
             }
             let (resolved, bytes) = resolve_generic_jar_module(&key.uri, &self.fs)?;
+            if self.custom_security.is_some() && resolved.resolved_uri != key.uri {
+                self.check_resolve_module(&resolved.resolved_uri)?;
+            }
             self.stage_source(&resolved.resolved_uri, bytes);
             return Ok(resolved);
         }
@@ -3169,7 +3651,7 @@ impl NativeHost {
         &self,
         resolved: &ResolvedModule,
     ) -> Result<ModuleSource, ModuleHostError> {
-        if resolved.resolved_uri.starts_with("file:") {
+        if has_scheme_ignore_ascii_case(&resolved.resolved_uri, "file:") {
             let staged_path = {
                 let mut paths = self
                     .resolved_file_paths
@@ -3296,6 +3778,29 @@ impl NativeHost {
         }
 
         // 3. Builtin configured `env:`, `prop:`, and non-package capability metadata.
+        // Enforce CustomSecurityChecker BEFORE configured `env:`/`prop:` globbing so
+        // `self.fs.policy()` (allow-all when custom security is active) cannot bypass it.
+        if self.custom_security.is_some() {
+            match &request.kind {
+                GlobRequestKind::HasElement { uri, .. }
+                    if has_scheme_ignore_ascii_case(uri, "env:")
+                        || has_scheme_ignore_ascii_case(uri, "prop:") =>
+                {
+                    if let Err(err) = self.check_resolve_resource_for_glob(uri) {
+                        return GlobCompletion::HasElement(Err(err.into()));
+                    }
+                }
+                GlobRequestKind::ListElements { uri, .. }
+                    if has_scheme_ignore_ascii_case(uri, "env:")
+                        || has_scheme_ignore_ascii_case(uri, "prop:") =>
+                {
+                    if let Err(err) = self.check_resolve_resource_for_glob(uri) {
+                        return GlobCompletion::Elements(Err(err.into()));
+                    }
+                }
+                _ => {}
+            }
+        }
         if let Some(completion) = configured_completion_with_policy(
             request,
             &self.properties,
@@ -3311,9 +3816,9 @@ impl NativeHost {
                 reader: GlobReader::Module(key),
             } => {
                 let globbable = key.kind == ModuleKeyKind::StandardFile
-                    || key.uri.starts_with("file:")
-                    || key.uri.starts_with("package:")
-                    || key.uri.starts_with("projectpackage:");
+                    || has_scheme_ignore_ascii_case(&key.uri, "file:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "package:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "projectpackage:");
                 GlobCompletion::Globbable(Ok(globbable))
             }
             GlobRequestKind::IsHierarchical {
@@ -3321,23 +3826,64 @@ impl NativeHost {
             } => {
                 let hierarchical = key.kind == ModuleKeyKind::StandardFile
                     || key.handle == "builtin:modulepath"
-                    || key.uri.starts_with("file:")
-                    || key.uri.starts_with("modulepath:")
-                    || key.uri.starts_with("http:")
-                    || key.uri.starts_with("https:")
-                    || key.uri.starts_with("package:")
-                    || key.uri.starts_with("projectpackage:");
+                    || has_scheme_ignore_ascii_case(&key.uri, "file:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "modulepath:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "http:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "https:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "package:")
+                    || has_scheme_ignore_ascii_case(&key.uri, "projectpackage:");
                 GlobCompletion::Hierarchical(Ok(hierarchical))
             }
             GlobRequestKind::HasElement { uri, .. } => {
-                if self.custom_security.is_some()
-                    && let Err(err) = self.check_resolve_resource_for_glob(uri)
-                {
-                    return GlobCompletion::HasElement(Err(err.into()));
+                let mut verified_file_path: Option<PathBuf> = None;
+                if self.custom_security.is_some() {
+                    if let Err(err) = self.check_resolve_resource_for_glob(uri) {
+                        return GlobCompletion::HasElement(Err(err.into()));
+                    }
+                    if has_scheme_ignore_ascii_case(uri, "file:") {
+                        let raw_path = match file_uri_to_path(uri) {
+                            Ok(p) => p,
+                            Err(msg) => {
+                                return GlobCompletion::HasElement(Err(
+                                    ModuleHostError::SecurityManagerException {
+                                        message: Some(msg),
+                                    }
+                                    .into(),
+                                ));
+                            }
+                        };
+                        let canon_path =
+                            match crate::fs::try_resolve_canonical_or_ancestor(&raw_path) {
+                                Ok(p) => p,
+                                Err(()) => {
+                                    return GlobCompletion::HasElement(Err(
+                                    ModuleHostError::SecurityManagerException {
+                                        message: Some(
+                                            pkl_runtime::host::security::root_dir_denied_message(
+                                                uri, true,
+                                            ),
+                                        ),
+                                    }
+                                    .into(),
+                                ));
+                                }
+                            };
+                        let canon_uri = path_to_file_uri(&canon_path);
+                        if canon_uri != *uri
+                            && let Err(err) = self.check_resolve_resource_for_glob(&canon_uri)
+                        {
+                            return GlobCompletion::HasElement(Err(err.into()));
+                        }
+                        verified_file_path = Some(canon_path);
+                    }
                 }
-                let result = if uri.starts_with("file:") {
-                    self.fs.has_element(uri, true).map_err(Into::into)
-                } else if uri.starts_with("modulepath:") {
+                let result = if has_scheme_ignore_ascii_case(uri, "file:") {
+                    if let Some(ref verified) = verified_file_path {
+                        Ok(verified.exists())
+                    } else {
+                        self.fs.has_element(uri, true).map_err(Into::into)
+                    }
+                } else if has_scheme_ignore_ascii_case(uri, "modulepath:") {
                     self.modulepath
                         .has_element(uri, &self.fs, true)
                         .map_err(Into::into)
@@ -3350,18 +3896,64 @@ impl NativeHost {
             }
             GlobRequestKind::ListElements { reader, uri } => {
                 let is_resource = matches!(reader, GlobReader::Resource(_));
+                let mut verified_file_path: Option<PathBuf> = None;
                 if self.custom_security.is_some() {
-                    let check = if is_resource {
-                        self.check_resolve_resource_for_glob(uri)
-                    } else {
-                        self.check_resolve_module(uri)
+                    let check = |target: &PklString| {
+                        if is_resource {
+                            self.check_resolve_resource_for_glob(target)
+                        } else {
+                            self.check_resolve_module(target)
+                        }
                     };
-                    if let Err(err) = check {
+                    if let Err(err) = check(uri) {
                         return GlobCompletion::Elements(Err(err.into()));
                     }
+                    if has_scheme_ignore_ascii_case(uri, "file:") {
+                        let raw_path = match file_uri_to_path(uri) {
+                            Ok(p) => p,
+                            Err(msg) => {
+                                return GlobCompletion::Elements(Err(
+                                    ModuleHostError::SecurityManagerException {
+                                        message: Some(msg),
+                                    }
+                                    .into(),
+                                ));
+                            }
+                        };
+                        let canon_path =
+                            match crate::fs::try_resolve_canonical_or_ancestor(&raw_path) {
+                                Ok(p) => p,
+                                Err(()) => {
+                                    return GlobCompletion::Elements(Err(
+                                    ModuleHostError::SecurityManagerException {
+                                        message: Some(
+                                            pkl_runtime::host::security::root_dir_denied_message(
+                                                uri,
+                                                is_resource,
+                                            ),
+                                        ),
+                                    }
+                                    .into(),
+                                ));
+                                }
+                            };
+                        let canon_uri = path_to_file_uri(&canon_path);
+                        if canon_uri != *uri
+                            && let Err(err) = check(&canon_uri)
+                        {
+                            return GlobCompletion::Elements(Err(err.into()));
+                        }
+                        verified_file_path = Some(canon_path);
+                    }
                 }
-                let result = if uri.starts_with("file:") {
-                    self.fs.list_elements(uri, is_resource).map_err(Into::into)
+                let result = if has_scheme_ignore_ascii_case(uri, "file:") {
+                    if let Some(ref verified) = verified_file_path {
+                        self.fs
+                            .list_elements_from_verified_path(verified, uri, is_resource)
+                            .map_err(Into::into)
+                    } else {
+                        self.fs.list_elements(uri, is_resource).map_err(Into::into)
+                    }
                 } else {
                     Err(GlobHostError::Failure(ModuleHostError::Unsupported(
                         format!("Unsupported glob listElements for `{uri}`.").into(),
@@ -3460,36 +4052,82 @@ fn module_err_to_read_failure(err: ModuleHostError) -> ReadFailure {
     }
 }
 
+fn has_scheme_ignore_ascii_case(uri: &PklString, prefix: &str) -> bool {
+    uri.as_str()
+        .and_then(|s| s.get(..prefix.len()))
+        .is_some_and(|head| head.eq_ignore_ascii_case(prefix))
+}
+
+fn has_package_scheme(uri: &PklString) -> bool {
+    has_scheme_ignore_ascii_case(uri, "package:")
+        || has_scheme_ignore_ascii_case(uri, "projectpackage:")
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum LocalProjectAssetCheck {
+    Module,
+    ResourceRead,
+    ResourceGlob,
+}
+
 fn read_local_module_bytes(path: &Path) -> Result<Vec<u8>, ModuleHostError> {
-    match std::fs::read(path) {
-        Ok(bytes) => Ok(bytes),
-        Err(err) if err.kind() == std::io::ErrorKind::NotFound => Err(ModuleHostError::NotFound),
-        Err(err)
-            if err.kind() == std::io::ErrorKind::IsADirectory
-                || path.is_dir()
-                || err.to_string().starts_with("Is a directory") =>
-        {
-            Err(ModuleHostError::Io("Is a directory".into()))
+    let meta = match std::fs::symlink_metadata(path) {
+        Ok(m) => m,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
+            return Err(ModuleHostError::NotFound);
         }
-        Err(err) => Err(ModuleHostError::Io(err.to_string().into())),
+        Err(err) => return Err(ModuleHostError::Io(err.to_string().into())),
+    };
+    if crate::fs::is_symlink_or_junction(path, &meta) {
+        return Err(ModuleHostError::SecurityManagerException {
+            message: Some("Refusing to follow symlink during local project package read.".into()),
+        });
     }
+    if meta.is_dir() {
+        return Err(ModuleHostError::Io("Is a directory".into()));
+    }
+    let mut file = open_file_nofollow(path).map_err(|err| {
+        if err.kind() == std::io::ErrorKind::NotFound {
+            ModuleHostError::NotFound
+        } else {
+            ModuleHostError::Io(err.to_string().into())
+        }
+    })?;
+    crate::fs::read_file_bounded(&mut file)
+        .map_err(|err| ModuleHostError::Io(err.to_string().into()))
 }
 
 fn read_local_project_resource(
     path: &Path,
     fallback_uri: &PklString,
 ) -> Result<ReadResult, ReadFailure> {
+    let meta = match std::fs::symlink_metadata(path) {
+        Ok(m) => m,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(ReadResult::Missing),
+        Err(err) => return Err(ReadFailure::Io(err.to_string().into())),
+    };
+    if crate::fs::is_symlink_or_junction(path, &meta) {
+        return Err(ReadFailure::SecurityManagerException {
+            message: Some(
+                "Refusing to follow symlink during local project package resource read.".into(),
+            ),
+        });
+    }
     let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
     let resource_uri = if canonical.is_absolute() {
         path_to_file_uri(&canonical)
     } else {
         fallback_uri.clone()
     };
-    if path.is_dir() {
+    if meta.is_dir() {
         let entries = std::fs::read_dir(path).map_err(|e| ReadFailure::Io(e.to_string().into()))?;
         let mut names = Vec::new();
         for entry in entries.flatten() {
-            if !entry.path().is_symlink() {
+            let ep = entry.path();
+            let is_link = std::fs::symlink_metadata(&ep)
+                .map(|m| crate::fs::is_symlink_or_junction(&ep, &m))
+                .unwrap_or(true);
+            if !is_link {
                 names.push(entry.file_name().to_string_lossy().into_owned());
             }
         }
@@ -3508,17 +4146,33 @@ fn read_local_project_resource(
             bytes: out.into_bytes().into(),
         }));
     }
-    match std::fs::read(path) {
-        Ok(bytes) => Ok(ReadResult::Resource(Resource {
-            uri: resource_uri,
-            bytes: bytes.into(),
-        })),
-        Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(ReadResult::Missing),
-        Err(err) => Err(ReadFailure::Io(err.to_string().into())),
-    }
+    let mut file = match open_file_nofollow(path) {
+        Ok(f) => f,
+        Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(ReadResult::Missing),
+        Err(err) => return Err(ReadFailure::Io(err.to_string().into())),
+    };
+    let bytes = crate::fs::read_file_bounded(&mut file)
+        .map_err(|err| ReadFailure::Io(err.to_string().into()))?;
+    Ok(ReadResult::Resource(Resource {
+        uri: resource_uri,
+        bytes: bytes.into(),
+    }))
 }
 
 fn list_local_dir_elements(dir_path: &Path) -> Result<Vec<PathElement>, ModuleHostError> {
+    match std::fs::symlink_metadata(dir_path) {
+        Ok(m) if crate::fs::is_symlink_or_junction(dir_path, &m) => return Ok(Vec::new()),
+        Ok(_) => {}
+        Err(err)
+            if matches!(
+                err.kind(),
+                std::io::ErrorKind::NotFound | std::io::ErrorKind::NotADirectory
+            ) =>
+        {
+            return Ok(Vec::new());
+        }
+        Err(err) => return Err(ModuleHostError::Io(err.to_string().into())),
+    }
     let entries = match std::fs::read_dir(dir_path) {
         Ok(e) => e,
         Err(err)
@@ -3535,13 +4189,16 @@ fn list_local_dir_elements(dir_path: &Path) -> Result<Vec<PathElement>, ModuleHo
     for entry in entries {
         let entry = entry.map_err(|err| ModuleHostError::Io(err.to_string().into()))?;
         let path = entry.path();
-        if path.is_symlink() {
+        let Ok(meta) = std::fs::symlink_metadata(&path) else {
+            continue;
+        };
+        if crate::fs::is_symlink_or_junction(&path, &meta) {
             continue;
         }
         let name = entry.file_name().to_string_lossy().into_owned();
         out.push(PathElement {
             name: name.into(),
-            is_directory: path.is_dir(),
+            is_directory: meta.is_dir(),
         });
     }
     Ok(out)

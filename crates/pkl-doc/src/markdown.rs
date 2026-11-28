@@ -3,7 +3,9 @@
 //! doc-link resolution semantics.
 
 use crate::html::escape_html_into;
-use crate::util::kotlin_trim_indent;
+use crate::util::{kotlin_trim_indent, sanitize_href_url};
+
+const MAX_MARKDOWN_DEPTH: usize = 128;
 
 /// Resolution returned by `MarkdownParserContext.getLinkReferenceDefinition(label)`.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -186,7 +188,7 @@ where
 {
     let norm = normalize_newlines(input);
     let lines = split_lines(&norm);
-    parse_block_lines(&lines, resolve_ref)
+    parse_block_lines(&lines, resolve_ref, 0)
 }
 
 fn count_leading_spaces(line: &str) -> (usize, usize) {
@@ -703,10 +705,19 @@ fn ends_html_block(line: &str, kind: u8) -> bool {
     }
 }
 
-fn parse_block_lines<F>(lines: &[&str], resolve_ref: &mut F) -> Vec<Block>
+fn parse_block_lines<F>(lines: &[&str], resolve_ref: &mut F, depth: usize) -> Vec<Block>
 where
     F: FnMut(&str) -> RefLinkResolution,
 {
+    if depth >= MAX_MARKDOWN_DEPTH {
+        let text = lines.join("\n");
+        let trimmed = text.trim();
+        return if trimmed.is_empty() {
+            Vec::new()
+        } else {
+            vec![Block::Paragraph(vec![Inline::Text(trimmed.to_string())])]
+        };
+    }
     let mut blocks = Vec::new();
     let mut i = 0;
 
@@ -781,7 +792,7 @@ where
                     break;
                 }
             }
-            let inner_blocks = parse_block_lines(&q_lines, resolve_ref);
+            let inner_blocks = parse_block_lines(&q_lines, resolve_ref, depth + 1);
             blocks.push(Block::BlockQuote(inner_blocks));
             continue;
         }
@@ -795,7 +806,7 @@ where
 
         // 6. List (ordered or unordered)
         if let Some(first_marker) = parse_list_marker(line, false) {
-            let (list_block, next_i) = parse_list(lines, i, first_marker, resolve_ref);
+            let (list_block, next_i) = parse_list(lines, i, first_marker, resolve_ref, depth + 1);
             blocks.push(list_block);
             i = next_i;
             continue;
@@ -910,6 +921,7 @@ fn parse_list<F>(
     start_idx: usize,
     first_marker: ListMarker,
     resolve_ref: &mut F,
+    depth: usize,
 ) -> (Block, usize)
 where
     F: FnMut(&str) -> RefLinkResolution,
@@ -1035,7 +1047,7 @@ where
     let mut items = Vec::with_capacity(raw_items.len());
     for (item_lines, had_internal_blank) in raw_items {
         let refs: Vec<&str> = item_lines.iter().map(String::as_str).collect();
-        let parsed = parse_block_lines(&refs, resolve_ref);
+        let parsed = parse_block_lines(&refs, resolve_ref, depth);
         if had_internal_blank && parsed.len() >= 2 {
             loose = true;
         }
@@ -1087,10 +1099,25 @@ fn parse_inlines<F>(input: &str, resolve_ref: &mut F) -> Vec<Inline>
 where
     F: FnMut(&str) -> RefLinkResolution,
 {
+    parse_inlines_depth(input, resolve_ref, 0)
+}
+
+fn parse_inlines_depth<F>(input: &str, resolve_ref: &mut F, depth: usize) -> Vec<Inline>
+where
+    F: FnMut(&str) -> RefLinkResolution,
+{
+    if depth >= MAX_MARKDOWN_DEPTH {
+        return if input.is_empty() {
+            Vec::new()
+        } else {
+            vec![Inline::Text(input.to_string())]
+        };
+    }
     let mut parser = InlineParser {
         src: input,
         bytes: input.as_bytes(),
         pos: 0,
+        depth,
         resolve_ref,
     };
     parser.parse_until_eof()
@@ -1100,6 +1127,7 @@ struct InlineParser<'a, F> {
     src: &'a str,
     bytes: &'a [u8],
     pos: usize,
+    depth: usize,
     resolve_ref: &'a mut F,
 }
 
@@ -1329,7 +1357,7 @@ where
             && self.bytes[after_close] == b'('
             && let Some((dest, title, end_pos)) = parse_inline_link_dest(self.src, after_close)
         {
-            let children = parse_inlines(label_raw, self.resolve_ref);
+            let children = parse_inlines_depth(label_raw, self.resolve_ref, self.depth + 1);
             self.pos = end_pos;
             if is_image {
                 tokens.push(InlineToken::Node(Inline::Image {
@@ -1362,7 +1390,7 @@ where
             if is_valid_ref_label(effective_label) {
                 // Parse children first (matches commonmark-java link child processing),
                 // then resolve the reference label.
-                let children = parse_inlines(label_raw, self.resolve_ref);
+                let children = parse_inlines_depth(label_raw, self.resolve_ref, self.depth + 1);
                 let res = (self.resolve_ref)(effective_label);
                 self.pos = ref_close + 1;
                 if is_image {
@@ -1391,7 +1419,7 @@ where
             && is_valid_ref_label(label_raw)
             && !(after_close < self.bytes.len() && self.bytes[after_close] == b'[')
         {
-            let children = parse_inlines(label_raw, self.resolve_ref);
+            let children = parse_inlines_depth(label_raw, self.resolve_ref, self.depth + 1);
             let res = (self.resolve_ref)(label_raw);
             self.pos = after_close;
             tokens.push(InlineToken::Node(Inline::Link {
@@ -2122,7 +2150,7 @@ fn render_block(block: &Block, tight_list: bool, out: &mut String) {
             if !out.is_empty() && !out.ends_with('\n') {
                 out.push('\n');
             }
-            out.push_str(raw);
+            escape_html_into(out, raw);
             out.push('\n');
         }
     }
@@ -2169,11 +2197,12 @@ fn render_inline(inline: &Inline, out: &mut String) {
         } => {
             if let Some(meta) = pkldoc {
                 // Exact `MarkdownNodeRenderer.visit(Link)` (`Markdown.kt:120-128`)
+                let safe_dest = sanitize_href_url(destination);
                 let is_short = children.len() == 1
                     && matches!(&children[0], Inline::Text(t) if t == &meta.label);
                 if !is_short {
                     out.push_str("<a href=\"");
-                    escape_html_into(out, destination);
+                    escape_html_into(out, safe_dest);
                     out.push_str("\">");
                     render_inlines(children, out);
                     out.push_str("</a>");
@@ -2183,15 +2212,16 @@ fn render_inline(inline: &Inline, out: &mut String) {
                     out.push_str("</code>");
                 } else {
                     out.push_str("<a href=\"");
-                    escape_html_into(out, destination);
+                    escape_html_into(out, safe_dest);
                     out.push_str("\"><code>");
                     escape_html_into(out, &meta.label);
                     out.push_str("</code></a>");
                 }
                 return;
             }
+            let safe_dest = sanitize_href_url(destination);
             out.push_str("<a href=\"");
-            escape_html_into(out, destination);
+            escape_html_into(out, safe_dest);
             out.push('"');
             if let Some(t) = title {
                 out.push_str(" title=\"");
@@ -2207,8 +2237,9 @@ fn render_inline(inline: &Inline, out: &mut String) {
             title,
             alt,
         } => {
+            let safe_dest = sanitize_href_url(destination);
             out.push_str("<img src=\"");
-            escape_html_into(out, destination);
+            escape_html_into(out, safe_dest);
             out.push_str("\" alt=\"");
             let mut alt_plain = String::new();
             collect_alt_text(alt, &mut alt_plain);
@@ -2222,15 +2253,16 @@ fn render_inline(inline: &Inline, out: &mut String) {
             out.push_str(" />");
         }
         Inline::Autolink { destination, text } => {
+            let safe_dest = sanitize_href_url(destination);
             out.push_str("<a href=\"");
-            escape_html_into(out, destination);
+            escape_html_into(out, safe_dest);
             out.push_str("\">");
             escape_html_into(out, text);
             out.push_str("</a>");
         }
         Inline::HardBreak => out.push_str("<br />\n"),
         Inline::SoftBreak => out.push('\n'),
-        Inline::HtmlInline(raw) => out.push_str(raw),
+        Inline::HtmlInline(raw) => escape_html_into(out, raw),
     }
 }
 
@@ -2324,5 +2356,23 @@ age = 42
             render_inline_markdown_text("Spelling mistake.", dummy_ref),
             "Spelling mistake."
         );
+    }
+
+    #[test]
+    fn round4_escapes_raw_html_blocks_and_inline_html() {
+        let block_html = render_markdown_trimmed("<script>alert(1)</script>", dummy_ref).unwrap();
+        assert!(
+            !block_html.contains("<script>"),
+            "raw HTML block must be escaped, got: {block_html}"
+        );
+        assert!(block_html.contains("&lt;script&gt;"));
+
+        let inline_html =
+            render_inline_markdown_text("hello <img src=x onerror=alert(1)> world", dummy_ref);
+        assert!(
+            !inline_html.contains("<img"),
+            "raw inline HTML must be escaped, got: {inline_html}"
+        );
+        assert!(inline_html.contains("&lt;img"));
     }
 }

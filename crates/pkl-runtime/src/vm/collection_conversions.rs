@@ -600,6 +600,7 @@ impl Vm {
         self.stack.push(Value::Object(id));
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn convert_object(&mut self, operation: Operation) -> Result<(), RuntimeError> {
         let source = self.conversion_receiver()?;
         match operation {
@@ -721,6 +722,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn read_conversion_property(&mut self) -> Result<(), RuntimeError> {
         let force = self
             .frames

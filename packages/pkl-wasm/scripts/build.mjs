@@ -39,7 +39,11 @@ const WASM_ARTIFACT = join(
   'pkl_wasm.wasm',
 );
 const SKIP_CARGO = process.argv.includes('--skip-cargo');
-const NO_WASM_OPT = process.argv.includes('--no-wasm-opt');
+// Binaryen `wasm-opt -Os/-Oz` re-inlines outlined `wasm32` cold helpers, empirically
+// doubling V8 Liftoff/TurboFan peak RSS (+174 MiB) and regressing gzip-9 size (+84 KiB).
+// Keep `wasm-opt` strictly opt-in (`--wasm-opt`) so builds stay deterministic and lean.
+const USE_WASM_OPT =
+  process.argv.includes('--wasm-opt') && !process.argv.includes('--no-wasm-opt');
 
 function resolveExecutable(name, fallbacks = []) {
   if (name.includes('/') || name.includes('\\')) return name;
@@ -131,10 +135,10 @@ mkdirSync(WASM_OUT_DIR, { recursive: true });
 // 3. Run pinned wasm-bindgen targeting web ESM (works in both Chromium browser and Node)
 run(BINDGEN, ['--target', 'web', '--out-dir', WASM_OUT_DIR, WASM_ARTIFACT]);
 
-// 3b. Run optional Binaryen wasm-opt pass when installed for further size & JIT-cache reduction
+// 3b. Run optional Binaryen wasm-opt pass only when explicitly requested via `--wasm-opt`
 let wasmOptApplied = false;
 const wasmBgPath = join(WASM_OUT_DIR, 'pkl_wasm_bg.wasm');
-if (!NO_WASM_OPT && WASM_OPT && existsSync(wasmBgPath)) {
+if (USE_WASM_OPT && WASM_OPT && existsSync(wasmBgPath)) {
   run(WASM_OPT, [
     '-Os',
     '--enable-bulk-memory',

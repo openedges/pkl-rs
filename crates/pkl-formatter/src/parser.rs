@@ -44,10 +44,16 @@ enum ExpectError<'a> {
     MissingDelimiter(&'a str),
 }
 
+use std::collections::HashMap;
+
+const MAX_PARSE_DEPTH: usize = 128;
+
 pub(crate) struct GenericParser {
     source: Vec<u16>,
     tokens: Vec<FullToken>,
     cursor: usize,
+    depth: usize,
+    param_cache: HashMap<usize, bool>,
 }
 
 impl GenericParser {
@@ -71,47 +77,70 @@ impl GenericParser {
             source: lexer.into_source(),
             tokens,
             cursor: 0,
+            depth: 0,
+            param_cache: HashMap::new(),
         };
         let module = parser.parse_module()?;
         Ok((module, parser.source))
     }
 
+    fn enter_depth(&mut self) -> Result<(), FormatError> {
+        if self.depth >= MAX_PARSE_DEPTH {
+            return Err(self.parser_error(format!(
+                "Maximum syntax nesting depth ({MAX_PARSE_DEPTH}) exceeded."
+            )));
+        }
+        self.depth += 1;
+        Ok(())
+    }
+
+    fn leave_depth(&mut self) {
+        self.depth = self.depth.saturating_sub(1);
+    }
+
+    fn token_at(&self, index: usize) -> FullToken {
+        let idx = index.min(self.tokens.len().saturating_sub(1));
+        self.tokens[idx]
+    }
+
     fn current(&self) -> FullToken {
-        self.tokens[self.cursor]
+        self.token_at(self.cursor)
     }
 
     fn lookahead_token(&self) -> Token {
-        self.tokens[self.cursor].token
+        self.current().token
     }
 
     fn span_lookahead(&self) -> FullSpan {
-        self.tokens[self.cursor].span
+        self.current().span
     }
 
     fn next(&mut self) -> FullToken {
-        let tmp = self.tokens[self.cursor];
-        self.cursor += 1;
+        let tmp = self.current();
+        if self.cursor + 1 < self.tokens.len() {
+            self.cursor += 1;
+        }
         tmp
     }
 
     fn prev(&self) -> FullToken {
-        self.tokens[self.cursor - 1]
+        self.token_at(self.cursor.saturating_sub(1))
     }
 
     fn no_semicolon_inbetween(&self) -> bool {
-        self.tokens[self.cursor - 1].token != Token::Semicolon
+        self.cursor == 0 || self.prev().token != Token::Semicolon
     }
 
     fn backtrack_to(&mut self, point: usize) {
-        self.cursor = point;
+        self.cursor = point.min(self.tokens.len().saturating_sub(1));
     }
 
     fn lookahead(&self) -> Token {
         let mut i = self.cursor;
-        let mut tmp = self.tokens[i];
-        while tmp.token.is_affix() && tmp.token != Token::Eof {
+        let mut tmp = self.token_at(i);
+        while tmp.token.is_affix() && tmp.token != Token::Eof && i + 1 < self.tokens.len() {
             i += 1;
-            tmp = self.tokens[i];
+            tmp = self.token_at(i);
         }
         tmp.token
     }
@@ -119,13 +148,13 @@ impl GenericParser {
     fn full_lookahead(&self) -> LookaheadSearch {
         let mut i = self.cursor;
         let mut has_semicolon = false;
-        let mut tmp = self.tokens[i];
-        while tmp.token.is_affix() && tmp.token != Token::Eof {
+        let mut tmp = self.token_at(i);
+        while tmp.token.is_affix() && tmp.token != Token::Eof && i + 1 < self.tokens.len() {
             if tmp.token == Token::Semicolon {
                 has_semicolon = true;
             }
             i += 1;
-            tmp = self.tokens[i];
+            tmp = self.token_at(i);
         }
         LookaheadSearch {
             tk: tmp,
@@ -134,35 +163,35 @@ impl GenericParser {
     }
 
     fn ff_into(&mut self, children: &mut Vec<Node>) {
-        while self.tokens[self.cursor].token.is_affix() {
-            let tmp = self.tokens[self.cursor];
+        while self.current().token.is_affix() && self.cursor + 1 < self.tokens.len() {
+            let tmp = self.current();
             children.push(make_affix(tmp));
             self.cursor += 1;
         }
     }
 
     fn ff(&mut self) {
-        while self.tokens[self.cursor].token.is_affix() {
+        while self.current().token.is_affix() && self.cursor + 1 < self.tokens.len() {
             self.cursor += 1;
         }
     }
 
     fn is_module_decl(&self) -> bool {
         let mut c = self.cursor;
-        let mut ftk = self.tokens[c];
-        while ftk.token.is_affix() || ftk.token.is_modifier() {
+        let mut ftk = self.token_at(c);
+        while (ftk.token.is_affix() || ftk.token.is_modifier()) && c + 1 < self.tokens.len() {
             c += 1;
-            ftk = self.tokens[c];
+            ftk = self.token_at(c);
         }
         matches!(ftk.token, Token::Module | Token::Extends | Token::Amends)
     }
 
     fn is_import(&self) -> bool {
         let mut c = self.cursor;
-        let mut ftk = self.tokens[c];
-        while ftk.token.is_affix() {
+        let mut ftk = self.token_at(c);
+        while ftk.token.is_affix() && c + 1 < self.tokens.len() {
             c += 1;
-            ftk = self.tokens[c];
+            ftk = self.token_at(c);
         }
         matches!(ftk.token, Token::Import | Token::ImportStar)
     }
@@ -600,6 +629,13 @@ impl GenericParser {
     }
 
     fn parse_object_body(&mut self) -> Result<Node, FormatError> {
+        self.enter_depth()?;
+        let res = self.parse_object_body_inner();
+        self.leave_depth();
+        res
+    }
+
+    fn parse_object_body_inner(&mut self) -> Result<Node, FormatError> {
         let mut children = Vec::new();
         self.expect_into(
             Token::LBrace,
@@ -652,6 +688,9 @@ impl GenericParser {
             return Ok(false);
         }
         let original_cursor = self.cursor;
+        if let Some(&cached) = self.param_cache.get(&original_cursor) {
+            return Ok(cached);
+        }
         let mut result = false;
         self.next(); // identifier
         self.ff();
@@ -672,6 +711,7 @@ impl GenericParser {
             }
         }
         self.backtrack_to(original_cursor);
+        self.param_cache.insert(original_cursor, result);
         Ok(result)
     }
 
@@ -974,6 +1014,17 @@ impl GenericParser {
         expectation: Option<&str>,
         min_precedence: u8,
     ) -> Result<Node, FormatError> {
+        self.enter_depth()?;
+        let res = self.parse_expr_inner(expectation, min_precedence);
+        self.leave_depth();
+        res
+    }
+
+    fn parse_expr_inner(
+        &mut self,
+        expectation: Option<&str>,
+        min_precedence: u8,
+    ) -> Result<Node, FormatError> {
         let mut expr = self.parse_expr_atom(expectation)?;
         let mut full_op = self.full_lookahead();
         while let Some(operator) = Operator::from_token(full_op.tk.token) {
@@ -1044,117 +1095,18 @@ impl GenericParser {
             Token::Outer => Node::leaf(NodeType::OuterExpr, self.next().span),
             Token::Module => Node::leaf(NodeType::ModuleExpr, self.next().span),
             Token::Null => Node::leaf(NodeType::NullExpr, self.next().span),
-            Token::Throw => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::LParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(Some(")"), 1)?);
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::RParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                Node::from_children(NodeType::ThrowExpr, children)
-            }
-            Token::Trace => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::LParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(Some(")"), 1)?);
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::RParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                Node::from_children(NodeType::TraceExpr, children)
-            }
-            Token::Import | Token::ImportStar => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::LParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                self.ff_into(&mut children);
-                children.push(self.parse_string_constant()?);
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::RParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                Node::from_children(NodeType::ImportExpr, children)
-            }
+            Token::Throw => self.parse_unary_paren_expr(NodeType::ThrowExpr)?,
+            Token::Trace => self.parse_unary_paren_expr(NodeType::TraceExpr)?,
+            Token::Import | Token::ImportStar => self.parse_import_expr()?,
             Token::Read | Token::ReadStar | Token::ReadQuestion => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::LParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(Some(")"), 1)?);
-                self.ff_into(&mut children);
-                self.expect_into(
-                    Token::RParen,
-                    &mut children,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                Node::from_children(NodeType::ReadExpr, children)
+                self.parse_unary_paren_expr(NodeType::ReadExpr)?
             }
-            Token::New => {
-                let mut children = Vec::new();
-                let mut header = Vec::new();
-                let tk = self.next();
-                header.push(make_terminal(tk));
-                self.ff_into(&mut header);
-                if self.lookahead_token() != Token::LBrace {
-                    header.push(self.parse_type(Some("{"))?);
-                    children.push(Node::from_children(NodeType::NewHeader, header));
-                    self.ff_into(&mut children);
-                } else {
-                    children.push(Node::from_children(NodeType::NewHeader, header));
-                }
-                children.push(self.parse_object_body()?);
-                Node::from_children(NodeType::NewExpr, children)
-            }
+            Token::New => self.parse_new_expr()?,
             Token::Minus => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(expectation, 12)?);
-                Node::from_children(NodeType::UnaryMinusExpr, children)
+                self.parse_prefix_unary_expr(NodeType::UnaryMinusExpr, expectation, 12)?
             }
             Token::Not => {
-                let mut children = Vec::new();
-                let tk = self.next();
-                children.push(make_terminal(tk));
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(expectation, 11)?);
-                Node::from_children(NodeType::LogicalNotExpr, children)
+                self.parse_prefix_unary_expr(NodeType::LogicalNotExpr, expectation, 11)?
             }
             Token::LParen => {
                 if self.is_function_literal() {
@@ -1163,114 +1115,9 @@ impl GenericParser {
                     self.parse_parenthesized_expr()?
                 }
             }
-            Token::Super => {
-                let mut children = Vec::new();
-                let super_tk = self.next();
-                children.push(make_terminal(super_tk));
-                self.ff_into(&mut children);
-                if self.lookahead_token() == Token::Dot {
-                    let dot = self.next();
-                    children.push(make_terminal(dot));
-                    self.ff_into(&mut children);
-                    children.push(self.parse_identifier()?);
-                    if self.lookahead() == Token::LParen {
-                        self.ff_into(&mut children);
-                        children.push(self.parse_argument_list()?);
-                    }
-                    Node::from_children(NodeType::SuperAccessExpr, children)
-                } else {
-                    self.expect_into(
-                        Token::LBrack,
-                        &mut children,
-                        ExpectError::UnexpectedToken("["),
-                    )?;
-                    self.ff_into(&mut children);
-                    children.push(self.parse_expr(None, 1)?);
-                    self.ff_into(&mut children);
-                    self.expect_into(
-                        Token::RBrack,
-                        &mut children,
-                        ExpectError::UnexpectedToken("]"),
-                    )?;
-                    Node::from_children(NodeType::SuperSubscriptExpr, children)
-                }
-            }
-            Token::If => {
-                let mut children = Vec::new();
-                let mut header = Vec::new();
-                let if_tk = self.next();
-                header.push(make_terminal(if_tk));
-                self.ff_into(&mut header);
-                let mut condition = Vec::new();
-                let mut condition_expr = Vec::new();
-                self.expect_into(
-                    Token::LParen,
-                    &mut condition,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                self.ff_into(&mut condition_expr);
-                condition_expr.push(self.parse_expr(Some(")"), 1)?);
-                self.ff_into(&mut condition_expr);
-                condition.push(Node::from_children(
-                    NodeType::IfConditionExpr,
-                    condition_expr,
-                ));
-                self.expect_into(
-                    Token::RParen,
-                    &mut condition,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                header.push(Node::from_children(NodeType::IfCondition, condition));
-                children.push(Node::from_children(NodeType::IfHeader, header));
-                let mut then_expr = Vec::new();
-                self.ff_into(&mut then_expr);
-                then_expr.push(self.parse_expr(Some("else"), 1)?);
-                self.ff_into(&mut then_expr);
-                children.push(Node::from_children(NodeType::IfThenExpr, then_expr));
-                self.expect_into(
-                    Token::Else,
-                    &mut children,
-                    ExpectError::UnexpectedToken("else"),
-                )?;
-                let mut else_expr = Vec::new();
-                self.ff_into(&mut else_expr);
-                else_expr.push(self.parse_expr(expectation, 1)?);
-                children.push(Node::from_children(NodeType::IfElseExpr, else_expr));
-                Node::from_children(NodeType::IfExpr, children)
-            }
-            Token::Let => {
-                let mut children = Vec::new();
-                let let_tk = self.next();
-                children.push(make_terminal(let_tk));
-                self.ff_into(&mut children);
-                let mut param_def = Vec::new();
-                self.expect_into(
-                    Token::LParen,
-                    &mut param_def,
-                    ExpectError::UnexpectedToken("("),
-                )?;
-                let mut param = Vec::new();
-                self.ff_into(&mut param);
-                param.push(self.parse_parameter()?);
-                self.ff_into(&mut param);
-                self.expect_into(Token::Assign, &mut param, ExpectError::UnexpectedToken("="))?;
-                self.ff_into(&mut param);
-                param.push(self.parse_expr(Some(")"), 1)?);
-                param_def.push(Node::from_children(NodeType::LetParameter, param));
-                self.ff_into(&mut param_def);
-                self.expect_into(
-                    Token::RParen,
-                    &mut param_def,
-                    ExpectError::UnexpectedToken(")"),
-                )?;
-                children.push(Node::from_children(
-                    NodeType::LetParameterDefinition,
-                    param_def,
-                ));
-                self.ff_into(&mut children);
-                children.push(self.parse_expr(None, 1)?);
-                Node::from_children(NodeType::LetExpr, children)
-            }
+            Token::Super => self.parse_super_expr()?,
+            Token::If => self.parse_if_expr(expectation)?,
+            Token::Let => self.parse_let_expr()?,
             Token::True | Token::False => Node::leaf(NodeType::BoolLiteralExpr, self.next().span),
             Token::Int | Token::Hex | Token::Bin | Token::Oct => {
                 Node::leaf(NodeType::IntLiteralExpr, self.next().span)
@@ -1296,10 +1143,193 @@ impl GenericParser {
         self.parse_expr_rest(expr)
     }
 
-    fn parse_expr_rest(&mut self, expr: Node) -> Result<Node, FormatError> {
-        if self.lookahead() == Token::LBrace {
+    fn parse_unary_paren_expr(&mut self, kind: NodeType) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let tk = self.next();
+        children.push(make_terminal(tk));
+        self.ff_into(&mut children);
+        self.expect_into(
+            Token::LParen,
+            &mut children,
+            ExpectError::UnexpectedToken("("),
+        )?;
+        self.ff_into(&mut children);
+        children.push(self.parse_expr(Some(")"), 1)?);
+        self.ff_into(&mut children);
+        self.expect_into(
+            Token::RParen,
+            &mut children,
+            ExpectError::UnexpectedToken(")"),
+        )?;
+        Ok(Node::from_children(kind, children))
+    }
+
+    fn parse_import_expr(&mut self) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let tk = self.next();
+        children.push(make_terminal(tk));
+        self.ff_into(&mut children);
+        self.expect_into(
+            Token::LParen,
+            &mut children,
+            ExpectError::UnexpectedToken("("),
+        )?;
+        self.ff_into(&mut children);
+        children.push(self.parse_string_constant()?);
+        self.ff_into(&mut children);
+        self.expect_into(
+            Token::RParen,
+            &mut children,
+            ExpectError::UnexpectedToken(")"),
+        )?;
+        Ok(Node::from_children(NodeType::ImportExpr, children))
+    }
+
+    fn parse_new_expr(&mut self) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let mut header = Vec::new();
+        let tk = self.next();
+        header.push(make_terminal(tk));
+        self.ff_into(&mut header);
+        if self.lookahead_token() != Token::LBrace {
+            header.push(self.parse_type(Some("{"))?);
+            children.push(Node::from_children(NodeType::NewHeader, header));
+            self.ff_into(&mut children);
+        } else {
+            children.push(Node::from_children(NodeType::NewHeader, header));
+        }
+        children.push(self.parse_object_body()?);
+        Ok(Node::from_children(NodeType::NewExpr, children))
+    }
+
+    fn parse_prefix_unary_expr(
+        &mut self,
+        kind: NodeType,
+        expectation: Option<&str>,
+        min_precedence: u8,
+    ) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let tk = self.next();
+        children.push(make_terminal(tk));
+        self.ff_into(&mut children);
+        children.push(self.parse_expr(expectation, min_precedence)?);
+        Ok(Node::from_children(kind, children))
+    }
+
+    fn parse_super_expr(&mut self) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let super_tk = self.next();
+        children.push(make_terminal(super_tk));
+        self.ff_into(&mut children);
+        if self.lookahead_token() == Token::Dot {
+            let dot = self.next();
+            children.push(make_terminal(dot));
+            self.ff_into(&mut children);
+            children.push(self.parse_identifier()?);
+            if self.lookahead() == Token::LParen {
+                self.ff_into(&mut children);
+                children.push(self.parse_argument_list()?);
+            }
+            Ok(Node::from_children(NodeType::SuperAccessExpr, children))
+        } else {
+            self.expect_into(
+                Token::LBrack,
+                &mut children,
+                ExpectError::UnexpectedToken("["),
+            )?;
+            self.ff_into(&mut children);
+            children.push(self.parse_expr(None, 1)?);
+            self.ff_into(&mut children);
+            self.expect_into(
+                Token::RBrack,
+                &mut children,
+                ExpectError::UnexpectedToken("]"),
+            )?;
+            Ok(Node::from_children(NodeType::SuperSubscriptExpr, children))
+        }
+    }
+
+    fn parse_if_expr(&mut self, expectation: Option<&str>) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let mut header = Vec::new();
+        let if_tk = self.next();
+        header.push(make_terminal(if_tk));
+        self.ff_into(&mut header);
+        let mut condition = Vec::new();
+        let mut condition_expr = Vec::new();
+        self.expect_into(
+            Token::LParen,
+            &mut condition,
+            ExpectError::UnexpectedToken("("),
+        )?;
+        self.ff_into(&mut condition_expr);
+        condition_expr.push(self.parse_expr(Some(")"), 1)?);
+        self.ff_into(&mut condition_expr);
+        condition.push(Node::from_children(
+            NodeType::IfConditionExpr,
+            condition_expr,
+        ));
+        self.expect_into(
+            Token::RParen,
+            &mut condition,
+            ExpectError::UnexpectedToken(")"),
+        )?;
+        header.push(Node::from_children(NodeType::IfCondition, condition));
+        children.push(Node::from_children(NodeType::IfHeader, header));
+        let mut then_expr = Vec::new();
+        self.ff_into(&mut then_expr);
+        then_expr.push(self.parse_expr(Some("else"), 1)?);
+        self.ff_into(&mut then_expr);
+        children.push(Node::from_children(NodeType::IfThenExpr, then_expr));
+        self.expect_into(
+            Token::Else,
+            &mut children,
+            ExpectError::UnexpectedToken("else"),
+        )?;
+        let mut else_expr = Vec::new();
+        self.ff_into(&mut else_expr);
+        else_expr.push(self.parse_expr(expectation, 1)?);
+        children.push(Node::from_children(NodeType::IfElseExpr, else_expr));
+        Ok(Node::from_children(NodeType::IfExpr, children))
+    }
+
+    fn parse_let_expr(&mut self) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let let_tk = self.next();
+        children.push(make_terminal(let_tk));
+        self.ff_into(&mut children);
+        let mut param_def = Vec::new();
+        self.expect_into(
+            Token::LParen,
+            &mut param_def,
+            ExpectError::UnexpectedToken("("),
+        )?;
+        let mut param = Vec::new();
+        self.ff_into(&mut param);
+        param.push(self.parse_parameter()?);
+        self.ff_into(&mut param);
+        self.expect_into(Token::Assign, &mut param, ExpectError::UnexpectedToken("="))?;
+        self.ff_into(&mut param);
+        param.push(self.parse_expr(Some(")"), 1)?);
+        param_def.push(Node::from_children(NodeType::LetParameter, param));
+        self.ff_into(&mut param_def);
+        self.expect_into(
+            Token::RParen,
+            &mut param_def,
+            ExpectError::UnexpectedToken(")"),
+        )?;
+        children.push(Node::from_children(
+            NodeType::LetParameterDefinition,
+            param_def,
+        ));
+        self.ff_into(&mut children);
+        children.push(self.parse_expr(None, 1)?);
+        Ok(Node::from_children(NodeType::LetExpr, children))
+    }
+
+    fn parse_expr_rest(&mut self, mut expr: Node) -> Result<Node, FormatError> {
+        while self.lookahead() == Token::LBrace {
             let expr_kind = expr.kind;
-            let expr_text = expr.text(&self.source);
             let mut children = Vec::new();
             children.push(expr);
             self.ff_into(&mut children);
@@ -1308,13 +1338,15 @@ impl GenericParser {
                 NodeType::ParenthesizedExpr | NodeType::AmendsExpr | NodeType::NewExpr
             ) {
                 children.push(self.parse_object_body()?);
-                return self.parse_expr_rest(Node::from_children(NodeType::AmendsExpr, children));
+                expr = Node::from_children(NodeType::AmendsExpr, children);
+            } else {
+                let expr_text = children[0].text(&self.source);
+                return Err(
+                    self.parser_error(error::unexpected_curly_probably_amends_expression(
+                        &expr_text,
+                    )),
+                );
             }
-            return Err(
-                self.parser_error(error::unexpected_curly_probably_amends_expression(
-                    &expr_text,
-                )),
-            );
         }
         Ok(expr)
     }
@@ -1391,7 +1423,11 @@ impl GenericParser {
                     let delimiter: String = start.text(&self.source).chars().rev().collect();
                     return Err(self.parser_error(error::missing_delimiter(&delimiter)));
                 }
-                other => unreachable!("unexpected token inside single-line string: {other:?}"),
+                _ => {
+                    let text = self.current().text(&self.source);
+                    let delimiter: String = start.text(&self.source).chars().rev().collect();
+                    return Err(self.parser_error(error::unexpected_token(&text, &delimiter)));
+                }
             }
         }
         let end = self.next();
@@ -1453,7 +1489,11 @@ impl GenericParser {
                     let delimiter: String = start.text(&self.source).chars().rev().collect();
                     return Err(self.parser_error(error::missing_delimiter(&delimiter)));
                 }
-                other => unreachable!("unexpected token inside multi-line string: {other:?}"),
+                _ => {
+                    let text = self.current().text(&self.source);
+                    let delimiter: String = start.text(&self.source).chars().rev().collect();
+                    return Err(self.parser_error(error::unexpected_token(&text, &delimiter)));
+                }
             }
         }
         let end = self.next();
@@ -1579,6 +1619,13 @@ impl GenericParser {
     }
 
     fn parse_type(&mut self, expectation: Option<&str>) -> Result<Node, FormatError> {
+        self.enter_depth()?;
+        let res = self.parse_type_inner(expectation);
+        self.leave_depth();
+        res
+    }
+
+    fn parse_type_inner(&mut self, expectation: Option<&str>) -> Result<Node, FormatError> {
         let mut children = Vec::new();
         let mut has_default = false;
         let mut start = None;
@@ -1629,61 +1676,7 @@ impl GenericParser {
             Token::Unknown => Node::leaf(NodeType::UnknownType, self.next().span),
             Token::Nothing => Node::leaf(NodeType::NothingType, self.next().span),
             Token::Module => Node::leaf(NodeType::ModuleType, self.next().span),
-            Token::LParen => {
-                let mut children = Vec::new();
-                let lparen = self.next();
-                children.push(make_terminal(lparen));
-                let mut total_types = 0usize;
-                if self.lookahead() == Token::RParen {
-                    self.ff_into(&mut children);
-                    let rparen = self.next();
-                    children.push(make_terminal(rparen));
-                } else {
-                    let mut elements = Vec::new();
-                    self.ff_into(&mut elements);
-                    elements.push(self.parse_type(Some(")"))?);
-                    self.ff_into(&mut elements);
-                    while self.lookahead_token() == Token::Comma {
-                        let comma = self.next();
-                        if self.lookahead() == Token::RParen {
-                            self.ff_into(&mut elements);
-                            break;
-                        }
-                        elements.push(make_terminal(comma));
-                        self.ff_into(&mut elements);
-                        elements.push(self.parse_type(Some(")"))?);
-                        total_types += 1;
-                        self.ff_into(&mut elements);
-                    }
-                    children.push(Node::from_children(
-                        NodeType::ParenthesizedTypeElements,
-                        elements,
-                    ));
-                    self.expect_into(
-                        Token::RParen,
-                        &mut children,
-                        ExpectError::UnexpectedToken2(",", ")"),
-                    )?;
-                }
-                if total_types > 1 || self.lookahead() == Token::Arrow {
-                    let mut actual_children = Vec::new();
-                    actual_children.push(Node::from_children(
-                        NodeType::FunctionTypeParameters,
-                        children,
-                    ));
-                    self.ff_into(&mut actual_children);
-                    self.expect_into(
-                        Token::Arrow,
-                        &mut actual_children,
-                        ExpectError::UnexpectedToken("->"),
-                    )?;
-                    self.ff_into(&mut actual_children);
-                    actual_children.push(self.parse_type(expectation)?);
-                    Node::from_children(NodeType::FunctionType, actual_children)
-                } else {
-                    Node::from_children(NodeType::ParenthesizedType, children)
-                }
-            }
+            Token::LParen => self.parse_parenthesized_or_function_type(expectation)?,
             Token::Identifier => {
                 let mut children = Vec::new();
                 children.push(self.parse_qualified_identifier()?);
@@ -1712,45 +1705,106 @@ impl GenericParser {
         self.parse_type_end(typ)
     }
 
-    fn parse_type_end(&mut self, ty: Node) -> Result<Node, FormatError> {
-        if self.lookahead() == Token::Question {
-            let mut children = vec![ty];
+    fn parse_parenthesized_or_function_type(
+        &mut self,
+        expectation: Option<&str>,
+    ) -> Result<Node, FormatError> {
+        let mut children = Vec::new();
+        let lparen = self.next();
+        children.push(make_terminal(lparen));
+        let mut total_types = 0usize;
+        if self.lookahead() == Token::RParen {
             self.ff_into(&mut children);
-            let q = self.next();
-            children.push(make_terminal(q));
-            let res = Node::from_children(NodeType::NullableType, children);
-            return self.parse_type_end(res);
-        }
-        let fla = self.full_lookahead();
-        if fla.tk.token == Token::LParen
-            && self.no_semicolon_inbetween()
-            && fla.tk.new_lines_between == 0
-        {
-            let mut children = vec![ty];
-            self.ff_into(&mut children);
-            let mut constraint = Vec::new();
-            let lparen = self.next();
-            constraint.push(make_terminal(lparen));
+            let rparen = self.next();
+            children.push(make_terminal(rparen));
+        } else {
             let mut elements = Vec::new();
             self.ff_into(&mut elements);
-            self.parse_list_of(Token::RParen, &mut elements, |p| p.parse_expr(Some(")"), 1))?;
-            constraint.push(Node::from_children(
-                NodeType::ConstrainedTypeElements,
+            elements.push(self.parse_type(Some(")"))?);
+            self.ff_into(&mut elements);
+            while self.lookahead_token() == Token::Comma {
+                let comma = self.next();
+                if self.lookahead() == Token::RParen {
+                    self.ff_into(&mut elements);
+                    break;
+                }
+                elements.push(make_terminal(comma));
+                self.ff_into(&mut elements);
+                elements.push(self.parse_type(Some(")"))?);
+                total_types += 1;
+                self.ff_into(&mut elements);
+            }
+            children.push(Node::from_children(
+                NodeType::ParenthesizedTypeElements,
                 elements,
             ));
             self.expect_into(
                 Token::RParen,
-                &mut constraint,
+                &mut children,
                 ExpectError::UnexpectedToken2(",", ")"),
             )?;
-            children.push(Node::from_children(
-                NodeType::ConstrainedTypeConstraint,
-                constraint,
-            ));
-            let res = Node::from_children(NodeType::ConstrainedType, children);
-            return self.parse_type_end(res);
         }
-        Ok(ty)
+        if total_types > 1 || self.lookahead() == Token::Arrow {
+            let mut actual_children = Vec::new();
+            actual_children.push(Node::from_children(
+                NodeType::FunctionTypeParameters,
+                children,
+            ));
+            self.ff_into(&mut actual_children);
+            self.expect_into(
+                Token::Arrow,
+                &mut actual_children,
+                ExpectError::UnexpectedToken("->"),
+            )?;
+            self.ff_into(&mut actual_children);
+            actual_children.push(self.parse_type(expectation)?);
+            Ok(Node::from_children(NodeType::FunctionType, actual_children))
+        } else {
+            Ok(Node::from_children(NodeType::ParenthesizedType, children))
+        }
+    }
+
+    fn parse_type_end(&mut self, mut ty: Node) -> Result<Node, FormatError> {
+        loop {
+            if self.lookahead() == Token::Question {
+                let mut children = vec![ty];
+                self.ff_into(&mut children);
+                let q = self.next();
+                children.push(make_terminal(q));
+                ty = Node::from_children(NodeType::NullableType, children);
+                continue;
+            }
+            let fla = self.full_lookahead();
+            if fla.tk.token == Token::LParen
+                && self.no_semicolon_inbetween()
+                && fla.tk.new_lines_between == 0
+            {
+                let mut children = vec![ty];
+                self.ff_into(&mut children);
+                let mut constraint = Vec::new();
+                let lparen = self.next();
+                constraint.push(make_terminal(lparen));
+                let mut elements = Vec::new();
+                self.ff_into(&mut elements);
+                self.parse_list_of(Token::RParen, &mut elements, |p| p.parse_expr(Some(")"), 1))?;
+                constraint.push(Node::from_children(
+                    NodeType::ConstrainedTypeElements,
+                    elements,
+                ));
+                self.expect_into(
+                    Token::RParen,
+                    &mut constraint,
+                    ExpectError::UnexpectedToken2(",", ")"),
+                )?;
+                children.push(Node::from_children(
+                    NodeType::ConstrainedTypeConstraint,
+                    constraint,
+                ));
+                ty = Node::from_children(NodeType::ConstrainedType, children);
+                continue;
+            }
+            return Ok(ty);
+        }
     }
 
     fn parse_annotation(&mut self) -> Result<Node, FormatError> {
@@ -1944,6 +1998,11 @@ impl GenericParser {
                     let tk = self.next();
                     children.push(make_terminal(tk));
                 }
+                Token::StringEscapeContinuation => {
+                    return Err(
+                        self.parser_error(error::invalid_line_continuation_escape_sequence())
+                    );
+                }
                 Token::Eof => {
                     let delimiter: String = start_tk.text(&self.source).chars().rev().collect();
                     return Err(self.parser_error(error::missing_delimiter(&delimiter)));
@@ -1951,7 +2010,11 @@ impl GenericParser {
                 Token::InterpolationStart => {
                     return Err(self.parser_error(error::interpolation_in_constant()));
                 }
-                other => unreachable!("unexpected token inside string constant: {other:?}"),
+                _ => {
+                    let text = self.current().text(&self.source);
+                    let delimiter: String = start_tk.text(&self.source).chars().rev().collect();
+                    return Err(self.parser_error(error::unexpected_token(&text, &delimiter)));
+                }
             }
         }
         let end_tk = self.next();

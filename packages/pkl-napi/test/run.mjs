@@ -31,12 +31,14 @@ import {
   format,
   decodePklBinary,
   monotonicClockMs,
+} from "../dist/index.mjs";
+import {
   roundtripValue,
   roundtripInteger,
   roundtripBytes,
   roundtripString,
   measureConversion,
-} from "../dist/index.mjs";
+} from "../dist/testing.mjs";
 
 const require = createRequire(import.meta.url);
 const cjsPkg = require("../dist/index.cjs");
@@ -63,6 +65,16 @@ await test("dual ESM/CJS identity and capabilities", async () => {
   assert.equal(esmPkg.PklError, cjsPkg.PklError);
   assert.equal(esmPkg.ModuleSource, cjsPkg.ModuleSource);
   assert.equal(esmPkg.PklObject, cjsPkg.PklObject);
+  for (const internalName of [
+    "roundtripValue",
+    "roundtripInteger",
+    "roundtripBytes",
+    "roundtripString",
+    "measureConversion",
+  ]) {
+    assert.equal(internalName in esmPkg, false, `${internalName} must not be on ESM top-level`);
+    assert.equal(internalName in cjsPkg, false, `${internalName} must not be on CJS top-level`);
+  }
 
   const caps = capabilities();
   assert.deepEqual(caps, {
@@ -458,7 +470,10 @@ await test("custom async JS moduleReaders, resourceReaders, logger, frameTransfo
     assert.deepEqual(Array.from(res.properties.bin), [10, 20, 30]);
     assert.equal(res.properties.missing, null);
     assert.deepEqual(res.properties.globKeys, ["mem:/a.pkl", "mem:/b.pkl"]);
-    assert.ok(logs.some((l) => l.level === "trace" && l.msg.includes("hello-log")));
+    assert.ok(
+      logs.some((l) => l.level === "trace" && l.msg.includes("hello-log") && l.uri === "transformed:repl:text"),
+      `Expected transformed frame URI on trace log, got: ${JSON.stringify(logs)}`,
+    );
 
     await assert.rejects(
       () => ev.evaluateOutputText(ModuleSource.text('x = read("kv:forbidden")')),
@@ -688,6 +703,20 @@ await test("lossless BigInt, Uint8Array, UTF-16 surrogates, roundtripValue, and 
   assert.ok(rt.properties.ref instanceof PklReference);
   assert.equal(rt.entries.get("entryKey"), "entryVal");
   assert.deepEqual(rt.elements, [10n, 20n]);
+
+  // Lazy PklObject empty entries/elements remain isolated mutable containers per instance
+  const lazyA = new PklObject("Lazy#A", "repl:a", { x: 1n });
+  const lazyB = new PklObject("Lazy#A", "repl:a", { x: 1n });
+  assert.deepStrictEqual(lazyA, lazyB);
+  assert.ok(lazyA.entries instanceof Map);
+  assert.ok(Array.isArray(lazyA.elements));
+  lazyA.entries.set("k", 99n);
+  lazyA.elements.push("item");
+  assert.equal(lazyB.entries.size, 0);
+  assert.equal(lazyB.elements.length, 0);
+  const lazyRt = roundtripValue(lazyA);
+  assert.equal(lazyRt.entries.get("k"), 99n);
+  assert.deepEqual(lazyRt.elements, ["item"]);
 
   const bench = measureConversion(200);
   assert.equal(bench.iterations, 200);
@@ -924,6 +953,333 @@ await test("native HTTP in same Node process (non-blocking loopback)", async () 
       await new Promise((r) => server.close(r));
     }
   }
+});
+
+await test("Wave 2 security/stability regressions: decoder DoS, cyclic values, __proto__ schema", async () => {
+  // 1. P1-16: Truncated 4B-element List header rejects cleanly without OOM preallocation.
+  const hugeList = new Uint8Array([0x92, 0x04, 0xdd, 0x7f, 0xff, 0xff, 0xff]);
+  assert.throws(
+    () => decodePklBinary(hugeList),
+    (e) => e instanceof PklError && e.kind === "decode",
+  );
+
+  // 2. P1-18: Cyclic JS objects reject cleanly instead of overflowing the stack.
+  const cyclic = [];
+  cyclic.push(cyclic);
+  assert.throws(
+    () => roundtripValue(cyclic),
+    (e) => e instanceof PklError && e.kind === "invalid-argument",
+  );
+
+  // 3. P1-19: `__proto__` property in schema is defined as an own property without prototype mutation.
+  const ev = await createEvaluator();
+  try {
+    const schema = await ev.evaluateSchema(ModuleSource.text("`__proto__`: Int = 42\n"));
+    const props = schema.moduleClass.properties;
+    assert.equal(Object.getPrototypeOf(props), Object.prototype);
+    assert.ok(Object.prototype.hasOwnProperty.call(props, "__proto__"));
+    assert.equal(props["__proto__"].simpleName, "__proto__");
+  } finally {
+    await ev.close();
+  }
+});
+
+await test("Round 2 regressions: PklObject reassignment, single-call cancel() health, invalid options", async () => {
+  // 1. PklObject entries/elements setters can be reassigned repeatedly and survive roundtripValue.
+  const obj = new PklObject("Mod#Obj", "repl:r2", { a: 1n });
+  obj.entries = new Map([["k1", 10n]]);
+  obj.entries = new Map([["k2", 20n]]);
+  obj.elements = [1n, 2n];
+  obj.elements = [3n];
+  assert.equal(obj.entries.get("k2"), 20n);
+  assert.equal(obj.entries.has("k1"), false);
+  assert.deepEqual(obj.elements, [3n]);
+  const rt = roundtripValue(obj);
+  assert.equal(rt.entries.get("k2"), 20n);
+  assert.deepEqual(rt.elements, [3n]);
+
+  // 2. Single-call cancel() rejects only the cancelled evaluation without poisoning subsequent calls.
+  const ev = await createEvaluator();
+  try {
+    const pending = ev.evaluateExpression(
+      ModuleSource.text(`
+        function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)
+        ans = fib(32)
+      `),
+      "ans",
+    );
+    ev.cancel();
+    await assert.rejects(
+      () => pending,
+      (err) => err instanceof PklError && err.kind === "cancelled",
+    );
+    const after = await ev.evaluateExpression(ModuleSource.text("x = 20 + 22"), "x");
+    assert.equal(after, "42");
+  } finally {
+    await ev.close();
+  }
+
+  // 3. Invalid http.testPort and externalResourceReaders reject cleanly with PklError.
+  await assert.rejects(
+    () => createEvaluator({ http: { testPort: -1 } }),
+    (err) => err instanceof PklError && err.kind === "invalid-argument",
+  );
+  await assert.rejects(
+    () => createEvaluator({ externalResourceReaders: { bad: {} } }),
+    (err) => err instanceof PklError && err.kind === "invalid-argument",
+  );
+});
+
+await test("Round 3 regressions: API unification, non-closing timeout/cancel, BOM, Uint8Array reader, strict decode", async () => {
+  // 1. ModuleSource.modulePath normalizes bare `modulepath:` prefix & empty cacheDir rejects.
+  assert.equal(ModuleSource.modulePath("modulepath:foo/bar.pkl").uri, "modulepath:/foo/bar.pkl");
+  assert.equal(ModuleSource.modulePath("modulepath:/foo/bar.pkl").uri, "modulepath:/foo/bar.pkl");
+  await assert.rejects(
+    () => createEvaluator({ cacheDir: "" }),
+    (err) => err instanceof PklError && err.kind === "configuration",
+  );
+
+  // 2. Hardened PklObject: empty collection identity, frozen getters, setter validation, toJSON, undefined rejection.
+  const emptyMap = new Map();
+  const emptyArr = [];
+  const obj = new PklObject("Mod#Obj", "repl:r3", { a: 1n }, emptyMap, emptyArr);
+  assert.equal(obj.entries, emptyMap);
+  assert.equal(obj.elements, emptyArr);
+  assert.deepEqual(obj.toJSON(), {
+    className: "Mod#Obj",
+    moduleUri: "repl:r3",
+    properties: { a: 1n },
+    entries: [],
+    elements: [],
+  });
+  const frozen = Object.freeze(new PklObject("Mod#Frozen", "repl:r3", {}));
+  assert.ok(frozen.entries instanceof Map);
+  assert.ok(Array.isArray(frozen.elements));
+  assert.throws(
+    () => {
+      obj.entries = "bad";
+    },
+    (e) => e instanceof PklError && e.kind === "invalid-argument",
+  );
+  assert.throws(
+    () => {
+      obj.elements = {};
+    },
+    (e) => e instanceof PklError && e.kind === "invalid-argument",
+  );
+  assert.throws(
+    () => roundtripValue(undefined),
+    (e) => e instanceof PklError && e.kind === "invalid-argument",
+  );
+
+  // 3. Unified measureConversion overloads & superset fields.
+  const m1 = measureConversion(5);
+  assert.equal(m1.iterations, 5);
+  assert.equal(typeof m1.totalMs, "number");
+  assert.equal(typeof m1.elapsedMs, "number");
+  assert.equal(typeof m1.avgUs, "number");
+  assert.equal(typeof m1.perIterationUs, "number");
+  assert.equal(typeof m1.opsPerSec, "number");
+  assert.ok(m1.sample !== undefined && m1.lastValue !== undefined);
+  const m2 = measureConversion(42n, 5);
+  assert.equal(m2.iterations, 5);
+  assert.equal(m2.sample, 42n);
+  assert.equal(m2.lastValue, 42n);
+
+  // 4. Unified schema shape + BOM preservation + strict decode + owned binary fast-path + typed security error.
+  const ev = await createEvaluator();
+  try {
+    const schema = await ev.evaluateSchema(
+      ModuleSource.text(`
+        module example.Unified
+        typealias Port = Int(isBetween(1, 65535))
+        class Server { host: String }
+      `),
+    );
+    assert.equal(schema.classes.Server.info.simpleName, "Server");
+    assert.equal(schema.classes.Server.moduleUri, schema.classes.Server.info.moduleUri);
+    assert.equal(schema.typeAliases.Port.info.simpleName, "Port");
+
+    // Leading UTF-8 BOM U+FEFF must be preserved in long (>64B) strings.
+    const longBom = await ev.evaluateExpressionValue(
+      ModuleSource.text(`s = "\\u{feff}" + "a".repeat(80)\n`),
+      "s",
+    );
+    assert.equal(longBom.charCodeAt(0), 0xfeff);
+    assert.equal(longBom.length, 81);
+
+    // decodePklBinary({ strict: true }) rejects Function while default lossless decodes PklFunction.
+    const fnBytes = await ev.evaluateExpressionPklBinary(ModuleSource.text("f = (x) -> x + 1\n"), "f");
+    assert.ok(decodePklBinary(fnBytes) instanceof PklFunction);
+    assert.throws(
+      () => decodePklBinary(fnBytes, { strict: true }),
+      (e) => e instanceof PklError && e.kind === "decode",
+    );
+
+    // Fast-path evaluateExpressionPklBinary returns owned Uint8Array (not a Node Buffer slab view).
+    const warmSrc = ModuleSource.text("x = 42\n", "file:///owned_bin_check.pkl");
+    await ev.evaluateExpressionPklBinary(warmSrc, "x");
+    const warmBytes = await ev.evaluateExpressionPklBinary(warmSrc, "x");
+    assert.equal(warmBytes.byteOffset, 0);
+    assert.equal(warmBytes.buffer.byteLength, warmBytes.byteLength);
+
+    // Substring "Refusing to " in user throw() must stay kind === 'evaluation', not 'security'.
+    await assert.rejects(
+      () => ev.evaluateOutputText(ModuleSource.text('x = throw("Refusing to eat broccoli")\n')),
+      (e) => e instanceof PklError && e.kind === "evaluation",
+    );
+  } finally {
+    await ev.close();
+  }
+
+  // 5. ModuleReader returning Uint8Array (with BOM) and logger error propagation.
+  const enc = new TextEncoder();
+  const readerEv = await createEvaluator({
+    allowedModules: ["pkl:", "repl:", "mem:"],
+    moduleReaders: [
+      {
+        scheme: "mem",
+        isLocal: true,
+        hasHierarchicalUris: true,
+        hasFragmentPaths: false,
+        read() {
+          return enc.encode('msg = "from-bytes"\n');
+        },
+      },
+    ],
+  });
+  try {
+    const v = await readerEv.evaluateExpression(
+      ModuleSource.text('import "mem:/a.pkl" as m\nv = m.msg\n'),
+      "v",
+    );
+    assert.equal(v, "from-bytes");
+  } finally {
+    await readerEv.close();
+  }
+
+  const throwingLogEv = await createEvaluator({
+    logger: {
+      trace() {
+        throw new Error("boom-from-logger");
+      },
+    },
+  });
+  try {
+    await assert.rejects(
+      () => throwingLogEv.evaluateExpression(ModuleSource.text("x = trace(42)\n"), "x"),
+      (e) => e instanceof PklError && e.message.includes("boom-from-logger"),
+    );
+  } finally {
+    await throwingLogEv.close();
+  }
+
+  // 6. Non-closing timeout reuse on Evaluator and ReplSession + ReplSession.cancel/evalDefinitions.
+  const timeoutEv = await createEvaluator({ timeoutMs: 25 });
+  try {
+    await assert.rejects(
+      () =>
+        timeoutEv.evaluateExpression(
+          ModuleSource.text("function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nx = fib(32)\n"),
+          "x",
+        ),
+      (e) => e instanceof PklError && e.kind === "timeout",
+    );
+    assert.equal(timeoutEv.isClosed, false);
+    assert.equal(
+      await timeoutEv.evaluateExpression(ModuleSource.text("x = 20 + 22\n"), "x"),
+      "42",
+    );
+  } finally {
+    await timeoutEv.close();
+  }
+
+  const repl = await createRepl({ timeoutMs: 25 });
+  try {
+    await assert.rejects(
+      () =>
+        repl.eval("function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nfib(32)"),
+      (e) => e instanceof PklError && e.kind === "timeout",
+    );
+    assert.equal(repl.isClosed, false);
+    const okResps = await repl.eval("a = 10 + 5", { evalDefinitions: true });
+    assert.equal(okResps[0].kind, "evalSuccess");
+    assert.equal(okResps[0].result, "15");
+    assert.equal(typeof repl.cancel, "function");
+
+    // Round 4: N-API ReplSession.load(ModuleSource.text(...)) stages inline contents.
+    const loadResps = await repl.load(ModuleSource.text("loadedVal = 99\n", "file:///ephemeral.pkl"));
+    assert.ok(loadResps.every((r) => r.kind !== "evalError"));
+    const readLoaded = await repl.eval("loadedVal");
+    assert.equal(readLoaded[0].kind, "evalSuccess");
+    assert.equal(readLoaded[0].result, "99");
+
+    // Round 4: format(null) & invalid PklIntSeq step throw PklError.
+    assert.throws(() => format(null), (e) => e instanceof PklError);
+    assert.throws(() => new PklIntSeq(1, 5, 0), (e) => e instanceof PklError && e.kind === "invalid-argument");
+
+    // Round 5 (P1-19): ReplSession.load(ModuleSource.text(...)) reloads fresh source without stale cache.
+    const reload1 = await repl.load(ModuleSource.text("reloaded = 11\n", "file:///r5_reload.pkl"));
+    assert.ok(reload1.every((r) => r.kind !== "evalError"));
+    assert.equal((await repl.eval("reloaded"))[0].result, "11");
+    const reload2 = await repl.load(ModuleSource.text("reloaded = 22\n", "file:///r5_reload.pkl"));
+    assert.ok(reload2.every((r) => r.kind !== "evalError"));
+    assert.equal((await repl.eval("reloaded"))[0].result, "22");
+    await assert.rejects(
+      () => repl.load(""),
+      (e) => e instanceof PklError && e.kind === "invalid-argument",
+    );
+  } finally {
+    await repl.close();
+  }
+
+  // Round 5 (P1-5): projectDir + custom securityManager fails closed with configuration error (no deadlock/bypass).
+  await assert.rejects(
+    () =>
+      createEvaluator({
+        projectDir: tmpdir(),
+        securityManager: { checkResolveModule() {} },
+      }),
+    (e) => e instanceof PklError && e.kind === "configuration",
+  );
+
+  // Round 5 (P1-22 & P2-9): warm expression fast path preserves unpaired UTF-16 surrogates,
+  // analyzeImportGraph AbortSignal reports cancelled, and PklReference / empty source.uri validate cleanly.
+  const r5Ev = await createEvaluator();
+  try {
+    const surrSrc = ModuleSource.text('s = "ok"\n', "file:///r5_surrogate_warm.pkl");
+    assert.equal(await r5Ev.evaluateExpression(surrSrc, "s"), "ok");
+    const loneHigh = String.fromCharCode(0xd800);
+    const warmSurr = await r5Ev.evaluateExpression(surrSrc, `"${loneHigh}"`);
+    assert.equal(warmSurr.length, 1);
+    assert.equal(warmSurr.charCodeAt(0), 0xd800);
+    await assert.rejects(
+      () => r5Ev.evaluateOutputText({ uri: "" }),
+      (e) => e instanceof PklError && e.kind === "invalid-argument",
+    );
+  } finally {
+    await r5Ev.close();
+  }
+
+  const ac = new AbortController();
+  await assert.rejects(
+    () =>
+      analyzeImportGraph(["file:///r5_abort_graph.pkl"], {
+        signal: ac.signal,
+        securityManager: {
+          async checkResolveModule() {
+            ac.abort();
+            throw new PklError("aborted during callback", "security");
+          },
+        },
+      }),
+    (e) => e instanceof PklError && e.kind === "cancelled",
+  );
+
+  assert.throws(
+    () => new PklReference("d", 1n, null),
+    (e) => e instanceof PklError && e.kind === "invalid-argument",
+  );
 });
 
 console.log(JSON.stringify({ passed: results.length, results }, null, 2));

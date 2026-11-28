@@ -15,7 +15,7 @@ use std::sync::Arc;
 
 /// Directory/file listing entry returned by globbable module and resource readers
 /// (`org.pkl.core.module.PathElement`).
-#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PathElement {
     pub name: String,
     pub is_directory: bool,
@@ -31,7 +31,7 @@ impl PathElement {
 }
 
 /// Resolved module source returned by [`ModuleKey::resolve`] (`org.pkl.core.module.ResolvedModuleKey`).
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct ResolvedModuleKey {
     pub original_uri: String,
     pub resolved_uri: String,
@@ -127,6 +127,7 @@ where
 }
 
 /// Helper constructors mirroring `org.pkl.core.module.ModuleKeyFactories`.
+#[derive(Clone, Copy, Debug, Default)]
 pub struct ModuleKeyFactories;
 
 impl ModuleKeyFactories {
@@ -139,7 +140,7 @@ impl ModuleKeyFactories {
 }
 
 /// Binary resource payload returned by [`ResourceReader::read`] (`org.pkl.core.resource.Resource`).
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Resource {
     pub uri: String,
     pub bytes: Vec<u8>,
@@ -162,7 +163,8 @@ impl Resource {
 }
 
 /// Return value of [`ResourceReader::read`].
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub enum ResourceValue {
     /// Binary/text resource (`pkl:base#Resource` with `uri`, `bytes`, `text`, `base64`).
     Resource(Resource),

@@ -97,6 +97,43 @@ pub fn normalize_zip_path(path: &str) -> String {
     }
 }
 
+const MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES: usize = 128 * 1024 * 1024;
+const MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES: usize = 256 * 1024 * 1024;
+const MAX_ZIP_INITIAL_ALLOC_BYTES: usize = 64 * 1024;
+const MAX_ZIP_PATH_BYTES: usize = 8192;
+const MAX_ZIP_PATH_DEPTH: usize = 2048;
+const MAX_ZIP_DIR_METADATA_BYTES: usize = 16 * 1024 * 1024;
+
+fn validate_zip_entry_path(filename: &str) -> Result<(), ZipError> {
+    if filename.len() > MAX_ZIP_PATH_BYTES {
+        return Err(ZipError::CorruptedData(
+            "ZIP entry path exceeds maximum allowed byte length",
+        ));
+    }
+    if filename.contains('\0') || filename.contains('\\') {
+        return Err(ZipError::CorruptedData(
+            "ZIP entry path contains forbidden NUL or backslash character",
+        ));
+    }
+    let mut depth = 0usize;
+    for seg in filename.split('/') {
+        if seg == ".." {
+            return Err(ZipError::CorruptedData(
+                "ZIP entry path contains forbidden parent-directory traversal (`..`)",
+            ));
+        }
+        if !seg.is_empty() {
+            depth += 1;
+            if depth > MAX_ZIP_PATH_DEPTH {
+                return Err(ZipError::CorruptedData(
+                    "ZIP entry path exceeds maximum directory nesting depth",
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Represents an in-memory ZIP archive with normalized entry paths.
 #[derive(Clone, Debug, Default)]
 pub struct ZipArchive {
@@ -142,6 +179,8 @@ impl ZipArchive {
             return Err(ZipError::CorruptedData("Central directory out of bounds"));
         }
 
+        let mut total_uncompressed: usize = 0;
+        let mut total_dir_metadata_bytes: usize = 0;
         let mut offset = cd_offset;
         for _ in 0..num_entries {
             if offset + 46 > cd_end {
@@ -157,6 +196,7 @@ impl ZipArchive {
                 return Err(ZipError::InvalidSignature);
             }
 
+            let version_made_by = u16::from_le_bytes([bytes[offset + 4], bytes[offset + 5]]);
             let method = u16::from_le_bytes([bytes[offset + 10], bytes[offset + 11]]);
             let dos_time = u16::from_le_bytes([bytes[offset + 12], bytes[offset + 13]]);
             let dos_date = u16::from_le_bytes([bytes[offset + 14], bytes[offset + 15]]);
@@ -182,6 +222,12 @@ impl ZipArchive {
                 u16::from_le_bytes([bytes[offset + 28], bytes[offset + 29]]) as usize;
             let extra_len = u16::from_le_bytes([bytes[offset + 30], bytes[offset + 31]]) as usize;
             let comment_len = u16::from_le_bytes([bytes[offset + 32], bytes[offset + 33]]) as usize;
+            let external_attrs = u32::from_le_bytes([
+                bytes[offset + 38],
+                bytes[offset + 39],
+                bytes[offset + 40],
+                bytes[offset + 41],
+            ]);
             let local_header_offset = u32::from_le_bytes([
                 bytes[offset + 42],
                 bytes[offset + 43],
@@ -206,6 +252,16 @@ impl ZipArchive {
                 String::from_utf8_lossy(&bytes[filename_start..filename_end]).to_string();
 
             offset = next_offset;
+
+            validate_zip_entry_path(&filename)?;
+
+            // Skip Unix/macOS symlink entries (`S_IFLNK = 0o120000` when OS == 3 Unix or 19 macOS)
+            // so archives cannot smuggle symlinks as regular files.
+            let is_unix_symlink = matches!(version_made_by >> 8, 3 | 19)
+                && ((external_attrs >> 16) & 0o170000) == 0o120000;
+            if is_unix_symlink {
+                continue;
+            }
 
             // Validate and extract entry from local file header
             let Some(local_fixed_end) = local_header_offset.checked_add(30) else {
@@ -261,8 +317,22 @@ impl ZipArchive {
                 } else {
                     dir_path
                 };
-                archive.add_directory_hierarchy(&dir_key);
+                archive.add_directory_hierarchy(&dir_key, &mut total_dir_metadata_bytes)?;
             } else {
+                if uncompressed_size > MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES {
+                    return Err(ZipError::CorruptedData(
+                        "ZIP entry uncompressed size exceeds maximum limit",
+                    ));
+                }
+                let remaining_archive_budget =
+                    MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES.saturating_sub(total_uncompressed);
+                let entry_limit = remaining_archive_budget.min(MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES);
+                if uncompressed_size > entry_limit {
+                    return Err(ZipError::CorruptedData(
+                        "ZIP archive total uncompressed size exceeds maximum limit",
+                    ));
+                }
+
                 // File entry
                 let compressed_data = &bytes[data_start..data_end];
                 let decompressed = match method {
@@ -272,7 +342,7 @@ impl ZipArchive {
                         }
                         compressed_data.to_vec()
                     }
-                    8 => inflate(compressed_data, uncompressed_size)?,
+                    8 => inflate(compressed_data, uncompressed_size, entry_limit)?,
                     other => return Err(ZipError::UnsupportedCompression(other)),
                 };
                 if decompressed.len() != uncompressed_size {
@@ -281,10 +351,11 @@ impl ZipArchive {
                 if compute_crc32(&decompressed) != cd_crc32 {
                     return Err(ZipError::CorruptedData("Entry CRC-32 mismatch"));
                 }
+                total_uncompressed = total_uncompressed.saturating_add(decompressed.len());
                 archive
                     .dos_mtimes
                     .insert(normalized_path.clone(), (dos_time, dos_date));
-                archive.add_file(normalized_path, decompressed);
+                archive.add_file(normalized_path, decompressed, &mut total_dir_metadata_bytes)?;
             }
         }
 
@@ -302,40 +373,82 @@ impl ZipArchive {
         self.dos_mtimes.get(&norm).copied()
     }
 
-    fn add_directory_hierarchy(&mut self, dir_path: &str) {
-        if !self.directories.contains_key(dir_path) {
-            self.directories.insert(dir_path.to_string(), Vec::new());
-        }
-        if dir_path != "/" {
-            let parent = match dir_path.rfind('/') {
+    /// Iteratively ensures every ancestor directory of `dir_path` exists in `self.directories`
+    /// without recursion and bounded by `MAX_ZIP_DIR_METADATA_BYTES`.
+    fn add_directory_hierarchy(
+        &mut self,
+        dir_path: &str,
+        dir_metadata_bytes: &mut usize,
+    ) -> Result<(), ZipError> {
+        let mut chain: Vec<&str> = Vec::new();
+        let mut cur = dir_path;
+        while !self.directories.contains_key(cur) {
+            chain.push(cur);
+            if cur == "/" {
+                break;
+            }
+            cur = match cur.rfind('/') {
                 Some(0) => "/",
-                Some(idx) => &dir_path[..idx],
+                Some(idx) => &cur[..idx],
                 None => "/",
             };
-            let leaf = &dir_path[dir_path.rfind('/').map_or(0, |i| i + 1)..];
-            self.add_directory_hierarchy(parent);
-            if let Some(children) = self.directories.get_mut(parent)
-                && !children.iter().any(|c| c == leaf)
-            {
-                children.push(leaf.to_string());
+        }
+        for path in chain.into_iter().rev() {
+            *dir_metadata_bytes = dir_metadata_bytes.saturating_add(path.len() + 64);
+            if *dir_metadata_bytes > MAX_ZIP_DIR_METADATA_BYTES {
+                return Err(ZipError::CorruptedData(
+                    "ZIP directory metadata exceeds maximum allowed size",
+                ));
+            }
+            self.directories.entry(path.to_string()).or_default();
+            if path != "/" {
+                let (parent, leaf) = match path.rfind('/') {
+                    Some(0) => ("/", &path[1..]),
+                    Some(idx) => (&path[..idx], &path[idx + 1..]),
+                    None => ("/", path),
+                };
+                if let Some(children) = self.directories.get_mut(parent)
+                    && !children.iter().any(|c| c == leaf)
+                {
+                    *dir_metadata_bytes = dir_metadata_bytes.saturating_add(leaf.len() + 24);
+                    if *dir_metadata_bytes > MAX_ZIP_DIR_METADATA_BYTES {
+                        return Err(ZipError::CorruptedData(
+                            "ZIP directory metadata exceeds maximum allowed size",
+                        ));
+                    }
+                    children.push(leaf.to_string());
+                }
             }
         }
+        Ok(())
     }
 
-    fn add_file(&mut self, normalized_path: String, data: Vec<u8>) {
+    fn add_file(
+        &mut self,
+        normalized_path: String,
+        data: Vec<u8>,
+        dir_metadata_bytes: &mut usize,
+    ) -> Result<(), ZipError> {
         let parent = match normalized_path.rfind('/') {
             Some(0) => "/",
             Some(idx) => &normalized_path[..idx],
             None => "/",
         };
         let leaf = normalized_path[normalized_path.rfind('/').map_or(0, |i| i + 1)..].to_string();
-        self.add_directory_hierarchy(parent);
+        self.add_directory_hierarchy(parent, dir_metadata_bytes)?;
         if let Some(children) = self.directories.get_mut(parent)
             && !children.iter().any(|c| c == &leaf)
         {
+            *dir_metadata_bytes = dir_metadata_bytes.saturating_add(leaf.len() + 24);
+            if *dir_metadata_bytes > MAX_ZIP_DIR_METADATA_BYTES {
+                return Err(ZipError::CorruptedData(
+                    "ZIP directory metadata exceeds maximum allowed size",
+                ));
+            }
             children.push(leaf);
         }
         self.entries.insert(normalized_path, data);
+        Ok(())
     }
 
     pub fn is_directory(&self, path: &str) -> bool {
@@ -631,9 +744,17 @@ const CL_ORDER: [usize; 19] = [
     16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15,
 ];
 
-fn inflate(compressed: &[u8], expected_size: usize) -> Result<Vec<u8>, ZipError> {
+fn inflate(
+    compressed: &[u8],
+    expected_size: usize,
+    max_output_bytes: usize,
+) -> Result<Vec<u8>, ZipError> {
     let mut reader = BitReader::new(compressed);
-    let mut output = Vec::with_capacity(expected_size);
+    let mut output = Vec::with_capacity(
+        expected_size
+            .min(max_output_bytes)
+            .min(MAX_ZIP_INITIAL_ALLOC_BYTES),
+    );
     let mut is_final = false;
 
     while !is_final {
@@ -648,14 +769,28 @@ fn inflate(compressed: &[u8], expected_size: usize) -> Result<Vec<u8>, ZipError>
                 if len != (nlen ^ 0xffff) {
                     return Err(ZipError::CorruptedData("Stored block length mismatch"));
                 }
+                if output.len().saturating_add(len) > max_output_bytes {
+                    return Err(ZipError::CorruptedData(
+                        "ZIP entry decompressed size exceeds maximum limit",
+                    ));
+                }
                 let bytes = reader.read_bytes(len)?;
+                output
+                    .try_reserve(bytes.len())
+                    .map_err(|_| ZipError::CorruptedData("ZIP inflate out of memory"))?;
                 output.extend_from_slice(bytes);
             }
             1 => {
                 // Fixed Huffman
                 let lit_tree = fixed_literal_tree()?;
                 let dist_tree = fixed_distance_tree()?;
-                decode_huffman_block(&mut reader, &lit_tree, &dist_tree, &mut output)?;
+                decode_huffman_block(
+                    &mut reader,
+                    &lit_tree,
+                    &dist_tree,
+                    &mut output,
+                    max_output_bytes,
+                )?;
             }
             2 => {
                 // Dynamic Huffman
@@ -694,10 +829,21 @@ fn inflate(compressed: &[u8], expected_size: usize) -> Result<Vec<u8>, ZipError>
                         _ => return Err(ZipError::CorruptedData("Invalid CL symbol")),
                     }
                 }
+                if lengths.len() > hlit + hdist {
+                    return Err(ZipError::CorruptedData(
+                        "Dynamic Huffman code length overflow",
+                    ));
+                }
 
                 let lit_tree = FastHuffman::from_code_lengths(&lengths[..hlit])?;
                 let dist_tree = FastHuffman::from_code_lengths(&lengths[hlit..])?;
-                decode_huffman_block(&mut reader, &lit_tree, &dist_tree, &mut output)?;
+                decode_huffman_block(
+                    &mut reader,
+                    &lit_tree,
+                    &dist_tree,
+                    &mut output,
+                    max_output_bytes,
+                )?;
             }
             _ => return Err(ZipError::CorruptedData("Reserved block type")),
         }
@@ -733,11 +879,19 @@ fn decode_huffman_block(
     lit_tree: &FastHuffman,
     dist_tree: &FastHuffman,
     output: &mut Vec<u8>,
+    max_output_bytes: usize,
 ) -> Result<(), ZipError> {
     loop {
         let sym = lit_tree.decode(reader)?;
         match sym {
-            0..=255 => output.push(sym as u8),
+            0..=255 => {
+                if output.len() >= max_output_bytes {
+                    return Err(ZipError::CorruptedData(
+                        "ZIP entry decompressed size exceeds maximum limit",
+                    ));
+                }
+                output.push(sym as u8);
+            }
             256 => break, // End of block
             257..=285 => {
                 let len_idx = (sym - 257) as usize;
@@ -764,6 +918,14 @@ fn decode_huffman_block(
                 if distance > output.len() {
                     return Err(ZipError::CorruptedData("Distance exceeds output"));
                 }
+                if output.len().saturating_add(length) > max_output_bytes {
+                    return Err(ZipError::CorruptedData(
+                        "ZIP entry decompressed size exceeds maximum limit",
+                    ));
+                }
+                output
+                    .try_reserve(length)
+                    .map_err(|_| ZipError::CorruptedData("ZIP inflate out of memory"))?;
                 let start = output.len() - distance;
                 for i in 0..length {
                     let b = output[start + i];
@@ -787,6 +949,11 @@ pub const PACKAGE_ZIP_DOS_DATE: u16 = 0x0041;
 ///
 /// Empty input emits the exact 22-byte EOCD record (`SHA-256 = 8739c76e...76d85`).
 pub fn build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
+    try_build_deterministic_package_zip(entries).expect("ZIP32 archive bounds exceeded")
+}
+
+/// Fallible counterpart to [`build_deterministic_package_zip`] validating ZIP32 `u16`/`u32` bounds.
+pub fn try_build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Result<Vec<u8>, ZipError> {
     let mut sorted: Vec<(String, &[u8])> = entries
         .iter()
         .map(|(name, bytes)| {
@@ -797,18 +964,25 @@ pub fn build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
         .collect();
     sorted.sort_by(|(a, _), (b, _)| a.cmp(b));
 
+    let num_entries = u16::try_from(sorted.len())
+        .map_err(|_| ZipError::CorruptedData("ZIP entry count exceeds ZIP32 u16 limit"))?;
+
     let mut zip = Vec::new();
     let mut cd = Vec::new();
     const UTF8_FLAG: u16 = 0x0800;
 
     for (name, content) in &sorted {
-        let offset = zip.len() as u32;
+        let offset = u32::try_from(zip.len())
+            .map_err(|_| ZipError::CorruptedData("ZIP local header offset exceeds ZIP32 limit"))?;
         let fn_bytes = name.as_bytes();
-        let fn_len = fn_bytes.len() as u16;
-        let uncompressed_size = content.len() as u32;
+        let fn_len = u16::try_from(fn_bytes.len())
+            .map_err(|_| ZipError::CorruptedData("ZIP entry filename exceeds u16 length limit"))?;
+        let uncompressed_size = u32::try_from(content.len())
+            .map_err(|_| ZipError::CorruptedData("ZIP entry size exceeds ZIP32 u32 limit"))?;
         let crc = compute_crc32(content);
         let compressed = deflate_raw(content);
-        let compressed_size = compressed.len() as u32;
+        let compressed_size = u32::try_from(compressed.len())
+            .map_err(|_| ZipError::CorruptedData("ZIP compressed size exceeds ZIP32 u32 limit"))?;
 
         // Local header (30 bytes)
         zip.extend_from_slice(&0x04034b50u32.to_le_bytes());
@@ -846,9 +1020,10 @@ pub fn build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
         cd.extend_from_slice(fn_bytes);
     }
 
-    let cd_offset = zip.len() as u32;
-    let cd_size = cd.len() as u32;
-    let num_entries = sorted.len() as u16;
+    let cd_offset = u32::try_from(zip.len())
+        .map_err(|_| ZipError::CorruptedData("ZIP central directory offset exceeds ZIP32 limit"))?;
+    let cd_size = u32::try_from(cd.len())
+        .map_err(|_| ZipError::CorruptedData("ZIP central directory size exceeds ZIP32 limit"))?;
 
     zip.extend_from_slice(&cd);
 
@@ -862,7 +1037,7 @@ pub fn build_deterministic_package_zip(entries: &[(&str, &[u8])]) -> Vec<u8> {
     zip.extend_from_slice(&cd_offset.to_le_bytes());
     zip.extend_from_slice(&0u16.to_le_bytes()); // comment len
 
-    zip
+    Ok(zip)
 }
 
 /// Deterministic pure-Rust RFC 1951 raw DEFLATE encoder (LZ77 + Fixed Huffman, with
@@ -1319,5 +1494,64 @@ mod tests {
         let sym = huffman.decode(&mut reader).unwrap();
         assert_eq!(sym, 0);
         assert_eq!(reader.bit_pos, 3);
+    }
+
+    #[test]
+    fn zip_parser_rejects_traversal_oversized_header_and_skips_symlinks() {
+        // 1. Entry with `..` traversal is rejected.
+        let bad = build_deterministic_package_zip(&[("safe/../escape.pkl", b"a = 1")]);
+        assert!(ZipArchive::parse(&bad).is_err());
+
+        // 2. Entry claiming 200 MiB uncompressed in header is rejected before allocating.
+        let mut bomb = build_deterministic_package_zip(&[("a.txt", b"hi")]);
+        // Patch CD uncompressed_size to 200 MiB (0x0c80_0000)
+        let cd_sig = [0x50, 0x4b, 0x01, 0x02];
+        let cd_pos = bomb.windows(4).position(|w| w == cd_sig).unwrap();
+        bomb[cd_pos + 24..cd_pos + 28].copy_from_slice(&(200u32 * 1024 * 1024).to_le_bytes());
+        assert!(ZipArchive::parse(&bomb).is_err());
+
+        // 3. Deeply nested path (2000 segments) succeeds iteratively without stack overflow.
+        let deep_name = format!("{}leaf.pkl", "d/".repeat(2000));
+        let deep = build_deterministic_package_zip(&[(&deep_name, b"x = 1")]);
+        let parsed = ZipArchive::parse(&deep).unwrap();
+        assert_eq!(parsed.get(&format!("/{deep_name}")).unwrap(), b"x = 1");
+
+        // 4. Unix symlink entry (`S_IFLNK = 0o120000` in external attributes) is skipped.
+        let mut sym = build_deterministic_package_zip(&[("link.pkl", b"/etc/passwd")]);
+        let cd_pos = sym.windows(4).position(|w| w == cd_sig).unwrap();
+        // version_made_by = Unix (3 << 8)
+        sym[cd_pos + 4..cd_pos + 6].copy_from_slice(&((3u16 << 8) | 20).to_le_bytes());
+        // external_attr = 0o120777 << 16
+        sym[cd_pos + 38..cd_pos + 42].copy_from_slice(&(0o120777u32 << 16).to_le_bytes());
+        let parsed_sym = ZipArchive::parse(&sym).unwrap();
+        assert!(parsed_sym.get("/link.pkl").is_none());
+
+        // 5. macOS symlink entry (version_made_by OS == 19) is also skipped.
+        let mut mac_sym = build_deterministic_package_zip(&[("maclink.pkl", b"/etc/passwd")]);
+        let cd_pos = mac_sym.windows(4).position(|w| w == cd_sig).unwrap();
+        mac_sym[cd_pos + 4..cd_pos + 6].copy_from_slice(&((19u16 << 8) | 20).to_le_bytes());
+        mac_sym[cd_pos + 38..cd_pos + 42].copy_from_slice(&(0o120777u32 << 16).to_le_bytes());
+        let parsed_mac_sym = ZipArchive::parse(&mac_sym).unwrap();
+        assert!(parsed_mac_sym.get("/maclink.pkl").is_none());
+
+        // 6. Path exceeding MAX_ZIP_PATH_BYTES or MAX_ZIP_PATH_DEPTH is rejected cleanly.
+        let too_deep = format!("{}leaf.pkl", "d/".repeat(MAX_ZIP_PATH_DEPTH + 10));
+        let deep_zip = build_deterministic_package_zip(&[(&too_deep, b"")]);
+        assert!(ZipArchive::parse(&deep_zip).is_err());
+
+        // 7. Zero-payload directory-hierarchy bomb exceeding MAX_ZIP_DIR_METADATA_BYTES is rejected.
+        let mut many_names = Vec::new();
+        for i in 0..160 {
+            let mut path = format!("p{i:03}/");
+            for j in 0..240 {
+                path.push_str(&format!("d{j:03}/"));
+            }
+            path.push_str("f.pkl");
+            many_names.push(path);
+        }
+        let entries: Vec<(&str, &[u8])> =
+            many_names.iter().map(|s| (s.as_str(), &b""[..])).collect();
+        let bomb_zip = build_uncompressed_zip(&entries);
+        assert!(ZipArchive::parse(&bomb_zip).is_err());
     }
 }

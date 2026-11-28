@@ -4,7 +4,6 @@
 
 use crate::assets::write_all_static_resources;
 use crate::html::HtmlWriter;
-use crate::json::push_json_string;
 use crate::markdown::{render_inline_markdown_text, render_markdown_trimmed};
 use crate::model::{
     DocGeneratorError, DocModule, DocPackage, DocsiteInfo, PackageDependency,
@@ -18,8 +17,8 @@ use crate::scope::{
 };
 use crate::util::{
     ParsedUri, as_module_name, encode_path, file_uri_to_path_buf, get_doc_comment_overflow,
-    get_doc_comment_summary, maybe_quote_identifier, relativize_uri, resolve_uri,
-    uri_encode_component,
+    get_doc_comment_summary, maybe_quote_identifier, push_safe_inline_script_json_string,
+    relativize_uri, resolve_uri, sanitize_href_url, uri_encode_component,
 };
 use pkl_runtime::pkl_binary_decode::{DecodedObject, DecodedValue};
 use pkl_runtime::schema::{
@@ -77,6 +76,11 @@ impl<'a> HtmlGenerator<'a> {
     ) -> Result<(), DocGeneratorError> {
         let pkg_scope = self.site_scope.package_scope(pkg_index);
         let doc_package = &self.site_scope.doc_packages[pkg_index];
+        crate::util::validate_single_path_segment("package version", doc_package.version())?;
+        let pkg_root = crate::util::join_confined_output_path(
+            self.output_dir,
+            &encode_path(&format!("{}/{}", doc_package.name(), doc_package.version())),
+        )?;
 
         // Package page
         {
@@ -92,13 +96,18 @@ impl<'a> HtmlGenerator<'a> {
                 &page_scope,
                 self.is_single_package_site,
             );
-            queue_page(&page_scope.url(), html, writes, logs)?;
+            queue_page_under(Some(&pkg_root), &page_scope.url(), html, writes, logs)?;
         }
 
         // Module pages & class pages
         for doc_module in &doc_package.doc_modules {
             if doc_module.is_unlisted {
                 continue;
+            }
+            for seg in doc_module.path.split('/') {
+                if !seg.is_empty() {
+                    crate::util::validate_single_path_segment("module path segment", seg)?;
+                }
             }
             let module_scope = pkg_scope.get_module(doc_module.name());
             let mod_page_scope = DocScope::Module {
@@ -116,13 +125,20 @@ impl<'a> HtmlGenerator<'a> {
                 self.is_test_mode,
                 self.is_single_package_site,
             );
-            queue_page(&mod_page_scope.url(), mod_html, writes, logs)?;
+            queue_page_under(
+                Some(&pkg_root),
+                &mod_page_scope.url(),
+                mod_html,
+                writes,
+                logs,
+            )?;
 
             for (_, cid) in &doc_module.schema.classes {
                 let clazz = doc_module.schema.store.class(*cid);
                 if annotations_is_unlisted(&clazz.annotations) {
                     continue;
                 }
+                crate::util::validate_single_path_segment("class name", clazz.simple_name())?;
                 let class_page_scope =
                     make_class_scope(&self.site_scope, &pkg_scope, &module_scope, clazz);
                 let class_html = render_class_page(
@@ -137,7 +153,13 @@ impl<'a> HtmlGenerator<'a> {
                     self.is_test_mode,
                     self.is_single_package_site,
                 );
-                queue_page(&class_page_scope.url(), class_html, writes, logs)?;
+                queue_page_under(
+                    Some(&pkg_root),
+                    &class_page_scope.url(),
+                    class_html,
+                    writes,
+                    logs,
+                )?;
             }
         }
         Ok(())
@@ -151,7 +173,7 @@ impl<'a> HtmlGenerator<'a> {
         let mut writes = Vec::new();
         let mut logs = Vec::new();
         self.collect_package_writes(pkg_index, &mut writes, &mut logs)?;
-        crate::generator::write_files_parallel(&writes)?;
+        crate::generator::write_files_parallel_under(Some(self.output_dir), &writes)?;
         for line in &logs {
             let _ = console_out.write_all(line.as_bytes());
         }
@@ -170,7 +192,13 @@ impl<'a> HtmlGenerator<'a> {
             &self.site_scope,
             self.is_single_package_site,
         );
-        queue_page(&self.site_scope.url, html, writes, logs)
+        queue_page_under(
+            Some(self.output_dir),
+            &self.site_scope.url,
+            html,
+            writes,
+            logs,
+        )
     }
 
     pub fn generate_site_page_only(
@@ -181,7 +209,7 @@ impl<'a> HtmlGenerator<'a> {
         let mut writes = Vec::new();
         let mut logs = Vec::new();
         self.collect_site_page_write(packages, &mut writes, &mut logs)?;
-        crate::generator::write_files_parallel(&writes)?;
+        crate::generator::write_files_parallel_under(Some(self.output_dir), &writes)?;
         for line in &logs {
             let _ = console_out.write_all(line.as_bytes());
         }
@@ -204,7 +232,8 @@ impl<'a> HtmlGenerator<'a> {
     }
 }
 
-fn queue_page(
+fn queue_page_under(
+    confine_root: Option<&Path>,
     url: &str,
     html: String,
     writes: &mut Vec<crate::generator::PendingFile>,
@@ -212,6 +241,9 @@ fn queue_page(
 ) -> Result<(), DocGeneratorError> {
     let path: PathBuf = file_uri_to_path_buf(url)
         .ok_or_else(|| DocGeneratorError::bug(format!("Non-file page URI `{url}`")))?;
+    if let Some(root) = confine_root {
+        crate::util::ensure_path_under_output_dir(root, &path)?;
+    }
     let display_url = url
         .strip_prefix("file://")
         .map_or_else(|| url.to_string(), |rest| format!("file:{rest}"));
@@ -409,8 +441,9 @@ impl MemberDocs {
                             });
                         }
                         ExtraInfoBody::Link { href, text } => {
+                            let safe_href = sanitize_href_url(href);
                             w.block("dd", &[], |w| {
-                                w.inline("a", &[("href", href)], |w| w.text(text));
+                                w.inline("a", &[("href", safe_href)], |w| w.text(text));
                             });
                         }
                         ExtraInfoBody::Dependencies(deps) => {
@@ -420,7 +453,8 @@ impl MemberDocs {
                                         w.text(", ");
                                     }
                                     if let Some(href) = link {
-                                        w.inline("a", &[("href", href)], |w| {
+                                        let safe_href = sanitize_href_url(href);
+                                        w.inline("a", &[("href", safe_href)], |w| {
                                             w.text(name);
                                             w.text(":");
                                             w.text(version);
@@ -439,7 +473,8 @@ impl MemberDocs {
                                     if idx > 0 {
                                         w.text(", ");
                                     }
-                                    w.inline("a", &[("href", href)], |w| w.text(short_name));
+                                    let safe_href = sanitize_href_url(href);
+                                    w.inline("a", &[("href", safe_href)], |w| w.text(short_name));
                                 }
                             });
                         }
@@ -521,11 +556,15 @@ impl<'a> PageCtx<'a> {
                 let page_url = self.page_scope.url();
                 let pkg_ver_url = relativize_uri(&per_pkg, &page_url);
                 let per_pkg_ver_url = relativize_uri(&per_pkg_ver, &page_url);
+                let mut pkg_ver_url_js = String::new();
+                push_safe_inline_script_json_string(&mut pkg_ver_url_js, &pkg_ver_url);
+                let mut per_pkg_ver_url_js = String::new();
+                push_safe_inline_script_json_string(&mut per_pkg_ver_url_js, &per_pkg_ver_url);
                 let mut version_json = String::new();
-                push_json_string(&mut version_json, version);
+                push_safe_inline_script_json_string(&mut version_json, version);
                 // Exact 12-space trailing indent before `</script>` matching `PageGenerator.kt:99-106`.
                 let script_body = format!(
-                    "\n      import perPackageData from \"{pkg_ver_url}\" with {{ type: \"json\" }}\n      import perPackageVersionData from \"{per_pkg_ver_url}\" with {{ type: \"json\" }}\n\n      runtimeData.knownVersions(perPackageData.knownVersions, {version_json});\n      runtimeData.knownUsagesOrSubtypes(\"known-subtypes\", perPackageVersionData.knownSubtypes);\n      runtimeData.knownUsagesOrSubtypes(\"known-usages\", perPackageVersionData.knownUsages);\n            "
+                    "\n      import perPackageData from {pkg_ver_url_js} with {{ type: \"json\" }}\n      import perPackageVersionData from {per_pkg_ver_url_js} with {{ type: \"json\" }}\n\n      runtimeData.knownVersions(perPackageData.knownVersions, {version_json});\n      runtimeData.knownUsagesOrSubtypes(\"known-subtypes\", perPackageVersionData.knownSubtypes);\n      runtimeData.knownUsagesOrSubtypes(\"known-usages\", perPackageVersionData.knownUsages);\n            "
                 );
                 w.block("script", &[("type", "module")], |w| w.raw(&script_body));
             }
@@ -786,11 +825,10 @@ impl<'a> PageCtx<'a> {
             .page_scope
             .resolve_module_name_to_relative_doc_url(self.site, module_name)
         {
-            w.inline(
-                "a",
-                &[("href", rel_url.as_str()), ("class", "name-ref")],
-                |w| w.text(module_name),
-            );
+            let safe_href = sanitize_href_url(&rel_url);
+            w.inline("a", &[("href", safe_href), ("class", "name-ref")], |w| {
+                w.text(module_name)
+            });
         } else {
             w.inline("span", &[("class", "member-ref")], |w| w.text(module_name));
         }
@@ -815,7 +853,8 @@ impl<'a> PageCtx<'a> {
                 )
             };
             let rel = relativize_uri(&target_url, &self.page_scope.url());
-            w.inline("a", &[("href", rel.as_str()), ("class", css_class)], |w| {
+            let safe_href = sanitize_href_url(&rel);
+            w.inline("a", &[("href", safe_href), ("class", css_class)], |w| {
                 w.text(&ident);
             });
         } else {
@@ -831,7 +870,8 @@ impl<'a> PageCtx<'a> {
         {
             let target_url = resolve_uri(&mod_doc_url, &format!("#{}", alias.simple_name()));
             let rel = relativize_uri(&target_url, &self.page_scope.url());
-            w.inline("a", &[("href", rel.as_str()), ("class", css_class)], |w| {
+            let safe_href = sanitize_href_url(&rel);
+            w.inline("a", &[("href", safe_href), ("class", css_class)], |w| {
                 w.text(&ident);
             });
         } else {
@@ -953,17 +993,15 @@ impl<'a> PageCtx<'a> {
                     && resolved.is_parameter_scope()
                 {
                     let href = resolved.url_relative_to(self.page_scope);
-                    w.inline(
-                        "a",
-                        &[("href", href.as_str()), ("class", "name-ref")],
-                        |w| {
-                            w.text(&tp.name);
-                        },
-                    );
+                    let safe_href = sanitize_href_url(&href);
+                    w.inline("a", &[("href", safe_href), ("class", "name-ref")], |w| {
+                        w.text(&tp.name);
+                    });
                 } else {
                     w.inline("span", &[("class", "name-ref")], |w| w.text(&tp.name));
                 }
             }
+            _ => {}
         }
     }
 
@@ -1000,6 +1038,7 @@ impl<'a> PageCtx<'a> {
                 Variance::Contravariant => w.text("in "),
                 Variance::Covariant => w.text("out "),
                 Variance::Invariant => {}
+                _ => {}
             }
             let cls = format!("param{}", idx + 1);
             w.inline("a", &[("class", cls.as_str())], |w| w.text(&param.name));
@@ -1048,9 +1087,10 @@ impl<'a> PageCtx<'a> {
         else {
             return;
         };
+        let safe_url = sanitize_href_url(&url);
         w.inline(
             "a",
-            &[("class", "member-source-link"), ("href", url.as_str())],
+            &[("class", "member-source-link"), ("href", safe_url)],
             |w| w.text("Source"),
         );
     }
@@ -1468,12 +1508,16 @@ impl<'a> PageCtx<'a> {
                 &dep.version,
             ));
         }
-        // Fallback: check if directory already exists on disk (`PageGenerator.kt:601-617`).
-        let pkg_path = self.site.output_dir.join(encode_path(&qname));
+        // Fallback: check if directory already exists on disk (`PageGenerator.kt:601-617`),
+        // strictly confined within `self.site.output_dir`.
+        crate::util::validate_single_path_segment("package version", &dep.version).ok()?;
+        let encoded_name = encode_path(&qname);
+        let pkg_path =
+            crate::util::join_confined_output_path(&self.site.output_dir, &encoded_name).ok()?;
         if pkg_path.exists() {
             let target_uri = resolve_uri(
                 &self.site.url,
-                &format!("./{}/{}/index.html", encode_path(&qname), dep.version),
+                &format!("./{encoded_name}/{}/index.html", dep.version),
             );
             return Some(relativize_uri(&target_uri, &self.page_scope.url()));
         }
@@ -1564,7 +1608,7 @@ fn render_main_page(
         let single_pkg = &packages_data[0];
         let pkg_url = format!("{}/current/index.html", single_pkg.r#ref.base_path());
         let mut pkg_url_json = String::new();
-        push_json_string(&mut pkg_url_json, &pkg_url);
+        push_safe_inline_script_json_string(&mut pkg_url_json, &pkg_url);
         let script = format!("window.location.replace({pkg_url_json});");
         w.block("html", &[("lang", "en-US")], |w| {
             w.block("head", &[], |w| {

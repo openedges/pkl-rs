@@ -10,6 +10,7 @@ pub(super) struct GuestCatch {
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_guest_catch(&mut self, or_null: bool) -> Result<(), RuntimeError> {
         let Value::Function(function) = self.pop()? else {
             return Err(invalid("guest catch requires checked Function0"));
@@ -28,6 +29,7 @@ impl Vm {
         self.invoke_function(function, Vec::new(), false)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn finish_guest_catch(&mut self) -> Result<(), RuntimeError> {
         let handler = self
             .frames

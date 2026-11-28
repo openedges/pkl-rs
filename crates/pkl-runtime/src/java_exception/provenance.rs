@@ -1204,12 +1204,22 @@ fn evaluation_frames() -> Vec<JavaStackTraceElement> {
 
 fn release_info(platform: Option<&crate::logging::PlatformMetadata>) -> String {
     match platform {
-        Some(meta) => format!(
-            "Pkl 0.32.0 ({} {}, Java {})",
-            meta.os_name.to_java_utf8(),
-            meta.os_version.to_java_utf8(),
-            meta.java_version.to_java_utf8(),
-        ),
+        Some(meta) => {
+            let os_name = meta.os_name.to_java_utf8();
+            let os_version = meta.os_version.to_java_utf8();
+            let java_version = meta.java_version.to_java_utf8();
+            let os_part = if os_version.is_empty() {
+                os_name
+            } else {
+                format!("{os_name} {os_version}")
+            };
+            let flavor = if java_version.is_empty() || java_version == "native" {
+                "native".to_owned()
+            } else {
+                format!("Java {java_version}")
+            };
+            format!("Pkl 0.32.0 ({os_part}, {flavor})")
+        }
         None => "Pkl 0.32.0 (unknown, pkl-rust 0.32.0)".to_string(),
     }
 }

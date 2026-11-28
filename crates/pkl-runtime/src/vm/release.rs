@@ -3,6 +3,7 @@ use super::*;
 use crate::heap::CollectionKind;
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn release_current(&mut self) -> Result<(), RuntimeError> {
         // If we cooperatively resumed after initializing `pkl:semver`, discard
         // the module value left on the operand stack by its initializer frame.
@@ -105,12 +106,17 @@ impl Vm {
         let os_name = platform_meta.os_name.to_java_utf8();
         let os_version = platform_meta.os_version.to_java_utf8();
         let java_version = platform_meta.java_version.to_java_utf8();
+        let os_part = if os_version.is_empty() {
+            os_name
+        } else {
+            format!("{os_name} {os_version}")
+        };
         let flavor = if java_version.is_empty() || java_version == "native" {
             "native".to_owned()
         } else {
             format!("Java {java_version}")
         };
-        let version_info = format!("Pkl 0.32.0 ({os_name} {os_version}, {flavor})");
+        let version_info = format!("Pkl 0.32.0 ({os_part}, {flavor})");
 
         // 5. Release
         let rel_class = self.get_or_create_module_class(module_id, "Release")?;

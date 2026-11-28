@@ -64,6 +64,11 @@ pub struct ParsedHttpUri {
 
 impl ParsedHttpUri {
     pub fn parse(raw: &str) -> Result<Self, String> {
+        if raw.bytes().any(|b| b <= 0x20 || b == 0x7f || b == b'\\') {
+            return Err(format!(
+                "Invalid control, whitespace, or backslash character in HTTP URI `{raw}`."
+            ));
+        }
         let Some((scheme_raw, rest)) = raw.split_once("://") else {
             return Err(format!(
                 "Expected `http://` or `https://` URI, got `{raw}`."
@@ -118,10 +123,22 @@ impl ParsedHttpUri {
             } else {
                 return Err(format!("Invalid host/port syntax in `{raw}`."));
             };
+            if !inner
+                .bytes()
+                .all(|b| b.is_ascii_hexdigit() || matches!(b, b':' | b'.' | b'%' | b'_' | b'-'))
+            {
+                return Err(format!("Invalid IPv6 host literal in `{raw}`."));
+            }
             (bracketed.to_string(), inner.to_string(), port)
         } else if let Some((h, port_str)) = host_port.rsplit_once(':') {
-            if h.is_empty() {
-                return Err(format!("Missing host in HTTP URI `{raw}`."));
+            if h.is_empty() || h.contains(':') {
+                return Err(format!("Invalid host/port syntax in `{raw}`."));
+            }
+            if !h
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'-' | b'.' | b'_'))
+            {
+                return Err(format!("Invalid host `{h}` in `{raw}`."));
             }
             let port = if port_str.is_empty() {
                 None
@@ -133,6 +150,12 @@ impl ParsedHttpUri {
             };
             (h.to_string(), h.to_string(), port)
         } else {
+            if !host_port
+                .bytes()
+                .all(|b| b.is_ascii_alphanumeric() || matches!(b, b'-' | b'.' | b'_'))
+            {
+                return Err(format!("Invalid host `{host_port}` in `{raw}`."));
+            }
             (host_port.to_string(), host_port.to_string(), None)
         };
         if host.is_empty() {
@@ -178,13 +201,10 @@ impl ParsedHttpUri {
         }
     }
 
-    /// Formats the HTTP/1.1 absolute-form target (for plain HTTP proxy requests, without fragment).
+    /// Formats the HTTP/1.1 absolute-form target (for plain HTTP proxy requests, without
+    /// fragment or cleartext userinfo per RFC 9110 §4.2.4).
     pub fn absolute_form_target(&self) -> String {
         let mut out = format!("{}://", self.scheme);
-        if let Some(ui) = &self.user_info {
-            out.push_str(ui);
-            out.push('@');
-        }
         out.push_str(&self.raw_host);
         if let Some(port) = self.port {
             out.push(':');
@@ -362,6 +382,11 @@ pub fn validate_rewrite_rule(uri: &str) -> Result<String, String> {
     let parsed = ParsedHttpUri::parse(uri).map_err(|_| {
         format!("Rewrite rule must start with 'http://' or 'https://', but was '{uri}'")
     })?;
+    if parsed.query.is_some() || parsed.fragment.is_some() {
+        return Err(format!(
+            "Rewrite rule must not contain a query or fragment, but was '{uri}'"
+        ));
+    }
     if !uri.ends_with('/') {
         return Err(format!("Rewrite rule must end with '/', but was '{uri}'"));
     }
@@ -764,11 +789,16 @@ impl NoProxyRule {
                     return false;
                 }
                 let lower = host_clean.to_ascii_lowercase();
-                if lower == *host {
+                let lower_fqdn = lower.trim_end_matches('.');
+                let host_fqdn = host.trim_end_matches('.');
+                if lower_fqdn.is_empty() || host_fqdn.is_empty() {
+                    return false;
+                }
+                if lower_fqdn == host_fqdn {
                     return true;
                 }
-                lower
-                    .strip_suffix(host.as_str())
+                lower_fqdn
+                    .strip_suffix(host_fqdn)
                     .is_some_and(|prefix| prefix.ends_with('.'))
             }
             Self::Ipv4Cidr {
@@ -781,8 +811,13 @@ impl NoProxyRule {
                 {
                     return false;
                 }
-                let Ok(IpAddr::V4(v4)) = host_clean.parse::<IpAddr>() else {
-                    return false;
+                let v4 = match host_clean.parse::<IpAddr>() {
+                    Ok(IpAddr::V4(v4)) => v4,
+                    Ok(IpAddr::V6(v6)) => match v6.to_ipv4_mapped() {
+                        Some(v4) => v4,
+                        None => return false,
+                    },
+                    Err(_) => return false,
                 };
                 let mask = ipv4_mask(*prefix_len);
                 (u32::from(v4) & mask) == *network

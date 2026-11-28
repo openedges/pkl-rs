@@ -1430,8 +1430,23 @@ def execute(
     )
     error_count = status_counts.get("oracle-error", 0) + status_counts.get("candidate-error", 0)
 
+    git_head: str | None = None
+    try:
+        head_proc = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        cand = head_proc.stdout.strip()
+        if head_proc.returncode == 0 and len(cand) == 40:
+            git_head = cand
+    except OSError:
+        git_head = None
+
     report = {
         "schema_version": 1,
+        "source": {"git_head": git_head} if git_head else {},
         "suite": "m7-seeded-differential-fuzz",
         "baseline": "0.32.0",
         "prng_algorithm": "splitmix64",

@@ -40,7 +40,7 @@ fn assert_cause_contains(bytes: &[u8], expected: &str) {
 #[test]
 fn decodes_upstream_pkl_binary_decoder_fixture() {
     let decoded = decode(FIXTURE).expect("decode pklBinaryDecoderTest.msgpack");
-    let DecodedValue::Object(root) = decoded else {
+    let DecodedValue::Object(root) = &decoded else {
         panic!("expected root DecodedValue::Object, got {decoded:?}");
     };
 
@@ -443,9 +443,10 @@ fn decode_invalid_units_and_types_match_java() {
 fn java_edge_cases_whitespace_floats_overflow_trailing_slots_uri_regex_utf8() {
     // NBSP (U+00A0) is NOT blank in Java String.isBlank(); U+3000 IS blank.
     let nbsp = [0x94, 0x01, 0xa2, 0xc2, 0xa0, 0xa1, b'u', 0x90];
-    let DecodedValue::Object(obj) = decode(&nbsp).expect("NBSP is not Java blank") else {
-        panic!("expected object");
-    };
+    let obj = decode(&nbsp)
+        .expect("NBSP is not Java blank")
+        .into_object()
+        .expect("expected object");
     assert!(obj.class_info.is_module);
     assert_eq!(obj.class_name, "\u{00a0}");
 
@@ -617,10 +618,10 @@ output {
     assert_eq!(strict_err.cause, "Cannot decode IntSeq value");
 
     // Lossless mode decodes all 19 codes cleanly!
-    let DecodedValue::Object(root) = decode_lossless(&result.stdout).expect("lossless decode")
-    else {
-        panic!("expected root Object");
-    };
+    let root = decode_lossless(&result.stdout)
+        .expect("lossless decode")
+        .into_object()
+        .expect("expected root Object");
     assert_eq!(root.class_name, "main#Root");
     assert_eq!(root.module_uri, uri);
     assert_eq!(root.get_property("nullVal"), Some(&DecodedValue::Null));
@@ -729,11 +730,41 @@ fn iterative_decoder_handles_deep_nesting_without_stack_overflow() {
     bytes.push(0x2a);
     let mut val = decode(&bytes).expect("deeply nested list decodes");
     for _ in 0..depth {
-        let DecodedValue::List(mut items) = val else {
+        let DecodedValue::List(items) = &mut val else {
             panic!("expected List");
         };
         assert_eq!(items.len(), 1);
-        val = items.pop().unwrap();
+        let next = items.pop().unwrap();
+        val = next;
     }
     assert_eq!(val, DecodedValue::Int(42));
+}
+
+#[test]
+fn round3_decoded_value_drop_depth_4096_does_not_stack_overflow() {
+    // P0-9: Dropping a depth-4096 DecodedValue on a 512 KiB stack must remain iterative.
+    let handle = std::thread::Builder::new()
+        .name("drop-depth-4096".into())
+        .stack_size(512 * 1024)
+        .spawn(|| {
+            let depth = 4096usize;
+            let mut bytes = Vec::with_capacity(depth * 3 + 1);
+            for _ in 0..depth {
+                bytes.extend_from_slice(&[0x92, PklBinaryCode::List.code(), 0x91]);
+            }
+            bytes.push(0x2a);
+            let val = pkl_runtime::pkl_binary_decode::decode_with_options(
+                &bytes,
+                pkl_runtime::pkl_binary_decode::DecodeOptions {
+                    max_depth: 4096,
+                    ..pkl_runtime::pkl_binary_decode::DecodeOptions::lossless()
+                },
+            )
+            .expect("depth-4096 list decodes cleanly");
+            drop(val);
+        })
+        .expect("spawn small-stack thread");
+    handle
+        .join()
+        .expect("depth-4096 drop must not overflow stack");
 }

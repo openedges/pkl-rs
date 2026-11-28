@@ -32,6 +32,7 @@ pub(super) fn repeat_block(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn subscript_string(
         &self,
         text: &PklString,
@@ -103,6 +104,7 @@ impl Vm {
         self.stack.push(Value::Function(id));
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn repeat_string(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let count = match value {
@@ -196,14 +198,27 @@ impl Vm {
         } else if count == 1 {
             self.stack.push(Value::String(text.clone()));
         } else {
+            const MAX_REPEAT_UTF16_UNITS: i64 = 128 * 1024 * 1024;
+            if total > MAX_REPEAT_UTF16_UNITS {
+                return Err(RuntimeError::new(
+                    ErrorKind::Host,
+                    "String.repeat length exceeds maximum supported limit.",
+                ));
+            }
+            let total_usize = usize::try_from(total).map_err(|_| {
+                RuntimeError::new(
+                    ErrorKind::Host,
+                    "String.repeat length exceeds platform address space.",
+                )
+            })?;
             let mut units = Vec::new();
-            units.try_reserve_exact(total as usize).map_err(|_| {
+            units.try_reserve_exact(total_usize).map_err(|_| {
                 RuntimeError::new(ErrorKind::Host, "String.repeat allocation failed.")
             })?;
             units.extend(text.encode_utf16());
             let source_length = units.len();
-            while units.len() < total as usize {
-                let copy = units.len().min(total as usize - units.len());
+            while units.len() < total_usize {
+                let copy = units.len().min(total_usize - units.len());
                 debug_assert!(copy.is_multiple_of(source_length));
                 units.extend_from_within(..copy);
             }
@@ -269,6 +284,7 @@ impl Vm {
         });
         self.stack.push(Value::Function(id));
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn encode_string(&mut self) -> Result<(), RuntimeError> {
         let Value::String(charset) = self.pop()? else {
             return Err(invalid("String.encodeToBytes charset"));

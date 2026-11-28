@@ -19,7 +19,7 @@ use pkl_host_native::{
 use pkl_runtime::{
     glob::PathElement,
     host::{IoFailure, ReadFailure, security::SecurityPolicy},
-    logging::{LogFrame, LogLevel},
+    logging::{LogFrame, LogLevel, LoggerFailure},
     modules::{ModuleHostError, ModuleSource, ResolvedModule},
     resources::{ReadResult, Resource},
     source::SourceText,
@@ -204,7 +204,7 @@ struct ActiveCallState {
 
 /// Shared JS callback dispatcher held by `NativeEvaluator`, `NativeReplSession`, and `Analyzer`.
 pub struct JsBridge {
-    tsfn: DispatchTsfn,
+    tsfn: Mutex<Option<DispatchTsfn>>,
     next_id: AtomicU64,
     pending: Mutex<HashMap<u64, WaitSlot>>,
     active_call: Mutex<Option<ActiveCallState>>,
@@ -247,7 +247,7 @@ impl JsBridge {
                 })
             })?;
         Ok(Arc::new(Self {
-            tsfn,
+            tsfn: Mutex::new(Some(tsfn)),
             next_id: AtomicU64::new(1),
             pending: Mutex::new(HashMap::new()),
             active_call: Mutex::new(None),
@@ -299,9 +299,12 @@ impl JsBridge {
         }
     }
 
-    /// Marks the bridge closed and wakes every waiting worker thread immediately.
+    /// Marks the bridge closed, releases the JS ThreadsafeFunction reference to break
+    /// V8<->Rust cycles, and wakes every waiting worker thread immediately.
     pub fn abort_all(&self) {
         self.closed.store(true, Ordering::SeqCst);
+        let dropped = self.tsfn.lock().unwrap_or_else(|e| e.into_inner()).take();
+        drop(dropped);
         self.wake_all();
     }
 
@@ -339,9 +342,13 @@ impl JsBridge {
             let mut pending = self.pending.lock().unwrap_or_else(|e| e.into_inner());
             pending.insert(id, Arc::clone(&slot));
         }
-        let status = self
-            .tsfn
-            .call(payload, ThreadsafeFunctionCallMode::NonBlocking);
+        let status = {
+            let guard = self.tsfn.lock().unwrap_or_else(|e| e.into_inner());
+            match guard.as_ref() {
+                Some(tsfn) => tsfn.call(payload, ThreadsafeFunctionCallMode::NonBlocking),
+                None => Status::Closing,
+            }
+        };
         if status != Status::Ok {
             let mut pending = self.pending.lock().unwrap_or_else(|e| e.into_inner());
             pending.remove(&id);
@@ -423,10 +430,13 @@ impl CapturingHostLogger {
         let mut buf = self.buffer.lock().unwrap_or_else(|e| e.into_inner());
         std::mem::take(&mut *buf)
     }
-}
 
-impl HostLogger for CapturingHostLogger {
-    fn log(&self, level: LogLevel, message: &PklString, frame: &LogFrame) {
+    pub fn log_checked(
+        &self,
+        level: LogLevel,
+        message: &PklString,
+        frame: &LogFrame,
+    ) -> Result<(), LoggerFailure> {
         if self.capturing.load(Ordering::SeqCst) {
             let mut buf = self.buffer.lock().unwrap_or_else(|e| e.into_inner());
             buf.push_str(&message.to_java_utf8());
@@ -438,7 +448,7 @@ impl HostLogger for CapturingHostLogger {
                 LogLevel::Warn => self.has_warn,
             };
             if dispatch {
-                let _ = bridge.invoke(BridgeRequestPayload {
+                match bridge.invoke(BridgeRequestPayload {
                     id: 0,
                     op: "log".to_string(),
                     reader_index: None,
@@ -450,9 +460,26 @@ impl HostLogger for CapturingHostLogger {
                     }),
                     message: Some(message.encode_utf16().collect()),
                     frame: Some(BridgeFramePayload::from(frame)),
-                });
+                }) {
+                    Ok(resp) if resp.ok => {}
+                    Ok(resp) => {
+                        return Err(LoggerFailure::new(
+                            resp.error_message
+                                .unwrap_or_else(|| PklString::from("Logger callback failed.")),
+                        ));
+                    }
+                    Err(BridgeAbort::Cancelled) => {
+                        return Err(LoggerFailure::new("Evaluation was cancelled."));
+                    }
+                    Err(BridgeAbort::TimedOut) => {
+                        return Err(LoggerFailure::new("Evaluation timed out."));
+                    }
+                    Err(BridgeAbort::Closed) => {
+                        return Err(LoggerFailure::new("Evaluator has been closed."));
+                    }
+                }
             }
-            return;
+            return Ok(());
         }
         if self.use_stderr_default {
             use std::io::Write;
@@ -470,6 +497,13 @@ impl HostLogger for CapturingHostLogger {
             let _ = stderr.write_all(formatted.as_bytes());
             let _ = stderr.flush();
         }
+        Ok(())
+    }
+}
+
+impl HostLogger for CapturingHostLogger {
+    fn log(&self, level: LogLevel, message: &PklString, frame: &LogFrame) {
+        let _ = self.log_checked(level, message, frame);
     }
 }
 
@@ -482,10 +516,8 @@ impl JsFrameTransformerAdapter {
     pub fn new(bridge: Arc<JsBridge>) -> Arc<Self> {
         Arc::new(Self { bridge })
     }
-}
 
-impl HostFrameTransformer for JsFrameTransformerAdapter {
-    fn transform(&self, frame: LogFrame) -> LogFrame {
+    pub fn transform_checked(&self, frame: LogFrame) -> Result<LogFrame, LoggerFailure> {
         let payload = BridgeRequestPayload {
             id: 0,
             op: "transformFrame".to_string(),
@@ -497,9 +529,21 @@ impl HostFrameTransformer for JsFrameTransformerAdapter {
             frame: Some(BridgeFramePayload::from(&frame)),
         };
         match self.bridge.invoke(payload) {
-            Ok(resp) if resp.ok => resp.frame.unwrap_or(frame),
-            _ => frame,
+            Ok(resp) if resp.ok => Ok(resp.frame.unwrap_or(frame)),
+            Ok(resp) => Err(LoggerFailure::new(resp.error_message.unwrap_or_else(
+                || PklString::from("Frame transformer callback failed."),
+            ))),
+            Err(BridgeAbort::Cancelled) => Err(LoggerFailure::new("Evaluation was cancelled.")),
+            Err(BridgeAbort::TimedOut) => Err(LoggerFailure::new("Evaluation timed out.")),
+            Err(BridgeAbort::Closed) => Err(LoggerFailure::new("Evaluator has been closed.")),
         }
+    }
+}
+
+impl HostFrameTransformer for JsFrameTransformerAdapter {
+    fn transform(&self, frame: LogFrame) -> LogFrame {
+        let fallback = frame.clone();
+        self.transform_checked(frame).unwrap_or(fallback)
     }
 }
 
@@ -521,11 +565,11 @@ impl JsSecurityHooks {
     }
 }
 
-/// Custom JS `SecurityManager` adapter with standard `SecurityPolicy` fallback for omitted hooks.
+/// Custom JS `SecurityManager` adapter with canonical `NativeFs` fallback for omitted hooks.
 pub struct JsSecurityAdapter {
     bridge: Arc<JsBridge>,
     hooks: JsSecurityHooks,
-    fallback: SecurityPolicy,
+    fallback: pkl_host_native::NativeFs,
 }
 
 impl JsSecurityAdapter {
@@ -537,7 +581,7 @@ impl JsSecurityAdapter {
         Arc::new(Self {
             bridge,
             hooks,
-            fallback,
+            fallback: pkl_host_native::NativeFs::new(fallback),
         })
     }
 
@@ -594,6 +638,7 @@ impl CustomSecurityChecker for JsSecurityAdapter {
             self.call_check("checkImportModule", importing_module, Some(imported_module))
         } else {
             self.fallback
+                .policy()
                 .check_import_module(importing_module, imported_module)
                 .map_err(|err| match err {
                     ModuleHostError::SecurityManagerException { message } => {
@@ -645,6 +690,7 @@ pub struct JsModuleReaderSpec {
     pub is_local: bool,
     pub is_globbable: bool,
     pub has_hierarchical_uris: bool,
+    pub has_fragment_paths: bool,
     pub is_cached: bool,
     pub has_has_element: bool,
     pub has_list_elements: bool,
@@ -691,6 +737,10 @@ impl CustomModuleReader for JsModuleReaderAdapter {
         self.spec.is_cached
     }
 
+    fn has_fragment_paths(&self, _uri: &PklString) -> bool {
+        self.spec.has_fragment_paths
+    }
+
     fn resolve_module(
         &self,
         uri: &PklString,
@@ -726,7 +776,11 @@ impl CustomModuleReader for JsModuleReaderAdapter {
 
     fn has_element(&self, element_uri: &PklString) -> Result<bool, ModuleHostError> {
         if !self.spec.has_has_element {
-            return Ok(false);
+            return match self.resolve_module(element_uri) {
+                Ok(_) => Ok(true),
+                Err(ModuleHostError::NotFound) => Ok(false),
+                Err(err) => Err(err),
+            };
         }
         let resp = self
             .bridge

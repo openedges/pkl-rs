@@ -1087,6 +1087,7 @@ pub(super) fn builtin_members(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_module_output(&self) -> Result<(), RuntimeError> {
         let value = self
             .stack
@@ -1141,6 +1142,7 @@ impl Vm {
         }
         Err(error)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn output_renderer(&mut self) -> Result<(), RuntimeError> {
         let format = self.pop()?;
         let Value::String(format) = format else {

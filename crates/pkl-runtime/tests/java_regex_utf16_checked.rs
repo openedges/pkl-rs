@@ -124,10 +124,25 @@ fn budget_failure_is_sticky_and_cannot_become_a_negative_match() {
             Err(MatchError::StepBudgetExceeded { limit: 0 })
         );
     }
-    let re = Utf16Regex::from_str("a+", "Uu").unwrap();
+    // Simple non-backtracking quantifiers like `a+` run iteratively in O(1) depth.
+    let simple = Utf16Regex::from_str("a+", "Uu").unwrap();
+    assert!(
+        simple
+            .captures_entire(
+                &[0x61; 64],
+                Limits {
+                    steps: 100_000,
+                    depth: 4
+                }
+            )
+            .unwrap()
+            .is_some()
+    );
+    // Deeply nested groups still hit the explicit depth budget cleanly.
+    let nested = Utf16Regex::from_str("((((((a))))))", "Uu").unwrap();
     assert!(matches!(
-        re.captures_entire(
-            &[0x61; 64],
+        nested.captures_entire(
+            &[0x61],
             Limits {
                 steps: 100_000,
                 depth: 4

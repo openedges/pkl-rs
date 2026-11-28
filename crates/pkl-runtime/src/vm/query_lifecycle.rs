@@ -6,7 +6,7 @@ use std::ops::Range;
 pub(super) struct CodeArena {
     owner: ExecutableOwnerId,
     pub(super) query: bool,
-    blocks: Range<usize>,
+    pub(super) blocks: Range<usize>,
     objects: Range<usize>,
     units: Range<usize>,
     recipes: Range<usize>,

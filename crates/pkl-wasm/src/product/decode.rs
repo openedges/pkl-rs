@@ -189,9 +189,24 @@ pub fn decoded_object_to_js(decoded: &DecodedObject) -> Result<JsValue, JsValue>
     Ok(obj.into())
 }
 
+const MAX_JS_VALUE_DEPTH: usize = 128;
+
 /// Converts a JS descriptor tree into a Rust `DecodedValue`, enforcing exact `i64` BigInt bounds,
 /// owned `Uint8Array` bytes, and lossless UTF-16 strings.
 pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredError> {
+    js_to_decoded_value_depth(value, 0)
+}
+
+fn js_to_decoded_value_depth(
+    value: &JsValue,
+    depth: usize,
+) -> Result<DecodedValue, StructuredError> {
+    if depth > MAX_JS_VALUE_DEPTH {
+        return Err(StructuredError::invalid_argument(
+            "maximum value nesting depth exceeded",
+        ));
+    }
+    let next_depth = depth + 1;
     if value.is_null() || value.is_undefined() {
         return Ok(DecodedValue::Null);
     }
@@ -214,7 +229,7 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
         let arr = Array::from(value);
         let mut items = Vec::with_capacity(arr.length() as usize);
         for item in arr.iter() {
-            items.push(js_to_decoded_value(&item)?);
+            items.push(js_to_decoded_value_depth(&item, next_depth)?);
         }
         return Ok(DecodedValue::List(items));
     }
@@ -248,8 +263,9 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                     Ok(DecodedValue::DataSize(DataSize::new(num, unit)))
                 }
                 "pair" => {
-                    let first = js_to_decoded_value(&get_prop(value, "first")?)?;
-                    let second = js_to_decoded_value(&get_prop(value, "second")?)?;
+                    let first = js_to_decoded_value_depth(&get_prop(value, "first")?, next_depth)?;
+                    let second =
+                        js_to_decoded_value_depth(&get_prop(value, "second")?, next_depth)?;
                     Ok(DecodedValue::Pair(Box::new(first), Box::new(second)))
                 }
                 "regex" => {
@@ -264,7 +280,7 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                     let arr = Array::from(&items_val);
                     let mut items = Vec::with_capacity(arr.length() as usize);
                     for item in arr.iter() {
-                        items.push(js_to_decoded_value(&item)?);
+                        items.push(js_to_decoded_value_depth(&item, next_depth)?);
                     }
                     Ok(DecodedValue::Set(items))
                 }
@@ -290,8 +306,8 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                             ));
                         }
                         entries.push((
-                            js_to_decoded_value(&pair.get(0))?,
-                            js_to_decoded_value(&pair.get(1))?,
+                            js_to_decoded_value_depth(&pair.get(0), next_depth)?,
+                            js_to_decoded_value_depth(&pair.get(1), next_depth)?,
                         ));
                     }
                     Ok(DecodedValue::Map(entries))
@@ -306,7 +322,7 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                         for pair_val in Array::from(&props_val).iter() {
                             let pair = Array::from(&pair_val);
                             let k = pkl_string_from_js(&pair.get(0))?;
-                            let v = js_to_decoded_value(&pair.get(1))?;
+                            let v = js_to_decoded_value_depth(&pair.get(1), next_depth)?;
                             members.push(DecodedObjectMember {
                                 kind: ObjectMemberKind::Property,
                                 key: DecodedValue::String(k),
@@ -320,8 +336,8 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                             let pair = Array::from(&pair_val);
                             members.push(DecodedObjectMember {
                                 kind: ObjectMemberKind::Entry,
-                                key: js_to_decoded_value(&pair.get(0))?,
-                                value: js_to_decoded_value(&pair.get(1))?,
+                                key: js_to_decoded_value_depth(&pair.get(0), next_depth)?,
+                                value: js_to_decoded_value_depth(&pair.get(1), next_depth)?,
                             });
                         }
                     }
@@ -331,7 +347,7 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                             members.push(DecodedObjectMember {
                                 kind: ObjectMemberKind::Element,
                                 key: DecodedValue::Int(idx as i64),
-                                value: js_to_decoded_value(&elem_val)?,
+                                value: js_to_decoded_value_depth(&elem_val, next_depth)?,
                             });
                         }
                     }
@@ -357,13 +373,14 @@ pub fn js_to_decoded_value(value: &JsValue) -> Result<DecodedValue, StructuredEr
                 }),
                 "function" => Ok(DecodedValue::Function),
                 "reference" => {
-                    let domain = js_to_decoded_value(&get_prop(value, "domain")?)?;
-                    let data = js_to_decoded_value(&get_prop(value, "data")?)?;
+                    let domain =
+                        js_to_decoded_value_depth(&get_prop(value, "domain")?, next_depth)?;
+                    let data = js_to_decoded_value_depth(&get_prop(value, "data")?, next_depth)?;
                     let path_val = get_prop(value, "path")?;
                     let mut path = Vec::new();
                     if Array::is_array(&path_val) {
                         for item in Array::from(&path_val).iter() {
-                            path.push(js_to_decoded_value(&item)?);
+                            path.push(js_to_decoded_value_depth(&item, next_depth)?);
                         }
                     }
                     Ok(DecodedValue::Reference(DecodedReference {

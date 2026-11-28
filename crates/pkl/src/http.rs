@@ -32,6 +32,14 @@ impl HttpClient {
     }
 }
 
+impl std::fmt::Debug for HttpClient {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("HttpClient")
+            .field("closed", &self.is_closed())
+            .finish()
+    }
+}
+
 /// Builder for [`HttpClient`] (`org.pkl.core.http.HttpClient.Builder`).
 #[derive(Clone, Debug, Default)]
 pub struct HttpClientBuilder {
@@ -105,6 +113,7 @@ impl HttpClientBuilder {
         self
     }
 
+    #[doc(hidden)]
     pub fn with_test_port(mut self, port: u16) -> Self {
         self.test_port = Some(port);
         self
@@ -114,10 +123,12 @@ impl HttpClientBuilder {
     pub fn build(self) -> Result<HttpClient> {
         let mut cfg = HttpClientConfig::default();
         if let Some(d) = self.connect_timeout {
-            cfg.connect_timeout_ms = d.as_millis().min(u64::MAX as u128) as u64;
+            let ms = d.as_millis().min(u64::MAX as u128) as u64;
+            cfg.connect_timeout_ms = if ms == 0 && !d.is_zero() { 1 } else { ms };
         }
         if let Some(d) = self.request_timeout {
-            cfg.request_timeout_ms = d.as_millis().min(u64::MAX as u128) as u64;
+            let ms = d.as_millis().min(u64::MAX as u128) as u64;
+            cfg.request_timeout_ms = if ms == 0 && !d.is_zero() { 1 } else { ms };
         }
         cfg.proxy = ProxyConfig::new(self.proxy_address.as_deref(), &self.no_proxy)
             .map_err(PklError::configuration)?;

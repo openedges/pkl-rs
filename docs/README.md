@@ -15,9 +15,9 @@ Documentation in `pkl-rs` is organized into three tiers so end users, contributo
 | [SECURITY.md](../SECURITY.md) | Users / Security | Vulnerability disclosure and Pkl security model / trust boundaries |
 | [LICENSE](../LICENSE) | Legal / Distributors | Apache License, Version 2.0 |
 | [NOTICE](../NOTICE) | Legal / Distributors | Required Apache-2.0 attribution notices |
-| [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md) | Legal / Distributors | Complete embedded asset, font, vendored regex, and Rust crate license inventory |
-| [packages/pkl-wasm/README.md](../packages/pkl-wasm/README.md) | Web / Node users | `@pkl-rs/wasm` npm package guide and Wasm capability boundaries |
-| [packages/pkl-napi/README.md](../packages/pkl-napi/README.md) | Node.js users | `@pkl-rs/napi` npm package guide and supported native platforms |
+| [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md) | Legal / Distributors | Complete embedded asset, font, Unicode 15.0.0 UCD data, and Rust crate license inventory |
+| [packages/pkl-wasm/README.md](../packages/pkl-wasm/README.md) | Web / Node users | `@openedges/pkl-wasm` npm package guide and Wasm capability boundaries |
+| [packages/pkl-napi/README.md](../packages/pkl-napi/README.md) | Node.js users | `@openedges/pkl-napi` npm package guide and supported native platforms |
 
 ---
 

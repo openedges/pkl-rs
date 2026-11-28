@@ -287,6 +287,7 @@ impl Vm {
         self.stack.push(value);
         self.jump(step + 2)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn list_ops(
         &mut self,
         receiver: Value,
@@ -351,8 +352,24 @@ impl Vm {
                     return Err(index_error(self, &receiver, end, start, len)?);
                 }
                 if matches!(kind, ReplaceRange | ReplaceRangeOrNull) {
+                    let repl = values(self, arguments[2].as_object()?)?;
+                    let total_len = (start as usize)
+                        .saturating_add(repl.len())
+                        .saturating_add(input.len().saturating_sub(end as usize));
+                    if total_len > super::collections::MAX_MATERIALIZED_REPEAT_LIST {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "List of length {total_len} exceeds maximum materialized length ({}).",
+                                super::collections::MAX_MATERIALIZED_REPEAT_LIST
+                            ),
+                        ));
+                    }
+                    selected.try_reserve_exact(total_len).map_err(|_| {
+                        RuntimeError::new(ErrorKind::Type, "List size exceeds available memory.")
+                    })?;
                     selected.extend_from_slice(&input[..start as usize]);
-                    selected.extend(values(self, arguments[2].as_object()?)?);
+                    selected.extend(repl);
                     selected.extend_from_slice(&input[end as usize..]);
                 } else {
                     selected.extend_from_slice(&input[start as usize..end as usize]);

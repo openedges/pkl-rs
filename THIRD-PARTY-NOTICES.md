@@ -259,20 +259,35 @@ All **79 external Rust crates** locked in [Cargo.lock](Cargo.lock) (**67 runtime
 
 | SPDX License Expression | Crate Count | Representative Crates |
 | --- | ---: | --- |
-| `MIT OR Apache-2.0` / `Apache-2.0 OR MIT` / `MIT/Apache-2.0` | 60 | `rustls`, `wasm-bindgen`, `js-sys`, `sha1`, `sha2`, `md-5`, `libc`, `syn`, `quote`, `time`, `semver`, `unicode-normalization`, `windows-*` |
-| `MIT` | 8 | `napi`, `napi-derive`, `napi-sys`, `libm`, `convert_case`, `pem`, `zeroize`, `bumpalo` |
+| `MIT OR Apache-2.0` / `Apache-2.0 OR MIT` / `MIT/Apache-2.0` | 60 | `rustls-pki-types`, `zeroize`, `bumpalo`, `wasm-bindgen`, `js-sys`, `sha1`, `sha2`, `md-5`, `libc`, `syn`, `quote`, `time`, `semver`, `unicode-normalization`, `windows-*` |
+| `MIT` | 8 | `napi`, `napi-derive`, `napi-derive-backend`, `napi-build`, `napi-sys`, `libm`, `convert_case`, `pem` *(dev/test-only)* |
 | `ISC` | 3 | `libloading`, `rustls-webpki`, `untrusted` |
-| `Apache-2.0 OR ISC OR MIT` / `Apache-2.0 AND ISC` | 3 | `ring`, `rustls-pki-types`, `rustls-pemfile` |
+| `Apache-2.0 OR ISC OR MIT` / `Apache-2.0 AND ISC` | 3 | `ring`, `rustls`, `rustls-pemfile` |
 | `Zlib OR Apache-2.0 OR MIT` | 2 | `tinyvec`, `tinyvec_macros` |
 | `BSD-3-Clause` | 1 | `subtle` |
 | `(MIT OR Apache-2.0) AND Unicode-3.0` | 1 | `unicode-ident` |
 | `Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT` | 1 | `wasi` |
+
+### MIT License Copyright Holders (Statically Linked Crates)
+
+The MIT license text in Section 5 applies to the following MIT-licensed crates included in distributions:
+
+- **`libm`** (`0.2.16`, `MIT`): Copyright (c) 2018 Jorge Aparicio; Copyright © 2005–2020 Rich Felker, et al. (musl libc); portions Copyright © 1993, 2004 Sun Microsystems, David Schultz, Steven G. Kargl, Bruce D. Evans, Stephen L. Moshier, and Arm Limited.
+- **`napi` / `napi-derive` / `napi-derive-backend` / `napi-sys`** (`3.x`, `MIT`) and **`napi-build`** (`2.2.4`, `MIT`, `@openedges/pkl-napi` only): Copyright (c) napi-rs contributors.
+- **`convert_case`** (`0.8.0`, `MIT`): Copyright (c) 2025 rutrum.
+- **`pem`** (`3.0.6`, `MIT`, dev/test-only): Copyright (c) 2016 Jonathan Creekmore.
+- **`zeroize`** (`1.9.2`, `MIT OR Apache-2.0`): Copyright (c) 2018–2026 The RustCrypto Project Developers.
+- **`bumpalo`** (`3.20.3`, `MIT OR Apache-2.0`): Copyright (c) 2019 Nick Fitzgerald.
 
 ### `ring` (`0.17.14`, `Apache-2.0 AND ISC`)
 
 `ring` includes code derived from BoringSSL (Copyright Google Inc. and contributors, ISC-style / Apache-2.0) and portions of OpenSSL (Copyright 1995–2016 The OpenSSL Project / Eric Young, permissive OpenSSL/SSLeay terms). This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com).
 
 ### ISC License (Applies to `libloading`, `rustls-webpki`, `untrusted`, and `ring`)
+
+- **`libloading`** (`0.8.9`, `ISC`): Copyright © 2015, Simonas Kazlauskas.
+- **`rustls-webpki`** (`0.103.17`, `ISC`): Copyright 2015 Brian Smith.
+- **`untrusted`** (`0.9.0`, `ISC`): Copyright 2015–2016 Brian Smith.
 
 ```text
 Permission to use, copy, modify, and/or distribute this software for any
@@ -292,6 +307,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 ```text
 Copyright (c) 2016-2017 Isis Agora Lovecruft, Henry de Valence. All rights reserved.
+Copyright (c) 2016-2024 Isis Agora Lovecruft. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are

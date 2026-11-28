@@ -163,6 +163,7 @@ impl Bytes {
     pub(crate) fn lifetime(&self) -> std::sync::Weak<()> {
         Arc::downgrade(&self.cache.lifetime)
     }
+    #[cfg(test)]
     pub(crate) fn concatenate(&self, right: &Self) -> Self {
         if self.is_empty() {
             return right.clone();
@@ -174,6 +175,37 @@ impl Bytes {
         data.extend_from_slice(self);
         data.extend_from_slice(right);
         data.into()
+    }
+    pub(crate) fn try_concatenate(&self, right: &Self) -> Result<Self, crate::value::RuntimeError> {
+        const MAX_BYTES_LEN: usize = 256 * 1024 * 1024;
+        if self.is_empty() {
+            return Ok(right.clone());
+        }
+        if right.is_empty() {
+            return Ok(self.clone());
+        }
+        let total = self.len().checked_add(right.len()).ok_or_else(|| {
+            crate::value::RuntimeError::new(
+                crate::value::ErrorKind::Host,
+                "Bytes concatenation length overflow.",
+            )
+        })?;
+        if total > MAX_BYTES_LEN {
+            return Err(crate::value::RuntimeError::new(
+                crate::value::ErrorKind::Host,
+                format!("Bytes concatenation size {total} exceeds limit ({MAX_BYTES_LEN} bytes)."),
+            ));
+        }
+        let mut data = Vec::new();
+        data.try_reserve_exact(total).map_err(|_| {
+            crate::value::RuntimeError::new(
+                crate::value::ErrorKind::Host,
+                "Bytes concatenation allocation failed.",
+            )
+        })?;
+        data.extend_from_slice(self);
+        data.extend_from_slice(right);
+        Ok(data.into())
     }
     pub fn size(&self) -> crate::data_size::DataSize {
         use crate::data_size::{DataSize, DataSizeUnit};

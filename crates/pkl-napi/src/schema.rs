@@ -1,5 +1,6 @@
 //! Conversion of `pkl_runtime::schema::ModuleSchema` into JS objects matching the M6 contract.
 
+use crate::error::define_own_prop;
 use crate::values::decoded_object_to_js;
 use napi::{
     Env, Result,
@@ -40,43 +41,36 @@ pub fn module_schema_to_js<'env>(env: &'env Env, schema: &ModuleSchema) -> Resul
 
     let mut classes_obj = Object::new(env)?;
     for (name, cid) in &schema.classes {
-        classes_obj.set(
-            name.as_str(),
-            pclass_to_js(env, schema.store.class(*cid), &schema.store)?,
-        )?;
+        let cls_js = pclass_to_js(env, schema.store.class(*cid), &schema.store)?;
+        define_own_prop(env, &mut classes_obj, name.as_str(), &cls_js)?;
     }
     out.set("classes", classes_obj)?;
 
     let mut all_classes_obj = Object::new(env)?;
     for (name, cid) in schema.all_classes() {
-        all_classes_obj.set(
-            name.as_str(),
-            pclass_to_js(env, schema.store.class(cid), &schema.store)?,
-        )?;
+        let cls_js = pclass_to_js(env, schema.store.class(cid), &schema.store)?;
+        define_own_prop(env, &mut all_classes_obj, name.as_str(), &cls_js)?;
     }
     out.set("allClasses", all_classes_obj)?;
 
     let mut aliases_obj = Object::new(env)?;
     for (name, tid) in &schema.type_aliases {
-        aliases_obj.set(
-            name.as_str(),
-            type_alias_to_js(env, schema.store.type_alias(*tid))?,
-        )?;
+        let alias_js = type_alias_to_js(env, schema.store.type_alias(*tid))?;
+        define_own_prop(env, &mut aliases_obj, name.as_str(), &alias_js)?;
     }
     out.set("typeAliases", aliases_obj)?;
 
     let mut all_aliases_obj = Object::new(env)?;
     for (name, tid) in schema.all_type_aliases() {
-        all_aliases_obj.set(
-            name.as_str(),
-            type_alias_to_js(env, schema.store.type_alias(tid))?,
-        )?;
+        let alias_js = type_alias_to_js(env, schema.store.type_alias(tid))?;
+        define_own_prop(env, &mut all_aliases_obj, name.as_str(), &alias_js)?;
     }
     out.set("allTypeAliases", all_aliases_obj)?;
 
     let mut imports_obj = Object::new(env)?;
     for (alias, uri) in &schema.imports {
-        imports_obj.set(alias.as_str(), uri.as_str())?;
+        let uri_js = env.create_string(uri.as_str())?;
+        define_own_prop(env, &mut imports_obj, alias.as_str(), &uri_js)?;
     }
     out.set("imports", imports_obj)?;
 
@@ -85,6 +79,7 @@ pub fn module_schema_to_js<'env>(env: &'env Env, schema: &ModuleSchema) -> Resul
 
 fn pclass_to_js<'env>(env: &'env Env, cls: &PClass, store: &SchemaStore) -> Result<Object<'env>> {
     let mut out = Object::new(env)?;
+    out.set("info", class_info_to_js(env, &cls.info)?)?;
     out.set("moduleName", cls.info.module_name.as_str())?;
     out.set("simpleName", cls.info.simple_name.as_str())?;
     out.set("qualifiedName", cls.info.qualified_name())?;
@@ -133,25 +128,29 @@ fn pclass_to_js<'env>(env: &'env Env, cls: &PClass, store: &SchemaStore) -> Resu
 
     let mut props_obj = Object::new(env)?;
     for (name, prop) in &cls.properties {
-        props_obj.set(name.as_str(), property_to_js(env, prop)?)?;
+        let prop_js = property_to_js(env, prop)?;
+        define_own_prop(env, &mut props_obj, name.as_str(), &prop_js)?;
     }
     out.set("properties", props_obj)?;
 
     let mut all_props_obj = Object::new(env)?;
     for (name, prop) in store.all_properties(cls.id) {
-        all_props_obj.set(name.as_str(), property_to_js(env, prop)?)?;
+        let prop_js = property_to_js(env, prop)?;
+        define_own_prop(env, &mut all_props_obj, name.as_str(), &prop_js)?;
     }
     out.set("allProperties", all_props_obj)?;
 
     let mut methods_obj = Object::new(env)?;
     for (name, method) in &cls.methods {
-        methods_obj.set(name.as_str(), method_to_js(env, method)?)?;
+        let method_js = method_to_js(env, method)?;
+        define_own_prop(env, &mut methods_obj, name.as_str(), &method_js)?;
     }
     out.set("methods", methods_obj)?;
 
     let mut all_methods_obj = Object::new(env)?;
     for (name, method) in store.all_methods(cls.id) {
-        all_methods_obj.set(name.as_str(), method_to_js(env, method)?)?;
+        let method_js = method_to_js(env, method)?;
+        define_own_prop(env, &mut all_methods_obj, name.as_str(), &method_js)?;
     }
     out.set("allMethods", all_methods_obj)?;
 
@@ -222,7 +221,8 @@ fn method_to_js<'env>(env: &'env Env, method: &PClassMethod) -> Result<Object<'e
 
     let mut params = Object::new(env)?;
     for (pname, pty) in &method.parameters {
-        params.set(pname.as_str(), ptype_to_js(env, pty)?)?;
+        let pty_js = ptype_to_js(env, pty)?;
+        define_own_prop(env, &mut params, pname.as_str(), &pty_js)?;
     }
     out.set("parameters", params)?;
     out.set("returnType", ptype_to_js(env, &method.return_type)?)?;
@@ -231,6 +231,7 @@ fn method_to_js<'env>(env: &'env Env, method: &PClassMethod) -> Result<Object<'e
 
 fn type_alias_to_js<'env>(env: &'env Env, alias: &TypeAlias) -> Result<Object<'env>> {
     let mut out = Object::new(env)?;
+    out.set("info", alias_info_to_js(env, &alias.info)?)?;
     out.set("moduleName", alias.info.module_name.as_str())?;
     out.set("simpleName", alias.info.simple_name.as_str())?;
     out.set("qualifiedName", alias.info.qualified_name.as_str())?;
@@ -302,6 +303,7 @@ fn type_param_to_js<'env>(env: &'env Env, tp: &TypeParameter) -> Result<Object<'
             Variance::Invariant => "invariant",
             Variance::Covariant => "covariant",
             Variance::Contravariant => "contravariant",
+            _ => "invariant",
         },
     )?;
     Ok(out)
@@ -386,6 +388,9 @@ fn ptype_to_js<'env>(env: &'env Env, ty: &PType) -> Result<Object<'env>> {
         PType::TypeVariable(tp) => {
             out.set("kind", "typeVariable")?;
             out.set("typeParameter", type_param_to_js(env, tp)?)?;
+        }
+        _ => {
+            out.set("kind", "unknown")?;
         }
     }
     Ok(out)

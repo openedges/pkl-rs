@@ -114,6 +114,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn mapping_ops(
         &mut self,
         receiver: Value,
@@ -834,6 +835,7 @@ impl Vm {
             .and_then(|force| force.stolen_cast.as_ref())
             .is_some_and(|handler| handler.error.is_some())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_mapping_cast_failure(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("cast failure frame");
         let handler = frame

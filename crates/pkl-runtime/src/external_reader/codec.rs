@@ -20,7 +20,10 @@ use std::io::{Cursor, Read, Write};
 
 const MAX_NESTING_DEPTH: usize = 64;
 const MAX_PAYLOAD_BYTES: usize = 256 * 1024 * 1024;
+const MAX_MESSAGE_TOTAL_BYTES: usize = 256 * 1024 * 1024;
 const MAX_COLLECTION_ELEMENTS: usize = 4 * 1024 * 1024;
+const MAX_MESSAGE_NODES: usize = 4 * 1024 * 1024;
+const MSGPACK_READ_CHUNK_BYTES: usize = 64 * 1024;
 
 // ============================================================================
 // Public Convenience Functions
@@ -833,11 +836,17 @@ impl<'a, W: Write> MsgPackWriter<'a, W> {
 
 pub(crate) struct MsgPackReader<'a, R: Read> {
     input: &'a mut R,
+    decoded_bytes: usize,
+    decoded_nodes: usize,
 }
 
 impl<'a, R: Read> MsgPackReader<'a, R> {
     pub(crate) fn new(input: &'a mut R) -> Self {
-        Self { input }
+        Self {
+            input,
+            decoded_bytes: 0,
+            decoded_nodes: 0,
+        }
     }
 
     pub(crate) fn read_first_byte_or_eof(&mut self) -> Result<Option<u8>, ExternalReaderError> {
@@ -886,8 +895,38 @@ impl<'a, R: Read> MsgPackReader<'a, R> {
         if len > MAX_PAYLOAD_BYTES {
             return Err(format!("MessagePack payload length {len} exceeds maximum"));
         }
-        let mut buf = vec![0u8; len];
-        self.read_exact(&mut buf)?;
+        let next_total = self
+            .decoded_bytes
+            .checked_add(len)
+            .ok_or_else(|| "MessagePack cumulative message byte limit exceeded".to_string())?;
+        if next_total > MAX_MESSAGE_TOTAL_BYTES {
+            return Err(format!(
+                "MessagePack cumulative payload size {next_total} exceeds maximum of {MAX_MESSAGE_TOTAL_BYTES} bytes"
+            ));
+        }
+        // Read incrementally in bounded chunks so a truncated frame declaring a huge
+        // length header cannot trigger an immediate multi-hundred-MiB allocation.
+        let mut buf = Vec::with_capacity(len.min(MSGPACK_READ_CHUNK_BYTES));
+        let mut remaining = len;
+        let mut chunk = [0u8; MSGPACK_READ_CHUNK_BYTES];
+        while remaining > 0 {
+            let want = remaining.min(chunk.len());
+            let n = loop {
+                match self.input.read(&mut chunk[..want]) {
+                    Ok(n) => break n,
+                    Err(e) if e.kind() == std::io::ErrorKind::Interrupted => continue,
+                    Err(e) => return Err(format!("Unexpected EOF or I/O error: {e}")),
+                }
+            };
+            if n == 0 {
+                return Err("Unexpected EOF or I/O error: failed to fill whole buffer".into());
+            }
+            buf.try_reserve(n)
+                .map_err(|_| "MessagePack payload allocation failed".to_string())?;
+            buf.extend_from_slice(&chunk[..n]);
+            remaining -= n;
+        }
+        self.decoded_bytes = next_total;
         Ok(buf)
     }
 
@@ -953,6 +992,12 @@ impl<'a, R: Read> MsgPackReader<'a, R> {
     pub(crate) fn unpack_value(&mut self, depth: usize) -> Result<MsgPackValue, String> {
         if depth > MAX_NESTING_DEPTH {
             return Err("MessagePack nesting depth exceeded".into());
+        }
+        self.decoded_nodes = self.decoded_nodes.saturating_add(1);
+        if self.decoded_nodes > MAX_MESSAGE_NODES {
+            return Err(format!(
+                "MessagePack value node count exceeds maximum of {MAX_MESSAGE_NODES}"
+            ));
         }
         let b = self.read_byte()?;
         match b {
@@ -1097,5 +1142,27 @@ const fn format_type_name(b: u8) -> &'static str {
         0xc4..=0xc6 => "Binary",
         0xc7..=0xc9 | 0xd4..=0xd8 => "Extension",
         0xca | 0xcb => "Float",
+    }
+}
+
+#[cfg(test)]
+mod security_tests {
+    use super::*;
+    use std::io::Cursor;
+
+    #[test]
+    fn msgpack_reader_rejects_oversized_and_truncated_bin32_without_oom() {
+        // 5-byte frame declaring a 256 MiB + 1 byte `bin32` inside a 2-element array:
+        // [0x26, bin32(256 MiB + 1)]
+        let over_limit = [0x92u8, 0x26, 0xc6, 0x10, 0x00, 0x00, 0x01];
+        let mut cur = Cursor::new(&over_limit[..]);
+        let err = read_message(&mut cur).expect_err("oversized bin32 must be rejected");
+        assert!(format!("{err:?}").contains("exceeds") || format!("{err:?}").contains("Decode"));
+
+        // 5-byte frame declaring a 200 MiB `bin32` with only 4 bytes of payload:
+        // must fail incrementally at EOF without pre-allocating 200 MiB.
+        let truncated_huge = [0x92u8, 0x26, 0xc6, 0x0c, 0x80, 0x00, 0x00, 1, 2, 3, 4];
+        let mut cur2 = Cursor::new(&truncated_huge[..]);
+        assert!(read_message(&mut cur2).is_err());
     }
 }

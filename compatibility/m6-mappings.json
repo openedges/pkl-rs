@@ -7,8 +7,8 @@
   "scope": "Complete M6 Wasm & N-API Product Completion requirement-to-evidence mappings covering Wasm browser execution, Wasm Node execution, N-API Node execution, 4-way cross-target raw-byte parity, explicit capability-gap honesty, JS<->Rust conversion telemetry, and clean-directory packaging & install verification.",
   "api_contract": {
     "version": "0.32.0",
-    "wasm_package": "@pkl-rs/wasm",
-    "napi_package": "@pkl-rs/napi",
+    "wasm_package": "@openedges/pkl-wasm",
+    "napi_package": "@openedges/pkl-napi",
     "common_exports": [
       "PKL_VERSION",
       "capabilities",
@@ -283,7 +283,7 @@
           "symbol": "normalizeTimeoutMs"
         },
         {
-          "path": "packages/pkl-wasm/src/index.mjs",
+          "path": "packages/pkl-wasm/src/testing.mjs",
           "symbol": "measureConversion"
         }
       ]
@@ -320,7 +320,7 @@
     },
     "m6:wasm-node:packed-install-and-core": {
       "lane": "wasm-node",
-      "description": "Node.js clean-installed packed @pkl-rs/wasm execution: auto-init, renderers, output.files, formatter, VFS/async loaders, pure-Wasm package loading, lossless values, 64-bit clock/lifecycle, and capability-gap honesty",
+      "description": "Node.js clean-installed packed @openedges/pkl-wasm execution: auto-init, renderers, output.files, formatter, VFS/async loaders, pure-Wasm package loading, lossless values, 64-bit clock/lifecycle, and capability-gap honesty",
       "case_ids": [
         "m6:wasm-node:eval-renderers-and-stdlib",
         "m6:wasm-node:eval-output-bytes-and-files",
@@ -551,7 +551,7 @@
           "symbol": "parseTimeoutMs"
         },
         {
-          "path": "packages/pkl-napi/src/runtime.cjs",
+          "path": "packages/pkl-napi/src/testing.cjs",
           "symbol": "measureConversion"
         }
       ]
@@ -626,7 +626,7 @@
     },
     "m6:packaging:wasm-and-napi-npm-tarballs-and-matrix": {
       "lane": "packaging-and-install",
-      "description": "Reproducible npm pack + clean isolated temp directory install & live execution of @pkl-rs/wasm (Node + Chromium), @pkl-rs/napi (ESM + CJS), and platform support matrix metadata",
+      "description": "Reproducible npm pack + clean isolated temp directory install & live execution of @openedges/pkl-wasm (Node + Chromium), @openedges/pkl-napi (ESM + CJS), and platform support matrix metadata",
       "case_ids": [
         "m6:pack:wasm-npm-pack-clean-install-node-and-browser",
         "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",

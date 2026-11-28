@@ -401,21 +401,54 @@ impl FastIntTree {
     }
 
     #[inline]
-    fn execute(&self, args: &[i64], max_steps: usize) -> Option<(i64, usize)> {
+    fn execute(&self, args: &[i64], max_steps: usize) -> TreeResult {
         if max_steps == 0 {
-            return None;
+            return TreeResult::Abort(0);
         }
         let mut budget = max_steps;
         let res = if self.arity == 1 {
-            eval_tree_1(&self.nodes, self.root, self.root, args[0], 0, &mut budget)?
+            eval_tree_1(&self.nodes, self.root, self.root, args[0], 0, &mut budget)
         } else {
             let mut a = [0i64; 4];
             a[..args.len()].copy_from_slice(args);
-            eval_tree_n(&self.nodes, self.root, self.root, &a, 0, &mut budget)?
+            eval_tree_n(&self.nodes, self.root, self.root, &a, 0, &mut budget)
         };
         let consumed = max_steps.saturating_sub(budget).max(1);
-        Some((res, consumed))
+        match res {
+            TreeEval::Ok(val) => TreeResult::Done(val, consumed),
+            TreeEval::DepthExceeded => TreeResult::DepthExceeded(consumed),
+            TreeEval::Abort => TreeResult::Abort(consumed),
+        }
     }
+}
+
+#[cfg(target_arch = "wasm32")]
+const MAX_FAST_TREE_DEPTH: u16 = 128;
+#[cfg(not(target_arch = "wasm32"))]
+const MAX_FAST_TREE_DEPTH: u16 = 256;
+
+#[derive(Clone, Copy, Debug)]
+enum TreeEval {
+    Ok(i64),
+    DepthExceeded,
+    Abort,
+}
+
+#[derive(Clone, Copy, Debug)]
+enum TreeResult {
+    Done(i64, usize),
+    DepthExceeded(usize),
+    Abort(usize),
+}
+
+macro_rules! try_tree {
+    ($expr:expr) => {
+        match $expr {
+            TreeEval::Ok(v) => v,
+            TreeEval::DepthExceeded => return TreeEval::DepthExceeded,
+            TreeEval::Abort => return TreeEval::Abort,
+        }
+    };
 }
 
 #[inline]
@@ -426,17 +459,31 @@ fn eval_tree_1(
     arg0: i64,
     depth: u16,
     budget: &mut usize,
-) -> Option<i64> {
+) -> TreeEval {
+    if depth >= MAX_FAST_TREE_DEPTH {
+        return TreeEval::DepthExceeded;
+    }
+    let next_depth = depth + 1;
     loop {
         match nodes[id as usize] {
-            FastExpr::Arg(_) => return Some(arg0),
-            FastExpr::Const(k) => return Some(k),
-            FastExpr::ArgAddConst(_, k) => return arg0.checked_add(i64::from(k)),
-            FastExpr::ArgSubConst(_, k) => return arg0.checked_sub(i64::from(k)),
-            FastExpr::ArgLtConst(_, k) => return Some(i64::from(arg0 < i64::from(k))),
-            FastExpr::ArgLeConst(_, k) => return Some(i64::from(arg0 <= i64::from(k))),
-            FastExpr::ArgGtConst(_, k) => return Some(i64::from(arg0 > i64::from(k))),
-            FastExpr::ArgGeConst(_, k) => return Some(i64::from(arg0 >= i64::from(k))),
+            FastExpr::Arg(_) => return TreeEval::Ok(arg0),
+            FastExpr::Const(k) => return TreeEval::Ok(k),
+            FastExpr::ArgAddConst(_, k) => {
+                return match arg0.checked_add(i64::from(k)) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
+            }
+            FastExpr::ArgSubConst(_, k) => {
+                return match arg0.checked_sub(i64::from(k)) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
+            }
+            FastExpr::ArgLtConst(_, k) => return TreeEval::Ok(i64::from(arg0 < i64::from(k))),
+            FastExpr::ArgLeConst(_, k) => return TreeEval::Ok(i64::from(arg0 <= i64::from(k))),
+            FastExpr::ArgGtConst(_, k) => return TreeEval::Ok(i64::from(arg0 > i64::from(k))),
+            FastExpr::ArgGeConst(_, k) => return TreeEval::Ok(i64::from(arg0 >= i64::from(k))),
             FastExpr::IfArgLtConst {
                 k,
                 then_id,
@@ -466,97 +513,112 @@ fn eval_tree_1(
                 then_id,
                 else_id,
             } => {
-                let c = eval_tree_1(nodes, root, cond, arg0, depth, budget)?;
+                let c = try_tree!(eval_tree_1(nodes, root, cond, arg0, next_depth, budget));
                 id = if c != 0 { then_id } else { else_id };
             }
             FastExpr::Add(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return lv.checked_add(rv);
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return match lv.checked_add(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Sub(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return lv.checked_sub(rv);
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return match lv.checked_sub(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Mul(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return lv.checked_mul(rv);
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return match lv.checked_mul(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::AddConst(x, k) => {
-                return eval_tree_1(nodes, root, x, arg0, depth, budget)?.checked_add(i64::from(k));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return match v.checked_add(i64::from(k)) {
+                    Some(r) => TreeEval::Ok(r),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::SubConst(x, k) => {
-                return eval_tree_1(nodes, root, x, arg0, depth, budget)?.checked_sub(i64::from(k));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return match v.checked_sub(i64::from(k)) {
+                    Some(r) => TreeEval::Ok(r),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Lt(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv < rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv < rv));
             }
             FastExpr::Le(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv <= rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv <= rv));
             }
             FastExpr::Gt(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv > rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv > rv));
             }
             FastExpr::Ge(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv >= rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv >= rv));
             }
             FastExpr::Eq(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv == rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv == rv));
             }
             FastExpr::Ne(l, r) => {
-                let lv = eval_tree_1(nodes, root, l, arg0, depth, budget)?;
-                let rv = eval_tree_1(nodes, root, r, arg0, depth, budget)?;
-                return Some(i64::from(lv != rv));
+                let lv = try_tree!(eval_tree_1(nodes, root, l, arg0, next_depth, budget));
+                let rv = try_tree!(eval_tree_1(nodes, root, r, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv != rv));
             }
             FastExpr::LtConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_1(nodes, root, x, arg0, depth, budget)? < i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(v < i64::from(k)));
             }
             FastExpr::LeConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_1(nodes, root, x, arg0, depth, budget)? <= i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(v <= i64::from(k)));
             }
             FastExpr::GtConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_1(nodes, root, x, arg0, depth, budget)? > i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(v > i64::from(k)));
             }
             FastExpr::GeConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_1(nodes, root, x, arg0, depth, budget)? >= i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_1(nodes, root, x, arg0, next_depth, budget));
+                return TreeEval::Ok(i64::from(v >= i64::from(k)));
             }
             FastExpr::CallSelf1ArgSub(k) => {
-                if depth >= 1024 || *budget < 4 {
-                    return None;
+                if *budget < 4 {
+                    return TreeEval::Abort;
                 }
                 *budget -= 4;
-                let next_arg = arg0.checked_sub(i64::from(k))?;
-                return eval_tree_1(nodes, root, root, next_arg, depth + 1, budget);
+                let Some(next_arg) = arg0.checked_sub(i64::from(k)) else {
+                    return TreeEval::Abort;
+                };
+                return eval_tree_1(nodes, root, root, next_arg, next_depth, budget);
             }
             FastExpr::CallSelf1(a) => {
-                if depth >= 1024 || *budget < 4 {
-                    return None;
+                if *budget < 4 {
+                    return TreeEval::Abort;
                 }
                 *budget -= 4;
-                let next_arg = eval_tree_1(nodes, root, a, arg0, depth, budget)?;
-                return eval_tree_1(nodes, root, root, next_arg, depth + 1, budget);
+                let next_arg = try_tree!(eval_tree_1(nodes, root, a, arg0, next_depth, budget));
+                return eval_tree_1(nodes, root, root, next_arg, next_depth, budget);
             }
-            _ => return None,
+            _ => return TreeEval::Abort,
         }
     }
 }
@@ -569,17 +631,39 @@ fn eval_tree_n(
     args: &[i64; 4],
     depth: u16,
     budget: &mut usize,
-) -> Option<i64> {
+) -> TreeEval {
+    if depth >= MAX_FAST_TREE_DEPTH {
+        return TreeEval::DepthExceeded;
+    }
+    let next_depth = depth + 1;
     loop {
         match nodes[id as usize] {
-            FastExpr::Arg(a) => return Some(args[a as usize]),
-            FastExpr::Const(k) => return Some(k),
-            FastExpr::ArgAddConst(a, k) => return args[a as usize].checked_add(i64::from(k)),
-            FastExpr::ArgSubConst(a, k) => return args[a as usize].checked_sub(i64::from(k)),
-            FastExpr::ArgLtConst(a, k) => return Some(i64::from(args[a as usize] < i64::from(k))),
-            FastExpr::ArgLeConst(a, k) => return Some(i64::from(args[a as usize] <= i64::from(k))),
-            FastExpr::ArgGtConst(a, k) => return Some(i64::from(args[a as usize] > i64::from(k))),
-            FastExpr::ArgGeConst(a, k) => return Some(i64::from(args[a as usize] >= i64::from(k))),
+            FastExpr::Arg(a) => return TreeEval::Ok(args[a as usize]),
+            FastExpr::Const(k) => return TreeEval::Ok(k),
+            FastExpr::ArgAddConst(a, k) => {
+                return match args[a as usize].checked_add(i64::from(k)) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
+            }
+            FastExpr::ArgSubConst(a, k) => {
+                return match args[a as usize].checked_sub(i64::from(k)) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
+            }
+            FastExpr::ArgLtConst(a, k) => {
+                return TreeEval::Ok(i64::from(args[a as usize] < i64::from(k)));
+            }
+            FastExpr::ArgLeConst(a, k) => {
+                return TreeEval::Ok(i64::from(args[a as usize] <= i64::from(k)));
+            }
+            FastExpr::ArgGtConst(a, k) => {
+                return TreeEval::Ok(i64::from(args[a as usize] > i64::from(k)));
+            }
+            FastExpr::ArgGeConst(a, k) => {
+                return TreeEval::Ok(i64::from(args[a as usize] >= i64::from(k)));
+            }
             FastExpr::IfArgLtConst {
                 arg,
                 k,
@@ -609,120 +693,133 @@ fn eval_tree_n(
                 then_id,
                 else_id,
             } => {
-                let c = eval_tree_n(nodes, root, cond, args, depth, budget)?;
+                let c = try_tree!(eval_tree_n(nodes, root, cond, args, next_depth, budget));
                 id = if c != 0 { then_id } else { else_id };
             }
             FastExpr::Add(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return lv.checked_add(rv);
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return match lv.checked_add(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Sub(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return lv.checked_sub(rv);
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return match lv.checked_sub(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Mul(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return lv.checked_mul(rv);
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return match lv.checked_mul(rv) {
+                    Some(v) => TreeEval::Ok(v),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::AddConst(x, k) => {
-                return eval_tree_n(nodes, root, x, args, depth, budget)?.checked_add(i64::from(k));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return match v.checked_add(i64::from(k)) {
+                    Some(r) => TreeEval::Ok(r),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::SubConst(x, k) => {
-                return eval_tree_n(nodes, root, x, args, depth, budget)?.checked_sub(i64::from(k));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return match v.checked_sub(i64::from(k)) {
+                    Some(r) => TreeEval::Ok(r),
+                    None => TreeEval::Abort,
+                };
             }
             FastExpr::Lt(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv < rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv < rv));
             }
             FastExpr::Le(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv <= rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv <= rv));
             }
             FastExpr::Gt(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv > rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv > rv));
             }
             FastExpr::Ge(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv >= rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv >= rv));
             }
             FastExpr::Eq(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv == rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv == rv));
             }
             FastExpr::Ne(l, r) => {
-                let lv = eval_tree_n(nodes, root, l, args, depth, budget)?;
-                let rv = eval_tree_n(nodes, root, r, args, depth, budget)?;
-                return Some(i64::from(lv != rv));
+                let lv = try_tree!(eval_tree_n(nodes, root, l, args, next_depth, budget));
+                let rv = try_tree!(eval_tree_n(nodes, root, r, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(lv != rv));
             }
             FastExpr::LtConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_n(nodes, root, x, args, depth, budget)? < i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(v < i64::from(k)));
             }
             FastExpr::LeConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_n(nodes, root, x, args, depth, budget)? <= i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(v <= i64::from(k)));
             }
             FastExpr::GtConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_n(nodes, root, x, args, depth, budget)? > i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(v > i64::from(k)));
             }
             FastExpr::GeConst(x, k) => {
-                return Some(i64::from(
-                    eval_tree_n(nodes, root, x, args, depth, budget)? >= i64::from(k),
-                ));
+                let v = try_tree!(eval_tree_n(nodes, root, x, args, next_depth, budget));
+                return TreeEval::Ok(i64::from(v >= i64::from(k)));
             }
             FastExpr::CallSelf2(a0, a1) => {
-                if depth >= 1024 || *budget < 4 {
-                    return None;
+                if *budget < 4 {
+                    return TreeEval::Abort;
                 }
                 *budget -= 4;
                 let next = [
-                    eval_tree_n(nodes, root, a0, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a1, args, depth, budget)?,
+                    try_tree!(eval_tree_n(nodes, root, a0, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a1, args, next_depth, budget)),
                     0,
                     0,
                 ];
-                return eval_tree_n(nodes, root, root, &next, depth + 1, budget);
+                return eval_tree_n(nodes, root, root, &next, next_depth, budget);
             }
             FastExpr::CallSelf3(a0, a1, a2) => {
-                if depth >= 1024 || *budget < 4 {
-                    return None;
+                if *budget < 4 {
+                    return TreeEval::Abort;
                 }
                 *budget -= 4;
                 let next = [
-                    eval_tree_n(nodes, root, a0, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a1, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a2, args, depth, budget)?,
+                    try_tree!(eval_tree_n(nodes, root, a0, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a1, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a2, args, next_depth, budget)),
                     0,
                 ];
-                return eval_tree_n(nodes, root, root, &next, depth + 1, budget);
+                return eval_tree_n(nodes, root, root, &next, next_depth, budget);
             }
             FastExpr::CallSelf4(a0, a1, a2, a3) => {
-                if depth >= 1024 || *budget < 4 {
-                    return None;
+                if *budget < 4 {
+                    return TreeEval::Abort;
                 }
                 *budget -= 4;
                 let next = [
-                    eval_tree_n(nodes, root, a0, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a1, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a2, args, depth, budget)?,
-                    eval_tree_n(nodes, root, a3, args, depth, budget)?,
+                    try_tree!(eval_tree_n(nodes, root, a0, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a1, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a2, args, next_depth, budget)),
+                    try_tree!(eval_tree_n(nodes, root, a3, args, next_depth, budget)),
                 ];
-                return eval_tree_n(nodes, root, root, &next, depth + 1, budget);
+                return eval_tree_n(nodes, root, root, &next, next_depth, budget);
             }
-            _ => return None,
+            _ => return TreeEval::Abort,
         }
     }
 }
@@ -747,18 +844,20 @@ enum ValKind {
     SelfFn(usize),
 }
 
-fn is_int_accepting_type(ty: &TypeCheck) -> bool {
+#[inline]
+pub(super) fn is_int_accepting_type(ty: &TypeCheck) -> bool {
     match ty.resolved() {
         TypeCheck::Any
         | TypeCheck::Unknown
         | TypeCheck::Int
         | TypeCheck::Number
         | TypeCheck::NonNull => true,
-        TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
-        } => is_int_accepting_type(inner),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => is_int_accepting_type(inner),
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded: inner,
+            ..
+        } if arguments.is_empty() => is_int_accepting_type(inner),
         TypeCheck::Nullable(inner) => is_int_accepting_type(inner),
         _ => false,
     }
@@ -767,11 +866,12 @@ fn is_int_accepting_type(ty: &TypeCheck) -> bool {
 fn is_bool_accepting_type(ty: &TypeCheck) -> bool {
     match ty.resolved() {
         TypeCheck::Any | TypeCheck::Unknown | TypeCheck::Boolean | TypeCheck::NonNull => true,
-        TypeCheck::Alias(inner)
-        | TypeCheck::GenericAlias(inner)
-        | TypeCheck::NamedAlias {
-            expanded: inner, ..
-        } => is_bool_accepting_type(inner),
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => is_bool_accepting_type(inner),
+        TypeCheck::NamedAlias {
+            arguments,
+            expanded: inner,
+            ..
+        } if arguments.is_empty() => is_bool_accepting_type(inner),
         TypeCheck::Nullable(inner) => is_bool_accepting_type(inner),
         _ => false,
     }
@@ -780,6 +880,7 @@ fn is_bool_accepting_type(ty: &TypeCheck) -> bool {
 impl FastIntBlock {
     /// Attempts to compile `code` into a pure-`i64` `FastIntBlock`.
     /// Returns `None` if any instruction, control-flow join, or type falls outside the pure-`i64` subset.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn compile(code: &[Instruction], arity: usize) -> Option<Self> {
         if code.is_empty() || code.len() > 4096 {
             return None;
@@ -1169,6 +1270,11 @@ impl FastIntBlock {
         }
 
         let has_self_calls = !self_calls.is_empty();
+        // Self-calls in the abstract verifier assume `ValKind::Int` returns; reject recursive
+        // Bool-returning functions and arity-mismatched self-calls before execution.
+        if has_self_calls && (!returns_int || self_calls.iter().any(|c| c.arity != arity)) {
+            return None;
+        }
         // Only lower to the expression-tree IR when recursion or 2-arg fold matching
         // will amortize the lowering allocation; non-recursive 1-shot helpers execute
         // directly on the compact bytecode ops.
@@ -1224,9 +1330,12 @@ impl FastIntBlock {
     }
 
     /// Executes this `FastIntBlock` on a pure `i64` scratchpad.
-    /// Returns `Some((result_i64, steps_consumed))` on clean completion, or `None`
-    /// on overflow, recursion limit, or step-budget exhaustion (zero side effects).
-    #[inline]
+    /// Returns `Ok((result_i64, steps_consumed))` on clean completion, or
+    /// `Err(steps_consumed)` on overflow, recursion limit, or step-budget
+    /// exhaustion (zero side effects, while still billing consumed steps so
+    /// cooperative timeout/cancellation cannot be bypassed).
+    #[cfg_attr(not(target_arch = "wasm32"), inline)]
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn execute(
         &self,
         captured: &[i64],
@@ -1235,13 +1344,44 @@ impl FastIntBlock {
         val_stack: &mut Vec<i64>,
         locals_buf: &mut Vec<i64>,
         call_stack: &mut Vec<(u32, u32)>,
-    ) -> Option<(i64, usize)> {
+    ) -> Result<(i64, usize), usize> {
+        let mut prior_steps = 0usize;
         if captured.is_empty()
             && let Some(tree) = &self.tree
             && args.len() == tree.arity as usize
         {
-            return tree.execute(args, max_steps);
+            match tree.execute(args, max_steps) {
+                TreeResult::Done(val, consumed) => return Ok((val, consumed)),
+                TreeResult::Abort(consumed) => return Err(consumed),
+                TreeResult::DepthExceeded(consumed) => {
+                    prior_steps = consumed;
+                    if prior_steps >= max_steps {
+                        return Err(prior_steps);
+                    }
+                }
+            }
         }
+        let rem_steps = max_steps.saturating_sub(prior_steps);
+        let mut steps: usize = 0;
+        match self.execute_ops(
+            captured, args, rem_steps, &mut steps, val_stack, locals_buf, call_stack,
+        ) {
+            Some(val) => Ok((val, prior_steps.saturating_add(steps).max(1))),
+            None => Err(prior_steps.saturating_add(steps).max(1)),
+        }
+    }
+
+    #[allow(clippy::too_many_arguments)]
+    fn execute_ops(
+        &self,
+        captured: &[i64],
+        args: &[i64],
+        max_steps: usize,
+        steps_out: &mut usize,
+        val_stack: &mut Vec<i64>,
+        locals_buf: &mut Vec<i64>,
+        call_stack: &mut Vec<(u32, u32)>,
+    ) -> Option<i64> {
         val_stack.clear();
         locals_buf.clear();
         call_stack.clear();
@@ -1254,21 +1394,20 @@ impl FastIntBlock {
         let consts = self.consts.as_slice();
         let mut pc: usize = 0;
         let mut locals_base: usize = 0;
-        let mut steps: usize = 0;
 
-        while steps < max_steps {
+        while *steps_out < max_steps {
             let op = *ops.get(pc)?;
-            steps += 1;
+            *steps_out += 1;
             match op {
                 FastIntOp::LoadLocal(depth) => {
-                    let idx = locals_buf.len() - 1 - (depth as usize);
-                    val_stack.push(locals_buf[idx]);
+                    let idx = locals_buf.len().checked_sub(1 + depth as usize)?;
+                    val_stack.push(*locals_buf.get(idx)?);
                     pc += 1;
                 }
                 FastIntOp::StoreLocal(depth) => {
                     let v = val_stack.pop()?;
-                    let idx = locals_buf.len() - 1 - (depth as usize);
-                    locals_buf[idx] = v;
+                    let idx = locals_buf.len().checked_sub(1 + depth as usize)?;
+                    *locals_buf.get_mut(idx)? = v;
                     pc += 1;
                 }
                 FastIntOp::BindNewLocal => {
@@ -1285,7 +1424,7 @@ impl FastIntBlock {
                     pc += 1;
                 }
                 FastIntOp::ConstPool(idx) => {
-                    val_stack.push(consts[idx as usize]);
+                    val_stack.push(*consts.get(idx as usize)?);
                     pc += 1;
                 }
                 FastIntOp::Add => {
@@ -1390,6 +1529,9 @@ impl FastIntBlock {
                 }
                 FastIntOp::Swap => {
                     let n = val_stack.len();
+                    if n < 2 {
+                        return None;
+                    }
                     val_stack.swap(n - 1, n - 2);
                     pc += 1;
                 }
@@ -1425,7 +1567,7 @@ impl FastIntBlock {
                         pc = ret_pc as usize;
                     } else {
                         let result = val_stack.pop()?;
-                        return Some((result, steps));
+                        return Some(result);
                     }
                 }
             }
@@ -1439,7 +1581,8 @@ impl FastIntBlock {
 /// - Every `BindLocal` site in `fast_block` already has `heap.local_kind` recorded (`Long | Object`)
 /// - Every `SelfCallSite` resolves directly (non-open, non-abstract or local, non-deprecated, non-saturated) to `fn_id`
 /// - All captured locals are `Value::Int` (copied into `captured_out`)
-#[inline]
+#[cfg_attr(not(target_arch = "wasm32"), inline)]
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 pub(super) fn verify_fast_int_invocation(
     fast_block: &FastIntBlock,
     block_id: usize,

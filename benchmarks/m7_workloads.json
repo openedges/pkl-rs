@@ -206,7 +206,7 @@
       "op_mode": "eval-expression",
       "module": "benchmarks/fixtures/collections.pkl",
       "java_reference_workload": "stdlib-collections",
-      "description": "@pkl-rs/napi Node startup, warm persistent eval-expression throughput, and Node wait4 RSS"
+      "description": "@openedges/pkl-napi Node startup, warm persistent eval-expression throughput, and Node wait4 RSS"
     },
     {
       "id": "napi-typed-conversion",
@@ -216,7 +216,7 @@
       "op_mode": "typed-conversion",
       "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
       "java_reference_workload": "js-boundary-payload",
-      "description": "@pkl-rs/napi BigInt/Uint8Array/UTF-16 typed value conversion throughput and Node wait4 RSS"
+      "description": "@openedges/pkl-napi BigInt/Uint8Array/UTF-16 typed value conversion throughput and Node wait4 RSS"
     },
     {
       "id": "wasm-node-eval-text",
@@ -226,7 +226,7 @@
       "op_mode": "eval-expression",
       "module": "benchmarks/fixtures/collections.pkl",
       "java_reference_workload": "stdlib-collections",
-      "description": "@pkl-rs/wasm Node init/compile, warm persistent eval-expression throughput, and Node wait4 RSS"
+      "description": "@openedges/pkl-wasm Node init/compile, warm persistent eval-expression throughput, and Node wait4 RSS"
     },
     {
       "id": "wasm-node-typed-conversion",
@@ -236,7 +236,7 @@
       "op_mode": "typed-conversion",
       "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
       "java_reference_workload": "js-boundary-payload",
-      "description": "@pkl-rs/wasm Node BigInt/Uint8Array/UTF-16 typed conversion throughput and Node wait4 RSS"
+      "description": "@openedges/pkl-wasm Node BigInt/Uint8Array/UTF-16 typed conversion throughput and Node wait4 RSS"
     },
     {
       "id": "wasm-browser-eval-text",
@@ -246,7 +246,7 @@
       "op_mode": "eval-expression",
       "module": "benchmarks/fixtures/collections.pkl",
       "java_reference_workload": "stdlib-collections",
-      "description": "@pkl-rs/wasm Playwright Chromium 1.64.1 init/compile, warm eval throughput, and browser process-tree RSS"
+      "description": "@openedges/pkl-wasm Playwright Chromium 1.64.1 init/compile, warm eval throughput, and browser process-tree RSS"
     },
     {
       "id": "wasm-browser-typed-conversion",
@@ -256,7 +256,7 @@
       "op_mode": "typed-conversion",
       "module": "benchmarks/m7_fixtures/js_boundary_payload.pkl",
       "java_reference_workload": "js-boundary-payload",
-      "description": "@pkl-rs/wasm Playwright Chromium 1.64.1 BigInt/Uint8Array typed conversion and browser process-tree RSS"
+      "description": "@openedges/pkl-wasm Playwright Chromium 1.64.1 BigInt/Uint8Array typed conversion and browser process-tree RSS"
     }
   ]
 }

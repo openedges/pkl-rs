@@ -2,7 +2,7 @@
 //! matching Pkl 0.32.0 `ModulePathResolver.java`, `ModuleKeyFactories.ModulePath`,
 //! `ModuleKeys.ModulePath`, `ModuleKeys.GenericUrl`, and `ResourceReaders.ModulePath`.
 
-use crate::fs::{NativeFs, path_to_file_uri};
+use crate::fs::{NativeFs, open_file_nofollow, path_to_file_uri, strip_windows_uri_leading_slash};
 use crate::zip_archive::ZipReader;
 use pkl_runtime::host::modulepath::{
     format_jar_file_uri, is_zip_or_executable_jar_magic, parse_jar_file_uri, parse_modulepath_uri,
@@ -97,7 +97,7 @@ impl NativeModulePathResolver {
                 if real_root.is_dir() {
                     index_directory(&real_root, &real_root, &mut guard.entries)?;
                 } else if real_root.is_file() && is_archive_candidate(&real_root) {
-                    let bytes = fs::read(&real_root).map_err(|err| {
+                    let bytes = crate::fs::read_path_bounded(&real_root).map_err(|err| {
                         format!(
                             "Failed to read modulepath archive `{}`: {err}",
                             real_root.display()
@@ -151,7 +151,8 @@ impl NativeModulePathResolver {
 
         // Check both original archive URI and canonicalized archive URI.
         let mut matched = state.mounted_jars.contains_key(&parsed.archive_file_uri);
-        if !matched && let Ok(real_archive) = fs::canonicalize(&parsed.archive_path) {
+        let archive_path = strip_windows_uri_leading_slash(PathBuf::from(&parsed.archive_path));
+        if !matched && let Ok(real_archive) = fs::canonicalize(&archive_path) {
             let real_uri = path_to_file_uri(&real_archive).to_java_utf8();
             matched = state.mounted_jars.contains_key(&real_uri);
         }
@@ -214,7 +215,7 @@ impl NativeModulePathResolver {
                 real_path,
                 resolved_uri,
             } => {
-                let bytes = fs::read(&real_path).map_err(|err| {
+                let bytes = crate::fs::read_path_nofollow_bounded(&real_path).map_err(|err| {
                     if err.kind() == std::io::ErrorKind::NotFound {
                         ModuleHostError::NotFound
                     } else {
@@ -269,11 +270,13 @@ impl NativeModulePathResolver {
         drop(guard);
 
         match target {
-            IndexedTarget::DirFile { real_path, .. } => match fs::read(&real_path) {
-                Ok(bytes) => Ok(Some(bytes)),
-                Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
-                Err(err) => Err(ReadFailure::Io(IoFailure::from(err.to_string()))),
-            },
+            IndexedTarget::DirFile { real_path, .. } => {
+                match crate::fs::read_path_nofollow_bounded(&real_path) {
+                    Ok(bytes) => Ok(Some(bytes)),
+                    Err(err) if err.kind() == std::io::ErrorKind::NotFound => Ok(None),
+                    Err(err) => Err(ReadFailure::Io(IoFailure::from(err.to_string()))),
+                }
+            }
             IndexedTarget::ArchiveEntry {
                 archive,
                 entry_path,
@@ -299,7 +302,7 @@ pub fn resolve_generic_jar_module(
     let parsed = parse_jar_file_uri(uri).ok_or_else(|| ModuleHostError::UriSyntax {
         reason: format!("Invalid `jar:file:` URI `{uri}`.").into(),
     })?;
-    let archive_path = PathBuf::from(&parsed.archive_path);
+    let archive_path = strip_windows_uri_leading_slash(PathBuf::from(&parsed.archive_path));
     let real_archive = match fs::canonicalize(&archive_path) {
         Ok(real) => real,
         Err(err) if err.kind() == std::io::ErrorKind::NotFound => {
@@ -314,23 +317,30 @@ pub fn resolve_generic_jar_module(
     {
         return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
     }
-    let archive_bytes = fs::read(&real_archive).map_err(|err| {
+    let canonical_uri = format_jar_file_uri(
+        &path_to_file_uri(&real_archive).to_java_utf8(),
+        &parsed.entry_path,
+    );
+    if real_archive != archive_path
+        && let Err(msg) = fs_host.policy().check_allowlist_only(&canonical_uri, false)
+    {
+        return Err(ModuleHostError::SecurityManagerException { message: Some(msg) });
+    }
+    let mut archive_file = open_file_nofollow(&real_archive).map_err(|err| {
         if err.kind() == std::io::ErrorKind::NotFound {
             ModuleHostError::NotFound
         } else {
             ModuleHostError::Io(IoFailure::from(err.to_string()))
         }
     })?;
+    let archive_bytes = crate::fs::read_file_bounded(&mut archive_file)
+        .map_err(|err| ModuleHostError::Io(IoFailure::from(err.to_string())))?;
     let zip = ZipReader::parse(&archive_bytes)
         .map_err(|err| ModuleHostError::Io(IoFailure::from(err)))?;
     let entry_bytes = zip
         .get(&parsed.entry_path)
         .ok_or(ModuleHostError::NotFound)?
         .to_vec();
-    let canonical_uri = format_jar_file_uri(
-        &path_to_file_uri(&real_archive).to_java_utf8(),
-        &parsed.entry_path,
-    );
     Ok((
         ResolvedModule {
             original_uri: uri.clone(),
@@ -351,7 +361,7 @@ pub fn read_generic_jar_resource(
     let parsed = parse_jar_file_uri(uri).ok_or_else(|| ReadFailure::UriSyntax {
         reason: format!("Invalid `jar:file:` URI `{uri}`.").into(),
     })?;
-    let archive_path = PathBuf::from(&parsed.archive_path);
+    let archive_path = strip_windows_uri_leading_slash(PathBuf::from(&parsed.archive_path));
     let real_archive = match fs::canonicalize(&archive_path) {
         Ok(real) => real,
         Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
@@ -364,11 +374,22 @@ pub fn read_generic_jar_resource(
     {
         return Err(ReadFailure::SecurityManagerException { message: Some(msg) });
     }
-    let archive_bytes = match fs::read(&real_archive) {
-        Ok(b) => b,
+    let canonical_uri = format_jar_file_uri(
+        &path_to_file_uri(&real_archive).to_java_utf8(),
+        &parsed.entry_path,
+    );
+    if real_archive != archive_path
+        && let Err(msg) = fs_host.policy().check_allowlist_only(&canonical_uri, true)
+    {
+        return Err(ReadFailure::SecurityManagerException { message: Some(msg) });
+    }
+    let mut archive_file = match open_file_nofollow(&real_archive) {
+        Ok(f) => f,
         Err(err) if err.kind() == std::io::ErrorKind::NotFound => return Ok(None),
         Err(err) => return Err(ReadFailure::Io(IoFailure::from(err.to_string()))),
     };
+    let archive_bytes = crate::fs::read_file_bounded(&mut archive_file)
+        .map_err(|err| ReadFailure::Io(IoFailure::from(err.to_string())))?;
     let zip =
         ZipReader::parse(&archive_bytes).map_err(|err| ReadFailure::Io(IoFailure::from(err)))?;
     Ok(zip.get(&parsed.entry_path).map(<[u8]>::to_vec))
@@ -429,7 +450,7 @@ fn index_directory(
         let Ok(meta) = fs::symlink_metadata(&path) else {
             continue;
         };
-        if meta.is_symlink() {
+        if crate::fs::is_symlink_or_junction(&path, &meta) {
             continue;
         }
         if meta.is_dir() {

@@ -288,8 +288,8 @@ def build_manifest(root: Path = ROOT) -> dict:
         "schema_version": 1,
         "baseline": inventory["baseline"],
         "scope": (
-            "Complete M6 Wasm & N-API Product Completion manifest: unified `@pkl-rs/wasm` (browser + Node, "
-            "VFS, async loaders, pure-Wasm package archives) and `@pkl-rs/napi` (dual ESM+CJS, native FS/HTTP/"
+            "Complete M6 Wasm & N-API Product Completion manifest: unified `@openedges/pkl-wasm` (browser + Node, "
+            "VFS, async loaders, pure-Wasm package archives) and `@openedges/pkl-napi` (dual ESM+CJS, native FS/HTTP/"
             "HTTPS/CA/proxy/projects/packages/external readers, non-blocking async + cancel/timeout/close), "
             "lossless BigInt/Uint8Array/UTF-16 & 64-bit clock, 4-way cross-target raw-byte parity "
             "(Java == Native == N-API == Wasm), clean-install packaging verification, and explicit "

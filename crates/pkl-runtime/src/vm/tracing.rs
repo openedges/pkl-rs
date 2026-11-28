@@ -29,6 +29,7 @@ impl TraceRun {
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_trace(&mut self, operand: Span) -> Result<(), RuntimeError> {
         if self.callback_closing {
             return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));

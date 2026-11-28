@@ -12,8 +12,8 @@ Executes all 6 required M7 memory reclamation scenarios from PLAN.md:
 
 Runs across:
   - native     : recorded-build `crates/pkl/examples/m7_memory_soak_probe.rs`
-  - napi-node  : `@pkl-rs/napi` under Node.js (`--expose-gc`), tracking RSS, heapUsed, FDs, child PIDs
-  - wasm-node  : `@pkl-rs/wasm` under Node.js (`--expose-gc`), tracking Wasm linear memory pages + Node RSS/heapUsed
+  - napi-node  : `@openedges/pkl-napi` under Node.js (`--expose-gc`), tracking RSS, heapUsed, FDs, child PIDs
+  - wasm-node  : `@openedges/pkl-wasm` under Node.js (`--expose-gc`), tracking Wasm linear memory pages + Node RSS/heapUsed
 
 Measurement honesty & integrity:
   - Each (target, scenario) executes in a fresh isolated OS child process so RSS/Wasm pages never bleed across scenarios.
@@ -81,7 +81,10 @@ PROFILE_ITERATIONS: dict[str, dict[str, dict[str, tuple[int, int]]]] = {
         },
         "napi-node": {
             "repeated-success": (1000, 100),
-            "repeated-failure": (1000, 100),
+            # 1500 measured + 300 warmup (matching native's 1500/300 budget) ensures V8's one-time
+            # concurrent TurboFan compiler init (~4 MiB around step ~750) completes in the first half
+            # so the second half measures 750 pure post-JIT steady-state iterations.
+            "repeated-failure": (1500, 300),
             "unique-sources-churn": (400, 40),
             "cyclic-graphs": (600, 60),
             "lifecycle-cancel-timeout-close": (100, 10),
@@ -841,7 +844,7 @@ def execute(
         napi_native_dir = root / "packages/pkl-napi/native"
         native_addons = sorted(p for p in napi_native_dir.glob("*.node") if p.is_file())
         if not napi_entry.is_file() or not native_addons:
-            raise RuntimeError("built @pkl-rs/napi package/native addon missing under packages/pkl-napi/")
+            raise RuntimeError("built @openedges/pkl-napi package/native addon missing under packages/pkl-napi/")
         candidates["napi_package"] = {
             "entry": NAPI_PKG_ENTRY.as_posix(),
             "entry_sha256": oracle.sha256(napi_entry),
@@ -857,7 +860,7 @@ def execute(
         wasm_entry = root / WASM_PKG_ENTRY
         wasm_bin = root / "packages/pkl-wasm/dist/wasm/pkl_wasm_bg.wasm"
         if not wasm_entry.is_file() or not wasm_bin.is_file():
-            raise RuntimeError("built @pkl-rs/wasm package/wasm binary missing under packages/pkl-wasm/dist/")
+            raise RuntimeError("built @openedges/pkl-wasm package/wasm binary missing under packages/pkl-wasm/dist/")
         candidates["wasm_package"] = {
             "entry": WASM_PKG_ENTRY.as_posix(),
             "entry_sha256": oracle.sha256(wasm_entry),
@@ -971,8 +974,23 @@ def execute(
         for s in scenarios
     }
 
+    git_head: str | None = None
+    try:
+        head_proc = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        cand = head_proc.stdout.strip()
+        if head_proc.returncode == 0 and len(cand) == 40:
+            git_head = cand
+    except OSError:
+        git_head = None
+
     report = {
         "schema_version": 1,
+        "source": {"git_head": git_head} if git_head else {},
         "suite": "m7-memory-reclamation-soak",
         "baseline": "0.32.0",
         "profile": profile,

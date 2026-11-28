@@ -20,13 +20,14 @@ pub mod security;
 pub mod settings;
 pub mod value;
 
-pub use analyzer::{Analyzer, AnalyzerBuilder, Import, ImportGraph};
+pub use analyzer::{Analyzer, AnalyzerBuilder, Import, ImportGraph, ImportNode};
 pub use error::{PklError, PklErrorKind, Result};
 pub use evaluator::{CancelHandle, CommandEvalResult, Evaluator, EvaluatorBuilder, FileOutput};
 pub use frame::{StackFrame, StackFrameTransformer, StackFrameTransformers};
 pub use http::{HttpClient, HttpClientBuilder};
 pub use logger::{BufferedLogger, Logger, Loggers};
 pub use module_source::ModuleSource;
+pub use pkl_runtime::packages::project::PackageSpec;
 pub use project::Project;
 pub use reader::{
     ModuleKey, ModuleKeyFactories, ModuleKeyFactory, PathElement, ResolvedModuleKey, Resource,
@@ -35,16 +36,20 @@ pub use reader::{
 pub use release::{PKL_MAJOR, PKL_MINOR, PKL_PATCH, PKL_VERSION, Release};
 pub use security::{SecurityManager, SecurityManagers, StandardSecurityManager};
 pub use settings::{
-    Color, DEFAULT_EDITOR_URL_SCHEME, Editor, ExternalReaderSpec, HttpSettings, OutputFormat,
-    PklEvaluatorSettings, PklSettings, ProxySettings, TraceMode,
+    Color, DEFAULT_EDITOR_URL_SCHEME, Editor, EvaluatorColor, ExternalReaderSpec, HttpSettings,
+    OutputFormat, PklEvaluatorSettings, PklSettings, ProxySettings, TraceMode,
 };
 pub use value::{
-    FromPklValue, PModule, PObject, PklBinaryDecoder, PklDataSize, PklDuration, PklValue,
+    FromPklValue, PModule, PObject, PklBinaryDecoder, PklBytes, PklDataSize, PklDuration, PklValue,
 };
 
-/// Re-exports of `pkl-runtime` schema types (`Evaluator::evaluate_schema`).
+/// Re-exports of public schema data types returned by [`Evaluator::evaluate_schema`].
 pub mod schema {
-    pub use pkl_runtime::schema::*;
+    pub use pkl_runtime::schema::{
+        ClassId, Modifier, ModuleSchema, PClass, PClassInfo, PClassMethod, PClassProperty, PType,
+        SchemaStore, SourceLocation, TypeAlias, TypeAliasId, TypeAliasInfo, TypeParameter,
+        Variance,
+    };
 }
 
 /// Re-exports of `pkl:test` result and reporter APIs (`SpecReporter`, `MinimalReporter`, `JUnitReporter`).

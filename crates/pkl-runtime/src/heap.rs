@@ -1143,6 +1143,18 @@ impl MemberList {
     }
 
     #[inline]
+    pub fn try_reserve(
+        &mut self,
+        additional: usize,
+    ) -> Result<(), std::collections::TryReserveError> {
+        if additional > 0 {
+            Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new())))
+                .try_reserve(additional)?;
+        }
+        Ok(())
+    }
+
+    #[inline]
     pub fn set(&mut self, index: usize, member: Member) {
         Arc::make_mut(self.0.get_or_insert_with(|| Arc::new(Vec::new())))[index] = member;
     }
@@ -1839,6 +1851,30 @@ impl Heap {
 
     pub(crate) fn register_module(&mut self, unit: crate::modules::UnitId, id: ObjectId) {
         self.module_index.insert(unit.0, id);
+    }
+
+    pub(crate) fn get_local_module_index(&self, unit: crate::modules::UnitId) -> Option<ObjectId> {
+        self.module_index.get(&unit.0).copied()
+    }
+
+    pub(crate) fn restore_local_module_index(
+        &mut self,
+        unit: crate::modules::UnitId,
+        prev: Option<ObjectId>,
+    ) {
+        if let Some(id) = prev {
+            self.module_index.insert(unit.0, id);
+        } else {
+            self.module_index.remove(&unit.0);
+        }
+    }
+
+    pub(crate) fn snapshot_local_class_index(&self) -> FastMap<usize, ObjectId> {
+        self.class_index.clone()
+    }
+
+    pub(crate) fn restore_local_class_index(&mut self, prev: FastMap<usize, ObjectId>) {
+        self.class_index = prev;
     }
 
     /// Allocates a strict dense `List` directly into a heap `Box<Object>` without a

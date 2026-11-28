@@ -167,10 +167,21 @@ fn render_with_layout(
     limit: usize,
     multiline: bool,
 ) -> Result<crate::value::PklString, RuntimeError> {
+    const MAX_SYNC_DIAGNOSTIC_STEPS: usize = 4_000_000;
+    const MAX_SYNC_DIAGNOSTIC_UTF16_UNITS: usize = 32 * 1024 * 1024;
     let module = module.into();
     let module = &module;
     let mut run = RenderRun::new(value.clone(), limit, multiline);
-    while !run.step(heap, module)? {}
+    let mut steps = 0usize;
+    while !run.step(heap, module)? {
+        steps += 1;
+        if steps > MAX_SYNC_DIAGNOSTIC_STEPS || run.units.len() > MAX_SYNC_DIAGNOSTIC_UTF16_UNITS {
+            return Err(RuntimeError::new(
+                ErrorKind::Host,
+                "Value string representation exceeds maximum size limit.",
+            ));
+        }
+    }
     Ok(run.finish())
 }
 

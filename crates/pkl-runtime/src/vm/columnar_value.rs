@@ -60,9 +60,12 @@ fn is_valid_binary_ident(s: &str) -> bool {
 }
 
 #[inline]
-fn align8(n: usize) -> usize {
-    (n + 7) & !7
+fn align8(n: usize) -> Option<usize> {
+    n.checked_add(7).map(|v| v & !7)
 }
+
+const MAX_COLUMNAR_NODES: usize = 2_000_000;
+const MAX_COLUMNAR_PAYLOAD_BYTES: usize = 64 * 1024 * 1024;
 
 struct ShapeKey {
     class_name: String,
@@ -257,13 +260,13 @@ impl ColumnarValueBuffer {
         let Some(ops_bytes) = ops_total.checked_mul(4) else {
             return false;
         };
-        let Some(bigs_off) = ops_off.checked_add(ops_bytes).map(align8) else {
+        let Some(bigs_off) = ops_off.checked_add(ops_bytes).and_then(align8) else {
             return false;
         };
         let Some(bigs_bytes) = self.bigs.len().checked_mul(8) else {
             return false;
         };
-        let Some(floats_off) = bigs_off.checked_add(bigs_bytes).map(align8) else {
+        let Some(floats_off) = bigs_off.checked_add(bigs_bytes).and_then(align8) else {
             return false;
         };
         let Some(floats_bytes) = self.floats.len().checked_mul(8) else {
@@ -296,10 +299,12 @@ impl ColumnarValueBuffer {
         if u32::try_from(total_bytes).is_err() {
             return false;
         }
+        let Some(reserve_bytes) = total_bytes.checked_add(8) else {
+            return false;
+        };
 
         self.packed.clear();
-        if self.packed.capacity() < total_bytes + 8
-            && self.packed.try_reserve(total_bytes + 8).is_err()
+        if self.packed.capacity() < reserve_bytes && self.packed.try_reserve(reserve_bytes).is_err()
         {
             return false;
         }
@@ -433,6 +438,7 @@ struct PackCtx<'a> {
     dynamic_class: Option<ObjectId>,
     empty_dynamic_parent_cache: Option<ObjectId>,
     active: Vec<ObjectId>,
+    remaining_nodes: usize,
 }
 
 impl<'a> PackCtx<'a> {
@@ -676,11 +682,34 @@ impl<'a> PackCtx<'a> {
             }
         }
         let count = elems.len();
-        out.bigs.reserve(count * n_int);
-        out.bools.reserve(count * n_bool);
-        out.val_str_lens.reserve(count * n_str);
-        out.bin_lens.reserve(count * n_bytes);
-        out.floats.reserve(count * n_float);
+        let Some(row_budget) = count.checked_mul(k.saturating_add(1)) else {
+            out.restore(cp);
+            return false;
+        };
+        if row_budget > self.remaining_nodes {
+            out.restore(cp);
+            return false;
+        }
+        self.remaining_nodes -= row_budget;
+        let (Some(int_cap), Some(bool_cap), Some(str_cap), Some(bytes_cap), Some(float_cap)) = (
+            count.checked_mul(n_int),
+            count.checked_mul(n_bool),
+            count.checked_mul(n_str),
+            count.checked_mul(n_bytes),
+            count.checked_mul(n_float),
+        ) else {
+            out.restore(cp);
+            return false;
+        };
+        if out.bigs.try_reserve(int_cap).is_err()
+            || out.bools.try_reserve(bool_cap).is_err()
+            || out.val_str_lens.try_reserve(str_cap).is_err()
+            || out.bin_lens.try_reserve(bytes_cap).is_err()
+            || out.floats.try_reserve(float_cap).is_err()
+        {
+            out.restore(cp);
+            return false;
+        }
 
         let use_collection_members = !first_obj.collection_members.is_empty();
         // Record exact cache_slots permutation from element 0 so property forcing in any order
@@ -755,6 +784,12 @@ impl<'a> PackCtx<'a> {
                     }
                 }
                 if ok {
+                    if out.val_str_utf8.len().saturating_add(out.bin_bytes.len())
+                        > MAX_COLUMNAR_PAYLOAD_BYTES
+                    {
+                        out.restore(cp);
+                        return false;
+                    }
                     continue;
                 }
                 // Fall through cleanly if this specific row has a different cache_slots order.
@@ -774,6 +809,12 @@ impl<'a> PackCtx<'a> {
                     out.restore(cp);
                     return false;
                 }
+            }
+            if out.val_str_utf8.len().saturating_add(out.bin_bytes.len())
+                > MAX_COLUMNAR_PAYLOAD_BYTES
+            {
+                out.restore(cp);
+                return false;
             }
         }
         true
@@ -802,6 +843,13 @@ impl<'a> PackCtx<'a> {
     }
 
     fn pack_value(&mut self, value: &Value, out: &mut ColumnarValueBuffer) -> bool {
+        if self.remaining_nodes == 0
+            || out.val_str_utf8.len().saturating_add(out.bin_bytes.len())
+                > MAX_COLUMNAR_PAYLOAD_BYTES
+        {
+            return false;
+        }
+        self.remaining_nodes -= 1;
         match value {
             Value::Null | Value::NullWithDefault(_) => {
                 out.ops.push(OP_NULL);
@@ -1110,6 +1158,14 @@ impl Vm {
                 else {
                     return false;
                 };
+                // Match `Instruction::CheckModuleOutput`: `output` must be a `ModuleOutput`.
+                if !collections::typed_class_ref(&self.heap, *out_id)
+                    .ok()
+                    .flatten()
+                    .is_some_and(|c| c.id == output::MODULE_OUTPUT)
+                {
+                    return false;
+                }
                 let Some(out_obj) = self.heap.get_fast(*out_id) else {
                     return false;
                 };
@@ -1147,6 +1203,7 @@ impl Vm {
             dynamic_class,
             empty_dynamic_parent_cache: None,
             active: Vec::with_capacity(8),
+            remaining_nodes: MAX_COLUMNAR_NODES,
         };
         if !ctx.pack_value(root, out) {
             out.reset_streams();

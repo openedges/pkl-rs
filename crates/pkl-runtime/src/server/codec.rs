@@ -48,7 +48,7 @@ pub fn write_message<W: Write>(
 ///
 /// Returns `Ok(None)` on clean EOF before the first byte of the next message.
 /// External-reader-only codes (`0x2e`–`0x32`) fail with exact upstream
-/// `Unhandled decoding message code \`<hex>\`.` (`AbstractMessagePackDecoder.java:82-83`).
+/// ``Unhandled decoding message code `<hex>`.`` (`AbstractMessagePackDecoder.java:82-83`).
 pub fn read_message<R: Read>(reader: &mut R) -> Result<Option<ServerMessage>, ExternalReaderError> {
     let mut unpacker = MsgPackReader::new(reader);
     let Some(first_byte) = unpacker.read_first_byte_or_eof()? else {

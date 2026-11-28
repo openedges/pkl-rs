@@ -118,7 +118,7 @@ function makePadding(seed, repeats) {
 function baseOpts() {
   return {
     allowedModules: ["pkl:", "repl:", "file:", "package:", "uncached:", "churn:"],
-    allowedResources: ["prop:", "env:", "file:", "package:"],
+    allowedResources: ["prop:", "env:", "file:", "https:", "package:"],
     env: {},
     properties: {},
   };

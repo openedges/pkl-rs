@@ -14,9 +14,9 @@ macOS bytes / Linux KiB) across all required M7 workload families:
   - `server` (MessagePack `0x20-0x25` startup + steady request throughput)
   - `formatter` (`pkl format` on substantial unformatted module)
   - `pkldoc` (`SinglePackageTest` documentation site generation)
-  - `napi` (`@pkl-rs/napi` Node startup, warm eval & `BigInt`/`Uint8Array` conversion + Node RSS)
-  - `wasm-node` (`@pkl-rs/wasm` Node init/compile, warm eval & conversion + Node RSS)
-  - `wasm-browser` (`@pkl-rs/wasm` Playwright Chromium 1.64.1 init, warm eval & browser-tree RSS)
+  - `napi` (`@openedges/pkl-napi` Node startup, warm eval & `BigInt`/`Uint8Array` conversion + Node RSS)
+  - `wasm-node` (`@openedges/pkl-wasm` Node init/compile, warm eval & conversion + Node RSS)
+  - `wasm-browser` (`@openedges/pkl-wasm` Playwright Chromium 1.64.1 init, warm eval & browser-tree RSS)
 
 Strict honesty invariants (`INTENT.md`, `TESTING.md`, `AGENTS.md`):
   1. 100% raw-byte output/error/file verification against pinned Pkl 0.32.0 BEFORE timing.
@@ -783,7 +783,7 @@ def evaluate_browser_wasm_verdict(
     browser_engine: str = "chromium",
     workload_key: str | None = None,
 ) -> dict[str, Any]:
-    """Evaluate browser `@pkl-rs/wasm` under the 2026-11-22 browser Wasm contract.
+    """Evaluate browser `@openedges/pkl-wasm` under the 2026-11-22 browser Wasm contract.
 
     Execution time must meet `<= 1.00x` Java for Chromium and WebKit (with only the
     explicitly documented Firefox `typed-conversion` exception). Memory is gated on
@@ -998,18 +998,18 @@ def build_rust_artifacts(
 
         if need_napi:
             if not node_bin:
-                raise RuntimeError("node executable required to rebuild @pkl-rs/napi")
+                raise RuntimeError("node executable required to rebuild @openedges/pkl-napi")
             napi_cmd = [node_bin, str(root / "packages/pkl-napi/scripts/build.mjs")]
             napi_cap = capture_wait4(napi_cmd, root, dict(os.environ), destination / "build/napi-build", timeout=600)
             if napi_cap["status"] != "executed" or napi_cap["exit_code"] != 0:
                 err = raw_channel(napi_cap, "stderr").decode("utf-8", errors="replace")
-                raise RuntimeError(f"@pkl-rs/napi build failed (rc={napi_cap['exit_code']}): {err[-1000:]}")
+                raise RuntimeError(f"@openedges/pkl-napi build failed (rc={napi_cap['exit_code']}): {err[-1000:]}")
             build_record["commands"].append({"cmd": napi_cmd, "capture": "build/napi-build/result.json"})
             napi_binding = "recorded-build"
 
         if need_wasm:
             if not node_bin:
-                raise RuntimeError("node executable required to rebuild @pkl-rs/wasm")
+                raise RuntimeError("node executable required to rebuild @openedges/pkl-wasm")
             wasm_env = dict(os.environ)
             m1_tools_bin = root / ".cache/m1-tools/bin"
             if m1_tools_bin.is_dir():
@@ -1018,7 +1018,7 @@ def build_rust_artifacts(
             wasm_cap = capture_wait4(wasm_cmd, root, wasm_env, destination / "build/wasm-build", timeout=600)
             if wasm_cap["status"] != "executed" or wasm_cap["exit_code"] != 0:
                 err = raw_channel(wasm_cap, "stderr").decode("utf-8", errors="replace")
-                raise RuntimeError(f"@pkl-rs/wasm build failed (rc={wasm_cap['exit_code']}): {err[-1000:]}")
+                raise RuntimeError(f"@openedges/pkl-wasm build failed (rc={wasm_cap['exit_code']}): {err[-1000:]}")
             build_record["commands"].append({"cmd": wasm_cmd, "capture": "build/wasm-build/result.json"})
             wasm_binding = "recorded-build"
 
@@ -1045,7 +1045,7 @@ def build_rust_artifacts(
     napi_addons = sorted(napi_node.glob("*.node")) if napi_node.is_dir() else []
     if not napi_addons:
         if need_napi or full_catalog:
-            raise ValueError(f"missing compiled @pkl-rs/napi .node addon under {napi_node}")
+            raise ValueError(f"missing compiled @openedges/pkl-napi .node addon under {napi_node}")
     else:
         artifacts["napi_addon"] = {
             "path": str(napi_addons[0]),
@@ -3072,8 +3072,23 @@ def run_suite(
         if r["vs_m0_graalvm_25_0_1"]["verdict"] != "pass"
     ]
 
+    git_head: str | None = None
+    try:
+        head_proc = subprocess.run(
+            ["git", "-C", str(root), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        cand = head_proc.stdout.strip()
+        if head_proc.returncode == 0 and len(cand) == 40:
+            git_head = cand
+    except OSError:
+        git_head = None
+
     report: dict[str, Any] = {
         "schema_version": 1,
+        "source": {"git_head": git_head} if git_head else {},
         "timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "baseline": contract["baseline"],
         "baseline_mode": baseline,

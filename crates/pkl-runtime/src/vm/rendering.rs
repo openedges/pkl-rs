@@ -42,6 +42,7 @@ struct Members {
     members: Vec<collections::RenderMember>,
     next: usize,
     seen: Vec<(CollectionMember, Option<i32>)>,
+    seen_buckets: crate::heap::FastMap<(bool, Option<i32>), Vec<usize>>,
     compare: usize,
     prepared: bool,
     hash: Option<i32>,
@@ -216,6 +217,9 @@ pub(super) struct RenderRun {
         ),
     >,
 }
+const MAX_RENDER_BYTES: usize = 128 * 1024 * 1024;
+const MAX_RENDER_INDENT_BYTES: usize = 16 * 1024 * 1024;
+
 impl RenderRun {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
         roots.push(Value::Object(self.receiver));
@@ -302,11 +306,33 @@ impl RenderRun {
         }
     }
     fn indentation(&self, depth: usize) -> PklString {
+        let total = self.indent.len_bytes().saturating_mul(depth);
+        let safe_depth = if total > MAX_RENDER_INDENT_BYTES && self.indent.len_bytes() > 0 {
+            MAX_RENDER_INDENT_BYTES / self.indent.len_bytes()
+        } else {
+            depth
+        };
         let mut text = crate::pkl_string::PklStringBuilder::default();
-        for _ in 0..depth {
+        for _ in 0..safe_depth {
             text.push_value(&self.indent);
         }
         text.finish()
+    }
+    fn check_output_budget(&self) -> Result<(), RuntimeError> {
+        let size = if self.format == Format::PklBinary {
+            self.binary.len()
+        } else if let Some(yaml) = &self.yaml {
+            yaml.byte_len()
+        } else {
+            self.output.len_bytes_approx()
+        };
+        if size > MAX_RENDER_BYTES {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Rendered output exceeds maximum allowed size.",
+            ));
+        }
+        Ok(())
     }
     fn append(&mut self, text: &str) {
         if self.format == Format::Protobuf
@@ -633,6 +659,7 @@ impl Vm {
         }
         None
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_jsonnet_render(&mut self, document: bool) -> Result<(), RuntimeError> {
         // Authored methods may capture lexical locals before their argument.
         let root = self
@@ -708,6 +735,7 @@ impl Vm {
         }));
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_pcf(&mut self) -> Result<(), RuntimeError> {
         let index = self.frames.len() - 1;
         let mut run = self.frames[index]
@@ -845,6 +873,7 @@ impl Vm {
             }
             return Ok(true);
         };
+        run.check_output_budget()?;
         match task {
             Task::Protobuf(task) => self.advance_protobuf(run, task),
             Task::BinaryArray(length) => {
@@ -1071,11 +1100,18 @@ impl Vm {
             ) else {
                 return Err(invalid("YAML options"));
             };
-            let width = width.get() as i32;
+            let raw_width = width.get();
+            let width = raw_width as i32;
             if width == 0 {
                 return Err(RuntimeError::new(
                     ErrorKind::Unsupported,
                     "Pinned Java YAML zero narrowed indent raises an oracle-internal error; this boundary remains unresolved.",
+                ));
+            }
+            if raw_width < 0 || !(0..=1_048_576).contains(&width) {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!("YAML indent width `{raw_width}` is out of supported range."),
                 ));
             }
             let mode = match mode.as_str() {
@@ -1742,6 +1778,7 @@ impl Vm {
                         members,
                         next: 0,
                         seen: Vec::new(),
+                        seen_buckets: crate::heap::FastMap::default(),
                         compare: 0,
                         prepared: false,
                         hash: None,
@@ -1882,6 +1919,7 @@ impl Vm {
                     members,
                     next: 0,
                     seen: Vec::new(),
+                    seen_buckets: crate::heap::FastMap::default(),
                     compare: 0,
                     prepared: false,
                     hash: None,
@@ -2006,32 +2044,56 @@ impl Vm {
                 }
                 if needs_key_dedup {
                     m.hash = self.java_hash(&descriptor.key)?;
+                    let is_prop = descriptor.kind == CollectionMemberKind::Property;
                     let mut duplicate = false;
-                    while m.compare < m.seen.len() {
-                        let (seen, hash) = &m.seen[m.compare];
-                        m.compare += 1;
-                        if (seen.kind == CollectionMemberKind::Property)
-                            != (descriptor.kind == CollectionMemberKind::Property)
-                            || hash.zip(m.hash).is_some_and(|(a, b)| a != b)
-                        {
-                            continue;
-                        }
-                        if !matches!(
-                            (&seen.key, &descriptor.key),
-                            (Value::Object(_), _) | (_, Value::Object(_))
-                        ) {
-                            if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
-                                duplicate = true;
-                                break;
+                    if let Some(h) = m.hash {
+                        let bucket_key = (is_prop, Some(h));
+                        let bucket_len = m.seen_buckets.get(&bucket_key).map_or(0, Vec::len);
+                        while m.compare < bucket_len {
+                            let seen_idx = m.seen_buckets[&bucket_key][m.compare];
+                            let (seen, _) = &m.seen[seen_idx];
+                            m.compare += 1;
+                            if !matches!(
+                                (&seen.key, &descriptor.key),
+                                (Value::Object(_), _) | (_, Value::Object(_))
+                            ) {
+                                if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
+                                    duplicate = true;
+                                    break;
+                                }
+                                continue;
                             }
-                            continue;
+                            let left = seen.key.clone();
+                            let right = descriptor.key.clone();
+                            run.tasks.push(Task::Members(m));
+                            run.await_ = Some(Await::KeyEquality);
+                            self.begin_equality(left, right, false);
+                            return Ok(false);
                         }
-                        let left = seen.key.clone();
-                        let right = descriptor.key.clone();
-                        run.tasks.push(Task::Members(m));
-                        run.await_ = Some(Await::KeyEquality);
-                        self.begin_equality(left, right, false);
-                        return Ok(false);
+                    } else {
+                        while m.compare < m.seen.len() {
+                            let (seen, _) = &m.seen[m.compare];
+                            m.compare += 1;
+                            if (seen.kind == CollectionMemberKind::Property) != is_prop {
+                                continue;
+                            }
+                            if !matches!(
+                                (&seen.key, &descriptor.key),
+                                (Value::Object(_), _) | (_, Value::Object(_))
+                            ) {
+                                if equality::same_key(&self.heap, &seen.key, &descriptor.key) {
+                                    duplicate = true;
+                                    break;
+                                }
+                                continue;
+                            }
+                            let left = seen.key.clone();
+                            let right = descriptor.key.clone();
+                            run.tasks.push(Task::Members(m));
+                            run.await_ = Some(Await::KeyEquality);
+                            self.begin_equality(left, right, false);
+                            return Ok(false);
+                        }
                     }
                     if duplicate {
                         m.next += 1;
@@ -2039,7 +2101,14 @@ impl Vm {
                         m.prepared = false;
                         continue;
                     }
+                    let seen_idx = m.seen.len();
                     m.seen.push((descriptor.clone(), m.hash));
+                    if let Some(h) = m.hash {
+                        m.seen_buckets
+                            .entry((is_prop, Some(h)))
+                            .or_default()
+                            .push(seen_idx);
+                    }
                 }
                 let skip = item.skip;
                 let item = m.members[m.next].clone();
@@ -4581,6 +4650,8 @@ impl Vm {
             if non_local_non_method != obj.collection_members.len() {
                 return None;
             }
+            let mut seen_names: Option<crate::heap::FastSet<&'a PklString>> =
+                (obj.collection_members.len() > 16).then(crate::heap::FastSet::default);
             for cm in &obj.collection_members {
                 if cm.kind != CollectionMemberKind::Property {
                     scratch.truncate(base);
@@ -4594,10 +4665,14 @@ impl Vm {
                         return None;
                     }
                 }
-                if scratch[base..]
-                    .iter()
-                    .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &cm.name))
-                {
+                let duplicate = if let Some(set) = seen_names.as_mut() {
+                    !set.insert(&cm.name)
+                } else {
+                    scratch[base..]
+                        .iter()
+                        .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &cm.name))
+                };
+                if duplicate {
                     scratch.truncate(base);
                     return None;
                 }
@@ -4608,6 +4683,8 @@ impl Vm {
                 scratch.push(FastMember::Property(&cm.name, val));
             }
         } else {
+            let mut seen_names: Option<crate::heap::FastSet<&'a PklString>> =
+                (obj.members.len() > 16).then(crate::heap::FastSet::default);
             for m in obj.members.iter() {
                 if m.local || m.method {
                     continue;
@@ -4627,10 +4704,14 @@ impl Vm {
                         return None;
                     }
                 }
-                if scratch[base..]
-                    .iter()
-                    .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name))
-                {
+                let duplicate = if let Some(set) = seen_names.as_mut() {
+                    !set.insert(&m.name)
+                } else {
+                    scratch[base..]
+                        .iter()
+                        .any(|prev| matches!(prev, FastMember::Property(n, _) if *n == &m.name))
+                };
+                if duplicate {
                     scratch.truncate(base);
                     return None;
                 }
@@ -4707,6 +4788,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn try_fast_render_default_document(
         &self,
         format: Format,
@@ -4910,6 +4992,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn try_fast_render_document(&self, run: &mut RenderRun) -> bool {
         match run.format {
             Format::PklBinary => {
@@ -5110,6 +5193,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn try_fast_render_xml_document(&self, run: &mut RenderRun) -> bool {
         let Some(indent) = run.indent.as_str() else {
             return false;
@@ -5197,6 +5281,7 @@ impl Vm {
         true
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     #[allow(clippy::too_many_arguments)]
     fn try_fast_render_open_object(
         &self,
@@ -5671,7 +5756,20 @@ impl Vm {
             }
             Format::Plist => {
                 let indent = run.indent.as_str().unwrap_or("");
-                let mut close = String::with_capacity(indent.len() * depth + 8);
+                let cap = indent
+                    .len()
+                    .checked_mul(depth)
+                    .and_then(|n| n.checked_add(8))
+                    .ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::Host,
+                            "Rendered indentation size exceeds platform limits.",
+                        )
+                    })?;
+                let mut close = String::new();
+                close.try_reserve(cap).map_err(|_| {
+                    RuntimeError::new(ErrorKind::Host, "Rendered indentation allocation failed.")
+                })?;
                 push_indent_str(&mut close, indent, depth);
                 close.push_str("</array>");
                 run.output.push_str(&close);
@@ -5682,6 +5780,8 @@ impl Vm {
         Ok(false)
     }
 }
+
+const MAX_FAST_RENDER_BYTES: usize = 16 * 1024 * 1024;
 
 impl Vm {
     #[allow(clippy::too_many_arguments)]
@@ -5702,6 +5802,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         match value {
             Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
             Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
@@ -6131,6 +6234,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         match value {
             Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
             Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
@@ -6395,6 +6501,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         match value {
             Value::Null | Value::NullWithDefault(_) => buf.push_str("null"),
             Value::Bool(v) => buf.push_str(if *v { "true" } else { "false" }),
@@ -6622,6 +6731,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if yaml.byte_len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         match value {
             Value::Null | Value::NullWithDefault(_) => yaml.scalar_str("null"),
             Value::Bool(v) => yaml.scalar_str(if *v { "true" } else { "false" }),
@@ -6878,6 +6990,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         if let Value::Object(id) = value {
             if active.len() >= 32
                 || active.contains(id)
@@ -7081,6 +7196,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         match value {
             Value::String(s) => {
                 let Some(text) = s.as_str() else {
@@ -7400,6 +7518,9 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        if buf.len() > MAX_FAST_RENDER_BYTES {
+            return false;
+        }
         let base = scratch.len();
         let Some(kind) = self.extract_fast_object(id, scratch, false) else {
             return false;

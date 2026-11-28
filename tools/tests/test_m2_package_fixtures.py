@@ -199,5 +199,33 @@ class RouteChecks(unittest.TestCase):
             self.assertTrue(all(not row['passed'] for row in report['checks']))
 
 
+class PurePythonPackageBuildTests(unittest.TestCase):
+    def test_build_upstream_packages_matches_pinned_gradle_checksums_without_gradle(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            stage = Path(temporary).resolve() / 'staged'
+            with patch.object(fixtures.subprocess, 'run', side_effect=AssertionError('must not invoke Gradle')):
+                out = fixtures.build_upstream_packages(stage)
+            self.assertEqual(out, stage)
+            for name in fixtures.ALL_PACKAGES:
+                pkg_dir = stage / name
+                self.assertTrue((pkg_dir / f'{name}.zip').is_file())
+                self.assertTrue((pkg_dir / f'{name}.json').is_file())
+                sidecar = (pkg_dir / f'{name}.json.sha256').read_text(encoding='ascii')
+                self.assertEqual(sidecar, compat.digest((pkg_dir / f'{name}.json').read_bytes()))
+                with zipfile.ZipFile(pkg_dir / f'{name}.zip') as zf:
+                    self.assertIsNone(zf.testzip())
+            for name, expected in fixtures.EXPECTED_METADATA.items():
+                actual = compat.digest((stage / name / f'{name}.json').read_bytes())
+                self.assertEqual(actual, expected)
+
+    def test_reproducible_zip_rejects_symlinks(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root / 'ok.pkl').write_bytes(b'x = 1\n')
+            (root / 'link.pkl').symlink_to(root / 'ok.pkl')
+            with self.assertRaisesRegex(ValueError, 'non-regular'):
+                fixtures._build_reproducible_gradle_zip(root)
+
+
 if __name__ == '__main__':
     unittest.main()

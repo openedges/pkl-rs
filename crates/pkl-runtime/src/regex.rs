@@ -79,6 +79,32 @@ fn unhex(value: &str) -> Result<String, String> {
         .collect::<Result<Vec<_>, _>>()?;
     String::from_utf8(bytes).map_err(|_| "invalid UTF-8 input".into())
 }
+const MAX_REGEX_REPLACEMENT_UTF16_UNITS: usize = 128 * 1024 * 1024;
+
+fn checked_extend_u16(out: &mut Vec<u16>, slice: &[u16]) -> Result<(), String> {
+    let next = out
+        .len()
+        .checked_add(slice.len())
+        .ok_or_else(|| "Regex replacement result exceeds maximum string length".to_string())?;
+    if next > MAX_REGEX_REPLACEMENT_UTF16_UNITS {
+        return Err("Regex replacement result exceeds maximum string length".to_string());
+    }
+    out.try_reserve(slice.len())
+        .map_err(|_| "Regex replacement result exceeds available memory".to_string())?;
+    out.extend_from_slice(slice);
+    Ok(())
+}
+
+fn checked_push_u16(out: &mut Vec<u16>, unit: u16) -> Result<(), String> {
+    if out.len() >= MAX_REGEX_REPLACEMENT_UTF16_UNITS {
+        return Err("Regex replacement result exceeds maximum string length".to_string());
+    }
+    out.try_reserve(1)
+        .map_err(|_| "Regex replacement result exceeds available memory".to_string())?;
+    out.push(unit);
+    Ok(())
+}
+
 fn append_group(
     output: &mut Vec<u16>,
     matched: &MatchRanges,
@@ -90,7 +116,8 @@ fn append_group(
         .get(index)
         .ok_or_else(|| format!("No group {index}"))?;
     if let Some((a, b)) = range {
-        output.extend_from_slice(input.get(*a..*b).ok_or("invalid backend capture range")?);
+        let slice = input.get(*a..*b).ok_or("invalid backend capture range")?;
+        checked_extend_u16(output, slice)?;
     }
     Ok(())
 }
@@ -111,7 +138,7 @@ pub(crate) fn expand_replacement(
                 let next = *replacement
                     .get(position)
                     .ok_or("character to be escaped is missing")?;
-                output.push(next);
+                checked_push_u16(&mut output, next)?;
                 position += 1;
             }
             0x24 => {
@@ -169,7 +196,7 @@ pub(crate) fn expand_replacement(
                     return Err("Illegal group reference".into());
                 }
             }
-            _ => output.push(unit),
+            _ => checked_push_u16(&mut output, unit)?,
         }
     }
     Ok(output)
@@ -181,22 +208,19 @@ fn replace_checked(
 ) -> Result<Vec<u16>, String> {
     let mut matcher = regex.matcher(input, Limits::default());
     let mut result = Vec::new();
+    let replacement_units: Vec<u16> = replacement.encode_utf16().collect();
     let mut end = 0;
     while let Some(m) = matcher.find().map_err(execution_error)? {
-        result.extend_from_slice(
-            input
-                .get(end..m.start)
-                .ok_or("invalid backend match range")?,
-        );
-        result.extend(expand_replacement(
-            &replacement.encode_utf16().collect::<Vec<_>>(),
-            &m,
-            regex,
-            input,
-        )?);
+        let prefix = input
+            .get(end..m.start)
+            .ok_or("invalid backend match range")?;
+        checked_extend_u16(&mut result, prefix)?;
+        let expanded = expand_replacement(&replacement_units, &m, regex, input)?;
+        checked_extend_u16(&mut result, &expanded)?;
         end = m.end;
     }
-    result.extend_from_slice(input.get(end..).ok_or("invalid backend match end")?);
+    let suffix = input.get(end..).ok_or("invalid backend match end")?;
+    checked_extend_u16(&mut result, suffix)?;
     Ok(result)
 }
 /// UTF-8 public adapter; Java UTF-8 replacement of unmatched surrogates occurs

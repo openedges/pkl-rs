@@ -15,6 +15,39 @@ enum Mode {
     Reluctant,
 }
 
+/// Zero-allocation borrowed continuation stack for matching tails of groups,
+/// alternations, quantifiers, and lookbehinds without cloning suffix `Node`s.
+enum Cont<'a> {
+    Empty,
+    Slice {
+        nodes: &'a [Node],
+        next: &'a Cont<'a>,
+    },
+    GroupEnd {
+        index: usize,
+        start: usize,
+        next: &'a Cont<'a>,
+    },
+    RestoreFlags {
+        flags: Flags,
+        next: &'a Cont<'a>,
+    },
+    PositionCheck {
+        target: usize,
+        next: &'a Cont<'a>,
+    },
+    Quant {
+        mode: Mode,
+        atom: &'a Node,
+        min: u32,
+        max: u32,
+        count: u32,
+        prev_pos: usize,
+        rest: &'a [Node],
+        rest_cont: &'a Cont<'a>,
+    },
+}
+
 /// Whether a `Pattern` is "deterministic" in OpenJDK's sense — i.e., would be
 /// compiled with `GroupCurly` (atomic) rather than `Loop` (with backtracking)
 /// when used as a quantifier atom. Mirrors `TreeInfo.deterministic` propagation
@@ -24,199 +57,24 @@ enum Mode {
 /// like `(?:\R){2}` or `(?i:\R){2}`, the engine must not backtrack into the
 /// atom's internal choices (e.g., `\R`'s `\r\n` vs single-char). Multi-branch
 /// bodies (alternation) keep backtracking, matching OpenJDK's `Loop`.
+#[inline]
 fn is_deterministic_body(p: &Pattern) -> bool {
-    p.branches.len() == 1 && p.branches[0].iter().all(node_is_deterministic)
+    p.meta.deterministic
 }
 
-/// Maximum match length of a Pattern, or None if the engine cannot prove a
-/// finite upper bound. Same logic as `parser::pattern_max_length` — duplicated
-/// here so the engine can detect "zero-width body" groups at match time.
-/// Minimum match length of a Pattern. Walks the AST recursively; conservative
-/// (returns 0 for things it can't statically size, like backrefs).
+#[inline]
 fn pattern_min_length(p: &Pattern) -> usize {
-    p.branches
-        .iter()
-        .map(|b| b.iter().map(node_min_length).sum::<usize>())
-        .min()
-        .unwrap_or(0)
+    p.meta.min_length
 }
 
-fn node_min_length(n: &Node) -> usize {
-    match n {
-        Node::Literal(_) | Node::Dot | Node::CharClass(_) | Node::NfcCharClass(_) => 1,
-        Node::LinebreakMatcher => 1, // \R minimum is 1 (single char)
-        Node::Anchor(_)
-        | Node::GraphemeBoundary
-        | Node::SetFlags(_)
-        | Node::RestoreFlags(_)
-        | Node::Lookahead { .. }
-        | Node::Lookbehind { .. } => 0,
-        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
-            pattern_min_length(inner)
-        }
-        Node::Quantified { inner, min, .. } => node_min_length(inner) * (*min as usize),
-        // Only call site is `check_lookbehind` (via `pattern_min_length`).
-        // The lookbehind body is a parsed pattern, which the parser has
-        // already validated to reject Backreference/NamedBackreference/
-        // GraphemeCluster (lookbehind requires a bounded max length, which
-        // those nodes can't provide). Engine-internal nodes (GroupEnd,
-        // GreedyCont, ReluctantCont, PositionCheck) are produced by the
-        // engine during matching and never appear in parsed pattern bodies.
-        n => unreachable!(
-            "node_min_length called with {n:?} — lookbehind body should never \
-             contain Backref/NamedBackref/GraphemeCluster (parser-rejected) \
-             nor engine-internal nodes (never in parsed patterns)"
-        ),
-    }
-}
-
+#[inline]
 fn pattern_max_length(p: &Pattern) -> Option<usize> {
-    let mut max = 0;
-    for branch in &p.branches {
-        let mut total: usize = 0;
-        for node in branch {
-            total = total.checked_add(node_max_length(node)?)?;
-        }
-        if total > max {
-            max = total;
-        }
-    }
-    Some(max)
+    p.meta.max_length
 }
 
-/// Computes the body's `maxLength` the same way Java's `Pattern.java::TreeInfo`
-/// does: with `i32` wrapping arithmetic and the `MAX_REPS` constant. Used by
-/// `check_lookbehind` to mirror Java's overflow-induced iteration skip.
-///
-/// Java compiles `(?:X)?`/`(?:X)??` (and `X?` when X is a group) into
-/// `Branch[head, null]`/`Branch[null, head]`; Branch.study takes signed
-/// `Math.max` across atoms (null contributes 0). For `(?:X){0,N}` or
-/// `(?:X){0,N}?` (non-Ques) it uses `Curly` whose study multiplies inner_max
-/// by cmax with i32 wrapping — overflows are NOT clamped. Concatenated
-/// nodes' contributions accumulate via i32 wrapping addition.
-const JAVA_MAX_REPS: i32 = 0x7FFFFFFF;
-
+#[inline]
 fn pattern_java_max(p: &Pattern) -> i32 {
-    let mut max: Option<i32> = None;
-    for branch in &p.branches {
-        let mut total: i32 = 0;
-        for node in branch {
-            total = total.wrapping_add(node_java_max(node));
-        }
-        max = Some(max.map_or(total, |m| m.max(total)));
-    }
-    max.unwrap_or(0)
-}
-
-fn node_java_max(n: &Node) -> i32 {
-    match n {
-        Node::Literal(_) | Node::Dot | Node::CharClass(_) => 1,
-        Node::LinebreakMatcher => 2,
-        Node::Anchor(_)
-        | Node::NfcCharClass(_)
-        | Node::GraphemeBoundary
-        | Node::SetFlags(_)
-        | Node::RestoreFlags(_)
-        | Node::Lookahead { .. }
-        | Node::Lookbehind { .. } => 0,
-        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
-            pattern_java_max(inner)
-        }
-        Node::Quantified { inner, max, .. } => {
-            if *max == 0 {
-                return 0;
-            }
-            let inner_max = node_java_max(inner);
-            if *max == 1 {
-                // Java's Ques greedy/lazy is wrapped in `Branch[head, null]`
-                // (or `Branch[null, head]`); Branch.study takes signed
-                // Math.max across atoms, with null contributing 0. So an
-                // overflowed (negative) inner_max gets clamped to 0 by the
-                // sibling null-atom. Mirror that here.
-                inner_max.max(0)
-            } else if *max == u32::MAX {
-                inner_max.wrapping_mul(JAVA_MAX_REPS)
-            } else {
-                inner_max.wrapping_mul(*max as i32)
-            }
-        }
-        // Same reasoning as `node_min_length`: only called via
-        // `check_lookbehind` on a parser-validated lookbehind body, which
-        // can contain neither Backref/NamedBackref/GraphemeCluster nor
-        // engine-internal nodes.
-        n => unreachable!(
-            "node_java_max called with {n:?} — lookbehind body should never \
-             contain Backref/NamedBackref/GraphemeCluster (parser-rejected) \
-             nor engine-internal nodes (never in parsed patterns)"
-        ),
-    }
-}
-
-fn node_max_length(n: &Node) -> Option<usize> {
-    match n {
-        Node::Literal(_) | Node::Dot | Node::CharClass(_) | Node::NfcCharClass(_) => Some(1),
-        Node::LinebreakMatcher => Some(2),
-        Node::Anchor(_)
-        | Node::GraphemeBoundary
-        | Node::SetFlags(_)
-        | Node::RestoreFlags(_)
-        | Node::Lookahead { .. }
-        | Node::Lookbehind { .. } => Some(0),
-        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
-            pattern_max_length(inner)
-        }
-        Node::Quantified { inner, max, .. } => {
-            if *max == 0 {
-                // `X{0}` matches zero times regardless of `X` — even if X's
-                // own max length is unbounded (e.g. `\3{0}` where `\3` is a
-                // backref to a non-existent group).
-                return Some(0);
-            }
-            let inner_max = node_max_length(inner)?;
-            if inner_max == 0 {
-                Some(0)
-            } else if *max == u32::MAX {
-                None
-            } else {
-                inner_max.checked_mul(*max as usize)
-            }
-        }
-        Node::Backreference(_) | Node::NamedBackreference(_) => None,
-        Node::GraphemeCluster => None,
-        // Only call site is `match_quant`'s Group/FlagGroup zero-width body
-        // restore check (`pattern_max_length(inner) == Some(0)`), where
-        // `inner` is the parsed inner pattern of a Group node. Engine-internal
-        // nodes (GroupEnd, GreedyCont, ReluctantCont, PositionCheck) are
-        // never present in parsed pattern bodies.
-        n => unreachable!(
-            "node_max_length called with {n:?} — only invoked on parsed \
-             Group/FlagGroup bodies, which never contain engine-internal nodes"
-        ),
-    }
-}
-
-fn node_is_deterministic(n: &Node) -> bool {
-    match n {
-        // Alternation (multi-branch Pattern) is the canonical non-deterministic
-        // construct — Group/FlagGroup with a multi-branch body falls through to
-        // is_deterministic_body returning false.
-        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
-            is_deterministic_body(inner)
-        }
-        // Java's `study()` marks Lookbehind/Lookahead as deterministic
-        // regardless of internal alternation — lookarounds don't consume, so
-        // their internal structure doesn't affect the outer quantifier's
-        // backtracking model. Mirror that: a lookaround atom is deterministic
-        // from the perspective of any enclosing quantifier.
-        Node::Lookahead { .. } | Node::Lookbehind { .. } => true,
-        // Java's `Curly.study` keeps `deterministic` only when min == max AND
-        // the atom is deterministic.
-        Node::Quantified {
-            inner, min, max, ..
-        } => min == max && node_is_deterministic(inner),
-        Node::NfcCharClass(_) => false,
-        _ => true,
-    }
+    p.meta.java_max
 }
 
 fn single_char_lowercase(c: u32) -> Option<u32> {
@@ -233,6 +91,7 @@ pub struct Engine<'a> {
     pub named_groups: &'a BTreeMap<String, usize>,
     steps: u64,
     max_steps: u64,
+    class_work: u64,
     depth: u32,
     max_depth: u32,
     pub search_start: usize,
@@ -271,6 +130,7 @@ impl<'a> Engine<'a> {
             error: None,
             steps: 0,
             max_steps: 5_000_000,
+            class_work: 0,
             depth: 0,
             max_depth: 500,
             search_start: 0,
@@ -312,6 +172,21 @@ impl<'a> Engine<'a> {
         true
     }
 
+    fn step_class_work(&mut self) -> bool {
+        if self.error.is_some() {
+            return false;
+        }
+        let limit = self.max_steps.max(65_536);
+        if self.class_work >= limit {
+            self.error = Some(MatchError::StepBudgetExceeded {
+                limit: self.max_steps,
+            });
+            return false;
+        }
+        self.class_work += 1;
+        true
+    }
+
     /// Try to match the pattern at `pos`, using the caller-provided State so
     /// captures can persist across iterations. This mirrors OpenJDK's
     /// `Start.match` loop: between successive position attempts, `groups[]` is
@@ -327,9 +202,11 @@ impl<'a> Engine<'a> {
         pos: usize,
         state: &mut State,
     ) -> Option<usize> {
-        for branch in &pattern.branches {
-            let combined = branch.clone();
-            if self.match_nodes(&combined, pos, state) {
+        for branch in pattern.branches.iter() {
+            if self.error.is_some() {
+                break;
+            }
+            if self.match_nodes(branch, &Cont::Empty, pos, state) {
                 return Some(state.match_end);
             }
             // Intentionally NO save/restore: failed branch's mutations persist,
@@ -346,10 +223,27 @@ impl<'a> Engine<'a> {
         pos: usize,
         state: &mut State,
     ) -> bool {
-        for branch in &pattern.branches {
-            let mut combined = branch.clone();
-            combined.extend_from_slice(rest);
-            if self.match_nodes(&combined, pos, state) {
+        self.match_pattern_cont(pattern, rest, &Cont::Empty, pos, state)
+    }
+
+    fn match_pattern_cont(
+        &mut self,
+        pattern: &Pattern,
+        rest: &[Node],
+        cont: &Cont<'_>,
+        pos: usize,
+        state: &mut State,
+    ) -> bool {
+        let tail = Cont::Slice {
+            nodes: rest,
+            next: cont,
+        };
+        let next_cont = if rest.is_empty() { cont } else { &tail };
+        for branch in pattern.branches.iter() {
+            if self.error.is_some() {
+                break;
+            }
+            if self.match_nodes(branch, next_cont, pos, state) {
                 return true;
             }
             // No save/restore between branches — captures from failed branches
@@ -362,7 +256,13 @@ impl<'a> Engine<'a> {
         false
     }
 
-    fn match_nodes(&mut self, nodes: &[Node], pos: usize, state: &mut State) -> bool {
+    fn match_nodes<'b>(
+        &mut self,
+        nodes: &'b [Node],
+        cont: &Cont<'b>,
+        pos: usize,
+        state: &mut State,
+    ) -> bool {
         if pos > self.text_end || !self.step() {
             return false;
         }
@@ -374,72 +274,200 @@ impl<'a> Engine<'a> {
             });
             return false;
         }
-        let result = self.match_nodes_inner(nodes, pos, state);
+        let result = self.match_nodes_inner(nodes, cont, pos, state);
         self.depth -= 1;
         result && self.error.is_none()
     }
 
-    fn match_nodes_inner(&mut self, nodes: &[Node], pos: usize, state: &mut State) -> bool {
-        if nodes.is_empty() {
-            state.match_end = pos;
-            return true;
+    fn match_nodes_inner<'b>(
+        &mut self,
+        mut nodes: &'b [Node],
+        mut cont: &Cont<'b>,
+        mut pos: usize,
+        state: &mut State,
+    ) -> bool {
+        // Iteratively consume sequential non-branching nodes (`Literal`, `Dot`,
+        // `Anchor`, `CharClass`, `PositionCheck`) and slice continuations so
+        // long literal/class sequences (>500 chars) do not exhaust recursion depth.
+        let mut stepped = false;
+        loop {
+            while nodes.is_empty() {
+                match cont {
+                    Cont::Empty => {
+                        if pos > self.text_end {
+                            return false;
+                        }
+                        state.match_end = pos;
+                        return true;
+                    }
+                    Cont::Slice {
+                        nodes: next_nodes,
+                        next,
+                    } => {
+                        nodes = next_nodes;
+                        cont = next;
+                    }
+                    Cont::PositionCheck { target, next } => {
+                        if pos != *target {
+                            return false;
+                        }
+                        cont = next;
+                    }
+                    Cont::GroupEnd { index, start, next } => {
+                        let saved = state.captures[*index];
+                        state.captures[*index] = Some((*start, pos));
+                        if self.match_nodes(&[], next, pos, state) {
+                            return true;
+                        }
+                        state.captures[*index] = saved;
+                        return false;
+                    }
+                    Cont::RestoreFlags { flags, next } => {
+                        let saved = self.flags;
+                        self.flags = *flags;
+                        if self.match_nodes(&[], next, pos, state) {
+                            return true;
+                        }
+                        self.flags = saved;
+                        return false;
+                    }
+                    Cont::Quant {
+                        mode,
+                        atom,
+                        min,
+                        max,
+                        count,
+                        prev_pos,
+                        rest,
+                        rest_cont,
+                    } => {
+                        if pos == *prev_pos {
+                            if *count < *min {
+                                return match mode {
+                                    Mode::Greedy => self.match_greedy(
+                                        atom, *min, *max, *count, rest, rest_cont, pos, *prev_pos,
+                                        state,
+                                    ),
+                                    Mode::Reluctant => self.match_reluctant(
+                                        atom, *min, *max, *count, rest, rest_cont, pos, *prev_pos,
+                                        state,
+                                    ),
+                                };
+                            }
+                            return match mode {
+                                Mode::Greedy => self.match_nodes(rest, rest_cont, pos, state),
+                                Mode::Reluctant => {
+                                    if *count == *min {
+                                        self.match_nodes(rest, rest_cont, pos, state)
+                                    } else {
+                                        false
+                                    }
+                                }
+                            };
+                        }
+                        return match mode {
+                            Mode::Greedy => self.match_greedy(
+                                atom, *min, *max, *count, rest, rest_cont, pos, *prev_pos, state,
+                            ),
+                            Mode::Reluctant => self.match_reluctant(
+                                atom, *min, *max, *count, rest, rest_cont, pos, *prev_pos, state,
+                            ),
+                        };
+                    }
+                }
+            }
+            if stepped && (pos > self.text_end || !self.step()) {
+                return false;
+            }
+            stepped = true;
+
+            match &nodes[0] {
+                Node::Literal(ch) => {
+                    if pos < self.text_len() {
+                        let cp = self.input.at_bounded(pos, self.text_end);
+                        let matched = if self.flags.case_insensitive {
+                            chars_eq_ci(cp, *ch, self.flags.unicode_case)
+                        } else {
+                            cp == *ch
+                        };
+                        if matched {
+                            pos = self.input.next_bounded(pos, self.text_end);
+                            nodes = &nodes[1..];
+                            continue;
+                        }
+                    }
+                    return false;
+                }
+
+                Node::Dot => {
+                    if pos < self.text_len()
+                        && (self.flags.dotall
+                            || !self.is_lt(self.input.at_bounded(pos, self.text_end)))
+                    {
+                        pos = self.input.next_bounded(pos, self.text_end);
+                        nodes = &nodes[1..];
+                        continue;
+                    }
+                    return false;
+                }
+
+                Node::Anchor(kind) => {
+                    if self.check_anchor(*kind, pos) {
+                        nodes = &nodes[1..];
+                        continue;
+                    }
+                    return false;
+                }
+
+                Node::CharClass(cc) => {
+                    if pos < self.text_len()
+                        && self.match_char_class(cc, self.input.at_bounded(pos, self.text_end))
+                    {
+                        pos = self.input.next_bounded(pos, self.text_end);
+                        nodes = &nodes[1..];
+                        continue;
+                    }
+                    return false;
+                }
+
+                Node::PositionCheck(target) => {
+                    if pos == *target {
+                        nodes = &nodes[1..];
+                        continue;
+                    }
+                    return false;
+                }
+
+                _ => break,
+            }
         }
 
         match &nodes[0] {
-            Node::Literal(ch) => {
-                if pos < self.text_len() {
-                    let matched = if self.flags.case_insensitive {
-                        chars_eq_ci(self.input.at(pos), *ch, self.flags.unicode_case)
-                    } else {
-                        self.input.at(pos) == *ch
-                    };
-                    if matched {
-                        return self.match_nodes(&nodes[1..], self.input.next(pos), state);
-                    }
-                }
-                false
-            }
-
-            Node::Dot => {
-                if pos < self.text_len() && (self.flags.dotall || !self.is_lt(self.input.at(pos))) {
-                    self.match_nodes(&nodes[1..], self.input.next(pos), state)
-                } else {
-                    false
-                }
-            }
-
-            Node::Anchor(kind) => {
-                if self.check_anchor(*kind, pos) {
-                    self.match_nodes(&nodes[1..], pos, state)
-                } else {
-                    false
-                }
-            }
-
-            Node::CharClass(cc) => {
-                if pos < self.text_len() && self.match_char_class(cc, self.input.at(pos)) {
-                    self.match_nodes(&nodes[1..], self.input.next(pos), state)
-                } else {
-                    false
-                }
-            }
+            Node::Literal(_)
+            | Node::Dot
+            | Node::Anchor(_)
+            | Node::CharClass(_)
+            | Node::PositionCheck(_) => unreachable!(),
 
             Node::NfcCharClass(cc) => {
                 let limit = self.text_len();
                 if pos < limit {
                     let ch0 = self.input.at(pos);
                     let n = if ch0 >= 0x10000 { 2 } else { 1 };
-                    let mut j = super::canon_eq::next_grapheme_boundary(self.input.0, pos, limit);
+                    // No single Unicode NFC scalar decomposes to more than 4 code points
+                    // (<= 8 UTF-16 units); cap prefix length to prevent O(N^3) on long combining runs.
+                    let max_end = limit.min(pos.saturating_add(16));
+                    let mut j = super::canon_eq::next_grapheme_boundary(self.input.0, pos, max_end);
                     if pos + n == j {
                         if self.match_char_class(cc, ch0) {
-                            return self.match_nodes(&nodes[1..], j, state);
+                            return self.match_nodes(&nodes[1..], cont, j, state);
                         }
                     } else {
                         while pos + n < j {
                             if let Some(cp) =
                                 super::canon_eq::nfc_single_codepoint(&self.input.0[pos..j])
                                 && self.match_char_class(cc, cp)
-                                && self.match_nodes(&nodes[1..], j, state)
+                                && self.match_nodes(&nodes[1..], cont, j, state)
                             {
                                 return true;
                             }
@@ -456,37 +484,41 @@ impl<'a> Engine<'a> {
                 // Per-group save/restore happens inside GroupEnd (the GroupTail
                 // analog) for ONLY the slot owned by this Group.
                 //
-                // Flag scoping: append RestoreFlags(saved) at the end of each
-                // branch so inline `(?mu)` setters inside don't leak past the
-                // group. This mirrors OpenJDK's compile-time flag scoping where
-                // `(?:(?mu))` doesn't propagate `m` to nodes after the group.
+                // Flag scoping: thread RestoreFlags(saved) after each branch so
+                // inline `(?mu)` setters inside don't leak past the group, and
+                // restore `self.flags` after any failed branch so inline flags
+                // from a failed branch never leak into later branches or callers.
                 let start = pos;
                 let saved_flags = self.flags;
-                for branch in &inner.branches {
-                    let mut combined = branch.clone();
-                    if let Some(idx) = index {
-                        combined.push(Node::GroupEnd { index: *idx, start });
+                let tail = Cont::Slice {
+                    nodes: &nodes[1..],
+                    next: cont,
+                };
+                let restore = Cont::RestoreFlags {
+                    flags: saved_flags,
+                    next: if nodes.len() > 1 { &tail } else { cont },
+                };
+                let group_end;
+                let next_cont: &Cont<'_> = if let Some(idx) = index {
+                    group_end = Cont::GroupEnd {
+                        index: *idx,
+                        start,
+                        next: &restore,
+                    };
+                    &group_end
+                } else {
+                    &restore
+                };
+                for branch in inner.branches.iter() {
+                    if self.error.is_some() {
+                        break;
                     }
-                    combined.push(Node::RestoreFlags(saved_flags));
-                    combined.extend_from_slice(&nodes[1..]);
-                    if self.match_nodes(&combined, pos, state) {
+                    self.flags = saved_flags;
+                    if self.match_nodes(branch, next_cont, pos, state) {
                         return true;
                     }
                 }
-                false
-            }
-
-            Node::GroupEnd { index, start } => {
-                // Per-group save/restore — mirrors OpenJDK GroupTail.match:
-                // save the slot, set it, call next, restore only on failure.
-                // Captures of OTHER groups set during the body's matching are
-                // left intact (so they can leak through).
-                let saved = state.captures[*index];
-                state.captures[*index] = Some((*start, pos));
-                if self.match_nodes(&nodes[1..], pos, state) {
-                    return true;
-                }
-                state.captures[*index] = saved;
+                self.flags = saved_flags;
                 false
             }
 
@@ -497,15 +529,32 @@ impl<'a> Engine<'a> {
                 kind,
             } => {
                 let rest = &nodes[1..];
-                match kind {
-                    QuantKind::Greedy => {
-                        self.match_greedy(inner, *min, *max, 0, rest, pos, pos, state)
+                if matches!(
+                    inner.as_ref(),
+                    Node::Literal(_) | Node::Dot | Node::CharClass(_)
+                ) {
+                    match kind {
+                        QuantKind::Greedy => {
+                            self.match_greedy_single(inner, *min, *max, rest, cont, pos, state)
+                        }
+                        QuantKind::Reluctant => {
+                            self.match_reluctant_single(inner, *min, *max, rest, cont, pos, state)
+                        }
+                        QuantKind::Possessive => {
+                            self.match_possessive_single(inner, *min, *max, rest, cont, pos, state)
+                        }
                     }
-                    QuantKind::Reluctant => {
-                        self.match_reluctant(inner, *min, *max, 0, rest, pos, pos, state)
-                    }
-                    QuantKind::Possessive => {
-                        self.match_possessive(inner, *min, *max, rest, pos, state)
+                } else {
+                    match kind {
+                        QuantKind::Greedy => {
+                            self.match_greedy(inner, *min, *max, 0, rest, cont, pos, pos, state)
+                        }
+                        QuantKind::Reluctant => {
+                            self.match_reluctant(inner, *min, *max, 0, rest, cont, pos, pos, state)
+                        }
+                        QuantKind::Possessive => {
+                            self.match_possessive(inner, *min, *max, rest, cont, pos, state)
+                        }
                     }
                 }
             }
@@ -520,10 +569,10 @@ impl<'a> Engine<'a> {
                 // Flag scoping: save/restore self.flags around the inner so
                 // inline `(?ims)` setters inside don't leak past the lookaround.
                 let saved_flags = self.flags;
-                let matched = self.match_pattern(inner, &[], pos, state);
+                let matched = self.match_pattern_cont(inner, &[], &Cont::Empty, pos, state);
                 self.flags = saved_flags;
                 if matched == *positive {
-                    self.match_nodes(&nodes[1..], pos, state)
+                    self.match_nodes(&nodes[1..], cont, pos, state)
                 } else {
                     false
                 }
@@ -538,7 +587,7 @@ impl<'a> Engine<'a> {
                 let found = self.check_lookbehind(inner, pos, state, *supplementary);
                 self.flags = saved_flags;
                 if found == *positive {
-                    self.match_nodes(&nodes[1..], pos, state)
+                    self.match_nodes(&nodes[1..], cont, pos, state)
                 } else {
                     false
                 }
@@ -552,28 +601,30 @@ impl<'a> Engine<'a> {
                 // Flag scoping: inline `(?ims)` inside doesn't leak past the
                 // atomic group.
                 let saved_flags = self.flags;
-                let ok = self.match_pattern(inner, &[], pos, state);
+                let ok = self.match_pattern_cont(inner, &[], &Cont::Empty, pos, state);
                 self.flags = saved_flags;
                 if ok {
                     let end = state.match_end;
-                    self.match_nodes(&nodes[1..], end, state)
+                    self.match_nodes(&nodes[1..], cont, end, state)
                 } else {
                     false
                 }
             }
 
-            Node::Backreference(idx) => self.match_backref_by_index(*idx, &nodes[1..], pos, state),
+            Node::Backreference(idx) => {
+                self.match_backref_by_index(*idx, &nodes[1..], cont, pos, state)
+            }
 
             Node::NamedBackreference(name) => {
                 if let Some(&idx) = self.named_groups.get(name) {
-                    self.match_backref_by_index(idx, &nodes[1..], pos, state)
+                    self.match_backref_by_index(idx, &nodes[1..], cont, pos, state)
                 } else {
                     false
                 }
             }
 
             Node::LinebreakMatcher => {
-                // \R is atomic: (?>\r\n|[\n\v\f\r\x85  ]) — if \r\n
+                // \R is atomic: (?>\r\n|[\n\v\f\r\x85\u{2028}\u{2029}]) — if \r\n
                 // matches, normally commit to it. Inside a lookbehind, though,
                 // the engine must enumerate every possible match length so the
                 // outer PositionCheck constraint can be satisfied. There, fall
@@ -584,14 +635,14 @@ impl<'a> Engine<'a> {
                         && pos + 1 < self.text_len()
                         && self.input.at(pos + 1) == 0x0a
                     {
-                        if self.match_nodes(&nodes[1..], pos + 2, state) {
+                        if self.match_nodes(&nodes[1..], cont, pos + 2, state) {
                             return true;
                         }
                         // Backtrack to single-char branch; \R is not atomic.
-                        return self.match_nodes(&nodes[1..], self.input.next(pos), state);
+                        return self.match_nodes(&nodes[1..], cont, self.input.next(pos), state);
                     }
                     if is_linebreak(self.input.at(pos)) {
-                        return self.match_nodes(&nodes[1..], self.input.next(pos), state);
+                        return self.match_nodes(&nodes[1..], cont, self.input.next(pos), state);
                     }
                 }
                 false
@@ -607,7 +658,7 @@ impl<'a> Engine<'a> {
                 // distinct search positions.) Scoped `(?s:…)` groups use the
                 // separate FlagGroup/RestoreFlags pair and DO scope properly.
                 self.flags = *new_flags;
-                self.match_nodes(&nodes[1..], pos, state)
+                self.match_nodes(&nodes[1..], cont, pos, state)
             }
 
             Node::FlagGroup { flags, inner } => {
@@ -616,11 +667,19 @@ impl<'a> Engine<'a> {
                 // flag context; the branches don't reset groups[]).
                 let old_flags = self.flags;
                 self.flags = *flags;
-                for branch in &inner.branches {
-                    let mut combined = branch.clone();
-                    combined.push(Node::RestoreFlags(old_flags));
-                    combined.extend_from_slice(&nodes[1..]);
-                    if self.match_nodes(&combined, pos, state) {
+                let tail = Cont::Slice {
+                    nodes: &nodes[1..],
+                    next: cont,
+                };
+                let restore = Cont::RestoreFlags {
+                    flags: old_flags,
+                    next: if nodes.len() > 1 { &tail } else { cont },
+                };
+                for branch in inner.branches.iter() {
+                    if self.error.is_some() {
+                        break;
+                    }
+                    if self.match_nodes(branch, &restore, pos, state) {
                         return true;
                     }
                 }
@@ -628,75 +687,21 @@ impl<'a> Engine<'a> {
                 false
             }
 
-            Node::RestoreFlags(flags) => {
-                // Save/restore around the recursive call: the flag change is
-                // scoped to the remaining nodes (the part of the pattern after
-                // the FlagGroup). When the recursive call returns we're back
-                // inside the FlagGroup's body — possibly mid-quantifier-loop
-                // — and the inner flags must remain in effect. Without
-                // restoring, a failed `rest` attempt inside a quantifier
-                // would leak the outer flags into subsequent atom matches.
-                let saved = self.flags;
-                self.flags = *flags;
-                let ok = self.match_nodes(&nodes[1..], pos, state);
-                self.flags = saved;
-                ok
-            }
-
             Node::GraphemeCluster | Node::GraphemeBoundary => {
                 self.error = Some(MatchError::Unsupported("Unicode grapheme segmentation"));
                 false
-            }
-
-            Node::PositionCheck(target) => {
-                if pos == *target {
-                    self.match_nodes(&nodes[1..], pos, state)
-                } else {
-                    false
-                }
-            }
-
-            Node::GreedyCont {
-                atom,
-                min,
-                max,
-                count,
-                rest,
-                prev_pos,
-            } => {
-                if pos == *prev_pos {
-                    // No progress made — atom matched zero-width. Since it can
-                    // match empty forever, treat as having reached min, try rest.
-                    self.match_nodes(rest, pos, state)
-                } else {
-                    self.match_greedy(atom, *min, *max, *count, rest, pos, *prev_pos, state)
-                }
-            }
-
-            Node::ReluctantCont {
-                atom,
-                min,
-                max,
-                count,
-                rest,
-                prev_pos,
-            } => {
-                if pos == *prev_pos {
-                    // No progress made — atom matched zero-width. Since it can
-                    // match empty forever, treat as having reached min, try rest.
-                    self.match_nodes(rest, pos, state)
-                } else {
-                    self.match_reluctant(atom, *min, *max, *count, rest, pos, *prev_pos, state)
-                }
             }
         }
     }
 
     /// Shared backreference matching for both numbered and named backrefs.
-    fn backref_end(&self, start: usize, end: usize, pos: usize) -> Option<usize> {
+    fn backref_end(&mut self, start: usize, end: usize, pos: usize) -> Option<usize> {
         let mut capture = start;
         let mut current = pos;
         while capture < end {
+            if !self.step() {
+                return None;
+            }
             if current >= self.text_len() {
                 return None;
             }
@@ -714,13 +719,7 @@ impl<'a> Engine<'a> {
                     return None;
                 }
             } else {
-                let a = u32::from(self.input.0[current]);
-                let b = u32::from(self.input.0[capture]);
-                if if self.flags.case_insensitive {
-                    !chars_eq_ci(a, b, false)
-                } else {
-                    a != b
-                } {
+                if self.input.0[current] != self.input.0[capture] {
                     return None;
                 }
                 capture += 1;
@@ -734,15 +733,162 @@ impl<'a> Engine<'a> {
         &mut self,
         idx: usize,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         state: &mut State,
     ) -> bool {
         if let Some(Some((start, end))) = state.captures.get(idx).copied()
             && let Some(end) = self.backref_end(start, end, pos)
         {
-            return self.match_nodes(rest, end, state);
+            return self.match_nodes(rest, cont, end, state);
         }
         false
+    }
+
+    #[inline]
+    fn match_single_atom(&mut self, atom: &Node, pos: usize) -> Option<usize> {
+        if pos >= self.text_len() {
+            return None;
+        }
+        let ch = self.input.at_bounded(pos, self.text_end);
+        let ok = match atom {
+            Node::Literal(target) => {
+                if self.flags.case_insensitive {
+                    chars_eq_ci(ch, *target, self.flags.unicode_case)
+                } else {
+                    ch == *target
+                }
+            }
+            Node::Dot => self.flags.dotall || !self.is_lt(ch),
+            Node::CharClass(cc) => self.match_char_class(cc, ch),
+            _ => false,
+        };
+        ok.then(|| self.input.next_bounded(pos, self.text_end))
+    }
+
+    /// Iterative greedy quantifier for single-codepoint atoms (`.*`, `.+`, `[a-z]+`, etc.),
+    /// avoiding O(text_len) recursion depth and DepthBudgetExceeded on inputs > 500 chars.
+    #[allow(clippy::too_many_arguments)]
+    fn match_greedy_single(
+        &mut self,
+        atom: &Node,
+        min: u32,
+        max: u32,
+        rest: &[Node],
+        cont: &Cont<'_>,
+        pos: usize,
+        state: &mut State,
+    ) -> bool {
+        let mut cur = pos;
+        let mut count = 0u32;
+        while count < min {
+            if !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                return false;
+            };
+            cur = next;
+            count += 1;
+        }
+        let mut positions = Vec::new();
+        positions.push(cur);
+        while count < max {
+            if !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                break;
+            };
+            cur = next;
+            count += 1;
+            positions.push(cur);
+        }
+        for &p in positions.iter().rev() {
+            if self.match_nodes(rest, cont, p, state) {
+                return true;
+            }
+            if self.error.is_some() {
+                return false;
+            }
+        }
+        false
+    }
+
+    /// Iterative reluctant quantifier for single-codepoint atoms (`.*?`, `.+?`, etc.).
+    #[allow(clippy::too_many_arguments)]
+    fn match_reluctant_single(
+        &mut self,
+        atom: &Node,
+        min: u32,
+        max: u32,
+        rest: &[Node],
+        cont: &Cont<'_>,
+        pos: usize,
+        state: &mut State,
+    ) -> bool {
+        let mut cur = pos;
+        let mut count = 0u32;
+        while count < min {
+            if !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                return false;
+            };
+            cur = next;
+            count += 1;
+        }
+        loop {
+            if self.match_nodes(rest, cont, cur, state) {
+                return true;
+            }
+            if self.error.is_some() || count >= max || !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                return false;
+            };
+            cur = next;
+            count += 1;
+        }
+    }
+
+    /// Iterative possessive quantifier for single-codepoint atoms (`.*+`, `[a-z]++`, etc.).
+    #[allow(clippy::too_many_arguments)]
+    fn match_possessive_single(
+        &mut self,
+        atom: &Node,
+        min: u32,
+        max: u32,
+        rest: &[Node],
+        cont: &Cont<'_>,
+        pos: usize,
+        state: &mut State,
+    ) -> bool {
+        let mut cur = pos;
+        let mut count = 0u32;
+        while count < min {
+            if !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                return false;
+            };
+            cur = next;
+            count += 1;
+        }
+        while count < max {
+            if !self.step() {
+                return false;
+            }
+            let Some(next) = self.match_single_atom(atom, cur) else {
+                break;
+            };
+            cur = next;
+            count += 1;
+        }
+        self.match_nodes(rest, cont, cur, state)
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -753,6 +899,7 @@ impl<'a> Engine<'a> {
         max: u32,
         count: u32,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         iter_start: usize,
         state: &mut State,
@@ -764,25 +911,13 @@ impl<'a> Engine<'a> {
         if count < max {
             // No save/restore — captures from failed quantifier-atom attempts
             // leak (matching OpenJDK Curly/Loop, which never reset matcher.groups[]).
-            if self.try_match_atom_mode(Mode::Greedy, atom, min, max, count, rest, pos, state) {
+            if self.try_match_atom_mode(Mode::Greedy, atom, min, max, count, rest, cont, pos, state)
+            {
                 return true;
             }
         }
 
-        if count >= min && self.match_nodes(rest, pos, state) {
-            // Mirror Java's GroupCurly.match0 backoff: after `next.match`
-            // succeeds, the OUTER GroupCurly explicitly sets
-            //   groups[groupIndex]   = i - k
-            //   groups[groupIndex+1] = i
-            // overriding any captures set deeper in the chain. Equivalent
-            // here: when this match_greedy frame's rest succeeds (= Java's
-            // outer GroupCurly continuation), and our atom is a capturing
-            // Group, override captures[idx] to (iter_start, pos) = the
-            // last-consumed iter's slice.
-            //
-            // GUARD: only fire when the atom would use Path 1 (= Java's
-            // GroupCurly conversion). For Path 2 (Ques `Branch[head, null]`
-            // or non-det `Prolog(Loop)`), Java has no such override.
+        if count >= min && self.match_nodes(rest, cont, pos, state) {
             if count > 0
                 && let Node::Group {
                     index: Some(idx),
@@ -803,9 +938,6 @@ impl<'a> Engine<'a> {
     }
 
     /// Recurse back into the appropriate top-level wrapper for the given mode.
-    /// match_greedy and match_reluctant differ in the order they try
-    /// atom-expansion vs `rest`, so they stay separate at the top level — this
-    /// helper just dispatches.
     #[allow(clippy::too_many_arguments)]
     fn match_quant(
         &mut self,
@@ -815,6 +947,7 @@ impl<'a> Engine<'a> {
         max: u32,
         count: u32,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         iter_start: usize,
         state: &mut State,
@@ -831,9 +964,11 @@ impl<'a> Engine<'a> {
             return false;
         }
         let result = match mode {
-            Mode::Greedy => self.match_greedy(atom, min, max, count, rest, pos, iter_start, state),
+            Mode::Greedy => {
+                self.match_greedy(atom, min, max, count, rest, cont, pos, iter_start, state)
+            }
             Mode::Reluctant => {
-                self.match_reluctant(atom, min, max, count, rest, pos, iter_start, state)
+                self.match_reluctant(atom, min, max, count, rest, cont, pos, iter_start, state)
             }
         };
         self.depth -= 1;
@@ -841,16 +976,7 @@ impl<'a> Engine<'a> {
     }
 
     /// Unified atom-expansion dispatcher for both greedy and reluctant
-    /// quantifiers. The two modes diverge in only three places:
-    ///
-    /// 1. Which continuation node is threaded into chain-based bodies
-    ///    (`GreedyCont` vs `ReluctantCont`) — see `make_cont` below.
-    /// 2. Which top-level wrapper recursion targets (`match_greedy` vs
-    ///    `match_reluctant`) — see `match_quant` above.
-    /// 3. Whether to try `rest` at a zero-width Path-1/_ body match.
-    ///    Greedy: always (mirrors Java's Curly greedy `match0`). Reluctant:
-    ///    only when `count + 1 == min` (Java's Curly LAZY `match1` zero-width
-    ///    abort `if (i == matcher.last) return false;` applies otherwise).
+    /// quantifiers.
     #[allow(clippy::too_many_arguments)]
     fn try_match_atom_mode(
         &mut self,
@@ -860,6 +986,7 @@ impl<'a> Engine<'a> {
         max: u32,
         count: u32,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         state: &mut State,
     ) -> bool {
@@ -869,36 +996,15 @@ impl<'a> Engine<'a> {
                 Mode::Reluctant => count + 1 == min,
             }
         };
-        let make_cont = |atom: &Node, count: u32, rest: &[Node], prev_pos: usize| -> Node {
-            let atom = Box::new(atom.clone());
-            let rest = rest.to_vec();
-            match mode {
-                Mode::Greedy => Node::GreedyCont {
-                    atom,
-                    min,
-                    max,
-                    count,
-                    rest,
-                    prev_pos,
-                },
-                Mode::Reluctant => Node::ReluctantCont {
-                    atom,
-                    min,
-                    max,
-                    count,
-                    rest,
-                    prev_pos,
-                },
-            }
-        };
 
         match atom {
             Node::Literal(ch) => {
                 if pos < self.text_len() {
+                    let cp = self.input.at_bounded(pos, self.text_end);
                     let matched = if self.flags.case_insensitive {
-                        chars_eq_ci(self.input.at(pos), *ch, self.flags.unicode_case)
+                        chars_eq_ci(cp, *ch, self.flags.unicode_case)
                     } else {
-                        self.input.at(pos) == *ch
+                        cp == *ch
                     };
                     if matched {
                         return self.match_quant(
@@ -908,7 +1014,8 @@ impl<'a> Engine<'a> {
                             max,
                             count + 1,
                             rest,
-                            self.input.next(pos),
+                            cont,
+                            self.input.next_bounded(pos, self.text_end),
                             pos,
                             state,
                         );
@@ -917,7 +1024,9 @@ impl<'a> Engine<'a> {
                 false
             }
             Node::Dot => {
-                if pos < self.text_len() && (self.flags.dotall || !self.is_lt(self.input.at(pos))) {
+                if pos < self.text_len()
+                    && (self.flags.dotall || !self.is_lt(self.input.at_bounded(pos, self.text_end)))
+                {
                     self.match_quant(
                         mode,
                         atom,
@@ -925,7 +1034,8 @@ impl<'a> Engine<'a> {
                         max,
                         count + 1,
                         rest,
-                        self.input.next(pos),
+                        cont,
+                        self.input.next_bounded(pos, self.text_end),
                         pos,
                         state,
                     )
@@ -934,7 +1044,9 @@ impl<'a> Engine<'a> {
                 }
             }
             Node::CharClass(cc) => {
-                if pos < self.text_len() && self.match_char_class(cc, self.input.at(pos)) {
+                if pos < self.text_len()
+                    && self.match_char_class(cc, self.input.at_bounded(pos, self.text_end))
+                {
                     self.match_quant(
                         mode,
                         atom,
@@ -942,7 +1054,8 @@ impl<'a> Engine<'a> {
                         max,
                         count + 1,
                         rest,
-                        self.input.next(pos),
+                        cont,
+                        self.input.next_bounded(pos, self.text_end),
                         pos,
                         state,
                     )
@@ -952,51 +1065,67 @@ impl<'a> Engine<'a> {
             }
             Node::Group { index, inner, .. } => {
                 let start = pos;
-                // Mirror Java's compile-time mode selection:
-                //   * Ques (`{0,1}`)  → `Branch[head, null] → BranchConn → next`
-                //     (chain-threaded — inner GroupTails see outer continuation
-                //     failure and restore).
-                //   * Non-det `{n,m}` → `Prolog(Loop|LazyLoop)` (also chain-
-                //     threaded via the body's loop-back).
-                //   * Det `{n,m}`     → `GroupCurly` (atomic — atom.tail.next
-                //     is a sentinel returning true, so inner GroupTails do NOT
-                //     restore; only the outer group's own slot is managed).
                 let deterministic = is_deterministic_body(inner);
                 let is_ques = min == 0 && max == 1;
                 let chain_based = is_ques || !deterministic;
-                let saved = state.captures.clone();
+                let saved_cap = index.map(|idx| state.captures[idx]);
                 let saved_flags = self.flags;
-                for branch in &inner.branches {
+                for branch in inner.branches.iter() {
+                    if self.error.is_some() {
+                        break;
+                    }
+                    self.flags = saved_flags;
                     if chain_based {
-                        // Path 2: chain-threaded continuation. Mirrors Java's
-                        // `Branch[head, null] → BranchConn → next` (Ques) or
-                        // `Loop`/`LazyLoop` body loop-back (non-det). Inner
-                        // GroupEnd sees its full continuation and properly
-                        // restores its slot on downstream failure.
-                        let mut combined = branch.clone();
-                        if let Some(idx) = index {
-                            combined.push(Node::GroupEnd { index: *idx, start });
-                        }
-                        combined.push(Node::RestoreFlags(saved_flags));
-                        combined.push(make_cont(atom, count + 1, rest, pos));
-                        if self.match_nodes(&combined, pos, state) {
+                        let quant_cont = Cont::Quant {
+                            mode,
+                            atom,
+                            min,
+                            max,
+                            count: count + 1,
+                            prev_pos: pos,
+                            rest,
+                            rest_cont: cont,
+                        };
+                        let restore = Cont::RestoreFlags {
+                            flags: saved_flags,
+                            next: &quant_cont,
+                        };
+                        let group_end;
+                        let next_cont: &Cont<'_> = if let Some(idx) = index {
+                            group_end = Cont::GroupEnd {
+                                index: *idx,
+                                start,
+                                next: &restore,
+                            };
+                            &group_end
+                        } else {
+                            &restore
+                        };
+                        if self.match_nodes(branch, next_cont, pos, state) {
                             return true;
                         }
+                        self.flags = saved_flags;
                     } else {
-                        // Path 1: atomic body match. Mirrors Java's `GroupCurly`
-                        // — atom is matched in isolation; inner captures inside
-                        // atom leak (Java's GroupTail.next within GroupCurly's
-                        // atom is a sentinel always returning true).
-                        let mut combined = branch.clone();
-                        if let Some(idx) = index {
-                            combined.push(Node::GroupEnd { index: *idx, start });
-                        }
-                        combined.push(Node::RestoreFlags(saved_flags));
-                        let mut branch_state = state.clone();
-                        let branch_ok = self.match_nodes(&combined, pos, &mut branch_state);
-                        state.captures = branch_state.captures.clone();
+                        let restore = Cont::RestoreFlags {
+                            flags: saved_flags,
+                            next: &Cont::Empty,
+                        };
+                        let group_end;
+                        let next_cont: &Cont<'_> = if let Some(idx) = index {
+                            group_end = Cont::GroupEnd {
+                                index: *idx,
+                                start,
+                                next: &restore,
+                            };
+                            &group_end
+                        } else {
+                            &restore
+                        };
+                        let saved_match_end = state.match_end;
+                        let branch_ok = self.match_nodes(branch, next_cont, pos, state);
+                        self.flags = saved_flags;
                         if branch_ok {
-                            let new_pos = branch_state.match_end;
+                            let new_pos = state.match_end;
                             if new_pos > pos {
                                 if self.match_quant(
                                     mode,
@@ -1005,30 +1134,24 @@ impl<'a> Engine<'a> {
                                     max,
                                     count + 1,
                                     rest,
+                                    cont,
                                     new_pos,
                                     pos,
                                     state,
                                 ) {
                                     return true;
                                 }
-                                // GroupCurly restores its OWN slot on overall
-                                // failure (when capturing). Inner captures
-                                // (set by inner Groups inside the body) leak.
                                 if let Some(idx) = index {
-                                    state.captures[*idx] = saved[*idx];
+                                    state.captures[*idx] = saved_cap.flatten();
                                 }
                             } else {
-                                // Zero-width body. GroupCurly.match{0,1}
-                                // restores its own slot when body is provably
-                                // zero-width-only (pattern_max_length == 0) and
-                                // `max > 1` (excludes Ques, now chain-based).
                                 if count == 0
                                     && min == 0
                                     && max > 1
                                     && pattern_max_length(inner) == Some(0)
                                     && let Some(idx) = index
                                 {
-                                    state.captures[*idx] = saved[*idx];
+                                    state.captures[*idx] = saved_cap.flatten();
                                 }
                                 if (count + 1) < min {
                                     if self.match_quant(
@@ -1038,6 +1161,7 @@ impl<'a> Engine<'a> {
                                         max,
                                         count + 1,
                                         rest,
+                                        cont,
                                         pos,
                                         pos,
                                         state,
@@ -1045,52 +1169,61 @@ impl<'a> Engine<'a> {
                                         return true;
                                     }
                                     if let Some(idx) = index {
-                                        state.captures[*idx] = saved[*idx];
+                                        state.captures[*idx] = saved_cap.flatten();
                                     }
-                                } else if try_rest_zw(count) && self.match_nodes(rest, pos, state) {
+                                } else if try_rest_zw(count)
+                                    && self.match_nodes(rest, cont, pos, state)
+                                {
                                     return true;
                                 } else if let Some(idx) = index {
-                                    state.captures[*idx] = saved[*idx];
+                                    state.captures[*idx] = saved_cap.flatten();
                                 }
                             }
+                            state.match_end = saved_match_end;
+                            self.flags = saved_flags;
+                        } else {
+                            state.match_end = saved_match_end;
                         }
                     }
                 }
-                // Group failed. Do NOT restore captures — OpenJDK's `Branch.match`
-                // has no save/restore between alternatives, so leaks from failed
-                // branches persist in caller state.
-                let _ = saved;
+                self.flags = saved_flags;
                 false
             }
             Node::FlagGroup { flags, inner } => {
-                // Java has no runtime FlagGroup — flags are scoped at parse
-                // time. We mirror the same Ques/Curly/GroupCurly split as the
-                // Group arm above:
-                //   * `(?...:X)?`  → chain-threaded.
-                //   * `(?...:X){n,m}` with non-det X → chain-threaded.
-                //   * `(?...:X){n,m}` with det X     → atomic.
                 let deterministic = is_deterministic_body(inner);
                 let is_ques = min == 0 && max == 1;
                 let chain_based = is_ques || !deterministic;
                 let old_flags = self.flags;
                 self.flags = *flags;
-                for branch in &inner.branches {
+                for branch in inner.branches.iter() {
+                    if self.error.is_some() {
+                        break;
+                    }
                     if chain_based {
-                        let mut combined = branch.clone();
-                        combined.push(Node::RestoreFlags(old_flags));
-                        combined.push(make_cont(atom, count + 1, rest, pos));
-                        if self.match_nodes(&combined, pos, state) {
+                        let quant_cont = Cont::Quant {
+                            mode,
+                            atom,
+                            min,
+                            max,
+                            count: count + 1,
+                            prev_pos: pos,
+                            rest,
+                            rest_cont: cont,
+                        };
+                        let restore = Cont::RestoreFlags {
+                            flags: old_flags,
+                            next: &quant_cont,
+                        };
+                        if self.match_nodes(branch, &restore, pos, state) {
                             self.flags = old_flags;
                             return true;
                         }
                         self.flags = *flags;
                     } else {
-                        // Path 1: atomic body match, mirroring GroupCurly.
-                        let mut branch_state = state.clone();
-                        let branch_ok = self.match_nodes(branch, pos, &mut branch_state);
-                        state.captures = branch_state.captures.clone();
+                        let saved_match_end = state.match_end;
+                        let branch_ok = self.match_nodes(branch, &Cont::Empty, pos, state);
                         if branch_ok {
-                            let new_pos = branch_state.match_end;
+                            let new_pos = state.match_end;
                             self.flags = old_flags;
                             if new_pos > pos {
                                 if self.match_quant(
@@ -1100,6 +1233,7 @@ impl<'a> Engine<'a> {
                                     max,
                                     count + 1,
                                     rest,
+                                    cont,
                                     new_pos,
                                     pos,
                                     state,
@@ -1114,16 +1248,21 @@ impl<'a> Engine<'a> {
                                     max,
                                     count + 1,
                                     rest,
+                                    cont,
                                     pos,
                                     pos,
                                     state,
                                 ) {
                                     return true;
                                 }
-                            } else if try_rest_zw(count) && self.match_nodes(rest, pos, state) {
+                            } else if try_rest_zw(count) && self.match_nodes(rest, cont, pos, state)
+                            {
                                 return true;
                             }
+                            state.match_end = saved_match_end;
                             self.flags = *flags;
+                        } else {
+                            state.match_end = saved_match_end;
                         }
                     }
                 }
@@ -1131,11 +1270,6 @@ impl<'a> Engine<'a> {
                 false
             }
             Node::LinebreakMatcher => {
-                // Inside a quantifier (`\R{n}`, `\R+`, `\R*`), OpenJDK's Curly
-                // does NOT backtrack into the atom — each iteration takes the
-                // longest \R available, and the engine doesn't retry a shorter
-                // \R if a later iteration fails. So we match atomically here.
-                // (Sequential `\R\R` still backtracks via the match_nodes arm.)
                 if pos < self.text_len() {
                     if self.input.at(pos) == 0x0d
                         && pos + 1 < self.text_len()
@@ -1148,6 +1282,7 @@ impl<'a> Engine<'a> {
                             max,
                             count + 1,
                             rest,
+                            cont,
                             pos + 2,
                             pos,
                             state,
@@ -1161,6 +1296,7 @@ impl<'a> Engine<'a> {
                             max,
                             count + 1,
                             rest,
+                            cont,
                             self.input.next(pos),
                             pos,
                             state,
@@ -1170,51 +1306,68 @@ impl<'a> Engine<'a> {
                 false
             }
             Node::Backreference(idx) => {
-                // Optimization arm: bypasses one match_nodes call. Equivalent
-                // to the generic `_` arm — Java's Curly handles backref via the
-                // same atom.match path; the dedicated arm here just spares the
-                // node-list overhead.
                 if let Some(Some((start, end))) = state.captures.get(*idx).cloned() {
                     let cap_len = end - start;
                     let Some(p) = self.backref_end(start, end, pos) else {
                         return false;
                     };
                     if cap_len == 0 {
-                        // Empty backref — zero-width iter. Java's Curly detects
-                        // `i == matcher.last` and proceeds to next. Mirror that
-                        // with the mode-aware zero-width policy: greedy always
-                        // tries `rest`; reluctant only at `count + 1 == min`.
                         if (count + 1) < min {
-                            self.match_quant(mode, atom, min, max, count + 1, rest, p, pos, state)
+                            self.match_quant(
+                                mode,
+                                atom,
+                                min,
+                                max,
+                                count + 1,
+                                rest,
+                                cont,
+                                p,
+                                pos,
+                                state,
+                            )
                         } else if try_rest_zw(count) {
-                            self.match_nodes(rest, p, state)
+                            self.match_nodes(rest, cont, p, state)
                         } else {
                             false
                         }
                     } else {
-                        self.match_quant(mode, atom, min, max, count + 1, rest, p, pos, state)
+                        self.match_quant(mode, atom, min, max, count + 1, rest, cont, p, pos, state)
                     }
                 } else {
                     false
                 }
             }
             _ => {
-                // No temp_state clone — let captures from the atom's internal
-                // attempts leak into `state`, matching OpenJDK. This is what
-                // exposes capture leaks from negative lookarounds whose inner
-                // matched (e.g. `(?<!(a|bb))c?` on "ac" leaks group 1 = "a").
-                if self.match_nodes(core::slice::from_ref(atom), pos, state) {
+                if self.match_nodes(core::slice::from_ref(atom), &Cont::Empty, pos, state) {
                     let new_pos = state.match_end;
                     if new_pos > pos {
-                        self.match_quant(mode, atom, min, max, count + 1, rest, new_pos, pos, state)
+                        self.match_quant(
+                            mode,
+                            atom,
+                            min,
+                            max,
+                            count + 1,
+                            rest,
+                            cont,
+                            new_pos,
+                            pos,
+                            state,
+                        )
                     } else if (count + 1) < min {
-                        // Zero-width but min not yet reached — iterate.
-                        self.match_quant(mode, atom, min, max, count + 1, rest, pos, pos, state)
+                        self.match_quant(
+                            mode,
+                            atom,
+                            min,
+                            max,
+                            count + 1,
+                            rest,
+                            cont,
+                            pos,
+                            pos,
+                            state,
+                        )
                     } else if try_rest_zw(count) {
-                        // Zero-width, min satisfied. Greedy: try rest. Reluctant:
-                        // only when count+1 == min — Java's match1 zero-width
-                        // abort applies otherwise.
-                        self.match_nodes(rest, pos, state)
+                        self.match_nodes(rest, cont, pos, state)
                     } else {
                         false
                     }
@@ -1233,6 +1386,7 @@ impl<'a> Engine<'a> {
         max: u32,
         count: u32,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         iter_start: usize,
         state: &mut State,
@@ -1241,72 +1395,74 @@ impl<'a> Engine<'a> {
             return false;
         }
 
-        if count >= min {
-            // No save/restore — see comment on match_greedy.
-            if self.match_nodes(rest, pos, state) {
-                // Mirror Java's GroupCurly.match1: after `next.match` succeeds
-                // at iteration N, the OUTER GroupCurly's prior iter set
-                //   groups[groupIndex]   = i (= position at iter N entry)
-                //   groups[groupIndex+1] = matcher.last (= position after consuming atom)
-                // — i.e. the LAST consumed atom's slice. Equivalent here:
-                // override captures[idx] = (iter_start, pos).
-                //
-                // GUARD: only fire when atom would use Path 1 (Java's
-                // GroupCurly). For Path 2 (Ques or non-det Loop) Java has no
-                // such override.
-                if count > 0
-                    && let Node::Group {
-                        index: Some(idx),
-                        inner,
-                        ..
-                    } = atom
-                {
-                    let is_ques = min == 0 && max == 1;
-                    let chain_based = is_ques || !is_deterministic_body(inner);
-                    if !chain_based {
-                        state.captures[*idx] = Some((iter_start, pos));
-                    }
+        if count >= min && self.match_nodes(rest, cont, pos, state) {
+            if count > 0
+                && let Node::Group {
+                    index: Some(idx),
+                    inner,
+                    ..
+                } = atom
+            {
+                let is_ques = min == 0 && max == 1;
+                let chain_based = is_ques || !is_deterministic_body(inner);
+                if !chain_based {
+                    state.captures[*idx] = Some((iter_start, pos));
                 }
-                return true;
             }
+            return true;
         }
 
         if count < max {
-            self.try_match_atom_mode(Mode::Reluctant, atom, min, max, count, rest, pos, state)
+            self.try_match_atom_mode(
+                Mode::Reluctant,
+                atom,
+                min,
+                max,
+                count,
+                rest,
+                cont,
+                pos,
+                state,
+            )
         } else {
             false
         }
     }
 
+    #[allow(clippy::too_many_arguments)]
     fn match_possessive(
         &mut self,
         atom: &Node,
         min: u32,
         max: u32,
         rest: &[Node],
+        cont: &Cont<'_>,
         pos: usize,
         state: &mut State,
     ) -> bool {
-        // Mirrors OpenJDK Curly POSSESSIVE: a cmin loop that iterates `min`
-        // times unconditionally (without zero-width check), followed by
-        // `match2` that iterates while atom advances. Captures leak — atom.match
-        // shares state.
         let mut current_pos = pos;
         let mut count = 0u32;
 
-        // cmin loop: must succeed `min` times, no zero-width abort.
         while count < min {
-            if !self.match_nodes(core::slice::from_ref(atom), current_pos, state) {
+            if !self.match_nodes(
+                core::slice::from_ref(atom),
+                &Cont::Empty,
+                current_pos,
+                state,
+            ) {
                 return false;
             }
             current_pos = state.match_end;
             count += 1;
         }
 
-        // Post-cmin loop: keep iterating while atom matches AND advances.
-        // Zero-width or fail breaks out (no possessive backtracking).
         while count < max {
-            if !self.match_nodes(core::slice::from_ref(atom), current_pos, state) {
+            if !self.match_nodes(
+                core::slice::from_ref(atom),
+                &Cont::Empty,
+                current_pos,
+                state,
+            ) {
                 break;
             }
             let new_pos = state.match_end;
@@ -1317,7 +1473,7 @@ impl<'a> Engine<'a> {
             count += 1;
         }
 
-        self.match_nodes(rest, current_pos, state)
+        self.match_nodes(rest, cont, current_pos, state)
     }
 
     fn is_lt(&self, c: u32) -> bool {
@@ -1347,7 +1503,7 @@ impl<'a> Engine<'a> {
         }
     }
 
-    fn check_anchor(&self, kind: AnchorKind, pos: usize) -> bool {
+    fn check_anchor(&mut self, kind: AnchorKind, pos: usize) -> bool {
         match kind {
             AnchorKind::StartOfLine => {
                 if self.flags.multiline {
@@ -1425,8 +1581,11 @@ impl<'a> Engine<'a> {
 
     /// Check if the character before pos is a word character,
     /// treating combining marks as inheriting word-status from preceding char.
-    fn has_base_character(&self, mut pos: usize) -> bool {
+    fn has_base_character(&mut self, mut pos: usize) -> bool {
         loop {
+            if !self.step() {
+                return false;
+            }
             let cp = self.input.at(pos);
             if is_letter_or_digit(cp) {
                 return true;
@@ -1438,7 +1597,7 @@ impl<'a> Engine<'a> {
             pos -= 1;
         }
     }
-    fn word_char_before(&self, pos: usize) -> bool {
+    fn word_char_before(&mut self, pos: usize) -> bool {
         if pos <= self.text_start {
             return false;
         }
@@ -1446,7 +1605,7 @@ impl<'a> Engine<'a> {
         is_word_char(cp, self.flags.unicode_class)
             || (is_nonspacing_mark(cp) && self.has_base_character(pos - 1))
     }
-    fn word_char_after(&self, pos: usize) -> bool {
+    fn word_char_after(&mut self, pos: usize) -> bool {
         if pos >= self.text_len() {
             return false;
         }
@@ -1474,7 +1633,10 @@ impl<'a> Engine<'a> {
         // (setting captures), those captures persist even if the surrounding
         // assertion is negative — `(?<!(a|bb))c` on "ac" leaves group 1 = "a"
         // from the inner success that flipped the outer to fail.
-        let rest = [Node::PositionCheck(pos)];
+        let pos_check = Cont::PositionCheck {
+            target: pos,
+            next: &Cont::Empty,
+        };
         let body_min = pattern_min_length(inner);
         if supplementary {
             let Some(high) = self.input.retreat(pos, body_min, self.text_start) else {
@@ -1496,7 +1658,7 @@ impl<'a> Engine<'a> {
                 if start < low {
                     break;
                 }
-                if self.match_pattern(inner, &rest, start, state) {
+                if self.match_pattern_cont(inner, &[], &pos_check, start, state) {
                     return true;
                 }
                 if self.error.is_some() || start == low {
@@ -1533,19 +1695,25 @@ impl<'a> Engine<'a> {
             return false;
         }
         for start in (start_low..=start_high).rev() {
-            if self.match_pattern(inner, &rest, start, state) {
+            if self.error.is_some() {
+                break;
+            }
+            if self.match_pattern_cont(inner, &[], &pos_check, start, state) {
                 return true;
             }
         }
         false
     }
 
-    pub fn match_char_class(&self, cc: &CharClass, ch: u32) -> bool {
+    pub fn match_char_class(&mut self, cc: &CharClass, ch: u32) -> bool {
         let matched = self.match_char_class_items(&cc.items, ch);
+        if self.error.is_some() {
+            return false;
+        }
         if cc.negated { !matched } else { matched }
     }
 
-    fn match_char_class_items(&self, items: &[CharClassItem], ch: u32) -> bool {
+    fn match_char_class_items(&mut self, items: &[CharClassItem], ch: u32) -> bool {
         enum Work<'a> {
             Any(&'a [CharClassItem]),
             Item(&'a CharClassItem),
@@ -1556,6 +1724,9 @@ impl<'a> Engine<'a> {
         let mut pending = vec![Work::Any(items)];
         let mut matched = false;
         while let Some(work) = pending.pop() {
+            if !self.step_class_work() {
+                return false;
+            }
             match work {
                 Work::Any(items) => {
                     if let Some((first, rest)) = items.split_first() {
@@ -1590,13 +1761,10 @@ impl<'a> Engine<'a> {
                     CharClassItem::Predefined(pc) => {
                         matched = match_predefined_class(*pc, ch, self.flags.unicode_class);
                     }
-                    CharClassItem::UnicodeProperty { name, negated } => {
-                        matched = match_unicode_property_ext(
-                            name,
-                            ch,
-                            self.flags.unicode_class,
-                            self.flags.case_insensitive,
-                        ) != *negated;
+                    CharClassItem::UnicodeProperty {
+                        compiled, negated, ..
+                    } => {
+                        matched = match_compiled_property(*compiled, ch) != *negated;
                     }
                     CharClassItem::Nested(nested) => {
                         if nested.negated {

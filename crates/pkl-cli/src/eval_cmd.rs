@@ -61,6 +61,18 @@ fn infer_module_name_for_placeholder(uri: &str) -> String {
     decoded.strip_suffix(".pkl").unwrap_or(&decoded).to_string()
 }
 
+fn validate_output_placeholder_segment(placeholder: &str, value: &str) -> Result<(), CliError> {
+    if value.contains(['/', '\\', '\0'])
+        || (cfg!(windows) && value.contains(':'))
+        || matches!(value, "." | "..")
+    {
+        return Err(CliError::err(format!(
+            "Cannot substitute output path placeholder `{placeholder}` with invalid path segment `{value}`."
+        )));
+    }
+    Ok(())
+}
+
 fn resolve_output_template(
     working_dir: &Path,
     template: &str,
@@ -74,35 +86,52 @@ fn resolve_output_template(
         Some(if rel.is_empty() { ".".to_string() } else { rel })
     });
 
-    let mut substituted = template.replace("%{moduleName}", &module_name);
-    if let Some(fmt) = output_format {
-        substituted = substituted.replace("%{outputFormat}", fmt);
+    // Single-pass substitution so placeholder values containing `%{...}` are never rescanned.
+    let mut substituted = String::with_capacity(template.len());
+    let mut rest = template;
+    while let Some(pos) = rest.find("%{") {
+        substituted.push_str(&rest[..pos]);
+        let tail = &rest[pos..];
+        if let Some(after) = tail.strip_prefix("%{moduleName}") {
+            validate_output_placeholder_segment("%{moduleName}", &module_name)?;
+            substituted.push_str(&module_name);
+            rest = after;
+        } else if let Some(after) = tail.strip_prefix("%{outputFormat}") {
+            if let Some(fmt) = output_format {
+                validate_output_placeholder_segment("%{outputFormat}", fmt)?;
+                substituted.push_str(fmt);
+            } else {
+                substituted.push_str("%{outputFormat}");
+            }
+            rest = after;
+        } else if let Some(after) = tail.strip_prefix("%{moduleDir}") {
+            let Some(ref dir) = module_dir else {
+                return Err(CliError::err(format!(
+                    "Cannot substitute output path placeholder `%{{moduleDir}}` because module `{}` does not have a file system path.",
+                    src.uri
+                )));
+            };
+            substituted.push_str(dir);
+            rest = after;
+        } else {
+            substituted.push_str("%{");
+            rest = &tail[2..];
+        }
     }
-    if let Some(dir) = module_dir {
-        substituted = substituted.replace("%{moduleDir}", &dir);
-    }
-    if substituted.contains("%{moduleDir}") {
-        return Err(CliError::err(format!(
-            "Cannot substitute output path placeholder `%{{moduleDir}}` because module `{}` does not have a file system path.",
-            src.uri
-        )));
-    }
+    substituted.push_str(rest);
     Ok(resolve_path(working_dir, Path::new(&substituted)))
 }
 
-fn resolve_real_output_path(base: &Path, rel: &str) -> (PathBuf, PathBuf) {
-    let mut resolved = base.to_path_buf();
-    let mut real = base.to_path_buf();
-    for comp in Path::new(rel).components() {
-        resolved.push(comp);
-        real.push(comp);
-        if real.exists()
-            && let Ok(canon) = std::fs::canonicalize(&real)
-        {
-            real = canon;
-        }
-    }
-    (normalize_lexical(&real), normalize_lexical(&resolved))
+fn resolve_real_output_path(
+    real_base: &Path,
+    display_base: &Path,
+    rel: &str,
+) -> Result<(PathBuf, PathBuf), ()> {
+    let joined_real = pkl_host_native::join_relative_path_segments(real_base, rel);
+    let real = pkl_host_native::try_resolve_canonical_or_ancestor(&joined_real)?;
+    let joined_display = pkl_host_native::join_relative_path_segments(display_base, rel);
+    let resolved = normalize_lexical(&joined_display);
+    Ok((real, resolved))
 }
 
 pub fn cmd_eval(args: &[String]) -> Result<i32, CliError> {
@@ -210,10 +239,12 @@ fn run_eval_modes(
                     output_dir.display()
                 )));
             }
-            let real_output_dir = if output_dir.exists() {
-                std::fs::canonicalize(&output_dir).unwrap_or_else(|_| output_dir.clone())
+            let real_output_dir = pkl_host_native::canonicalize_root_dir(&output_dir)
+                .unwrap_or_else(|_| output_dir.clone());
+            let display_output_dir = if output_dir.exists() {
+                pkl_host_native::strip_windows_verbatim_prefix(&real_output_dir)
             } else {
-                output_dir.clone()
+                pkl_host_native::strip_windows_verbatim_prefix(&output_dir)
             };
             let stdin_text = if module.is_stdin {
                 Some(read_stdin_utf8()?)
@@ -231,13 +262,27 @@ fn run_eval_modes(
                     }
                     let path_spec_str = path_spec.to_java_utf8();
                     let (real_path, resolved_path) =
-                        resolve_real_output_path(&real_output_dir, &path_spec_str);
+                        resolve_real_output_path(&real_output_dir, &display_output_dir, &path_spec_str)
+                            .map_err(|()| {
+                                MultiFileError::Cli(format!(
+                                    "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves outside output directory `{}`.",
+                                    module.uri,
+                                    real_output_dir.display()
+                                ))
+                            })?;
                     if !real_path.starts_with(&real_output_dir) {
                         return Err(MultiFileError::Cli(format!(
                             "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
                             module.uri,
                             real_path.display(),
                             real_output_dir.display()
+                        )));
+                    }
+                    if real_path == real_output_dir || real_path.is_dir() {
+                        return Err(MultiFileError::Cli(format!(
+                            "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is a directory.",
+                            module.uri,
+                            real_path.display()
                         )));
                     }
                     if let Some((prev_spec, prev_uri)) = written_files.get(&real_path) {
@@ -247,22 +292,47 @@ fn run_eval_modes(
                             real_path.display()
                         )));
                     }
-                    if real_path.is_dir() {
-                        return Err(MultiFileError::Cli(format!(
-                            "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is a directory.",
-                            module.uri,
-                            real_path.display()
-                        )));
-                    }
-                    written_files.insert(real_path.clone(), (path_spec_str, module.uri.clone()));
-                    if let Some(parent) = real_path.parent()
-                        && !parent.as_os_str().is_empty()
-                    {
+                    written_files.insert(real_path.clone(), (path_spec_str.clone(), module.uri.clone()));
+                    let parent = real_path.parent().filter(|p| !p.as_os_str().is_empty());
+                    if let Some(parent) = parent {
                         std::fs::create_dir_all(parent)
                             .map_err(|e| MultiFileError::Io(e.to_string()))?;
                     }
                     let bytes = eval_bytes().map_err(|_| MultiFileError::Eval)?;
-                    std::fs::write(&real_path, &bytes)
+                    let write_target = if let (Some(parent), Some(file_name)) =
+                        (parent, real_path.file_name())
+                    {
+                        let canon = std::fs::canonicalize(parent)
+                            .map_err(|e| MultiFileError::Io(e.to_string()))?;
+                        if !canon.starts_with(&real_output_dir) {
+                            return Err(MultiFileError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
+                                module.uri,
+                                canon.display(),
+                                real_output_dir.display()
+                            )));
+                        }
+                        canon.join(file_name)
+                    } else {
+                        let verified = pkl_host_native::try_resolve_canonical_or_ancestor(&real_path)
+                            .map_err(|()| {
+                                MultiFileError::Cli(format!(
+                                    "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves outside output directory `{}`.",
+                                    module.uri,
+                                    real_output_dir.display()
+                                ))
+                            })?;
+                        if !verified.starts_with(&real_output_dir) || verified == real_output_dir {
+                            return Err(MultiFileError::Cli(format!(
+                                "Output file conflict: `output.files` entry `\"{path_spec_str}\"` in module `{}` resolves to file path `{}`, which is outside output directory `{}`.",
+                                module.uri,
+                                verified.display(),
+                                real_output_dir.display()
+                            )));
+                        }
+                        verified
+                    };
+                    pkl_host_native::write_file_nofollow(&write_target, &bytes)
                         .map_err(|e| MultiFileError::Io(e.to_string()))?;
                     let relative = relativize_paths(&resolved_path, working_dir);
                     let line = format!("{relative}{LINE_SEP}");
@@ -342,24 +412,22 @@ fn run_eval_modes(
                     .map_err(|e| CliError::err(format!("Failed to create parent dir: {e}")))?;
             }
             if !written_non_empty.contains(&output_file) {
-                std::fs::write(&output_file, &eval_res.stdout).map_err(|e| {
-                    CliError::err(format!("Failed to write `{}`: {e}", output_file.display()))
-                })?;
+                pkl_host_native::write_file_nofollow(&output_file, &eval_res.stdout).map_err(
+                    |e| CliError::err(format!("Failed to write `{}`: {e}", output_file.display())),
+                )?;
                 if !eval_res.stdout.is_empty() {
                     written_non_empty.insert(output_file);
                 }
             } else if !eval_res.stdout.is_empty() {
-                let mut file = std::fs::OpenOptions::new()
-                    .append(true)
-                    .open(&output_file)
-                    .map_err(|e| {
-                        CliError::err(format!("Failed to open `{}`: {e}", output_file.display()))
-                    })?;
-                file.write_all(format!("{}\n", opts.module_output_separator).as_bytes())
-                    .and_then(|()| file.write_all(&eval_res.stdout))
-                    .map_err(|e| {
-                        CliError::err(format!("Failed to append `{}`: {e}", output_file.display()))
-                    })?;
+                let mut payload = Vec::with_capacity(
+                    opts.module_output_separator.len() + 1 + eval_res.stdout.len(),
+                );
+                payload.extend_from_slice(opts.module_output_separator.as_bytes());
+                payload.push(b'\n');
+                payload.extend_from_slice(&eval_res.stdout);
+                pkl_host_native::append_file_nofollow(&output_file, &payload).map_err(|e| {
+                    CliError::err(format!("Failed to append `{}`: {e}", output_file.display()))
+                })?;
             }
         }
         return Ok(0);
@@ -496,7 +564,7 @@ pub fn cmd_project_resolve(args: &[String]) -> Result<i32, CliError> {
             .unwrap_or(&loaded.project.project_dir)
             .join(PKL_PROJECT_DEPS_FILENAME);
         let json = resolved.deps.write_json();
-        std::fs::write(&deps_file, json.as_bytes()).map_err(|e| {
+        pkl_host_native::write_file_nofollow(&deps_file, json.as_bytes()).map_err(|e| {
             resolver.close();
             http.close();
             CliError::err(format!("Failed to write to {}: {e}", deps_file.display()))
@@ -791,7 +859,7 @@ pub fn cmd_analyze_imports(args: &[String]) -> Result<i32, CliError> {
             std::fs::create_dir_all(parent)
                 .map_err(|e| CliError::err(format!("Failed to create output directory: {e}")))?;
         }
-        std::fs::write(&resolved, &res.stdout)
+        pkl_host_native::write_file_nofollow(&resolved, &res.stdout)
             .map_err(|e| CliError::err(format!("Failed to write `{}`: {e}", resolved.display())))?;
     } else {
         let mut stdout = io::stdout().lock();

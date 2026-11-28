@@ -42,10 +42,11 @@ pub enum ScopeKey {
 pub struct SiteScope {
     pub doc_packages: Vec<DocPackage>,
     pub overview_imports: Vec<(String, String)>,
-    pub imported_modules: BTreeMap<String, ModuleSchema>,
+    pub imported_modules: BTreeMap<String, Arc<ModuleSchema>>,
     pub output_dir: PathBuf,
     pub url: String,
-    pub pkl_base_module: ModuleSchema,
+    pub pkl_base_module: Arc<ModuleSchema>,
+    pub pkl_base_scope: Arc<ModuleScope>,
     pub stdlib_package_index: Option<usize>,
     pub package_scopes: Vec<Arc<PackageScope>>,
 }
@@ -59,20 +60,40 @@ impl SiteScope {
     ) -> Arc<Self> {
         let base_uri = dir_to_file_uri_with_slash(&output_dir);
         let url = resolve_uri(&base_uri, "index.html");
-        let pkl_base_module = imported_modules
-            .get("pkl:base")
-            .cloned()
-            .expect("SiteScope requires `pkl:base` in imported_modules");
+        let imported_modules: BTreeMap<String, Arc<ModuleSchema>> = imported_modules
+            .into_iter()
+            .map(|(k, v)| (k, Arc::new(v)))
+            .collect();
+        let pkl_base_module = Arc::clone(
+            imported_modules
+                .get("pkl:base")
+                .expect("SiteScope requires `pkl:base` in imported_modules"),
+        );
         let stdlib_package_index = doc_packages.iter().position(|p| p.name() == "pkl");
 
         let mut package_scopes = Vec::with_capacity(doc_packages.len());
         for pkg in &doc_packages {
             package_scopes.push(Arc::new(PackageScope::new(
                 Arc::clone(&pkg.doc_package_info),
-                pkg.doc_modules.iter().map(|m| m.schema.clone()).collect(),
+                pkg.doc_modules
+                    .iter()
+                    .map(|m| Arc::new(m.schema.clone()))
+                    .collect(),
                 &url,
             )));
         }
+
+        let stdlib_pkg_url = stdlib_package_index.map(|idx| package_scopes[idx].url.as_str());
+        let pkl_base_page = match stdlib_pkg_url {
+            Some(local_url) => local_url.to_string(),
+            None => stdlib_package_page_url(PKL_VERSION),
+        };
+        let pkl_base_url = resolve_uri(&pkl_base_page, "base/");
+        let pkl_base_scope = Arc::new(ModuleScope::new(
+            Arc::clone(&pkl_base_module),
+            pkl_base_url,
+            None,
+        ));
 
         Arc::new(Self {
             doc_packages,
@@ -81,6 +102,7 @@ impl SiteScope {
             output_dir,
             url,
             pkl_base_module,
+            pkl_base_scope,
             stdlib_package_index,
             package_scopes,
         })
@@ -121,7 +143,7 @@ impl SiteScope {
         Arc::new(PackageScope::new(info, Vec::new(), &self.url))
     }
 
-    pub fn resolve_import(&self, uri: &str) -> Option<&ModuleSchema> {
+    pub fn resolve_import(&self, uri: &str) -> Option<&Arc<ModuleSchema>> {
         self.imported_modules.get(uri)
     }
 
@@ -153,11 +175,8 @@ impl SiteScope {
         None
     }
 
-    fn pkl_base_scope(&self) -> ModuleScope {
-        let base_url = self
-            .resolve_module_name_to_doc_url("pkl.base")
-            .expect("pkl.base doc url");
-        ModuleScope::new(self.pkl_base_module.clone(), base_url, None)
+    fn pkl_base_scope(&self) -> Arc<ModuleScope> {
+        Arc::clone(&self.pkl_base_scope)
     }
 
     pub fn as_doc_scope(self: &Arc<Self>) -> DocScope {
@@ -177,7 +196,7 @@ pub struct PackageScope {
 impl PackageScope {
     fn new(
         doc_package_info: Arc<DocPackageInfo>,
-        modules: Vec<ModuleSchema>,
+        modules: Vec<Arc<ModuleSchema>>,
         site_url: &str,
     ) -> Self {
         let encoded_name = encode_path(&doc_package_info.name);
@@ -206,7 +225,7 @@ impl PackageScope {
             );
             let doc_url = resolve_uri(&url, &mod_rel);
             let mscope = Arc::new(ModuleScope {
-                module: module.clone(),
+                module: Arc::clone(&module),
                 url: doc_url,
                 parent_info: Some(Arc::clone(&doc_package_info)),
                 parent_url: Some(url.clone()),
@@ -280,18 +299,25 @@ impl PackageScope {
         site.resolve_module_name_to_source_url(name, source_location)
     }
 
-    fn pkl_base_scope(&self, site: &SiteScope) -> ModuleScope {
+    fn pkl_base_scope(&self, site: &SiteScope) -> Arc<ModuleScope> {
         let base_url = self
             .resolve_module_name_to_doc_url(site, "pkl.base")
             .expect("pkl.base doc url");
-        ModuleScope::new(site.pkl_base_module.clone(), base_url, None)
+        if base_url == site.pkl_base_scope.url {
+            return Arc::clone(&site.pkl_base_scope);
+        }
+        Arc::new(ModuleScope::new(
+            Arc::clone(&site.pkl_base_module),
+            base_url,
+            None,
+        ))
     }
 }
 
 /// Module-level scope (`ModuleScope` in `DocScope.kt:336`).
 #[derive(Clone)]
 pub struct ModuleScope {
-    pub module: ModuleSchema,
+    pub module: Arc<ModuleSchema>,
     pub url: String,
     pub parent_info: Option<Arc<DocPackageInfo>>,
     pub parent_url: Option<String>,
@@ -300,7 +326,7 @@ pub struct ModuleScope {
 }
 
 impl ModuleScope {
-    pub fn new(module: ModuleSchema, url: String, parent: Option<&PackageScope>) -> Self {
+    pub fn new(module: Arc<ModuleSchema>, url: String, parent: Option<&PackageScope>) -> Self {
         Self {
             module,
             url,
@@ -392,7 +418,7 @@ impl ModuleScope {
         {
             return Some(DocScope::Class {
                 site,
-                schema: self.module.clone(),
+                schema: Arc::clone(&self.module),
                 class_id: cid,
                 parent_url: self.url.clone(),
                 parent_module: Some((parent_pkg, Arc::clone(self))),
@@ -406,7 +432,7 @@ impl ModuleScope {
         {
             return Some(DocScope::TypeAlias {
                 site,
-                schema: self.module.clone(),
+                schema: Arc::clone(&self.module),
                 alias_id: aid,
                 parent_doc_url: self.url.clone(),
                 parent_module: Some((parent_pkg, Arc::clone(self))),
@@ -430,14 +456,14 @@ pub enum DocScope {
     },
     Class {
         site: Arc<SiteScope>,
-        schema: ModuleSchema,
+        schema: Arc<ModuleSchema>,
         class_id: ClassId,
         parent_url: String,
         parent_module: Option<(Option<Arc<PackageScope>>, Arc<ModuleScope>)>,
     },
     TypeAlias {
         site: Arc<SiteScope>,
-        schema: ModuleSchema,
+        schema: Arc<ModuleSchema>,
         alias_id: TypeAliasId,
         parent_doc_url: String,
         parent_module: Option<(Option<Arc<PackageScope>>, Arc<ModuleScope>)>,
@@ -812,11 +838,11 @@ impl DocScope {
     pub fn resolve_method(&self, site: &Arc<SiteScope>, name: &str) -> Option<DocScope> {
         match self {
             Self::Site(s) => {
-                let base = Arc::new(s.pkl_base_scope());
+                let base = s.pkl_base_scope();
                 base.get_method(None, Arc::clone(site), name)
             }
             Self::Package { package, .. } => {
-                let base = Arc::new(package.pkl_base_scope(site));
+                let base = package.pkl_base_scope(site);
                 base.get_method(None, Arc::clone(site), name)
             }
             Self::Module { site_pkg, module } => {
@@ -828,7 +854,7 @@ impl DocScope {
                     });
                 }
                 if let Some(pkg) = site_pkg {
-                    let base = Arc::new(pkg.pkl_base_scope(site));
+                    let base = pkg.pkl_base_scope(site);
                     if let Some(found) = base.get_method(None, Arc::clone(site), name) {
                         return Some(found);
                     }
@@ -883,10 +909,10 @@ impl DocScope {
                 {
                     return Some(Self::Module {
                         site_pkg: None,
-                        module: Arc::new(ModuleScope::new(mod_schema.clone(), doc_url, None)),
+                        module: Arc::new(ModuleScope::new(Arc::clone(mod_schema), doc_url, None)),
                     });
                 }
-                let base = Arc::new(s.pkl_base_scope());
+                let base = s.pkl_base_scope();
                 base.get_property(None, Arc::clone(site), name)
             }
             Self::Package { package, .. } => {
@@ -897,10 +923,10 @@ impl DocScope {
                 {
                     return Some(Self::Module {
                         site_pkg: None,
-                        module: Arc::new(ModuleScope::new(mod_schema.clone(), doc_url, None)),
+                        module: Arc::new(ModuleScope::new(Arc::clone(mod_schema), doc_url, None)),
                     });
                 }
-                let base = Arc::new(package.pkl_base_scope(site));
+                let base = package.pkl_base_scope(site);
                 base.get_property(None, Arc::clone(site), name)
             }
             Self::Module { site_pkg, module } => {
@@ -915,7 +941,7 @@ impl DocScope {
                     if let Some(url) = doc_url {
                         return Some(Self::Module {
                             site_pkg: None,
-                            module: Arc::new(ModuleScope::new(mod_schema.clone(), url, None)),
+                            module: Arc::new(ModuleScope::new(Arc::clone(mod_schema), url, None)),
                         });
                     }
                     // Upstream `ModuleScope.kt:390-393` returns `null` from the `let` block,
@@ -936,7 +962,7 @@ impl DocScope {
                 {
                     return Some(Self::Class {
                         site: Arc::clone(site),
-                        schema: module.module.clone(),
+                        schema: Arc::clone(&module.module),
                         class_id: cid,
                         parent_url: module.url.clone(),
                         parent_module: Some((site_pkg.clone(), Arc::clone(module))),
@@ -950,14 +976,14 @@ impl DocScope {
                 {
                     return Some(Self::TypeAlias {
                         site: Arc::clone(site),
-                        schema: module.module.clone(),
+                        schema: Arc::clone(&module.module),
                         alias_id: aid,
                         parent_doc_url: module.url.clone(),
                         parent_module: Some((site_pkg.clone(), Arc::clone(module))),
                     });
                 }
                 if let Some(pkg) = site_pkg {
-                    let base = Arc::new(pkg.pkl_base_scope(site));
+                    let base = pkg.pkl_base_scope(site);
                     if let Some(found) = base.get_property(None, Arc::clone(site), name) {
                         return Some(found);
                     }
@@ -1090,7 +1116,7 @@ pub fn make_class_scope(
 ) -> DocScope {
     DocScope::Class {
         site: Arc::clone(site),
-        schema: module.module.clone(),
+        schema: Arc::clone(&module.module),
         class_id: class.id,
         parent_url: module.url.clone(),
         parent_module: Some((Some(Arc::clone(pkg)), Arc::clone(module))),
@@ -1106,7 +1132,7 @@ pub fn make_type_alias_scope(
 ) -> DocScope {
     DocScope::TypeAlias {
         site: Arc::clone(site),
-        schema: module.module.clone(),
+        schema: Arc::clone(&module.module),
         alias_id: alias.id,
         parent_doc_url: module.url.clone(),
         parent_module: Some((Some(Arc::clone(pkg)), Arc::clone(module))),

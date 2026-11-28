@@ -7,10 +7,10 @@ use crate::value::PklString;
 
 // A prefix token stream keeps construction, equality, rendering and destruction
 // iterative even when a literal List key is nested thousands of times.
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Hash)]
 pub(super) struct ConstantKey(Vec<ConstantToken>);
 
-#[derive(PartialEq, Eq)]
+#[derive(PartialEq, Eq, Hash)]
 enum ConstantToken {
     Null,
     Bool(bool),

@@ -697,6 +697,7 @@ struct Parser<'a> {
     pending: Vec<Diagnostic>,
     member_path: Vec<PklString>,
     entry_counts: crate::heap::FastMap<PklString, usize>,
+    entry_counts_undo: Option<Vec<(PklString, usize)>>,
     folded_integer_spans: std::collections::BTreeMap<Span, Span>,
     interpolation_spans: std::collections::BTreeMap<Span, Span>,
     skip_class_bodies: bool,
@@ -767,6 +768,7 @@ impl<'a> Parser<'a> {
             pending: Vec::new(),
             member_path: Vec::new(),
             entry_counts: crate::heap::FastMap::default(),
+            entry_counts_undo: None,
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
             skip_class_bodies,
@@ -796,6 +798,7 @@ impl<'a> Parser<'a> {
             pending: Vec::new(),
             member_path: Vec::new(),
             entry_counts: crate::heap::FastMap::default(),
+            entry_counts_undo: None,
             folded_integer_spans: std::collections::BTreeMap::new(),
             interpolation_spans: std::collections::BTreeMap::new(),
             skip_class_bodies: false,
@@ -2526,24 +2529,94 @@ impl<'a> Parser<'a> {
             self.advance()?;
             return Ok(parameters);
         }
-        let mut candidate = self.clone();
-        let first = candidate.parameter()?;
+        // Speculative lookahead without cloning the whole parser's accumulated
+        // span/entry/diagnostic tables (which would turn `{ x: T }` into O(N^2)).
+        // Move `entry_counts` in O(1) with a rollback log so computed entry keys
+        // inside parameter type constraints see and preserve outer numbering.
+        let mut candidate = Parser {
+            lexer: self.lexer.clone(),
+            token: self.token.clone(),
+            gap: self.gap,
+            depth: self.depth,
+            previous_end: self.previous_end,
+            expectation: None,
+            expressions: self.expressions,
+            pending: Vec::new(),
+            member_path: self.member_path.clone(),
+            entry_counts: std::mem::take(&mut self.entry_counts),
+            entry_counts_undo: Some(Vec::new()),
+            folded_integer_spans: std::collections::BTreeMap::new(),
+            interpolation_spans: std::collections::BTreeMap::new(),
+            skip_class_bodies: self.skip_class_bodies,
+        };
+        let restore_entry_counts = |target: &mut Self, mut cand: Parser<'a>| {
+            if let Some(undo) = cand.entry_counts_undo.take() {
+                for (key, prev) in undo.into_iter().rev() {
+                    if prev == 0 {
+                        cand.entry_counts.remove(&key);
+                    } else {
+                        cand.entry_counts.insert(key, prev);
+                    }
+                }
+            }
+            target.entry_counts = cand.entry_counts;
+        };
+        let first = match candidate.parameter() {
+            Ok(param) => param,
+            Err(err) => {
+                restore_entry_counts(self, candidate);
+                return Err(err);
+            }
+        };
         if !underscore && !candidate.is_symbol(',') && !candidate.is_operator("->") {
+            self.expressions = candidate.expressions;
+            restore_entry_counts(self, candidate);
             return Ok(Vec::new());
         }
         let mut parameters = vec![first];
         while candidate.is_symbol(',') {
-            candidate.advance()?;
+            if let Err(err) = candidate.advance() {
+                restore_entry_counts(self, candidate);
+                return Err(err);
+            }
             if candidate.is_operator("->") {
                 break;
             }
-            parameters.push(candidate.parameter()?);
+            match candidate.parameter() {
+                Ok(param) => parameters.push(param),
+                Err(err) => {
+                    restore_entry_counts(self, candidate);
+                    return Err(err);
+                }
+            }
         }
         if !candidate.is_operator("->") {
-            return Err(candidate.unexpected(Some(",` or `->")));
+            let err = candidate.unexpected(Some(",` or `->"));
+            restore_entry_counts(self, candidate);
+            return Err(err);
         }
-        candidate.advance()?;
-        *self = candidate;
+        if let Err(err) = candidate.advance() {
+            restore_entry_counts(self, candidate);
+            return Err(err);
+        }
+        self.lexer = candidate.lexer;
+        self.token = candidate.token;
+        self.gap = candidate.gap;
+        self.depth = candidate.depth;
+        self.previous_end = candidate.previous_end;
+        self.expectation = candidate.expectation;
+        self.expressions = candidate.expressions;
+        self.pending.extend(candidate.pending);
+        self.entry_counts = candidate.entry_counts;
+        if let (Some(parent_undo), Some(cand_undo)) =
+            (&mut self.entry_counts_undo, candidate.entry_counts_undo)
+        {
+            parent_undo.extend(cand_undo);
+        }
+        self.folded_integer_spans
+            .extend(candidate.folded_integer_spans);
+        self.interpolation_spans
+            .extend(candidate.interpolation_spans);
         Ok(parameters)
     }
 
@@ -2817,10 +2890,11 @@ impl<'a> Parser<'a> {
             _ => None,
         });
         let label = literal.unwrap_or_else(|| {
-            let count = self
-                .entry_counts
-                .entry(PklString::join(&self.member_path, "."))
-                .or_default();
+            let key = PklString::join(&self.member_path, ".");
+            let count = self.entry_counts.entry(key.clone()).or_default();
+            if let Some(undo) = &mut self.entry_counts_undo {
+                undo.push((key, *count));
+            }
             *count += 1;
             format!("#{count}").into()
         });

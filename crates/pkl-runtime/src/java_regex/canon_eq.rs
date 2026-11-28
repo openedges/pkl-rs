@@ -125,24 +125,23 @@ fn compose_pair(a: u32, b: u32) -> Option<u32> {
 }
 
 fn canonical_order(cps: &mut [u32]) {
-    let mut i = 1usize;
+    // Sort each maximal contiguous run of non-zero combining classes stably in O(N log N)
+    // (preserving relative order of identical combining classes and avoiding O(N^2) DoS on
+    // adversarial combining-mark runs).
+    let mut i = 0usize;
     while i < cps.len() {
-        let cc = combining_class(cps[i]);
-        if cc == 0 {
+        if combining_class(cps[i]) == 0 {
             i += 1;
             continue;
         }
-        let mut j = i;
-        while j > 0 {
-            let prev_cc = combining_class(cps[j - 1]);
-            if prev_cc > cc {
-                cps.swap(j - 1, j);
-                j -= 1;
-            } else {
-                break;
-            }
-        }
+        let start = i;
         i += 1;
+        while i < cps.len() && combining_class(cps[i]) != 0 {
+            i += 1;
+        }
+        if i - start > 1 {
+            cps[start..i].sort_by_key(|&cp| combining_class(cp));
+        }
     }
 }
 
@@ -473,11 +472,21 @@ fn count_chars(units: &[u16], index: usize, length_in_code_points: usize) -> usi
     pos - index
 }
 
+const MAX_CANON_EQ_VARIANTS: usize = 1024;
+
 fn produce_equivalent_alternation(
     source: &[u16],
     dst: &mut Vec<Vec<u16>>,
     original_pattern: &[u16],
 ) -> Result<(), CompileError> {
+    if dst.len() >= MAX_CANON_EQ_VARIANTS {
+        return Err(CompileError {
+            kind: CompileErrorKind::NestingBudgetExceeded,
+            message: "Pattern too complex".into(),
+            pattern: original_pattern.to_vec(),
+            index: 0,
+        });
+    }
     let len = count_chars(source, 0, 1);
     if source.len() == len {
         push_unique(dst, source.to_vec());
@@ -485,8 +494,17 @@ fn produce_equivalent_alternation(
     }
     let base = &source[..len];
     let combining = &source[len..];
-    let perms = produce_permutations(combining, original_pattern)?;
+    let mut perm_budget = MAX_CANON_EQ_VARIANTS;
+    let perms = produce_permutations(combining, original_pattern, &mut perm_budget)?;
     for perm in perms {
+        if dst.len() >= MAX_CANON_EQ_VARIANTS {
+            return Err(CompileError {
+                kind: CompileErrorKind::NestingBudgetExceeded,
+                message: "Pattern too complex".into(),
+                pattern: original_pattern.to_vec(),
+                index: 0,
+            });
+        }
         let mut candidate = Vec::with_capacity(base.len() + perm.len());
         candidate.extend_from_slice(base);
         candidate.extend_from_slice(&perm);
@@ -501,6 +519,7 @@ fn produce_equivalent_alternation(
 fn produce_permutations(
     input: &[u16],
     original_pattern: &[u16],
+    budget: &mut usize,
 ) -> Result<Vec<Vec<u16>>, CompileError> {
     let c1 = count_chars(input, 0, 1);
     if input.len() == c1 {
@@ -521,7 +540,7 @@ fn produce_permutations(
     }
     let cps = decode_utf16_points(input);
     let length = cps.len();
-    if length > 12 {
+    if length > 8 {
         return Err(CompileError {
             kind: CompileErrorKind::NestingBudgetExceeded,
             message: "Pattern too complex".into(),
@@ -545,9 +564,18 @@ fn produce_permutations(
             let mut remaining = Vec::with_capacity(input.len() - len);
             remaining.extend_from_slice(&input[..offset]);
             remaining.extend_from_slice(&input[offset + len..]);
-            let sub = produce_permutations(&remaining, original_pattern)?;
+            let sub = produce_permutations(&remaining, original_pattern, budget)?;
             let ch_slice = &input[offset..offset + len];
             for perm in sub {
+                if *budget == 0 {
+                    return Err(CompileError {
+                        kind: CompileErrorKind::NestingBudgetExceeded,
+                        message: "Pattern too complex".into(),
+                        pattern: original_pattern.to_vec(),
+                        index: 0,
+                    });
+                }
+                *budget -= 1;
                 let mut combined = Vec::with_capacity(input.len());
                 combined.extend_from_slice(ch_slice);
                 combined.extend_from_slice(&perm);

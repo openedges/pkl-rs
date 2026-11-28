@@ -42,17 +42,15 @@ export declare class PklError extends Error {
   constructor(message: string, kind?: PklErrorKind, capability?: keyof PklCapabilities);
 }
 
-export interface ModuleSource {
+export declare class ModuleSource {
   readonly uri: string;
   readonly contents?: string;
+  constructor(uri: string, contents?: string);
+  static text(text: string, uri?: string): ModuleSource;
+  static uri(uri: string): ModuleSource;
+  static path(path: string): ModuleSource;
+  static modulePath(path: string): ModuleSource;
 }
-
-export declare const ModuleSource: {
-  text(text: string, uri?: string): ModuleSource;
-  uri(uri: string): ModuleSource;
-  path(path: string): ModuleSource;
-  modulePath(path: string): ModuleSource;
-};
 
 export interface StackFrame {
   moduleUri: string;
@@ -96,6 +94,18 @@ export interface HttpFetchResponse {
   bytes: Uint8Array;
 }
 
+export interface SecurityManager {
+  checkImportModule?(importingUri: string, importedUri: string): void | Promise<void>;
+  checkResolveModule?(uri: string): void | Promise<void>;
+  checkReadResource?(uri: string): void | Promise<void>;
+  checkResolveResource?(uri: string): void | Promise<void>;
+}
+
+export interface Logger {
+  trace?(message: string, frame?: StackFrame): void | Promise<void>;
+  warn?(message: string, frame?: StackFrame): void | Promise<void>;
+}
+
 export interface EvaluatorOptions {
   allowedModules?: string[];
   allowedResources?: string[];
@@ -110,16 +120,9 @@ export interface EvaluatorOptions {
   testMode?: boolean;
   timeoutMs?: number | bigint;
   signal?: AbortSignal;
-  logger?: {
-    trace?(message: string, frame?: StackFrame): void | Promise<void>;
-    warn?(message: string, frame?: StackFrame): void | Promise<void>;
-  };
+  logger?: Logger;
   frameTransformer?: (frame: StackFrame) => StackFrame | Promise<StackFrame>;
-  securityManager?: {
-    checkImportModule?(importingUri: string, importedUri: string): void | Promise<void>;
-    checkResolveModule?(uri: string): void | Promise<void>;
-    checkReadResource?(uri: string): void | Promise<void>;
-  };
+  securityManager?: SecurityManager;
   moduleReaders?: ModuleReader[];
   resourceReaders?: ResourceReader[];
   vfs?: VirtualFileSystem;
@@ -137,59 +140,66 @@ export interface CallOptions {
 }
 
 export declare class PklDuration {
-  value: number;
-  unit: string;
+  readonly value: number;
+  readonly unit: string;
   constructor(value: number, unit: string);
 }
 
 export declare class PklDataSize {
-  value: number;
-  unit: string;
+  readonly value: number;
+  readonly unit: string;
   constructor(value: number, unit: string);
 }
 
 export declare class PklPair<A = PklValue, B = PklValue> {
-  first: A;
-  second: B;
+  readonly first: A;
+  readonly second: B;
   constructor(first: A, second: B);
 }
 
 export declare class PklRegex {
-  pattern: string;
+  readonly pattern: string;
   constructor(pattern: string);
 }
 
 export declare class PklObject {
-  className: string;
-  moduleUri: string;
-  properties: Record<string, PklValue>;
-  entries: Map<PklValue, PklValue>;
-  elements: PklValue[];
+  readonly className: string;
+  readonly moduleUri: string;
+  readonly properties: Record<string, PklValue>;
+  readonly entries: Map<PklValue, PklValue>;
+  readonly elements: PklValue[];
   constructor(
     className: string,
     moduleUri: string,
     properties?: Record<string, PklValue>,
     entries?: Map<PklValue, PklValue> | Iterable<[PklValue, PklValue]>,
-    elements?: PklValue[],
+    elements?: Iterable<PklValue>,
   );
+  toJSON(): {
+    className: string;
+    moduleUri: string;
+    properties: Record<string, PklValue>;
+    entries: [PklValue, PklValue][];
+    elements: PklValue[];
+  };
 }
 
 export declare class PklClass {
-  name: string;
-  moduleUri: string;
+  readonly name: string;
+  readonly moduleUri: string;
   constructor(name: string, moduleUri: string);
 }
 
 export declare class PklTypeAlias {
-  name: string;
-  moduleUri: string;
+  readonly name: string;
+  readonly moduleUri: string;
   constructor(name: string, moduleUri: string);
 }
 
 export declare class PklIntSeq {
-  start: bigint;
-  end: bigint;
-  step: bigint;
+  readonly start: bigint;
+  readonly end: bigint;
+  readonly step: bigint;
   constructor(start: bigint, end: bigint, step: bigint);
 }
 
@@ -198,10 +208,10 @@ export declare class PklFunction {
 }
 
 export declare class PklReference {
-  domain: PklValue;
-  data: PklValue;
-  path: PklValue[];
-  constructor(domain: PklValue, data: PklValue, path: PklValue[]);
+  readonly domain: PklValue;
+  readonly data: PklValue;
+  readonly path: PklValue[];
+  constructor(domain: PklValue, data: PklValue, path?: PklValue[]);
 }
 
 export type PklValue =
@@ -274,6 +284,7 @@ export interface PPropertySchema {
   annotations: PklObject[];
   type: PType;
 }
+export type PClassProperty = PPropertySchema;
 
 export interface PMethodSchema {
   name: string;
@@ -287,6 +298,7 @@ export interface PMethodSchema {
   parameters: Record<string, PType>;
   returnType: PType;
 }
+export type PClassMethod = PMethodSchema;
 
 export interface PClassSchema {
   info: PClassInfo;
@@ -294,6 +306,7 @@ export interface PClassSchema {
   simpleName: string;
   qualifiedName: string;
   displayName: string;
+  moduleUri: string;
   isModuleClass: boolean;
   docComment: string | null;
   sourceLocation: SourceLocation;
@@ -321,6 +334,7 @@ export interface PTypeAliasSchema {
   typeParameters: TypeParameter[];
   aliasedType: PType;
 }
+export type TypeAliasSchema = PTypeAliasSchema;
 
 export interface ModuleSchema {
   moduleUri: string;
@@ -352,6 +366,7 @@ export interface TestError {
 export interface TestResult {
   name: string;
   totalAsserts: number;
+  failed: boolean;
   failures: TestFailure[];
   errors: TestError[];
   isExampleWritten: boolean;
@@ -359,6 +374,10 @@ export interface TestResult {
 
 export interface TestSectionResults {
   name: "facts" | "examples";
+  failed: boolean;
+  totalTests: number;
+  totalFailures: number;
+  totalAsserts: number;
   results: TestResult[];
 }
 
@@ -381,6 +400,7 @@ export interface EvaluateTestOptions extends CallOptions {
   overwrite?: boolean;
   reporter?: "spec" | "minimal" | "junit";
 }
+export type TestOptions = EvaluateTestOptions;
 
 export declare class VirtualFileSystem {
   readonly rootDir: string | null;
@@ -398,6 +418,7 @@ export declare class VirtualFileSystem {
 }
 
 export declare class Evaluator {
+  private constructor();
   readonly isClosed: boolean;
   evaluateOutputText(source: ModuleSource, options?: CallOptions): Promise<string>;
   evaluateOutputBytes(source: ModuleSource, options?: CallOptions): Promise<Uint8Array>;
@@ -409,16 +430,24 @@ export declare class Evaluator {
   evaluateSchema(source: ModuleSource, options?: CallOptions): Promise<ModuleSchema>;
   evaluateTest(source: ModuleSource, options?: EvaluateTestOptions): Promise<TestResults>;
   cancel(): void;
-  close(): void;
+  close(): Promise<void>;
 }
 
 export interface ReplResponse {
-  kind: "evalSuccess" | "evalError" | "incompleteInput" | "invalidRequest" | "internalError";
+  kind:
+    | "evalSuccess"
+    | "evalError"
+    | "incompleteInput"
+    | "invalidRequest"
+    | "internalError"
+    | "completion";
   result?: string;
   message?: string;
+  members?: string[];
 }
 
 export declare class ReplSession {
+  private constructor();
   readonly isClosed: boolean;
   eval(
     input: string,
@@ -427,20 +456,13 @@ export declare class ReplSession {
   load(uriOrSource: string | ModuleSource, options?: { id?: string }): Promise<ReplResponse[]>;
   reset(options?: { id?: string }): Promise<void>;
   complete(prefix: string, options?: { id?: string }): Promise<string[]>;
-  close(): void;
+  cancel(): void;
+  close(): Promise<void>;
 }
 
 export interface ImportGraph {
   imports: Record<string, string[]>;
   resolvedImports: Record<string, string>;
-}
-
-export interface ConversionTelemetry {
-  iterations: number;
-  totalMs: number;
-  avgUs: number;
-  opsPerSec: number;
-  sample: PklValue;
 }
 
 export declare function init(
@@ -449,11 +471,12 @@ export declare function init(
 export declare function capabilities(): PklCapabilities;
 export declare function createEvaluator(options?: EvaluatorOptions): Promise<Evaluator>;
 export declare function decodePklBinary(bytes: Uint8Array, options?: { strict?: boolean }): PklValue;
-export declare function format(source: string, options?: { grammarVersion?: 1 | 2 }): string;
+export declare function format(
+  source: string,
+  options?: { grammarVersion?: 1 | 2 | null },
+): string;
 export declare function createRepl(options?: EvaluatorOptions): Promise<ReplSession>;
-export declare function analyzeImportGraph(uris: string[], options?: EvaluatorOptions): Promise<ImportGraph>;
-export declare function roundtripValue<T extends PklValue>(value: T): T;
-export declare function roundtripInteger(value: bigint): bigint;
-export declare function roundtripBytes(value: Uint8Array): Uint8Array;
-export declare function roundtripString(value: string): string;
-export declare function measureConversion(iterations?: number, sampleValue?: PklValue): ConversionTelemetry;
+export declare function analyzeImportGraph(
+  uris: (string | ModuleSource)[],
+  options?: EvaluatorOptions,
+): Promise<ImportGraph>;

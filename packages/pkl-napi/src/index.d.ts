@@ -37,6 +37,7 @@ export type PklErrorKind =
   | "capability-unavailable";
 
 export class PklError extends Error {
+  readonly name: "PklError";
   readonly kind: PklErrorKind;
   readonly code: PklErrorKind;
   readonly capability?: keyof PklCapabilities;
@@ -86,9 +87,16 @@ export class PklObject {
     className: string,
     moduleUri: string,
     properties?: Record<string, PklValue>,
-    entries?: Map<PklValue, PklValue>,
-    elements?: PklValue[],
+    entries?: Map<PklValue, PklValue> | Iterable<[PklValue, PklValue]>,
+    elements?: Iterable<PklValue>,
   );
+  toJSON(): {
+    className: string;
+    moduleUri: string;
+    properties: Record<string, PklValue>;
+    entries: [PklValue, PklValue][];
+    elements: PklValue[];
+  };
 }
 
 export class PklClass {
@@ -162,8 +170,11 @@ export interface ModuleReader {
   isLocal?: boolean;
   isGlobbable?: boolean;
   hasHierarchicalUris?: boolean;
+  hasFragmentPaths?: boolean;
   isCached?: boolean;
-  read(uri: string): string | Promise<string>;
+  read(
+    uri: string,
+  ): string | Uint8Array | null | undefined | Promise<string | Uint8Array | null | undefined>;
   listElements?(uri: string): PathElement[] | Promise<PathElement[]>;
   hasElement?(uri: string): boolean | Promise<boolean>;
 }
@@ -244,6 +255,7 @@ export interface TestOptions extends CallOptions {
   overwrite?: boolean;
   reporter?: "spec" | "minimal" | "junit";
 }
+export type EvaluateTestOptions = TestOptions;
 
 export interface SourceLocation {
   startLine: number;
@@ -294,6 +306,7 @@ export interface PClassProperty {
   annotations: PklObject[];
   type: PType;
 }
+export type PPropertySchema = PClassProperty;
 
 export interface PClassMethod {
   name: string;
@@ -307,8 +320,10 @@ export interface PClassMethod {
   parameters: Record<string, PType>;
   returnType: PType;
 }
+export type PMethodSchema = PClassMethod;
 
 export interface PClassSchema extends PClassInfo {
+  info: PClassInfo;
   docComment: string | null;
   sourceLocation: SourceLocation;
   modifiers: string[];
@@ -323,6 +338,7 @@ export interface PClassSchema extends PClassInfo {
 }
 
 export interface TypeAliasSchema extends TypeAliasInfo {
+  info: TypeAliasInfo;
   docComment: string | null;
   sourceLocation: SourceLocation;
   modifiers: string[];
@@ -330,6 +346,7 @@ export interface TypeAliasSchema extends TypeAliasInfo {
   typeParameters: TypeParameter[];
   aliasedType: PType;
 }
+export type PTypeAliasSchema = TypeAliasSchema;
 
 export interface ModuleSchema {
   moduleUri: string;
@@ -447,6 +464,7 @@ export class Project {
 }
 
 export class Evaluator {
+  private constructor();
   readonly isClosed: boolean;
   evaluateOutputText(source: ModuleSource, options?: CallOptions): Promise<string>;
   evaluateOutputTextSync(source: ModuleSource, options?: CallOptions): string;
@@ -486,17 +504,29 @@ export function createEvaluator(options?: EvaluatorOptions): Promise<Evaluator>;
 export function createEvaluatorSync(options?: EvaluatorOptions): Evaluator;
 
 export interface ReplResponse {
-  kind: "evalSuccess" | "evalError" | "incompleteInput" | "invalidRequest" | "internalError";
+  kind:
+    | "evalSuccess"
+    | "evalError"
+    | "incompleteInput"
+    | "invalidRequest"
+    | "internalError"
+    | "completion";
   result?: string;
   message?: string;
+  members?: string[];
 }
 
 export class ReplSession {
+  private constructor();
   readonly isClosed: boolean;
-  eval(input: string, options?: { force?: boolean; id?: string }): Promise<ReplResponse[]>;
+  eval(
+    input: string,
+    options?: { force?: boolean; evalDefinitions?: boolean; id?: string },
+  ): Promise<ReplResponse[]>;
   load(uriOrSource: string | ModuleSource, options?: { id?: string }): Promise<ReplResponse[]>;
   reset(options?: { id?: string }): Promise<void>;
   complete(prefix: string, options?: { id?: string }): Promise<string[]>;
+  cancel(): void;
   close(): Promise<void>;
 }
 
@@ -512,23 +542,6 @@ export function analyzeImportGraph(
   options?: EvaluatorOptions,
 ): Promise<ImportGraph>;
 
-export function format(source: string, options?: { grammarVersion?: 1 | 2 }): string;
-export function decodePklBinary(bytes: Uint8Array): PklValue;
+export function format(source: string, options?: { grammarVersion?: 1 | 2 | null }): string;
+export function decodePklBinary(bytes: Uint8Array, options?: { strict?: boolean }): PklValue;
 export function monotonicClockMs(): bigint;
-
-export function roundtripValue<T extends PklValue>(val: T): PklValue;
-export function roundtripInteger(val: bigint): bigint;
-export function roundtripBytes(val: Uint8Array): Uint8Array;
-export function roundtripString(val: string): string;
-
-export interface ConversionBenchmarkResult {
-  iterations: number;
-  elapsedMs: number;
-  nativeElapsedMs: number;
-  perIterationUs: number;
-  nativePerIterationUs: number;
-  lastValue: PklValue;
-}
-
-export function measureConversion(iterations?: number): ConversionBenchmarkResult;
-export function measureConversion(value: PklValue, iterations?: number): ConversionBenchmarkResult;

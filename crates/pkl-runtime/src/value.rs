@@ -203,6 +203,8 @@ pub struct RuntimeErrorDetails {
     pub(crate) type_lookup_module: Option<PklString>,
     /// A typed Host SPI mapping produced an ordinary guest exception.
     pub(crate) host_language_exception: bool,
+    /// Originates from a typed `SecurityManagerException` (never set by user `throw(...)`).
+    pub(crate) security_manager_exception: bool,
     /// Undefined() has no receiver; renderer paths belong only to undefined properties.
     pub(crate) undefined_receiverless: bool,
     /// The throwing helper has neither a guest node nor a source section.
@@ -236,6 +238,7 @@ impl PartialEq for RuntimeErrorDetails {
             && self.hint_from_template == other.hint_from_template
             && self.type_lookup_module == other.type_lookup_module
             && self.host_language_exception == other.host_language_exception
+            && self.security_manager_exception == other.security_manager_exception
             && self.undefined_receiverless == other.undefined_receiverless
             && self.unavailable_origin == other.unavailable_origin
             && self.frontend == other.frontend
@@ -265,6 +268,7 @@ static EMPTY_ERROR_DETAILS: RuntimeErrorDetails = RuntimeErrorDetails {
     host_language_exception: false,
     undefined_receiverless: false,
     unavailable_origin: false,
+    security_manager_exception: false,
     frontend: None,
     cached_module_frames: false,
     module_failure_id: None,
@@ -404,6 +408,17 @@ impl RuntimeError {
             span: None,
             frames: Vec::new(),
         }
+    }
+
+    /// Returns `true` when this error originated from a typed Host `SecurityManagerException`.
+    pub fn is_security_error(&self) -> bool {
+        self.security_manager_exception
+    }
+
+    pub(crate) fn host_security(message: impl Into<PklString>) -> Self {
+        let mut error = Self::host_language(message);
+        error.security_manager_exception = true;
+        error
     }
 
     /// Creates a `RuntimeError` whose `headline` is styled with `ERROR_MESSAGE`

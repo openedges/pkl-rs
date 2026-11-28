@@ -119,6 +119,7 @@ fn protobuf_escape_name(name: &PklString) -> PklString {
     )
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_protobuf_render(&mut self, document: bool) -> Result<(), RuntimeError> {
         let value = self
             .frames
@@ -129,6 +130,7 @@ impl Vm {
         self.stack.push(value);
         self.begin_render(document, Format::Protobuf)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn protobuf_render_type(&mut self) -> Result<(), RuntimeError> {
         // The authored reflect.Type parameter check is preserved. Java asks for
         // the mirror's runtime class (e.g. ClassType), not its reflectee class.

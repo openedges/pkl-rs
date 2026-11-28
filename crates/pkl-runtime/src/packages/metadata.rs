@@ -648,11 +648,15 @@ pub(crate) enum Node {
     Object(JsonObject),
 }
 
+const MAX_METADATA_JSON_DEPTH: usize = 128;
+
 /// Only the default HashMap string-key bucket behavior needed by metadata is
 /// modeled. Tree bins are retained as an explicit unqualified observation.
 #[derive(Clone, Debug, Default)]
 pub(crate) struct JsonObject {
     pub(crate) entries: Vec<(PklString, Node)>,
+    index: std::collections::HashMap<PklString, usize>,
+    bucket_counts: Vec<u16>,
     capacity: usize,
     tree_bin: bool,
 }
@@ -665,30 +669,46 @@ fn hash(key: &PklString) -> usize {
 }
 
 impl JsonObject {
+    fn rebuild_buckets(&mut self) {
+        self.bucket_counts.clear();
+        self.bucket_counts.resize(self.capacity, 0);
+        let mask = self.capacity - 1;
+        for (name, _) in &self.entries {
+            let b = hash(name) & mask;
+            self.bucket_counts[b] = self.bucket_counts[b].saturating_add(1);
+        }
+    }
+
     fn insert(&mut self, key: PklString, value: Node) {
-        if let Some((_, old)) = self.entries.iter_mut().find(|(name, _)| name == &key) {
-            *old = value;
+        if let Some(&idx) = self.index.get(&key) {
+            self.entries[idx].1 = value;
             return;
         }
         if self.capacity == 0 {
             self.capacity = 16;
+            self.bucket_counts.resize(16, 0);
         }
         let bucket = hash(&key) & (self.capacity - 1);
-        let collisions = self
-            .entries
-            .iter()
-            .filter(|(name, _)| hash(name) & (self.capacity - 1) == bucket)
-            .count();
+        let collisions = usize::from(self.bucket_counts[bucket]);
+        let idx = self.entries.len();
+        self.index.insert(key.clone(), idx);
         self.entries.push((key, value));
+        self.bucket_counts[bucket] = self.bucket_counts[bucket].saturating_add(1);
+        let mut grew = false;
         if collisions >= 8 {
             if self.capacity < 64 {
                 self.capacity *= 2;
+                grew = true;
             } else {
                 self.tree_bin = true;
             }
         }
         if self.entries.len() > self.capacity * 3 / 4 {
             self.capacity *= 2;
+            grew = true;
+        }
+        if grew {
+            self.rebuild_buckets();
         }
     }
     fn ordered(&self) -> Parsed<Vec<&(PklString, Node)>> {
@@ -702,11 +722,9 @@ impl JsonObject {
         Ok(entries)
     }
     pub(crate) fn optional(&self, field: &str) -> Option<&Node> {
-        self.entries
-            .iter()
-            .find(|(key, _)| key == field)
-            .map(|(_, value)| value)
-            .filter(|node| !matches!(node, Node::Null))
+        let idx = *self.index.get(&PklString::from(field))?;
+        let (_, value) = &self.entries[idx];
+        (!matches!(value, Node::Null)).then_some(value)
     }
     pub(crate) fn required(&self, field: &str) -> Parsed<&Node> {
         match self.optional(field) {
@@ -778,10 +796,24 @@ impl Node {
         }
     }
     pub(crate) fn object_text(object: &JsonObject) -> Parsed<PklString> {
+        Self::object_text_depth(object, 0)
+    }
+    fn object_text_depth(object: &JsonObject, depth: usize) -> Parsed<PklString> {
+        if depth > MAX_METADATA_JSON_DEPTH {
+            return Err(Issue::Java(
+                "JSON metadata exceeds maximum nesting depth.".into(),
+            ));
+        }
         let pairs = object
             .ordered()?
             .into_iter()
-            .map(|(key, value)| Ok(text(&[key.clone(), "=".into(), value.java_text()?])))
+            .map(|(key, value)| {
+                Ok(text(&[
+                    key.clone(),
+                    "=".into(),
+                    value.java_text_depth(depth + 1)?,
+                ]))
+            })
             .collect::<Parsed<Vec<_>>>()?;
         Ok(text(&[
             "{".into(),
@@ -789,7 +821,12 @@ impl Node {
             "}".into(),
         ]))
     }
-    fn java_text(&self) -> Parsed<PklString> {
+    fn java_text_depth(&self, depth: usize) -> Parsed<PklString> {
+        if depth > MAX_METADATA_JSON_DEPTH {
+            return Err(Issue::Java(
+                "JSON metadata exceeds maximum nesting depth.".into(),
+            ));
+        }
         Ok(match self {
             Self::Null => "null".into(),
             Self::Boolean(value) => value.to_string().into(),
@@ -800,11 +837,11 @@ impl Node {
             Self::Array(values) => {
                 let values = values
                     .iter()
-                    .map(Self::java_text)
+                    .map(|v| v.java_text_depth(depth + 1))
                     .collect::<Parsed<Vec<_>>>()?;
                 text(&["[".into(), PklString::join(&values, ", "), "]".into()])
             }
-            Self::Object(object) => Self::object_text(object)?,
+            Self::Object(object) => Self::object_text_depth(object, depth + 1)?,
         })
     }
 }
@@ -1042,6 +1079,15 @@ fn is_valid_duration_unit(symbol: &str) -> bool {
 }
 
 fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
+    parse_metadata_value_depth(node, 0)
+}
+
+fn parse_metadata_value_depth(node: &Node, depth: usize) -> Parsed<MetadataValue> {
+    if depth > MAX_METADATA_JSON_DEPTH {
+        return Err(Issue::Java(
+            "Package metadata annotation exceeds maximum nesting depth.".into(),
+        ));
+    }
     match node {
         Node::Null => Ok(MetadataValue::Null),
         Node::Boolean(b) => Ok(MetadataValue::Bool(*b)),
@@ -1052,7 +1098,7 @@ fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
         Node::Array(arr) => {
             let mut list = Vec::with_capacity(arr.len());
             for elem in arr {
-                list.push(parse_metadata_value(elem)?);
+                list.push(parse_metadata_value_depth(elem, depth + 1)?);
             }
             Ok(MetadataValue::List(list))
         }
@@ -1063,7 +1109,7 @@ fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
                     let arr = obj.array_field("value")?;
                     let mut set = Vec::with_capacity(arr.len());
                     for elem in arr {
-                        set.push(parse_metadata_value(elem)?);
+                        set.push(parse_metadata_value_depth(elem, depth + 1)?);
                     }
                     Ok(MetadataValue::Set(set))
                 }
@@ -1084,7 +1130,10 @@ fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
                             .find(|(k, _)| k == "value")
                             .map(|(_, v)| v)
                             .unwrap_or(&Node::Null);
-                        entries.push((parse_metadata_value(k)?, parse_metadata_value(v)?));
+                        entries.push((
+                            parse_metadata_value_depth(k, depth + 1)?,
+                            parse_metadata_value_depth(v, depth + 1)?,
+                        ));
                     }
                     Ok(MetadataValue::Map(entries))
                 }
@@ -1096,7 +1145,7 @@ fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
                     let props_obj = obj.object_field("properties")?;
                     let mut properties = Vec::with_capacity(props_obj.entries.len());
                     for (k, v) in &props_obj.entries {
-                        properties.push((k.clone(), parse_metadata_value(v)?));
+                        properties.push((k.clone(), parse_metadata_value_depth(v, depth + 1)?));
                     }
                     Ok(MetadataValue::PObject(MetadataAnnotation {
                         class_info: MetadataClassInfo {
@@ -1157,8 +1206,8 @@ fn parse_metadata_value(node: &Node) -> Parsed<MetadataValue> {
                         .map(|(_, v)| v)
                         .unwrap_or(&Node::Null);
                     Ok(MetadataValue::Pair(
-                        Box::new(parse_metadata_value(first)?),
-                        Box::new(parse_metadata_value(second)?),
+                        Box::new(parse_metadata_value_depth(first, depth + 1)?),
+                        Box::new(parse_metadata_value_depth(second, depth + 1)?),
                     ))
                 }
                 other => Err(Issue::Java(PklString::from(format!(

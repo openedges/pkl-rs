@@ -308,6 +308,7 @@ enum Task {
     AppendCache(ObjectId, CacheKey, Value, Option<Value>),
     CacheRebuild(ObjectId, usize),
     CacheLink(ObjectId, usize, bool),
+    ListNext(ObjectId, ObjectId, usize, usize),
     ResumeForce(Box<CacheRead>),
     ReadCache(Box<CacheRead>, Vec<usize>, usize),
     ReadCacheMatch(Value),
@@ -470,12 +471,26 @@ impl Vm {
         if key.entry
             && !key.method
             && key.owner.is_none()
-            && let Some(elems) = &object.list_elements
             && let Some(Value::Int(index)) = probe
-            && index.get() >= 0
-            && let Some(val) = elems.get(index.get() as usize)
+            && let Ok(pos) = usize::try_from(index.get())
         {
-            return Ok(Some(val.clone()));
+            if let Some(elems) = &object.list_elements
+                && let Some(val) = elems.get(pos)
+            {
+                return Ok(Some(val.clone()));
+            }
+            if object.collection_kind == CollectionKind::List
+                && object.parent.is_none()
+                && let Some(base_len) = object.repeat_base_len
+                && base_len > 0
+                && pos < object.length
+                && let Some(slot) = object.cache_slots.get(pos % base_len)
+                && slot.key.entry
+                && slot.key.owner.is_none()
+                && !slot.key.method
+            {
+                return Ok(Some(slot.value.clone()));
+            }
         }
         let hash = if let Some(probe) = probe {
             self.java_hash(probe)?.unwrap_or(0)
@@ -595,11 +610,20 @@ impl Vm {
             }
             if object.collection_kind == CollectionKind::List
                 && let Value::Int(idx) = probe
-                && idx.get() >= 0
+                && let Ok(pos) = usize::try_from(idx.get())
             {
-                let pos = idx.get() as usize;
                 if let Some(elems) = &object.list_elements {
                     return Ok(elems.get(pos).cloned());
+                }
+                if let Some(base_len) = object.repeat_base_len
+                    && base_len > 0
+                    && pos < object.length
+                    && let Some(slot) = object.cache_slots.get(pos % base_len)
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                {
+                    return Ok(Some(slot.value.clone()));
                 }
                 if let Some(slot) = object.cache_slots.get(pos)
                     && slot.key.entry
@@ -1142,10 +1166,10 @@ impl Vm {
         if let Some(elems) = &obj.list_elements
             && member.kind == CollectionMemberKind::Element
             && let Value::Int(idx) = &member.key
-            && idx.get() >= 0
+            && let Ok(i) = usize::try_from(idx.get())
         {
             let value = elems
-                .get(idx.get() as usize)
+                .get(i)
                 .cloned()
                 .ok_or_else(|| invalid("missing effective collection member"))?;
             self.stack.push(value);
@@ -1446,6 +1470,36 @@ impl Vm {
         });
         Ok(members)
     }
+    fn list_equality_element_at(&self, id: ObjectId, index: usize) -> Result<Value, RuntimeError> {
+        let object = self.heap.get(id)?;
+        if let Some(elements) = &object.list_elements {
+            return elements
+                .get(index)
+                .cloned()
+                .ok_or_else(|| invalid("list equality index out of bounds"));
+        }
+        let eff_index = if object.parent.is_none()
+            && object.collection_members.len() < object.length
+            && let Some(base) = object.repeat_base_len.filter(|&b| b > 0)
+        {
+            index % base
+        } else {
+            index
+        };
+        if object.parent.is_none() {
+            let member = object
+                .collection_members
+                .get(eff_index)
+                .ok_or_else(|| invalid("list equality member out of bounds"))?;
+            self.cached_equality_member(id, member)
+        } else {
+            let members = self.equality_members(id)?;
+            let member = members
+                .get(eff_index)
+                .ok_or_else(|| invalid("list equality member out of bounds"))?;
+            self.cached_equality_member(id, member)
+        }
+    }
     fn cached_equality_member(
         &self,
         id: ObjectId,
@@ -1613,6 +1667,7 @@ impl Vm {
         Ok(result)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_equality(&mut self) -> Result<(), RuntimeError> {
         let frame_index = self.frames.len() - 1;
         let mut run = self.frames[frame_index]
@@ -1686,6 +1741,7 @@ impl Vm {
             | Task::CacheRebuild(..)
             | Task::CacheLink(..) => self.step_equality_cache_ops(frame_index, run, task),
             Task::Compare(..)
+            | Task::ListNext(..)
             | Task::SetNext(..)
             | Task::SetLookup(..)
             | Task::MapNext(..)
@@ -2656,20 +2712,41 @@ impl Vm {
                                 run.tasks.push(Task::MapNext(*a, *b, 0));
                                 None
                             } else if x.collection_kind == CollectionKind::List {
-                                if let (Some(lx), Some(ry)) = (&x.list_elements, &y.list_elements) {
+                                if let (Some(lx), Some(ry)) = (&x.list_elements, &y.list_elements)
+                                    && lx.len() <= 64
+                                {
                                     for (l, r) in lx.iter().zip(ry.iter()).rev() {
                                         run.roots.extend([l.clone(), r.clone()]);
                                         run.tasks.push(Task::Compare(l.clone(), r.clone(), false));
                                     }
                                 } else {
-                                    let lhs = collections::ordered_members(&self.heap, *a)?;
-                                    let rhs = collections::ordered_members(&self.heap, *b)?;
-                                    for (l, r) in lhs.iter().zip(&rhs).rev() {
-                                        let l = self.cached_equality_member(*a, l)?;
-                                        let r = self.cached_equality_member(*b, r)?;
-                                        run.roots.extend([l.clone(), r.clone()]);
-                                        run.tasks.push(Task::Compare(l, r, false));
-                                    }
+                                    let x_period = (x.parent.is_none()
+                                        && x.list_elements.is_none()
+                                        && x.collection_members.len() < x.length)
+                                        .then_some(x.repeat_base_len)
+                                        .flatten()
+                                        .filter(|&b| b > 0);
+                                    let y_period = (y.parent.is_none()
+                                        && y.list_elements.is_none()
+                                        && y.collection_members.len() < y.length)
+                                        .then_some(y.repeat_base_len)
+                                        .flatten()
+                                        .filter(|&b| b > 0);
+                                    let limit = match (x_period, y_period) {
+                                        (Some(px), Some(py)) => {
+                                            let mut ga = px as u128;
+                                            let mut gb = py as u128;
+                                            while gb != 0 {
+                                                let r = ga % gb;
+                                                ga = gb;
+                                                gb = r;
+                                            }
+                                            let lcm = (px as u128 / ga).saturating_mul(py as u128);
+                                            (x.length as u128).min(lcm) as usize
+                                        }
+                                        _ => x.length,
+                                    };
+                                    run.tasks.push(Task::ListNext(*a, *b, 0, limit));
                                 }
                                 None
                             } else {
@@ -2684,6 +2761,15 @@ impl Vm {
                 };
                 if equal == Some(false) {
                     run.reject();
+                }
+            }
+            Task::ListNext(a, b, index, limit) => {
+                if index < limit {
+                    let l = self.list_equality_element_at(a, index)?;
+                    let r = self.list_equality_element_at(b, index)?;
+                    run.roots.extend([l.clone(), r.clone()]);
+                    run.tasks.push(Task::ListNext(a, b, index + 1, limit));
+                    run.tasks.push(Task::Compare(l, r, false));
                 }
             }
             Task::SetNext(a, b, index) => {
@@ -3025,10 +3111,10 @@ impl Vm {
                 if let Some(elems) = &self.heap.get(id)?.list_elements
                     && member.kind == CollectionMemberKind::Element
                     && let Value::Int(idx) = &member.key
-                    && idx.get() >= 0
+                    && let Ok(i) = usize::try_from(idx.get())
                 {
                     let value = elems
-                        .get(idx.get() as usize)
+                        .get(i)
                         .cloned()
                         .ok_or_else(|| invalid("missing effective collection member"))?;
                     self.stack.push(value);

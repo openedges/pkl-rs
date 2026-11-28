@@ -1,6 +1,6 @@
 //! Public Pkl evaluator and builder mirroring `org.pkl.core.{Evaluator, EvaluatorBuilder}`.
 
-use crate::error::{PklError, Result};
+use crate::error::{PklError, Result, format_module_host_error};
 use crate::frame::{
     HostFrameTransformerAdapter, StackFrame, StackFrameTransformer, StackFrameTransformers,
 };
@@ -12,7 +12,7 @@ use crate::reader::{
     ModuleKeyFactory, ModuleKeyFactoryAdapter, ResourceReader, ResourceReaderAdapter,
 };
 use crate::security::{SecurityManager, SecurityManagerAdapter, StandardSecurityManager};
-use crate::settings::{OutputFormat, PklEvaluatorSettings, TraceMode};
+use crate::settings::{ExternalReaderSpec, OutputFormat, PklEvaluatorSettings, TraceMode};
 use crate::value::{FromPklValue, PModule, PklBinaryDecoder, PklValue};
 use pkl_host_native::{
     CaCertSource, CancelFlag, NativeHost, NativeHostConfig, NativeHostExtensions,
@@ -46,7 +46,7 @@ use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 /// Output of one entry in `Module.output.files` (`org.pkl.core.FileOutput`).
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct FileOutput {
     bytes: Vec<u8>,
 }
@@ -73,7 +73,7 @@ impl FileOutput {
 }
 
 /// Result of executing a `pkl:Command` module (`output.bytes` and `output.files`).
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct CommandEvalResult {
     pub output_bytes: Vec<u8>,
     pub output_files: Vec<(String, FileOutput)>,
@@ -83,11 +83,21 @@ pub struct CommandEvalResult {
 #[derive(Clone)]
 pub struct CancelHandle {
     flag: Arc<CancelFlag>,
+    external_readers: Arc<pkl_runtime::external_reader::ExternalReaderRegistry>,
+}
+
+impl std::fmt::Debug for CancelHandle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CancelHandle")
+            .field("cancelled", &self.is_cancelled())
+            .finish()
+    }
 }
 
 impl CancelHandle {
     pub fn cancel(&self) {
         self.flag.cancel();
+        self.external_readers.cancel_all();
     }
 
     pub fn is_cancelled(&self) -> bool {
@@ -283,7 +293,8 @@ impl EvaluatorBuilder {
         self
     }
 
-    pub fn with_diagnostic_profile(mut self, profile: DiagnosticProfile) -> Self {
+    #[allow(dead_code)]
+    pub(crate) fn with_diagnostic_profile(mut self, profile: DiagnosticProfile) -> Self {
         self.diagnostic_profile = profile;
         self
     }
@@ -392,19 +403,21 @@ impl EvaluatorBuilder {
         self
     }
 
-    pub fn with_http_config(mut self, config: HttpClientConfig) -> Self {
+    #[allow(dead_code)]
+    pub(crate) fn with_http_config(mut self, config: HttpClientConfig) -> Self {
         self.http_config = config;
         self
     }
 
-    pub fn with_ca_certs(mut self, ca_certs: CaCertSource) -> Self {
+    #[allow(dead_code)]
+    pub(crate) fn with_ca_certs(mut self, ca_certs: CaCertSource) -> Self {
         self.ca_certs = ca_certs;
         self
     }
 
     pub fn with_external_module_readers(
         mut self,
-        readers: BTreeMap<String, ExternalReaderConfig>,
+        readers: BTreeMap<String, ExternalReaderSpec>,
     ) -> Self {
         self.external_module_readers = readers;
         self
@@ -412,7 +425,7 @@ impl EvaluatorBuilder {
 
     pub fn with_external_resource_readers(
         mut self,
-        readers: BTreeMap<String, ExternalReaderConfig>,
+        readers: BTreeMap<String, ExternalReaderSpec>,
     ) -> Self {
         self.external_resource_readers = readers;
         self
@@ -428,7 +441,8 @@ impl EvaluatorBuilder {
         self
     }
 
-    pub fn with_project_dependencies(mut self, deps: ProjectDependenciesManager) -> Self {
+    #[allow(dead_code)]
+    pub(crate) fn with_project_dependencies(mut self, deps: ProjectDependenciesManager) -> Self {
         self.project_dependencies = Some(deps);
         self
     }
@@ -526,9 +540,10 @@ impl EvaluatorBuilder {
 
     /// Constructs the [`Evaluator`].
     pub fn build(self) -> Result<Evaluator> {
-        let timeout_ms = self
-            .timeout
-            .map(|d| d.as_millis().min(u64::MAX as u128) as u64);
+        let timeout_ms = self.timeout.map(|d| {
+            let ms = d.as_millis().min(u64::MAX as u128) as u64;
+            if ms == 0 && !d.is_zero() { 1 } else { ms }
+        });
 
         let needs_reader_security =
             !self.custom_module_factories.is_empty() || !self.custom_resource_readers.is_empty();
@@ -618,8 +633,24 @@ impl EvaluatorBuilder {
             editor_url_scheme: self.editor_url_scheme,
             test_mode: self.test_mode,
             diagnostic_profile: self.diagnostic_profile,
+            active_deadline_ms: None,
+            composite_eval_depth: 0,
             closed: false,
         })
+    }
+}
+
+impl std::fmt::Debug for EvaluatorBuilder {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("EvaluatorBuilder")
+            .field("root_dir", &self.root_dir)
+            .field("module_paths", &self.module_paths)
+            .field("output_format", &self.output_format)
+            .field("timeout", &self.timeout)
+            .field("trace_mode", &self.trace_mode)
+            .field("use_color", &self.use_color)
+            .field("test_mode", &self.test_mode)
+            .finish_non_exhaustive()
     }
 }
 
@@ -634,7 +665,19 @@ pub struct Evaluator {
     editor_url_scheme: String,
     test_mode: bool,
     diagnostic_profile: DiagnosticProfile,
+    active_deadline_ms: Option<u64>,
+    composite_eval_depth: u32,
     closed: bool,
+}
+
+impl std::fmt::Debug for Evaluator {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("Evaluator")
+            .field("closed", &self.is_closed())
+            .field("use_color", &self.use_color)
+            .field("test_mode", &self.test_mode)
+            .finish_non_exhaustive()
+    }
 }
 
 impl Evaluator {
@@ -647,6 +690,7 @@ impl Evaluator {
     pub fn cancel_handle(&self) -> CancelHandle {
         CancelHandle {
             flag: self.host.cancel_flag(),
+            external_readers: self.host.external_readers_arc(),
         }
     }
 
@@ -678,8 +722,41 @@ impl Evaluator {
             }
             ErrorKind::Closed => PklError::closed("Evaluator has been closed."),
             ErrorKind::Cancelled => PklError::cancelled("Evaluation was cancelled."),
-            _ => PklError::evaluation(self.session.format_error(err)),
+            _ => {
+                let is_security = err.is_security_error();
+                let rendered = self.session.format_error(err);
+                if is_security {
+                    PklError::security(rendered)
+                } else {
+                    PklError::evaluation(rendered)
+                }
+            }
         }
+    }
+
+    fn reset_cancel_if_top_level(&self) {
+        if !self.closed && self.composite_eval_depth == 0 {
+            self.host.reset_cancel_flag_if_set();
+        }
+    }
+
+    fn effective_clock_and_timeout(&self) -> Result<(u64, Option<u64>)> {
+        if let Some(deadline_ms) = self.active_deadline_ms {
+            let now = self.host.clock_ms();
+            if now >= deadline_ms {
+                return Err(PklError::timeout(format_timeout_message(
+                    self.host.timeout_ms().unwrap_or(0),
+                )));
+            }
+            return Ok((now, Some(deadline_ms.saturating_sub(now))));
+        }
+        let timeout_ms = self.host.timeout_ms();
+        let now = if timeout_ms.is_some() {
+            self.host.clock_ms()
+        } else {
+            self.session.host_session().last_clock()
+        };
+        Ok((now, timeout_ms))
     }
 
     fn run_eval_result<T>(
@@ -693,20 +770,57 @@ impl Evaluator {
     ) -> Result<T> {
         self.ensure_open()?;
         let mut stderr = Vec::new();
-        let timeout_ms = self.host.timeout_ms();
-        let now = if timeout_ms.is_some() {
-            self.host.clock_ms()
-        } else {
-            self.session.host_session().last_clock()
-        };
+        let (now, timeout_ms) = self.effective_clock_and_timeout()?;
         let res = (|| -> std::result::Result<T, RuntimeError> {
             start(&mut self.session, now, timeout_ms)?;
-            let val = self
-                .host
-                .drive_public_session(&mut self.session, &mut stderr)?;
+            let val = self.host.drive_public_session_with_timeout(
+                &mut self.session,
+                timeout_ms,
+                &mut stderr,
+            )?;
             extract(val)
         })();
+        self.reset_cancel_if_top_level();
         res.map_err(|err| self.map_runtime_err(err))
+    }
+
+    fn evaluate_string_warm_or_cold(
+        &mut self,
+        source: &ModuleSource,
+        expression: &str,
+    ) -> Result<String> {
+        self.ensure_open()?;
+        let uri = source.get_uri();
+        if source.contents().is_none() && !uri.starts_with('@') {
+            let (now, timeout_ms) = self.effective_clock_and_timeout()?;
+            match self
+                .session
+                .try_start_warm_evaluation_str(uri, expression, now, timeout_ms)
+            {
+                Ok(true) => {
+                    let mut stderr = Vec::new();
+                    let res = self
+                        .host
+                        .drive_public_session_with_timeout(
+                            &mut self.session,
+                            timeout_ms,
+                            &mut stderr,
+                        )
+                        .and_then(|val| {
+                            SourceSession::result_string(val).map(|s| s.to_java_utf8())
+                        });
+                    self.reset_cancel_if_top_level();
+                    return res.map_err(|err| self.map_runtime_err(err));
+                }
+                Ok(false) => {}
+                Err(err) => return Err(self.map_runtime_err(err)),
+            }
+        }
+        let spec = self.prepare_spec(source)?;
+        self.run_eval_result(
+            |session, now, timeout| session.start_evaluation(spec, expression, now, timeout),
+            |val| SourceSession::result_string(val).map(|s| s.to_java_utf8()),
+        )
     }
 
     fn prepare_spec(
@@ -715,7 +829,17 @@ impl Evaluator {
     ) -> Result<pkl_runtime::modules::ModuleSourceSpec> {
         self.host
             .resolve_module_source_spec(source.to_runtime_spec())
-            .map_err(|err| PklError::evaluation(format!("{err:?}")))
+            .map_err(|err| {
+                let msg = format_module_host_error(&err);
+                if matches!(
+                    err,
+                    pkl_runtime::modules::ModuleHostError::SecurityManagerException { .. }
+                ) {
+                    PklError::security(msg)
+                } else {
+                    PklError::evaluation(msg)
+                }
+            })
     }
 
     /// Evaluates a module and decodes it as a [`PModule`] (`Evaluator.evaluate`).
@@ -733,11 +857,7 @@ impl Evaluator {
 
     /// Evaluates a module's `output.text` (`Evaluator.evaluateOutputText`).
     pub fn evaluate_output_text(&mut self, source: &ModuleSource) -> Result<String> {
-        let spec = self.prepare_spec(source)?;
-        self.run_eval_result(
-            |session, now, timeout| session.start_evaluation(spec, "output.text", now, timeout),
-            |val| SourceSession::result_string(val).map(|s| s.to_java_utf8()),
-        )
+        self.evaluate_string_warm_or_cold(source, "output.text")
     }
 
     /// Evaluates a module's `output.bytes` (`Evaluator.evaluateOutputBytes`).
@@ -772,17 +892,17 @@ impl Evaluator {
     ) -> Result<Vec<(String, FileOutput)>> {
         const EXPR: &str = "let (f = output.files) if (f == null) Map() else f.toMap().mapValues((_, v) -> v.bytes)";
         let bytes = self.evaluate_expression_pkl_binary(source, EXPR)?;
-        let decoded = decode_pkl_binary(&bytes)
+        let mut decoded = decode_pkl_binary(&bytes)
             .map_err(|err| PklError::decode(format!("Failed to decode output.files: {err}")))?;
         let mut out = Vec::new();
-        if let DecodedValue::Map(entries) | DecodedValue::Mapping(entries) = decoded {
-            for (k, v) in entries {
-                let key = match k {
+        if let DecodedValue::Map(entries) | DecodedValue::Mapping(entries) = &mut decoded {
+            for (k, mut v) in entries.drain(..) {
+                let key = match &k {
                     DecodedValue::String(s) => s.to_java_utf8(),
                     other => other.to_java_key_string().to_java_utf8(),
                 };
-                let raw_bytes = match v {
-                    DecodedValue::Bytes(b) => b,
+                let raw_bytes = match &mut v {
+                    DecodedValue::Bytes(b) => std::mem::take(b),
                     DecodedValue::String(s) => s.to_java_utf8().into_bytes(),
                     other => {
                         return Err(PklError::decode(format!(
@@ -814,11 +934,7 @@ impl Evaluator {
         source: &ModuleSource,
         expression: &str,
     ) -> Result<String> {
-        let spec = self.prepare_spec(source)?;
-        self.run_eval_result(
-            |session, now, timeout| session.start_evaluation(spec, expression, now, timeout),
-            |val| SourceSession::result_string(val).map(|s| s.to_java_utf8()),
-        )
+        self.evaluate_string_warm_or_cold(source, expression)
     }
 
     /// Evaluates an arbitrary Pkl expression against `source` and returns raw `pkl-binary`
@@ -840,26 +956,52 @@ impl Evaluator {
     /// Extracts the [`ModuleSchema`] of `source` (`Evaluator.evaluateSchema`).
     pub fn evaluate_schema(&mut self, source: &ModuleSource) -> Result<ModuleSchema> {
         self.ensure_open()?;
+        let prev_deadline = self.active_deadline_ms;
+        if self.active_deadline_ms.is_none() {
+            self.active_deadline_ms = self
+                .host
+                .timeout_ms()
+                .map(|ms| self.host.clock_ms().saturating_add(ms));
+        }
+        self.composite_eval_depth += 1;
+        let outcome = self.evaluate_schema_inner(source);
+        self.composite_eval_depth -= 1;
+        self.active_deadline_ms = prev_deadline;
+        self.reset_cancel_if_top_level();
+        outcome
+    }
+
+    fn evaluate_schema_inner(&mut self, source: &ModuleSource) -> Result<ModuleSchema> {
         let spec = self.prepare_spec(source)?;
         let module_val = self.run_eval_result(
             |session, now, timeout| session.start_load_module(spec, now, timeout),
             Ok,
         )?;
-        let timeout_ms = self.host.timeout_ms();
         let mut stderr = Vec::new();
         let mut extractor =
             SchemaExtractor::new(module_val).map_err(|err| self.map_runtime_err(err))?;
         let mut last_result = None;
         loop {
-            let now = self.host.clock_ms();
+            let (now, rem_timeout) = self.effective_clock_and_timeout()?;
             match extractor
-                .step(&mut self.session, last_result, now, timeout_ms)
+                .step(&mut self.session, last_result, now, rem_timeout)
                 .map_err(|err| self.map_runtime_err(err))?
             {
                 SchemaStep::RunPending => {
+                    let (_, drive_timeout) = match self.effective_clock_and_timeout() {
+                        Ok(pair) => pair,
+                        Err(err) => {
+                            self.session.abort_active_operation();
+                            return Err(err);
+                        }
+                    };
                     last_result = Some(
                         self.host
-                            .drive_public_session(&mut self.session, &mut stderr)
+                            .drive_public_session_with_timeout(
+                                &mut self.session,
+                                drive_timeout,
+                                &mut stderr,
+                            )
                             .map_err(|err| self.map_runtime_err(err))?,
                     );
                 }
@@ -873,9 +1015,41 @@ impl Evaluator {
     /// and `--overwrite` support).
     pub fn evaluate_test(&mut self, source: &ModuleSource, overwrite: bool) -> Result<TestResults> {
         self.ensure_open()?;
+        struct CaptureGuard {
+            logger: Arc<TestCapturingLogger>,
+            finished: bool,
+        }
+        impl CaptureGuard {
+            fn finish(mut self) -> String {
+                self.finished = true;
+                self.logger.end_capture()
+            }
+        }
+        impl Drop for CaptureGuard {
+            fn drop(&mut self) {
+                if !self.finished {
+                    let _ = self.logger.end_capture();
+                }
+            }
+        }
         self.test_logger.begin_capture();
+        let guard = CaptureGuard {
+            logger: self.test_logger.clone(),
+            finished: false,
+        };
+        let prev_deadline = self.active_deadline_ms;
+        if self.active_deadline_ms.is_none() {
+            self.active_deadline_ms = self
+                .host
+                .timeout_ms()
+                .map(|ms| self.host.clock_ms().saturating_add(ms));
+        }
+        self.composite_eval_depth += 1;
         let outcome = self.evaluate_test_inner(source, overwrite);
-        let logs = self.test_logger.end_capture();
+        self.composite_eval_depth -= 1;
+        self.active_deadline_ms = prev_deadline;
+        self.reset_cancel_if_top_level();
+        let logs = guard.finish();
         match outcome {
             Ok(mut results) => {
                 results.logs = logs;
@@ -989,9 +1163,23 @@ new Mapping {
         let module_source_text: Option<String> = if let Some(inline) = source.contents() {
             Some(inline.to_string())
         } else if module_uri.starts_with("file:") {
-            file_uri_to_path(&PklString::from(module_uri.as_str()))
+            let uri_pkl = PklString::from(module_uri.as_str());
+            self.host
+                .fs()
+                .resolve_file_module(&uri_pkl)
                 .ok()
-                .and_then(|p| std::fs::read_to_string(p).ok())
+                .and_then(|(resolved, real_path)| {
+                    if resolved.resolved_uri != uri_pkl
+                        && self
+                            .host
+                            .check_resolve_module(&resolved.resolved_uri)
+                            .is_err()
+                    {
+                        return None;
+                    }
+                    self.host.fs().read_file_module_bytes(&real_path).ok()
+                })
+                .and_then(|bytes| String::from_utf8(bytes).ok())
         } else {
             None
         };
@@ -1029,7 +1217,7 @@ new Mapping {
         let shape_bytes = self.evaluate_expression_pkl_binary(source, shape_expr)?;
         let shape_decoded = decode_pkl_binary(&shape_bytes)
             .map_err(|err| PklError::decode(format!("Failed to decode facts shape: {err}")))?;
-        let groups = match shape_decoded {
+        let groups = match &shape_decoded {
             DecodedValue::Null => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
             DecodedValue::Map(entries) | DecodedValue::Mapping(entries) => entries,
             _ => return Ok(TestSectionResults::empty(TestSectionName::Facts)),
@@ -1043,7 +1231,7 @@ new Mapping {
         for (group_key, len_val) in groups {
             let group_name = group_key.to_java_key_string().to_java_utf8();
             let count = match len_val {
-                DecodedValue::Int(n) if n >= 0 => n as usize,
+                DecodedValue::Int(n) if *n >= 0 => *n as usize,
                 _ => 0,
             };
             let group_locs = fact_spans.get(&group_name);
@@ -1065,9 +1253,19 @@ new Mapping {
                                 module_uri,
                                 group_locs.and_then(|v| v.get(idx)),
                                 idx,
-                            );
+                            )?;
                             failures.push(failure);
                         }
+                    }
+                    Err(err)
+                        if matches!(
+                            err.kind(),
+                            crate::PklErrorKind::Timeout
+                                | crate::PklErrorKind::Cancelled
+                                | crate::PklErrorKind::Closed
+                        ) =>
+                    {
+                        return Err(err);
                     }
                     Err(err) => {
                         let rendered = err.message().to_string();
@@ -1101,10 +1299,14 @@ new Mapping {
         module_uri: &str,
         loc_info: Option<&(String, usize, pkl_runtime::source::Span)>,
         idx: usize,
-    ) -> TestFailure {
+    ) -> Result<TestFailure> {
         let Some((expr_text, line, _span)) = loc_info else {
             let loc = self.format_test_location(module_uri, None);
-            return format_fact_failure(&format!("fact #{idx} == false"), &loc, self.use_color);
+            return Ok(format_fact_failure(
+                &format!("fact #{idx} == false"),
+                &loc,
+                self.use_color,
+            ));
         };
         let location = self.format_test_location(module_uri, Some(*line));
 
@@ -1113,38 +1315,50 @@ new Mapping {
             // records all sub-expression observations for this failing fact.
             let probe_expr = format!("(null as Any({expr_text}))");
             if let Ok(spec) = self.prepare_spec(source) {
-                let now = self.host.clock_ms();
-                let timeout_ms = self.host.timeout_ms();
+                let (now, rem_timeout) = self.effective_clock_and_timeout()?;
                 let mut stderr = Vec::new();
                 if self
                     .session
-                    .start_evaluation_pkl_binary(spec, &probe_expr, now, timeout_ms)
+                    .start_evaluation_pkl_binary(spec, &probe_expr, now, rem_timeout)
                     .is_ok()
                 {
-                    let res = self
-                        .host
-                        .drive_public_session(&mut self.session, &mut stderr);
-                    if let Err(err) = res
-                        && let Some(ref td) = err.type_diagnostic
-                        && let Some((body_span, observations)) = extract_constraint_observations(td)
-                    {
-                        let mut sm = SourceMap::default();
-                        let sid = sm.add("repl:text", probe_expr.as_str());
-                        if let Some(src) = sm.get(sid) {
-                            return format_fact_failure_with_power_assertions(
-                                src,
-                                body_span,
-                                observations,
-                                &location,
-                                self.use_color,
-                            );
+                    let res = self.host.drive_public_session_with_timeout(
+                        &mut self.session,
+                        rem_timeout,
+                        &mut stderr,
+                    );
+                    if let Err(err) = res {
+                        if matches!(
+                            err.kind,
+                            ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                        ) {
+                            if err.kind == ErrorKind::Cancelled && !self.closed {
+                                self.host.cancel_flag().reset();
+                            }
+                            return Err(self.map_runtime_err(err));
+                        }
+                        if let Some(ref td) = err.type_diagnostic
+                            && let Some((body_span, observations)) =
+                                extract_constraint_observations(td)
+                        {
+                            let mut sm = SourceMap::default();
+                            let sid = sm.add("repl:text", probe_expr.as_str());
+                            if let Some(src) = sm.get(sid) {
+                                return Ok(format_fact_failure_with_power_assertions(
+                                    src,
+                                    body_span,
+                                    observations,
+                                    &location,
+                                    self.use_color,
+                                ));
+                            }
                         }
                     }
                 }
             }
         }
 
-        format_fact_failure(expr_text, &location, self.use_color)
+        Ok(format_fact_failure(expr_text, &location, self.use_color))
     }
 
     fn run_test_examples(
@@ -1174,7 +1388,12 @@ new Mapping {
             )));
         }
 
-        let module_path = file_uri_to_path(&PklString::from(module_uri)).map_err(|err| {
+        let module_uri_pkl = PklString::from(module_uri);
+        self.host
+            .check_resolve_module(&module_uri_pkl)
+            .map_err(|err| PklError::security(format_module_host_error(&err)))?;
+
+        let module_path = file_uri_to_path(&module_uri_pkl).map_err(|err| {
             PklError::evaluation(format!("Invalid file URI `{module_uri}`: {err}"))
         })?;
         let file_name = module_path
@@ -1183,22 +1402,62 @@ new Mapping {
             .unwrap_or_default();
         let expected_path = module_path.with_file_name(format!("{file_name}-expected.pcf"));
         let actual_path = module_path.with_file_name(format!("{file_name}-actual.pcf"));
+        let expected_uri_pkl = path_to_file_uri(&expected_path);
+        let actual_uri_pkl = path_to_file_uri(&actual_path);
+        self.host
+            .check_resolve_module(&expected_uri_pkl)
+            .map_err(|err| PklError::security(format_module_host_error(&err)))?;
+        self.host
+            .check_resolve_module(&actual_uri_pkl)
+            .map_err(|err| PklError::security(format_module_host_error(&err)))?;
+        let canon_expected = pkl_host_native::try_resolve_canonical_or_ancestor(&expected_path)
+            .map_err(|()| {
+                PklError::security(
+                    pkl_runtime::host::security::root_dir_denied_message(&expected_uri_pkl, false)
+                        .to_java_utf8(),
+                )
+            })?;
+        let canon_expected_uri = path_to_file_uri(&canon_expected);
+        if canon_expected_uri != expected_uri_pkl {
+            self.host
+                .check_resolve_module(&canon_expected_uri)
+                .map_err(|err| PklError::security(format_module_host_error(&err)))?;
+        }
+        let canon_actual = pkl_host_native::try_resolve_canonical_or_ancestor(&actual_path)
+            .map_err(|()| {
+                PklError::security(
+                    pkl_runtime::host::security::root_dir_denied_message(&actual_uri_pkl, false)
+                        .to_java_utf8(),
+                )
+            })?;
+        let canon_actual_uri = path_to_file_uri(&canon_actual);
+        if canon_actual_uri != actual_uri_pkl {
+            self.host
+                .check_resolve_module(&canon_actual_uri)
+                .map_err(|err| PklError::security(format_module_host_error(&err)))?;
+        }
 
-        if actual_path.exists() {
-            std::fs::remove_file(&actual_path).map_err(|err| {
-                PklError::io(format!(
+        match std::fs::remove_file(&actual_path) {
+            Ok(()) => {}
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+            Err(err) => {
+                return Err(PklError::io(format!(
                     "I/O error writing test output file `{}`: {err}",
                     actual_path.display()
-                ))
-            })?;
+                )));
+            }
         }
-        if overwrite && expected_path.exists() {
-            std::fs::remove_file(&expected_path).map_err(|err| {
-                PklError::io(format!(
-                    "I/O error writing test output file `{}`: {err}",
-                    expected_path.display()
-                ))
-            })?;
+        if overwrite {
+            match std::fs::remove_file(&expected_path) {
+                Ok(()) => {}
+                Err(err) if err.kind() == std::io::ErrorKind::NotFound => {}
+                Err(err) => {
+                    return Err(PklError::io(format!(
+                        "I/O error writing test output file `{}`: {err}",
+                        expected_path.display()
+                    )));
+                }
+            }
         }
 
         // Evaluate actual examples rendered to PCF comparison strings + full PCF document
@@ -1225,17 +1484,83 @@ examples.toMap().mapValues((_, g) ->
         let expected_uri = path_to_file_uri(&expected_path).to_java_utf8();
         let actual_uri = path_to_file_uri(&actual_path).to_java_utf8();
 
-        let (expected_groups, expected_source) = if expected_path.is_file() {
-            let exp_text = std::fs::read_to_string(&expected_path).map_err(|err| {
-                PklError::io(format!(
+        let (expected_groups, expected_source) = match std::fs::symlink_metadata(&expected_path) {
+            Err(err) if err.kind() == std::io::ErrorKind::NotFound => (None, None),
+            Err(err) => {
+                return Err(PklError::io(format!(
                     "I/O error reading test output file `{}`: {err}",
                     expected_path.display()
-                ))
-            })?;
-            let exp_source = ModuleSource::create(expected_uri.clone(), exp_text.clone());
-            let exp_bytes = self.evaluate_expression_pkl_binary(
-                &exp_source,
-                r#"
+                )));
+            }
+            Ok(meta) if meta.is_dir() => (None, None),
+            Ok(_) => {
+                let raw_bytes_opt = match self.host.fs().resolve_file_module(&expected_uri_pkl) {
+                    Ok((resolved, real_path)) => {
+                        if resolved.resolved_uri != expected_uri_pkl {
+                            self.host
+                                .check_resolve_module(&resolved.resolved_uri)
+                                .map_err(|err| {
+                                    PklError::security(format_module_host_error(&err))
+                                })?;
+                        }
+                        match self.host.fs().read_file_module_bytes(&real_path) {
+                            Ok(b) => Some(b),
+                            Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                            Err(
+                                err @ pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                                    ..
+                                },
+                            ) => {
+                                return Err(PklError::security(format_module_host_error(&err)));
+                            }
+                            Err(err) => {
+                                return Err(PklError::io(format!(
+                                    "I/O error reading test output file `{}`: {}",
+                                    expected_path.display(),
+                                    format_module_host_error(&err)
+                                )));
+                            }
+                        }
+                    }
+                    Err(pkl_runtime::modules::ModuleHostError::NotFound) => None,
+                    Err(
+                        err @ pkl_runtime::modules::ModuleHostError::SecurityManagerException {
+                            ..
+                        },
+                    ) => {
+                        return Err(PklError::security(format_module_host_error(&err)));
+                    }
+                    Err(err) => {
+                        return Err(PklError::io(format!(
+                            "I/O error reading test output file `{}`: {}",
+                            expected_path.display(),
+                            format_module_host_error(&err)
+                        )));
+                    }
+                };
+                if let Some(raw_bytes) = raw_bytes_opt {
+                    let exp_text = String::from_utf8(raw_bytes).map_err(|err| {
+                        PklError::io(format!(
+                            "I/O error reading test output file `{}`: {err}",
+                            expected_path.display()
+                        ))
+                    })?;
+                    // Evaluate on a fresh short-lived session sharing `self.host` so repeated
+                    // `evaluate_test` calls on the same `Evaluator` never read stale cached
+                    // `*-expected.pcf` contents while preserving `allowedModules` (no `repl:` needed).
+                    let exp_spec = pkl_runtime::modules::ModuleSourceSpec {
+                        uri: expected_uri_pkl.clone(),
+                        contents: Some(exp_text.as_str().into()),
+                    };
+                    let (now, rem_timeout) = self.effective_clock_and_timeout()?;
+                    let mut exp_session =
+                        self.host.new_public_session(DiagnosticProfile::ApiIdentity);
+                    let mut exp_stderr = Vec::new();
+                    let exp_eval =
+                        (|| -> std::result::Result<Vec<u8>, pkl_runtime::value::RuntimeError> {
+                            exp_session.start_evaluation_pkl_binary(
+                                exp_spec,
+                                r#"
 let (r = new PcfRenderer { omitNullProperties = false })
 let (ex = examples)
 if (ex == null) throw("Invalid output file structure")
@@ -1246,16 +1571,55 @@ else ex.toMap().mapValues((_, g) ->
   )
 )
 "#,
-            )?;
-            let exp_decoded = decode_pkl_binary(&exp_bytes).map_err(|err| {
-                PklError::decode(format!("Failed to decode expected examples: {err}"))
-            })?;
-            (
-                Some(decode_rendered_examples_map(Some(&exp_decoded))),
-                Some(exp_text),
-            )
-        } else {
-            (None, None)
+                                now,
+                                rem_timeout,
+                            )?;
+                            let val = self.host.drive_public_session_with_timeout(
+                                &mut exp_session,
+                                rem_timeout,
+                                &mut exp_stderr,
+                            )?;
+                            SourceSession::result_bytes(val).map(|b| b.to_vec())
+                        })();
+                    let exp_bytes = match exp_eval {
+                        Ok(b) => {
+                            exp_session.close();
+                            b
+                        }
+                        Err(err) => {
+                            let mapped = match err.kind {
+                                ErrorKind::Timeout => PklError::timeout(format_timeout_message(
+                                    self.host.timeout_ms().unwrap_or(0),
+                                )),
+                                ErrorKind::Cancelled => {
+                                    PklError::cancelled(err.message.to_java_utf8())
+                                }
+                                ErrorKind::Closed => PklError::closed(err.message.to_java_utf8()),
+                                _ => {
+                                    let is_security = err.is_security_error();
+                                    let rendered = exp_session.format_error(err);
+                                    if is_security {
+                                        PklError::security(rendered)
+                                    } else {
+                                        PklError::evaluation(rendered)
+                                    }
+                                }
+                            };
+                            exp_session.close();
+                            return Err(mapped);
+                        }
+                    };
+                    let exp_decoded = decode_pkl_binary(&exp_bytes).map_err(|err| {
+                        PklError::decode(format!("Failed to decode expected examples: {err}"))
+                    })?;
+                    (
+                        Some(decode_rendered_examples_map(Some(&exp_decoded))),
+                        Some(exp_text),
+                    )
+                } else {
+                    (None, None)
+                }
+            }
         };
 
         let (section, gen_expected, gen_actual) = evaluate_examples_rendered_detailed(
@@ -1272,20 +1636,24 @@ else ex.toMap().mapValues((_, g) ->
         );
 
         if let Some(ref content) = gen_expected {
-            std::fs::write(&expected_path, content).map_err(|err| {
-                PklError::io(format!(
-                    "I/O error writing test output file `{}`: {err}",
-                    expected_path.display()
-                ))
-            })?;
+            pkl_host_native::write_file_nofollow(&expected_path, content.as_bytes()).map_err(
+                |err| {
+                    PklError::io(format!(
+                        "I/O error writing test output file `{}`: {err}",
+                        expected_path.display()
+                    ))
+                },
+            )?;
         }
         if let Some(ref content) = gen_actual {
-            std::fs::write(&actual_path, content).map_err(|err| {
-                PklError::io(format!(
-                    "I/O error writing test output file `{}`: {err}",
-                    actual_path.display()
-                ))
-            })?;
+            pkl_host_native::write_file_nofollow(&actual_path, content.as_bytes()).map_err(
+                |err| {
+                    PklError::io(format!(
+                        "I/O error writing test output file `{}`: {err}",
+                        actual_path.display()
+                    ))
+                },
+            )?;
         }
 
         Ok((section, gen_expected, gen_actual))
@@ -1304,9 +1672,23 @@ else ex.toMap().mapValues((_, g) ->
         let source_text = if let Some(inline) = source.contents() {
             Some(inline.to_string())
         } else if source.get_uri().starts_with("file:") {
-            file_uri_to_path(&PklString::from(source.get_uri()))
+            let uri_pkl = PklString::from(source.get_uri());
+            self.host
+                .fs()
+                .resolve_file_module(&uri_pkl)
                 .ok()
-                .and_then(|p| std::fs::read_to_string(p).ok())
+                .and_then(|(resolved, real_path)| {
+                    if resolved.resolved_uri != uri_pkl
+                        && self
+                            .host
+                            .check_resolve_module(&resolved.resolved_uri)
+                            .is_err()
+                    {
+                        return None;
+                    }
+                    self.host.fs().read_file_module_bytes(&real_path).ok()
+                })
+                .and_then(|bytes| String::from_utf8(bytes).ok())
         } else {
             None
         };
@@ -1325,14 +1707,30 @@ else ex.toMap().mapValues((_, g) ->
         levels: &[InvokedCommandLevel],
         working_dir_uri: &str,
     ) -> Result<CommandEvalResult> {
-        let synth_pkl = synthesize_command_eval_module(root_module_uri, levels, working_dir_uri);
-        let synth_source = ModuleSource::text(synth_pkl);
-        let output_bytes = self.evaluate_output_bytes(&synth_source)?;
-        let output_files = self.evaluate_output_files_ordered(&synth_source)?;
-        Ok(CommandEvalResult {
-            output_bytes,
-            output_files,
-        })
+        self.ensure_open()?;
+        let prev_deadline = self.active_deadline_ms;
+        if self.active_deadline_ms.is_none() {
+            self.active_deadline_ms = self
+                .host
+                .timeout_ms()
+                .map(|ms| self.host.clock_ms().saturating_add(ms));
+        }
+        self.composite_eval_depth += 1;
+        let outcome = (|| -> Result<CommandEvalResult> {
+            let synth_pkl =
+                synthesize_command_eval_module(root_module_uri, levels, working_dir_uri);
+            let synth_source = ModuleSource::text(synth_pkl);
+            let output_bytes = self.evaluate_output_bytes(&synth_source)?;
+            let output_files = self.evaluate_output_files_ordered(&synth_source)?;
+            Ok(CommandEvalResult {
+                output_bytes,
+                output_files,
+            })
+        })();
+        self.composite_eval_depth -= 1;
+        self.active_deadline_ms = prev_deadline;
+        self.reset_cancel_if_top_level();
+        outcome
     }
 }
 
@@ -1438,5 +1836,184 @@ mod tests {
         );
 
         evaluator.close();
+    }
+
+    #[test]
+    fn round2_vm_dos_and_correctness_regressions() {
+        let mut evaluator = EvaluatorBuilder::preconfigured()
+            .with_module_cache_dir(None)
+            .build()
+            .expect("build evaluator");
+
+        // 1. Exponential typealias DAG hits node/depth guard cleanly instead of OOM/hang.
+        let mut dag = String::from("typealias T0 = Int | String\n");
+        for i in 1..=22 {
+            dag.push_str(&format!("typealias T{i} = T{} | T{}\n", i - 1, i - 1));
+        }
+        dag.push_str("x: T22 = 1\n");
+        assert!(
+            evaluator
+                .evaluate_output_text(&ModuleSource::text(dag))
+                .is_err(),
+            "exponential typealias DAG must fail cleanly"
+        );
+
+        // 2. List.repeat preserves virtual length, materializes normal repeats accurately,
+        //    and rejects oversized materializations explicitly instead of truncating.
+        let rep_ok = evaluator
+            .evaluate_expression(
+                &ModuleSource::text(
+                    "a = List(1, 2).repeat(3)\nb = List(0).repeat(118866785).length\n",
+                ),
+                "Pair(a, b)",
+            )
+            .expect("evaluate List.repeat");
+        assert_eq!(
+            rep_ok,
+            crate::PklValue::Pair(
+                Box::new(crate::PklValue::List(vec![
+                    crate::PklValue::Int(1),
+                    crate::PklValue::Int(2),
+                    crate::PklValue::Int(1),
+                    crate::PklValue::Int(2),
+                    crate::PklValue::Int(1),
+                    crate::PklValue::Int(2),
+                ])),
+                Box::new(crate::PklValue::Int(118_866_785)),
+            )
+        );
+        assert!(
+            evaluator
+                .evaluate_expression_pkl_binary(
+                    &ModuleSource::text("huge = List(1).repeat(3000000)\n"),
+                    "huge",
+                )
+                .is_err(),
+            "oversized List.repeat materialization must fail explicitly"
+        );
+
+        // 3. YAML nesting depth > 256 fails cleanly without stack overflow.
+        let deep_yaml = format!(
+            "import \"pkl:yaml\"\nres = new yaml.Parser {{}}.parse({:?})\n",
+            format!("{}{}", "[".repeat(300), "]".repeat(300))
+        );
+        assert!(
+            evaluator
+                .evaluate_output_text(&ModuleSource::text(deep_yaml))
+                .is_err(),
+            "YAML nesting depth > 256 must fail cleanly"
+        );
+
+        // 4. Flat YAML Dynamic mapping with 1500 keys stays linear (no O(N^2) blowup).
+        let mut flat_yaml = String::new();
+        for i in 0..1500 {
+            flat_yaml.push_str(&format!("k{i}: {i}\n"));
+        }
+        let yaml_src = format!(
+            "import \"pkl:yaml\"\nd = new yaml.Parser {{}}.parse({flat_yaml:?})\nlast = d.k1499\n"
+        );
+        let last = evaluator
+            .evaluate_expression(&ModuleSource::text(yaml_src), "last")
+            .expect("flat YAML dynamic mapping parses");
+        assert_eq!(last, crate::PklValue::Int(1499));
+
+        evaluator.close();
+    }
+
+    #[test]
+    fn round3_evaluator_reusable_timeout_typed_security_and_module_path() {
+        // 1. P2-10: ModuleSource::module_path normalizes bare `modulepath:` prefix.
+        assert_eq!(
+            ModuleSource::module_path("modulepath:foo/bar.pkl").get_uri(),
+            "modulepath:/foo/bar.pkl"
+        );
+        assert_eq!(
+            ModuleSource::module_path("modulepath:/foo/bar.pkl").get_uri(),
+            "modulepath:/foo/bar.pkl"
+        );
+
+        // 2. P0-7 & P1-14: Timeout aborts only the active evaluation so the evaluator stays reusable,
+        //    and user throw("Refusing to ...") stays Evaluation (not Security).
+        let mut evaluator = EvaluatorBuilder::preconfigured()
+            .with_module_cache_dir(None)
+            .with_timeout(Duration::from_millis(25))
+            .build()
+            .expect("build evaluator");
+
+        let slow = ModuleSource::text(
+            "function fib(n: Int): Int = if (n <= 1) n else fib(n - 1) + fib(n - 2)\nx = fib(32)\n",
+        );
+        let timeout_err = evaluator
+            .evaluate_expression(&slow, "x")
+            .expect_err("slow fib must time out");
+        assert_eq!(timeout_err.kind(), crate::PklErrorKind::Timeout);
+        assert!(!evaluator.is_closed());
+
+        // Subsequent evaluation on the same evaluator succeeds!
+        let ok = evaluator
+            .evaluate_expression(&ModuleSource::text("x = 20 + 22\n"), "x")
+            .expect("evaluator must remain reusable after timeout");
+        assert_eq!(ok, crate::PklValue::Int(42));
+
+        // User throw with "Refusing to " text must remain Evaluation, not Security.
+        let throw_err = evaluator
+            .evaluate_output_text(&ModuleSource::text(
+                "x = throw(\"Refusing to eat broccoli\")\n",
+            ))
+            .expect_err("throw must error");
+        assert_eq!(throw_err.kind(), crate::PklErrorKind::Evaluation);
+
+        evaluator.close();
+    }
+
+    #[test]
+    fn round5_evaluate_test_expected_pcf_uses_allowed_modules_and_refreshes_cache() {
+        let dir = std::env::temp_dir().join(format!(
+            "pkl-r5-eval-test-{}-{}",
+            std::process::id(),
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_nanos()
+        ));
+        std::fs::create_dir_all(&dir).expect("create temp test dir");
+        let test_path = dir.join("sample.pkl");
+        let expected_path = dir.join("sample.pkl-expected.pcf");
+        std::fs::write(
+            &test_path,
+            "amends \"pkl:test\"\n\nexamples {\n  [\"e\"] {\n    1\n  }\n}\n",
+        )
+        .expect("write test module");
+        std::fs::write(&expected_path, "examples {\n  [\"e\"] {\n    1\n  }\n}\n")
+            .expect("write expected pcf");
+
+        // Intentionally omit `file:` from allowed_resources: `*-expected.pcf` must be gated by
+        // `allowed_modules` (matching upstream `TestRunner.java:371-379`).
+        let mut evaluator = EvaluatorBuilder::preconfigured()
+            .with_module_cache_dir(None)
+            .with_allowed_modules(vec!["pkl:".into(), "file:".into(), "repl:".into()])
+            .with_allowed_resources(vec!["prop:".into()])
+            .build()
+            .expect("build evaluator");
+
+        let src = ModuleSource::path(&test_path);
+        let first = evaluator
+            .evaluate_test(&src, false)
+            .expect("first evaluate_test");
+        assert!(!first.failed(), "expected first run to pass: {first:?}");
+
+        // Modify `*-expected.pcf` on disk and re-run on the SAME evaluator: must see updated file.
+        std::fs::write(&expected_path, "examples {\n  [\"e\"] {\n    2\n  }\n}\n")
+            .expect("update expected pcf");
+        let second = evaluator
+            .evaluate_test(&src, false)
+            .expect("second evaluate_test");
+        assert!(
+            second.failed(),
+            "expected second run to observe modified *-expected.pcf, got: {second:?}"
+        );
+
+        evaluator.close();
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

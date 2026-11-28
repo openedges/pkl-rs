@@ -69,16 +69,25 @@ pub(crate) fn type_name(ty: &TypeCheck, module: &PklString) -> PklString {
 }
 
 pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &PklString) -> PklString {
+    const MAX_TYPE_NAME_DISPLAY_BYTES: usize = 1024 * 1024;
     enum Part<'a> {
         Type(&'a TypeCheck),
         Text(String),
     }
     let mut output = crate::pkl_string::PklStringBuilder::default();
+    let mut written_bytes = 0usize;
     let mut pending = vec![Part::Type(ty)];
     while let Some(part) = pending.pop() {
+        if written_bytes >= MAX_TYPE_NAME_DISPLAY_BYTES {
+            output.push_str("...");
+            break;
+        }
         let ty = match part {
             Part::Text(text) => {
+                let before = output.len_bytes_approx();
                 output.push_str(&text);
+                written_bytes =
+                    written_bytes.saturating_add(output.len_bytes_approx().saturating_sub(before));
                 continue;
             }
             Part::Type(ty) => ty.resolved(),
@@ -92,6 +101,7 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &PklString) -> PklS
                 sequence.push(Part::Type(ty));
             }
         };
+        let before = output.len_bytes_approx();
         match ty {
             TypeCheck::Unknown => output.push_str("unknown"),
             TypeCheck::NamedAlias {
@@ -201,6 +211,8 @@ pub(crate) fn type_name_value<'a>(ty: &'a TypeCheck, module: &PklString) -> PklS
             TypeCheck::Parameter { name, .. } => output.push_value(name),
             _ => output.push_value(&super::type_name_value(ty, module)),
         }
+        written_bytes =
+            written_bytes.saturating_add(output.len_bytes_approx().saturating_sub(before));
         pending.extend(sequence.into_iter().rev());
     }
     output.finish()

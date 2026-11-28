@@ -163,9 +163,7 @@ impl Utf16Regex {
         }
         Self {
             source: source.to_vec(),
-            pattern: Pattern {
-                branches: vec![nodes],
-            },
+            pattern: Pattern::new(std::sync::Arc::from(vec![nodes])),
             flags: Flags {
                 unicode_case,
                 ..Flags::default()
@@ -423,5 +421,38 @@ impl OwnedMatcher {
         end: usize,
     ) -> Result<Option<MatchRanges>, MatchError> {
         self.advance(Some((start, end)))
+    }
+}
+
+#[cfg(test)]
+mod round2_tests {
+    use super::*;
+
+    #[test]
+    fn round2_regex_security_and_syntax_regressions() {
+        // 1. Unclosed \x{...} and truncated \uXXXX must fail cleanly.
+        assert!(Utf16Regex::from_str(r"\x{41", "").is_err());
+        assert!(Utf16Regex::from_str(r"\u12", "").is_err());
+        assert!(Utf16Regex::from_str(r"\u123", "").is_err());
+        assert!(Utf16Regex::from_str(r"\x{41}", "").is_ok());
+
+        // 2. Nested quantified groups must not cause exponential Arc/Vec cloning OOM.
+        let pat = format!("{}a{}", "(".repeat(24), "+)".repeat(24));
+        let re = Utf16Regex::from_str(&pat, "").expect("compile nested quantifiers");
+        let input: Vec<u16> = format!("{}b", "a".repeat(30)).encode_utf16().collect();
+        let mut m = re.matcher(&input, Limits::default());
+        let _ = m.find();
+
+        // 3. CANON_EQ with long combining-mark run finishes quickly without O(N^2) blowup
+        //    (cleanly hitting NestingBudgetExceeded), and normal CANON_EQ still matches NFC/NFD.
+        let mut marks = String::from("a");
+        for _ in 0..400 {
+            marks.push('\u{0301}');
+        }
+        assert!(Utf16Regex::from_str(&marks, "c").is_err());
+        let canon = Utf16Regex::from_str("a\u{0301}", "c").expect("compile CANON_EQ");
+        let input: Vec<u16> = "\u{00e1}".encode_utf16().collect();
+        let mut m = canon.matcher(&input, Limits::default());
+        assert!(m.find().expect("match CANON_EQ").is_some());
     }
 }

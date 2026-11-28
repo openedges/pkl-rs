@@ -181,6 +181,7 @@ impl Vm {
         self.frames.push(frame);
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_deep_force(&mut self) -> Result<(), RuntimeError> {
         let index = self.frames.len() - 1;
         let mut run = self.frames[index].deep_force.take();
@@ -282,6 +283,8 @@ impl Vm {
                 } else if let Some(reference) = self.heap.get_mut(id)?.reference.as_mut() {
                     if !reference.forced {
                         reference.forced = true;
+                        run.active.push(id);
+                        run.tasks.push(Task::Finish(id));
                         run.tasks
                             .extend(reference.path.iter().rev().cloned().map(Task::Value));
                         run.tasks.push(Task::Value(reference.data.clone()));
@@ -341,7 +344,11 @@ impl Vm {
             Task::Value(_) => {}
             Task::Finish(id) => {
                 if run.incomplete.remove(&id) {
-                    self.heap.get_mut(id)?.forced = false;
+                    let obj = self.heap.get_mut(id)?;
+                    obj.forced = false;
+                    if let Some(reference) = &mut obj.reference {
+                        reference.forced = false;
+                    }
                 }
                 if run.active.pop() != Some(id) {
                     return Err(invalid("unbalanced object force markers"));
@@ -520,6 +527,9 @@ impl Vm {
                 for id in run.active.drain(..) {
                     if let Ok(object) = self.heap.get_mut(id) {
                         object.forced = false;
+                        if let Some(reference) = &mut object.reference {
+                            reference.forced = false;
+                        }
                     }
                 }
             }

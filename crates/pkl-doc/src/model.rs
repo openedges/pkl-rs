@@ -291,7 +291,10 @@ impl DocPackageInfo {
 
     pub fn get_module_import_uri(&self, module_name: &str) -> String {
         if self.import_uri == "pkl:/" {
-            format!("pkl:{}", &module_name[4..])
+            format!(
+                "pkl:{}",
+                module_name.strip_prefix("pkl.").unwrap_or(module_name)
+            )
         } else {
             let path = format!(
                 "{}.pkl",
@@ -426,13 +429,25 @@ impl DocModule {
     ) -> Self {
         // Exact upstream quirk (`DocGenerator.kt:347`):
         // `name.pathEncoded.substring(parent.docPackageInfo.moduleNamePrefix.length).replace('.', '/')`
-        let encoded_name = encode_path(&schema.module_name);
-        let prefix_len = parent_info.module_name_prefix.len();
-        let path = if encoded_name.len() >= prefix_len {
-            encoded_name[prefix_len..].replace('.', "/")
+        // Advance by UTF-16 code units along `char_indices()` so multi-byte UTF-8 characters
+        // match Kotlin `String.substring` without ever slicing mid-codepoint or panicking.
+        let encoded = encode_path(&schema.module_name);
+        let prefix_utf16_len = parent_info.module_name_prefix.encode_utf16().count();
+        let mut utf16_seen = 0usize;
+        let mut split_byte = encoded.len();
+        for (byte_idx, ch) in encoded.char_indices() {
+            if utf16_seen >= prefix_utf16_len {
+                split_byte = byte_idx;
+                break;
+            }
+            utf16_seen += ch.len_utf16();
+        }
+        let path = if utf16_seen < prefix_utf16_len {
+            encoded.as_str()
         } else {
-            encoded_name.replace('.', "/")
-        };
+            &encoded[split_byte..]
+        }
+        .replace('.', "/");
         let min_pkl_version = module_info_min_pkl_version(&schema.annotations);
         let deprecation = annotations_deprecation(&schema.annotations);
         let is_unlisted = annotations_is_unlisted(&schema.annotations);

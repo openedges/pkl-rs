@@ -6,9 +6,12 @@ use crate::package_data::PackageData;
 use crate::pages::HtmlGenerator;
 use crate::runtime_data::{RuntimeDataState, path_to_uri_display};
 use crate::search_index::{PackageIndexEntry, SearchIndexGenerator};
-use crate::util::{compare_versions_desc, encode_path, parse_semver_or_none};
+use crate::util::{
+    compare_versions_desc, encode_path, ensure_path_under_canon_root, ensure_path_under_output_dir,
+    join_confined_output_path, parse_semver_or_none, validate_single_path_segment,
+};
 use pkl_runtime::schema::ModuleSchema;
-use std::collections::{BTreeMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fs;
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -36,23 +39,79 @@ pub(crate) struct PendingFile {
     pub bytes: FileBytes,
 }
 
+#[cfg(test)]
 pub(crate) fn write_files_parallel(files: &[PendingFile]) -> Result<(), DocGeneratorError> {
+    write_files_parallel_under(None, files)
+}
+
+pub(crate) fn write_files_parallel_under(
+    output_dir: Option<&Path>,
+    files: &[PendingFile],
+) -> Result<(), DocGeneratorError> {
     if files.is_empty() {
         return Ok(());
     }
+    let canon_root: Option<PathBuf> = output_dir.map(|root| {
+        pkl_host_native::canonicalize_root_dir(root).unwrap_or_else(|_| root.to_path_buf())
+    });
+
+    // Deduplicate colliding destination paths (preserving last write) so parallel workers
+    // never race on the same output file, and reject malformed paths up front.
+    let mut last_idx_by_path: HashMap<&Path, usize> = HashMap::with_capacity(files.len());
+    for (idx, f) in files.iter().enumerate() {
+        if let (Some(root), Some(croot)) = (output_dir, canon_root.as_deref()) {
+            if f.path.to_string_lossy().contains('\0') {
+                return Err(DocGeneratorError::user(format!(
+                    "Invalid documentation output path `{}`: contains NUL byte.",
+                    f.path.display()
+                )));
+            }
+            let has_simple_parent_and_name = f.path.file_name().is_some()
+                && f.path.parent().is_some_and(|p| !p.as_os_str().is_empty())
+                && f.path
+                    .strip_prefix(root)
+                    .or_else(|_| f.path.strip_prefix(croot))
+                    .ok()
+                    .is_some_and(|rel| {
+                        rel.components().all(|c| {
+                            matches!(
+                                c,
+                                std::path::Component::Normal(_) | std::path::Component::CurDir
+                            )
+                        }) && rel
+                            .components()
+                            .any(|c| matches!(c, std::path::Component::Normal(_)))
+                    });
+            if !has_simple_parent_and_name {
+                ensure_path_under_canon_root(root, croot, &f.path, false)?;
+            }
+        }
+        last_idx_by_path.insert(f.path.as_path(), idx);
+    }
+    let unique_files: Vec<&PendingFile> = files
+        .iter()
+        .enumerate()
+        .filter(|(idx, f)| last_idx_by_path.get(f.path.as_path()) == Some(idx))
+        .map(|(_, f)| f)
+        .collect();
+
     // Deduplicate parent directories and skip ancestors of deeper directories so
     // `create_dir_all` is invoked only once per leaf directory.
-    let mut dirs: Vec<&Path> = files
+    let all_parent_dirs: Vec<&Path> = unique_files
         .iter()
-        .filter_map(|f| f.path.parent())
+        .filter_map(|f| f.path.parent().filter(|p| !p.as_os_str().is_empty()))
         .collect::<HashSet<_>>()
         .into_iter()
         .collect();
+    let mut dirs = all_parent_dirs.clone();
     dirs.sort_by_key(|a| std::cmp::Reverse(a.as_os_str().len()));
     let mut covered: HashSet<&Path> = HashSet::new();
     for dir in dirs {
         if covered.contains(dir) {
             continue;
+        }
+        if let (Some(root), Some(croot)) = (output_dir, canon_root.as_deref()) {
+            ensure_path_under_canon_root(root, croot, dir, true)?;
         }
         fs::create_dir_all(dir).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", dir.display()))
@@ -66,11 +125,54 @@ pub(crate) fn write_files_parallel(files: &[PendingFile]) -> Result<(), DocGener
         }
     }
 
-    if files.len() < 2 {
-        for f in files {
-            fs::write(&f.path, f.bytes.as_slice()).map_err(|e| {
-                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", f.path.display()))
-            })?;
+    // Re-canonicalize each unique parent directory once after creation and verify it lies
+    // inside `canon_root`, then write each file directly into its verified canonical parent
+    // using `O_NOFOLLOW` so symlinks at any level cannot escape `output_dir`.
+    let canon_parents: HashMap<&Path, PathBuf> =
+        if let (Some(root), Some(croot)) = (output_dir, canon_root.as_deref()) {
+            let mut map = HashMap::with_capacity(all_parent_dirs.len());
+            for dir in &all_parent_dirs {
+                let canon_dir = fs::canonicalize(dir).map_err(|e| {
+                    DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", dir.display()))
+                })?;
+                if !canon_dir.starts_with(croot) {
+                    return Err(DocGeneratorError::user(format!(
+                        "Refusing to access path `{}` outside output directory `{}`.",
+                        dir.display(),
+                        root.display()
+                    )));
+                }
+                map.insert(*dir, canon_dir);
+            }
+            map
+        } else {
+            HashMap::new()
+        };
+
+    let write_one = |f: &PendingFile| -> Result<(), DocGeneratorError> {
+        if let Some(root) = output_dir {
+            let target = if let (Some(parent), Some(name)) = (
+                f.path.parent().filter(|p| !p.as_os_str().is_empty()),
+                f.path.file_name(),
+            ) && let Some(canon_dir) = canon_parents.get(parent)
+            {
+                canon_dir.join(name)
+            } else {
+                let croot = canon_root.as_deref().unwrap_or(root);
+                ensure_path_under_canon_root(root, croot, &f.path, false)?
+            };
+            pkl_host_native::write_file_nofollow(&target, f.bytes.as_slice())
+        } else {
+            fs::write(&f.path, f.bytes.as_slice())
+        }
+        .map_err(|e| {
+            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", f.path.display()))
+        })
+    };
+
+    if unique_files.len() < 2 {
+        for f in unique_files {
+            write_one(f)?;
         }
         return Ok(());
     }
@@ -78,24 +180,20 @@ pub(crate) fn write_files_parallel(files: &[PendingFile]) -> Result<(), DocGener
     let next = AtomicUsize::new(0);
     let first_err: Mutex<Option<DocGeneratorError>> = Mutex::new(None);
     let workers = std::thread::available_parallelism()
-        .map(|n| n.get().min(8).min(files.len()))
-        .unwrap_or_else(|_| 8.min(files.len()));
+        .map(|n| n.get().min(8).min(unique_files.len()))
+        .unwrap_or_else(|_| 8.min(unique_files.len()));
     std::thread::scope(|scope| {
         for _ in 0..workers {
             scope.spawn(|| {
                 loop {
                     let idx = next.fetch_add(1, AtomicOrdering::Relaxed);
-                    if idx >= files.len() {
+                    if idx >= unique_files.len() {
                         break;
                     }
-                    let f = &files[idx];
-                    if let Err(e) = fs::write(&f.path, f.bytes.as_slice()) {
+                    if let Err(err) = write_one(unique_files[idx]) {
                         let mut guard = first_err.lock().unwrap_or_else(|x| x.into_inner());
                         if guard.is_none() {
-                            *guard = Some(DocGeneratorError::bug(format!(
-                                "I/O error writing `{}`: {e}",
-                                f.path.display()
-                            )));
+                            *guard = Some(err);
                         }
                         break;
                     }
@@ -228,11 +326,11 @@ impl DocGenerator {
         let data_dir_existed = output_dir_non_empty && self.output_dir.join("data").exists();
         if output_dir_non_empty {
             for doc_package in html_generator.doc_packages() {
-                let pkg_dir = self.output_dir.join(encode_path(&format!(
-                    "{}/{}",
-                    doc_package.name(),
-                    doc_package.version()
-                )));
+                validate_single_path_segment("package version", doc_package.version())?;
+                let pkg_dir = join_confined_output_path(
+                    &self.output_dir,
+                    &encode_path(&format!("{}/{}", doc_package.name(), doc_package.version())),
+                )?;
                 delete_path_recursively(&pkg_dir)?;
             }
         }
@@ -240,18 +338,22 @@ impl DocGenerator {
         let mut pkg_writes: Vec<PendingFile> = Vec::with_capacity(64);
         let mut pkg_logs: Vec<String> = Vec::new();
         for (pkg_idx, doc_package) in html_generator.doc_packages().iter().enumerate() {
+            validate_single_path_segment("package version", doc_package.version())?;
             SearchIndexGenerator::collect_package_write(
                 &self.output_dir,
                 doc_package,
                 &mut pkg_writes,
                 &mut pkg_logs,
-            );
+            )?;
             html_generator.collect_package_writes(pkg_idx, &mut pkg_writes, &mut pkg_logs)?;
-            let pkg_data_path = self
-                .output_dir
-                .join(encode_path(doc_package.name()))
-                .join(doc_package.version())
-                .join("package-data.json");
+            let pkg_data_path = join_confined_output_path(
+                &self.output_dir,
+                &format!(
+                    "{}/{}/package-data.json",
+                    encode_path(doc_package.name()),
+                    doc_package.version()
+                ),
+            )?;
             pkg_writes.push(PendingFile {
                 path: pkg_data_path,
                 bytes: FileBytes::Owned(
@@ -268,7 +370,7 @@ impl DocGenerator {
         if self.no_symlinks {
             // `--no-symlinks` copies `<pkg>/<ver>` into `<pkg>/current`, so flush package
             // files before copying, then flush all remaining files in a second parallel batch.
-            write_files_parallel(&pkg_writes)?;
+            write_files_parallel_under(Some(&self.output_dir), &pkg_writes)?;
             for line in &pkg_logs {
                 let _ = console_out.write_all(line.as_bytes());
             }
@@ -305,7 +407,7 @@ impl DocGenerator {
                 path: self.output_dir.join(".pkldoc/VERSION"),
                 bytes: FileBytes::Owned(migrator::CURRENT_VERSION.to_string().into_bytes()),
             });
-            write_files_parallel(&rest_writes)?;
+            write_files_parallel_under(Some(&self.output_dir), &rest_writes)?;
             for line in &site_logs {
                 let _ = console_out.write_all(line.as_bytes());
             }
@@ -353,7 +455,7 @@ impl DocGenerator {
                 path: self.output_dir.join(".pkldoc/VERSION"),
                 bytes: FileBytes::Owned(migrator::CURRENT_VERSION.to_string().into_bytes()),
             });
-            write_files_parallel(&writes)?;
+            write_files_parallel_under(Some(&self.output_dir), &writes)?;
             self.create_current_directories(&current_packages, &existing_current_packages)?;
 
             for line in &pkg_logs {
@@ -384,16 +486,18 @@ impl DocGenerator {
         entry: &PackageIndexEntry,
         console_out: &mut dyn Write,
     ) -> Result<Option<PackageData>, DocGeneratorError> {
-        let mut package_data_file = self
-            .output_dir
-            .join(&entry.package_entry.url)
-            .with_file_name("package-data.json");
+        let mut package_data_file =
+            join_confined_output_path(&self.output_dir, &entry.package_entry.url)?
+                .with_file_name("package-data.json");
+        ensure_path_under_output_dir(&self.output_dir, &package_data_file)?;
         if !package_data_file.exists() {
             // search-index.js in Pkl 0.29 and below did not encode path.
-            package_data_file = self
-                .output_dir
-                .join(encode_path(&entry.package_entry.url))
-                .with_file_name("package-data.json");
+            package_data_file = join_confined_output_path(
+                &self.output_dir,
+                &encode_path(&entry.package_entry.url),
+            )?
+            .with_file_name("package-data.json");
+            ensure_path_under_output_dir(&self.output_dir, &package_data_file)?;
             if !package_data_file.exists() {
                 let _ = writeln!(
                     console_out,
@@ -434,9 +538,17 @@ impl DocGenerator {
             if existing_current_packages.contains(package_data) {
                 continue;
             }
-            let base_path = self.output_dir.join(encode_path(&package_data.r#ref.pkg));
-            let src = base_path.join(&package_data.r#ref.version);
-            let dst = base_path.join(CURRENT_DIRECTORY_NAME);
+            validate_single_path_segment("package version", &package_data.r#ref.version)?;
+            let base_path =
+                join_confined_output_path(&self.output_dir, &encode_path(&package_data.r#ref.pkg))?;
+            let src = ensure_path_under_output_dir(
+                &self.output_dir,
+                &base_path.join(&package_data.r#ref.version),
+            )?;
+            let dst = ensure_path_under_output_dir(
+                &self.output_dir,
+                &base_path.join(CURRENT_DIRECTORY_NAME),
+            )?;
 
             if self.no_symlinks {
                 delete_path_recursively(&dst)?;
@@ -467,12 +579,26 @@ pub(crate) fn delete_path_recursively(path: &Path) -> Result<(), DocGeneratorErr
             )));
         }
     };
-    if meta.file_type().is_symlink() || meta.is_file() {
+    #[cfg(windows)]
+    let remove_res = {
+        use std::os::windows::fs::FileTypeExt;
+        let ft = meta.file_type();
+        if ft.is_symlink_dir() {
+            fs::remove_dir(path)
+        } else if ft.is_symlink() || meta.is_file() {
+            fs::remove_file(path)
+        } else {
+            fs::remove_dir_all(path)
+        }
+    };
+    #[cfg(not(windows))]
+    let remove_res = if meta.file_type().is_symlink() || meta.is_file() {
         fs::remove_file(path)
     } else {
         fs::remove_dir_all(path)
-    }
-    .map_err(|e| DocGeneratorError::bug(format!("I/O error generating documentation: {e}")))
+    };
+    remove_res
+        .map_err(|e| DocGeneratorError::bug(format!("I/O error generating documentation: {e}")))
 }
 
 fn copy_dir_recursively(src: &Path, dst: &Path) -> Result<(), DocGeneratorError> {
@@ -491,10 +617,16 @@ fn copy_dir_recursively(src: &Path, dst: &Path) -> Result<(), DocGeneratorError>
         let meta = fs::symlink_metadata(&entry_path).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error generating documentation: {e}"))
         })?;
+        if pkl_host_native::is_symlink_or_junction(&entry_path, &meta) {
+            continue;
+        }
         if meta.is_dir() {
             copy_dir_recursively(&entry_path, &target)?;
         } else if meta.is_file() {
-            fs::copy(&entry_path, &target).map_err(|e| {
+            let bytes = pkl_host_native::read_path_nofollow_bounded(&entry_path).map_err(|e| {
+                DocGeneratorError::bug(format!("I/O error generating documentation: {e}"))
+            })?;
+            pkl_host_native::write_file_nofollow(&target, &bytes).map_err(|e| {
                 DocGeneratorError::bug(format!("I/O error generating documentation: {e}"))
             })?;
         }
@@ -555,5 +687,65 @@ mod tests {
             b"static-bytes"
         );
         let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn write_files_parallel_under_blocks_traversal_and_symlinks() {
+        let base =
+            std::env::temp_dir().join(format!("pkl-doc-confine-test-{}", std::process::id()));
+        let out_dir = base.join("out");
+        let outside = base.join("outside");
+        let _ = fs::remove_dir_all(&base);
+        fs::create_dir_all(&out_dir).unwrap();
+        fs::create_dir_all(&outside).unwrap();
+
+        // 1. Valid nested writes under output_dir succeed.
+        let valid = vec![
+            PendingFile {
+                path: out_dir.join("index.html"),
+                bytes: FileBytes::Static(b"ok-root"),
+            },
+            PendingFile {
+                path: out_dir.join("pkg/1.0.0/mod.html"),
+                bytes: FileBytes::Static(b"ok-nested"),
+            },
+        ];
+        write_files_parallel_under(Some(&out_dir), &valid).unwrap();
+        assert_eq!(
+            fs::read(out_dir.join("pkg/1.0.0/mod.html")).unwrap(),
+            b"ok-nested"
+        );
+
+        // 2. Parent traversal escaping output_dir is rejected.
+        let escape = vec![PendingFile {
+            path: out_dir.join("pkg/../../outside/pwn.html"),
+            bytes: FileBytes::Static(b"bad"),
+        }];
+        assert!(write_files_parallel_under(Some(&out_dir), &escape).is_err());
+        assert!(!outside.join("pwn.html").exists());
+
+        #[cfg(unix)]
+        {
+            // 3. Pre-existing parent directory symlink escaping output_dir is rejected before create_dir_all.
+            std::os::unix::fs::symlink(&outside, out_dir.join("escape_dir")).unwrap();
+            let sym_dir = vec![PendingFile {
+                path: out_dir.join("escape_dir/sub/pwn2.html"),
+                bytes: FileBytes::Static(b"bad"),
+            }];
+            assert!(write_files_parallel_under(Some(&out_dir), &sym_dir).is_err());
+            assert!(!outside.join("sub").exists());
+
+            // 4. Pre-existing dangling file symlink escaping output_dir is rejected via O_NOFOLLOW.
+            std::os::unix::fs::symlink(outside.join("pwn3.html"), out_dir.join("dangling.html"))
+                .unwrap();
+            let sym_file = vec![PendingFile {
+                path: out_dir.join("dangling.html"),
+                bytes: FileBytes::Static(b"bad"),
+            }];
+            assert!(write_files_parallel_under(Some(&out_dir), &sym_file).is_err());
+            assert!(!outside.join("pwn3.html").exists());
+        }
+
+        let _ = fs::remove_dir_all(&base);
     }
 }

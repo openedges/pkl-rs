@@ -194,6 +194,7 @@ impl Vm {
         Value::Object(self.heap.allocate(object))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn resource_property(&mut self, property: Property) -> Result<(), RuntimeError> {
         let owner = self
             .frames

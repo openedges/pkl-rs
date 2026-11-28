@@ -704,8 +704,10 @@ fn static_project_fast_path_matches_pkl_0_32_0_on_invalid_manifests() {
     )
     .unwrap();
     let encoded_dep_uri = format!(
-        "file://{}/Pkl%50roject",
-        dep_dir.to_string_lossy().replace('\\', "/")
+        "{}/Pkl%50roject",
+        pkl_host_native::path_to_file_uri(&dep_dir)
+            .to_java_utf8()
+            .trim_end_matches('/')
     );
     let pct_out = run_with_project(
         "dep-percent-encoded",
@@ -720,33 +722,37 @@ fn static_project_fast_path_matches_pkl_0_32_0_on_invalid_manifests() {
         String::from_utf8_lossy(&pct_out.stdout)
     );
 
-    let triple_proj = tmp.join("triple_proj");
-    std::fs::create_dir_all(triple_proj.join("...")).unwrap();
-    std::fs::write(
-        triple_proj.join("...").join("PklProject"),
-        "amends \"pkl:Project\"\npackage {\n  name = \"t\"\n  baseUri = \"package://example.com/t\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/t.zip\"\n}\n",
-    )
-    .unwrap();
-    std::fs::write(
-        triple_proj.join("PklProject"),
-        "amends \"pkl:Project\"\ndependencies {\n  [\"t\"] = import(\".../PklProject\")\n}\n",
-    )
-    .unwrap();
-    let triple_main = triple_proj.join("main.pkl");
-    std::fs::write(&triple_main, "x = 1\n").unwrap();
-    let triple_out = run_pkl(&[
-        "eval",
-        "--color=never",
-        "--project-dir",
-        triple_proj.to_str().unwrap(),
-        triple_main.to_str().unwrap(),
-    ]);
-    assert_eq!(
-        triple_out.status.code(),
-        Some(1),
-        "triple-dot .../PklProject import must fail: stdout={}",
-        String::from_utf8_lossy(&triple_out.stdout)
-    );
+    // Windows NTFS strips trailing dots from directory names (cannot create a `...` directory).
+    #[cfg(not(windows))]
+    {
+        let triple_proj = tmp.join("triple_proj");
+        std::fs::create_dir_all(triple_proj.join("...")).unwrap();
+        std::fs::write(
+            triple_proj.join("...").join("PklProject"),
+            "amends \"pkl:Project\"\npackage {\n  name = \"t\"\n  baseUri = \"package://example.com/t\"\n  version = \"1.0.0\"\n  packageZipUrl = \"https://example.com/t.zip\"\n}\n",
+        )
+        .unwrap();
+        std::fs::write(
+            triple_proj.join("PklProject"),
+            "amends \"pkl:Project\"\ndependencies {\n  [\"t\"] = import(\".../PklProject\")\n}\n",
+        )
+        .unwrap();
+        let triple_main = triple_proj.join("main.pkl");
+        std::fs::write(&triple_main, "x = 1\n").unwrap();
+        let triple_out = run_pkl(&[
+            "eval",
+            "--color=never",
+            "--project-dir",
+            triple_proj.to_str().unwrap(),
+            triple_main.to_str().unwrap(),
+        ]);
+        assert_eq!(
+            triple_out.status.code(),
+            Some(1),
+            "triple-dot .../PklProject import must fail: stdout={}",
+            String::from_utf8_lossy(&triple_out.stdout)
+        );
+    }
 
     // 8. Non-Project PklProject single-evaluation error reporting (direct & non-direct & function & null)
     for (tag, src, expected_type) in [
@@ -776,6 +782,210 @@ fn static_project_fast_path_matches_pkl_0_32_0_on_invalid_manifests() {
             )),
             "case `{tag}` unexpected stderr: {stderr}"
         );
+    }
+
+    let _ = std::fs::remove_dir_all(&tmp);
+}
+
+#[test]
+fn wave1_cli_security_regressions_dangling_symlink_junit_traversal_and_utf8_flag() {
+    let tmp = make_temp_dir("wave1-cli-sec");
+
+    // 1. Non-ASCII short flag `-é` must return clean CLI usage error, never panic on `&raw[..2]`.
+    let utf8_out = run_pkl(&["eval", "-é"]);
+    assert_eq!(utf8_out.status.code(), Some(1));
+    let utf8_stderr = String::from_utf8_lossy(&utf8_out.stderr);
+    assert!(
+        utf8_stderr.contains("no such option") || utf8_stderr.contains("Error"),
+        "unexpected stderr for `-é`: {utf8_stderr}"
+    );
+
+    // 2. `pkl eval -m <dir>` must reject dangling symlink pointing outside output directory.
+    #[cfg(unix)]
+    {
+        let out_dir = tmp.join("multi_out");
+        let outside = tmp.join("outside_dir");
+        std::fs::create_dir_all(&out_dir).unwrap();
+        std::fs::create_dir_all(&outside).unwrap();
+        let target_outside = outside.join("pwned.txt");
+        std::os::unix::fs::symlink(&target_outside, out_dir.join("escape.txt")).unwrap();
+
+        let mod_path = tmp.join("multi.pkl");
+        std::fs::write(
+            &mod_path,
+            "output {\n  files {\n    [\"escape.txt\"] { text = \"pwned\" }\n  }\n}\n",
+        )
+        .unwrap();
+        let m_out = run_pkl(&[
+            "eval",
+            "--no-project",
+            "-m",
+            out_dir.to_str().unwrap(),
+            mod_path.to_str().unwrap(),
+        ]);
+        assert_eq!(
+            m_out.status.code(),
+            Some(1),
+            "dangling symlink in -m output dir must fail"
+        );
+        assert!(
+            !target_outside.exists(),
+            "dangling symlink escape must never create file outside output dir"
+        );
+    }
+
+    // 3. `pkl test --junit-reports <dir>` must reject module name path traversal.
+    let junit_dir = tmp.join("junit");
+    std::fs::create_dir_all(&junit_dir).unwrap();
+    let bad_test = tmp.join("bad_junit.pkl");
+    std::fs::write(
+        &bad_test,
+        "module `../escaped`\namends \"pkl:test\"\nfacts {\n  [\"ok\"] { true }\n}\n",
+    )
+    .unwrap();
+    let j_out = run_pkl(&[
+        "test",
+        "--no-project",
+        "--junit-reports",
+        junit_dir.to_str().unwrap(),
+        bad_test.to_str().unwrap(),
+    ]);
+    assert_eq!(
+        j_out.status.code(),
+        Some(1),
+        "JUnit module-name traversal must fail"
+    );
+    assert!(
+        !tmp.join("escaped.xml").exists(),
+        "JUnit report must never escape junit-dir"
+    );
+
+    // 4. `pkl eval -o %{moduleName}.out` must reject percent-encoded `/` in moduleName.
+    let tpl_out = run_pkl(&[
+        "eval",
+        "--no-project",
+        "-o",
+        &format!("{}/%{{moduleName}}.out", tmp.display()),
+        "https://example.com/a%2F..%2Fescape.pkl",
+    ]);
+    assert_eq!(tpl_out.status.code(), Some(1));
+    assert!(!tmp.join("escape.out").exists());
+
+    let _ = std::fs::remove_dir_all(&tmp);
+}
+
+#[test]
+fn round3_cli_security_dangling_test_symlink_double_placeholder_and_shell_completion() {
+    let tmp = make_temp_dir("round3-cli-sec");
+
+    // 1. P0-6: `pkl test` must refuse to write through a dangling `-actual.pcf` / `-expected.pcf` symlink.
+    #[cfg(unix)]
+    {
+        let test_dir = tmp.join("test_sym");
+        let outside = tmp.join("outside_test");
+        std::fs::create_dir_all(&test_dir).unwrap();
+        std::fs::create_dir_all(&outside).unwrap();
+        let test_file = test_dir.join("sym_test.pkl");
+        std::fs::write(
+            &test_file,
+            "amends \"pkl:test\"\nexamples {\n  [\"ex\"] {\n    123\n  }\n}\n",
+        )
+        .unwrap();
+        let target_outside = outside.join("pwned_expected.pcf");
+        let expected_link = test_dir.join("sym_test.pkl-expected.pcf");
+        std::os::unix::fs::symlink(&target_outside, &expected_link).unwrap();
+
+        // 1a. Without --overwrite, reading a dangling symlink expected.pcf fails cleanly.
+        let out_no_ov = run_pkl(&["test", "--no-project", test_file.to_str().unwrap()]);
+        assert_eq!(
+            out_no_ov.status.code(),
+            Some(1),
+            "pkl test without --overwrite must fail on dangling symlink expected.pcf"
+        );
+        assert!(
+            !target_outside.exists(),
+            "pkl test must never create files outside test dir via dangling symlink"
+        );
+
+        // 1b. With --overwrite, unlinks the dangling symlink safely and writes a regular file (never following symlink).
+        let out = run_pkl(&[
+            "test",
+            "--no-project",
+            "--overwrite",
+            test_file.to_str().unwrap(),
+        ]);
+        assert_eq!(
+            out.status.code(),
+            Some(10),
+            "pkl test --overwrite should safely unlink dangling symlink and write new regular expected.pcf"
+        );
+        assert!(
+            !target_outside.exists(),
+            "pkl test --overwrite must never create files outside test dir via dangling symlink"
+        );
+        assert!(
+            !std::fs::symlink_metadata(&expected_link)
+                .expect("expected.pcf exists")
+                .file_type()
+                .is_symlink(),
+            "overwritten expected.pcf must be a regular file, not a symlink"
+        );
+    }
+
+    // 2. P0-4: `pkl eval -o` expands repeated placeholders without path escape.
+    let mod_file = tmp.join("sample.pkl");
+    std::fs::write(&mod_file, "x = 1\n").unwrap();
+    let dbl_out = run_pkl(&[
+        "eval",
+        "--no-project",
+        "-o",
+        &format!("{}/%{{moduleName}}-%{{moduleName}}.pcf", tmp.display()),
+        mod_file.to_str().unwrap(),
+    ]);
+    assert_eq!(
+        dbl_out.status.code(),
+        Some(0),
+        "stderr: {}",
+        String::from_utf8_lossy(&dbl_out.stderr)
+    );
+    assert!(tmp.join("sample-sample.pcf").is_file());
+
+    // 3. P0-5: `pkl run` shell completion escapes quotes & shell metacharacters safely.
+    let cmd_file = tmp.join("evil_cmd.pkl");
+    std::fs::write(
+        &cmd_file,
+        r#"amends "pkl:Command"
+class Options {
+  /// Evil 'desc' $(id) `uname`
+  @Flag {
+    shortName = "x"
+    completionCandidates = List("ok", "a'$(id)`b")
+  }
+  mode: String = "ok"
+}
+command {
+  name = "safe'$(id)"
+  description = "Desc $(whoami) `uname`"
+}
+options: Options
+output { text = options.mode }
+"#,
+    )
+    .unwrap();
+    for shell in ["bash", "zsh", "fish"] {
+        let comp = run_pkl(&[
+            "run",
+            "--no-project",
+            cmd_file.to_str().unwrap(),
+            &format!("--generate-completion={shell}"),
+        ]);
+        if comp.status.code() == Some(0) {
+            let script = String::from_utf8(comp.stdout).unwrap();
+            assert!(
+                !script.contains("$(id)`b\""),
+                "unescaped command substitution in {shell} completion:\n{script}"
+            );
+        }
     }
 
     let _ = std::fs::remove_dir_all(&tmp);

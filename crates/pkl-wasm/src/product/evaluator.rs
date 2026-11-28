@@ -37,7 +37,7 @@ enum ActiveOperation {
     Expression,
     ExpressionPklBinary,
     Schema {
-        extractor: Option<SchemaExtractor>,
+        extractor: Option<Box<SchemaExtractor>>,
     },
     PowerAssertionProbe {
         probe_expr: String,
@@ -51,8 +51,10 @@ pub struct WasmEvaluator {
     core: WasmHostCore,
     session: SourceSession,
     columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer,
+    fast_uris: Vec<PklString>,
     active: Option<ActiveOperation>,
     active_timeout_ms: Option<u64>,
+    active_deadline_ms: Option<u64>,
     pending_suspend: Option<WasmSuspendRequest>,
     pending_capability_error: Option<(&'static str, String)>,
     force_suspend_logs: bool,
@@ -70,7 +72,7 @@ impl WasmEvaluator {
             },
             trace_mode: config.trace_mode,
             log_delivery: LogDelivery::Host,
-            frame_transformer: if config.has_custom_frame_transformer {
+            frame_transformer: if config.has_custom_frame_transformer || config.test_mode {
                 FrameTransformer::Host
             } else {
                 FrameTransformer::Default
@@ -82,17 +84,20 @@ impl WasmEvaluator {
         let pure_standard_host = config.allowed_modules.is_none()
             && config.allowed_resources.is_none()
             && config.root_dir.is_none()
+            && !config.test_mode
             && !config.has_custom_logger
             && !config.has_custom_frame_transformer
             && !config.has_custom_security_check_import
             && !config.has_custom_security_check_read
             && !config.has_custom_security_check_resolve
+            && !config.has_custom_security_check_resolve_resource
             && config.custom_module_readers.is_empty()
             && config.custom_resource_readers.is_empty();
         let core = WasmHostCore::new(config)?;
         let mut session = SourceSession::module_evaluator(session_opts)
             .with_color(use_color)
-            .with_pure_standard_host(pure_standard_host);
+            .with_pure_standard_host(pure_standard_host)
+            .with_reusable_timeouts(true);
         if let Some(meta) = platform_metadata {
             session.set_platform_metadata(Some(meta));
         }
@@ -100,8 +105,10 @@ impl WasmEvaluator {
             core,
             session,
             columnar_buf: pkl_runtime::vm::columnar_value::ColumnarValueBuffer::new(),
+            fast_uris: Vec::new(),
             active: None,
             active_timeout_ms: None,
+            active_deadline_ms: None,
             pending_suspend: None,
             pending_capability_error: None,
             force_suspend_logs: false,
@@ -117,6 +124,23 @@ impl WasmEvaluator {
     #[wasm_bindgen(js_name = isClosed)]
     pub fn is_closed(&self) -> bool {
         self.closed || self.session.is_closed()
+    }
+
+    #[wasm_bindgen(js_name = checkResolveModule)]
+    pub fn check_resolve_module(&self, uri: JsValue) -> Result<(), JsValue> {
+        let pkl_uri = pkl_string_from_js(&uri)?;
+        self.core
+            .policy
+            .check_resolve_module(&pkl_uri)
+            .map_err(|err| {
+                let msg = match err {
+                    ModuleHostError::SecurityManagerException { message } => message
+                        .map(|m| m.to_java_utf8())
+                        .unwrap_or_else(|| "Module access denied by security manager.".to_string()),
+                    other => format!("{other:?}"),
+                };
+                StructuredError::security(msg).into_js_value()
+            })
     }
 
     #[wasm_bindgen(js_name = startOutputText)]
@@ -256,6 +280,8 @@ impl WasmEvaluator {
 
         if let Some((cap, msg)) = self.pending_capability_error.take() {
             self.active = None;
+            self.core.cancel_pending();
+            self.session.abort_active_operation();
             return make_error_event(&StructuredError::capability_unavailable(cap, msg));
         }
 
@@ -607,12 +633,12 @@ impl WasmEvaluator {
         let tok = rust_string_from_js(&token)?;
         let err_msg = opt_pkl_string(&error_message)?;
         let now_ms = parse_u64_js(&now)?;
-        self.core.take_pending_frame_transform(&tok)?;
         let completion = if let Some(msg) = err_msg {
             Err(LoggerFailure::new(msg))
         } else {
             Ok(log_frame_from_js(&frame)?)
         };
+        self.core.take_pending_frame_transform(&tok)?;
         self.session
             .complete_frame_transform(&tok, completion, now_ms)
             .map_err(|err| self.map_runtime_error(err).into())
@@ -625,8 +651,10 @@ impl WasmEvaluator {
     pub fn cancel(&mut self) {
         self.core.cancel_pending();
         self.pending_suspend = None;
+        self.pending_capability_error = None;
         self.active = None;
-        self.session.cancel();
+        self.active_deadline_ms = None;
+        self.session.abort_active_operation();
     }
 
     pub fn close(&mut self) {
@@ -634,10 +662,59 @@ impl WasmEvaluator {
             self.closed = true;
             self.core.close();
             self.columnar_buf.clear_and_release();
+            self.fast_uris.clear();
             self.pending_suspend = None;
             self.pending_capability_error = None;
             self.active = None;
+            self.active_deadline_ms = None;
             self.session.close();
+        }
+    }
+
+    #[wasm_bindgen(js_name = registerFastUri)]
+    pub fn register_fast_uri(&mut self, uri: &str) -> u32 {
+        if self.fast_uris.len() >= 64 {
+            return u32::MAX;
+        }
+        let id = self.fast_uris.len() as u32;
+        self.fast_uris.push(PklString::from(uri));
+        id
+    }
+
+    #[wasm_bindgen(js_name = tryEvaluateExpressionColumnarFastById)]
+    pub fn try_evaluate_expression_columnar_fast_by_id(
+        &mut self,
+        uri_id: u32,
+        has_contents: bool,
+        expr_tag: u8,
+    ) -> u32 {
+        if self.closed
+            || self.active.is_some()
+            || self.pending_suspend.is_some()
+            || self.pending_capability_error.is_some()
+            || self.force_suspend_logs
+        {
+            return 0;
+        }
+        let Some(uri_pkl) = self.fast_uris.get(uri_id as usize) else {
+            return 0;
+        };
+        if has_contents && uri_pkl.as_str() == Some("repl:text") {
+            return 0;
+        }
+        let expression = match expr_tag {
+            0 => "module",
+            1 => "output.value",
+            _ => return 0,
+        };
+        if self.session.try_pack_warm_expression_columnar(
+            uri_pkl,
+            expression,
+            &mut self.columnar_buf,
+        ) {
+            1
+        } else {
+            0
         }
     }
 
@@ -731,6 +808,7 @@ impl WasmEvaluator {
         self.core.reset_call_flags();
         self.core.staged_sources.clear();
         self.active_timeout_ms = timeout;
+        self.active_deadline_ms = timeout.map(|ms| now_ms.saturating_add(ms));
         self.pending_suspend = None;
         self.pending_capability_error = None;
         f(self, now_ms, timeout).map_err(Into::into)
@@ -744,8 +822,9 @@ impl WasmEvaluator {
             ErrorKind::Closed => StructuredError::closed("Evaluator has been closed."),
             ErrorKind::Cancelled => StructuredError::cancelled("Evaluation was cancelled."),
             _ => {
+                let is_security = err.is_security_error() || self.core.saw_security_denial;
                 let rendered = self.session.format_error_text(err);
-                if self.core.saw_security_denial || is_security_rendered(&rendered) {
+                if is_security {
                     StructuredError::security(rendered)
                 } else {
                     StructuredError::evaluation(rendered)
@@ -797,7 +876,16 @@ impl WasmEvaluator {
                 message,
             } => {
                 self.inject_capability_unwind(token, capability, message, now_ms);
-                Ok(None)
+                self.active = None;
+                self.core.cancel_pending();
+                self.session.abort_active_operation();
+                let (cap, msg) = self
+                    .pending_capability_error
+                    .take()
+                    .expect("pending capability error");
+                Ok(Some(make_error_event(
+                    &StructuredError::capability_unavailable(cap, msg),
+                )?))
             }
         }
     }
@@ -838,6 +926,9 @@ impl WasmEvaluator {
                 message,
             } => {
                 self.inject_capability_unwind(token, capability, message, now_ms);
+                self.active = None;
+                self.core.cancel_pending();
+                self.session.abort_active_operation();
                 Ok(())
             }
         }
@@ -912,6 +1003,8 @@ impl WasmEvaluator {
     ) -> Result<JsValue, JsValue> {
         if let Some((cap, msg)) = self.pending_capability_error.take() {
             self.active = None;
+            self.core.cancel_pending();
+            self.session.abort_active_operation();
             return make_error_event(&StructuredError::capability_unavailable(cap, msg));
         }
 
@@ -941,17 +1034,23 @@ impl WasmEvaluator {
                 };
                 let (mut ext, last_result) = match extractor {
                     None => match SchemaExtractor::new(value) {
-                        Ok(ext) => (ext, None),
+                        Ok(ext) => (Box::new(ext), None),
                         Err(err) => return make_error_event(&self.map_runtime_error(err)),
                     },
                     Some(ext) => (ext, Some(value)),
                 };
-                match ext.step(
-                    &mut self.session,
-                    last_result,
-                    now_ms,
-                    self.active_timeout_ms,
-                ) {
+                let rem_timeout = if let Some(deadline) = self.active_deadline_ms {
+                    if now_ms >= deadline {
+                        self.active_deadline_ms = None;
+                        return make_error_event(&StructuredError::timeout(
+                            format_timeout_message(self.active_timeout_ms.unwrap_or(0)),
+                        ));
+                    }
+                    Some(deadline.saturating_sub(now_ms))
+                } else {
+                    None
+                };
+                match ext.step(&mut self.session, last_result, now_ms, rem_timeout) {
                     Ok(SchemaStep::RunPending) => {
                         self.active = Some(ActiveOperation::Schema {
                             extractor: Some(ext),
@@ -961,10 +1060,14 @@ impl WasmEvaluator {
                         Ok(obj.into())
                     }
                     Ok(SchemaStep::Done(schema)) => {
+                        self.active_deadline_ms = None;
                         let js = module_schema_to_js(&schema)?;
                         make_ready_event("schema", js)
                     }
-                    Err(err) => make_error_event(&self.map_runtime_error(err)),
+                    Err(err) => {
+                        self.active_deadline_ms = None;
+                        make_error_event(&self.map_runtime_error(err))
+                    }
                 }
             }
             ActiveOperation::PowerAssertionProbe {
@@ -973,6 +1076,14 @@ impl WasmEvaluator {
                 use_color,
             } => {
                 let failure_js = match result {
+                    Err(err)
+                        if matches!(
+                            err.kind,
+                            ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                        ) =>
+                    {
+                        return make_error_event(&self.map_runtime_error(err));
+                    }
                     Err(err) => {
                         if let Some(ref td) = err.type_diagnostic
                             && let Some((body_span, observations)) =
@@ -1048,14 +1159,6 @@ fn make_error_event(err: &StructuredError) -> Result<JsValue, JsValue> {
         set_prop(&obj, "capability", JsValue::from_str(cap))?;
     }
     Ok(obj.into())
-}
-
-fn is_security_rendered(rendered: &PklString) -> bool {
-    let text = rendered.to_java_utf8();
-    text.contains("Refusing to load module `")
-        || text.contains("Refusing to import module `")
-        || text.contains("Refusing to read resource `")
-        || text.contains("SecurityManagerException")
 }
 
 fn extract_constraint_observations(

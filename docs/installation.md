@@ -39,7 +39,7 @@ Prebuilt archives are built by [.github/workflows/release.yml](../.github/workfl
 #### macOS / Linux
 
 ```sh
-VERSION=v0.32.0-rc.3
+VERSION=v0.32.0
 ARCHIVE=pkl-darwin-arm64.tar.gz   # Adjust for your platform above
 
 curl -fSLO "https://github.com/openedges/pkl-rs/releases/download/${VERSION}/${ARCHIVE}"
@@ -56,7 +56,7 @@ pkl --version
 #### Windows (PowerShell)
 
 ```powershell
-$Version = "v0.32.0-rc.3"
+$Version = "v0.32.0"
 $Archive = "pkl-win32-x64.zip"
 
 Invoke-WebRequest "https://github.com/openedges/pkl-rs/releases/download/$Version/$Archive" -OutFile $Archive
@@ -91,11 +91,10 @@ pkl shell-completion fish > ~/.config/fish/completions/pkl.fish
 
 - **Node.js requirement**: `>= 18.0.0` (N-API v8)
 - **Bundled prebuilt addons (7 platforms)**: `darwin-arm64`, `darwin-x64`, `linux-x64-gnu` (glibc `>= 2.28`), `linux-arm64-gnu`, `linux-x64-musl`, `linux-arm64-musl`, `win32-x64-msvc`.
-- **Module formats**: Dual ESM (`import`) and CommonJS (`require`) with bundled TypeScript declarations (`dist/index.d.ts`).
+- **Module formats**: Dual ESM (`import`) and CommonJS (`require`) with bundled TypeScript declarations (`dist/index.d.{ts,cts,mts}`).
 
 ```sh
-# Release candidates use the `next` dist-tag (GA uses `npm install @openedges/pkl-napi`)
-npm install @openedges/pkl-napi@next
+npm install @openedges/pkl-napi
 ```
 
 To build and test locally from a source checkout:
@@ -117,8 +116,7 @@ See [packages/pkl-napi/README.md](../packages/pkl-napi/README.md) for API usage 
 - **Bundle budget**: `pkl_wasm_bg.wasm` stays within `<= 2.50 MiB` (`2,621,440 B`) gzip-9 compressed.
 
 ```sh
-# Release candidates use the `next` dist-tag (GA uses `npm install @openedges/pkl-wasm`)
-npm install @openedges/pkl-wasm@next
+npm install @openedges/pkl-wasm
 ```
 
 To build and test locally from a source checkout (requires `wasm32-unknown-unknown` target and pinned `wasm-bindgen-cli 0.2.108`):
@@ -140,21 +138,21 @@ The public Rust evaluator API crate (`crates/pkl`) is published on crates.io as 
 
 ```toml
 [dependencies]
-pkl-lang = "0.32.0-rc.3"
+pkl-lang = "0.32.0"
 ```
 
 Or install the CLI tools directly via Cargo:
 
 ```sh
-cargo install pkl-cli --version 0.32.0-rc.3
-cargo install pkl-doc --version 0.32.0-rc.3
+cargo install pkl-cli --version 0.32.0
+cargo install pkl-doc --version 0.32.0
 ```
 
 Git dependency consumption also works directly with zero `[patch.crates-io]` overrides:
 
 ```toml
 [dependencies]
-pkl-lang = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0-rc.3" }
+pkl-lang = { git = "https://github.com/openedges/pkl-rs.git", tag = "v0.32.0" }
 ```
 
 - **Minimum Supported Rust Version (MSRV)**: Rust `1.98` (workspace pinned to `1.98.1` in [rust-toolchain.toml](../rust-toolchain.toml), Rust 2024 edition).

@@ -40,107 +40,178 @@ impl<'a, W: fmt::Write> Generator<'a, W> {
     }
 
     pub(crate) fn generate(&mut self, node: &FormatNode) -> fmt::Result {
-        self.node(node, Wrap::Detect)
-    }
-
-    fn node(&mut self, node: &FormatNode, wrap: Wrap) -> fmt::Result {
-        match node {
-            FormatNode::Empty => Ok(()),
-            FormatNode::Nodes(children) => {
-                for child in children {
-                    self.node(child, wrap)?;
+        enum GenTask<'n> {
+            Node(&'n FormatNode, Wrap),
+            PopIndent(usize),
+            Multiline {
+                end_quote_col: usize,
+                indent_length: usize,
+                old_indent: usize,
+                nodes: &'n [FormatNode],
+                index: usize,
+                previous_newline: bool,
+            },
+        }
+        let mut stack = vec![GenTask::Node(node, Wrap::Detect)];
+        while let Some(task) = stack.pop() {
+            match task {
+                GenTask::PopIndent(levels) => {
+                    self.indent = self.indent.saturating_sub(levels);
                 }
-                Ok(())
-            }
-            FormatNode::Group { id, nodes } => {
-                let width: usize = nodes.iter().map(|child| child.width(&self.wrapped)).sum();
-                let group_wrap = if self.size + width > MAX_WIDTH {
-                    self.wrapped.insert(*id);
-                    Wrap::Enabled
-                } else {
-                    Wrap::Detect
-                };
-                for child in nodes {
-                    self.node(child, group_wrap)?;
-                }
-                Ok(())
-            }
-            FormatNode::IfWrap {
-                id,
-                if_wrap,
-                if_not_wrap,
-            } => {
-                if self.wrapped.contains(id) {
-                    self.node(if_wrap, Wrap::Enabled)
-                } else {
-                    self.node(if_not_wrap, wrap)
-                }
-            }
-            FormatNode::Text(value) => self.text(value),
-            FormatNode::Line => {
-                if wrap.is_enabled() {
-                    self.newline(true)?;
-                }
-                Ok(())
-            }
-            FormatNode::ForceLine => self.newline(true),
-            FormatNode::SpaceOrLine => {
-                if wrap.is_enabled() {
-                    self.newline(true)
-                } else {
-                    self.text(" ")
-                }
-            }
-            FormatNode::Space => self.text(" "),
-            FormatNode::Indent(children) => {
-                if wrap.is_enabled() && !children.is_empty() {
-                    self.size += INDENT.len();
-                    self.indent += 1;
-                    for child in children {
-                        self.node(child, wrap)?;
-                    }
-                    self.indent -= 1;
-                } else {
-                    for child in children {
-                        self.node(child, wrap)?;
-                    }
-                }
-                Ok(())
-            }
-            FormatNode::MultilineStringGroup {
-                end_quote_col,
-                nodes,
-            } => {
-                let indent_length = self.indent * INDENT.len();
-                let old_indent = indent_for(nodes);
-                let mut previous_newline = false;
-                for (i, child) in nodes.iter().enumerate() {
-                    match child {
-                        FormatNode::ForceLine => {
-                            self.newline(false)?;
-                        }
-                        FormatNode::Text(t)
-                            if previous_newline
-                                && is_java_blank(t)
-                                && t.encode_utf16().count() == old_indent
-                                && matches!(nodes.get(i + 1), Some(FormatNode::ForceLine)) =>
-                        {
-                            // skip blank line indentation that will be repositioned
-                        }
-                        FormatNode::Text(t) if previous_newline => {
-                            let repositioned =
-                                reposition(t, end_quote_col.saturating_sub(1), indent_length);
-                            self.text(&repositioned)?;
-                        }
-                        _ => {
-                            self.node(child, Wrap::Detect)?;
+                GenTask::Multiline {
+                    end_quote_col,
+                    indent_length,
+                    old_indent,
+                    nodes,
+                    mut index,
+                    mut previous_newline,
+                } => {
+                    while index < nodes.len() {
+                        let child = &nodes[index];
+                        index += 1;
+                        match child {
+                            FormatNode::ForceLine => {
+                                self.newline(false)?;
+                                previous_newline = true;
+                            }
+                            FormatNode::Text(t)
+                                if previous_newline
+                                    && is_java_blank(t)
+                                    && t.encode_utf16().count() == old_indent
+                                    && matches!(nodes.get(index), Some(FormatNode::ForceLine)) =>
+                            {
+                                // skip blank line indentation that will be repositioned
+                                previous_newline = false;
+                            }
+                            FormatNode::Text(t) if previous_newline => {
+                                let repositioned =
+                                    reposition(t, end_quote_col.saturating_sub(1), indent_length);
+                                self.text(&repositioned)?;
+                                previous_newline = false;
+                            }
+                            _ => {
+                                stack.push(GenTask::Multiline {
+                                    end_quote_col,
+                                    indent_length,
+                                    old_indent,
+                                    nodes,
+                                    index,
+                                    previous_newline: false,
+                                });
+                                stack.push(GenTask::Node(child, Wrap::Detect));
+                                break;
+                            }
                         }
                     }
-                    previous_newline = matches!(child, FormatNode::ForceLine);
                 }
-                Ok(())
+                GenTask::Node(node, wrap) => match node {
+                    FormatNode::Empty => {}
+                    FormatNode::Nodes(children) => {
+                        for child in children.iter().rev() {
+                            stack.push(GenTask::Node(child, wrap));
+                        }
+                    }
+                    FormatNode::Group { id, nodes } => {
+                        let remaining = MAX_WIDTH.saturating_sub(self.size);
+                        let mut width = 0usize;
+                        for child in nodes {
+                            if width > remaining {
+                                break;
+                            }
+                            let child_limit = remaining.saturating_sub(width);
+                            width = width
+                                .saturating_add(child.width_bounded(&self.wrapped, child_limit));
+                        }
+                        let group_wrap = if self.size.saturating_add(width) > MAX_WIDTH {
+                            self.wrapped.insert(*id);
+                            Wrap::Enabled
+                        } else {
+                            Wrap::Detect
+                        };
+                        for child in nodes.iter().rev() {
+                            stack.push(GenTask::Node(child, group_wrap));
+                        }
+                    }
+                    FormatNode::IfWrap {
+                        id,
+                        if_wrap,
+                        if_not_wrap,
+                    } => {
+                        if self.wrapped.contains(id) {
+                            stack.push(GenTask::Node(if_wrap, Wrap::Enabled));
+                        } else {
+                            stack.push(GenTask::Node(if_not_wrap, wrap));
+                        }
+                    }
+                    FormatNode::IfWrapPrefix {
+                        id,
+                        wrap_indent,
+                        wrap_prefix,
+                        no_wrap_prefix,
+                        body,
+                    } => {
+                        if self.wrapped.contains(id) {
+                            let levels = usize::from(*wrap_indent);
+                            if levels > 0 {
+                                self.size = self.size.saturating_add(INDENT.len() * levels);
+                                self.indent += levels;
+                                stack.push(GenTask::PopIndent(levels));
+                            }
+                            for child in body.iter().rev() {
+                                stack.push(GenTask::Node(child, Wrap::Enabled));
+                            }
+                            stack.push(GenTask::Node(wrap_prefix, Wrap::Enabled));
+                        } else {
+                            for child in body.iter().rev() {
+                                stack.push(GenTask::Node(child, wrap));
+                            }
+                            stack.push(GenTask::Node(no_wrap_prefix, wrap));
+                        }
+                    }
+                    FormatNode::Text(value) => self.text(value)?,
+                    FormatNode::Line => {
+                        if wrap.is_enabled() {
+                            self.newline(true)?;
+                        }
+                    }
+                    FormatNode::ForceLine => self.newline(true)?,
+                    FormatNode::SpaceOrLine => {
+                        if wrap.is_enabled() {
+                            self.newline(true)?;
+                        } else {
+                            self.text(" ")?;
+                        }
+                    }
+                    FormatNode::Space => self.text(" ")?,
+                    FormatNode::Indent(children) => {
+                        if wrap.is_enabled() && !children.is_empty() {
+                            self.size = self.size.saturating_add(INDENT.len());
+                            self.indent += 1;
+                            stack.push(GenTask::PopIndent(1));
+                        }
+                        for child in children.iter().rev() {
+                            stack.push(GenTask::Node(child, wrap));
+                        }
+                    }
+                    FormatNode::MultilineStringGroup {
+                        end_quote_col,
+                        nodes,
+                    } => {
+                        let indent_length = self.indent * INDENT.len();
+                        let old_indent = indent_for(nodes);
+                        stack.push(GenTask::Multiline {
+                            end_quote_col: *end_quote_col,
+                            indent_length,
+                            old_indent,
+                            nodes,
+                            index: 0,
+                            previous_newline: false,
+                        });
+                    }
+                },
             }
         }
+        Ok(())
     }
 
     fn text(&mut self, value: &str) -> fmt::Result {

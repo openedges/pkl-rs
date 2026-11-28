@@ -1,7 +1,7 @@
 //! Projection of `pkl_runtime::schema::ModuleSchema` into finite, acyclic JS objects.
 
 use super::decode::decoded_object_to_js;
-use super::util::set_prop;
+use super::util::{define_own_prop, set_prop};
 use js_sys::{Array, Object};
 use pkl_runtime::schema::{
     Modifier, ModuleSchema, PClass, PClassInfo, PClassMethod, PClassProperty, PType, SchemaStore,
@@ -45,7 +45,7 @@ pub fn module_schema_to_js(schema: &ModuleSchema) -> Result<JsValue, JsValue> {
 
     let classes = Object::new();
     for (name, cid) in &schema.classes {
-        set_prop(
+        define_own_prop(
             &classes,
             name,
             pclass_to_js(schema.class(*cid), &schema.store)?,
@@ -55,7 +55,7 @@ pub fn module_schema_to_js(schema: &ModuleSchema) -> Result<JsValue, JsValue> {
 
     let all_classes = Object::new();
     for (name, cid) in schema.all_classes() {
-        set_prop(
+        define_own_prop(
             &all_classes,
             &name,
             pclass_to_js(schema.class(cid), &schema.store)?,
@@ -65,7 +65,7 @@ pub fn module_schema_to_js(schema: &ModuleSchema) -> Result<JsValue, JsValue> {
 
     let type_aliases = Object::new();
     for (name, tid) in &schema.type_aliases {
-        set_prop(
+        define_own_prop(
             &type_aliases,
             name,
             type_alias_to_js(schema.type_alias(*tid))?,
@@ -75,7 +75,7 @@ pub fn module_schema_to_js(schema: &ModuleSchema) -> Result<JsValue, JsValue> {
 
     let all_type_aliases = Object::new();
     for (name, tid) in schema.all_type_aliases() {
-        set_prop(
+        define_own_prop(
             &all_type_aliases,
             &name,
             type_alias_to_js(schema.type_alias(tid))?,
@@ -85,7 +85,7 @@ pub fn module_schema_to_js(schema: &ModuleSchema) -> Result<JsValue, JsValue> {
 
     let imports = Object::new();
     for (alias, uri) in &schema.imports {
-        set_prop(&imports, alias, JsValue::from_str(uri))?;
+        define_own_prop(&imports, alias, JsValue::from_str(uri))?;
     }
     set_prop(&obj, "imports", imports.into())?;
 
@@ -103,6 +103,7 @@ fn pclass_to_js(cls: &PClass, store: &SchemaStore) -> Result<JsValue, JsValue> {
         JsValue::from_str(&cls.qualified_name()),
     )?;
     set_prop(&obj, "displayName", JsValue::from_str(&cls.display_name()))?;
+    set_prop(&obj, "moduleUri", JsValue::from_str(&cls.info.module_uri))?;
     set_prop(
         &obj,
         "isModuleClass",
@@ -146,25 +147,25 @@ fn pclass_to_js(cls: &PClass, store: &SchemaStore) -> Result<JsValue, JsValue> {
 
     let properties = Object::new();
     for (name, prop) in &cls.properties {
-        set_prop(&properties, name, property_to_js(prop)?)?;
+        define_own_prop(&properties, name, property_to_js(prop)?)?;
     }
     set_prop(&obj, "properties", properties.into())?;
 
     let all_properties = Object::new();
     for (name, prop) in store.all_properties(cls.id) {
-        set_prop(&all_properties, &name, property_to_js(prop)?)?;
+        define_own_prop(&all_properties, &name, property_to_js(prop)?)?;
     }
     set_prop(&obj, "allProperties", all_properties.into())?;
 
     let methods = Object::new();
     for (name, method) in &cls.methods {
-        set_prop(&methods, name, method_to_js(method)?)?;
+        define_own_prop(&methods, name, method_to_js(method)?)?;
     }
     set_prop(&obj, "methods", methods.into())?;
 
     let all_methods = Object::new();
     for (name, method) in store.all_methods(cls.id) {
-        set_prop(&all_methods, &name, method_to_js(method)?)?;
+        define_own_prop(&all_methods, &name, method_to_js(method)?)?;
     }
     set_prop(&obj, "allMethods", all_methods.into())?;
 
@@ -221,7 +222,7 @@ fn method_to_js(method: &PClassMethod) -> Result<JsValue, JsValue> {
     )?;
     let params = Object::new();
     for (name, ty) in &method.parameters {
-        set_prop(&params, name, ptype_to_js(ty)?)?;
+        define_own_prop(&params, name, ptype_to_js(ty)?)?;
     }
     set_prop(&obj, "parameters", params.into())?;
     set_prop(&obj, "returnType", ptype_to_js(&method.return_type)?)?;
@@ -367,6 +368,9 @@ fn ptype_to_js(ty: &PType) -> Result<JsValue, JsValue> {
             set_prop(&obj, "kind", JsValue::from_str("typeVariable"))?;
             set_prop(&obj, "typeParameter", type_parameter_to_js(tp)?)?;
         }
+        _ => {
+            set_prop(&obj, "kind", JsValue::from_str("unknown"))?;
+        }
     }
     Ok(obj.into())
 }
@@ -405,6 +409,7 @@ fn type_parameter_to_js(tp: &TypeParameter) -> Result<JsValue, JsValue> {
         Variance::Invariant => "invariant",
         Variance::Covariant => "covariant",
         Variance::Contravariant => "contravariant",
+        _ => "invariant",
     };
     set_prop(&obj, "variance", JsValue::from_str(variance))?;
     Ok(obj.into())

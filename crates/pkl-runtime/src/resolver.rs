@@ -455,6 +455,7 @@ enum Work<'a> {
         members: &'a [ObjectMember],
         index: usize,
         seen: FastSet<(&'a PklString, bool)>,
+        prep_start: usize,
     },
     ObjectMember(&'a ObjectMember, Option<Span>),
     ConstantEntries(&'a [ObjectMember]),
@@ -1084,6 +1085,7 @@ impl<'a> Resolver<'a> {
                             members,
                             index: 0,
                             seen: Default::default(),
+                            prep_start: self.preparation.len(),
                         });
                     } else if self.diagnostic_owners.is_enabled()
                         && let Some(generator) = members.iter().position(|member| {
@@ -1118,6 +1120,7 @@ impl<'a> Resolver<'a> {
                     members,
                     index,
                     mut seen,
+                    prep_start,
                 } => {
                     if index > 0
                         && let ObjectMember::Property(member) = &members[index - 1]
@@ -1149,12 +1152,45 @@ impl<'a> Resolver<'a> {
                                 members,
                                 index: index + 1,
                                 seen,
+                                prep_start,
                             });
                             work.push(Work::ObjectMember(member, None));
                         } else {
-                            // The specialized builder has already visited its prefix.
-                            // Its generator fallback visits the complete body again.
-                            work.push(Work::ObjectBody(members, None));
+                            // AstBuilder's generator fallback revisits the specialized prefix
+                            // `members[..index]` before the generator. Replaying only the prefix's
+                            // recorded preparation effects and flat entry ordinals (without
+                            // re-traversing nested subtrees) preserves exact Apple Pkl 0.32.0
+                            // effect order while keeping nested generators O(N) instead of O(2^D).
+                            const MAX_PREPARATION_ENTRIES: usize = 65_536;
+                            let replay_len = self.preparation.len().saturating_sub(prep_start);
+                            if replay_len > 0 {
+                                if self.preparation.len().saturating_add(replay_len)
+                                    > MAX_PREPARATION_ENTRIES
+                                {
+                                    return Err(Diagnostic::language(
+                                        DiagnosticOrigin::Resolver,
+                                        DiagnosticKind::Syntax,
+                                        Span::new(0, 0),
+                                        "Maximum import preparation limit exceeded.",
+                                    ));
+                                }
+                                self.preparation.extend_from_within(prep_start..);
+                            }
+                            for prefix_member in &members[..index] {
+                                match prefix_member {
+                                    ObjectMember::Element { .. } => {
+                                        self.entry_label(None);
+                                    }
+                                    ObjectMember::Entry { key, .. } => {
+                                        self.entry_label(Some(key));
+                                    }
+                                    _ => {}
+                                }
+                            }
+                            work.push(Work::ObjectBody(&members[index..], None));
+                            if self.diagnostic_owners.is_enabled() && index > 0 {
+                                work.push(Work::DiagnosticOwnerPrefix(&members[..index]));
+                            }
                         }
                     }
                 }
@@ -1829,8 +1865,9 @@ impl<'a> Resolver<'a> {
                 _ => return Ok(()),
             }
         }
-        for (index, (key, value)) in keys.iter().enumerate() {
-            if keys[..index].iter().any(|(_, previous)| previous == value) {
+        let mut seen = crate::heap::FastSet::default();
+        for (key, value) in &keys {
+            if !seen.insert(value) {
                 let mut error = self.const_error(
                     key.unparenthesized(),
                     PklString::from("Duplicate definition of member `")

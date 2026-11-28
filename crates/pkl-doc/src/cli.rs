@@ -1005,12 +1005,11 @@ fn evaluate_module_object(
         .map_err(DocGeneratorError::user)?;
     let decoded = decode_lossless(&bytes)
         .map_err(|e| DocGeneratorError::bug(format!("Failed to decode module `{uri}`: {e:?}")))?;
-    match decoded {
-        DecodedValue::Object(obj) => Ok(obj),
-        other => Err(DocGeneratorError::bug(format!(
+    decoded.into_object().map_err(|other| {
+        DocGeneratorError::bug(format!(
             "Expected module object when evaluating `{uri}`, got `{other:?}`"
-        ))),
-    }
+        ))
+    })
 }
 
 fn collect_imported_modules(
@@ -1074,15 +1073,7 @@ fn pkl_home_dir() -> Option<PathBuf> {
 }
 
 fn is_uri_like(s: &str) -> bool {
-    let Some((scheme, _)) = s.split_once(':') else {
-        return false;
-    };
-    let mut chars = scheme.chars();
-    let Some(first) = chars.next() else {
-        return false;
-    };
-    first.is_ascii_alphabetic()
-        && chars.all(|c| c.is_ascii_alphanumeric() || matches!(c, '+' | '-' | '.'))
+    pkl_host_native::is_uri_like(s)
 }
 
 fn normalize_source_module_uri(arg: &str, working_dir: &Path) -> Result<String, DocGeneratorError> {
@@ -1356,7 +1347,7 @@ fn load_project_dependencies_manager(
     let deps_file = project.project_dir.join(PKL_PROJECT_DEPS_FILENAME);
     if deps_file.is_file() {
         let deps_uri = mgr.project_deps_file_uri();
-        let text = std::fs::read_to_string(&deps_file).map_err(|e| {
+        let text = pkl_host_native::read_path_to_string_bounded(&deps_file).map_err(|e| {
             DocGeneratorError::user(format!(
                 "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{e}\n\nTry running `pkl project resolve` within the project directory to create a new set of dependencies."
             ))
@@ -1502,6 +1493,7 @@ fn build_native_host(
         EvaluatorColor::Never => false,
         EvaluatorColor::Always => true,
         EvaluatorColor::Auto => io::stdin().is_terminal() && io::stdout().is_terminal(),
+        _ => io::stdin().is_terminal() && io::stdout().is_terminal(),
     };
 
     let ext = NativeHostExtensions::default().with_color(use_color);

@@ -87,6 +87,14 @@ impl PklString {
         }
     }
 
+    #[inline]
+    pub(crate) fn len_bytes(&self) -> usize {
+        match &self.0 {
+            Repr::Utf8(text) => text.len(),
+            Repr::Utf16(units) => units.len().saturating_mul(2),
+        }
+    }
+
     pub fn encode_utf16(&self) -> impl Iterator<Item = u16> + Clone + '_ {
         match &self.0 {
             Repr::Utf8(text) => Units::Utf8(text.encode_utf16()),
@@ -453,6 +461,12 @@ impl PklStringBuilder {
         self.units
             .as_ref()
             .map_or(self.text.is_empty(), Vec::is_empty)
+    }
+
+    pub(crate) fn len_bytes_approx(&self) -> usize {
+        self.units
+            .as_ref()
+            .map_or(self.text.len(), |units| units.len().saturating_mul(2))
     }
 
     pub(crate) fn push_str(&mut self, text: &str) {

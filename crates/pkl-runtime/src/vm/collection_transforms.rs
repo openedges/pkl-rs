@@ -459,7 +459,8 @@ impl TransformRun {
     /// `(c) -> c.properties.length` or `(u) -> u.name`). Stops cleanly at the first
     /// element that requires lazy evaluation or non-fast lookup so the normal VM
     /// finishes the remaining elements with exact semantics.
-    #[inline]
+    #[cfg_attr(not(target_arch = "wasm32"), inline)]
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn try_fast_member_chain_bulk(
         &mut self,
         heap: &mut Heap,
@@ -776,7 +777,8 @@ impl TransformRun {
         Some(true)
     }
 
-    #[inline]
+    #[cfg_attr(not(target_arch = "wasm32"), inline)]
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn try_inplace_map_accept_and_next(
         &mut self,
         heap: &mut Heap,
@@ -994,6 +996,7 @@ impl Vm {
         true
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_collection_transform(
         &mut self,
         operation: Transform,
@@ -1002,6 +1005,7 @@ impl Vm {
         self.begin_collection_run(Operation::Callback(operation), Some(callback))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_collection_projection(
         &mut self,
         operation: Projection,
@@ -1267,6 +1271,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_key_order(&mut self) -> Result<(), RuntimeError> {
         let source = self
             .frames
@@ -1420,6 +1425,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_contains_step(&mut self, matched: usize) -> Result<(), RuntimeError> {
         let non_object_match = {
             let element = self
@@ -1629,6 +1635,7 @@ impl Vm {
 
     /// Drain a strict callback result in ordinary VM steps. The inner source
     /// remains rooted across yields, and is exhausted before the next callback.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_flat_map_next(&mut self, end: usize) -> Result<(), RuntimeError> {
         let (source, member) = {
             let run = self
@@ -1899,6 +1906,7 @@ pub(super) fn endpoint_blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_endpoint(
         &mut self,
         receiver: Value,
@@ -2148,6 +2156,7 @@ impl Vm {
         Ok(true)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_collection_every(&mut self) -> Result<(), RuntimeError> {
         let callback = self.pop()?;
         let source = self.conversion_receiver()?;
@@ -2297,6 +2306,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_every_accept(&mut self, next: usize) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let Value::Bool(accepted) = value else {
@@ -2324,6 +2334,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn end_collection_every(&mut self) -> Result<(), RuntimeError> {
         self.frames
             .last_mut()
@@ -2695,6 +2706,7 @@ impl Vm {
     fn retry_distinct_step(&mut self) {
         self.frames.last_mut().unwrap().pc -= 1;
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn collection_distinct_step(
         &mut self,
         next: usize,

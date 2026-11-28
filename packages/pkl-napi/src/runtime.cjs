@@ -56,7 +56,9 @@ const PKL_VERSION = native.productPklVersion ? native.productPklVersion() : "0.3
 const MAX_U64 = (1n << 64n) - 1n;
 const MIN_I64 = -(1n << 63n);
 const MAX_I64 = (1n << 63n) - 1n;
-const FAST_UTF8_DECODER = new TextDecoder("utf-8", { fatal: true });
+const FAST_UTF8_DECODER = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+const FAST_MODULE_URI_RE =
+  /^[A-Za-z][A-Za-z0-9+.-]*:(?:\/\/\/[A-Za-z0-9\-._~/:$&'()*+,;=]*|\/(?!\/)[A-Za-z0-9\-._~/$&'()*+,;=]*|[A-Za-z0-9\-._~$&'()*+,;=][A-Za-z0-9\-._~/$&'()*+,;=]*)$/;
 const VALID_DURATION_UNITS = new Set(["ns", "us", "ms", "s", "min", "h", "d"]);
 const VALID_DATA_SIZE_UNITS = new Set([
   "b", "kb", "mb", "gb", "tb", "pb", "kib", "mib", "gib", "tib", "pib",
@@ -161,14 +163,12 @@ class ModuleSource {
         "invalid-argument",
       );
     }
-    let uri;
-    if (modulePath.startsWith("modulepath:")) {
-      uri = modulePath;
-    } else if (modulePath.startsWith("/")) {
-      uri = `modulepath:${modulePath}`;
-    } else {
-      uri = `modulepath:/${modulePath}`;
-    }
+    const normalized = modulePath.startsWith("modulepath:")
+      ? modulePath.slice("modulepath:".length)
+      : modulePath;
+    const uri = normalized.startsWith("/")
+      ? `modulepath:${normalized}`
+      : `modulepath:/${normalized}`;
     return new ModuleSource(uri, undefined);
   }
 }
@@ -177,7 +177,7 @@ function normalizeSource(source) {
   if (source instanceof ModuleSource) {
     return { uri: source.uri, contents: source.contents };
   }
-  if (source && typeof source === "object" && typeof source.uri === "string") {
+  if (source && typeof source === "object" && typeof source.uri === "string" && source.uri.length > 0) {
     if (source.contents !== undefined && typeof source.contents !== "string") {
       throw new PklError("ModuleSource.contents must be a string.", "invalid-argument");
     }
@@ -213,13 +213,93 @@ class PklRegex {
   }
 }
 
+const SYM_ENTRIES = Symbol("pklEntries");
+const SYM_ELEMENTS = Symbol("pklElements");
+
 class PklObject {
-  constructor(className, moduleUri, properties = {}, entries = new Map(), elements = []) {
+  constructor(className, moduleUri, properties = {}, entries = undefined, elements = undefined) {
     this.className = className;
     this.moduleUri = moduleUri;
     this.properties = properties;
-    this.entries = entries instanceof Map ? entries : new Map(entries);
-    this.elements = Array.isArray(elements) ? elements : Array.from(elements);
+    if (entries !== undefined) {
+      if (entries instanceof Map) {
+        this[SYM_ENTRIES] = entries;
+      } else if (entries !== null && typeof entries[Symbol.iterator] === "function") {
+        this[SYM_ENTRIES] = new Map(entries);
+      } else {
+        throw new PklError(
+          "PklObject entries must be a Map or iterable of [key, value] pairs",
+          "invalid-argument",
+        );
+      }
+    }
+    if (elements !== undefined) {
+      if (Array.isArray(elements)) {
+        this[SYM_ELEMENTS] = elements;
+      } else if (elements !== null && typeof elements[Symbol.iterator] === "function") {
+        this[SYM_ELEMENTS] = Array.from(elements);
+      } else {
+        throw new PklError("PklObject elements must be an Array or iterable", "invalid-argument");
+      }
+    }
+  }
+
+  get entries() {
+    let m = this[SYM_ENTRIES];
+    if (m === undefined) {
+      m = new Map();
+      if (Object.isExtensible(this)) {
+        this[SYM_ENTRIES] = m;
+      }
+    }
+    return m;
+  }
+
+  set entries(val) {
+    if (!(val instanceof Map)) {
+      throw new PklError("PklObject.entries must be a Map", "invalid-argument");
+    }
+    this[SYM_ENTRIES] = val;
+  }
+
+  get elements() {
+    let a = this[SYM_ELEMENTS];
+    if (a === undefined) {
+      a = [];
+      if (Object.isExtensible(this)) {
+        this[SYM_ELEMENTS] = a;
+      }
+    }
+    return a;
+  }
+
+  set elements(val) {
+    if (!Array.isArray(val)) {
+      throw new PklError("PklObject.elements must be an Array", "invalid-argument");
+    }
+    this[SYM_ELEMENTS] = val;
+  }
+
+  toJSON() {
+    const rawEntries = this[SYM_ENTRIES];
+    const rawElements = this[SYM_ELEMENTS];
+    return {
+      className: this.className,
+      moduleUri: this.moduleUri,
+      properties: this.properties,
+      entries: rawEntries !== undefined ? Array.from(rawEntries.entries()) : [],
+      elements: rawElements !== undefined ? rawElements : [],
+    };
+  }
+
+  static _peekEntries(obj) {
+    const m = obj[SYM_ENTRIES];
+    return m === undefined ? null : m;
+  }
+
+  static _peekElements(obj) {
+    const a = obj[SYM_ELEMENTS];
+    return a === undefined ? null : a;
   }
 }
 
@@ -239,9 +319,15 @@ class PklTypeAlias {
 
 class PklIntSeq {
   constructor(start, end, step) {
-    this.start = BigInt(start);
-    this.end = BigInt(end);
-    this.step = BigInt(step);
+    if (typeof start !== "bigint" || typeof end !== "bigint" || typeof step !== "bigint") {
+      throw new PklError(
+        "PklIntSeq start, end, and step must be BigInt values",
+        "invalid-argument",
+      );
+    }
+    this.start = start;
+    this.end = end;
+    this.step = step;
   }
 }
 
@@ -251,7 +337,13 @@ class PklReference {
   constructor(domain, data, path = []) {
     this.domain = domain;
     this.data = data;
-    this.path = Array.isArray(path) ? path : Array.from(path);
+    if (Array.isArray(path)) {
+      this.path = path;
+    } else if (path !== null && path !== undefined && typeof path[Symbol.iterator] === "function") {
+      this.path = Array.from(path);
+    } else {
+      throw new PklError("PklReference path must be an Array or iterable", "invalid-argument");
+    }
   }
 }
 
@@ -264,7 +356,13 @@ function definePropSafe(obj, key, value) {
   });
 }
 
-function hydrateValue(raw) {
+const MAX_HYDRATE_DEPTH = 256;
+const MAX_DEHYDRATE_DEPTH = 128;
+
+function hydrateValue(raw, depth = 0) {
+  if (depth > MAX_HYDRATE_DEPTH) {
+    throw new PklError("Maximum value nesting depth exceeded.", "decode");
+  }
   if (
     raw === null ||
     raw === undefined ||
@@ -278,22 +376,27 @@ function hydrateValue(raw) {
   if (raw instanceof Uint8Array) {
     return raw;
   }
+  const nextDepth = depth + 1;
   if (Array.isArray(raw)) {
-    return raw.map(hydrateValue);
+    const out = new Array(raw.length);
+    for (let i = 0; i < raw.length; i += 1) {
+      out[i] = hydrateValue(raw[i], nextDepth);
+    }
+    return out;
   }
   if (typeof raw === "object" && typeof raw.__pklTag === "string") {
     switch (raw.__pklTag) {
       case "set": {
         const set = new Set();
         for (const item of raw.items) {
-          set.add(hydrateValue(item));
+          set.add(hydrateValue(item, nextDepth));
         }
         return set;
       }
       case "map": {
         const map = new Map();
         for (const [k, v] of raw.entries) {
-          map.set(hydrateValue(k), hydrateValue(v));
+          map.set(hydrateValue(k, nextDepth), hydrateValue(v, nextDepth));
         }
         return map;
       }
@@ -304,17 +407,17 @@ function hydrateValue(raw) {
       case "regex":
         return new PklRegex(raw.pattern);
       case "pair":
-        return new PklPair(hydrateValue(raw.first), hydrateValue(raw.second));
+        return new PklPair(hydrateValue(raw.first, nextDepth), hydrateValue(raw.second, nextDepth));
       case "object": {
         const properties = {};
         for (const [k, v] of raw.properties) {
-          definePropSafe(properties, k, hydrateValue(v));
+          definePropSafe(properties, k, hydrateValue(v, nextDepth));
         }
         const entries = new Map();
         for (const [k, v] of raw.entries) {
-          entries.set(hydrateValue(k), hydrateValue(v));
+          entries.set(hydrateValue(k, nextDepth), hydrateValue(v, nextDepth));
         }
-        const elements = raw.elements.map(hydrateValue);
+        const elements = raw.elements.map((item) => hydrateValue(item, nextDepth));
         return new PklObject(raw.className, raw.moduleUri, properties, entries, elements);
       }
       case "class":
@@ -327,9 +430,9 @@ function hydrateValue(raw) {
         return new PklFunction();
       case "reference":
         return new PklReference(
-          hydrateValue(raw.domain),
-          hydrateValue(raw.data),
-          raw.path.map(hydrateValue),
+          hydrateValue(raw.domain, nextDepth),
+          hydrateValue(raw.data, nextDepth),
+          raw.path.map((item) => hydrateValue(item, nextDepth)),
         );
       default:
         throw new PklError(`Unknown Pkl tag: ${raw.__pklTag}`, "decode");
@@ -340,8 +443,9 @@ function hydrateValue(raw) {
 
 function hydrateSchema(schema) {
   if (!schema || typeof schema !== "object") return schema;
+  const hydrateAnnList = (list) => list.map((item) => hydrateValue(item, 0));
   if (Array.isArray(schema.annotations)) {
-    schema.annotations = schema.annotations.map(hydrateValue);
+    schema.annotations = hydrateAnnList(schema.annotations);
   }
   if (schema.supermodule) {
     hydrateSchema(schema.supermodule);
@@ -349,14 +453,14 @@ function hydrateSchema(schema) {
   const hydrateClass = (cls) => {
     if (!cls) return;
     if (Array.isArray(cls.annotations)) {
-      cls.annotations = cls.annotations.map(hydrateValue);
+      cls.annotations = hydrateAnnList(cls.annotations);
     }
     for (const mapName of ["properties", "allProperties", "methods", "allMethods"]) {
       const m = cls[mapName];
       if (m && typeof m === "object") {
         for (const member of Object.values(m)) {
           if (member && Array.isArray(member.annotations)) {
-            member.annotations = member.annotations.map(hydrateValue);
+            member.annotations = hydrateAnnList(member.annotations);
           }
         }
       }
@@ -376,7 +480,7 @@ function hydrateSchema(schema) {
     if (m && typeof m === "object") {
       for (const alias of Object.values(m)) {
         if (alias && Array.isArray(alias.annotations)) {
-          alias.annotations = alias.annotations.map(hydrateValue);
+          alias.annotations = hydrateAnnList(alias.annotations);
         }
       }
     }
@@ -384,7 +488,10 @@ function hydrateSchema(schema) {
   return schema;
 }
 
-function dehydrateValue(val) {
+function dehydrateValue(val, depth = 0, seen = null) {
+  if (depth > MAX_DEHYDRATE_DEPTH) {
+    throw new PklError("Maximum value nesting depth exceeded.", "invalid-argument");
+  }
   if (val === null) return null;
   if (typeof val === "boolean" || typeof val === "number" || typeof val === "string") {
     return val;
@@ -401,18 +508,6 @@ function dehydrateValue(val) {
   if (val instanceof Uint8Array) {
     return new Uint8Array(val.buffer, val.byteOffset, val.byteLength);
   }
-  if (Array.isArray(val)) {
-    return val.map(dehydrateValue);
-  }
-  if (val instanceof Set) {
-    return { __pklTag: "set", items: Array.from(val, dehydrateValue) };
-  }
-  if (val instanceof Map) {
-    return {
-      __pklTag: "map",
-      entries: Array.from(val.entries(), ([k, v]) => [dehydrateValue(k), dehydrateValue(v)]),
-    };
-  }
   if (val instanceof PklDuration) {
     return { __pklTag: "duration", value: val.value, unit: val.unit };
   }
@@ -421,29 +516,6 @@ function dehydrateValue(val) {
   }
   if (val instanceof PklRegex) {
     return { __pklTag: "regex", pattern: val.pattern };
-  }
-  if (val instanceof PklPair) {
-    return {
-      __pklTag: "pair",
-      first: dehydrateValue(val.first),
-      second: dehydrateValue(val.second),
-    };
-  }
-  if (val instanceof PklObject) {
-    const properties = Object.entries(val.properties).map(([k, v]) => [k, dehydrateValue(v)]);
-    const entries = Array.from(val.entries.entries(), ([k, v]) => [
-      dehydrateValue(k),
-      dehydrateValue(v),
-    ]);
-    const elements = val.elements.map(dehydrateValue);
-    return {
-      __pklTag: "object",
-      className: val.className,
-      moduleUri: val.moduleUri,
-      properties,
-      entries,
-      elements,
-    };
   }
   if (val instanceof PklClass) {
     return { __pklTag: "class", name: val.name, moduleUri: val.moduleUri };
@@ -454,32 +526,104 @@ function dehydrateValue(val) {
   if (val instanceof PklIntSeq) {
     return {
       __pklTag: "intSeq",
-      start: dehydrateValue(val.start),
-      end: dehydrateValue(val.end),
-      step: dehydrateValue(val.step),
+      start: dehydrateValue(val.start, depth + 1, seen),
+      end: dehydrateValue(val.end, depth + 1, seen),
+      step: dehydrateValue(val.step, depth + 1, seen),
     };
   }
   if (val instanceof PklFunction) {
     return { __pklTag: "function" };
   }
-  if (val instanceof PklReference) {
-    return {
-      __pklTag: "reference",
-      domain: dehydrateValue(val.domain),
-      data: dehydrateValue(val.data),
-      path: val.path.map(dehydrateValue),
-    };
-  }
   if (typeof val === "object") {
-    const properties = Object.entries(val).map(([k, v]) => [k, dehydrateValue(v)]);
-    return {
-      __pklTag: "object",
-      className: "Dynamic",
-      moduleUri: "pkl:base",
-      properties,
-      entries: [],
-      elements: [],
-    };
+    const active = seen || new Set();
+    if (active.has(val)) {
+      throw new PklError(
+        "Circular reference detected during Pkl value conversion.",
+        "invalid-argument",
+      );
+    }
+    active.add(val);
+    const nextDepth = depth + 1;
+    try {
+      if (Array.isArray(val)) {
+        const out = new Array(val.length);
+        for (let i = 0; i < val.length; i += 1) {
+          out[i] = dehydrateValue(val[i], nextDepth, active);
+        }
+        return out;
+      }
+      if (val instanceof Set) {
+        const items = [];
+        for (const item of val) {
+          items.push(dehydrateValue(item, nextDepth, active));
+        }
+        return { __pklTag: "set", items };
+      }
+      if (val instanceof Map) {
+        const entries = [];
+        for (const [k, v] of val.entries()) {
+          entries.push([
+            dehydrateValue(k, nextDepth, active),
+            dehydrateValue(v, nextDepth, active),
+          ]);
+        }
+        return { __pklTag: "map", entries };
+      }
+      if (val instanceof PklPair) {
+        return {
+          __pklTag: "pair",
+          first: dehydrateValue(val.first, nextDepth, active),
+          second: dehydrateValue(val.second, nextDepth, active),
+        };
+      }
+      if (val instanceof PklObject) {
+        const properties = Object.entries(val.properties).map(([k, v]) => [
+          k,
+          dehydrateValue(v, nextDepth, active),
+        ]);
+        const rawEntries = PklObject._peekEntries(val);
+        const entries = rawEntries
+          ? Array.from(rawEntries.entries(), ([k, v]) => [
+              dehydrateValue(k, nextDepth, active),
+              dehydrateValue(v, nextDepth, active),
+            ])
+          : [];
+        const rawElements = PklObject._peekElements(val);
+        const elements = rawElements
+          ? rawElements.map((item) => dehydrateValue(item, nextDepth, active))
+          : [];
+        return {
+          __pklTag: "object",
+          className: val.className,
+          moduleUri: val.moduleUri,
+          properties,
+          entries,
+          elements,
+        };
+      }
+      if (val instanceof PklReference) {
+        return {
+          __pklTag: "reference",
+          domain: dehydrateValue(val.domain, nextDepth, active),
+          data: dehydrateValue(val.data, nextDepth, active),
+          path: val.path.map((item) => dehydrateValue(item, nextDepth, active)),
+        };
+      }
+      const properties = Object.entries(val).map(([k, v]) => [
+        k,
+        dehydrateValue(v, nextDepth, active),
+      ]);
+      return {
+        __pklTag: "object",
+        className: "Dynamic",
+        moduleUri: "pkl:base",
+        properties,
+        entries: [],
+        elements: [],
+      };
+    } finally {
+      active.delete(val);
+    }
   }
   throw new PklError(`Unsupported JS value type for Pkl conversion: ${typeof val}`, "invalid-argument");
 }
@@ -637,7 +781,11 @@ function buildNativeOptions(options = {}) {
   if (opts.noCache === true || opts.cacheDir === null) {
     nativeOpts.noCache = true;
   } else if (opts.cacheDir !== undefined) {
-    nativeOpts.cacheDir = String(opts.cacheDir);
+    const cacheDirStr = String(opts.cacheDir);
+    if (cacheDirStr.length === 0) {
+      throw new PklError("cacheDir must not be an empty string.", "configuration");
+    }
+    nativeOpts.cacheDir = cacheDirStr;
   }
   if (opts.projectDir !== undefined && opts.projectDir !== null) {
     nativeOpts.projectDir = String(opts.projectDir);
@@ -718,27 +866,47 @@ function buildNativeOptions(options = {}) {
       nativeHttp.headers = entries;
     }
     if (http.testPort !== undefined && http.testPort !== null) {
-      nativeHttp.testPort = Number(http.testPort);
+      const port = Number(http.testPort);
+      if (!Number.isInteger(port) || port < 0 || port > 65535) {
+        throw new PklError(`Invalid http.testPort \`${http.testPort}\`.`, "invalid-argument");
+      }
+      nativeHttp.testPort = port;
     }
     nativeOpts.http = nativeHttp;
   }
 
   if (opts.externalModuleReaders && typeof opts.externalModuleReaders === "object") {
     nativeOpts.externalModuleReaders = Object.entries(opts.externalModuleReaders).map(
-      ([scheme, cfg]) => ({
-        scheme: scheme.replace(/:$/, ""),
-        executable: String(cfg.executable),
-        arguments: Array.isArray(cfg.arguments) ? cfg.arguments.map(String) : [],
-      }),
+      ([scheme, cfg]) => {
+        if (!cfg || typeof cfg !== "object" || typeof cfg.executable !== "string" || !cfg.executable) {
+          throw new PklError(
+            `externalModuleReaders[\`${scheme}\`] must be an object with a non-empty string executable.`,
+            "invalid-argument",
+          );
+        }
+        return {
+          scheme: scheme.replace(/:$/, ""),
+          executable: cfg.executable,
+          arguments: Array.isArray(cfg.arguments) ? cfg.arguments.map(String) : [],
+        };
+      },
     );
   }
   if (opts.externalResourceReaders && typeof opts.externalResourceReaders === "object") {
     nativeOpts.externalResourceReaders = Object.entries(opts.externalResourceReaders).map(
-      ([scheme, cfg]) => ({
-        scheme: scheme.replace(/:$/, ""),
-        executable: String(cfg.executable),
-        arguments: Array.isArray(cfg.arguments) ? cfg.arguments.map(String) : [],
-      }),
+      ([scheme, cfg]) => {
+        if (!cfg || typeof cfg !== "object" || typeof cfg.executable !== "string" || !cfg.executable) {
+          throw new PklError(
+            `externalResourceReaders[\`${scheme}\`] must be an object with a non-empty string executable.`,
+            "invalid-argument",
+          );
+        }
+        return {
+          scheme: scheme.replace(/:$/, ""),
+          executable: cfg.executable,
+          arguments: Array.isArray(cfg.arguments) ? cfg.arguments.map(String) : [],
+        };
+      },
     );
   }
 
@@ -757,6 +925,7 @@ function buildNativeOptions(options = {}) {
         isLocal: Boolean(r.isLocal),
         isGlobbable: Boolean(r.isGlobbable),
         hasHierarchicalUris: Boolean(r.hasHierarchicalUris),
+        hasFragmentPaths: Boolean(r.hasFragmentPaths),
         isCached: r.isCached === undefined ? true : Boolean(r.isCached),
         hasHasElement: typeof r.hasElement === "function",
         hasListElements: typeof r.listElements === "function",
@@ -831,6 +1000,15 @@ function buildNativeOptions(options = {}) {
     bridgeTarget = target;
   };
 
+  const safeErrMsg = (err) => {
+    try {
+      if (err instanceof Error && typeof err.message === "string") return err.message;
+      return String(err);
+    } catch {
+      return "Unknown callback error";
+    }
+  };
+
   const bridgeCallback = hasCallbacks
     ? (req) => {
         void (async () => {
@@ -844,16 +1022,32 @@ function buildNativeOptions(options = {}) {
               moduleReaders,
               resourceReaders,
             });
-            target.completeBridgeCallback(req.id, { ok: true, ...payload });
+            try {
+              target.completeBridgeCallback(req.id, { ok: true, ...payload });
+            } catch (marshalErr) {
+              try {
+                target.completeBridgeCallback(req.id, {
+                  ok: false,
+                  errorKind: "evaluation",
+                  errorMessage: safeErrMsg(marshalErr),
+                });
+              } catch {
+                // Target may have been closed concurrently
+              }
+            }
           } catch (err) {
             const isSecurity = err instanceof PklError && err.kind === "security";
             const isIo = err instanceof PklError && err.kind === "io";
-            const msg = err instanceof Error ? err.message : String(err);
-            target.completeBridgeCallback(req.id, {
-              ok: false,
-              errorKind: isSecurity ? "security" : isIo ? "io" : "evaluation",
-              errorMessage: msg,
-            });
+            const msg = safeErrMsg(err);
+            try {
+              target.completeBridgeCallback(req.id, {
+                ok: false,
+                errorKind: isSecurity ? "security" : isIo ? "io" : "evaluation",
+                errorMessage: msg,
+              });
+            } catch {
+              // Target may have been closed concurrently
+            }
           }
         })();
       }
@@ -886,15 +1080,15 @@ async function dispatchBridgeRequest(req, hooks) {
       if (!transformed || typeof transformed !== "object") {
         return {};
       }
+      const resolvedMemberName =
+        transformed.memberName !== undefined ? transformed.memberName : frame.memberName;
       return {
         frame: {
           moduleUri: String(transformed.moduleUri ?? frame.moduleUri),
           memberName:
-            transformed.memberName === undefined
-              ? frame.memberName
-              : transformed.memberName === null
-                ? undefined
-                : String(transformed.memberName),
+            resolvedMemberName === null || resolvedMemberName === undefined
+              ? undefined
+              : String(resolvedMemberName),
           sourceLines: Array.isArray(transformed.sourceLines)
             ? transformed.sourceLines.map(String)
             : frame.sourceLines,
@@ -929,6 +1123,9 @@ async function dispatchBridgeRequest(req, hooks) {
       const text = await reader.read(decodeU16(req.uriU16));
       if (text === null || text === undefined) {
         return { text: undefined };
+      }
+      if (text instanceof Uint8Array) {
+        return { text: FAST_UTF8_DECODER.decode(text) };
       }
       return { text: String(text) };
     }
@@ -1037,11 +1234,13 @@ class Project {
 }
 
 class Evaluator {
-  constructor(nativeEval, signal = undefined) {
+  constructor(nativeEval, signal = undefined, clearBridge = null) {
     this._native = nativeEval;
     this._closed = false;
     this._closePromise = null;
     this._nextCallId = 1n;
+    this._pendingFastContinue = 0;
+    this._clearBridge = clearBridge;
     this._signal = signal || null;
     this._onAbort = null;
     if (this._signal && !this._signal.aborted) {
@@ -1067,6 +1266,10 @@ class Evaluator {
       return this._closePromise || Promise.resolve();
     }
     this._closed = true;
+    if (this._clearBridge) {
+      this._clearBridge();
+      this._clearBridge = null;
+    }
     if (this._signal && this._onAbort) {
       this._signal.removeEventListener("abort", this._onAbort);
       this._onAbort = null;
@@ -1078,6 +1281,26 @@ class Evaluator {
     }
     this._closePromise = this._native.closeAsync();
     return this._closePromise;
+  }
+
+  async _continueFastAsync(binary, callOptions) {
+    this._pendingFastContinue += 1;
+    let invoked = false;
+    try {
+      return await this._runAsync(callOptions, (t, id) => {
+        invoked = true;
+        return this._native.continuePendingFast(binary, t, id);
+      });
+    } finally {
+      if (!invoked && typeof this._native?.abortPendingFast === "function") {
+        try {
+          this._native.abortPendingFast();
+        } catch {
+          // Ignore if already closed
+        }
+      }
+      this._pendingFastContinue -= 1;
+    }
   }
 
   async _runAsync(callOptions, invoke) {
@@ -1121,7 +1344,9 @@ class Evaluator {
   async evaluateOutputText(source, callOptions = undefined) {
     const { uri, contents } = normalizeSource(source);
     if (
+      !(contents !== undefined && uri === "repl:text") &&
       !this.isClosed &&
+      this._pendingFastContinue === 0 &&
       !this._signal?.aborted &&
       !callOptions?.signal &&
       callOptions?.timeoutMs === undefined
@@ -1129,9 +1354,7 @@ class Evaluator {
       const fast = this._native.tryEvaluateOutputTextFast(uri, contents);
       if (fast !== null && fast !== undefined) {
         if (fast.__continueAsync) {
-          return this._runAsync(callOptions, (t, id) =>
-            this._native.continuePendingFast(false, t, id),
-          );
+          return this._continueFastAsync(false, callOptions);
         }
         return unwrapOutcome(fast);
       }
@@ -1201,7 +1424,9 @@ class Evaluator {
       throw new PklError("Expression must be a string.", "invalid-argument");
     }
     if (
+      !(contents !== undefined && uri === "repl:text") &&
       !this.isClosed &&
+      this._pendingFastContinue === 0 &&
       !this._signal?.aborted &&
       !callOptions?.signal &&
       callOptions?.timeoutMs === undefined
@@ -1209,9 +1434,7 @@ class Evaluator {
       const fast = this._native.tryEvaluateExpressionFast(uri, contents, expr);
       if (fast !== null && fast !== undefined) {
         if (fast.__continueAsync) {
-          return this._runAsync(callOptions, (t, id) =>
-            this._native.continuePendingFast(false, t, id),
-          );
+          return this._continueFastAsync(false, callOptions);
         }
         return unwrapOutcome(fast);
       }
@@ -1237,7 +1460,9 @@ class Evaluator {
       throw new PklError("Expression must be a string.", "invalid-argument");
     }
     if (
+      !(contents !== undefined && uri === "repl:text") &&
       !this.isClosed &&
+      this._pendingFastContinue === 0 &&
       !this._signal?.aborted &&
       !callOptions?.signal &&
       callOptions?.timeoutMs === undefined
@@ -1254,9 +1479,7 @@ class Evaluator {
       const fast = this._native.tryEvaluateExpressionPklBinaryFast(uri, contents, expr);
       if (fast !== null && fast !== undefined) {
         if (fast.__continueAsync) {
-          const bytes = await this._runAsync(callOptions, (t, id) =>
-            this._native.continuePendingFast(true, t, id),
-          );
+          const bytes = await this._continueFastAsync(true, callOptions);
           return decodePklBinary(bytes);
         }
         return decodePklBinary(unwrapOutcome(fast));
@@ -1279,7 +1502,9 @@ class Evaluator {
       throw new PklError("Expression must be a string.", "invalid-argument");
     }
     if (
+      !(contents !== undefined && uri === "repl:text") &&
       !this.isClosed &&
+      this._pendingFastContinue === 0 &&
       !this._signal?.aborted &&
       !callOptions?.signal &&
       callOptions?.timeoutMs === undefined
@@ -1287,12 +1512,10 @@ class Evaluator {
       const fast = this._native.tryEvaluateExpressionPklBinaryFast(uri, contents, expr);
       if (fast !== null && fast !== undefined) {
         if (fast.__continueAsync) {
-          return this._runAsync(callOptions, (t, id) =>
-            this._native.continuePendingFast(true, t, id),
-          );
+          return this._continueFastAsync(true, callOptions);
         }
         const buf = unwrapOutcome(fast);
-        return new Uint8Array(buf.buffer, buf.byteOffset, buf.byteLength);
+        return new Uint8Array(buf);
       }
     }
     return this._runAsync(callOptions, (t, id) =>
@@ -1352,7 +1575,7 @@ function createEvaluatorSync(options = undefined) {
     native.NativeEvaluator.create(nativeOpts, nativeProject, bridgeCallback),
   );
   setBridgeTarget(nativeEval);
-  return new Evaluator(nativeEval, signal);
+  return new Evaluator(nativeEval, signal, () => setBridgeTarget(null));
 }
 
 async function createEvaluator(options = undefined) {
@@ -1360,10 +1583,11 @@ async function createEvaluator(options = undefined) {
 }
 
 class ReplSession {
-  constructor(nativeRepl, signal = undefined) {
+  constructor(nativeRepl, signal = undefined, clearBridge = null) {
     this._native = nativeRepl;
     this._closed = false;
     this._closePromise = null;
+    this._clearBridge = clearBridge;
     this._signal = signal || null;
     this._onAbort = null;
     if (this._signal && !this._signal.aborted) {
@@ -1393,25 +1617,44 @@ class ReplSession {
       throw new PklError("ReplSession.eval input must be a string.", "invalid-argument");
     }
     const force = Boolean(options?.force);
+    const evalDefinitions = Boolean(options?.evalDefinitions);
     const id = options?.id !== undefined ? String(options.id) : undefined;
-    return unwrapOutcome(await this._native.eval(input, force, id));
+    return unwrapOutcome(await this._native.eval(input, force, evalDefinitions, id));
   }
 
   async load(uriOrSource, options = undefined) {
     this._checkOpen();
     let uri;
+    let contents = undefined;
     if (typeof uriOrSource === "string") {
+      if (uriOrSource.length === 0) {
+        throw new PklError(
+          "ReplSession.load requires a non-empty URI string or ModuleSource.",
+          "invalid-argument",
+        );
+      }
       uri = uriOrSource;
-    } else if (uriOrSource && typeof uriOrSource === "object" && typeof uriOrSource.uri === "string") {
+    } else if (
+      uriOrSource &&
+      typeof uriOrSource === "object" &&
+      typeof uriOrSource.uri === "string" &&
+      uriOrSource.uri.length > 0
+    ) {
       uri = uriOrSource.uri;
+      if (uriOrSource.contents !== undefined && uriOrSource.contents !== null) {
+        if (typeof uriOrSource.contents !== "string") {
+          throw new PklError("ModuleSource.contents must be a string.", "invalid-argument");
+        }
+        contents = uriOrSource.contents;
+      }
     } else {
       throw new PklError(
-        "ReplSession.load requires a URI string or ModuleSource.",
+        "ReplSession.load requires a non-empty URI string or ModuleSource.",
         "invalid-argument",
       );
     }
     const id = options?.id !== undefined ? String(options.id) : undefined;
-    return unwrapOutcome(await this._native.load(uri, id));
+    return unwrapOutcome(await this._native.load(uri, contents, id));
   }
 
   async complete(prefix, options = undefined) {
@@ -1429,11 +1672,21 @@ class ReplSession {
     unwrapOutcome(await this._native.reset(id));
   }
 
+  cancel() {
+    if (!this._closed) {
+      this._native.cancel();
+    }
+  }
+
   close() {
     if (this._closed) {
       return this._closePromise || Promise.resolve();
     }
     this._closed = true;
+    if (this._clearBridge) {
+      this._clearBridge();
+      this._clearBridge = null;
+    }
     if (this._signal && this._onAbort) {
       this._signal.removeEventListener("abort", this._onAbort);
       this._onAbort = null;
@@ -1454,7 +1707,7 @@ async function createRepl(options = undefined) {
     native.NativeReplSession.create(nativeOpts, nativeProject, bridgeCallback),
   );
   setBridgeTarget(nativeRepl);
-  return new ReplSession(nativeRepl, signal);
+  return new ReplSession(nativeRepl, signal, () => setBridgeTarget(null));
 }
 
 async function analyzeImportGraph(uris, options = undefined) {
@@ -1486,6 +1739,10 @@ async function analyzeImportGraph(uris, options = undefined) {
   try {
     return unwrapOutcome(await analyzer.importGraph(normalized));
   } finally {
+    setBridgeTarget(null);
+    if (typeof analyzer.close === "function") {
+      analyzer.close();
+    }
     if (signal && onAbort) {
       signal.removeEventListener("abort", onAbort);
     }
@@ -1497,13 +1754,18 @@ function format(source, options = undefined) {
     throw new PklError("format source must be a string.", "invalid-argument");
   }
   const grammarVersion = options?.grammarVersion;
-  if (grammarVersion !== undefined && grammarVersion !== 1 && grammarVersion !== 2) {
+  if (
+    grammarVersion !== undefined &&
+    grammarVersion !== null &&
+    grammarVersion !== 1 &&
+    grammarVersion !== 2
+  ) {
     throw new PklError(
       `Invalid grammarVersion "${grammarVersion}". Expected 1 or 2.`,
       "invalid-argument",
     );
   }
-  return unwrapOutcome(native.productFormat(source, grammarVersion));
+  return unwrapOutcome(native.productFormat(source, grammarVersion ?? undefined));
 }
 
 const DECODE_STATE = new Int32Array(1);
@@ -1838,7 +2100,8 @@ function fastDecodeVal(bytes, view, len, depth) {
       if (
         className === DECODE_FALLBACK ||
         className.length === 0 ||
-        (className.charCodeAt(0) <= 0x20 && BLANK_OR_CTRL_RE.test(className))
+        ((className.charCodeAt(0) <= 0x20 || className.charCodeAt(0) >= 0x80) &&
+          BLANK_OR_CTRL_RE.test(className))
       ) {
         return DECODE_FALLBACK;
       }
@@ -1847,14 +2110,14 @@ function fastDecodeVal(bytes, view, len, depth) {
       if (
         moduleUri === DECODE_FALLBACK ||
         moduleUri.length === 0 ||
-        (moduleUri.charCodeAt(0) <= 0x20 && BLANK_OR_CTRL_RE.test(moduleUri))
+        (moduleUri !== "pkl:base" && !FAST_MODULE_URI_RE.test(moduleUri))
       ) {
         return DECODE_FALLBACK;
       }
       pos = DECODE_STATE[0];
       const mcount = fastReadArrayLen(bytes, view, len, pos);
-      if (mcount < 0) return DECODE_FALLBACK;
       pos = DECODE_STATE[0];
+      if (mcount < 0 || mcount * 3 > len - pos) return DECODE_FALLBACK;
       const props = {};
       const entries = new Map();
       const elements = [];
@@ -1956,7 +2219,7 @@ function fastDecodeVal(bytes, view, len, depth) {
     if (code === 0x04 || code === 0x05) {
       if (alen !== 2) return DECODE_FALLBACK;
       const count = fastReadArrayLen(bytes, view, len, pos);
-      if (count < 0) return DECODE_FALLBACK;
+      if (count < 0 || count > len - DECODE_STATE[0]) return DECODE_FALLBACK;
       const out = new Array(count);
       const nextDepth = depth + 1;
       for (let i = 0; i < count; i += 1) {
@@ -1970,7 +2233,7 @@ function fastDecodeVal(bytes, view, len, depth) {
     if (code === 0x02 || code === 0x03) {
       if (alen !== 2) return DECODE_FALLBACK;
       const count = fastReadMapLen(bytes, view, len, pos);
-      if (count < 0) return DECODE_FALLBACK;
+      if (count < 0 || count * 2 > len - DECODE_STATE[0]) return DECODE_FALLBACK;
       const out = new Map();
       const nextDepth = depth + 1;
       for (let i = 0; i < count; i += 1) {
@@ -1986,7 +2249,7 @@ function fastDecodeVal(bytes, view, len, depth) {
     if (code === 0x06) {
       if (alen !== 2) return DECODE_FALLBACK;
       const count = fastReadArrayLen(bytes, view, len, pos);
-      if (count < 0) return DECODE_FALLBACK;
+      if (count < 0 || count > len - DECODE_STATE[0]) return DECODE_FALLBACK;
       const out = new Set();
       const nextDepth = depth + 1;
       for (let i = 0; i < count; i += 1) {
@@ -2081,19 +2344,29 @@ function tryDecodePklBinaryFast(bytes) {
 }
 
 const COLUMNAR_MAGIC = 0x504b4c01;
+const MAX_COLUMNAR_DEPTH = 64;
 const IS_LITTLE_ENDIAN = new Uint8Array(new Uint32Array([1]).buffer)[0] === 1;
 let canUseNewFunction = true;
 const SHAPE_PROPS_FACTORIES = new Map();
 const COLUMNAR_TABLE_READERS = new Map();
 let columnarAlignBuf = null;
-const COL_STATE = new Int32Array(7);
+const COL_STATE = new Float64Array(7);
+
+function isValidColumnarSection(off, count, elemSize, align, byteLen) {
+  return (
+    off >= 80 &&
+    off <= byteLen &&
+    (off & (align - 1)) === 0 &&
+    count * elemSize <= byteLen - off
+  );
+}
 
 function getShapePropsFactory(keys) {
   if (!canUseNewFunction || keys.length === 0 || keys.length > 32) return null;
   for (let i = 0; i < keys.length; i += 1) {
     if (keys[i] === "__proto__") return null;
   }
-  const sig = keys.join("\0");
+  const sig = JSON.stringify(keys);
   let fn = SHAPE_PROPS_FACTORIES.get(sig);
   if (fn !== undefined) return fn;
   try {
@@ -2117,7 +2390,7 @@ function getColumnarTableReader(keys, colTypes) {
   for (let i = 0; i < keys.length; i += 1) {
     if (keys[i] === "__proto__") return null;
   }
-  const sig = `${keys.join("\0")}|${colTypes.join(",")}`;
+  const sig = `${JSON.stringify(keys)}|${colTypes.join(",")}`;
   let fn = COLUMNAR_TABLE_READERS.get(sig);
   if (fn !== undefined) return fn;
   try {
@@ -2153,7 +2426,7 @@ function getColumnarTableReader(keys, colTypes) {
       }
     }
     lines.push(
-      `  out[i] = new PklObject(cls, uri, {${propExprs.join(",")}}, new Map(), []);`,
+      `  out[i] = new PklObject(cls, uri, {${propExprs.join(",")}});`,
     );
     lines.push("}");
     lines.push(
@@ -2198,10 +2471,30 @@ function unpackColumnarBuffer(bytes) {
     src = columnarAlignBuf.subarray(0, need);
     alignedCopyOversized = columnarAlignBuf.byteLength > 262144;
   }
-  const ab = src.buffer;
-  const base = src.byteOffset;
+  try {
+    return unpackColumnarAligned(src.buffer, src.byteOffset, src.byteLength);
+  } finally {
+    if (alignedCopyOversized) {
+      columnarAlignBuf = null;
+    }
+  }
+}
+
+function unpackColumnarAligned(ab, base, byteLen) {
   const header = new Uint32Array(ab, base, 20);
   if (header[0] !== COLUMNAR_MAGIC) {
+    return DECODE_FALLBACK;
+  }
+  if (
+    !isValidColumnarSection(header[1], header[2], 4, 4, byteLen) ||
+    !isValidColumnarSection(header[3], header[4], 8, 8, byteLen) ||
+    !isValidColumnarSection(header[5], header[6], 8, 8, byteLen) ||
+    !isValidColumnarSection(header[7], header[8], 1, 1, byteLen) ||
+    !isValidColumnarSection(header[9], header[10], 4, 4, byteLen) ||
+    !isValidColumnarSection(header[11], header[12], 1, 1, byteLen) ||
+    !isValidColumnarSection(header[13], header[14], 4, 4, byteLen) ||
+    !isValidColumnarSection(header[15], header[16], 1, 1, byteLen)
+  ) {
     return DECODE_FALLBACK;
   }
   const ops = new Int32Array(ab, base + header[1], header[2]);
@@ -2215,6 +2508,10 @@ function unpackColumnarBuffer(bytes) {
   const shapeCount = header[17];
   const shapeStrCount = header[18];
 
+  if (shapeStrCount > strLens.length || shapeCount * 3 > ops.length) {
+    return DECODE_FALLBACK;
+  }
+
   let bigStr;
   if (strUtf8.byteLength === 0) {
     bigStr = "";
@@ -2227,22 +2524,40 @@ function unpackColumnarBuffer(bytes) {
   }
 
   let soff = 0;
+  const bigStrLen = bigStr.length;
   const shapeStrs = new Array(shapeStrCount);
   for (let i = 0; i < shapeStrCount; i += 1) {
     const l = strLens[i];
+    if (soff + l > bigStrLen) return DECODE_FALLBACK;
     shapeStrs[i] = bigStr.slice(soff, soff + l);
     soff += l;
   }
 
   let op = 0;
+  const opsLen = ops.length;
   const shapes = new Array(shapeCount);
   for (let s = 0; s < shapeCount; s += 1) {
-    const cls = shapeStrs[ops[op++]];
-    const uri = shapeStrs[ops[op++]];
+    if (op + 3 > opsLen) return DECODE_FALLBACK;
+    const clsIdx = ops[op++];
+    const uriIdx = ops[op++];
     const klen = ops[op++];
+    if (
+      clsIdx < 0 ||
+      clsIdx >= shapeStrCount ||
+      uriIdx < 0 ||
+      uriIdx >= shapeStrCount ||
+      klen < 0 ||
+      klen > opsLen - op
+    ) {
+      return DECODE_FALLBACK;
+    }
+    const cls = shapeStrs[clsIdx];
+    const uri = shapeStrs[uriIdx];
     const keys = new Array(klen);
     for (let k = 0; k < klen; k += 1) {
-      keys[k] = shapeStrs[ops[op++]];
+      const keyIdx = ops[op++];
+      if (keyIdx < 0 || keyIdx >= shapeStrCount) return DECODE_FALLBACK;
+      keys[k] = shapeStrs[keyIdx];
     }
     shapes[s] = { cls, uri, keys, fn: getShapePropsFactory(keys) };
   }
@@ -2253,22 +2568,40 @@ function unpackColumnarBuffer(bytes) {
   let si = shapeStrCount;
   let bli = 0;
   let bo = 0;
+  const bigsLen = bigs.length;
+  const floatsLen = floats.length;
+  const boolsLen = bools.length;
+  const strLensLen = strLens.length;
+  const binLensLen = binLens.length;
+  const binBytesLen = binBytes.length;
+  const shapesLen = shapes.length;
 
-  function readVal() {
+  function readVal(depth) {
+    if (depth > MAX_COLUMNAR_DEPTH || op >= opsLen) return DECODE_FALLBACK;
     const tag = ops[op++];
     if (tag === 0) return null;
-    if (tag === 1) return bigs[bi++];
-    if (tag === 2) return floats[fli++];
+    if (tag === 1) {
+      if (bi >= bigsLen) return DECODE_FALLBACK;
+      return bigs[bi++];
+    }
+    if (tag === 2) {
+      if (fli >= floatsLen) return DECODE_FALLBACK;
+      return floats[fli++];
+    }
     if (tag === 3) return false;
     if (tag === 4) return true;
     if (tag === 5) {
+      if (si >= strLensLen) return DECODE_FALLBACK;
       const l = strLens[si++];
+      if (soff + l > bigStrLen) return DECODE_FALLBACK;
       const s = bigStr.slice(soff, soff + l);
       soff += l;
       return s;
     }
     if (tag === 6) {
+      if (bli >= binLensLen) return DECODE_FALLBACK;
       const n = binLens[bli++];
+      if (bo + n > binBytesLen) return DECODE_FALLBACK;
       let owned;
       if (n <= 16) {
         owned = new Uint8Array(n);
@@ -2280,26 +2613,33 @@ function unpackColumnarBuffer(bytes) {
       return owned;
     }
     if (tag === 7) {
+      if (op >= opsLen) return DECODE_FALLBACK;
       const n = ops[op++];
+      if (n < 0 || n > opsLen - op) return DECODE_FALLBACK;
       const arr = new Array(n);
+      const nextDepth = depth + 1;
       for (let i = 0; i < n; i += 1) {
-        const item = readVal();
+        const item = readVal(nextDepth);
         if (item === DECODE_FALLBACK) return DECODE_FALLBACK;
         arr[i] = item;
       }
       return arr;
     }
     if (tag === 10) {
-      const sh = shapes[ops[op++]];
+      if (op >= opsLen) return DECODE_FALLBACK;
+      const shIdx = ops[op++];
+      if (shIdx < 0 || shIdx >= shapesLen) return DECODE_FALLBACK;
+      const sh = shapes[shIdx];
       const keys = sh.keys;
       const klen = keys.length;
+      const nextDepth = depth + 1;
       let props;
       if (sh.fn !== null) {
         if (klen === 4) {
-          const a0 = readVal();
-          const a1 = readVal();
-          const a2 = readVal();
-          const a3 = readVal();
+          const a0 = readVal(nextDepth);
+          const a1 = readVal(nextDepth);
+          const a2 = readVal(nextDepth);
+          const a3 = readVal(nextDepth);
           if (
             a0 === DECODE_FALLBACK ||
             a1 === DECODE_FALLBACK ||
@@ -2310,11 +2650,11 @@ function unpackColumnarBuffer(bytes) {
           }
           props = sh.fn(a0, a1, a2, a3);
         } else if (klen === 5) {
-          const a0 = readVal();
-          const a1 = readVal();
-          const a2 = readVal();
-          const a3 = readVal();
-          const a4 = readVal();
+          const a0 = readVal(nextDepth);
+          const a1 = readVal(nextDepth);
+          const a2 = readVal(nextDepth);
+          const a3 = readVal(nextDepth);
+          const a4 = readVal(nextDepth);
           if (
             a0 === DECODE_FALLBACK ||
             a1 === DECODE_FALLBACK ||
@@ -2328,7 +2668,7 @@ function unpackColumnarBuffer(bytes) {
         } else {
           const vals = new Array(klen);
           for (let i = 0; i < klen; i += 1) {
-            const v = readVal();
+            const v = readVal(nextDepth);
             if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
             vals[i] = v;
           }
@@ -2337,7 +2677,7 @@ function unpackColumnarBuffer(bytes) {
       } else {
         props = {};
         for (let i = 0; i < klen; i += 1) {
-          const v = readVal();
+          const v = readVal(nextDepth);
           if (v === DECODE_FALLBACK) return DECODE_FALLBACK;
           const k = keys[i];
           if (k === "__proto__") {
@@ -2347,15 +2687,48 @@ function unpackColumnarBuffer(bytes) {
           }
         }
       }
-      return new PklObject(sh.cls, sh.uri, props, new Map(), []);
+      return new PklObject(sh.cls, sh.uri, props);
     }
     if (tag === 12) {
-      const sh = shapes[ops[op++]];
+      if (op + 2 > opsLen) return DECODE_FALLBACK;
+      const shIdx = ops[op++];
       const count = ops[op++];
+      if (shIdx < 0 || shIdx >= shapesLen || count < 0) return DECODE_FALLBACK;
+      const sh = shapes[shIdx];
       const keys = sh.keys;
       const klen = keys.length;
+      if (op + klen > opsLen) return DECODE_FALLBACK;
       const colTypes = new Array(klen);
-      for (let c = 0; c < klen; c += 1) colTypes[c] = ops[op++];
+      let needBigs = 0;
+      let needBools = 0;
+      let needStrs = 0;
+      let needBins = 0;
+      let needFloats = 0;
+      for (let c = 0; c < klen; c += 1) {
+        const t = ops[op++];
+        colTypes[c] = t;
+        if (t === 1) needBigs += count;
+        else if (t === 2) needBools += count;
+        else if (t === 3) needStrs += count;
+        else if (t === 4) needBins += count;
+        else if (t === 5) needFloats += count;
+        else if (t !== 6) return DECODE_FALLBACK;
+      }
+      if (
+        count > 2_000_000 ||
+        bi + needBigs > bigsLen ||
+        bbi + needBools > boolsLen ||
+        si + needStrs > strLensLen ||
+        bli + needBins > binLensLen ||
+        fli + needFloats > floatsLen
+      ) {
+        return DECODE_FALLBACK;
+      }
+      if (needBins > 0) {
+        let totalBinBytes = 0;
+        for (let i = 0; i < needBins; i += 1) totalBinBytes += binLens[bli + i];
+        if (bo + totalBinBytes > binBytesLen) return DECODE_FALLBACK;
+      }
       const reader = getColumnarTableReader(keys, colTypes);
       if (reader !== null) {
         COL_STATE[0] = bi;
@@ -2386,6 +2759,7 @@ function unpackColumnarBuffer(bytes) {
         bli = COL_STATE[4];
         fli = COL_STATE[5];
         bbi = COL_STATE[6];
+        if (soff > bigStrLen || bo > binBytesLen) return DECODE_FALLBACK;
         return out;
       }
       const out = new Array(count);
@@ -2398,10 +2772,12 @@ function unpackColumnarBuffer(bytes) {
           else if (t === 2) v = bools[bbi++] !== 0;
           else if (t === 3) {
             const l = strLens[si++];
+            if (soff + l > bigStrLen) return DECODE_FALLBACK;
             v = bigStr.slice(soff, soff + l);
             soff += l;
           } else if (t === 4) {
             const bn = binLens[bli++];
+            if (bo + bn > binBytesLen) return DECODE_FALLBACK;
             if (bn <= 16) {
               v = new Uint8Array(bn);
               for (let j = 0; j < bn; j += 1) v[j] = binBytes[bo + j];
@@ -2419,38 +2795,46 @@ function unpackColumnarBuffer(bytes) {
             props[k] = v;
           }
         }
-        out[i] = new PklObject(sh.cls, sh.uri, props, new Map(), []);
+        out[i] = new PklObject(sh.cls, sh.uri, props);
       }
       return out;
     }
     if (tag === 13) {
+      if (fli >= floatsLen || si >= strLensLen) return DECODE_FALLBACK;
       const val = floats[fli++];
       const l = strLens[si++];
+      if (soff + l > bigStrLen) return DECODE_FALLBACK;
       const unit = bigStr.slice(soff, soff + l);
       soff += l;
       return new PklDuration(val, unit);
     }
     if (tag === 14) {
+      if (fli >= floatsLen || si >= strLensLen) return DECODE_FALLBACK;
       const val = floats[fli++];
       const l = strLens[si++];
+      if (soff + l > bigStrLen) return DECODE_FALLBACK;
       const unit = bigStr.slice(soff, soff + l);
       soff += l;
       return new PklDataSize(val, unit);
     }
     if (tag === 15) {
-      const first = readVal();
+      const nextDepth = depth + 1;
+      const first = readVal(nextDepth);
       if (first === DECODE_FALLBACK) return DECODE_FALLBACK;
-      const second = readVal();
+      const second = readVal(nextDepth);
       if (second === DECODE_FALLBACK) return DECODE_FALLBACK;
       return new PklPair(first, second);
     }
     if (tag === 16) {
+      if (si >= strLensLen) return DECODE_FALLBACK;
       const l = strLens[si++];
+      if (soff + l > bigStrLen) return DECODE_FALLBACK;
       const pat = bigStr.slice(soff, soff + l);
       soff += l;
       return new PklRegex(pat);
     }
     if (tag === 17) {
+      if (bi + 3 > bigsLen) return DECODE_FALLBACK;
       const start = bigs[bi++];
       const end = bigs[bi++];
       const step = bigs[bi++];
@@ -2462,26 +2846,29 @@ function unpackColumnarBuffer(bytes) {
     return DECODE_FALLBACK;
   }
 
-  const root = readVal();
-  if (alignedCopyOversized) {
-    columnarAlignBuf = null;
-  }
-  if (root === DECODE_FALLBACK || op !== ops.length) {
+  const root = readVal(0);
+  if (root === DECODE_FALLBACK || op !== opsLen || soff > bigStrLen || bo > binBytesLen) {
     return DECODE_FALLBACK;
   }
   return root;
 }
 
-function decodePklBinary(bytes) {
+function decodePklBinary(bytes, options = undefined) {
   if (!(bytes instanceof Uint8Array)) {
     throw new PklError("decodePklBinary expects a Uint8Array.", "invalid-argument");
   }
-  const fast = tryDecodePklBinaryFast(bytes);
-  if (fast !== DECODE_FALLBACK) {
-    return fast;
+  const strict = Boolean(options?.strict);
+  if (!strict) {
+    const fast = tryDecodePklBinaryFast(bytes);
+    if (fast !== DECODE_FALLBACK) {
+      return fast;
+    }
   }
   const raw = unwrapOutcome(
-    native.productDecodePklBinary(new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength)),
+    native.productDecodePklBinary(
+      new Uint8Array(bytes.buffer, bytes.byteOffset, bytes.byteLength),
+      strict,
+    ),
   );
   return hydrateValue(raw);
 }
@@ -2490,90 +2877,7 @@ function monotonicClockMs() {
   return native.productMonotonicClockMs();
 }
 
-function roundtripValue(val) {
-  const dehydrated = dehydrateValue(val);
-  const raw = unwrapOutcome(native.productRoundtripValue(dehydrated));
-  return hydrateValue(raw);
-}
-
-function roundtripInteger(val) {
-  if (typeof val !== "bigint") {
-    throw new PklError("roundtripInteger expects a BigInt.", "invalid-argument");
-  }
-  return unwrapOutcome(native.productRoundtripInteger(val));
-}
-
-function roundtripBytes(val) {
-  if (!(val instanceof Uint8Array)) {
-    throw new PklError("roundtripBytes expects a Uint8Array.", "invalid-argument");
-  }
-  return native.roundtripBytes(new Uint8Array(val.buffer, val.byteOffset, val.byteLength));
-}
-
-function roundtripString(val) {
-  if (typeof val !== "string") {
-    throw new PklError("roundtripString expects a string.", "invalid-argument");
-  }
-  return native.roundtripString(val);
-}
-
-function defaultBenchmarkPayload() {
-  return new PklObject(
-    "Bench#Payload",
-    "repl:bench",
-    {
-      intMin: MIN_I64,
-      intMax: MAX_I64,
-      floatVal: 3.141592653589793,
-      text: "hello-pkl-🚀-utf16",
-      bytes: new Uint8Array([0, 1, 2, 127, 128, 255]),
-      duration: new PklDuration(5, "s"),
-      dataSize: new PklDataSize(16, "mib"),
-      pair: new PklPair("left", 42n),
-      list: [1n, 2n, 3n, true, null],
-      set: new Set(["a", "b", "c"]),
-      map: new Map([
-        ["k1", 100n],
-        ["k2", "v2"],
-      ]),
-    },
-    new Map(),
-    [],
-  );
-}
-
-function measureConversion(valOrIterations = 1000, maybeIterations = undefined) {
-  let value;
-  let iterations;
-  if (typeof valOrIterations === "number" && maybeIterations === undefined) {
-    value = defaultBenchmarkPayload();
-    iterations = valOrIterations;
-  } else {
-    value = valOrIterations;
-    iterations = maybeIterations === undefined ? 1000 : maybeIterations;
-  }
-  if (!Number.isInteger(iterations) || iterations < 1 || iterations > 1_000_000) {
-    throw new PklError(
-      `iterations must be an integer between 1 and 1000000, got ${iterations}.`,
-      "invalid-argument",
-    );
-  }
-  const dehydrated = dehydrateValue(value);
-  const startNs = process.hrtime.bigint();
-  const nativeStats = unwrapOutcome(native.productMeasureConversion(dehydrated, iterations));
-  const hydrated = hydrateValue(nativeStats.lastValue);
-  const totalElapsedMs = Number(process.hrtime.bigint() - startNs) / 1e6;
-  return {
-    iterations: nativeStats.iterations,
-    elapsedMs: totalElapsedMs,
-    nativeElapsedMs: nativeStats.elapsedMs,
-    perIterationUs: (totalElapsedMs * 1000) / nativeStats.iterations,
-    nativePerIterationUs: nativeStats.perIterationUs,
-    lastValue: hydrated,
-  };
-}
-
-module.exports = {
+const publicExports = {
   PKL_VERSION,
   capabilities,
   PklError,
@@ -2598,9 +2902,18 @@ module.exports = {
   format,
   decodePklBinary,
   monotonicClockMs,
-  roundtripValue,
-  roundtripInteger,
-  roundtripBytes,
-  roundtripString,
-  measureConversion,
 };
+
+Object.defineProperty(publicExports, Symbol.for("@openedges/pkl-napi/testing-internals"), {
+  value: Object.freeze({
+    native,
+    unwrapOutcome,
+    dehydrateValue,
+    hydrateValue,
+  }),
+  enumerable: false,
+  configurable: false,
+  writable: false,
+});
+
+module.exports = publicExports;

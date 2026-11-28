@@ -1,0 +1,84 @@
+pkl-rs
+Copyright 2025-2026 The pkl-rs Authors
+
+An independent pure-Rust implementation targeting Apple Pkl 0.32.0 compatibility.
+Repository: https://github.com/openedges/pkl-rs
+
+TRADEMARK & NON-AFFILIATION NOTICE
+"pkl-rs" is an independent open-source project and is not affiliated with,
+sponsored by, or endorsed by Apple Inc. "Pkl" is a trademark or product name of
+Apple Inc., referenced solely to describe language and specification
+compatibility. All `pkldoc` favicons under crates/pkl-doc/assets/images/ are
+original `pkl-rs` artwork licensed under Apache-2.0.
+
+This product includes or adapts software and assets from the following third-party
+projects. Full license texts and dependency inventories are recorded in
+THIRD-PARTY-NOTICES.md.
+
+1. Apple Pkl 0.32.0 (Apache License, Version 2.0)
+   Copyright © 2024-2026 Apple Inc. and the Pkl project authors.
+   - Standard library modules under crates/pkl-runtime/src/stdlib/ (all 23 `pkl:*`
+     `.pkl` modules, verbatim from Apple Pkl 0.32.0 with original Apache-2.0
+     copyright headers retained).
+   - Rust adaptations of upstream diagnostic, value rendering, ANSI/syntax
+     highlighting, stack-frame compression, YAML resolver, and lexical path
+     resolution logic in crates/pkl-runtime/src/{power_assertions.rs,
+     diagnostic_values.rs, diagnostic/ansi.rs, diagnostic/highlight.rs,
+     diagnostic/frames.rs, vm/settings_paths.rs, vm/yaml_parser/backend/resolve.rs}.
+   - Functional `pkldoc` web resources under crates/pkl-doc/assets/
+     (styles/pkldoc.css, scripts/pkldoc.js, scripts/search-worker.js, fonts/*;
+     excluding original `pkl-rs` icons under images/*) and Clikt
+     shell-completion scripts under crates/pkl-cli/assets/ (Clikt Copyright ©
+     2018 AJ Alt, Apache-2.0).
+   - Bundled TLS root certificates in crates/pkl-host-native/assets/PklCARoots.pem.
+   - Reference submodules external/pkl and external/pkl-pantry (development only)
+     retain their original licenses, NOTICE.txt, and THIRD-PARTY-NOTICES.txt.
+
+2. Sun Microsystems FDLIBM (Permissive Notice)
+   Copyright (C) 1993 by Sun Microsystems, Inc. All rights reserved.
+   Developed at SunSoft, a Sun Microsystems, Inc. business.
+   Permission to use, copy, modify, and distribute this software is freely
+   granted, provided that this notice is preserved.
+   - Adapted in crates/pkl-runtime/src/numeric.rs and
+     crates/pkl-runtime/src/vm/math_fdlibm.rs for IEEE-754 StrictMath parity.
+
+3. SnakeYAML Engine 3.0.1 (Apache License, Version 2.0)
+   Copyright (c) 2018, SnakeYAML.
+   - Adapted in crates/pkl-runtime/src/vm/yaml_parser/backend/ (original Apache-2.0
+     license text retained in LICENSE-APACHE-2.0.txt and PROVENANCE.md).
+
+4. Android Open Source Project / Apache Spark TimSort (Apache License, Version 2.0)
+   Copyright (C) 2008 The Android Open Source Project.
+   - Adapted from Apache Spark v3.5.7 TimSort.java in
+     crates/pkl-runtime/src/vm/protobuf_spark_sort.rs.
+
+5. Web libraries and fonts bundled in `pkldoc` (crates/pkl-doc/assets/)
+   - scroll-into-view-if-needed (`scroll-into-view.min.js`): MIT License,
+     Copyright (c) 2023 Cody Olsen.
+   - Open Sans & Material Icons webfonts: Apache License, Version 2.0.
+   - Lato & Source Code Pro webfonts: SIL Open Font License 1.1 (OFL-1.1).
+
+6. Regular expression engine & Unicode 15.0.0 data (crates/pkl-runtime/src/java_regex/)
+   - Adapted from java_regex 0.1.0 (MIT OR Apache-2.0), Copyright Mathieu Dutour
+     Sikiric, and extended for raw UTF-16 code units, canonical equivalence
+     (`CANON_EQ` / `(?c)`), and bounded Pkl compatibility execution inside
+     crates/pkl-runtime/src/java_regex/.
+   - All Unicode 15.0.0 character, name, normalization, and grapheme tables are
+     generated directly from official Unicode Consortium UCD 15.0.0 files under
+     the Unicode License Agreement (Unicode-3.0), Copyright © 1991-2026
+     Unicode, Inc. (verbatim in crates/pkl-runtime/src/java_regex/LICENSE-UNICODE).
+
+7. Statically linked Rust crate dependencies (Cargo.lock)
+   - All external Rust dependencies are licensed under permissive licenses
+     (MIT, Apache-2.0, ISC, BSD-3-Clause, Zlib, Unicode-3.0), including `ring`
+     (Apache-2.0 AND ISC, with BoringSSL/OpenSSL notices), `rustls-webpki`,
+     `untrusted`, `libloading` (ISC), and `subtle` (BSD-3-Clause). See
+     THIRD-PARTY-NOTICES.md for full license texts.
+
+8. Historical test fixtures (source repository only, not in binary releases)
+   - tests/fixtures/rev1/ retains its original Apache-2.0 LICENSE and NOTICE
+     (OPENEDGES Technology Inc., originally recorded in 2025 as OpenEdges Inc.;
+     Apple Inc./Pkl project authors 2024-2025).
+   - Compatibility oracle fixtures under tests/fixtures/ originate from the
+     pinned Apple Pkl 0.32.0 test suite (Apache-2.0) and are excluded from
+     binary and npm distributions.

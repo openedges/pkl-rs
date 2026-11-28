@@ -2,6 +2,7 @@
 use crate::value::{PklString, RuntimeSource};
 use std::sync::Arc;
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum TraceMode {
     #[default]

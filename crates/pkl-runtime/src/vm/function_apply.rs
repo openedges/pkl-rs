@@ -41,6 +41,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn function_apply_to_list(&mut self, receiver: Value) -> Result<(), RuntimeError> {
         let Value::Function(function) = receiver else {
             return Err(invalid("Function.applyToList receiver"));

@@ -5,7 +5,7 @@ use crate::model::DocGeneratorError;
 use crate::package_data::{
     ClassData, ElementRef, ModuleData, PackageData, PackageId, PackageRef, TypeId, TypeRef,
 };
-use crate::util::compare_versions_desc;
+use crate::util::{compare_versions_desc, join_confined_output_path};
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fs;
@@ -29,7 +29,7 @@ pub struct RuntimeData {
 
 impl RuntimeData {
     pub fn read_or_empty(path: &Path) -> Result<Self, DocGeneratorError> {
-        let content = match fs::read_to_string(path) {
+        let content = match pkl_host_native::read_path_to_string_bounded(path) {
             Ok(s) => s,
             Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(Self::default()),
             Err(e) => {
@@ -102,15 +102,39 @@ impl RuntimeData {
         out
     }
 
-    pub fn write_to(&self, path: &Path) -> Result<(), DocGeneratorError> {
-        if let Some(parent) = path.parent() {
+    pub fn write_to(&self, output_dir: &Path, path: &Path) -> Result<(), DocGeneratorError> {
+        crate::util::ensure_path_under_output_dir(output_dir, path)?;
+        let canon_root = pkl_host_native::canonicalize_root_dir(output_dir).map_err(|e| {
+            DocGeneratorError::bug(format!(
+                "I/O error resolving output directory `{}`: {e}",
+                output_dir.display()
+            ))
+        })?;
+        let target = if let (Some(parent), Some(file_name)) = (path.parent(), path.file_name()) {
             fs::create_dir_all(parent).map_err(|e| {
                 DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
             })?;
-        }
-        fs::write(path, self.to_pretty_json().as_bytes()).map_err(|e| {
-            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
-        })
+            let canon_parent = fs::canonicalize(parent).map_err(|e| {
+                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
+            })?;
+            if !canon_parent.starts_with(&canon_root) {
+                return Err(DocGeneratorError::user(format!(
+                    "Refusing to access path `{}` outside output directory `{}`.",
+                    path.display(),
+                    output_dir.display()
+                )));
+            }
+            canon_parent.join(file_name)
+        } else {
+            return Err(DocGeneratorError::user(format!(
+                "Refusing to access path `{}` outside output directory `{}`.",
+                path.display(),
+                output_dir.display()
+            )));
+        };
+        pkl_host_native::write_file_nofollow(&target, self.to_pretty_json().as_bytes()).map_err(
+            |e| DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display())),
+        )
     }
 
     pub fn per_package(&self) -> Self {
@@ -412,7 +436,10 @@ impl RuntimeDataState {
 
         for pkg in packages {
             let pkg_ref = &pkg.r#ref;
-            let path = output_dir.join(pkg_ref.per_package_version_runtime_data_path());
+            let path = join_confined_output_path(
+                output_dir,
+                &pkg_ref.per_package_version_runtime_data_path(),
+            )?;
             let existing = read_existing(&path, data_dir_existed, &in_memory)?;
             let usages = find_map_set(&self.package_usages, pkg_ref);
             let data = existing
@@ -430,7 +457,10 @@ impl RuntimeDataState {
             for module in &pkg.modules {
                 for clazz in effective_classes(module) {
                     let class_ref = &clazz.r#ref;
-                    let path = output_dir.join(class_ref.per_package_version_runtime_data_path());
+                    let path = join_confined_output_path(
+                        output_dir,
+                        &class_ref.per_package_version_runtime_data_path(),
+                    )?;
                     let existing = read_existing(&path, data_dir_existed, &in_memory)?;
                     let new_subtypes = find_map_set(&self.subtypes, class_ref);
                     let new_usages = find_map_set(&self.type_usages, class_ref);
@@ -462,7 +492,8 @@ impl RuntimeDataState {
                 continue;
             }
             let pkg_ref = &pkg.r#ref;
-            let path = output_dir.join(pkg_ref.per_package_runtime_data_path());
+            let path =
+                join_confined_output_path(output_dir, &pkg_ref.per_package_runtime_data_path())?;
             let existing = read_existing(&path, data_dir_existed, &in_memory)?;
             let new_versions: Option<Vec<String>> =
                 find_map_set(&self.package_versions, &pkg_ref.pkg).map(|refs| {
@@ -489,7 +520,10 @@ impl RuntimeDataState {
             for module in &pkg.modules {
                 for clazz in effective_classes(module) {
                     let class_ref = &clazz.r#ref;
-                    let path = output_dir.join(class_ref.per_package_runtime_data_path());
+                    let path = join_confined_output_path(
+                        output_dir,
+                        &class_ref.per_package_runtime_data_path(),
+                    )?;
                     let existing = read_existing(&path, data_dir_existed, &in_memory)?;
                     let new_versions = self
                         .class_versions
@@ -524,7 +558,10 @@ impl RuntimeDataState {
             if newly_written.contains(pkg_ref) {
                 continue;
             }
-            let path = output_dir.join(pkg_ref.per_package_version_runtime_data_path());
+            let path = join_confined_output_path(
+                output_dir,
+                &pkg_ref.per_package_version_runtime_data_path(),
+            )?;
             if !path.is_file() {
                 continue;
             }
@@ -536,7 +573,7 @@ impl RuntimeDataState {
                 &compare_versions_desc,
             );
             if updated != existing {
-                updated.write_to(&path)?;
+                updated.write_to(output_dir, &path)?;
                 let _ = write!(console_out, "Wrote file {}\r", path_to_uri_display(&path));
             }
         }
@@ -612,7 +649,7 @@ impl<'a> RuntimeDataGenerator<'a> {
             &mut logs,
             &mut self.written_files,
         )?;
-        crate::generator::write_files_parallel(&writes)?;
+        crate::generator::write_files_parallel_under(Some(self.output_dir), &writes)?;
         for line in &logs {
             let _ = self.console_out.write_all(line.as_bytes());
         }

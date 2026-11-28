@@ -6,6 +6,8 @@
 mod runner;
 pub mod terminal;
 
+pub use pkl_host_native::NativeHostConfig;
+
 use std::io::{BufRead, Write};
 use std::path::PathBuf;
 

@@ -1,6 +1,7 @@
 // Included in rendering.rs so binary traversal shares its private continuation,
 // converter paths, source frames and GC roots with the text renderers.
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_pkl_binary_render(&mut self, document: bool) -> Result<(), RuntimeError> {
         let root = self
             .frames
@@ -14,6 +15,7 @@ impl Vm {
 
     /// Encodes the top-of-stack `Value` directly as a `pkl-binary` document
     /// (`Value::Bytes`) with no converters, matching `EvaluatorImpl.evaluateExpressionPklBinary`.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_pkl_binary_encode_value(&mut self) -> Result<(), RuntimeError> {
         let root = self.pop()?.boxed();
         if let Some(bytes) = self.try_fast_encode_pkl_binary(&root) {
@@ -449,6 +451,12 @@ impl Vm {
         active: &mut Vec<ObjectId>,
         scratch: &mut Vec<FastMember<'a>>,
     ) -> bool {
+        // Abort the synchronous fast path on huge DAG expansions so the cooperative
+        // `RenderRun` loop can enforce step/timeout/cancellation limits cleanly.
+        const MAX_FAST_BINARY_BYTES: usize = 32 * 1024 * 1024;
+        if wire.len() > MAX_FAST_BINARY_BYTES {
+            return false;
+        }
         match value {
             Value::Null
             | Value::NullWithDefault(_)

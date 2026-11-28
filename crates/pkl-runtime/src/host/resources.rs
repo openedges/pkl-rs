@@ -502,7 +502,8 @@ pub(crate) fn module_trust_level(uri: &PklString) -> Result<i32, crate::modules:
                 "Default module trust requires a valid absolute URI.".into(),
             )
         })?;
-        return Ok(match parsed.scheme.as_deref() {
+        let scheme_lower = parsed.scheme.as_deref().map(str::to_ascii_lowercase);
+        return Ok(match scheme_lower.as_deref() {
             Some("repl") => 40,
             Some("file") => {
                 if parsed.authority.as_ref().is_some_and(|authority| {
@@ -514,8 +515,11 @@ pub(crate) fn module_trust_level(uri: &PklString) -> Result<i32, crate::modules:
                 }
             }
             Some("jar") => {
-                let nested = decoded_scheme_specific_part(&text)
-                    .is_some_and(|part| part.starts_with("nested:"));
+                let nested = decoded_scheme_specific_part(&text).is_some_and(|part| {
+                    part.as_str()
+                        .and_then(|s| s.get(..7))
+                        .is_some_and(|prefix| prefix.eq_ignore_ascii_case("nested:"))
+                });
                 text = SourceText::from(text).entire().range(4..).to_pkl_string();
                 if nested {
                     20

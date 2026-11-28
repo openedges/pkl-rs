@@ -1,6 +1,6 @@
 # `@openedges/pkl-napi`
 
-Node.js N-API native bindings for the pure-Rust **Apple Pkl `0.32.0`** engine (`pkl-runtime`, `pkl-host-native`, `pkl`, and `pkl-formatter`) with zero Java runtime dependency.
+Node.js N-API native bindings for the pure-Rust **Apple Pkl `0.32.0`** engine (`pkl-runtime`, `pkl-host-native`, `pkl-lang`, and `pkl-formatter`) with zero Java runtime dependency.
 
 ## Installation
 
@@ -11,7 +11,7 @@ npm install @openedges/pkl-napi
 ### Requirements & Supported Platforms
 
 - **Node.js**: `>= 18.0.0` (N-API v8)
-- **Module formats**: Dual ESM (`import`) and CommonJS (`require`) with bundled TypeScript declarations (`dist/index.d.ts`).
+- **Module formats**: Dual ESM (`import`) and CommonJS (`require`) with bundled TypeScript declarations (`dist/index.d.{ts,cts,mts}`).
 - **Prebuilt native addons (7 targets)**:
   - macOS: `darwin-arm64`, `darwin-x64`
   - Linux (glibc `>= 2.28`): `linux-x64-gnu`, `linux-arm64-gnu`
@@ -50,12 +50,16 @@ console.log(format('x=1+2\n'));
 ```js
 const { createEvaluatorSync, ModuleSource } = require('@openedges/pkl-napi');
 
-const evaluator = createEvaluatorSync();
-try {
-  console.log(evaluator.evaluateExpressionSync(ModuleSource.text('x = 20 + 22'), 'x'));
-} finally {
-  evaluator.close();
+async function main() {
+  const evaluator = createEvaluatorSync();
+  try {
+    console.log(evaluator.evaluateExpressionSync(ModuleSource.text('x = 20 + 22'), 'x'));
+  } finally {
+    await evaluator.close();
+  }
 }
+
+main();
 ```
 
 ## Compatibility & Versioning
@@ -64,6 +68,6 @@ Version `0.32.0` tracks the **Apple Pkl `0.32.0`** compatibility baseline (`PKL_
 
 ## License & Trademarks
 
-Licensed under the [Apache License, Version 2.0](LICENSE) (Copyright 2025–2026 The pkl-rs Authors). Attribution and third-party notices are bundled in [NOTICE](NOTICE) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+Licensed under the [Apache License, Version 2.0](https://github.com/openedges/pkl-rs/blob/main/LICENSE) (Copyright 2025–2026 The pkl-rs Authors). Attribution and third-party notices are bundled in [NOTICE](https://github.com/openedges/pkl-rs/blob/main/NOTICE) and [THIRD-PARTY-NOTICES.md](https://github.com/openedges/pkl-rs/blob/main/THIRD-PARTY-NOTICES.md).
 
 `@openedges/pkl-napi` is part of the independent open-source `pkl-rs` project and is not affiliated with, sponsored by, or endorsed by Apple Inc. "Pkl" is referenced solely to describe language compatibility.

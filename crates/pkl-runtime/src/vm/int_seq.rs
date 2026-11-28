@@ -266,12 +266,19 @@ enum Cursor {
         next: usize,
     },
 }
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum FastIntState {
+    Unchecked,
+    RetryOnce,
+    Done,
+}
 pub(super) struct Run {
     operation: Operation,
     cursor: Cursor,
     callback: Option<Value>,
     accumulator: Option<Value>,
     shallow: bool,
+    fast_int_state: FastIntState,
 }
 impl Run {
     pub(super) fn roots(&self, roots: &mut Vec<Value>) {
@@ -368,7 +375,8 @@ impl Run {
     /// - `Some(Some((arg0, opt_arg1)))` if there is a next iteration (for arity 1 or 2)
     /// - `Some(None)` if the cursor is exhausted
     /// - `None` if this run is not eligible for in-place reuse
-    #[inline]
+    #[cfg_attr(not(target_arch = "wasm32"), inline)]
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn try_inplace_accept_and_next(
         &mut self,
         heap: &mut Heap,
@@ -424,19 +432,35 @@ impl Run {
     }
 
     #[inline]
-    pub(super) fn callback_function_id(&self) -> Option<ObjectId> {
+    pub(super) fn fast_int_callback(&self) -> Option<ObjectId> {
+        if self.fast_int_state == FastIntState::Done {
+            return None;
+        }
         match self.callback {
             Some(Value::Function(id)) => Some(id),
             _ => None,
         }
     }
 
+    #[inline]
+    pub(super) fn note_fast_int_unverified(&mut self) {
+        self.fast_int_state = match self.fast_int_state {
+            FastIntState::Unchecked => FastIntState::RetryOnce,
+            FastIntState::RetryOnce | FastIntState::Done => FastIntState::Done,
+        };
+    }
+
+    #[inline]
+    pub(super) fn mark_fast_int_done(&mut self) {
+        self.fast_int_state = FastIntState::Done;
+    }
+
     /// Executes an entire `IntSeq.map` or `IntSeq`/`StrictList.fold` directly against a verified
     /// pure-`i64` `FastIntBlock`, respecting `max_steps`.
-    /// Returns `Some(steps_consumed)` if the entire loop completed (cursor exhausted and builder/accumulator updated),
-    /// or `None` if ineligible or bailed out mid-way (leaves cursor/builder untouched on bail-out before committing?
-    /// We commit only on full completion or per-step safely!).
+    /// Returns `Ok(steps_consumed)` if the entire loop completed (cursor exhausted and builder/accumulator updated),
+    /// or `Err(steps_consumed)` if ineligible or bailed out mid-way so the caller still bills consumed steps.
     #[allow(clippy::too_many_arguments)]
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn try_fast_int_bulk(
         &mut self,
         heap: &mut Heap,
@@ -447,105 +471,140 @@ impl Run {
         val_stack: &mut Vec<i64>,
         locals_buf: &mut Vec<i64>,
         call_stack: &mut Vec<(u32, u32)>,
-    ) -> Option<usize> {
+    ) -> Result<usize, usize> {
         if self.shallow || !fast_block.returns_int {
-            return None;
+            return Err(0);
         }
         let mut total_steps = 0usize;
         match (&mut self.cursor, self.operation) {
             (Cursor::IntSeq(cursor), Operation::Map) => {
-                let target = builder?;
+                let Some(target) = builder else {
+                    return Err(0);
+                };
                 let mut probe = cursor.clone();
                 let mut results = Vec::new();
                 while let Some((_, v)) = probe.next() {
                     let rem = max_steps.saturating_sub(total_steps);
                     if rem == 0 {
-                        return None;
+                        return Err(total_steps);
                     }
-                    let (out, steps) = fast_block.execute(
+                    let (out, steps) = match fast_block.execute(
                         captured,
                         &[v],
                         rem,
                         val_stack,
                         locals_buf,
                         call_stack,
-                    )?;
+                    ) {
+                        Ok(res) => res,
+                        Err(steps) => return Err(total_steps.saturating_add(steps)),
+                    };
                     total_steps = total_steps.saturating_add(steps);
+                    if results.len() == results.capacity() && results.try_reserve(1).is_err() {
+                        return Err(total_steps);
+                    }
                     results.push(Value::Int(crate::value_identity::Number::from(out).boxed()));
                 }
-                let object = heap.get_mut(target).ok()?;
-                let elems = object.list_elements.as_mut()?;
+                let Ok(object) = heap.get_mut(target) else {
+                    return Err(total_steps);
+                };
+                let Some(elems) = object.list_elements.as_mut() else {
+                    return Err(total_steps);
+                };
                 let added = results.len();
+                if elems.try_reserve(added).is_err() {
+                    return Err(total_steps);
+                }
                 elems.extend(results);
                 object.length += added;
                 *cursor = probe;
                 heap.note_external_allocation(added.saturating_mul(std::mem::size_of::<Value>()));
-                Some(total_steps.max(1))
+                Ok(total_steps.max(1))
             }
             (Cursor::IntSeq(cursor), Operation::Fold) => {
-                let Value::Int(init_acc) = self.accumulator.as_ref()? else {
-                    return None;
+                let Some(Value::Int(init_acc)) = self.accumulator.as_ref() else {
+                    return Err(0);
                 };
                 let mut acc = init_acc.get();
                 let mut probe = cursor.clone();
                 while let Some((_, v)) = probe.next() {
                     let rem = max_steps.saturating_sub(total_steps);
                     if rem == 0 {
-                        return None;
+                        return Err(total_steps);
                     }
-                    let (out, steps) = fast_block.execute(
+                    let (out, steps) = match fast_block.execute(
                         captured,
                         &[acc, v],
                         rem,
                         val_stack,
                         locals_buf,
                         call_stack,
-                    )?;
+                    ) {
+                        Ok(res) => res,
+                        Err(steps) => return Err(total_steps.saturating_add(steps)),
+                    };
                     total_steps = total_steps.saturating_add(steps);
                     acc = out;
                 }
                 *cursor = probe;
                 self.accumulator =
                     Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
-                Some(total_steps.max(1))
+                Ok(total_steps.max(1))
             }
             (Cursor::StrictList { source, len, next }, Operation::Fold) => {
-                let Value::Int(init_acc) = self.accumulator.as_ref()? else {
-                    return None;
+                let Some(Value::Int(init_acc)) = self.accumulator.as_ref() else {
+                    return Err(0);
                 };
                 let mut acc = init_acc.get();
-                let obj = heap.get(*source).ok()?;
-                let elems = obj.list_elements.as_ref()?;
+                let Ok(obj) = heap.get(*source) else {
+                    return Err(0);
+                };
+                let Some(elems) = obj.list_elements.as_ref() else {
+                    return Err(0);
+                };
                 let end = (*len).min(elems.len());
                 if let Some(op_code) = fast_block.try_fold_add_sub_mul(captured) {
                     let count = end.saturating_sub(*next);
                     let needed = count.saturating_mul(4);
                     if needed > max_steps {
-                        return None;
+                        return Err(0);
                     }
+                    let mut scanned = 0usize;
                     match op_code {
                         0 => {
                             for elem in &elems[*next..end] {
+                                scanned += 4;
                                 let Value::Int(v) = elem else {
-                                    return None;
+                                    return Err(scanned);
                                 };
-                                acc = acc.checked_add(v.get())?;
+                                let Some(next_acc) = acc.checked_add(v.get()) else {
+                                    return Err(scanned);
+                                };
+                                acc = next_acc;
                             }
                         }
                         1 => {
                             for elem in &elems[*next..end] {
+                                scanned += 4;
                                 let Value::Int(v) = elem else {
-                                    return None;
+                                    return Err(scanned);
                                 };
-                                acc = acc.checked_sub(v.get())?;
+                                let Some(next_acc) = acc.checked_sub(v.get()) else {
+                                    return Err(scanned);
+                                };
+                                acc = next_acc;
                             }
                         }
                         2 => {
                             for elem in &elems[*next..end] {
+                                scanned += 4;
                                 let Value::Int(v) = elem else {
-                                    return None;
+                                    return Err(scanned);
                                 };
-                                acc = acc.checked_mul(v.get())?;
+                                let Some(next_acc) = acc.checked_mul(v.get()) else {
+                                    return Err(scanned);
+                                };
+                                acc = next_acc;
                             }
                         }
                         _ => unreachable!(),
@@ -553,33 +612,36 @@ impl Run {
                     *next = end;
                     self.accumulator =
                         Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
-                    return Some(needed.max(1));
+                    return Ok(needed.max(1));
                 }
                 for elem in &elems[*next..end] {
                     let Value::Int(v) = elem else {
-                        return None;
+                        return Err(total_steps);
                     };
                     let rem = max_steps.saturating_sub(total_steps);
                     if rem == 0 {
-                        return None;
+                        return Err(total_steps);
                     }
-                    let (out, steps) = fast_block.execute(
+                    let (out, steps) = match fast_block.execute(
                         captured,
                         &[acc, v.get()],
                         rem,
                         val_stack,
                         locals_buf,
                         call_stack,
-                    )?;
+                    ) {
+                        Ok(res) => res,
+                        Err(steps) => return Err(total_steps.saturating_add(steps)),
+                    };
                     total_steps = total_steps.saturating_add(steps);
                     acc = out;
                 }
                 *next = end;
                 self.accumulator =
                     Some(Value::Int(crate::value_identity::Number::from(acc).boxed()));
-                Some(total_steps.max(1))
+                Ok(total_steps.max(1))
             }
-            _ => None,
+            _ => Err(0),
         }
     }
 }
@@ -595,6 +657,7 @@ impl Vm {
             ..Default::default()
         }))
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn make_int_seq(&mut self) -> Result<(), RuntimeError> {
         let Value::Int(end) = self.pop()? else {
             return Err(invalid("checked IntSeq end"));
@@ -606,6 +669,7 @@ impl Vm {
             .push(Value::IntSeq(IntSeq::new(start.get(), end.get(), 1)));
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_int_seq_step(&self) -> Result<(), RuntimeError> {
         if matches!(self.stack.last(), Some(Value::Int(value)) if value.get() != 0) {
             return Ok(());
@@ -625,6 +689,7 @@ impl Vm {
         self.stack.push(Value::Int(value.into()));
         true
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn int_seq_operation(
         &mut self,
         receiver: Value,
@@ -647,6 +712,7 @@ impl Vm {
         self.stack.push(value);
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_int_seq(&mut self, operation: Operation) -> Result<(), RuntimeError> {
         let callback = if matches!(
             operation,
@@ -725,20 +791,29 @@ impl Vm {
             callback,
             accumulator,
             shallow: shallow_source.is_some(),
+            fast_int_state: FastIntState::Unchecked,
         }));
         if !matches!(operation, Operation::Fold | Operation::FoldIndexed) {
             let is_listing = operation == Operation::ToListing;
+            let initial_cap = list_capacity.min(4096);
+            let list_elements = if is_listing {
+                None
+            } else {
+                let mut v = Vec::new();
+                if initial_cap > 0 && v.try_reserve(initial_cap).is_ok() {
+                    self.heap.note_external_allocation(
+                        initial_cap.saturating_mul(std::mem::size_of::<Value>()),
+                    );
+                }
+                Some(v)
+            };
             let builder = self.heap.allocate(Object {
                 collection_kind: if is_listing {
                     CollectionKind::Listing
                 } else {
                     CollectionKind::List
                 },
-                list_elements: if is_listing {
-                    None
-                } else {
-                    Some(Vec::with_capacity(list_capacity))
-                },
+                list_elements,
                 ..Default::default()
             });
             frame.builders.push(builder);
@@ -750,6 +825,7 @@ impl Vm {
         }
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn int_seq_next(&mut self, end: usize) -> Result<(), RuntimeError> {
         if self
             .frames
@@ -921,6 +997,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn int_seq_accept(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let run = self
@@ -936,6 +1013,7 @@ impl Vm {
         }
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn end_int_seq(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("IntSeq end");
         let run = frame

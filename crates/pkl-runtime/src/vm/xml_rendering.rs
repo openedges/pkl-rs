@@ -136,6 +136,7 @@ impl RenderRun {
     }
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_xml_render(&mut self, document: bool) -> Result<(), RuntimeError> {
         let root = self
             .frames
@@ -321,6 +322,7 @@ impl Vm {
             members,
             next: 0,
             seen: Vec::new(),
+            seen_buckets: crate::heap::FastMap::default(),
             compare: 0,
             prepared: false,
             hash: None,

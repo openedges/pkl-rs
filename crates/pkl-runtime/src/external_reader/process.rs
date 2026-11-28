@@ -289,17 +289,43 @@ impl NativeExternalReaderProcess {
         Ok(stdin)
     }
 
+    fn join_rx_bounded(handle: JoinHandle<()>) {
+        let deadline = Instant::now().checked_add(Duration::from_millis(200));
+        let mut sleep = Duration::from_millis(1);
+        while !handle.is_finished() {
+            if let Some(dl) = deadline {
+                let now = Instant::now();
+                if now >= dl {
+                    // Detach if a grandchild process inherited stdout and keeps the pipe open.
+                    drop(handle);
+                    return;
+                }
+                thread::sleep(sleep.min(dl.saturating_duration_since(now)));
+            } else {
+                thread::sleep(sleep);
+            }
+            sleep = (sleep * 2).min(Duration::from_millis(20));
+        }
+        let _ = handle.join();
+    }
+
     fn shutdown_process(&self, grace: Duration) {
-        let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
-        let Some(spawned) = guard.as_mut() else {
-            return;
+        let (alive, stdin) = {
+            let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
+            let Some(spawned) = guard.as_mut() else {
+                return;
+            };
+            (
+                matches!(spawned.child.try_wait(), Ok(None)),
+                Arc::clone(&spawned.stdin),
+            )
         };
 
-        let alive = matches!(spawned.child.try_wait(), Ok(None));
-        if alive {
-            // Send graceful `CloseExternalProcess` (`0x32`) and close child stdin.
+        if alive && !self.cancelled.load(Ordering::SeqCst) {
+            // Send graceful `CloseExternalProcess` (`0x32`) and close child stdin
+            // WITHOUT holding `self.process` so `cancel()` can kill a hung child immediately.
             {
-                let mut stdin_guard = spawned.stdin.lock().unwrap_or_else(|e| e.into_inner());
+                let mut stdin_guard = stdin.lock().unwrap_or_else(|e| e.into_inner());
                 if let Some(mut writer) = stdin_guard.take() {
                     self.shared.log("Sending message: CloseExternalProcess[]");
                     let _ = codec::write_message(
@@ -309,64 +335,80 @@ impl NativeExternalReaderProcess {
                 }
             }
 
-            let deadline = Instant::now() + grace;
+            let deadline = Instant::now().checked_add(grace);
             let mut poll_sleep = Duration::from_millis(2);
             loop {
-                match spawned.child.try_wait() {
-                    Ok(Some(_)) => break,
-                    Ok(None) => {
-                        if self.cancelled.load(Ordering::SeqCst) {
+                if self.cancelled.load(Ordering::SeqCst) {
+                    break;
+                }
+                let status = {
+                    let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
+                    guard.as_mut().map(|s| s.child.try_wait())
+                };
+                match status {
+                    Some(Ok(None)) => {
+                        let Some(dl) = deadline else {
                             break;
-                        }
+                        };
                         let now = Instant::now();
-                        if now >= deadline {
+                        if now >= dl {
                             break;
                         }
-                        let remaining = deadline.saturating_duration_since(now);
+                        let remaining = dl.saturating_duration_since(now);
                         thread::sleep(poll_sleep.min(remaining));
                         poll_sleep = (poll_sleep * 2).min(Duration::from_millis(25));
                     }
-                    Err(_) => break,
+                    _ => break,
                 }
             }
         } else {
             // Drop stdin pipe if still held.
-            let mut stdin_guard = spawned.stdin.lock().unwrap_or_else(|e| e.into_inner());
+            let mut stdin_guard = stdin.lock().unwrap_or_else(|e| e.into_inner());
             let _ = stdin_guard.take();
         }
 
         // Unconditionally force-kill if still alive and reap child (no zombies/orphans).
-        if matches!(spawned.child.try_wait(), Ok(None)) {
-            let _ = spawned.child.kill();
-        }
-        let _ = spawned.child.wait();
+        let rx_handle = {
+            let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
+            if let Some(spawned) = guard.as_mut() {
+                if matches!(spawned.child.try_wait(), Ok(None)) {
+                    let _ = spawned.child.kill();
+                }
+                let _ = spawned.child.wait();
+                spawned.rx_thread.take()
+            } else {
+                None
+            }
+        };
 
-        if let Some(handle) = spawned.rx_thread.take() {
-            let _ = handle.join();
+        if let Some(handle) = rx_handle {
+            Self::join_rx_bounded(handle);
         }
     }
 
     /// Force-kill and reap the child process immediately without sending
     /// `CloseExternalProcess` or waiting for `close_timeout`.
     fn terminate_immediately(&self) {
-        let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
-        let Some(spawned) = guard.as_mut() else {
-            return;
+        let (stdin, rx_handle) = {
+            let mut guard = self.process.lock().unwrap_or_else(|e| e.into_inner());
+            let Some(spawned) = guard.as_mut() else {
+                return;
+            };
+
+            // Kill first so any blocked stdin writer or stdout reader unblocks immediately.
+            if matches!(spawned.child.try_wait(), Ok(None)) {
+                let _ = spawned.child.kill();
+            }
+            let _ = spawned.child.wait();
+            (Arc::clone(&spawned.stdin), spawned.rx_thread.take())
         };
 
-        // Kill first so any blocked stdin writer or stdout reader unblocks immediately.
-        if matches!(spawned.child.try_wait(), Ok(None)) {
-            let _ = spawned.child.kill();
-        }
-        let _ = spawned.child.wait();
-
-        {
-            let mut stdin_guard = spawned.stdin.lock().unwrap_or_else(|e| e.into_inner());
+        if let Ok(mut stdin_guard) = stdin.try_lock() {
             let _ = stdin_guard.take();
         }
 
-        if let Some(handle) = spawned.rx_thread.take() {
-            let _ = handle.join();
+        if let Some(handle) = rx_handle {
+            Self::join_rx_bounded(handle);
         }
     }
 }
@@ -496,7 +538,9 @@ impl ExternalReaderTransport for NativeExternalReaderProcess {
             return Err(err);
         }
 
-        let deadline = self.request_timeout.map(|t| Instant::now() + t);
+        let deadline = self
+            .request_timeout
+            .and_then(|t| Instant::now().checked_add(t));
         let result = slot.wait(deadline);
         if matches!(result, Err(ExternalReaderError::Timeout)) {
             self.shared
@@ -537,14 +581,9 @@ impl ExternalReaderTransport for NativeExternalReaderProcess {
 
     fn cancel(&self) {
         self.cancelled.store(true, Ordering::SeqCst);
+        self.closed.store(true, Ordering::SeqCst);
         self.shared.fail_all(ExternalReaderError::Cancelled);
-        if self
-            .closed
-            .compare_exchange(false, true, Ordering::SeqCst, Ordering::SeqCst)
-            .is_ok()
-        {
-            self.terminate_immediately();
-        }
+        self.terminate_immediately();
     }
 }
 

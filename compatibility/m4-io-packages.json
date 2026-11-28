@@ -334,17 +334,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/external_reader/messages.rs",
-          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "sha256": "63b918ca7e7c026a075dd576e3715a17b53805bac2d47ed0dce2223423383de7",
           "symbol": "ExternalReaderConfig"
         },
         {
           "path": "crates/pkl-runtime/src/external_reader/messages.rs",
-          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "sha256": "63b918ca7e7c026a075dd576e3715a17b53805bac2d47ed0dce2223423383de7",
           "symbol": "shlex"
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "c3beef09e71fbdabec8f30ba41f7d602f0c258c7e5376488306120fd376fafd7",
+          "sha256": "302c4524f3405dad081cc5b3d264bed549d0a2931c74a93a9519c3e3ef5b0428",
           "symbol": "EvaluatorSettings"
         }
       ],
@@ -367,12 +367,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/external_reader/messages.rs",
-          "sha256": "156a4ce24963f2ddcda84af7a81ba051e93f3bbf4122a11f241248e079b0ae0b",
+          "sha256": "63b918ca7e7c026a075dd576e3715a17b53805bac2d47ed0dce2223423383de7",
           "symbol": "MessageType"
         },
         {
           "path": "crates/pkl-runtime/src/external_reader/codec.rs",
-          "sha256": "31dc502661971e54b4f5e36ca613934ec32b52e3a97263688bdd8e874bc48059",
+          "sha256": "adfecb83989d1ff01973097f0ce083f639bebb095f7af93193c9778749525100",
           "symbol": "write_message"
         },
         {
@@ -382,7 +382,7 @@
         },
         {
           "path": "crates/pkl-runtime/src/external_reader/process.rs",
-          "sha256": "3f88ef996aa7c68565fc653160395c3e109c80a3cae8697324fcd26033498331",
+          "sha256": "16bef92300baa46322d08f6cd2b249ae22e1da410ceae566d698d6b4293566fb",
           "symbol": "NativeExternalReaderProcess"
         }
       ],
@@ -406,17 +406,17 @@
         },
         {
           "path": "crates/pkl-runtime/src/host.rs",
-          "sha256": "a9520f5304e6e3429776bcf84616f988ec1c41e2270bece12e0a9269d1f13797",
+          "sha256": "de72f554fd071d8da82b5cab1f7a2e7fba7ed25458f4cd1c2e40a52713d02b1a",
           "symbol": "format_timeout_message"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "CancelFlag"
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "f3b6c6198701985aa7edbf9a4bf6c8c475f7caa07c46c05202f30b60ad21d978",
+          "sha256": "8a4e89fa84bb7b226a29f52daf2eded2d6e07e1c87133c361a0d40a73d3c2c55",
           "symbol": "CleanupReport"
         }
       ],
@@ -437,22 +437,22 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "ParsedHttpUri"
         },
         {
           "path": "crates/pkl-runtime/src/host/resources.rs",
-          "sha256": "e26eff52da810100107193ef2fcda4a6e7022335c61c4b3e1cff909cbfeffc43",
+          "sha256": "a1f288107b89a7747e40da5715b2e1b49c9f383d9adfeca649df3969b5914e22",
           "symbol": "try_configured_scalar_read_with_policy"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpClient"
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "f3b6c6198701985aa7edbf9a4bf6c8c475f7caa07c46c05202f30b60ad21d978",
+          "sha256": "8a4e89fa84bb7b226a29f52daf2eded2d6e07e1c87133c361a0d40a73d3c2c55",
           "symbol": "NativeHost"
         }
       ],
@@ -471,17 +471,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "RewriteRule"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "HeaderRule"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "HeaderGlobMatcher"
         }
       ],
@@ -501,17 +501,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "ProxyConfig"
         },
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "NoProxyRule"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpTransport"
         }
       ],
@@ -535,12 +535,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/http.rs",
-          "sha256": "a451b2a5ce2cc24d57f88b9f3586ba305fe65ecdaae5f515af258da801105096",
+          "sha256": "afcbed4cc3d3f47014cfac5563e950e41991082185a00a70b9d9353d979b63f1",
           "symbol": "RewritingHttpClient"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpTransport"
         }
       ],
@@ -566,7 +566,7 @@
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpTransport"
         }
       ],
@@ -589,12 +589,12 @@
         },
         {
           "path": "crates/pkl-host-native/src/modulepath.rs",
-          "sha256": "3d21971e7ebd8d81664842283fcca1b2e9b00246f54354ba4121e7f2f006bf6c",
+          "sha256": "6d4ecfbb8f4b8ccb3088a522a38f92d5b400540f242bf4688393f08f40796ec1",
           "symbol": "NativeModulePathResolver"
         },
         {
           "path": "crates/pkl-host-native/src/zip_archive.rs",
-          "sha256": "0a9100039f7d947e7a9b78f4e0d256623d22920fdc947b781a29f1818bd57073",
+          "sha256": "352a127a447c7ce9787bfbf7308dbf7973496494740b696876ec03b40b0a93b1",
           "symbol": "ZipReader"
         }
       ],
@@ -620,17 +620,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/security.rs",
-          "sha256": "2b5ce43d89ccc4532ac8b078f0df090d5fbb8ef058e0461a4a6f0d2904184ccf",
+          "sha256": "a2693b4d4820a94c172f3d497aff62ee4f7448303b548bad7336fdda0ecdff5d",
           "symbol": "SecurityPolicy"
         },
         {
           "path": "crates/pkl-host-native/src/fs.rs",
-          "sha256": "f77c3bcb4d8de1a570dedcc5dae7ae536bf7ec5e0763c0cfd82ef0445836ce48",
+          "sha256": "fab9b328ebc9753fb7492e262aeaad2dfb70f7c205c14e1edd54f688ffc66666",
           "symbol": "NativeFs"
         },
         {
           "path": "crates/pkl-host-native/src/fs.rs",
-          "sha256": "f77c3bcb4d8de1a570dedcc5dae7ae536bf7ec5e0763c0cfd82ef0445836ce48",
+          "sha256": "fab9b328ebc9753fb7492e262aeaad2dfb70f7c205c14e1edd54f688ffc66666",
           "symbol": "open_file_nofollow"
         }
       ],
@@ -654,17 +654,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/cache.rs",
-          "sha256": "44ca20c751c3c9a56ac6003758f3803f6d6eaa373ef0e0051d8f6357a3fffb6d",
+          "sha256": "0916feecc357bd85841c40b16b8c4ed3b68d1eac7d1586253cd69359d25b3d58",
           "symbol": "encode_cache_path"
         },
         {
           "path": "crates/pkl-runtime/src/packages/resolver.rs",
-          "sha256": "68e6c42b689593a03448faef4de14f1f2cccbaa28b895cbcde8d2c51f0f189bd",
+          "sha256": "57b92f5f202adf5c39e654b4db99a91b98b604bb58c0e3116c13407cf7f12676",
           "symbol": "PackageResolver"
         },
         {
           "path": "crates/pkl-runtime/src/packages/zip.rs",
-          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "sha256": "ba525ebcedb135969f2c7c3e85fb544706b7a27eb5c362fc1c46980acb003424",
           "symbol": "ZipArchive"
         },
         {
@@ -674,12 +674,12 @@
         },
         {
           "path": "crates/pkl-host-native/src/package_host.rs",
-          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "sha256": "99ec1d072fd906e93f0342df4b26430517d71202594404009900c3e7a1f0408d",
           "symbol": "NativePackageTransport"
         },
         {
           "path": "crates/pkl-host-native/src/package_host.rs",
-          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "sha256": "99ec1d072fd906e93f0342df4b26430517d71202594404009900c3e7a1f0408d",
           "symbol": "DiskPackageCache"
         }
       ],
@@ -693,26 +693,26 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
+          "sha256": "7cbdc013572acf30fcbffc870f3658111f824dce942e16a3f739da91b0ef579f",
           "symbol": "ProjectPackager"
         },
         {
           "path": "crates/pkl-runtime/src/packages/test_runner.rs",
-          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "sha256": "ca129e15f21fda147e936be2c29bc554eb3c582732986196b74cb5c96409131b",
           "symbol": "TestResults"
         },
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "f3b6c6198701985aa7edbf9a4bf6c8c475f7caa07c46c05202f30b60ad21d978",
+          "sha256": "8a4e89fa84bb7b226a29f52daf2eded2d6e07e1c87133c361a0d40a73d3c2c55",
           "symbol": "NativeHost"
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "8d079f2a20f31b3b316359115bf5d491bbc84ab49bca36d61ff4ca2c05424416",
+          "sha256": "97eb33741ce774a8070995372c2e45ef0801ae700b92e908d24bd616173d7bb2",
           "symbol": "run_cli"
         },
         {
-          "path": "crates/pkl-host-native/src/bin/pkl_m4_cli.rs",
+          "path": "crates/pkl-host-native/examples/pkl_m4_cli.rs",
           "sha256": "e9eede0ee6651f45eddfd96d4a38441cc82327dae53571495fe2bf5b47cd945e",
           "symbol": "main"
         }
@@ -727,27 +727,27 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/resolver.rs",
-          "sha256": "68e6c42b689593a03448faef4de14f1f2cccbaa28b895cbcde8d2c51f0f189bd",
+          "sha256": "57b92f5f202adf5c39e654b4db99a91b98b604bb58c0e3116c13407cf7f12676",
           "symbol": "PackageResolver"
         },
         {
           "path": "crates/pkl-runtime/src/packages/cache.rs",
-          "sha256": "44ca20c751c3c9a56ac6003758f3803f6d6eaa373ef0e0051d8f6357a3fffb6d",
+          "sha256": "0916feecc357bd85841c40b16b8c4ed3b68d1eac7d1586253cd69359d25b3d58",
           "symbol": "PackageCacheStore"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpClient"
         },
         {
           "path": "crates/pkl-host-native/src/package_host.rs",
-          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "sha256": "99ec1d072fd906e93f0342df4b26430517d71202594404009900c3e7a1f0408d",
           "symbol": "NativePackageTransport"
         },
         {
           "path": "crates/pkl-host-native/src/package_host.rs",
-          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "sha256": "99ec1d072fd906e93f0342df4b26430517d71202594404009900c3e7a1f0408d",
           "symbol": "DiskPackageCache"
         }
       ],
@@ -769,32 +769,32 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
+          "sha256": "7cbdc013572acf30fcbffc870f3658111f824dce942e16a3f739da91b0ef579f",
           "symbol": "ProjectPackager"
         },
         {
           "path": "crates/pkl-runtime/src/packages/packager.rs",
-          "sha256": "7ddd19760c35a2ee529a8c20ab8bb1a873191defc6cd5f9e26de15e1801d1b9a",
+          "sha256": "7cbdc013572acf30fcbffc870f3658111f824dce942e16a3f739da91b0ef579f",
           "symbol": "java_hashmap_order"
         },
         {
           "path": "crates/pkl-runtime/src/packages/zip.rs",
-          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "sha256": "ba525ebcedb135969f2c7c3e85fb544706b7a27eb5c362fc1c46980acb003424",
           "symbol": "build_deterministic_package_zip"
         },
         {
           "path": "crates/pkl-runtime/src/packages/metadata.rs",
-          "sha256": "c8402180b1a93f3b7f9512ae5b959220620124dadb018ed3fca099db743395e8",
+          "sha256": "a546e048aec6ca2639a38556c070778b65d0d3e2005f06d653ab4c81e8b63946",
           "symbol": "DependencyMetadata"
         },
         {
           "path": "crates/pkl-runtime/src/packages/test_runner.rs",
-          "sha256": "6b72075ce2ff2323ad1c094bcdd1cc3d6ddf4ee92ee3179820ded81b07cfb2ea",
+          "sha256": "ca129e15f21fda147e936be2c29bc554eb3c582732986196b74cb5c96409131b",
           "symbol": "render_spec_report"
         },
         {
           "path": "crates/pkl-host-native/src/package_host.rs",
-          "sha256": "5590cd8ff9ff6ad6bca5fc41c47e93e1362feb5f699c12f70c4bc05bbec2a7f8",
+          "sha256": "99ec1d072fd906e93f0342df4b26430517d71202594404009900c3e7a1f0408d",
           "symbol": "NativePackagerHost"
         }
       ],
@@ -815,7 +815,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/mvs.rs",
-          "sha256": "3029fd44de84311d754f15db0ec289f795a10c7c491adc0f53c001511810e993",
+          "sha256": "e7a810d2b6dce394a68efdd1c76e899d59ab39da16b94271f1ff1a898609249b",
           "symbol": "ProjectDependenciesResolver"
         },
         {
@@ -845,17 +845,17 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "c3beef09e71fbdabec8f30ba41f7d602f0c258c7e5376488306120fd376fafd7",
+          "sha256": "302c4524f3405dad081cc5b3d264bed549d0a2931c74a93a9519c3e3ef5b0428",
           "symbol": "PklSettings"
         },
         {
           "path": "crates/pkl-runtime/src/packages/project.rs",
-          "sha256": "c3beef09e71fbdabec8f30ba41f7d602f0c258c7e5376488306120fd376fafd7",
+          "sha256": "302c4524f3405dad081cc5b3d264bed549d0a2931c74a93a9519c3e3ef5b0428",
           "symbol": "EvaluatorSettings"
         },
         {
           "path": "crates/pkl-host-native/src/cli.rs",
-          "sha256": "8d079f2a20f31b3b316359115bf5d491bbc84ab49bca36d61ff4ca2c05424416",
+          "sha256": "97eb33741ce774a8070995372c2e45ef0801ae700b92e908d24bd616173d7bb2",
           "symbol": "ParsedCliOptions"
         }
       ],
@@ -867,7 +867,7 @@
   "sources": {
     "compatibility/corpus.json": "0e95da22f965dede398f1a1f136703ba913d588aa51c1fb871cd97a11c84a0dd",
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m4-mappings.json": "548c449f3335129fa1b24fe5ba68e0fcc7a906ecaa6814f5ad86c26589fd4714",
+    "compatibility/m4-mappings.json": "9b20f885ef3d12bfb13801f2ecfaeaa0841d6f75badabbacda5002b926bff285",
     "crates/pkl-host-native/assets/PklCARoots.pem": "6ef329901b9cccb93100d5da54424b0f9a1df871a5c17d8437c4982eea3a02fe",
     "reports/m0/pantry-evidence.tar.gz": "7794a0721c935696291fd62bf6936ebe40f9bccf47c26111fd0226a577d2549d",
     "tests/fixtures/m4/cases.json": "3a51adc9f2360574b8d757c82b9588ad318bb6cb579f126949262176b9045610",

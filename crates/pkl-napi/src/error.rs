@@ -3,7 +3,7 @@
 
 use napi::{
     Env, JsString, Result,
-    bindgen_prelude::{BigInt, Object, ToNapiValue, Utf16String},
+    bindgen_prelude::{BigInt, JsObjectValue, Object, ToNapiValue, Utf16String},
 };
 use pkl::{PklError, PklErrorKind};
 use pkl_runtime::value::PklString;
@@ -116,6 +116,7 @@ impl NativeError {
             PklErrorKind::Decode => NativeErrorKind::Decode,
             PklErrorKind::Io => NativeErrorKind::Io,
             PklErrorKind::InvalidArgument => NativeErrorKind::InvalidArgument,
+            _ => NativeErrorKind::Evaluation,
         };
         Self::new(kind, PklString::from(err.message()))
     }
@@ -149,6 +150,18 @@ pub fn to_js_outcome<'env, V: ToNapiValue>(
 pub fn js_pkl_string<'env>(env: &'env Env, text: &PklString) -> Result<JsString<'env>> {
     let units: Vec<u16> = text.encode_utf16().collect();
     env.create_string_utf16(units)
+}
+
+/// Defines an own enumerable/writable/configurable data property on `obj` without
+/// invoking inherited setters such as `Object.prototype.__proto__`.
+pub fn define_own_prop<'env, V: napi::JsValue<'env>>(
+    env: &'env Env,
+    obj: &mut Object<'env>,
+    key: &str,
+    value: &V,
+) -> Result<()> {
+    let prop = napi::Property::new().with_name(env, key)?.with_value(value);
+    obj.define_properties(&[prop])
 }
 
 /// Converts a `Utf16String` into a lossless `PklString`.

@@ -435,6 +435,7 @@ impl Run {
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_reflection(&mut self, operation: Operation) -> Result<(), RuntimeError> {
         if !self.program.base_full_metadata_loaded {
             self.ensure_base_full_metadata()?;
@@ -542,6 +543,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_mirror_property(&mut self, name: PklString) -> Result<(), RuntimeError> {
         let owner = self
             .frames

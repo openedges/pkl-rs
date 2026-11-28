@@ -2,8 +2,8 @@
 //! + persistent `SourceSession::module_evaluator` + client reader/logger adapters).
 
 use pkl_host_native::{
-    CaCertSource, CustomModuleReader, CustomResourceReader, HostLogger, NativeHost,
-    NativeHostConfig, NativeHostExtensions, file_uri_to_path,
+    CaCertSource, CustomModuleReader, CustomResourceReader, HostLogger, NativeFs, NativeHost,
+    NativeHostConfig, NativeHostExtensions, canonicalize_root_dir, file_uri_to_path,
 };
 use pkl_runtime::evaluation::frontend::DiagnosticProfile;
 use pkl_runtime::evaluation::session::SourceSession;
@@ -14,6 +14,7 @@ use pkl_runtime::external_reader::{
 use pkl_runtime::glob::PathElement;
 use pkl_runtime::host::ReadFailure;
 use pkl_runtime::host::http::{HttpClientConfig, ProxyConfig};
+use pkl_runtime::host::security::SecurityPolicy;
 use pkl_runtime::logging::{LogFrame, LogLevel, TraceMode};
 use pkl_runtime::modules::{ModuleHostError, ModuleSource, ModuleSourceSpec, ResolvedModule};
 use pkl_runtime::packages::project::{
@@ -101,7 +102,12 @@ impl ServerEvaluator {
         }
 
         let project_dependencies = match params.project {
-            Some(proj) => Some(build_project_dependencies(&proj)?),
+            Some(proj) => Some(build_project_dependencies(
+                &proj,
+                &allowed_modules,
+                &allowed_resources,
+                params.root_dir.as_deref(),
+            )?),
             None => None,
         };
 
@@ -212,6 +218,9 @@ impl ServerEvaluator {
             return Err("Evaluator has already been closed.".to_string());
         }
         let mut guard = self.session.lock().unwrap_or_else(|e| e.into_inner());
+        if self.closed.load(Ordering::SeqCst) {
+            return Err("Evaluator has already been closed.".to_string());
+        }
         let Some(session) = guard.as_mut() else {
             return Err("Evaluator has already been closed.".to_string());
         };
@@ -224,26 +233,39 @@ impl ServerEvaluator {
             .evaluate_expression_pkl_binary_on(session, source, expression)
     }
 
+    /// Non-blocking first phase of closing: marks the evaluator closed and cancels
+    /// client callbacks and host I/O immediately so the server reader loop never blocks.
+    pub(crate) fn begin_close(&self) {
+        self.closed.store(true, Ordering::SeqCst);
+        self.client_transport.close();
+        self.host.cancel_flag().cancel();
+    }
+
+    /// Blocking cleanup phase run off the server reader thread (or at shutdown):
+    /// gracefully shuts down external reader subprocesses, closes the session, and closes host.
+    pub(crate) fn finish_close(&self) {
+        self.begin_close();
+        // Send graceful `0x32 CloseExternalProcess` (and fail any in-flight reader calls)
+        // before locking `session` so blocked reader evaluations unwind cleanly without
+        // force-killing external readers prematurely via `NativeHost::cancel()`.
+        self.host.external_readers().close_all();
+        let mut guard = self.session.lock().unwrap_or_else(|e| e.into_inner());
+        if let Some(mut session) = guard.take() {
+            session.close();
+        }
+        drop(guard);
+        self.host.close();
+    }
+
+    /// Force-cancels external readers immediately during abnormal server error teardown.
+    pub(crate) fn abort_immediately(&self) {
+        self.begin_close();
+        self.host.external_readers().cancel_all();
+    }
+
     /// Cancels any in-flight evaluation and releases host/session/external-reader resources.
     pub(crate) fn close(&self) {
-        if self
-            .closed
-            .compare_exchange(false, true, Ordering::SeqCst, Ordering::SeqCst)
-            .is_ok()
-        {
-            self.client_transport.cancel();
-            self.host.cancel_flag().cancel();
-            // Send graceful `0x32 CloseExternalProcess` (and fail any in-flight reader calls)
-            // before locking `session` so blocked reader evaluations unwind cleanly without
-            // force-killing external readers prematurely via `NativeHost::cancel()`.
-            self.host.external_readers().close_all();
-            if let Ok(mut guard) = self.session.lock()
-                && let Some(mut session) = guard.take()
-            {
-                session.close();
-            }
-            self.host.close();
-        }
+        self.finish_close();
     }
 }
 
@@ -295,6 +317,9 @@ fn build_http_config(
 
 fn build_project_dependencies(
     project: &ServerProject,
+    allowed_modules: &[String],
+    allowed_resources: &[String],
+    root_dir: Option<&str>,
 ) -> Result<ProjectDependenciesManager, CreateEvaluatorFailure> {
     let tree = project
         .to_declared_dependencies_tree()
@@ -313,17 +338,66 @@ fn build_project_dependencies(
 
     let mut mgr = ProjectDependenciesManager::new(tree, project_dir.clone());
     let deps_file = project_dir.join(PKL_PROJECT_DEPS_FILENAME);
-    if deps_file.is_file() {
-        let deps_uri = mgr.project_deps_file_uri();
-        let text = std::fs::read_to_string(&deps_file).map_err(|e| {
-            CreateEvaluatorFailure::Protocol(format!(
-                "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{e}"
-            ))
-        })?;
-        let parsed = ProjectDeps::parse(&text, &deps_uri)
-            .map_err(|e| CreateEvaluatorFailure::Protocol(format!("{e:?}")))?;
-        mgr.initialize_with_deps(parsed)
-            .map_err(|e| CreateEvaluatorFailure::Protocol(format!("{e:?}")))?;
+    let deps_uri = mgr.project_deps_file_uri();
+    let normalized_root = match root_dir {
+        Some(dir) => Some(
+            canonicalize_root_dir(std::path::Path::new(dir))
+                .map_err(|err| {
+                    CreateEvaluatorFailure::Protocol(format!(
+                        "Failed to normalize rootDir `{dir}`: {err}"
+                    ))
+                })?
+                .to_string_lossy()
+                .into_owned(),
+        ),
+        None => None,
+    };
+    let policy = SecurityPolicy::new(
+        Some(allowed_modules),
+        Some(allowed_resources),
+        normalized_root,
+    )
+    .map_err(CreateEvaluatorFailure::Protocol)?;
+    let fs = NativeFs::new(policy);
+
+    let deps_uri_pkl = PklString::from(deps_uri.as_str());
+    match fs.resolve_file_module(&deps_uri_pkl) {
+        Ok((_, real_path)) => {
+            if real_path.is_file() {
+                let bytes = fs.read_file_module_bytes(&real_path).map_err(|e| {
+                    CreateEvaluatorFailure::Protocol(format!(
+                        "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{e:?}"
+                    ))
+                })?;
+                let text = String::from_utf8(bytes).map_err(|e| {
+                    CreateEvaluatorFailure::Protocol(format!(
+                        "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{e}"
+                    ))
+                })?;
+                let parsed = ProjectDeps::parse(&text, &deps_uri)
+                    .map_err(|e| CreateEvaluatorFailure::Protocol(format!("{e:?}")))?;
+                mgr.initialize_with_deps(parsed)
+                    .map_err(|e| CreateEvaluatorFailure::Protocol(format!("{e:?}")))?;
+            }
+        }
+        Err(ModuleHostError::NotFound) => {
+            let _ = deps_file;
+        }
+        Err(ModuleHostError::SecurityManagerException { message }) => {
+            // Only reject if PklProject.deps.json would actually be read or is outside rootDir.
+            if root_dir.is_some() || deps_file.exists() {
+                return Err(CreateEvaluatorFailure::Protocol(
+                    message
+                        .map(|m| m.to_java_utf8())
+                        .unwrap_or_else(|| format!("Security manager denied `{deps_uri}`.")),
+                ));
+            }
+        }
+        Err(err) => {
+            return Err(CreateEvaluatorFailure::Protocol(format!(
+                "Encountered an error when attempting to load `PklProject.deps.json` at `{deps_uri}`.\n{err:?}"
+            )));
+        }
     }
     Ok(mgr)
 }

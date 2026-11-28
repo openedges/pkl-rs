@@ -7,7 +7,7 @@ use pkl_runtime::value::PklString;
 use std::path::Path;
 
 /// A Pkl module source passed to [`crate::Evaluator`], mirroring `org.pkl.core.ModuleSource`.
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct ModuleSource {
     uri: String,
     contents: Option<String>,
@@ -60,12 +60,11 @@ impl ModuleSource {
     /// Creates a module source backed by a `modulepath:` URI (ensuring leading `/`).
     pub fn module_path(path: impl AsRef<str>) -> Self {
         let p = path.as_ref();
-        let uri = if p.starts_with("modulepath:") {
-            p.to_string()
-        } else if p.starts_with('/') {
-            format!("modulepath:{p}")
+        let rest = p.strip_prefix("modulepath:").unwrap_or(p);
+        let uri = if rest.starts_with('/') {
+            format!("modulepath:{rest}")
         } else {
-            format!("modulepath:/{p}")
+            format!("modulepath:/{rest}")
         };
         Self {
             uri,

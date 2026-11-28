@@ -261,6 +261,11 @@ pub trait PackageCacheStore: Send + Sync {
         Ok(())
     }
 
+    /// Read raw cached `.zip` bytes if present (allows caller to verify checksum after parsing).
+    fn read_zip_bytes(&self, _package: &PackageUri) -> Result<Option<Vec<u8>>, ModuleHostError> {
+        Ok(None)
+    }
+
     /// Read and validate a cached `.zip` archive. Returns `Err` if the cached `.zip` exists
     /// but is corrupt/truncated/invalid, or `Ok(None)` on cache miss.
     fn read_zip_archive(
@@ -397,21 +402,24 @@ impl PackageCacheStore for InMemoryPackageCacheStore {
         Ok(())
     }
 
-    fn read_zip_archive(
-        &self,
-        package: &PackageUri,
-    ) -> Result<Option<ZipArchive>, ModuleHostError> {
+    fn read_zip_bytes(&self, package: &PackageUri) -> Result<Option<Vec<u8>>, ModuleHostError> {
         let Some(paths) = PackageCachePaths::for_package(package) else {
             return Ok(None);
         };
-        let bytes = self
+        Ok(self
             .inner
             .read()
             .unwrap_or_else(|e| e.into_inner())
             .zips
             .get(&paths.zip_file)
-            .cloned();
-        let Some(bytes) = bytes else {
+            .cloned())
+    }
+
+    fn read_zip_archive(
+        &self,
+        package: &PackageUri,
+    ) -> Result<Option<ZipArchive>, ModuleHostError> {
+        let Some(bytes) = self.read_zip_bytes(package)? else {
             return Ok(None);
         };
         let archive = ZipArchive::parse(&bytes).map_err(|err| {

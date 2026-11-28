@@ -1561,7 +1561,7 @@ def run_pantry_lanes(
 # ---------------------------------------------------------------------------
 
 DEFAULT_CANDIDATE_PACKAGE = "pkl-host-native"
-DEFAULT_CANDIDATE_BIN = "pkl_m4_cli"
+DEFAULT_CANDIDATE_EXAMPLE = "pkl_m4_cli"
 
 
 def snapshot_rust_sources(root: Path) -> dict[str, str]:
@@ -1581,6 +1581,7 @@ def snapshot_rust_sources(root: Path) -> dict[str, str]:
     roots = (
         "crates/pkl-runtime/src",
         "crates/pkl-host-native/src",
+        "crates/pkl-host-native/examples",
         "crates/pkl-host-native/assets",
     )
     for rel_dir in roots:
@@ -1628,9 +1629,15 @@ def build_bin(
     return built, record
 
 
-def build_example(root: Path, example_name: str, target_dir: Path, output: Path) -> tuple[Path, dict]:
+def build_example(
+    root: Path,
+    package: str,
+    example_name: str,
+    target_dir: Path,
+    output: Path,
+) -> tuple[Path, dict]:
     cmd = [
-        "cargo", "build", "-p", "pkl-runtime", "--locked", "--release",
+        "cargo", "build", "-p", package, "--locked", "--release",
         "--example", example_name, "--target-dir", str(target_dir),
     ]
     proc = subprocess.run(cmd, cwd=root, capture_output=True, timeout=600)
@@ -1638,14 +1645,15 @@ def build_example(root: Path, example_name: str, target_dir: Path, output: Path)
     (output / f"build-{example_name}.stderr.bin").write_bytes(proc.stderr)
     record = {
         "command": cmd,
-        "package": "pkl-runtime",
+        "package": package,
         "example": example_name,
         "exit_code": proc.returncode,
         "stdout_sha256": digest(proc.stdout),
         "stderr_sha256": digest(proc.stderr),
     }
     if proc.returncode != 0:
-        raise ValueError(f"failed building {example_name} (rc={proc.returncode})")
+        stderr_preview = proc.stderr.decode("utf-8", errors="replace")[-1200:]
+        raise ValueError(f"failed building {package}::{example_name} (rc={proc.returncode}): {stderr_preview}")
     built = target_dir / "release/examples" / example_name
     if not built.is_file():
         raise ValueError(f"built example missing: {built}")
@@ -1731,16 +1739,16 @@ def execute(
             frozen_candidate, candidate_binding = freeze_artifact(
                 artifacts, candidate.name, candidate.resolve(), "unbound-caller-supplied", None
             )
-        elif candidate_example is not None:
-            built, rec = build_example(root, candidate_example, tdir, output)
+        elif candidate_bin is not None:
+            built, rec = build_bin(root, candidate_package, candidate_bin, tdir, output)
             frozen_candidate, candidate_binding = freeze_artifact(
-                artifacts, candidate_example, built, "recorded-build", rec
+                artifacts, candidate_bin, built, "recorded-build", rec
             )
         else:
-            bin_name = candidate_bin or DEFAULT_CANDIDATE_BIN
-            built, rec = build_bin(root, candidate_package, bin_name, tdir, output)
+            example_name = candidate_example or DEFAULT_CANDIDATE_EXAMPLE
+            built, rec = build_example(root, candidate_package, example_name, tdir, output)
             frozen_candidate, candidate_binding = freeze_artifact(
-                artifacts, bin_name, built, "recorded-build", rec
+                artifacts, example_name, built, "recorded-build", rec
             )
 
     results: list[dict] = []
@@ -1984,9 +1992,9 @@ def main() -> int:
     parser.add_argument("--java-only", action="store_true", help="record pinned Java 0.32.0 oracle baseline only (never counts as pass)")
     parser.add_argument("--record-only", action="store_true", help="exit 0 after integrity verification even with mismatches")
     parser.add_argument("--candidate", type=Path, help="caller-supplied Rust CLI candidate binary (unbound)")
-    parser.add_argument("--candidate-bin", type=str, default=None, help=f"Cargo bin name to build as recorded-build candidate (default: {DEFAULT_CANDIDATE_BIN})")
-    parser.add_argument("--candidate-package", type=str, default=DEFAULT_CANDIDATE_PACKAGE, help=f"Cargo package for --candidate-bin (default: {DEFAULT_CANDIDATE_PACKAGE})")
-    parser.add_argument("--candidate-example", type=str, help="Cargo example name in pkl-runtime to build as recorded-build candidate")
+    parser.add_argument("--candidate-bin", type=str, default=None, help="Cargo bin name to build as recorded-build candidate")
+    parser.add_argument("--candidate-package", type=str, default=DEFAULT_CANDIDATE_PACKAGE, help=f"Cargo package for --candidate-example/--candidate-bin (default: {DEFAULT_CANDIDATE_PACKAGE})")
+    parser.add_argument("--candidate-example", type=str, default=None, help=f"Cargo example name to build as recorded-build candidate (default: {DEFAULT_CANDIDATE_EXAMPLE})")
     parser.add_argument("--cargo-target-dir", type=Path, help="Cargo target directory for recorded builds")
     args = parser.parse_args()
 

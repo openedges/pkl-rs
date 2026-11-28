@@ -199,6 +199,7 @@ impl Run {
     }
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_analysis(&mut self) -> Result<(), RuntimeError> {
         let argument = self
             .frames

@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 #[derive(Clone, Copy, Debug, Default)]
 pub struct Flags {
     pub case_insensitive: bool, // i / CASE_INSENSITIVE
@@ -11,10 +13,156 @@ pub struct Flags {
     pub literal: bool,          // LITERAL (no inline flag)
 }
 
+/// Precomputed AST metadata for a `Pattern` so matching/backtracking never
+/// re-walks nested AST subtrees on every quantifier iteration or lookbehind check.
+#[derive(Clone, Copy, Debug)]
+pub struct PatternMeta {
+    pub deterministic: bool,
+    pub min_length: usize,
+    pub max_length: Option<usize>,
+    pub java_max: i32,
+}
+
 /// A pattern is an alternation of branches.
 #[derive(Clone, Debug)]
 pub struct Pattern {
-    pub branches: Vec<Vec<Node>>,
+    pub branches: Arc<[Vec<Node>]>,
+    pub meta: PatternMeta,
+}
+
+impl Pattern {
+    pub fn new(branches: Arc<[Vec<Node>]>) -> Self {
+        let meta = compute_pattern_meta(&branches);
+        Self { branches, meta }
+    }
+}
+
+const JAVA_MAX_REPS: i32 = 0x7FFFFFFF;
+
+fn compute_pattern_meta(branches: &[Vec<Node>]) -> PatternMeta {
+    let deterministic = branches.len() == 1 && branches[0].iter().all(node_is_deterministic);
+    let min_length = branches
+        .iter()
+        .map(|b| {
+            b.iter()
+                .fold(0usize, |acc, n| acc.saturating_add(node_min_length(n)))
+        })
+        .min()
+        .unwrap_or(0);
+    let mut max_len: Option<usize> = Some(0);
+    for branch in branches {
+        let mut total: Option<usize> = Some(0);
+        for node in branch {
+            total = total.and_then(|t| node_max_length(node).and_then(|n| t.checked_add(n)));
+            if total.is_none() {
+                break;
+            }
+        }
+        match (max_len, total) {
+            (Some(cur), Some(t)) => max_len = Some(cur.max(t)),
+            _ => {
+                max_len = None;
+                break;
+            }
+        }
+    }
+    let mut jmax: Option<i32> = None;
+    for branch in branches {
+        let mut total: i32 = 0;
+        for node in branch {
+            total = total.wrapping_add(node_java_max(node));
+        }
+        jmax = Some(jmax.map_or(total, |m| m.max(total)));
+    }
+    PatternMeta {
+        deterministic,
+        min_length,
+        max_length: max_len,
+        java_max: jmax.unwrap_or(0),
+    }
+}
+
+fn node_is_deterministic(n: &Node) -> bool {
+    match n {
+        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
+            inner.meta.deterministic
+        }
+        Node::Lookahead { .. } | Node::Lookbehind { .. } => true,
+        Node::Quantified {
+            inner, min, max, ..
+        } => min == max && node_is_deterministic(inner),
+        Node::NfcCharClass(_) => false,
+        _ => true,
+    }
+}
+
+fn node_min_length(n: &Node) -> usize {
+    match n {
+        Node::Literal(_)
+        | Node::Dot
+        | Node::CharClass(_)
+        | Node::NfcCharClass(_)
+        | Node::LinebreakMatcher => 1,
+        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
+            inner.meta.min_length
+        }
+        Node::Quantified { inner, min, .. } => node_min_length(inner).saturating_mul(*min as usize),
+        _ => 0,
+    }
+}
+
+fn node_max_length(n: &Node) -> Option<usize> {
+    match n {
+        Node::Literal(_) | Node::Dot | Node::CharClass(_) | Node::NfcCharClass(_) => Some(1),
+        Node::LinebreakMatcher => Some(2),
+        Node::Anchor(_)
+        | Node::GraphemeBoundary
+        | Node::SetFlags(_)
+        | Node::Lookahead { .. }
+        | Node::Lookbehind { .. } => Some(0),
+        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
+            inner.meta.max_length
+        }
+        Node::Quantified { inner, max, .. } => {
+            if *max == 0 {
+                return Some(0);
+            }
+            let inner_max = node_max_length(inner)?;
+            if inner_max == 0 {
+                Some(0)
+            } else if *max == u32::MAX {
+                None
+            } else {
+                inner_max.checked_mul(*max as usize)
+            }
+        }
+        Node::Backreference(_) | Node::NamedBackreference(_) | Node::GraphemeCluster => None,
+        Node::PositionCheck(_) => Some(0),
+    }
+}
+
+fn node_java_max(n: &Node) -> i32 {
+    match n {
+        Node::Literal(_) | Node::Dot | Node::CharClass(_) => 1,
+        Node::LinebreakMatcher => 2,
+        Node::Group { inner, .. } | Node::FlagGroup { inner, .. } | Node::AtomicGroup { inner } => {
+            inner.meta.java_max
+        }
+        Node::Quantified { inner, max, .. } => {
+            if *max == 0 {
+                return 0;
+            }
+            let inner_max = node_java_max(inner);
+            if *max == 1 {
+                inner_max.max(0)
+            } else if *max == u32::MAX {
+                inner_max.wrapping_mul(JAVA_MAX_REPS)
+            } else {
+                inner_max.wrapping_mul(*max as i32)
+            }
+        }
+        _ => 0,
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -22,10 +170,10 @@ pub enum Node {
     Literal(u32),
     Dot,
     Anchor(AnchorKind),
-    CharClass(CharClass),
+    CharClass(Arc<CharClass>),
     /// OpenJDK `Pattern.NFCCharProperty`: matches a single code point or an
     /// NFC-composed grapheme prefix when `CANON_EQ` (`(?c)`) is active.
-    NfcCharClass(CharClass),
+    NfcCharClass(Arc<CharClass>),
     Quantified {
         inner: Box<Node>,
         min: u32,
@@ -63,31 +211,8 @@ pub enum Node {
     },
 
     // Engine-internal nodes (not produced by parser)
-    GroupEnd {
-        index: usize,
-        start: usize,
-    },
-    RestoreFlags(Flags), // engine-internal: restore flags after FlagGroup
     #[allow(dead_code)]
     PositionCheck(usize), // engine-internal: assert current pos == target
-    GreedyCont {
-        // engine-internal: continue greedy quantifier loop
-        atom: Box<Node>,
-        min: u32,
-        max: u32,
-        count: u32,
-        rest: Vec<Node>,
-        prev_pos: usize,
-    },
-    ReluctantCont {
-        // engine-internal: continue reluctant quantifier loop
-        atom: Box<Node>,
-        min: u32,
-        max: u32,
-        count: u32,
-        rest: Vec<Node>,
-        prev_pos: usize,
-    },
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -120,7 +245,11 @@ pub enum CharClassItem {
     Single(u32),
     Range(u32, u32),
     Predefined(PredefinedClass),
-    UnicodeProperty { name: String, negated: bool },
+    UnicodeProperty {
+        compiled: super::unicode::CompiledProperty,
+        negated: bool,
+        supplementary: bool,
+    },
     Nested(CharClass),
     Intersection(Vec<CharClassItem>, Vec<CharClassItem>),
 }
@@ -142,9 +271,14 @@ impl Clone for CharClassItem {
                     Self::Single(c) => values.push(Self::Single(*c)),
                     Self::Range(a, b) => values.push(Self::Range(*a, *b)),
                     Self::Predefined(class) => values.push(Self::Predefined(*class)),
-                    Self::UnicodeProperty { name, negated } => values.push(Self::UnicodeProperty {
-                        name: name.clone(),
+                    Self::UnicodeProperty {
+                        compiled,
+                        negated,
+                        supplementary,
+                    } => values.push(Self::UnicodeProperty {
+                        compiled: *compiled,
                         negated: *negated,
+                        supplementary: *supplementary,
                     }),
                     Self::Nested(class) => {
                         work.push(Work::Nested {

@@ -335,7 +335,7 @@ impl Vm {
         }
         let listing = self.heap.get(receiver)?.collection_kind == CollectionKind::Listing;
         let in_range = !listing
-            || matches!(&key, Value::Int(index) if index.get() >= 0 && (index.get() as usize) < self.heap.get(receiver)?.length);
+            || matches!(&key, Value::Int(index) if usize::try_from(index.get()).is_ok_and(|i| i < self.heap.get(receiver).map_or(0, |o| o.length)));
         let member = if in_range {
             collections::ordered_members(&self.heap, receiver)?
                 .into_iter()
@@ -516,6 +516,7 @@ impl Vm {
         )?;
         Ok(true)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn object_default(&mut self) -> Result<(), RuntimeError> {
         let receiver = self.conversion_receiver()?;
         let mut owner = Some(receiver);

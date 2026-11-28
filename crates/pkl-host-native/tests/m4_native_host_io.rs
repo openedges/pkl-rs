@@ -995,3 +995,151 @@ fn review_regressions_ca_errors_symlink_safe_modulepath_and_disk_package_cache()
         other => panic!("expected ZipException Io error, got: {other:?}"),
     }
 }
+
+#[test]
+fn round4_platform_metadata_windows_uri_and_custom_security_enforcement() {
+    use pkl_host_native::{
+        CustomSecurityChecker, NativeHostExtensions, detect_native_platform_metadata, is_uri_like,
+    };
+    use pkl_runtime::value::PklString;
+
+    // 1. P0-1: Native platform metadata reflects host OS & arch and never uses "Java native".
+    let meta = detect_native_platform_metadata();
+    assert_eq!(meta.java_version, "native");
+    assert!(!meta.os_name.is_empty());
+    assert!(!meta.cpu_architecture.is_empty());
+
+    let default_host = NativeHost::new(NativeHostConfig {
+        ca_certs: CaCertSource::bundled_only(),
+        ..Default::default()
+    })
+    .unwrap();
+    let (code, stdout, stderr) = eval_text(
+        &default_host,
+        "file:///round4_platform.pkl",
+        "import \"pkl:platform\"\nimport \"pkl:release\"\n\
+         output { text = \"\\(platform.current.operatingSystem.name)|\\(platform.current.processor.architecture)|\\(release.current.versionInfo)\" }\n",
+    );
+    assert_eq!(code, 0, "stderr: {stderr}");
+    assert!(
+        stdout.starts_with(&format!("{}|", meta.os_name)),
+        "expected host OS {}, got {stdout:?}",
+        meta.os_name
+    );
+    assert!(
+        !stdout.contains("Java native"),
+        "unexpected stdout: {stdout}"
+    );
+
+    // 2. P0-2: Windows drive paths are never misclassified as URI schemes.
+    assert!(!is_uri_like(r"C:\Users\dev\main.pkl"));
+    assert!(!is_uri_like("C:/Users/dev/main.pkl"));
+    assert!(!is_uri_like("d:\\config.pkl"));
+    assert!(is_uri_like("file:///tmp/main.pkl"));
+    assert!(is_uri_like("pkl:base"));
+    assert!(is_uri_like("https://example.com/a.pkl"));
+
+    // 3. P0-3 & P1-5: CustomSecurityChecker enforces env: glob, symlink canonicalization, and pkl:* stdlib.
+    let tmp = TempDir::new("round4_custom_sec");
+    let allowed_dir = tmp.path().join("allowed");
+    let secret_dir = tmp.path().join("secret");
+    fs::create_dir_all(&allowed_dir).unwrap();
+    fs::create_dir_all(&secret_dir).unwrap();
+    let allowed_canon = fs::canonicalize(&allowed_dir).unwrap();
+    let secret_file = secret_dir.join("secret.txt");
+    fs::write(&secret_file, "TOP_SECRET").unwrap();
+
+    struct StrictChecker {
+        allowed_prefix: String,
+    }
+    impl CustomSecurityChecker for StrictChecker {
+        fn check_resolve_module(&self, uri: &PklString) -> Result<(), PklString> {
+            let s = uri.to_java_utf8();
+            if s == "pkl:json" {
+                return Err("blocked pkl:json".into());
+            }
+            Ok(())
+        }
+        fn check_import_module(
+            &self,
+            _importing: &PklString,
+            _imported: &PklString,
+        ) -> Result<(), PklString> {
+            Ok(())
+        }
+        fn check_read_resource(&self, resource: &PklString) -> Result<(), PklString> {
+            let s = resource.to_java_utf8();
+            if s.starts_with("env:") {
+                return Err("blocked env".into());
+            }
+            if s.starts_with("file:") && !s.starts_with(&self.allowed_prefix) {
+                return Err(format!("blocked outside allowed dir: {s}").into());
+            }
+            Ok(())
+        }
+    }
+
+    let allowed_prefix = path_to_file_uri(&allowed_canon).to_java_utf8();
+    let make_custom_host = || {
+        let env_list = vec![("SECRET_TOKEN".to_string(), "supersecret".to_string())];
+        NativeHost::with_extensions(
+            NativeHostConfig {
+                environment: env_list,
+                ca_certs: CaCertSource::bundled_only(),
+                ..Default::default()
+            },
+            NativeHostExtensions {
+                custom_security: Some(Arc::new(StrictChecker {
+                    allowed_prefix: allowed_prefix.clone(),
+                })),
+                ..Default::default()
+            },
+        )
+        .unwrap()
+    };
+
+    // 3a. `read*("env:*")` must NOT bypass CustomSecurityChecker.
+    let (code, _, stderr) = eval_text(
+        &make_custom_host(),
+        "file:///round4_env_glob.pkl",
+        "x = read*(\"env:*\")\n",
+    );
+    assert_ne!(
+        code, 0,
+        "env:* glob must be rejected by CustomSecurityChecker"
+    );
+    assert!(stderr.contains("blocked env"), "stderr: {stderr}");
+
+    // 3b. `import "pkl:json"` must NOT bypass CustomSecurityChecker.
+    let (code, _, stderr) = eval_text(
+        &make_custom_host(),
+        "file:///round4_stdlib_deny.pkl",
+        "import \"pkl:json\"\nx = new json.Renderer {}\n",
+    );
+    assert_ne!(
+        code, 0,
+        "pkl:json import must be rejected by CustomSecurityChecker"
+    );
+    assert!(stderr.contains("blocked pkl:json"), "stderr: {stderr}");
+
+    // 3c. Symlink inside allowed dir pointing to secret file outside allowed dir must be blocked.
+    #[cfg(unix)]
+    {
+        let link = allowed_dir.join("escape.txt");
+        std::os::unix::fs::symlink(&secret_file, &link).unwrap();
+        let link_uri = path_to_file_uri(&allowed_canon.join("escape.txt")).to_java_utf8();
+        let (code, _, stderr) = eval_text(
+            &make_custom_host(),
+            "file:///round4_symlink_escape.pkl",
+            &format!("x = read(\"{link_uri}\").text\n"),
+        );
+        assert_ne!(
+            code, 0,
+            "symlink escaping allowed dir must be blocked by canonicalized CustomSecurityChecker check"
+        );
+        assert!(
+            stderr.contains("blocked outside allowed dir"),
+            "stderr: {stderr}"
+        );
+    }
+}

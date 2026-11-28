@@ -152,6 +152,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn remaining_api(
         &mut self,
         receiver: Value,

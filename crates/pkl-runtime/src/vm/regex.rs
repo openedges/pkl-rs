@@ -192,6 +192,7 @@ impl Vm {
         })))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn make_regex(&mut self) -> Result<(), RuntimeError> {
         let Value::String(pattern) = self.pop()? else {
             return Err(invalid("checked Regex pattern"));
@@ -206,6 +207,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn regex_operation(
         &mut self,
         receiver: Value,
@@ -259,6 +261,7 @@ impl Vm {
         }))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn regex_match_property(&mut self, property: Property) -> Result<(), RuntimeError> {
         let owner = self
             .frames

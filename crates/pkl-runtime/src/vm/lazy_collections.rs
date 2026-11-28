@@ -230,6 +230,7 @@ impl Vm {
             .as_mut()
             .unwrap()
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_lazy_collection(
         &mut self,
         operation: Operation,
@@ -284,6 +285,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn lazy_collection_next(&mut self, end: usize) -> Result<(), RuntimeError> {
         if self.resume_visitor_lookup()? {
             return Ok(());
@@ -425,6 +427,7 @@ impl Vm {
         self.lazy_collection_select(next, end)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn lazy_collection_accept(
         &mut self,
         next: usize,
@@ -500,6 +503,7 @@ impl Vm {
         self.jump(next)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn end_lazy_collection(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().unwrap();
         let run = frame

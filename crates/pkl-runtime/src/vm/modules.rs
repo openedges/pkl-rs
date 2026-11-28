@@ -883,6 +883,7 @@ impl Vm {
             source: None,
         }
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_primary(
         &mut self,
         source: Arc<crate::modules::ModuleSourceSpec>,
@@ -949,9 +950,11 @@ impl Vm {
             phase: SelectionPhase::Primary,
         })
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_query(&mut self, expression: SourceText) -> Result<(), RuntimeError> {
         self.begin_query_with_purpose(expression, ModulePurpose::Query)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_raw_query(&mut self, expression: SourceText) -> Result<(), RuntimeError> {
         self.begin_query_with_purpose(expression, ModulePurpose::RawQuery)
     }
@@ -1301,6 +1304,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_import(&mut self, spec: ImportSpec) -> Result<(), RuntimeError> {
         self.begin_import_node(spec, true)
     }
@@ -2041,6 +2045,7 @@ impl Vm {
             .receiver
             .ok_or_else(|| invalid("missing empty module"))?;
         let cached = run.cached;
+        self.last_warm_module = None;
         self.modules_original
             .insert(resolved.original_uri.clone(), CachedModule::Value(receiver));
         self.modules_resolved
@@ -2185,7 +2190,12 @@ impl Vm {
                 // The checker explicitly supplies it, with no child parser
                 // location; outer authored frames unwind on the existing path.
                 let metadata = &self.program.metadata[caller.block];
-                if let Some(span) = metadata.spans[caller.pc.saturating_sub(1)] {
+                if let Some(span) = metadata
+                    .spans
+                    .get(caller.pc.saturating_sub(1))
+                    .copied()
+                    .flatten()
+                {
                     error.frames.push(RuntimeFrame {
                         source: metadata.source.clone(),
                         span,
@@ -2429,6 +2439,7 @@ impl Vm {
         })
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_module(&mut self) -> Result<(), RuntimeError> {
         let run = self
             .frames

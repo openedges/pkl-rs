@@ -28,11 +28,6 @@ export const {
   format,
   decodePklBinary,
   monotonicClockMs,
-  roundtripValue,
-  roundtripInteger,
-  roundtripBytes,
-  roundtripString,
-  measureConversion,
 } = pkg;
 
 export default pkg;

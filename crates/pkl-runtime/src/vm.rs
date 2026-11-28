@@ -407,7 +407,7 @@ pub enum Instruction {
     },
     ResolveType(Box<TypeCheck>),
     /// Resolve the actual declaration and class arity before argument nodes.
-    /// Canonical Class<T> skips that argument region without resolving T.
+    /// Canonical `Class<T>` skips that argument region without resolving `T`.
     PrepareTypeArguments {
         recipe: usize,
         end: usize,
@@ -827,20 +827,11 @@ impl TypeCheck {
                     }
                     _ => false,
                 },
-                (
-                    Self::Constrained {
-                        base: a,
-                        constraints: ac,
-                        ..
-                    },
-                    Self::Constrained {
-                        base: b,
-                        constraints: bc,
-                        ..
-                    },
-                ) => {
-                    pending.push((a, b));
-                    ac.len() == bc.len() && ac.iter().zip(bc).all(|(a, b)| a.block == b.block)
+                (Self::Constrained { .. }, Self::Constrained { .. }) => {
+                    // Matches upstream `TypeNode$ConstrainedTypeNode.doIsEquivalentTo`:
+                    // constrained types are never considered equivalent because constraints
+                    // may capture type arguments or lexical bindings.
+                    false
                 }
                 (
                     Self::Unknown
@@ -902,14 +893,31 @@ impl TypeCheck {
         }
         enum Work<'a> {
             Check(&'a TypeCheck, &'a Value),
+            Finish((*const TypeCheck, *const Value)),
             Union(&'a [TypeCheck], &'a Value),
             Reference(&'a TypeCheck, &'a reference::Reference),
         }
         let mut pending = vec![Work::Check(self, value)];
+        let mut seen_checked: crate::heap::FastMap<(*const TypeCheck, *const Value), Option<bool>> =
+            crate::heap::FastMap::default();
         let mut accepted = false;
         while let Some(work) = pending.pop() {
             let (ty, value) = match work {
-                Work::Check(ty, value) => (ty.resolved(), value),
+                Work::Check(ty, value) => {
+                    let resolved = ty.resolved();
+                    let key = (resolved as *const TypeCheck, value as *const Value);
+                    if let Some(cached) = seen_checked.get(&key) {
+                        accepted = cached.unwrap_or(false);
+                        continue;
+                    }
+                    seen_checked.insert(key, None);
+                    pending.push(Work::Finish(key));
+                    (resolved, value)
+                }
+                Work::Finish(key) => {
+                    seen_checked.insert(key, Some(accepted));
+                    continue;
+                }
                 Work::Union(rest, value) => {
                     if !accepted && let Some((next, rest)) = rest.split_first() {
                         pending.push(Work::Union(rest, value));
@@ -1584,6 +1592,8 @@ struct Frame {
     uri_resolution: Option<Box<uri_resolution::Resolution>>,
     glob: Option<Box<glob::Run>>,
     module_receiver: Option<ObjectId>,
+    initializing_alias: Option<usize>,
+    benchmark_restore: Option<Box<platform::OutputBenchmarkRestore>>,
 }
 
 impl Frame {
@@ -1636,6 +1646,8 @@ impl Frame {
             uri_resolution: None,
             glob: None,
             module_receiver: None,
+            initializing_alias: None,
+            benchmark_restore: None,
         })
     }
 
@@ -1853,7 +1865,7 @@ pub(crate) enum WarmPublicOp<'a> {
     PklBinaryOutputValue,
     PklBinaryOutputBytes,
     Query {
-        expression: &'a crate::source::SourceText,
+        expression: &'a str,
         raw_value: bool,
         encode_pkl_binary: bool,
     },
@@ -2335,6 +2347,7 @@ pub struct Vm {
     last_gc_arenas: usize,
     gc_epoch: u64,
     session_root: Option<Value>,
+    pub(crate) schema_roots: Vec<Value>,
     uncached_module_uris: std::collections::VecDeque<(PklString, PklString)>,
     cached_module_uris: BTreeSet<PklString>,
     /// 1-entry MRU cache for warm persistent public operations (bypasses BTreeMap URI compares).
@@ -2441,6 +2454,7 @@ impl Vm {
             last_gc_arenas: 0,
             gc_epoch: 1,
             session_root: None,
+            schema_roots: Vec::new(),
             uncached_module_uris: std::collections::VecDeque::new(),
             cached_module_uris: BTreeSet::new(),
             last_warm_module: None,
@@ -2589,6 +2603,28 @@ impl Vm {
         self.cached_module_uris.contains(uri) && self.modules_original.get_ref(uri).is_some()
     }
 
+    pub(crate) fn try_start_warm_cached_public_op_str(
+        &mut self,
+        uri: &str,
+        op: WarmPublicOp<'_>,
+    ) -> Result<bool, RuntimeError> {
+        self.available()?;
+        if let Err(err) = &self.code_validation {
+            return Err(err.clone());
+        }
+        if let Some((last_uri, receiver)) = &self.last_warm_module
+            && last_uri.as_str() == Some(uri)
+        {
+            let receiver = *receiver;
+            return self.start_warm_cached_receiver(receiver, op);
+        }
+        if self.cached_module_uris.is_empty() {
+            return Ok(false);
+        }
+        let uri_pkl = PklString::from(uri);
+        self.try_start_warm_cached_public_op(&uri_pkl, op)
+    }
+
     pub(crate) fn try_start_warm_cached_public_op(
         &mut self,
         uri: &PklString,
@@ -2622,6 +2658,14 @@ impl Vm {
                 }
             }
         };
+        self.start_warm_cached_receiver(receiver, op)
+    }
+
+    fn start_warm_cached_receiver(
+        &mut self,
+        receiver: ObjectId,
+        op: WarmPublicOp<'_>,
+    ) -> Result<bool, RuntimeError> {
         match op {
             WarmPublicOp::OutputText
             | WarmPublicOp::OutputBytes
@@ -2654,12 +2698,11 @@ impl Vm {
                     return Ok(false);
                 };
                 let power_assertions = self.power_assertions;
-                let expr_orig = expression.original();
                 let Some((owner, entry)) = self.query_cache.iter().find_map(|cached| {
                     (cached.unit == unit
                         && cached.raw_value == raw_value
                         && cached.power_assertions == power_assertions
-                        && cached.expression == *expr_orig
+                        && cached.expression.as_str() == Some(expression)
                         && self.heap.executable_is_live(cached.owner))
                     .then_some((cached.owner, cached.entry))
                 }) else {
@@ -2697,6 +2740,7 @@ impl Vm {
 
     pub(crate) fn start_failed(&mut self, error: RuntimeError) -> Result<(), RuntimeError> {
         self.available()?;
+        self.public_primary = None;
         self.log_buffer.clear();
         self.stack.clear();
         self.inputs.clear();
@@ -3021,7 +3065,8 @@ impl Vm {
         // `executable_roots`, `local_kind`, `obj.cache`, or `method_call_caches`.
         let mut cur_exec_block: usize = usize::MAX;
         let mut cur_exec_root: Option<ExecutableOwnerId> = None;
-        let mut last_bind_ok: Option<(ExecutableOwnerId, usize, usize, identity::SlotKind)> = None;
+        let mut last_bind_ok: Option<(ExecutableOwnerId, usize, usize, identity::SlotKind, bool)> =
+            None;
         let mut method_cache: [(usize, usize, ObjectId, ObjectId); 2] = [(
             usize::MAX,
             usize::MAX,
@@ -3194,7 +3239,11 @@ impl Vm {
                             }
                             pc += 1;
                         }
-                        (Value::String(_), Value::String(_)) => {
+                        (Value::String(l), Value::String(r)) => {
+                            if l.len_bytes().saturating_add(r.len_bytes()) > MAX_STRING_CONCAT_BYTES
+                            {
+                                break;
+                            }
                             let Some(Value::String(r)) = stack.pop() else {
                                 unreachable!()
                             };
@@ -3458,9 +3507,9 @@ impl Vm {
                     if obj.parent.is_none() && obj.reference.is_none() {
                         if obj.collection_kind == CollectionKind::List
                             && let Value::Int(idx) = &stack[len - 1]
-                            && idx.get() >= 0
+                            && let Ok(index) = usize::try_from(idx.get())
                             && let Some(elems) = &obj.list_elements
-                            && let Some(val) = elems.get(idx.get() as usize)
+                            && let Some(val) = elems.get(index)
                         {
                             let cloned = val.clone();
                             stack.pop();
@@ -3732,10 +3781,15 @@ impl Vm {
                     if frame.method_call_site.is_some() {
                         break;
                     }
-                    let Some(&scope) = frame.environment.scopes.first() else {
-                        break;
+                    let recv_id = match &frame.environment.this_value {
+                        Some(Value::Object(id)) => *id,
+                        Some(_) => break,
+                        None => match frame.environment.scopes.first() {
+                            Some(scope) => scope.receiver,
+                            None => break,
+                        },
                     };
-                    let Ok(obj) = heap.get(scope.receiver) else {
+                    let Ok(obj) = heap.get(recv_id) else {
                         break;
                     };
                     if obj.collection_kind == CollectionKind::Dynamic
@@ -3759,624 +3813,27 @@ impl Vm {
                     if stack.len() <= base || frames.last().unwrap().method_call_site.is_some() {
                         break;
                     }
-                    if name == "toString"
-                        && active_type_trackers == 0
-                        && let Some(Value::Int(n)) = stack.last()
-                    {
-                        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
-                            (
-                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
-                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
-                                Some(Instruction::Call { arity: 0, .. }),
-                            ) => 4,
-                            (
-                                Some(Instruction::PrepareMethodCall { arity: 0, .. }),
-                                Some(Instruction::Call { arity: 0, .. }),
-                                _,
-                            ) => 3,
-                            (Some(Instruction::Call { arity: 0, .. }), _, _) => 2,
-                            _ => 0,
-                        };
-                        if skip > 0 && consumed + skip <= max_steps {
-                            let s = if let (
-                                Some(Instruction::Constant(Value::String(suffix))),
-                                Some(Instruction::Add),
-                            ) = (code.get(pc + skip), code.get(pc + skip + 1))
-                                && consumed + skip + 2 <= max_steps
-                                && let Some(sfx) = suffix.as_str()
-                                && sfx.is_ascii()
-                                && sfx.len() <= 16
-                            {
-                                let mut ibuf = [0u8; 24];
-                                let num_str = format_i64_buf(n.get(), &mut ibuf);
-                                let mut out = [0u8; 40];
-                                let nlen = num_str.len();
-                                let slen = sfx.len();
-                                out[..nlen].copy_from_slice(num_str.as_bytes());
-                                out[nlen..nlen + slen].copy_from_slice(sfx.as_bytes());
-                                let combined = PklString::from(
-                                    std::str::from_utf8(&out[..nlen + slen])
-                                        .expect("ASCII integer + suffix"),
-                                );
-                                let Some(Value::Int(_)) = stack.pop() else {
-                                    unreachable!()
-                                };
-                                stack.push_raw(Value::String(combined));
-                                pc += skip + 2;
-                                consumed += skip + 2;
-                                continue;
-                            } else {
-                                format_i64_pkl_string(n.get())
-                            };
-                            let Some(Value::Int(_)) = stack.pop() else {
-                                unreachable!()
-                            };
-                            stack.push_raw(Value::String(s));
-                            pc += skip;
-                            consumed += skip;
-                            continue;
-                        }
-                        break;
-                    }
-                    if active_type_trackers == 0
-                        && let Some(Value::String(text)) = stack.last()
-                    {
-                        if name == "toString" {
-                            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3))
-                            {
-                                (
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup,
-                                        arity: 0,
-                                        after_arguments: false,
-                                    }),
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup: l2,
-                                        arity: 0,
-                                        after_arguments: true,
-                                    }),
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                ) if *lookup == pc && *l2 == pc => 4,
-                                (
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup, arity: 0, ..
-                                    }),
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                    _,
-                                ) if *lookup == pc => 3,
-                                (
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                    _,
-                                    _,
-                                ) => 2,
-                                _ => 0,
-                            };
-                            if skip > 0 && consumed + skip <= max_steps {
-                                let frame = frames.last().unwrap();
-                                let exec_owner = if let Some(o) = frame.environment.executable_owner
-                                {
-                                    Some(o)
-                                } else {
-                                    if cur_exec_block != block {
-                                        cur_exec_block = block;
-                                        cur_exec_root = executable_roots.get(&block).copied();
-                                    }
-                                    cur_exec_root
-                                };
-                                if exec_owner.is_some_and(|owner| {
-                                    heap.existing_method_call_cache(owner, (block, pc))
-                                        .ok()
-                                        .flatten()
-                                        .is_some_and(|c| {
-                                            c.is_megamorphic()
-                                                || c.contains_builtin_class(
-                                                    classes::BuiltinClass::String,
-                                                )
-                                        })
-                                }) {
-                                    pc += skip;
-                                    consumed += skip;
-                                    continue;
-                                }
-                            }
-                        } else if matches!(
-                            name.as_str(),
-                            Some("startsWith" | "endsWith" | "contains")
-                        ) && consumed + 5 <= max_steps
-                            && let (
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup: l1,
-                                    arity: 0,
-                                    after_arguments: false,
-                                }),
-                                Some(arg_instr),
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup: l2,
-                                    arity: 1,
-                                    after_arguments: true,
-                                }),
-                                Some(Instruction::Call {
-                                    arity: 1,
-                                    method: true,
-                                }),
-                            ) = (
-                                code.get(pc + 1),
-                                code.get(pc + 2),
-                                code.get(pc + 3),
-                                code.get(pc + 4),
-                            )
-                            && *l1 == pc
-                            && *l2 == pc
-                        {
-                            let frame = frames.last().unwrap();
-                            let arg_str = match arg_instr {
-                                Instruction::Constant(Value::String(s)) => Some(s),
-                                Instruction::LoadLocal(depth) => depth
-                                    .checked_add(1)
-                                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
-                                    .and_then(|idx| match &frame.environment.locals[idx] {
-                                        Value::String(s) => Some(s),
-                                        _ => None,
-                                    }),
-                                _ => None,
-                            };
-                            if let Some(pat) = arg_str
-                                && let (Some(t), Some(p)) = (text.as_str(), pat.as_str())
-                            {
-                                let exec_owner = if let Some(o) = frame.environment.executable_owner
-                                {
-                                    Some(o)
-                                } else {
-                                    if cur_exec_block != block {
-                                        cur_exec_block = block;
-                                        cur_exec_root = executable_roots.get(&block).copied();
-                                    }
-                                    cur_exec_root
-                                };
-                                if exec_owner.is_some_and(|owner| {
-                                    heap.existing_method_call_cache(owner, (block, pc))
-                                        .ok()
-                                        .flatten()
-                                        .is_some_and(|c| {
-                                            c.is_megamorphic()
-                                                || c.contains_builtin_class(
-                                                    classes::BuiltinClass::String,
-                                                )
-                                        })
-                                }) {
-                                    let res = match name.as_str() {
-                                        Some("startsWith") => t.starts_with(p),
-                                        Some("endsWith") => t.ends_with(p),
-                                        _ => t.contains(p),
-                                    };
-                                    stack.pop();
-                                    stack.push_raw(Value::Bool(res));
-                                    pc += 5;
-                                    consumed += 5;
-                                    continue;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    let Some(&Value::Object(recv_id)) = stack.last() else {
+                    let Some(skip) = poll_fast_get_method(
+                        name,
+                        code,
+                        pc,
+                        block,
+                        consumed,
+                        max_steps,
+                        active_type_trackers,
+                        frames,
+                        stack,
+                        heap,
+                        program,
+                        executable_roots,
+                        &mut cur_exec_block,
+                        &mut cur_exec_root,
+                    ) else {
                         break;
                     };
-                    let Ok(obj) = heap.get(recv_id) else {
-                        break;
-                    };
-                    if obj.collection_kind == CollectionKind::Dynamic
-                        && obj.reference.is_none()
-                        && obj.pair.is_none()
-                        && obj.function.is_none()
-                        && obj.native_function.is_none()
-                        && (obj.class_definition.is_none() || obj.is_module)
-                        && obj.member_deprecations.is_empty()
-                    {
-                        let Some(val) = fast_lookup_cached(obj, None, name, true) else {
-                            break;
-                        };
-                        let cloned = val.clone();
-                        let Some(Value::Object(_)) = stack.pop() else {
-                            unreachable!()
-                        };
-                        stack.push_raw(cloned);
-                        pc += 1;
-                    } else if obj.collection_kind == CollectionKind::List
-                        && obj.parent.is_none()
-                        && obj.instance_class.is_none()
-                        && obj.pair.is_none()
-                        && obj.reference.is_none()
-                        && obj.foreign_map_entry.is_none()
-                        && matches!(name.as_str(), Some("map" | "fold" | "toList" | "contains"))
-                    {
-                        let frame = frames.last().unwrap();
-                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
-                            Some(o)
-                        } else {
-                            if cur_exec_block != block {
-                                cur_exec_block = block;
-                                cur_exec_root = executable_roots.get(&block).copied();
-                            }
-                            cur_exec_root
-                        };
-                        let cached_list = exec_owner.is_some_and(|owner| {
-                            heap.existing_method_call_cache(owner, (block, pc))
-                                .ok()
-                                .flatten()
-                                .is_some_and(|c| {
-                                    c.is_megamorphic()
-                                        || c.contains_builtin_class(classes::BuiltinClass::List)
-                                })
-                        });
-                        if !cached_list {
-                            break;
-                        }
-                        if name == "toList" && active_type_trackers == 0 {
-                            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3))
-                            {
-                                (
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup,
-                                        arity: 0,
-                                        after_arguments: false,
-                                    }),
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup: l2,
-                                        arity: 0,
-                                        after_arguments: true,
-                                    }),
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                ) if *lookup == pc && *l2 == pc => 4,
-                                (
-                                    Some(Instruction::PrepareMethodCall {
-                                        lookup, arity: 0, ..
-                                    }),
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                    _,
-                                ) if *lookup == pc => 3,
-                                (
-                                    Some(Instruction::Call {
-                                        arity: 0,
-                                        method: true,
-                                    }),
-                                    _,
-                                    _,
-                                ) => 2,
-                                _ => 0,
-                            };
-                            if skip > 0 && consumed + skip <= max_steps {
-                                pc += skip;
-                                consumed += skip;
-                                continue;
-                            }
-                            break;
-                        }
-                        if name == "contains"
-                            && active_type_trackers == 0
-                            && consumed + 5 <= max_steps
-                            && let Some(elems) = obj.list_elements.as_deref()
-                            && elems.len() <= 512
-                            && let (
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup: l1,
-                                    arity: 0,
-                                    after_arguments: false,
-                                }),
-                                Some(arg_instr),
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup: l2,
-                                    arity: 1,
-                                    after_arguments: true,
-                                }),
-                                Some(Instruction::Call {
-                                    arity: 1,
-                                    method: true,
-                                }),
-                            ) = (
-                                code.get(pc + 1),
-                                code.get(pc + 2),
-                                code.get(pc + 3),
-                                code.get(pc + 4),
-                            )
-                            && *l1 == pc
-                            && *l2 == pc
-                        {
-                            let arg_ref = match arg_instr {
-                                Instruction::Constant(v) => Some(v),
-                                Instruction::LoadLocal(depth) => depth
-                                    .checked_add(1)
-                                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
-                                    .map(|idx| &frame.environment.locals[idx]),
-                                _ => None,
-                            };
-                            if let Some(needle) = arg_ref
-                                && matches!(
-                                    needle,
-                                    Value::String(_) | Value::Int(_) | Value::Bool(_)
-                                )
-                                && elems.iter().all(|e| !matches!(e, Value::Object(_)))
-                            {
-                                let found =
-                                    elems.iter().any(|e| equality::same_key(heap, e, needle));
-                                stack.pop();
-                                stack.push_raw(Value::Bool(found));
-                                pc += 5;
-                                consumed += 5;
-                                continue;
-                            }
-                            break;
-                        }
-                        if name == "map" || name == "fold" {
-                            let (fn_block, arity) = if name == "map" {
-                                (program.collection_transform_blocks[0], 1)
-                            } else {
-                                (program.list_fold_block, 2)
-                            };
-                            let id = heap.allocate_function(
-                                Function {
-                                    block: fn_block,
-                                    arity,
-                                    method: true,
-                                    captured_this: Some(Value::Object(recv_id)),
-                                },
-                                None,
-                                Environment::default(),
-                            );
-                            let Some(Value::Object(_)) = stack.pop() else {
-                                unreachable!()
-                            };
-                            stack.push_raw(Value::Function(id));
-                            pc += 1;
-                        } else {
-                            break;
-                        }
-                    } else if obj.collection_kind == CollectionKind::Map
-                        && active_type_trackers == 0
-                        && obj.parent.is_none()
-                        && !obj.has_object_collection_key
-                        && obj.instance_class.is_none()
-                        && obj.pair.is_none()
-                        && obj.reference.is_none()
-                        && obj.foreign_map_entry.is_none()
-                        && matches!(name.as_str(), Some("getOrNull" | "containsKey"))
-                        && consumed + 5 <= max_steps
-                        && let (
-                            Some(Instruction::PrepareMethodCall {
-                                lookup: l1,
-                                arity: 0,
-                                after_arguments: false,
-                            }),
-                            Some(arg_instr),
-                            Some(Instruction::PrepareMethodCall {
-                                lookup: l2,
-                                arity: 1,
-                                after_arguments: true,
-                            }),
-                            Some(Instruction::Call {
-                                arity: 1,
-                                method: true,
-                            }),
-                        ) = (
-                            code.get(pc + 1),
-                            code.get(pc + 2),
-                            code.get(pc + 3),
-                            code.get(pc + 4),
-                        )
-                        && *l1 == pc
-                        && *l2 == pc
-                    {
-                        let frame = frames.last().unwrap();
-                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
-                            Some(o)
-                        } else {
-                            if cur_exec_block != block {
-                                cur_exec_block = block;
-                                cur_exec_root = executable_roots.get(&block).copied();
-                            }
-                            cur_exec_root
-                        };
-                        let arg_ref = match arg_instr {
-                            Instruction::Constant(v) => Some(v),
-                            Instruction::LoadLocal(depth) => depth
-                                .checked_add(1)
-                                .and_then(|off| frame.environment.locals.len().checked_sub(off))
-                                .map(|idx| &frame.environment.locals[idx]),
-                            _ => None,
-                        };
-                        if let Some(key_ref) = arg_ref
-                            && matches!(key_ref, Value::String(_) | Value::Int(_) | Value::Bool(_))
-                            && exec_owner.is_some_and(|owner| {
-                                heap.existing_method_call_cache(owner, (block, pc))
-                                    .ok()
-                                    .flatten()
-                                    .is_some_and(|c| {
-                                        c.is_megamorphic()
-                                            || c.contains_builtin_class(classes::BuiltinClass::Map)
-                                    })
-                            })
-                            && let Ok(hash) = equality::java_hash_on_heap(heap, key_ref)
-                        {
-                            let mut matched_slot = None;
-                            for slot in obj.map_index().candidates(hash) {
-                                if equality::same_key(
-                                    heap,
-                                    key_ref,
-                                    &obj.collection_members[slot].key,
-                                ) {
-                                    matched_slot = Some(slot);
-                                    break;
-                                }
-                            }
-                            let result = if name == "containsKey" {
-                                Some(Value::Bool(matched_slot.is_some()))
-                            } else if let Some(slot) = matched_slot {
-                                let member = &obj.collection_members[slot];
-                                if let Some(cs) = obj.cache_slots.get(slot)
-                                    && cs.key.entry
-                                    && cs.key.owner.is_none()
-                                    && !cs.key.method
-                                    && cs.key.name == member.name
-                                {
-                                    Some(cs.value.clone())
-                                } else {
-                                    let ck = CacheKey {
-                                        owner: None,
-                                        name: member.name.clone(),
-                                        method: false,
-                                        entry: true,
-                                    };
-                                    obj.cache_get_completed(&ck).cloned()
-                                }
-                            } else {
-                                Some(Value::Null)
-                            };
-                            if let Some(val) = result {
-                                stack.pop();
-                                stack.push_raw(val);
-                                pc += 5;
-                                consumed += 5;
-                                continue;
-                            }
-                        }
-                        break;
-                    } else if obj.collection_kind == CollectionKind::Listing
-                        && name == "toList"
-                        && active_type_trackers == 0
-                        && obj.collection_cast.is_none()
-                        && obj.reference.is_none()
-                        && obj.pair.is_none()
-                        && obj.class_definition.is_none()
-                        && !obj.is_module
-                        && obj.foreign_map_entry.is_none()
-                        && !obj.has_object_collection_key
-                        && !obj.collection_members.is_empty()
-                        && obj.collection_members.len() <= 512
-                        && obj.collection_members.len() == obj.members.len()
-                        && collections::is_single_level_leaf_collection(heap, obj)
-                    {
-                        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
-                            (
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup,
-                                    arity: 0,
-                                    after_arguments: false,
-                                }),
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup: l2,
-                                    arity: 0,
-                                    after_arguments: true,
-                                }),
-                                Some(Instruction::Call {
-                                    arity: 0,
-                                    method: true,
-                                }),
-                            ) if *lookup == pc && *l2 == pc => 4,
-                            (
-                                Some(Instruction::PrepareMethodCall {
-                                    lookup, arity: 0, ..
-                                }),
-                                Some(Instruction::Call {
-                                    arity: 0,
-                                    method: true,
-                                }),
-                                _,
-                            ) if *lookup == pc => 3,
-                            (
-                                Some(Instruction::Call {
-                                    arity: 0,
-                                    method: true,
-                                }),
-                                _,
-                                _,
-                            ) => 2,
-                            _ => 0,
-                        };
-                        let frame = frames.last().unwrap();
-                        let exec_owner = if let Some(o) = frame.environment.executable_owner {
-                            Some(o)
-                        } else {
-                            if cur_exec_block != block {
-                                cur_exec_block = block;
-                                cur_exec_root = executable_roots.get(&block).copied();
-                            }
-                            cur_exec_root
-                        };
-                        if skip > 0
-                            && consumed + skip <= max_steps
-                            && obj.cache_slots.len() >= obj.collection_members.len()
-                            && exec_owner.is_some_and(|owner| {
-                                heap.existing_method_call_cache(owner, (block, pc))
-                                    .ok()
-                                    .flatten()
-                                    .is_some_and(|c| {
-                                        c.is_megamorphic()
-                                            || c.contains_builtin_class(
-                                                classes::BuiltinClass::Listing,
-                                            )
-                                    })
-                            })
-                        {
-                            let mut values = Vec::with_capacity(obj.collection_members.len());
-                            let mut approx_bytes = obj
-                                .collection_members
-                                .len()
-                                .saturating_mul(std::mem::size_of::<Value>());
-                            let mut ok = true;
-                            for idx in 0..obj.collection_members.len() {
-                                let cm = &obj.collection_members[idx];
-                                let m = &obj.members[idx];
-                                let slot = &obj.cache_slots[idx];
-                                if cm.kind == crate::heap::CollectionMemberKind::Element
-                                    && !m.local
-                                    && !m.method
-                                    && !m.hidden()
-                                    && !m.external()
-                                    && !m.definition()
-                                    && slot.key.entry
-                                    && slot.key.owner.is_none()
-                                    && !slot.key.method
-                                    && slot.key.name == cm.name
-                                {
-                                    if let Value::String(s) = &slot.value {
-                                        approx_bytes = approx_bytes
-                                            .saturating_add(s.as_str().map_or(16, str::len));
-                                    }
-                                    values.push(slot.value.clone());
-                                } else {
-                                    ok = false;
-                                    break;
-                                }
-                            }
-                            if ok {
-                                heap.note_external_allocation(approx_bytes);
-                                let list_id = heap.allocate_strict_list(values);
-                                stack.pop();
-                                stack.push_raw(Value::Object(list_id));
-                                pc += skip;
-                                consumed += skip;
-                                continue;
-                            }
-                        }
-                        break;
-                    } else {
-                        break;
-                    }
+                    pc += skip;
+                    consumed += skip;
+                    continue;
                 }
                 Instruction::MakeFunction {
                     block: fn_block,
@@ -4548,7 +4005,9 @@ impl Vm {
                     };
                     let site = (block, pc);
                     // Ultra-fast repeat hit for hot loop/lambda Int bindings.
-                    if let Some((co, cb, cp, identity::SlotKind::Long)) = last_bind_ok
+                    // Only valid when `ty` unconditionally accepts every `i64` (never
+                    // range-checked aliases like `Int8`/`UInt8`, constrained types, unions, etc.).
+                    if let Some((co, cb, cp, identity::SlotKind::Long, true)) = last_bind_ok
                         && co == owner
                         && cb == block
                         && cp == pc
@@ -4614,7 +4073,7 @@ impl Vm {
                                 Value::Bool(_) => identity::SlotKind::Boolean,
                                 _ => identity::SlotKind::Object,
                             };
-                            if let Some((co, cb, cp, ck)) = last_bind_ok
+                            if let Some((co, cb, cp, ck, _)) = last_bind_ok
                                 && co == owner
                                 && cb == block
                                 && cp == pc
@@ -4632,12 +4091,14 @@ impl Vm {
                             }
                         }
                     };
-                    if last_bind_ok != Some((owner, block, pc, kind)) {
+                    let unconditional_int =
+                        kind == identity::SlotKind::Long && fast_int::is_int_accepting_type(ty);
+                    if last_bind_ok != Some((owner, block, pc, kind, unconditional_int)) {
                         if !matches!(heap.local_kind(owner, site), Ok(Some(existing)) if existing == kind)
                         {
                             break;
                         }
-                        last_bind_ok = Some((owner, block, pc, kind));
+                        last_bind_ok = Some((owner, block, pc, kind, unconditional_int));
                     }
                     let stored = match (kind, stack.last().unwrap()) {
                         (identity::SlotKind::Long, Value::Int(v)) => {
@@ -4736,229 +4197,24 @@ impl Vm {
                     arity,
                     after_arguments,
                 } => {
-                    if stack.len() <= *arity {
+                    if !poll_fast_prepare_method_call(
+                        *lookup,
+                        *arity,
+                        *after_arguments,
+                        code,
+                        block,
+                        frames,
+                        stack,
+                        heap,
+                        executable_roots,
+                        &mut cur_exec_block,
+                        &mut cur_exec_root,
+                        &mut prep_method_cache,
+                        &mut prep_method_next,
+                    ) {
                         break;
                     }
-                    let Some(Value::Function(function_id)) = stack.get(stack.len() - arity - 1)
-                    else {
-                        break;
-                    };
-                    let Ok(obj) = heap.get(*function_id) else {
-                        break;
-                    };
-                    let has_method = obj.function.as_ref().is_none_or(|f| f.method);
-                    if !has_method {
-                        pc += 1;
-                        consumed += 1;
-                        continue;
-                    }
-                    let has_receiver = obj.native_function.is_some()
-                        || obj
-                            .function
-                            .as_ref()
-                            .is_some_and(|f| f.captured_this.is_some())
-                        || obj.environment.this_value.is_some();
-                    if !has_receiver {
-                        pc += 1;
-                        consumed += 1;
-                        continue;
-                    }
-                    match code.get(*lookup) {
-                        Some(Instruction::GetMethodProperty {
-                            owner_depth, local, ..
-                        }) => {
-                            let Some(&scope) =
-                                frames.last().unwrap().environment.scopes.get(*owner_depth)
-                            else {
-                                break;
-                            };
-                            let Ok(owner_obj) = heap.get(scope.owner) else {
-                                break;
-                            };
-                            let Some(class) = owner_obj.class_definition.as_ref() else {
-                                pc += 1;
-                                consumed += 1;
-                                continue;
-                            };
-                            let direct = *local || !(class.open || class.abstract_);
-                            if !direct {
-                                break;
-                            }
-                            if !*after_arguments {
-                                pc += 1;
-                                consumed += 1;
-                                continue;
-                            }
-                            if let Some((decl_owner, decl_code)) = obj.method_declaration
-                                && heap
-                                    .get(decl_owner)
-                                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
-                            {
-                                break;
-                            }
-                            pc += 1;
-                        }
-                        Some(Instruction::GetMethod(_) | Instruction::GetImplicitMethod(_)) => {
-                            // Virtual calls have `(direct, lexical) == (false, false)`:
-                            // `after_arguments == true` is an unconditional no-op.
-                            if *after_arguments {
-                                pc += 1;
-                                consumed += 1;
-                                continue;
-                            }
-                            let frame = frames.last().unwrap();
-                            if frame.method_call_site.is_some() {
-                                break;
-                            }
-                            if let Some((decl_owner, decl_code)) = obj.method_declaration
-                                && heap
-                                    .get(decl_owner)
-                                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
-                            {
-                                break;
-                            }
-                            let recv_val = obj
-                                .native_function
-                                .as_ref()
-                                .map(|n| &n.receiver)
-                                .or_else(|| {
-                                    obj.function.as_ref().and_then(|f| f.captured_this.as_ref())
-                                })
-                                .or(obj.environment.this_value.as_ref());
-                            let Some(recv_val) = recv_val else {
-                                break;
-                            };
-                            let exec_owner = if let Some(o) = frame.environment.executable_owner {
-                                Some(o)
-                            } else {
-                                if cur_exec_block != block {
-                                    cur_exec_block = block;
-                                    cur_exec_root = executable_roots.get(&block).copied();
-                                }
-                                cur_exec_root
-                            };
-                            let Some(owner) = exec_owner else {
-                                break;
-                            };
-                            match recv_val {
-                                Value::Object(recv_id) => {
-                                    let Ok(recv_obj) = heap.get(*recv_id) else {
-                                        break;
-                                    };
-                                    if let Some(recv_cls) = recv_obj.instance_class {
-                                        let key = Some((owner, block, *lookup, recv_cls));
-                                        if prep_method_cache[0] == key
-                                            || prep_method_cache[1] == key
-                                            || prep_method_cache[2] == key
-                                            || prep_method_cache[3] == key
-                                        {
-                                            pc += 1;
-                                            consumed += 1;
-                                            continue;
-                                        }
-                                        if heap
-                                            .existing_method_call_cache(owner, (block, *lookup))
-                                            .ok()
-                                            .flatten()
-                                            .is_some_and(|c| {
-                                                c.is_megamorphic()
-                                                    || c.contains_declared_class(recv_cls)
-                                            })
-                                        {
-                                            prep_method_cache[prep_method_next] = key;
-                                            prep_method_next = (prep_method_next + 1) & 3;
-                                            pc += 1;
-                                        } else {
-                                            break;
-                                        }
-                                    } else if recv_obj.class_definition.is_none()
-                                        && !recv_obj.is_module
-                                        && recv_obj.pair.is_none()
-                                        && recv_obj.reference.is_none()
-                                        && recv_obj.foreign_map_entry.is_none()
-                                    {
-                                        let builtin_cls = match recv_obj.collection_kind {
-                                            CollectionKind::List if recv_obj.parent.is_none() => {
-                                                Some(classes::BuiltinClass::List)
-                                            }
-                                            CollectionKind::Map if recv_obj.parent.is_none() => {
-                                                Some(classes::BuiltinClass::Map)
-                                            }
-                                            CollectionKind::Set if recv_obj.parent.is_none() => {
-                                                Some(classes::BuiltinClass::Set)
-                                            }
-                                            CollectionKind::Mapping
-                                            | CollectionKind::Listing
-                                            | CollectionKind::Dynamic
-                                                if recv_obj.parent.is_none_or(|p| {
-                                                    heap.get_fast(p).is_some_and(|pobj| {
-                                                        matches!(
-                                                            pobj.builtin_type.as_deref(),
-                                                            Some(TypeCheck::Collection(_))
-                                                        )
-                                                    })
-                                                }) =>
-                                            {
-                                                Some(match recv_obj.collection_kind {
-                                                    CollectionKind::Mapping => {
-                                                        classes::BuiltinClass::Mapping
-                                                    }
-                                                    CollectionKind::Listing => {
-                                                        classes::BuiltinClass::Listing
-                                                    }
-                                                    _ => classes::BuiltinClass::Dynamic,
-                                                })
-                                            }
-                                            _ => None,
-                                        };
-                                        if let Some(builtin_cls) = builtin_cls
-                                            && heap
-                                                .existing_method_call_cache(owner, (block, *lookup))
-                                                .ok()
-                                                .flatten()
-                                                .is_some_and(|c| {
-                                                    c.is_megamorphic()
-                                                        || c.contains_builtin_class(builtin_cls)
-                                                })
-                                        {
-                                            pc += 1;
-                                        } else {
-                                            break;
-                                        }
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                Value::String(_)
-                                | Value::Int(_)
-                                | Value::Float(_)
-                                | Value::Bool(_) => {
-                                    let builtin_cls = match recv_val {
-                                        Value::String(_) => classes::BuiltinClass::String,
-                                        Value::Int(_) => classes::BuiltinClass::Int,
-                                        Value::Float(_) => classes::BuiltinClass::Float,
-                                        Value::Bool(_) => classes::BuiltinClass::Boolean,
-                                        _ => unreachable!(),
-                                    };
-                                    if heap
-                                        .existing_method_call_cache(owner, (block, *lookup))
-                                        .ok()
-                                        .flatten()
-                                        .is_some_and(|c| {
-                                            c.is_megamorphic()
-                                                || c.contains_builtin_class(builtin_cls)
-                                        })
-                                    {
-                                        pc += 1;
-                                    } else {
-                                        break;
-                                    }
-                                }
-                                _ => break,
-                            }
-                        }
-                        _ => break,
-                    }
+                    pc += 1;
                 }
                 Instruction::CollectionTransformNext { end } => {
                     if *end >= code.len() {
@@ -5004,52 +4260,75 @@ impl Vm {
                         let cb_fn_id = frames
                             .last()
                             .and_then(|f| f.int_seq_run.as_ref())
-                            .and_then(|r| r.callback_function_id());
-                        if let Some(fn_id) = cb_fn_id
-                            && let Ok(cb_obj) = heap.get(fn_id)
-                            && cb_obj.native_function.is_none()
-                            && cb_obj.amendment.is_none()
-                            && let Some(func) = cb_obj.function.as_ref()
-                        {
-                            let cb_block = func.block;
-                            let cb_arity = func.arity;
-                            if let Some(fast_block) = fast_int_cache.get_or_compile(
-                                cb_block,
-                                program.builtin_block_range.end,
-                                || {
-                                    program
-                                        .blocks
-                                        .get(cb_block)
-                                        .and_then(|c| fast_int::FastIntBlock::compile(c, cb_arity))
-                                        .map(Box::new)
-                                },
-                            ) && fast_int::verify_fast_int_invocation(
-                                fast_block,
-                                cb_block,
-                                fn_id,
-                                cb_obj,
-                                heap,
-                                executable_roots,
-                                fast_int_captured,
-                            ) {
-                                let frame = frames.last_mut().unwrap();
-                                let builder = frame.builders.last().copied();
-                                let run = frame.int_seq_run.as_mut().unwrap();
-                                let budget = max_steps.saturating_sub(consumed);
-                                if let Some(steps) = run.try_fast_int_bulk(
-                                    heap,
-                                    builder,
-                                    fast_block,
-                                    fast_int_captured,
-                                    budget,
-                                    fast_int_vals,
-                                    fast_int_locals,
-                                    fast_int_calls,
+                            .and_then(|r| r.fast_int_callback());
+                        if let Some(fn_id) = cb_fn_id {
+                            let mut compiled_fast = false;
+                            if let Ok(cb_obj) = heap.get(fn_id)
+                                && cb_obj.native_function.is_none()
+                                && cb_obj.amendment.is_none()
+                                && let Some(func) = cb_obj.function.as_ref()
+                            {
+                                let cb_block = func.block;
+                                let cb_arity = func.arity;
+                                if let Some(fast_block) = fast_int_cache.get_or_compile(
+                                    cb_block,
+                                    program.builtin_block_range.end,
+                                    || {
+                                        program
+                                            .blocks
+                                            .get(cb_block)
+                                            .and_then(|c| {
+                                                fast_int::FastIntBlock::compile(c, cb_arity)
+                                            })
+                                            .map(Box::new)
+                                    },
                                 ) {
-                                    consumed = consumed.saturating_add(steps);
-                                    pc = *end;
-                                    continue;
+                                    compiled_fast = true;
+                                    if fast_int::verify_fast_int_invocation(
+                                        fast_block,
+                                        cb_block,
+                                        fn_id,
+                                        cb_obj,
+                                        heap,
+                                        executable_roots,
+                                        fast_int_captured,
+                                    ) {
+                                        let frame = frames.last_mut().unwrap();
+                                        let builder = frame.builders.last().copied();
+                                        let run = frame.int_seq_run.as_mut().unwrap();
+                                        let budget = max_steps.saturating_sub(consumed);
+                                        match run.try_fast_int_bulk(
+                                            heap,
+                                            builder,
+                                            fast_block,
+                                            fast_int_captured,
+                                            budget,
+                                            fast_int_vals,
+                                            fast_int_locals,
+                                            fast_int_calls,
+                                        ) {
+                                            Ok(steps) => {
+                                                consumed = consumed.saturating_add(steps);
+                                                pc = *end;
+                                                continue;
+                                            }
+                                            Err(steps) => {
+                                                consumed = consumed.saturating_add(steps);
+                                                run.mark_fast_int_done();
+                                            }
+                                        }
+                                    } else if let Some(run) =
+                                        frames.last_mut().and_then(|f| f.int_seq_run.as_mut())
+                                    {
+                                        run.note_fast_int_unverified();
+                                    }
                                 }
+                            }
+                            if !compiled_fast
+                                && let Some(run) =
+                                    frames.last_mut().and_then(|f| f.int_seq_run.as_mut())
+                            {
+                                run.mark_fast_int_done();
                             }
                         }
                     }
@@ -5149,24 +4428,34 @@ impl Vm {
                             }
                         }
                         let budget = max_steps.saturating_sub(consumed);
-                        if let Some((res, steps)) = fast_block.execute(
-                            fast_int_captured,
-                            &int_args[..*arity],
-                            budget,
-                            fast_int_vals,
-                            fast_int_locals,
-                            fast_int_calls,
-                        ) {
-                            stack.truncate(fn_idx);
-                            let out = if fast_block.returns_int {
-                                Value::Int(crate::value_identity::Number::from(res).boxed())
-                            } else {
-                                Value::Bool(res != 0)
-                            };
-                            stack.push_raw(out);
-                            pc += 1;
-                            consumed = consumed.saturating_add(steps.max(1));
-                            continue;
+                        if budget >= 2 {
+                            match fast_block.execute(
+                                fast_int_captured,
+                                &int_args[..*arity],
+                                budget,
+                                fast_int_vals,
+                                fast_int_locals,
+                                fast_int_calls,
+                            ) {
+                                Ok((res, steps)) => {
+                                    stack.truncate(fn_idx);
+                                    let out = if fast_block.returns_int {
+                                        Value::Int(crate::value_identity::Number::from(res).boxed())
+                                    } else {
+                                        Value::Bool(res != 0)
+                                    };
+                                    stack.push_raw(out);
+                                    pc += 1;
+                                    consumed = consumed.saturating_add(steps.max(1));
+                                    continue;
+                                }
+                                Err(steps) => {
+                                    // Bill aborted speculative steps, then fall through to the
+                                    // regular bytecode Call so `pc` always makes forward progress
+                                    // before the loop yields at `consumed >= max_steps`.
+                                    consumed = consumed.saturating_add(steps);
+                                }
+                            }
                         }
                     }
                     let target_code = if target_block == block {
@@ -5658,7 +4947,7 @@ impl Vm {
 
     /// Cancellation terminates the active computation; a later start has fresh stack state.
     pub fn cancel(&mut self) {
-        if matches!(self.state, State::Running | State::Waiting(_)) {
+        if matches!(self.state, State::Running | State::Waiting(_)) || !self.suspended.is_empty() {
             loop {
                 self.fail(RuntimeError::new(
                     ErrorKind::Cancelled,
@@ -5670,6 +4959,12 @@ impl Vm {
                 self.restore_context();
             }
         }
+        self.schema_roots.clear();
+        self.fact_tracker = None;
+        self.active_type_trackers = 0;
+        self.public_primary = None;
+        self.log_buffer.clear();
+        self.callback_closing = false;
     }
 
     pub fn close(&mut self) {
@@ -5707,6 +5002,7 @@ impl Vm {
         self.fact_tracker = None;
         self.active_type_trackers = 0;
         self.session_root = None;
+        self.schema_roots.clear();
         self.uncached_module_uris.clear();
         self.cached_module_uris.clear();
         self.last_warm_module = None;
@@ -5855,9 +5151,11 @@ impl Vm {
     /// Safepoint collection includes suspended frames and externally pinned results.
     pub fn collect(&mut self, external_roots: &[Value]) -> HeapStats {
         self.gc_epoch = self.gc_epoch.wrapping_add(1);
+        self.last_warm_module = None;
         let mut roots = Vec::with_capacity(external_roots.len() + 64);
         roots.extend_from_slice(external_roots);
         roots.extend(self.session_root.iter().cloned());
+        roots.extend(self.schema_roots.iter().cloned());
         roots.extend(self.resources.values().filter_map(Clone::clone));
         roots.extend(self.public_primary.map(Value::Object));
         roots.extend(
@@ -6668,6 +5966,10 @@ impl Vm {
                 }
             }
         }
+        let is_abort_unwind = matches!(
+            error.kind,
+            ErrorKind::Cancelled | ErrorKind::Timeout | ErrorKind::Closed
+        );
         let mut failed_uncached = Vec::new();
         for frame in &self.frames[cleanup_start..] {
             if let Some(receiver) = frame.module_receiver
@@ -6684,53 +5986,113 @@ impl Vm {
                 && unit.entry == frame.block
                 && let Some(identity) = &unit.identity
             {
-                if error.module_failure_id.is_none() {
-                    error.module_failure_id = Some(modules::next_failure_id());
-                    error.cached_module_frames = catch_boundary.is_none();
-                }
-                if let Some(key) = unit.singleton_cache_key() {
-                    self.modules_stdlib
-                        .insert(key.into(), modules::CachedModule::Failed(error.clone()));
+                if is_abort_unwind {
+                    if let Some(key) = unit.singleton_cache_key() {
+                        self.modules_stdlib.remove(PklString::from(key));
+                    } else {
+                        self.modules_original.remove(&identity.original_uri);
+                        self.modules_resolved.remove(&identity.resolved_uri);
+                        self.cached_module_uris.remove(&identity.original_uri);
+                        self.cached_module_uris.remove(&identity.resolved_uri);
+                        self.uncached_module_uris.retain(|(orig, res)| {
+                            orig != &identity.original_uri && res != &identity.resolved_uri
+                        });
+                        self.last_warm_module = None;
+                    }
                 } else {
-                    self.modules_original.insert(
-                        identity.original_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
-                    self.last_warm_module = None;
-                    self.modules_resolved.insert(
-                        identity.resolved_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
+                    if error.module_failure_id.is_none() {
+                        error.module_failure_id = Some(modules::next_failure_id());
+                        error.cached_module_frames = catch_boundary.is_none();
+                    }
+                    if let Some(key) = unit.singleton_cache_key() {
+                        self.modules_stdlib
+                            .insert(key.into(), modules::CachedModule::Failed(error.clone()));
+                    } else {
+                        self.modules_original.insert(
+                            identity.original_uri.clone(),
+                            modules::CachedModule::Failed(error.clone()),
+                        );
+                        self.last_warm_module = None;
+                        self.modules_resolved.insert(
+                            identity.resolved_uri.clone(),
+                            modules::CachedModule::Failed(error.clone()),
+                        );
+                    }
                 }
             }
             if let Some(run) = &frame.module_load
                 && run.initializing
                 && let Some(resolved) = &run.resolved
             {
-                if error.module_failure_id.is_none() {
-                    error.module_failure_id = Some(modules::next_failure_id());
-                    error.cached_module_frames = catch_boundary.is_none();
-                }
-                if run.is_singleton() {
-                    self.modules_stdlib.insert(
-                        resolved.original_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
+                if is_abort_unwind {
+                    if run.is_singleton() {
+                        self.modules_stdlib.remove(&resolved.original_uri);
+                    } else {
+                        self.modules_original.remove(&resolved.original_uri);
+                        self.modules_resolved.remove(&resolved.resolved_uri);
+                        self.cached_module_uris.remove(&resolved.original_uri);
+                        self.cached_module_uris.remove(&resolved.resolved_uri);
+                        self.uncached_module_uris.retain(|(orig, res)| {
+                            orig != &resolved.original_uri && res != &resolved.resolved_uri
+                        });
+                        self.last_warm_module = None;
+                    }
                 } else {
-                    self.modules_original.insert(
-                        resolved.original_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
-                    self.last_warm_module = None;
-                    self.modules_resolved.insert(
-                        resolved.resolved_uri.clone(),
-                        modules::CachedModule::Failed(error.clone()),
-                    );
-                    if !run.cached {
-                        failed_uncached
-                            .push((resolved.original_uri.clone(), resolved.resolved_uri.clone()));
+                    if error.module_failure_id.is_none() {
+                        error.module_failure_id = Some(modules::next_failure_id());
+                        error.cached_module_frames = catch_boundary.is_none();
+                    }
+                    if run.is_singleton() {
+                        self.modules_stdlib.insert(
+                            resolved.original_uri.clone(),
+                            modules::CachedModule::Failed(error.clone()),
+                        );
+                    } else {
+                        self.modules_original.insert(
+                            resolved.original_uri.clone(),
+                            modules::CachedModule::Failed(error.clone()),
+                        );
+                        self.last_warm_module = None;
+                        self.modules_resolved.insert(
+                            resolved.resolved_uri.clone(),
+                            modules::CachedModule::Failed(error.clone()),
+                        );
+                        if !run.cached {
+                            failed_uncached.push((
+                                resolved.original_uri.clone(),
+                                resolved.resolved_uri.clone(),
+                            ));
+                        }
                     }
                 }
+            }
+        }
+        let mut pending_benchmark_restores = Vec::new();
+        let mut aborted_aliases = Vec::new();
+        for frame in &mut self.frames[cleanup_start..] {
+            if let Some(restore) = frame.benchmark_restore.take() {
+                pending_benchmark_restores.push(restore);
+            }
+            if is_abort_unwind && let Some(decl) = frame.initializing_alias.take() {
+                aborted_aliases.push(decl);
+            }
+        }
+        for restore in pending_benchmark_restores.into_iter().rev() {
+            self.apply_output_benchmark_restore(*restore);
+        }
+        if is_abort_unwind {
+            let before_aliases = self.alias_singletons.len();
+            for decl in aborted_aliases {
+                self.alias_singletons.remove(&decl);
+            }
+            let heap = &self.heap;
+            self.alias_singletons.retain(|_, alias_id| {
+                heap.get(*alias_id)
+                    .ok()
+                    .is_some_and(|obj| obj.type_alias_initialized || !obj.annotations.is_empty())
+            });
+            if self.alias_singletons.len() != before_aliases {
+                self.declaration_roots_dirty = true;
             }
         }
         for (orig, res) in failed_uncached {
@@ -7033,7 +6395,7 @@ impl Vm {
             && let Some(elems) = &self.heap.get(receiver)?.list_elements
         {
             let idx = if let Some(Value::Int(index)) = &entry_probe {
-                (index.get() >= 0).then_some(index.get() as usize)
+                usize::try_from(index.get()).ok()
             } else if let Some(name_str) = name.as_str()
                 && let Some(rest) = name_str.strip_prefix('\0')
                 && let Some((_, idx_str)) = rest.split_once(':')
@@ -9997,7 +9359,6 @@ impl Vm {
     /// Keep the large general dispatch frame out of collection and continuation
     /// calls; their independent bounded stacks are exercised at 256 KiB.
     fn step_instruction(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
-        let frame = self.frames.last_mut().expect("active frame");
         match instruction {
             Instruction::ValidateTypeArguments { .. }
             | Instruction::BuiltinClass(_)
@@ -10013,227 +9374,8 @@ impl Vm {
             | Instruction::CheckType(_) => {
                 unreachable!("type instruction uses its bounded dispatcher")
             }
-            Instruction::ImportModule(spec) => self.begin_import(*spec)?,
-            Instruction::ImportGlob(spec) => {
-                let authored = spec
-                    .import
-                    .as_ref()
-                    .ok_or_else(|| invalid("glob import spec"))?
-                    .authored
-                    .clone();
-                self.begin_glob(*spec, authored)?;
-            }
-            Instruction::GlobMember => self.load_glob_member()?,
-            Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
-            Instruction::LoadPrimary(source) => self.begin_primary(source)?,
-            Instruction::EvaluateQuery(expression) => self.begin_query(*expression)?,
-            Instruction::EvaluateRawQuery(expression) => self.begin_raw_query(*expression)?,
-            Instruction::InitializeModuleParent => self.initialize_module_parent()?,
-            Instruction::CheckModuleOutput => self.check_module_output()?,
-            Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
             Instruction::ReadModuleVersion | Instruction::CheckModuleVersion => {
                 unreachable!("module version instruction uses its bounded dispatcher")
-            }
-            Instruction::MatchModuleVersion => {
-                let Value::String(value) = self.pop()? else {
-                    return Err(invalid("checked version string"));
-                };
-                let valid = annotations::matches_module_version(&value);
-                self.stack.push(Value::Bool(valid));
-            }
-            Instruction::EncodeUtf8 => {
-                let Value::String(value) = self.pop()? else {
-                    return Err(invalid("UTF-8 encoding operand"));
-                };
-                self.stack
-                    .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
-            }
-            Instruction::EncodePklBinary => {
-                self.begin_pkl_binary_encode_value()?;
-            }
-            Instruction::ResourceProperty(property) => self.resource_property(property)?,
-            Instruction::ResolveEvaluatorSettingsPath => self.resolve_evaluator_settings_path()?,
-            Instruction::PlatformCurrent => self.platform_current()?,
-            Instruction::ReleaseCurrent => self.release_current()?,
-            Instruction::BenchmarkRun => self.benchmark_run()?,
-            Instruction::AnalyzeImportGraph => self.begin_analysis()?,
-            Instruction::OutputRenderer => self.output_renderer()?,
-            Instruction::RenderPcf { document } => {
-                self.begin_render(document, rendering::Format::Pcf)?
-            }
-            Instruction::RenderPklBinary { document } => {
-                self.begin_pkl_binary_render(document)?;
-            }
-            Instruction::RenderProtobuf { document } => self.begin_protobuf_render(document)?,
-            Instruction::ProtobufRenderType => self.protobuf_render_type()?,
-            Instruction::RenderXml { document } => {
-                self.begin_xml_render(document)?;
-            }
-            Instruction::RenderJsonnet { document } => {
-                self.begin_jsonnet_render(document)?;
-            }
-            Instruction::RenderJson { document } => {
-                self.begin_render(document, rendering::Format::Json)?
-            }
-            Instruction::RenderPlist { document } => {
-                self.begin_render(document, rendering::Format::Plist)?;
-            }
-            Instruction::RenderYaml { document } => {
-                self.begin_render(document, rendering::Format::Yaml)?;
-            }
-            Instruction::RenderProperties { document } => {
-                self.begin_render(document, rendering::Format::Properties)?
-            }
-            Instruction::PublishModuleMember { code } => {
-                let owner = self
-                    .stack
-                    .last()
-                    .ok_or_else(|| invalid("missing module"))?
-                    .as_object()?;
-                let unit = self
-                    .heap
-                    .get(owner)?
-                    .module_unit
-                    .ok_or_else(|| invalid("missing module unit"))?;
-                let template = self.program.units[unit.0 as usize].template;
-                let member = self.program.objects[template]
-                    .iter()
-                    .find(|m| m.code == code)
-                    .ok_or_else(|| invalid("missing module declaration"))?
-                    .clone();
-                if self.program.units[unit.0 as usize].mode == modules::ModuleMode::Extends
-                    && let Some(parent) = self.heap.get(owner)?.parent
-                {
-                    self.validate_class_override(parent, &member)?;
-                }
-                let object = self.heap.get_mut(owner)?;
-                if object.published_module_members.insert(code) {
-                    object.members.push(member);
-                }
-            }
-            Instruction::FinishModule => {
-                let owner = self
-                    .stack
-                    .last()
-                    .ok_or_else(|| invalid("missing module"))?
-                    .as_object()?;
-                let object = self.heap.get_mut(owner)?;
-                object.module_initializing = false;
-                object.class_initializing = false;
-            }
-            Instruction::CheckAnnotationClass => {
-                let Some(Value::Class(id)) = self.stack.last().cloned() else {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "Expected an annotation class.",
-                    ));
-                };
-                let expected = self.canonical_builtin_class(classes::BuiltinClass::Ordinary(
-                    annotations::ANNOTATION_ID,
-                ));
-                let valid = self.heap.is_subclass(id, expected);
-                if !valid {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "Expected an annotation class.",
-                    ));
-                }
-            }
-            Instruction::AppendAnnotation => self.append_annotation()?,
-            Instruction::BeginMemberAnnotations => {
-                let id = self.heap.allocate(Object::default());
-                self.stack.push(Value::Object(id));
-            }
-            Instruction::InitializeDeprecation => self.initialize_deprecation()?,
-            Instruction::StoreDeprecation => self.store_deprecation()?,
-            Instruction::PrepareMethodCall {
-                lookup,
-                arity,
-                after_arguments,
-            } => {
-                self.prepare_method_call(lookup, arity, after_arguments)?;
-            }
-            Instruction::PublishMemberAnnotations { code } => {
-                self.publish_member_annotations(code)?
-            }
-            Instruction::PublishAnnotatedClassMember { template, index } => {
-                let annotations = self.pop()?.as_object()?;
-                let owner = self.heap.declaration_object(
-                    self.stack
-                        .last()
-                        .ok_or_else(|| invalid("missing annotation owner"))?,
-                )?;
-                let member = self
-                    .program
-                    .objects
-                    .get(template)
-                    .and_then(|members| members.get(index))
-                    .ok_or_else(|| invalid("missing annotated class member"))?
-                    .clone();
-                if let Some(parent) = self.heap.get(owner)?.parent {
-                    self.validate_class_override(parent, &member)?;
-                }
-                self.publish_annotations(owner, annotations, member.code)?;
-                self.heap.get_mut(owner)?.members.push(member);
-            }
-            Instruction::BeginTypeAlias {
-                declaration,
-                name,
-                end,
-            } => {
-                if let Some(id) = self.alias_singletons.get(&declaration).copied() {
-                    self.stack.push(Value::TypeAlias(id));
-                    self.frames.last_mut().expect("active frame").pc = end;
-                } else {
-                    let environment = self
-                        .frames
-                        .last()
-                        .expect("active frame")
-                        .environment
-                        .clone();
-                    let name = self.current_module_name().concat(&name);
-                    let id = self.heap.allocate(Object {
-                        type_alias: Some(name),
-                        type_alias_declaration: Some(declaration),
-                        declaration_code: self.frames.last().map(|frame| frame.block),
-                        environment,
-                        ..Object::default()
-                    });
-                    self.alias_singletons.insert(declaration, id);
-                    self.declaration_roots_dirty = true;
-                    self.stack.push(Value::TypeAlias(id));
-                }
-            }
-            Instruction::FinishTypeAlias => {
-                let Some(Value::TypeAlias(id)) = self.stack.last().cloned() else {
-                    return Err(invalid("missing alias initialization target"));
-                };
-                self.heap.get_mut(id)?.type_alias_initialized = true;
-            }
-            Instruction::CheckTypeAliasInitialized => {
-                let Value::TypeAlias(id) = self.pop()? else {
-                    return Err(invalid("missing alias type"));
-                };
-                if !self.heap.get(id)?.type_alias_initialized {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Cycle,
-                        "Type alias definitions must not be cyclic.",
-                    ));
-                }
-            }
-
-            Instruction::BuiltinTypeAlias(name) => {
-                let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
-                    self.heap.allocate(Object {
-                        type_alias: Some(name),
-                        type_alias_initialized: true,
-                        ..Object::default()
-                    })
-                });
-                self.stack.push(Value::TypeAlias(id));
-            }
-            Instruction::GuestCatch { or_null } => {
-                self.begin_guest_catch(or_null)?;
             }
             Instruction::LoadBaseModule
             | Instruction::LoadRefModule
@@ -10243,29 +9385,26 @@ impl Vm {
             | Instruction::LoadPklBinaryModule => {
                 unreachable!("bundled module preparation is dispatched before this frame")
             }
-
-            Instruction::ReferenceRenderMethod => {
-                let id = self.pop()?.as_object()?;
-                let domain = self
-                    .heap
-                    .get(id)?
-                    .reference
-                    .as_ref()
-                    .ok_or_else(|| invalid("reference render receiver"))?
-                    .domain
-                    .as_object()?;
-                self.retire_saturated_method_cache(
-                    &Value::Object(domain),
-                    &"renderReference".into(),
-                )?;
-                self.force(
-                    domain,
-                    domain,
-                    PklString::from("renderReference"),
-                    false,
-                    true,
-                    true,
-                )?;
+            Instruction::GetMember(_)
+            | Instruction::GetMethod(_)
+            | Instruction::GetImplicitCustomProperty(_)
+            | Instruction::GetImplicitCustomMethod(_)
+            | Instruction::GetConstMember(_)
+            | Instruction::GetConstMethod(_)
+            | Instruction::GetAmbiguousProperty { .. }
+            | Instruction::GetProperty { .. }
+            | Instruction::GetMethodProperty { .. }
+            | Instruction::GetImplicitProperty(_)
+            | Instruction::GetImplicitMethod(_)
+            | Instruction::InferPropertyParent
+            | Instruction::GetSuperMember(_)
+            | Instruction::GetSuperMethod(_)
+            | Instruction::GetConstSuperMember(_)
+            | Instruction::GetConstSuperMethod(_) => {
+                unreachable!("member access instruction uses its bounded dispatcher")
+            }
+            Instruction::Return => {
+                unreachable!("Return instruction uses its bounded dispatcher")
             }
             Instruction::Swap
             | Instruction::BeginCollection { .. }
@@ -10330,7 +9469,7 @@ impl Vm {
                 locals[index] = value;
             }
             Instruction::LoadLocal(depth) => {
-                let locals = &frame.environment.locals;
+                let locals = &self.frames.last().expect("active frame").environment.locals;
                 let offset = depth
                     .checked_add(1)
                     .ok_or_else(|| invalid("invalid lexical binding"))?;
@@ -10345,6 +9484,7 @@ impl Vm {
                 self.bind_local(None, identity::SlotPolicy::Adaptive, value)?;
             }
             Instruction::PopLocal => {
+                let frame = self.frames.last_mut().expect("active frame");
                 frame
                     .environment
                     .copy_locals
@@ -10362,7 +9502,10 @@ impl Vm {
                 self.stack.push(receiver);
             }
             Instruction::LoadCustomThis => {
-                let slot = frame
+                let slot = self
+                    .frames
+                    .last()
+                    .expect("active frame")
                     .environment
                     .custom_this
                     .ok_or_else(|| invalid("missing custom receiver slot"))?;
@@ -10373,6 +9516,7 @@ impl Vm {
                 );
             }
             Instruction::LoadOuter => {
+                let frame = self.frames.last().expect("active frame");
                 if let Some(value) = frame.environment.outer_value.clone() {
                     self.stack.push(value);
                     return Ok(());
@@ -10387,7 +9531,10 @@ impl Vm {
                 self.stack.push(Value::Object(scope.receiver));
             }
             Instruction::LoadModule => {
-                let scope = frame
+                let scope = self
+                    .frames
+                    .last()
+                    .expect("active frame")
                     .environment
                     .scopes
                     .last()
@@ -10420,786 +9567,66 @@ impl Vm {
                 }
                 self.stack.push(value);
             }
-            Instruction::Trace { operand_span } => {
-                self.begin_trace(operand_span)?;
+            Instruction::PrepareMethodCall {
+                lookup,
+                arity,
+                after_arguments,
+            } => {
+                self.prepare_method_call(lookup, arity, after_arguments)?;
             }
-            Instruction::Throw => {
-                let value = self.pop()?;
-                let Value::String(message) = value else {
-                    return Err(type_error(
-                        &TypeCheck::String,
-                        &value,
-                        &self.program.module_name,
-                        &self.heap,
-                    )?);
-                };
-                let mut error = RuntimeError::new(ErrorKind::Type, message.clone());
-                error.java_exception_message =
-                    Some(("org.pkl.core.runtime.VmEvalException", message));
-                return Err(error);
-            }
-            Instruction::StringRepeat => self.repeat_string()?,
-            Instruction::CollectionJoin => self.begin_collection_join()?,
             Instruction::ObjectLookup(operation) => self.object_lookup(operation)?,
-            Instruction::ModuleRelativePathTo => self.module_relative_path_to()?,
-            Instruction::ObjectDefault => self.object_default()?,
-            Instruction::EmptyDynamic => {
-                let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
-                self.stack.push(Value::Object(empty));
-            }
-            Instruction::ObjectDefaultProperty => {
-                let receiver = self.conversion_receiver()?;
-                if !self.object_default_member(receiver)? {
-                    return Err(invalid("object default receiver"));
-                }
-            }
-            Instruction::BeginConversion(operation) => self.begin_conversion(operation)?,
-            Instruction::ConversionNext { end } => self.conversion_next(end)?,
-            Instruction::ConversionValue => self.conversion_value()?,
-            Instruction::ConversionPair => self.conversion_pair()?,
-            Instruction::AppendConvertedMember => self.append_converted_member()?,
-            Instruction::EndConversion => self.end_conversion()?,
-            Instruction::ConvertObject(operation) => self.convert_object(operation)?,
-            Instruction::ReadConversionProperty => self.read_conversion_property()?,
-            Instruction::BeginLazyCollection(operation) => self.begin_lazy_collection(operation)?,
-            Instruction::LazyCollectionNext { end } => self.lazy_collection_next(end)?,
-            Instruction::LazyCollectionAccept { next, end } => {
-                self.lazy_collection_accept(next, end)?
-            }
-            Instruction::EndLazyCollection => self.end_lazy_collection()?,
-            Instruction::BeginCollectionEvery => self.begin_collection_every()?,
-            Instruction::CollectionEveryAccept { next } => self.collection_every_accept(next)?,
-            Instruction::EndCollectionEvery => self.end_collection_every()?,
-            Instruction::BeginCollectionTransform(operation) => {
-                self.begin_collection_transform(operation)?
-            }
-            Instruction::BeginCollectionProjection(operation) => {
-                self.begin_collection_projection(operation)?
-            }
-            Instruction::CollectionKeyOrder => self.collection_key_order()?,
-            Instruction::CollectionTransformNext { end } => self.collection_transform_next(end)?,
-            Instruction::CollectionTransformProject { next } => {
-                self.collection_transform_project(next)?
-            }
-            Instruction::CollectionFlatMapNext { end } => self.collection_flat_map_next(end)?,
-            Instruction::AppendStrictElement => self.append_strict_element()?,
-            Instruction::EndCollectionTransform => self.end_collection_transform()?,
-            Instruction::CollectionDistinctStep { next, end } => {
-                self.collection_distinct_step(next, end)?
-            }
-            Instruction::CollectionContainsStep { matched } => {
-                self.collection_contains_step(matched)?
-            }
-            Instruction::StringEncode => self.encode_string()?,
             Instruction::Primitive(operation) => self.primitive(operation)?,
-            Instruction::CheckObjectParameters { target } => {
-                self.check_object_parameters(target)?
-            }
-            Instruction::PrepareFunctionAmendment { body, arity } => {
-                self.prepare_function_amendment(body, arity)?
-            }
-            Instruction::BeginFunctionAmendment { end, function } => {
-                self.begin_function_amendment(end, function)?
-            }
-            Instruction::EndFunctionAmendment => {}
-            Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
-            Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
-            Instruction::CheckMixinArgument => self.check_mixin_argument()?,
-            Instruction::RegexConstructor => {
-                let value = self.regex_constructor()?;
-                self.stack.push(value);
-            }
-            Instruction::MakeRegex => self.make_regex()?,
-            Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
-            Instruction::ReflectCall(operation) => self.begin_reflection(operation)?,
-            Instruction::JsonParse => self.begin_json_parse()?,
-            Instruction::YamlParse { all } => self.begin_yaml_parse(all)?,
-            Instruction::MirrorProperty(name) => self.begin_mirror_property(name)?,
-            Instruction::IntSeqConstructor => {
-                let value = self.int_seq_constructor();
-                self.stack.push(value);
-            }
-            Instruction::MakeIntSeq => self.make_int_seq()?,
-            Instruction::CheckIntSeqStep => self.check_int_seq_step()?,
-            Instruction::BeginIntSeq(operation) => self.begin_int_seq(operation)?,
-            Instruction::IntSeqNext { end } => self.int_seq_next(end)?,
-            Instruction::IntSeqAccept => self.int_seq_accept()?,
-            Instruction::EndIntSeq => self.end_int_seq()?,
-            Instruction::PairConstructor => {
-                let value = self.pair_constructor();
-                self.stack.push(value);
-            }
-            Instruction::NullConstructor => {
-                let value = self.null_constructor();
-                self.stack.push(value);
-            }
-            Instruction::CheckNullDefault => self.check_null_default()?,
-            Instruction::MakePair => {
-                let second = self.pop()?;
-                let first = self.pop()?;
-                let value = self.make_pair(first, second);
-                self.stack.push(value);
-            }
-            Instruction::JavaValueString => {
-                let value = self.pop()?;
-                self.java_value_string(value)?;
-            }
             Instruction::CheckInterpolate
                 if matches!(self.stack.last(), Some(Value::String(_) | Value::Int(_))) => {}
             Instruction::FinishInterpolation(count) => {
                 finish_interpolation_on_stack(&mut self.stack, count, &mut self.scratch_utf8)?;
             }
             Instruction::CheckInterpolate | Instruction::ToString => {
-                let value = self.pop()?;
-                if let Value::Object(id) = value
-                    && self.heap.get(id)?.reference.is_some()
-                {
-                    self.render_reference(id)?;
-                } else if self.is_set(&value) || self.is_list(&value) {
-                    let text = crate::diagnostic_values::render_multiline(
-                        &value,
-                        &self.heap,
-                        &self.program.module_name,
-                    )?;
-                    self.stack.push(Value::string(text));
-                } else if matches!(
-                    value,
-                    Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
-                ) || self.is_map(&value)
-                {
-                    let text = crate::diagnostic_values::render_string(
-                        &value,
-                        &self.heap,
-                        &self.program.module_name,
-                        usize::MAX,
-                    )?;
-                    self.stack.push(Value::string(text));
-                } else if let Value::Object(id) = value {
-                    if collections::is_typed_class(&self.heap, id)? || self.heap.get(id)?.is_module
-                    {
-                        // Pkl interpolation virtually invokes Typed.toString; user
-                        // overrides can avoid forcing the receiver altogether.
-                        let site = self.current_method_call_site()?;
-                        let code_owner = self
-                            .frames
-                            .last()
-                            .expect("ToString frame")
-                            .environment
-                            .code_owner;
-                        let function = self.heap.allocate(Object {
-                            function: Some(Function {
-                                block: self.program.typed_string_block,
-                                arity: 0,
-                                method: true,
-                                captured_this: None,
-                            }),
-                            environment: Environment {
-                                locals: vec![Value::Object(id)],
-                                code_owner,
-                                ..Environment::default()
-                            },
-                            ..Object::default()
-                        });
-                        self.invoke_function(function, Vec::new(), true)?;
-                        self.frames
-                            .last_mut()
-                            .expect("implicit ToString call")
-                            .method_call_site = Some(Box::new(site));
-                    } else {
-                        self.begin_object_string(Value::Object(id))?;
-                    }
-                } else {
-                    self.stack.push(Value::string(scalar_string(&value)?));
-                }
+                self.step_to_string()?;
             }
-
             Instruction::JumpIfNull(target) => {
                 if self.pop()?.is_null() {
                     self.jump(target)?;
                 }
             }
-            Instruction::RequireConstProperty {
-                name,
-                owner_depth,
-                local,
-                method,
-            } => {
-                let scope = self.scope(owner_depth)?;
-                if local && !method {
-                    let owner = self.current_executable()?;
-                    let frame = self.frames.last().expect("active frame");
-                    // The following GetProperty is the read node's execution site.
-                    let site = (frame.block, frame.pc);
-                    if self.heap.resolved_local(owner, site)?.is_none() {
-                        let member = self
-                            .heap
-                            .get(scope.owner)?
-                            .members
-                            .iter()
-                            .find(|member| {
-                                member.name == name
-                                    && member.local
-                                    && !member.method
-                                    && !member.entry
-                            })
-                            .cloned();
-                        if let Some(member) = member {
-                            // Java publishes ObjectMember before its const check can fail.
-                            self.heap.publish_local(owner, site, member)?;
-                            self.require_const(scope.owner, &name, true, false)?;
-                        }
-                    }
-                } else {
-                    self.require_const(
-                        if local { scope.owner } else { scope.receiver },
-                        &name,
-                        local,
-                        method,
-                    )?;
+            Instruction::JumpIfNotNull(target) => {
+                if !self.pop()?.is_null() {
+                    self.jump(target)?;
                 }
             }
-            Instruction::GetMember(_)
-            | Instruction::GetMethod(_)
-            | Instruction::GetImplicitCustomProperty(_)
-            | Instruction::GetImplicitCustomMethod(_)
-            | Instruction::GetConstMember(_)
-            | Instruction::GetConstMethod(_)
-            | Instruction::GetAmbiguousProperty { .. }
-            | Instruction::GetProperty { .. }
-            | Instruction::GetMethodProperty { .. }
-            | Instruction::GetImplicitProperty(_)
-            | Instruction::GetImplicitMethod(_)
-            | Instruction::InferPropertyParent
-            | Instruction::GetSuperMember(_)
-            | Instruction::GetSuperMethod(_)
-            | Instruction::GetConstSuperMember(_)
-            | Instruction::GetConstSuperMethod(_) => {
-                unreachable!("member access instruction uses its bounded dispatcher")
+            Instruction::Jump(target) => {
+                self.jump(target)?;
             }
-
-            Instruction::Fail(error) => return Err(*error),
-
-            Instruction::Undefined(name) => {
-                return Err(RuntimeError::new(
-                    ErrorKind::MissingMember,
-                    PklString::from("Tried to read property `")
-                        .concat(&name)
-                        .concat(&"` but its value is undefined.".into()),
-                )
-                .undefined());
-            }
-            Instruction::AbstractMember { name, method } => {
-                let kind = if method { "method" } else { "property" };
-                return Err(RuntimeError::new(
-                    ErrorKind::Type,
-                    PklString::from(format!("Cannot invoke abstract {kind} `"))
-                        .concat(self.current_module_name())
-                        .concat(&name)
-                        .concat(&"`.".into()),
-                ));
-            }
-            Instruction::Unsupported(message) => {
-                return Err(RuntimeError::new(ErrorKind::Unsupported, message));
-            }
-            Instruction::BeginClass {
-                template,
-                class,
-                end,
-            } => {
-                if let Some(id) = self.class_singletons.get(&template).copied() {
-                    self.stack.push(Value::Class(id));
-                    self.frames.last_mut().expect("active frame").pc = end;
-                } else {
-                    let environment = self
-                        .frames
-                        .last()
-                        .expect("active frame")
-                        .environment
-                        .clone();
-                    let declaration_code = self.frames.last().map(|frame| frame.block);
-                    // Primary Programs can acquire their source after bytecode
-                    // compilation. Resolve the missing URI from this class's
-                    // declaring block, never from the renderer or its caller.
-                    let origin_uri = class.origin_uri.clone().or_else(|| {
-                        let metadata =
-                            declaration_code.and_then(|code| self.program.metadata.get(code))?;
-                        metadata
-                            .unit
-                            .and_then(|unit| self.program.units.get(unit.0 as usize))
-                            .and_then(|unit| {
-                                unit.identity
-                                    .as_ref()
-                                    .map(|identity| identity.original_uri.clone())
-                                    .or_else(|| {
-                                        unit.source.as_ref().map(|source| source.uri.clone())
-                                    })
-                            })
-                            .or_else(|| metadata.source.as_ref().map(|source| source.uri.clone()))
-                    });
-                    let mut class = class;
-                    class.origin_uri = origin_uri;
-                    class.module = class
-                        .module
-                        .or_else(|| Some(self.current_module_name().into()));
-                    let id = self.heap.allocate(Object {
-                        class_definition: Some(class),
-                        class_initializing: true,
-                        declaration_code,
-                        environment,
-                        ..Object::default()
-                    });
-                    let class = self.heap.allocate_class(id);
-                    self.class_singletons.insert(template, class);
-                    self.declaration_roots_dirty = true;
-                    self.stack.push(Value::Class(class));
+            Instruction::JumpIfFalse(target) => match self.pop()? {
+                Value::Bool(false) => self.jump(target)?,
+                Value::Bool(true) => {}
+                value => {
+                    return Err(type_error(
+                        &TypeCheck::Boolean,
+                        &value,
+                        &self.program.module_name,
+                        &self.heap,
+                    )?);
                 }
-            }
-            Instruction::SetClassParent => {
-                let Value::Class(parent) = self.pop()? else {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "Superclass must be a class.",
-                    ));
-                };
-                let Some(Value::Class(id)) = self.stack.last().cloned() else {
-                    return Err(invalid("missing class initialization target"));
-                };
-                let parent_class = self.heap.class_definition(parent)?;
-                if id == parent {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        PklString::from("Class `")
-                            .concat(
-                                parent_class
-                                    .module
-                                    .as_ref()
-                                    .unwrap_or(&self.program.module_name),
-                            )
-                            .concat(&"#".into())
-                            .concat(&parent_class.name)
-                            .concat(&"` cannot extend itself.".into()),
-                    ));
-                }
-                if !parent_class.open && !parent_class.abstract_ {
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        PklString::from("Cannot extend non-open class `")
-                            .concat(&reference::type_name(
-                                &TypeCheck::Class {
-                                    module: parent_class.module.clone(),
-                                    id: parent_class.id,
-                                    name: parent_class.name.clone(),
-                                },
-                                &self.program.module_name,
-                            ))
-                            .concat(&"`.".into()),
-                    );
-                    error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
-                    return Err(error);
-                }
-                // Upstream ClassNode uses PClassInfo's module-name predicate here.
-                if self.class_external(parent)?
-                    && !self
-                        .heap
-                        .class_definition(id)?
-                        .module
-                        .as_ref()
-                        .is_some_and(|name| name.starts_with("pkl."))
-                {
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        PklString::from("Cannot extend external class `")
-                            .concat(&self.heap.class_display_name(parent)?)
-                            .concat(&"`.".into()),
-                    );
-                    error.hint = Some(
-                        "External classes can only be extended by standard library classes.".into(),
-                    );
-                    return Err(error);
-                }
-                self.heap.link_superclass(id, Some(parent))?;
-            }
-            Instruction::SetDefaultClassParent => {
-                let Some(Value::Class(id)) = self.stack.last().cloned() else {
-                    return Err(invalid("missing class initialization target"));
-                };
-                let parent = self.canonical_builtin_class(classes::BuiltinClass::Typed);
-                self.heap.link_superclass(id, Some(parent))?;
-            }
-            Instruction::PublishClassMember { template, index } => {
-                let Some(Value::Class(id)) = self.stack.last().cloned() else {
-                    return Err(invalid("missing class initialization target"));
-                };
-                let member = self
-                    .program
-                    .objects
-                    .get(template)
-                    .and_then(|members| members.get(index))
-                    .ok_or_else(|| invalid("missing class member"))?
-                    .clone();
-                let prototype = self.heap.get_class(id)?.prototype;
-                if let Some(parent) = self.heap.get(prototype)?.parent {
-                    self.validate_class_override(parent, &member)?;
-                }
-                self.heap.get_mut(prototype)?.members.push(member);
-            }
-            Instruction::FinishClass => {
-                let Some(Value::Class(id)) = self.stack.last().cloned() else {
-                    return Err(invalid("missing class initialization target"));
-                };
-                let prototype = self.heap.get_class(id)?.prototype;
-                self.heap.get_mut(prototype)?.class_initializing = false;
-            }
+            },
             Instruction::MakeInstance { template }
             | Instruction::MakeBuiltinInstance { template } => {
-                let builtin = matches!(instruction, Instruction::MakeBuiltinInstance { .. });
-                let Value::Class(parent) = self.pop()? else {
-                    return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
-                };
-                if self.class_external(parent)? {
-                    let name = self.heap.class_display_name(parent)?;
-                    let mut error = RuntimeError::new(
-                        ErrorKind::Type,
-                        format!(
-                            "Cannot instantiate, or amend an instance of, external class `{name}`."
-                        ),
-                    );
-                    error.hint = Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
-                    return Err(error);
-                }
-                let class_id = parent;
-                let parent = self.heap.get_class(class_id)?.prototype;
-                let class = self
-                    .heap
-                    .get(parent)?
-                    .class_definition
-                    .as_ref()
-                    .ok_or_else(|| invalid("invalid class handle"))?;
-                self.check_class_instantiable(class)?;
-                let members = if builtin {
-                    self.program.builtin_objects.get(template)
-                } else {
-                    self.program.objects.get(template)
-                }
-                .ok_or_else(|| invalid("invalid instance template"))?
-                .clone();
-                self.validate_object_members(parent, &members)?;
-                if members.is_empty() {
-                    self.stack.push(Value::Object(parent));
-                    return Ok(());
-                }
-                let environment = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .clone();
-                let id = self.heap.allocate(Object {
-                    parent: Some(parent),
-                    instance_class: Some(class_id),
-                    members: members.into(),
-                    environment,
-                    ..Object::default()
-                });
-                self.stack.push(Value::Object(id));
-            }
-            Instruction::CheckByte => self.check_byte()?,
-            Instruction::MakeBytes { length } => {
-                if self.stack.len() < length {
-                    return Err(invalid("Bytes literal stack"));
-                }
-                let values = self.stack.split_off(self.stack.len() - length);
-                let bytes = values
-                    .into_iter()
-                    .map(|value| match value {
-                        Value::Int(value) => Ok(value.get() as u8),
-                        _ => Err(invalid("checked Bytes argument")),
-                    })
-                    .collect::<Result<Vec<_>, _>>()?;
-                self.stack.push(Value::Bytes(bytes.into()));
-            }
-            Instruction::DefaultClassInstance => {
-                let Value::Class(id) = self.pop()? else {
-                    return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
-                };
-                let id = self.heap.get_class(id)?.prototype;
-                if self
-                    .heap
-                    .get(id)?
-                    .class_definition
-                    .as_ref()
-                    .is_none_or(|class| class.abstract_)
-                {
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        "Abstract class has no default value.",
-                    ));
-                }
-                self.stack.push(Value::Object(id));
+                self.step_make_instance(
+                    template,
+                    matches!(instruction, Instruction::MakeBuiltinInstance { .. }),
+                )?;
             }
             Instruction::MakeObject {
                 template,
                 has_parent,
-            } => {
-                let module = self
-                    .program
-                    .units
-                    .iter()
-                    .find(|unit| unit.template == template)
-                    .cloned();
-                let parent = if has_parent {
-                    Some(self.pop()?.as_object()?)
-                } else if module
-                    .as_ref()
-                    .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain)
-                {
-                    let class = self
-                        .canonical_builtin_class(classes::BuiltinClass::Ordinary(output::MODULE));
-                    Some(self.heap.get_class(class)?.prototype)
-                } else {
-                    None
-                };
-                if let Some(id) = parent
-                    && self.heap.get(id)?.reference.is_some()
-                {
-                    return Err(collections::external_amendment_error("pkl.ref#Reference"));
-                }
-                let members = if let Some(module) = &module {
-                    if module.mode == modules::ModuleMode::Amends {
-                        Vec::new()
-                    } else {
-                        module.initial_members.clone()
-                    }
-                } else {
-                    self.program
-                        .objects
-                        .get(template)
-                        .ok_or_else(|| invalid("invalid object template"))?
-                        .clone()
-                };
-                if let Some(parent) = parent
-                    && module.is_none()
-                {
-                    self.validate_object_members(parent, &members)?;
-                    if members.is_empty() {
-                        self.stack.push(Value::Object(parent));
-                        return Ok(());
-                    }
-                }
-                let environment = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .clone();
-                let definition = Object {
-                    ref_module: module.as_ref().is_some_and(|unit| {
-                        unit.standard_library
-                            && unit
-                                .identity
-                                .as_ref()
-                                .is_some_and(|identity| identity.original_uri == "pkl:ref")
-                    }),
-                    is_module: module
-                        .as_ref()
-                        .is_some_and(|unit| unit.mode != modules::ModuleMode::Amends),
-                    module_unit: module.as_ref().map(|unit| unit.id),
-                    class_definition: module
-                        .as_ref()
-                        .filter(|unit| unit.mode != modules::ModuleMode::Amends)
-                        .map(|unit| {
-                            Box::new(Class {
-                                module: None,
-                                origin_uri: unit
-                                    .identity
-                                    .as_ref()
-                                    .map(|identity| identity.original_uri.clone())
-                                    .or_else(|| {
-                                        unit.source.as_ref().map(|source| source.uri.clone())
-                                    }),
-                                id: unit.class_id,
-                                name: if unit.id.0 == 0 {
-                                    self.program.module_name.clone()
-                                } else {
-                                    unit.name.clone()
-                                },
-                                open: unit.modifiers & crate::syntax::ModifierKind::Open.flag()
-                                    != 0,
-                                abstract_: unit.modifiers
-                                    & crate::syntax::ModifierKind::Abstract.flag()
-                                    != 0,
-                            })
-                        }),
-                    class_initializing: module
-                        .as_ref()
-                        .is_some_and(|unit| unit.mode == modules::ModuleMode::Extends),
-                    class_superclass_initialized: module
-                        .as_ref()
-                        .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain),
-                    module_initializing: module.is_some(),
-                    published_module_members: if module.is_some() {
-                        members.iter().map(|m| m.code).collect()
-                    } else {
-                        crate::heap::ThinBTreeSet::default()
-                    },
-                    parent,
-                    members: members.into(),
-                    environment,
-                    ..Object::default()
-                };
-                let existing = self
-                    .frames
-                    .last()
-                    .and_then(|frame| frame.module_receiver)
-                    .filter(|_| module.is_some());
-                let object = if let Some(receiver) = existing {
-                    let module_unit = definition.module_unit;
-                    *self.heap.get_mut(receiver)? = definition;
-                    // Replacing a pre-allocated module placeholder in place changes
-                    // its runtime kind/class (e.g. Dynamic -> Typed), invalidating
-                    // any cached strict-collection checks that observed it.
-                    self.verified_strict_collections.clear();
-                    if let Some(unit_id) = module_unit {
-                        self.heap.register_module(unit_id, receiver);
-                    }
-                    receiver
-                } else {
-                    self.heap.allocate(definition)
-                };
-                if self.heap.get(object)?.class_definition.is_some() {
-                    let class = self.heap.allocate_class(object);
-                    if let Some(parent) = parent {
-                        let superclass = self
-                            .heap
-                            .object_class(parent)?
-                            .ok_or_else(|| invalid("module superclass"))?;
-                        self.heap.link_superclass(class, Some(superclass))?;
-                    }
-                } else if let Some(parent) = parent {
-                    let class = self.heap.object_class(parent)?;
-                    self.heap.get_mut(object)?.instance_class = class;
-                }
-                if let Some(unit) = &module {
-                    self.frames.last_mut().unwrap().module_receiver = Some(object);
-                    if let Some(identity) = &unit.identity {
-                        if let Some(key) = unit.singleton_cache_key() {
-                            self.modules_stdlib
-                                .insert(key.into(), modules::CachedModule::Value(object));
-                        } else {
-                            self.modules_original.insert(
-                                identity.original_uri.clone(),
-                                modules::CachedModule::Value(object),
-                            );
-                            self.last_warm_module = None;
-                            self.modules_resolved.insert(
-                                identity.resolved_uri.clone(),
-                                modules::CachedModule::Value(object),
-                            );
-                        }
-                    }
-                }
-                self.stack.push(Value::Object(object));
-                if module.is_some() {
-                    self.frames
-                        .last_mut()
-                        .expect("module frame")
-                        .environment
-                        .scopes
-                        .push(Scope {
-                            receiver: object,
-                            owner: object,
-                        });
-                }
-            }
-            Instruction::BeginObjectMethodSignature => {
-                let frame = self.frames.last_mut().expect("method member frame");
-                let owner = frame
-                    .force
-                    .as_ref()
-                    .ok_or_else(|| invalid("method signature owner"))?
-                    .owner;
-                frame.environment.this_value = Some(Value::Object(owner));
-                if !frame.environment.scopes.set_first_receiver(owner) {
-                    return Err(invalid("method signature scope"));
-                }
-            }
-            Instruction::EndObjectMethodSignature => {
-                let frame = self.frames.last_mut().expect("method member frame");
-                let receiver = frame
-                    .force
-                    .as_ref()
-                    .ok_or_else(|| invalid("method signature receiver"))?
-                    .receiver;
-                frame.environment.this_value = Some(Value::Object(receiver));
-                if !frame.environment.scopes.set_first_receiver(receiver) {
-                    return Err(invalid("method signature scope"));
-                }
-            }
+            } => self.step_make_object(template, has_parent)?,
             Instruction::MakeFunction {
                 block,
                 arity,
                 method,
                 capture_custom_this,
             } => {
-                if self.program.blocks.get(block).is_none() {
-                    return Err(invalid("invalid function block"));
-                }
-                let environment = self
-                    .frames
-                    .last()
-                    .expect("active frame")
-                    .environment
-                    .clone();
-                let mut environment = environment;
-                if let Some(parent) = environment.executable_owner {
-                    let frame = self.frames.last().expect("active frame");
-                    environment.executable_owner = Some(self.heap.executable_child(
-                        parent,
-                        ExecutionSite::Function {
-                            block: frame.block,
-                            instruction: frame.pc - 1,
-                        },
-                    )?);
-                }
-                let captured_this = if capture_custom_this {
-                    let slot = environment
-                        .custom_this
-                        .ok_or_else(|| invalid("missing captured receiver slot"))?;
-                    self.heap.custom_this(slot)?
-                } else {
-                    None
-                };
-                let method_declaration = method
-                    .then(|| {
-                        self.frames.last().and_then(|frame| {
-                            frame.force.as_ref().map(|force| (force.owner, frame.block))
-                        })
-                    })
-                    .flatten();
-                let id = self.heap.allocate_function(
-                    Function {
-                        block,
-                        arity,
-                        method,
-                        captured_this,
-                    },
-                    method_declaration,
-                    environment,
-                );
-                self.stack.push(Value::Function(id));
-            }
-            Instruction::ApplyEntryDefault => {
-                let argument = self.pop()?;
-                let Value::Function(id) = self.pop()? else {
-                    return Err(invalid("entry default is not a function"));
-                };
-                // ApplyVmFunction1Node has no guest source section. Keep the
-                // enclosing member alive, but omit this synthetic call site.
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .callsite_hidden = true;
-                self.invoke_function(id, vec![argument], false)?;
+                self.step_make_function(block, arity, method, capture_custom_this)?;
             }
             Instruction::Call { arity, method } => {
                 let base = self.frames.last().expect("active frame").base;
@@ -11212,53 +9639,6 @@ impl Vm {
                 };
                 self.invoke_function(id, arguments, method)?;
             }
-            Instruction::PipeApply => {
-                let right = self.pop()?;
-                let left = self.pop()?;
-                let Value::Function(id) = right else {
-                    let headline = PklString::join(
-                        &[
-                            "Operator `|>` is not defined for operand types `".into(),
-                            crate::diagnostic_values::type_name(
-                                &left,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?,
-                            "` and `".into(),
-                            crate::diagnostic_values::type_name(
-                                &right,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?,
-                            "`.".into(),
-                        ],
-                        "",
-                    );
-                    let left_val = crate::diagnostic_values::render(
-                        &left,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    let right_val = crate::diagnostic_values::render(
-                        &right,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    return Err(RuntimeError::with_program_values(
-                        ErrorKind::Type,
-                        headline,
-                        &[("Left operand", left_val), ("Right operand", right_val)],
-                    ));
-                };
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .callsite_hidden = true;
-                self.invoke_function(id, vec![left], false)?;
-            }
-
             Instruction::Duplicate => {
                 let value = self.pop()?;
                 self.stack.push(value.clone());
@@ -11302,45 +9682,6 @@ impl Vm {
                 };
                 self.stack.push(Value::Bool(!value));
             }
-            Instruction::CheckLogicalLeft { or } | Instruction::CheckLogicalRight { or } => {
-                let value = self.pop()?;
-                if !matches!(value, Value::Bool(_)) {
-                    let operator = if or { "||" } else { "&&" };
-                    let name = crate::diagnostic_values::type_name(
-                        &value,
-                        &self.heap,
-                        &self.program.module_name,
-                    )?;
-                    let rendered = crate::diagnostic_values::render(
-                        &value,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    let error = if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
-                        RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            format!(
-                                "Operator `{operator}` is not defined for left operand type `{name}`."
-                            ),
-                            &[("Left operand", rendered)],
-                        )
-                    } else {
-                        RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            format!(
-                                "Operator `{operator}` is not defined for operand types `Boolean` and `{name}`."
-                            ),
-                            &[
-                                ("Left operand", (!or).to_string().into()),
-                                ("Right operand", rendered),
-                            ],
-                        )
-                    };
-                    return Err(error);
-                }
-                self.stack.push(value);
-            }
             Instruction::CheckBoolean => {
                 let value = self.pop()?;
                 if !matches!(value, Value::Bool(_)) {
@@ -11350,11 +9691,6 @@ impl Vm {
                     ));
                 }
                 self.stack.push(value);
-            }
-            Instruction::JumpIfNotNull(target) => {
-                if !self.pop()?.is_null() {
-                    self.jump(target)?;
-                }
             }
             Instruction::AddIntConstant(right) => {
                 let left = self.pop()?;
@@ -11426,132 +9762,1239 @@ impl Vm {
                     &self.program.module_name,
                 )?);
             }
-            Instruction::Jump(target) => {
-                self.jump(target)?;
+            Instruction::PublishModuleMember { .. }
+            | Instruction::FinishModule
+            | Instruction::CheckAnnotationClass
+            | Instruction::AppendAnnotation
+            | Instruction::BeginMemberAnnotations
+            | Instruction::InitializeDeprecation
+            | Instruction::StoreDeprecation
+            | Instruction::PublishMemberAnnotations { .. }
+            | Instruction::PublishAnnotatedClassMember { .. }
+            | Instruction::BeginTypeAlias { .. }
+            | Instruction::FinishTypeAlias
+            | Instruction::CheckTypeAliasInitialized
+            | Instruction::BuiltinTypeAlias(_)
+            | Instruction::BeginClass { .. }
+            | Instruction::SetClassParent
+            | Instruction::SetDefaultClassParent
+            | Instruction::PublishClassMember { .. }
+            | Instruction::FinishClass
+            | Instruction::DefaultClassInstance
+            | Instruction::BeginObjectMethodSignature
+            | Instruction::EndObjectMethodSignature
+            | Instruction::RequireConstProperty { .. }
+            | Instruction::Fail(_)
+            | Instruction::Undefined(_)
+            | Instruction::AbstractMember { .. }
+            | Instruction::Unsupported(_) => self.step_instruction_declarations(instruction)?,
+            other => self.step_instruction_cold_ops(other)?,
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_make_function(
+        &mut self,
+        block: usize,
+        arity: usize,
+        method: bool,
+        capture_custom_this: bool,
+    ) -> Result<(), RuntimeError> {
+        if self.program.blocks.get(block).is_none() {
+            return Err(invalid("invalid function block"));
+        }
+        let mut environment = self
+            .frames
+            .last()
+            .expect("active frame")
+            .environment
+            .clone();
+        if let Some(parent) = environment.executable_owner {
+            let frame = self.frames.last().expect("active frame");
+            environment.executable_owner = Some(self.heap.executable_child(
+                parent,
+                ExecutionSite::Function {
+                    block: frame.block,
+                    instruction: frame.pc - 1,
+                },
+            )?);
+        }
+        let captured_this = if capture_custom_this {
+            let slot = environment
+                .custom_this
+                .ok_or_else(|| invalid("missing captured receiver slot"))?;
+            self.heap.custom_this(slot)?
+        } else {
+            None
+        };
+        let method_declaration = method
+            .then(|| {
+                self.frames
+                    .last()
+                    .and_then(|frame| frame.force.as_ref().map(|force| (force.owner, frame.block)))
+            })
+            .flatten();
+        let id = self.heap.allocate_function(
+            Function {
+                block,
+                arity,
+                method,
+                captured_this,
+            },
+            method_declaration,
+            environment,
+        );
+        self.stack.push(Value::Function(id));
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_instruction_declarations(
+        &mut self,
+        instruction: Instruction,
+    ) -> Result<(), RuntimeError> {
+        match instruction {
+            Instruction::PublishModuleMember { code } => {
+                let owner = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing module"))?
+                    .as_object()?;
+                let unit = self
+                    .heap
+                    .get(owner)?
+                    .module_unit
+                    .ok_or_else(|| invalid("missing module unit"))?;
+                let template = self.program.units[unit.0 as usize].template;
+                let member = self.program.objects[template]
+                    .iter()
+                    .find(|m| m.code == code)
+                    .ok_or_else(|| invalid("missing module declaration"))?
+                    .clone();
+                if self.program.units[unit.0 as usize].mode == modules::ModuleMode::Extends
+                    && let Some(parent) = self.heap.get(owner)?.parent
+                {
+                    self.validate_class_override(parent, &member)?;
+                }
+                let object = self.heap.get_mut(owner)?;
+                if object.published_module_members.insert(code) {
+                    object.members.push(member);
+                }
             }
-            Instruction::JumpIfFalse(target) => match self.pop()? {
-                Value::Bool(false) => self.jump(target)?,
-                Value::Bool(true) => {}
-                value => {
+            Instruction::FinishModule => {
+                let owner = self
+                    .stack
+                    .last()
+                    .ok_or_else(|| invalid("missing module"))?
+                    .as_object()?;
+                let object = self.heap.get_mut(owner)?;
+                object.module_initializing = false;
+                object.class_initializing = false;
+            }
+            Instruction::CheckAnnotationClass => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Expected an annotation class.",
+                    ));
+                };
+                let expected = self.canonical_builtin_class(classes::BuiltinClass::Ordinary(
+                    annotations::ANNOTATION_ID,
+                ));
+                let valid = self.heap.is_subclass(id, expected);
+                if !valid {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Expected an annotation class.",
+                    ));
+                }
+            }
+            Instruction::AppendAnnotation => self.append_annotation()?,
+            Instruction::BeginMemberAnnotations => {
+                let id = self.heap.allocate(Object::default());
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::InitializeDeprecation => self.initialize_deprecation()?,
+            Instruction::StoreDeprecation => self.store_deprecation()?,
+            Instruction::PublishMemberAnnotations { code } => {
+                self.publish_member_annotations(code)?
+            }
+            Instruction::PublishAnnotatedClassMember { template, index } => {
+                let annotations = self.pop()?.as_object()?;
+                let owner = self.heap.declaration_object(
+                    self.stack
+                        .last()
+                        .ok_or_else(|| invalid("missing annotation owner"))?,
+                )?;
+                let member = self
+                    .program
+                    .objects
+                    .get(template)
+                    .and_then(|members| members.get(index))
+                    .ok_or_else(|| invalid("missing annotated class member"))?
+                    .clone();
+                if let Some(parent) = self.heap.get(owner)?.parent {
+                    self.validate_class_override(parent, &member)?;
+                }
+                self.publish_annotations(owner, annotations, member.code)?;
+                self.heap.get_mut(owner)?.members.push(member);
+            }
+            Instruction::BeginTypeAlias {
+                declaration,
+                name,
+                end,
+            } => {
+                if let Some(id) = self.alias_singletons.get(&declaration).copied() {
+                    self.stack.push(Value::TypeAlias(id));
+                    self.frames.last_mut().expect("active frame").pc = end;
+                } else {
+                    let environment = self
+                        .frames
+                        .last()
+                        .expect("active frame")
+                        .environment
+                        .clone();
+                    let name = self.current_module_name().concat(&name);
+                    let id = self.heap.allocate(Object {
+                        type_alias: Some(name),
+                        type_alias_declaration: Some(declaration),
+                        declaration_code: self.frames.last().map(|frame| frame.block),
+                        environment,
+                        ..Object::default()
+                    });
+                    self.alias_singletons.insert(declaration, id);
+                    self.frames
+                        .last_mut()
+                        .expect("active frame")
+                        .initializing_alias = Some(declaration);
+                    self.declaration_roots_dirty = true;
+                    self.stack.push(Value::TypeAlias(id));
+                }
+            }
+            Instruction::FinishTypeAlias => {
+                let Some(Value::TypeAlias(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing alias initialization target"));
+                };
+                self.heap.get_mut(id)?.type_alias_initialized = true;
+                if let Some(frame) = self.frames.last_mut() {
+                    frame.initializing_alias = None;
+                }
+            }
+            Instruction::CheckTypeAliasInitialized => {
+                let Value::TypeAlias(id) = self.pop()? else {
+                    return Err(invalid("missing alias type"));
+                };
+                if !self.heap.get(id)?.type_alias_initialized {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Cycle,
+                        "Type alias definitions must not be cyclic.",
+                    ));
+                }
+            }
+            Instruction::BuiltinTypeAlias(name) => {
+                let id = self.heap.find_type_alias(&name).unwrap_or_else(|| {
+                    self.heap.allocate(Object {
+                        type_alias: Some(name),
+                        type_alias_initialized: true,
+                        ..Object::default()
+                    })
+                });
+                self.stack.push(Value::TypeAlias(id));
+            }
+            Instruction::RequireConstProperty {
+                name,
+                owner_depth,
+                local,
+                method,
+            } => {
+                let scope = self.scope(owner_depth)?;
+                if local && !method {
+                    let owner = self.current_executable()?;
+                    let frame = self.frames.last().expect("active frame");
+                    let site = (frame.block, frame.pc);
+                    if self.heap.resolved_local(owner, site)?.is_none() {
+                        let member = self
+                            .heap
+                            .get(scope.owner)?
+                            .members
+                            .iter()
+                            .find(|member| {
+                                member.name == name
+                                    && member.local
+                                    && !member.method
+                                    && !member.entry
+                            })
+                            .cloned();
+                        if let Some(member) = member {
+                            self.heap.publish_local(owner, site, member)?;
+                            self.require_const(scope.owner, &name, true, false)?;
+                        }
+                    }
+                } else {
+                    self.require_const(
+                        if local { scope.owner } else { scope.receiver },
+                        &name,
+                        local,
+                        method,
+                    )?;
+                }
+            }
+            Instruction::Fail(error) => return Err(*error),
+            Instruction::Undefined(name) => {
+                return Err(RuntimeError::new(
+                    ErrorKind::MissingMember,
+                    PklString::from("Tried to read property `")
+                        .concat(&name)
+                        .concat(&"` but its value is undefined.".into()),
+                )
+                .undefined());
+            }
+            Instruction::AbstractMember { name, method } => {
+                let kind = if method { "method" } else { "property" };
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    PklString::from(format!("Cannot invoke abstract {kind} `"))
+                        .concat(self.current_module_name())
+                        .concat(&name)
+                        .concat(&"`.".into()),
+                ));
+            }
+            Instruction::Unsupported(message) => {
+                return Err(RuntimeError::new(ErrorKind::Unsupported, message));
+            }
+            Instruction::BeginClass { .. } => self.step_begin_class(instruction)?,
+            Instruction::SetClassParent => self.step_set_class_parent()?,
+            Instruction::SetDefaultClassParent => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let parent = self.canonical_builtin_class(classes::BuiltinClass::Typed);
+                self.heap.link_superclass(id, Some(parent))?;
+            }
+            Instruction::PublishClassMember { template, index } => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let member = self
+                    .program
+                    .objects
+                    .get(template)
+                    .and_then(|members| members.get(index))
+                    .ok_or_else(|| invalid("missing class member"))?
+                    .clone();
+                let prototype = self.heap.get_class(id)?.prototype;
+                if let Some(parent) = self.heap.get(prototype)?.parent {
+                    self.validate_class_override(parent, &member)?;
+                }
+                self.heap.get_mut(prototype)?.members.push(member);
+            }
+            Instruction::FinishClass => {
+                let Some(Value::Class(id)) = self.stack.last().cloned() else {
+                    return Err(invalid("missing class initialization target"));
+                };
+                let prototype = self.heap.get_class(id)?.prototype;
+                self.heap.get_mut(prototype)?.class_initializing = false;
+            }
+            Instruction::DefaultClassInstance => {
+                let Value::Class(id) = self.pop()? else {
+                    return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
+                };
+                let id = self.heap.get_class(id)?.prototype;
+                if self
+                    .heap
+                    .get(id)?
+                    .class_definition
+                    .as_ref()
+                    .is_none_or(|class| class.abstract_)
+                {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Abstract class has no default value.",
+                    ));
+                }
+                self.stack.push(Value::Object(id));
+            }
+            Instruction::BeginObjectMethodSignature => {
+                let frame = self.frames.last_mut().expect("method member frame");
+                let owner = frame
+                    .force
+                    .as_ref()
+                    .ok_or_else(|| invalid("method signature owner"))?
+                    .owner;
+                frame.environment.this_value = Some(Value::Object(owner));
+                if !frame.environment.scopes.set_first_receiver(owner) {
+                    return Err(invalid("method signature scope"));
+                }
+            }
+            Instruction::EndObjectMethodSignature => {
+                let frame = self.frames.last_mut().expect("method member frame");
+                let receiver = frame
+                    .force
+                    .as_ref()
+                    .ok_or_else(|| invalid("method signature receiver"))?
+                    .receiver;
+                frame.environment.this_value = Some(Value::Object(receiver));
+                if !frame.environment.scopes.set_first_receiver(receiver) {
+                    return Err(invalid("method signature scope"));
+                }
+            }
+            _ => unreachable!("step_instruction_declarations"),
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_instruction_cold_ops(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        match instruction {
+            Instruction::ImportModule(spec) => self.begin_import(*spec)?,
+            Instruction::ImportGlob(spec) => {
+                let authored = spec
+                    .import
+                    .as_ref()
+                    .ok_or_else(|| invalid("glob import spec"))?
+                    .authored
+                    .clone();
+                self.begin_glob(*spec, authored)?;
+            }
+            Instruction::GlobMember => self.load_glob_member()?,
+            Instruction::PrepareModuleImports(unit) => self.prepare_module_imports(unit)?,
+            Instruction::LoadPrimary(source) => self.begin_primary(source)?,
+            Instruction::EvaluateQuery(expression) => self.begin_query(*expression)?,
+            Instruction::EvaluateRawQuery(expression) => self.begin_raw_query(*expression)?,
+            Instruction::InitializeModuleParent => self.initialize_module_parent()?,
+            Instruction::CheckModuleOutput => self.check_module_output()?,
+            Instruction::BootstrapStdlib => self.bootstrap_stdlib()?,
+            Instruction::MatchModuleVersion => {
+                let Value::String(value) = self.pop()? else {
+                    return Err(invalid("checked version string"));
+                };
+                let valid = annotations::matches_module_version(&value);
+                self.stack.push(Value::Bool(valid));
+            }
+            Instruction::EncodeUtf8 => {
+                let Value::String(value) = self.pop()? else {
+                    return Err(invalid("UTF-8 encoding operand"));
+                };
+                self.stack
+                    .push(Value::Bytes(value.to_java_utf8().into_bytes().into()));
+            }
+            Instruction::EncodePklBinary => {
+                self.begin_pkl_binary_encode_value()?;
+            }
+            Instruction::ResourceProperty(property) => self.resource_property(property)?,
+            Instruction::ResolveEvaluatorSettingsPath => self.resolve_evaluator_settings_path()?,
+            Instruction::PlatformCurrent => self.platform_current()?,
+            Instruction::ReleaseCurrent => self.release_current()?,
+            Instruction::BenchmarkRun => self.benchmark_run()?,
+            Instruction::AnalyzeImportGraph => self.begin_analysis()?,
+            Instruction::OutputRenderer => self.output_renderer()?,
+            Instruction::RenderPcf { document } => {
+                self.begin_render(document, rendering::Format::Pcf)?
+            }
+            Instruction::RenderPklBinary { document } => {
+                self.begin_pkl_binary_render(document)?;
+            }
+            Instruction::RenderProtobuf { document } => self.begin_protobuf_render(document)?,
+            Instruction::ProtobufRenderType => self.protobuf_render_type()?,
+            Instruction::RenderXml { document } => {
+                self.begin_xml_render(document)?;
+            }
+            Instruction::RenderJsonnet { document } => {
+                self.begin_jsonnet_render(document)?;
+            }
+            Instruction::RenderJson { document } => {
+                self.begin_render(document, rendering::Format::Json)?
+            }
+            Instruction::RenderPlist { document } => {
+                self.begin_render(document, rendering::Format::Plist)?;
+            }
+            Instruction::RenderYaml { document } => {
+                self.begin_render(document, rendering::Format::Yaml)?;
+            }
+            Instruction::RenderProperties { document } => {
+                self.begin_render(document, rendering::Format::Properties)?
+            }
+            Instruction::GuestCatch { or_null } => {
+                self.begin_guest_catch(or_null)?;
+            }
+            Instruction::ReferenceRenderMethod => {
+                let id = self.pop()?.as_object()?;
+                let domain = self
+                    .heap
+                    .get(id)?
+                    .reference
+                    .as_ref()
+                    .ok_or_else(|| invalid("reference render receiver"))?
+                    .domain
+                    .as_object()?;
+                self.retire_saturated_method_cache(
+                    &Value::Object(domain),
+                    &"renderReference".into(),
+                )?;
+                self.force(
+                    domain,
+                    domain,
+                    PklString::from("renderReference"),
+                    false,
+                    true,
+                    true,
+                )?;
+            }
+            Instruction::Trace { operand_span } => {
+                self.begin_trace(operand_span)?;
+            }
+            Instruction::Throw => {
+                let value = self.pop()?;
+                let Value::String(message) = value else {
                     return Err(type_error(
-                        &TypeCheck::Boolean,
+                        &TypeCheck::String,
                         &value,
                         &self.program.module_name,
                         &self.heap,
                     )?);
+                };
+                let mut error = RuntimeError::new(ErrorKind::Type, message.clone());
+                error.java_exception_message =
+                    Some(("org.pkl.core.runtime.VmEvalException", message));
+                return Err(error);
+            }
+            Instruction::StringRepeat => self.repeat_string()?,
+            Instruction::CollectionJoin => self.begin_collection_join()?,
+            Instruction::ModuleRelativePathTo => self.module_relative_path_to()?,
+            Instruction::ObjectDefault => self.object_default()?,
+            Instruction::EmptyDynamic => {
+                let empty = self.empty_object(crate::heap::CollectionKind::Dynamic);
+                self.stack.push(Value::Object(empty));
+            }
+            Instruction::ObjectDefaultProperty => {
+                let receiver = self.conversion_receiver()?;
+                if !self.object_default_member(receiver)? {
+                    return Err(invalid("object default receiver"));
                 }
-            },
+            }
+            Instruction::BeginConversion(operation) => self.begin_conversion(operation)?,
+            Instruction::ConversionNext { end } => self.conversion_next(end)?,
+            Instruction::ConversionValue => self.conversion_value()?,
+            Instruction::ConversionPair => self.conversion_pair()?,
+            Instruction::AppendConvertedMember => self.append_converted_member()?,
+            Instruction::EndConversion => self.end_conversion()?,
+            Instruction::ConvertObject(operation) => self.convert_object(operation)?,
+            Instruction::ReadConversionProperty => self.read_conversion_property()?,
+            Instruction::BeginLazyCollection(operation) => self.begin_lazy_collection(operation)?,
+            Instruction::LazyCollectionNext { end } => self.lazy_collection_next(end)?,
+            Instruction::LazyCollectionAccept { next, end } => {
+                self.lazy_collection_accept(next, end)?
+            }
+            Instruction::EndLazyCollection => self.end_lazy_collection()?,
+            Instruction::BeginCollectionEvery => self.begin_collection_every()?,
+            Instruction::CollectionEveryAccept { next } => self.collection_every_accept(next)?,
+            Instruction::EndCollectionEvery => self.end_collection_every()?,
+            Instruction::BeginCollectionTransform(operation) => {
+                self.begin_collection_transform(operation)?
+            }
+            Instruction::BeginCollectionProjection(operation) => {
+                self.begin_collection_projection(operation)?
+            }
+            Instruction::CollectionKeyOrder => self.collection_key_order()?,
+            Instruction::CollectionTransformNext { end } => self.collection_transform_next(end)?,
+            Instruction::CollectionTransformProject { next } => {
+                self.collection_transform_project(next)?
+            }
+            Instruction::CollectionFlatMapNext { end } => self.collection_flat_map_next(end)?,
+            Instruction::AppendStrictElement => self.append_strict_element()?,
+            Instruction::EndCollectionTransform => self.end_collection_transform()?,
+            Instruction::CollectionDistinctStep { next, end } => {
+                self.collection_distinct_step(next, end)?
+            }
+            Instruction::CollectionContainsStep { matched } => {
+                self.collection_contains_step(matched)?
+            }
+            Instruction::StringEncode => self.encode_string()?,
+            Instruction::CheckObjectParameters { target } => {
+                self.check_object_parameters(target)?
+            }
+            Instruction::PrepareFunctionAmendment { body, arity } => {
+                self.prepare_function_amendment(body, arity)?
+            }
+            Instruction::BeginFunctionAmendment { end, function } => {
+                self.begin_function_amendment(end, function)?
+            }
+            Instruction::EndFunctionAmendment => {}
+            Instruction::InvokeAmendedParent => self.invoke_amended_parent()?,
+            Instruction::ContinueFunctionAmendment => self.continue_function_amendment()?,
+            Instruction::CheckMixinArgument => self.check_mixin_argument()?,
+            Instruction::RegexConstructor => {
+                let value = self.regex_constructor()?;
+                self.stack.push(value);
+            }
+            Instruction::MakeRegex => self.make_regex()?,
+            Instruction::RegexMatchProperty(property) => self.regex_match_property(property)?,
+            Instruction::ReflectCall(operation) => self.begin_reflection(operation)?,
+            Instruction::JsonParse => self.begin_json_parse()?,
+            Instruction::YamlParse { all } => self.begin_yaml_parse(all)?,
+            Instruction::MirrorProperty(name) => self.begin_mirror_property(name)?,
+            Instruction::IntSeqConstructor => {
+                let value = self.int_seq_constructor();
+                self.stack.push(value);
+            }
+            Instruction::MakeIntSeq => self.make_int_seq()?,
+            Instruction::CheckIntSeqStep => self.check_int_seq_step()?,
+            Instruction::BeginIntSeq(operation) => self.begin_int_seq(operation)?,
+            Instruction::IntSeqNext { end } => self.int_seq_next(end)?,
+            Instruction::IntSeqAccept => self.int_seq_accept()?,
+            Instruction::EndIntSeq => self.end_int_seq()?,
+            Instruction::PairConstructor => {
+                let value = self.pair_constructor();
+                self.stack.push(value);
+            }
+            Instruction::NullConstructor => {
+                let value = self.null_constructor();
+                self.stack.push(value);
+            }
+            Instruction::CheckNullDefault => self.check_null_default()?,
+            Instruction::MakePair => {
+                let second = self.pop()?;
+                let first = self.pop()?;
+                let value = self.make_pair(first, second);
+                self.stack.push(value);
+            }
+            Instruction::JavaValueString => {
+                let value = self.pop()?;
+                self.java_value_string(value)?;
+            }
+            Instruction::CheckByte => self.check_byte()?,
+            Instruction::MakeBytes { length } => {
+                if self.stack.len() < length {
+                    return Err(invalid("Bytes literal stack"));
+                }
+                let values = self.stack.split_off(self.stack.len() - length);
+                let bytes = values
+                    .into_iter()
+                    .map(|value| match value {
+                        Value::Int(value) => Ok(value.get() as u8),
+                        _ => Err(invalid("checked Bytes argument")),
+                    })
+                    .collect::<Result<Vec<_>, _>>()?;
+                self.stack.push(Value::Bytes(bytes.into()));
+            }
+            Instruction::ApplyEntryDefault => {
+                let argument = self.pop()?;
+                let Value::Function(id) = self.pop()? else {
+                    return Err(invalid("entry default is not a function"));
+                };
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .callsite_hidden = true;
+                self.invoke_function(id, vec![argument], false)?;
+            }
+            Instruction::PipeApply => {
+                let right = self.pop()?;
+                let left = self.pop()?;
+                let Value::Function(id) = right else {
+                    let headline = PklString::join(
+                        &[
+                            "Operator `|>` is not defined for operand types `".into(),
+                            crate::diagnostic_values::type_name(
+                                &left,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?,
+                            "` and `".into(),
+                            crate::diagnostic_values::type_name(
+                                &right,
+                                &self.heap,
+                                &self.program.module_name,
+                            )?,
+                            "`.".into(),
+                        ],
+                        "",
+                    );
+                    let left_val = crate::diagnostic_values::render(
+                        &left,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    let right_val = crate::diagnostic_values::render(
+                        &right,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        headline,
+                        &[("Left operand", left_val), ("Right operand", right_val)],
+                    ));
+                };
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .callsite_hidden = true;
+                self.invoke_function(id, vec![left], false)?;
+            }
+            Instruction::CheckLogicalLeft { or } | Instruction::CheckLogicalRight { or } => {
+                let value = self.pop()?;
+                if !matches!(value, Value::Bool(_)) {
+                    let operator = if or { "||" } else { "&&" };
+                    let name = crate::diagnostic_values::type_name(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?;
+                    let rendered = crate::diagnostic_values::render(
+                        &value,
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    let error = if matches!(instruction, Instruction::CheckLogicalLeft { .. }) {
+                        RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `{operator}` is not defined for left operand type `{name}`."
+                            ),
+                            &[("Left operand", rendered)],
+                        )
+                    } else {
+                        RuntimeError::with_program_values(
+                            ErrorKind::Type,
+                            format!(
+                                "Operator `{operator}` is not defined for operand types `Boolean` and `{name}`."
+                            ),
+                            &[
+                                ("Left operand", (!or).to_string().into()),
+                                ("Right operand", rendered),
+                            ],
+                        )
+                    };
+                    return Err(error);
+                }
+                self.stack.push(value);
+            }
             Instruction::ReadResource
             | Instruction::ReadResourceOrNull
             | Instruction::ReadResourceGlob(_) => {
-                let nullable = matches!(instruction, Instruction::ReadResourceOrNull);
-                let glob_spec = match instruction {
-                    Instruction::ReadResourceGlob(spec) => Some(spec),
-                    _ => None,
-                };
-                let glob = glob_spec.is_some();
-                if self.callback_closing {
-                    return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));
-                }
-                let uri = match self.pop()? {
-                    Value::String(uri) => uri,
-                    operand => {
-                        let operator = if glob {
-                            "read*"
-                        } else if nullable {
-                            "read?"
+                self.step_read_resource(instruction)?;
+            }
+            _ => unreachable!("step_instruction_cold_ops"),
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_to_string(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        if let Value::Object(id) = value
+            && self.heap.get(id)?.reference.is_some()
+        {
+            self.render_reference(id)?;
+        } else if self.is_set(&value) || self.is_list(&value) {
+            let text = crate::diagnostic_values::render_multiline(
+                &value,
+                &self.heap,
+                &self.program.module_name,
+            )?;
+            self.stack.push(Value::string(text));
+        } else if matches!(
+            value,
+            Value::TypeAlias(_) | Value::Class(_) | Value::Function(_)
+        ) || self.is_map(&value)
+        {
+            let text = crate::diagnostic_values::render_string(
+                &value,
+                &self.heap,
+                &self.program.module_name,
+                usize::MAX,
+            )?;
+            self.stack.push(Value::string(text));
+        } else if let Value::Object(id) = value {
+            if collections::is_typed_class(&self.heap, id)? || self.heap.get(id)?.is_module {
+                // Pkl interpolation virtually invokes Typed.toString; user
+                // overrides can avoid forcing the receiver altogether.
+                let site = self.current_method_call_site()?;
+                let code_owner = self
+                    .frames
+                    .last()
+                    .expect("ToString frame")
+                    .environment
+                    .code_owner;
+                let function = self.heap.allocate(Object {
+                    function: Some(Function {
+                        block: self.program.typed_string_block,
+                        arity: 0,
+                        method: true,
+                        captured_this: None,
+                    }),
+                    environment: Environment {
+                        locals: vec![Value::Object(id)],
+                        code_owner,
+                        ..Environment::default()
+                    },
+                    ..Object::default()
+                });
+                self.invoke_function(function, Vec::new(), true)?;
+                self.frames
+                    .last_mut()
+                    .expect("implicit ToString call")
+                    .method_call_site = Some(Box::new(site));
+            } else {
+                self.begin_object_string(Value::Object(id))?;
+            }
+        } else {
+            self.stack.push(Value::string(scalar_string(&value)?));
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_begin_class(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        let Instruction::BeginClass {
+            template,
+            class,
+            end,
+        } = instruction
+        else {
+            unreachable!("step_begin_class")
+        };
+        if let Some(id) = self.class_singletons.get(&template).copied() {
+            self.stack.push(Value::Class(id));
+            self.frames.last_mut().expect("active frame").pc = end;
+        } else {
+            let environment = self
+                .frames
+                .last()
+                .expect("active frame")
+                .environment
+                .clone();
+            let declaration_code = self.frames.last().map(|frame| frame.block);
+            // Primary Programs can acquire their source after bytecode
+            // compilation. Resolve the missing URI from this class's
+            // declaring block, never from the renderer or its caller.
+            let origin_uri = class.origin_uri.clone().or_else(|| {
+                let metadata = declaration_code.and_then(|code| self.program.metadata.get(code))?;
+                metadata
+                    .unit
+                    .and_then(|unit| self.program.units.get(unit.0 as usize))
+                    .and_then(|unit| {
+                        unit.identity
+                            .as_ref()
+                            .map(|identity| identity.original_uri.clone())
+                            .or_else(|| unit.source.as_ref().map(|source| source.uri.clone()))
+                    })
+                    .or_else(|| metadata.source.as_ref().map(|source| source.uri.clone()))
+            });
+            let mut class = class;
+            class.origin_uri = origin_uri;
+            class.module = class
+                .module
+                .or_else(|| Some(self.current_module_name().into()));
+            let id = self.heap.allocate(Object {
+                class_definition: Some(class),
+                class_initializing: true,
+                declaration_code,
+                environment,
+                ..Object::default()
+            });
+            let class = self.heap.allocate_class(id);
+            self.class_singletons.insert(template, class);
+            self.declaration_roots_dirty = true;
+            self.stack.push(Value::Class(class));
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_set_class_parent(&mut self) -> Result<(), RuntimeError> {
+        let Value::Class(parent) = self.pop()? else {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Superclass must be a class.",
+            ));
+        };
+        let Some(Value::Class(id)) = self.stack.last().cloned() else {
+            return Err(invalid("missing class initialization target"));
+        };
+        let parent_class = self.heap.class_definition(parent)?;
+        if id == parent {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Class `")
+                    .concat(
+                        parent_class
+                            .module
+                            .as_ref()
+                            .unwrap_or(&self.program.module_name),
+                    )
+                    .concat(&"#".into())
+                    .concat(&parent_class.name)
+                    .concat(&"` cannot extend itself.".into()),
+            ));
+        }
+        if !parent_class.open && !parent_class.abstract_ {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Cannot extend non-open class `")
+                    .concat(&reference::type_name(
+                        &TypeCheck::Class {
+                            module: parent_class.module.clone(),
+                            id: parent_class.id,
+                            name: parent_class.name.clone(),
+                        },
+                        &self.program.module_name,
+                    ))
+                    .concat(&"`.".into()),
+            );
+            error.hint = Some("By default, classes are closed for extension.\nTo make a class extensible, add an `open` modifier: `open class MyClass { ... }`".into());
+            return Err(error);
+        }
+        // Upstream ClassNode uses PClassInfo's module-name predicate here.
+        if self.class_external(parent)?
+            && !self
+                .heap
+                .class_definition(id)?
+                .module
+                .as_ref()
+                .is_some_and(|name| name.starts_with("pkl."))
+        {
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Cannot extend external class `")
+                    .concat(&self.heap.class_display_name(parent)?)
+                    .concat(&"`.".into()),
+            );
+            error.hint =
+                Some("External classes can only be extended by standard library classes.".into());
+            return Err(error);
+        }
+        self.heap.link_superclass(id, Some(parent))?;
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_make_instance(&mut self, template: usize, builtin: bool) -> Result<(), RuntimeError> {
+        let Value::Class(parent) = self.pop()? else {
+            return Err(RuntimeError::new(ErrorKind::Type, "Expected a class."));
+        };
+        if self.class_external(parent)? {
+            let name = self.heap.class_display_name(parent)?;
+            let mut error = RuntimeError::new(
+                ErrorKind::Type,
+                format!("Cannot instantiate, or amend an instance of, external class `{name}`."),
+            );
+            error.hint = Some("To create an instance of an external class, use its literal syntax or constructor method.\nExamples:\n* `123` uses literal syntax to create an instance of class `Int`.\n* `Pair(1, 2)` uses the `Pair()` constructor method to create an instance of class `Pair`.".into());
+            return Err(error);
+        }
+        let class_id = parent;
+        let parent = self.heap.get_class(class_id)?.prototype;
+        let class = self
+            .heap
+            .get(parent)?
+            .class_definition
+            .as_ref()
+            .ok_or_else(|| invalid("invalid class handle"))?;
+        self.check_class_instantiable(class)?;
+        let members = if builtin {
+            self.program.builtin_objects.get(template)
+        } else {
+            self.program.objects.get(template)
+        }
+        .ok_or_else(|| invalid("invalid instance template"))?
+        .clone();
+        self.validate_object_members(parent, &members)?;
+        if members.is_empty() {
+            self.stack.push(Value::Object(parent));
+            return Ok(());
+        }
+        let environment = self
+            .frames
+            .last()
+            .expect("active frame")
+            .environment
+            .clone();
+        let id = self.heap.allocate(Object {
+            parent: Some(parent),
+            instance_class: Some(class_id),
+            members: members.into(),
+            environment,
+            ..Object::default()
+        });
+        self.stack.push(Value::Object(id));
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_make_object(&mut self, template: usize, has_parent: bool) -> Result<(), RuntimeError> {
+        let module = self
+            .program
+            .units
+            .iter()
+            .find(|unit| unit.template == template)
+            .cloned();
+        let parent = if has_parent {
+            Some(self.pop()?.as_object()?)
+        } else if module
+            .as_ref()
+            .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain)
+        {
+            let class =
+                self.canonical_builtin_class(classes::BuiltinClass::Ordinary(output::MODULE));
+            Some(self.heap.get_class(class)?.prototype)
+        } else {
+            None
+        };
+        if let Some(id) = parent
+            && self.heap.get(id)?.reference.is_some()
+        {
+            return Err(collections::external_amendment_error("pkl.ref#Reference"));
+        }
+        let members = if let Some(module) = &module {
+            if module.mode == modules::ModuleMode::Amends {
+                Vec::new()
+            } else {
+                module.initial_members.clone()
+            }
+        } else {
+            self.program
+                .objects
+                .get(template)
+                .ok_or_else(|| invalid("invalid object template"))?
+                .clone()
+        };
+        if let Some(parent) = parent
+            && module.is_none()
+        {
+            self.validate_object_members(parent, &members)?;
+            if members.is_empty() {
+                self.stack.push(Value::Object(parent));
+                return Ok(());
+            }
+        }
+        let environment = self
+            .frames
+            .last()
+            .expect("active frame")
+            .environment
+            .clone();
+        let definition = Object {
+            ref_module: module.as_ref().is_some_and(|unit| {
+                unit.standard_library
+                    && unit
+                        .identity
+                        .as_ref()
+                        .is_some_and(|identity| identity.original_uri == "pkl:ref")
+            }),
+            is_module: module
+                .as_ref()
+                .is_some_and(|unit| unit.mode != modules::ModuleMode::Amends),
+            module_unit: module.as_ref().map(|unit| unit.id),
+            class_definition: module
+                .as_ref()
+                .filter(|unit| unit.mode != modules::ModuleMode::Amends)
+                .map(|unit| {
+                    Box::new(Class {
+                        module: None,
+                        origin_uri: unit
+                            .identity
+                            .as_ref()
+                            .map(|identity| identity.original_uri.clone())
+                            .or_else(|| unit.source.as_ref().map(|source| source.uri.clone())),
+                        id: unit.class_id,
+                        name: if unit.id.0 == 0 {
+                            self.program.module_name.clone()
                         } else {
-                            "read"
-                        };
-                        let headline = PklString::join(
-                            &[
-                                format!("Operator `{operator}` is not defined for operand type `")
-                                    .into(),
-                                crate::diagnostic_values::type_name(
-                                    &operand,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                )?,
-                                "`.".into(),
-                            ],
-                            "",
-                        );
-                        let rendered = crate::diagnostic_values::render(
+                            unit.name.clone()
+                        },
+                        open: unit.modifiers & crate::syntax::ModifierKind::Open.flag() != 0,
+                        abstract_: unit.modifiers & crate::syntax::ModifierKind::Abstract.flag()
+                            != 0,
+                    })
+                }),
+            class_initializing: module
+                .as_ref()
+                .is_some_and(|unit| unit.mode == modules::ModuleMode::Extends),
+            class_superclass_initialized: module
+                .as_ref()
+                .is_some_and(|unit| unit.mode == modules::ModuleMode::Plain),
+            module_initializing: module.is_some(),
+            published_module_members: if module.is_some() {
+                members.iter().map(|m| m.code).collect()
+            } else {
+                crate::heap::ThinBTreeSet::default()
+            },
+            parent,
+            members: members.into(),
+            environment,
+            ..Object::default()
+        };
+        let existing = self
+            .frames
+            .last()
+            .and_then(|frame| frame.module_receiver)
+            .filter(|_| module.is_some());
+        let object = if let Some(receiver) = existing {
+            let module_unit = definition.module_unit;
+            *self.heap.get_mut(receiver)? = definition;
+            // Replacing a pre-allocated module placeholder in place changes
+            // its runtime kind/class (e.g. Dynamic -> Typed), invalidating
+            // any cached strict-collection checks that observed it.
+            self.verified_strict_collections.clear();
+            if let Some(unit_id) = module_unit {
+                self.heap.register_module(unit_id, receiver);
+            }
+            receiver
+        } else {
+            self.heap.allocate(definition)
+        };
+        if self.heap.get(object)?.class_definition.is_some() {
+            let class = self.heap.allocate_class(object);
+            if let Some(parent) = parent {
+                let superclass = self
+                    .heap
+                    .object_class(parent)?
+                    .ok_or_else(|| invalid("module superclass"))?;
+                self.heap.link_superclass(class, Some(superclass))?;
+            }
+        } else if let Some(parent) = parent {
+            let class = self.heap.object_class(parent)?;
+            self.heap.get_mut(object)?.instance_class = class;
+        }
+        if let Some(unit) = &module {
+            self.frames.last_mut().unwrap().module_receiver = Some(object);
+            if let Some(identity) = &unit.identity {
+                if let Some(key) = unit.singleton_cache_key() {
+                    self.modules_stdlib
+                        .insert(key.into(), modules::CachedModule::Value(object));
+                } else {
+                    self.modules_original.insert(
+                        identity.original_uri.clone(),
+                        modules::CachedModule::Value(object),
+                    );
+                    self.last_warm_module = None;
+                    self.modules_resolved.insert(
+                        identity.resolved_uri.clone(),
+                        modules::CachedModule::Value(object),
+                    );
+                }
+            }
+        }
+        self.stack.push(Value::Object(object));
+        if module.is_some() {
+            self.frames
+                .last_mut()
+                .expect("module frame")
+                .environment
+                .scopes
+                .push(Scope {
+                    receiver: object,
+                    owner: object,
+                });
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn step_read_resource(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        let nullable = matches!(instruction, Instruction::ReadResourceOrNull);
+        let glob_spec = match instruction {
+            Instruction::ReadResourceGlob(spec) => Some(spec),
+            _ => None,
+        };
+        let glob = glob_spec.is_some();
+        if self.callback_closing {
+            return Err(RuntimeError::new(ErrorKind::Closed, "evaluator is closing"));
+        }
+        let uri = match self.pop()? {
+            Value::String(uri) => uri,
+            operand => {
+                let operator = if glob {
+                    "read*"
+                } else if nullable {
+                    "read?"
+                } else {
+                    "read"
+                };
+                let headline = PklString::join(
+                    &[
+                        format!("Operator `{operator}` is not defined for operand type `").into(),
+                        crate::diagnostic_values::type_name(
                             &operand,
                             &self.heap,
                             &self.program.module_name,
-                            80,
-                        )?;
-                        return Err(RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            headline,
-                            &[("Operand", rendered)],
-                        ));
-                    }
-                };
-                if let Some(spec) = glob_spec {
-                    return self.begin_glob(*spec, uri);
-                }
-                if self.in_stdlib_bootstrap() {
-                    // StdLibModule's private context contains no caller properties
-                    // or environment. Only base's nullable format read is required.
-                    if nullable && uri == "prop:pkl.outputFormat" {
-                        self.stack.push(Value::Null);
-                        return Ok(());
-                    }
-                    return Err(RuntimeError::new(
-                        ErrorKind::Unsupported,
-                        "Resource reader is unavailable in standard-library initialization.",
-                    ));
-                }
-                let id = self.next_request;
-                self.next_request = id
-                    .checked_add(1)
-                    .ok_or_else(|| invalid("Host request IDs exhausted"))?;
-                let module_uri = self
-                    .frames
+                        )?,
+                        "`.".into(),
+                    ],
+                    "",
+                );
+                let rendered = crate::diagnostic_values::render(
+                    &operand,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Operand", rendered)],
+                ));
+            }
+        };
+        if let Some(spec) = glob_spec {
+            return self.begin_glob(*spec, uri);
+        }
+        if self.in_stdlib_bootstrap() {
+            // StdLibModule's private context contains no caller properties
+            // or environment. Only base's nullable format read is required.
+            if nullable && uri == "prop:pkl.outputFormat" {
+                self.stack.push(Value::Null);
+                return Ok(());
+            }
+            return Err(RuntimeError::new(
+                ErrorKind::Unsupported,
+                "Resource reader is unavailable in standard-library initialization.",
+            ));
+        }
+        let id = self.next_request;
+        self.next_request = id
+            .checked_add(1)
+            .ok_or_else(|| invalid("Host request IDs exhausted"))?;
+        let module_uri = self
+            .frames
+            .last()
+            .and_then(|frame| self.program.metadata.get(frame.block))
+            .and_then(|metadata| {
+                metadata
+                    .unit
+                    .and_then(|unit| self.program.units.get(unit.0 as usize))
+                    // Explicit foreign source metadata can replace a
+                    // primary compiled block's declaration provenance.
+                    // Its old unit ID must not override that source.
+                    .filter(|unit| match (&metadata.source, &unit.source) {
+                        (None, _) => unit.id == crate::modules::UnitId(0) && !unit.standard_library,
+                        (Some(source), Some(unit_source)) => Arc::ptr_eq(source, unit_source),
+                        _ => false,
+                    })
+            })
+            .and_then(|unit| unit.identity.as_ref())
+            .map(|identity| identity.original_uri.clone())
+            .or_else(|| {
+                self.frames
                     .last()
                     .and_then(|frame| self.program.metadata.get(frame.block))
-                    .and_then(|metadata| {
-                        metadata
-                            .unit
-                            .and_then(|unit| self.program.units.get(unit.0 as usize))
-                            // Explicit foreign source metadata can replace a
-                            // primary compiled block's declaration provenance.
-                            // Its old unit ID must not override that source.
-                            .filter(|unit| match (&metadata.source, &unit.source) {
-                                (None, _) => {
-                                    unit.id == crate::modules::UnitId(0) && !unit.standard_library
-                                }
-                                (Some(source), Some(unit_source)) => {
-                                    Arc::ptr_eq(source, unit_source)
-                                }
-                                _ => false,
-                            })
-                    })
-                    .and_then(|unit| unit.identity.as_ref())
-                    .map(|identity| identity.original_uri.clone())
-                    .or_else(|| {
-                        self.frames
-                            .last()
-                            .and_then(|frame| self.program.metadata.get(frame.block))
-                            .and_then(|metadata| metadata.source.as_ref())
-                            .or(self.context.primary_source.as_ref())
-                            .map(|source| source.uri.clone())
-                    });
-                let request = ReadRequest {
-                    id,
-                    uri,
-                    module_uri,
-                    resolved_uri: None,
-                    nullable,
-                };
-                self.begin_read_resolution(request)?;
-            }
-            Instruction::Return => {
-                unreachable!("Return instruction uses its bounded dispatcher")
-            }
-        }
+                    .and_then(|metadata| metadata.source.as_ref())
+                    .or(self.context.primary_source.as_ref())
+                    .map(|source| source.uri.clone())
+            });
+        let request = ReadRequest {
+            id,
+            uri,
+            module_uri,
+            resolved_uri: None,
+            nullable,
+        };
+        self.begin_read_resolution(request)?;
         Ok(())
     }
 
@@ -12198,6 +11641,9 @@ fn fast_strict_type_key(
     }
 }
 
+const FAST_POLL_TYPE_STRUCT_BUDGET: usize = 256;
+const FAST_POLL_TYPE_EVAL_BUDGET: usize = 8192;
+
 #[allow(clippy::too_many_arguments)]
 fn fast_type_is_resolved(
     ty: &TypeCheck,
@@ -12208,13 +11654,15 @@ fn fast_type_is_resolved(
     builtin_classes: FastBuiltinClasses,
     fallback_module: Option<ObjectId>,
     depth: u8,
+    budget: &mut usize,
 ) -> bool {
     if !ty.has_declared() {
         return true;
     }
-    if depth >= 8 {
+    if depth >= 8 || *budget == 0 {
         return false;
     }
+    *budget -= 1;
     match ty.resolved() {
         TypeCheck::Nullable(inner) | TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
             fast_type_is_resolved(
@@ -12226,6 +11674,7 @@ fn fast_type_is_resolved(
                 builtin_classes,
                 fallback_module,
                 depth + 1,
+                budget,
             )
         }
         TypeCheck::Union { types, .. } => types.iter().all(|alt| {
@@ -12238,6 +11687,7 @@ fn fast_type_is_resolved(
                 builtin_classes,
                 fallback_module,
                 depth + 1,
+                budget,
             )
         }),
         TypeCheck::ParameterizedCollection {
@@ -12252,6 +11702,7 @@ fn fast_type_is_resolved(
             builtin_classes,
             fallback_module,
             depth + 1,
+            budget,
         ),
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
@@ -12266,6 +11717,7 @@ fn fast_type_is_resolved(
                 builtin_classes,
                 fallback_module,
                 depth + 1,
+                budget,
             ) && fast_type_is_resolved(
                 &arguments[1].0,
                 env,
@@ -12275,6 +11727,7 @@ fn fast_type_is_resolved(
                 builtin_classes,
                 fallback_module,
                 depth + 1,
+                budget,
             )
         }
         TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => {
@@ -12288,6 +11741,7 @@ fn fast_type_is_resolved(
                     builtin_classes,
                     fallback_module,
                     depth + 1,
+                    budget,
                 )
             })
         }
@@ -12313,6 +11767,7 @@ fn fast_type_is_resolved(
                             builtin_classes,
                             fallback_module,
                             depth + 1,
+                            budget,
                         )
                     } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
                         fast_type_is_resolved(
@@ -12324,6 +11779,7 @@ fn fast_type_is_resolved(
                             builtin_classes,
                             fallback_module,
                             depth + 1,
+                            budget,
                         ) && fast_type_is_resolved(
                             &arguments[1],
                             env,
@@ -12333,6 +11789,7 @@ fn fast_type_is_resolved(
                             builtin_classes,
                             fallback_module,
                             depth + 1,
+                            budget,
                         )
                     } else {
                         false
@@ -12363,6 +11820,7 @@ fn fast_type_is_resolved(
                             builtin_classes,
                             None,
                             depth + 1,
+                            budget,
                         )
                 }
                 Some(type_resolution::DeclarationValue::Builtin(bty)) if arguments.is_empty() => {
@@ -12375,6 +11833,7 @@ fn fast_type_is_resolved(
                         builtin_classes,
                         fallback_module,
                         depth + 1,
+                        budget,
                     )
                 }
                 _ => false,
@@ -12396,8 +11855,10 @@ fn fast_eval_strict_list_in_poll(
     fallback_module: Option<ObjectId>,
     mut verified: Option<&mut VerifiedStrictMap>,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
     let Value::Object(id) = val else {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12407,6 +11868,7 @@ fn fast_eval_strict_list_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(false);
     };
@@ -12417,6 +11879,7 @@ fn fast_eval_strict_list_in_poll(
         || obj.reference.is_some()
         || obj.ref_module
     {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12426,6 +11889,7 @@ fn fast_eval_strict_list_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(false);
     }
@@ -12440,6 +11904,7 @@ fn fast_eval_strict_list_in_poll(
         return Some(true);
     }
     if elems.is_empty() {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12449,6 +11914,7 @@ fn fast_eval_strict_list_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(true);
     }
@@ -12473,7 +11939,7 @@ fn fast_eval_strict_list_in_poll(
         return Some(true);
     }
     for elem in elems {
-        match fast_eval_type_in_poll(
+        match fast_eval_type_in_poll_budget(
             elem_ty,
             elem,
             env,
@@ -12484,6 +11950,7 @@ fn fast_eval_strict_list_in_poll(
             fallback_module,
             verified.as_deref_mut(),
             depth,
+            budget,
         ) {
             Some(true) => continue,
             Some(false) => return Some(false),
@@ -12510,8 +11977,10 @@ fn fast_eval_strict_set_in_poll(
     fallback_module: Option<ObjectId>,
     mut verified: Option<&mut VerifiedStrictMap>,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
     let Value::Object(id) = val else {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12521,6 +11990,7 @@ fn fast_eval_strict_set_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(false);
     };
@@ -12531,6 +12001,7 @@ fn fast_eval_strict_set_in_poll(
         || obj.reference.is_some()
         || obj.ref_module
     {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12540,6 +12011,7 @@ fn fast_eval_strict_set_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(false);
     }
@@ -12554,6 +12026,7 @@ fn fast_eval_strict_set_in_poll(
         return None;
     }
     if order.is_empty() {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         return fast_type_is_resolved(
             elem_ty,
             env,
@@ -12563,6 +12036,7 @@ fn fast_eval_strict_set_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
         .then_some(true);
     }
@@ -12588,7 +12062,7 @@ fn fast_eval_strict_set_in_poll(
     }
     for &idx in order {
         let elem = obj.set_entries.get(idx)?;
-        match fast_eval_type_in_poll(
+        match fast_eval_type_in_poll_budget(
             elem_ty,
             elem,
             env,
@@ -12599,6 +12073,7 @@ fn fast_eval_strict_set_in_poll(
             fallback_module,
             verified.as_deref_mut(),
             depth,
+            budget,
         ) {
             Some(true) => continue,
             Some(false) => return Some(false),
@@ -12626,8 +12101,10 @@ fn fast_eval_strict_map_in_poll(
     fallback_module: Option<ObjectId>,
     mut verified: Option<&mut VerifiedStrictMap>,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
-    let resolved_both = || {
+    let resolved_both = |budget: &mut usize| {
+        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
         fast_type_is_resolved(
             key_ty,
             env,
@@ -12637,6 +12114,7 @@ fn fast_eval_strict_map_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         ) && fast_type_is_resolved(
             val_ty,
             env,
@@ -12646,10 +12124,11 @@ fn fast_eval_strict_map_in_poll(
             builtin_classes,
             fallback_module,
             depth,
+            &mut struct_budget,
         )
     };
     let Value::Object(id) = val else {
-        return resolved_both().then_some(false);
+        return resolved_both(budget).then_some(false);
     };
     let obj = heap.get(*id).ok()?;
     if obj.collection_kind != crate::heap::CollectionKind::Map
@@ -12658,7 +12137,7 @@ fn fast_eval_strict_map_in_poll(
         || obj.reference.is_some()
         || obj.ref_module
     {
-        return resolved_both().then_some(false);
+        return resolved_both(budget).then_some(false);
     }
     if obj.parent.is_some() || obj.instance_class.is_some() || obj.class_definition.is_some() {
         return None;
@@ -12668,7 +12147,7 @@ fn fast_eval_strict_map_in_poll(
     if key_noop && val_noop {
         return Some(true);
     }
-    if (key_ty.has_declared() || val_ty.has_declared()) && !resolved_both() {
+    if (key_ty.has_declared() || val_ty.has_declared()) && !resolved_both(budget) {
         return None;
     }
     if obj.length == 0 {
@@ -12708,13 +12187,14 @@ fn fast_eval_strict_map_in_poll(
     }
     let check_member = |member: &crate::heap::CollectionMember,
                         slot_hint: Option<usize>,
-                        verified: &mut Option<&mut VerifiedStrictMap>|
+                        verified: &mut Option<&mut VerifiedStrictMap>,
+                        budget: &mut usize|
      -> Option<bool> {
         if member.kind == crate::heap::CollectionMemberKind::Property {
             return Some(true);
         }
         if !key_noop {
-            match fast_eval_type_in_poll(
+            match fast_eval_type_in_poll_budget(
                 key_ty,
                 &member.key,
                 env,
@@ -12725,6 +12205,7 @@ fn fast_eval_strict_map_in_poll(
                 fallback_module,
                 verified.as_deref_mut(),
                 depth,
+                budget,
             ) {
                 Some(true) => {}
                 other => return other,
@@ -12750,7 +12231,7 @@ fn fast_eval_strict_map_in_poll(
                     entry: true,
                 })?
             };
-            match fast_eval_type_in_poll(
+            match fast_eval_type_in_poll_budget(
                 val_ty,
                 entry_val,
                 env,
@@ -12761,6 +12242,7 @@ fn fast_eval_strict_map_in_poll(
                 fallback_module,
                 verified.as_deref_mut(),
                 depth,
+                budget,
             ) {
                 Some(true) => {}
                 other => return other,
@@ -12770,7 +12252,7 @@ fn fast_eval_strict_map_in_poll(
     };
     if let Some(order) = obj.map_key_order.as_deref() {
         for member in order {
-            match check_member(member, None, &mut verified) {
+            match check_member(member, None, &mut verified, budget) {
                 Some(true) => continue,
                 other => return other,
             }
@@ -12782,7 +12264,7 @@ fn fast_eval_strict_map_in_poll(
         }
         for &idx in order {
             let member = obj.collection_members.get(idx)?;
-            match check_member(member, Some(idx), &mut verified) {
+            match check_member(member, Some(idx), &mut verified, budget) {
                 Some(true) => continue,
                 other => return other,
             }
@@ -12807,13 +12289,78 @@ fn fast_eval_type_in_poll(
     program: &Program,
     builtin_classes: FastBuiltinClasses,
     fallback_module: Option<ObjectId>,
-    mut verified: Option<&mut VerifiedStrictMap>,
+    verified: Option<&mut VerifiedStrictMap>,
     depth: u8,
 ) -> Option<bool> {
+    let mut budget = FAST_POLL_TYPE_EVAL_BUDGET;
+    fast_eval_type_in_poll_budget(
+        ty,
+        val,
+        env,
+        heap,
+        resolved_declarations,
+        program,
+        builtin_classes,
+        fallback_module,
+        verified,
+        depth,
+        &mut budget,
+    )
+}
+
+#[inline(always)]
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_type_in_poll_budget(
+    ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &ResolvedDeclMap,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    verified: Option<&mut VerifiedStrictMap>,
+    depth: u8,
+    budget: &mut usize,
+) -> Option<bool> {
+    if *budget == 0 {
+        return None;
+    }
+    *budget -= 1;
     if let Some(matched) = typecheck::try_fast_leaf_type(ty, val) {
         return Some(matched);
     }
-    if depth >= 8 {
+    fast_eval_type_in_poll_slow(
+        ty,
+        val,
+        env,
+        heap,
+        resolved_declarations,
+        program,
+        builtin_classes,
+        fallback_module,
+        verified,
+        depth,
+        budget,
+    )
+}
+
+#[cfg_attr(target_arch = "wasm32", inline(never))]
+#[allow(clippy::too_many_arguments)]
+fn fast_eval_type_in_poll_slow(
+    ty: &TypeCheck,
+    val: &Value,
+    env: &Environment,
+    heap: &Heap,
+    resolved_declarations: &ResolvedDeclMap,
+    program: &Program,
+    builtin_classes: FastBuiltinClasses,
+    fallback_module: Option<ObjectId>,
+    mut verified: Option<&mut VerifiedStrictMap>,
+    depth: u8,
+    budget: &mut usize,
+) -> Option<bool> {
+    if depth >= 8 || *budget == 0 {
         return None;
     }
     match ty.resolved() {
@@ -12847,6 +12394,7 @@ fn fast_eval_type_in_poll(
                 if matches!(inner.resolved(), TypeCheck::VarArgs { .. }) {
                     return None;
                 }
+                let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
                 fast_type_is_resolved(
                     inner,
                     env,
@@ -12856,10 +12404,11 @@ fn fast_eval_type_in_poll(
                     builtin_classes,
                     fallback_module,
                     depth + 1,
+                    &mut struct_budget,
                 )
                 .then_some(true)
             } else {
-                fast_eval_type_in_poll(
+                fast_eval_type_in_poll_budget(
                     inner,
                     val,
                     env,
@@ -12870,10 +12419,11 @@ fn fast_eval_type_in_poll(
                     fallback_module,
                     verified,
                     depth + 1,
+                    budget,
                 )
             }
         }
-        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => fast_eval_type_in_poll(
+        TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => fast_eval_type_in_poll_budget(
             inner,
             val,
             env,
@@ -12884,13 +12434,14 @@ fn fast_eval_type_in_poll(
             fallback_module,
             verified,
             depth + 1,
+            budget,
         ),
         TypeCheck::NamedAlias {
             arguments,
             expanded,
             ..
         } if !expanded.has_declared() && arguments.iter().all(|a| !a.has_declared()) => {
-            fast_eval_type_in_poll(
+            fast_eval_type_in_poll_budget(
                 expanded,
                 val,
                 env,
@@ -12901,6 +12452,7 @@ fn fast_eval_type_in_poll(
                 fallback_module,
                 verified,
                 depth + 1,
+                budget,
             )
         }
         TypeCheck::Union {
@@ -12921,7 +12473,7 @@ fn fast_eval_type_in_poll(
             ..
         } if !types.is_empty() => {
             for (idx, alt) in types.iter().enumerate() {
-                match fast_eval_type_in_poll(
+                match fast_eval_type_in_poll_budget(
                     alt,
                     val,
                     env,
@@ -12932,8 +12484,10 @@ fn fast_eval_type_in_poll(
                     fallback_module,
                     verified.as_deref_mut(),
                     depth + 1,
+                    budget,
                 ) {
                     Some(true) => {
+                        let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
                         if types[idx + 1..].iter().all(|rest| {
                             fast_type_is_resolved(
                                 rest,
@@ -12944,6 +12498,7 @@ fn fast_eval_type_in_poll(
                                 builtin_classes,
                                 fallback_module,
                                 depth + 1,
+                                &mut struct_budget,
                             )
                         }) {
                             return Some(true);
@@ -12970,6 +12525,7 @@ fn fast_eval_type_in_poll(
             fallback_module,
             verified,
             depth + 1,
+            budget,
         ),
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Set,
@@ -12985,6 +12541,7 @@ fn fast_eval_type_in_poll(
             fallback_module,
             verified,
             depth + 1,
+            budget,
         ),
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
@@ -13001,6 +12558,7 @@ fn fast_eval_type_in_poll(
             fallback_module,
             verified,
             depth + 1,
+            budget,
         ),
         TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
             TypeCheck::CollectionBase {
@@ -13011,6 +12569,7 @@ fn fast_eval_type_in_poll(
         TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
             let elem_ty = &arguments[0].0;
             let Value::Object(id) = val else {
+                let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
                 return fast_type_is_resolved(
                     elem_ty,
                     env,
@@ -13020,6 +12579,7 @@ fn fast_eval_type_in_poll(
                     builtin_classes,
                     fallback_module,
                     depth + 1,
+                    &mut struct_budget,
                 )
                 .then_some(false);
             };
@@ -13036,6 +12596,7 @@ fn fast_eval_type_in_poll(
                     fallback_module,
                     verified,
                     depth + 1,
+                    budget,
                 ),
                 crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
                     elem_ty,
@@ -13048,18 +12609,23 @@ fn fast_eval_type_in_poll(
                     fallback_module,
                     verified,
                     depth + 1,
+                    budget,
                 ),
-                _ => fast_type_is_resolved(
-                    elem_ty,
-                    env,
-                    heap,
-                    resolved_declarations,
-                    program,
-                    builtin_classes,
-                    fallback_module,
-                    depth + 1,
-                )
-                .then_some(false),
+                _ => {
+                    let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
+                    fast_type_is_resolved(
+                        elem_ty,
+                        env,
+                        heap,
+                        resolved_declarations,
+                        program,
+                        builtin_classes,
+                        fallback_module,
+                        depth + 1,
+                        &mut struct_budget,
+                    )
+                    .then_some(false)
+                }
             }
         }
         TypeCheck::Function {
@@ -13097,7 +12663,7 @@ fn fast_eval_type_in_poll(
                         if let Some(specialized) =
                             classes::specialized_type(class.module.as_ref(), &class.name)
                         {
-                            fast_eval_type_in_poll(
+                            fast_eval_type_in_poll_budget(
                                 &specialized,
                                 val,
                                 env,
@@ -13108,6 +12674,7 @@ fn fast_eval_type_in_poll(
                                 fallback_module,
                                 verified,
                                 depth + 1,
+                                budget,
                             )
                         } else if class.id != classes::TYPED
                             && let Value::Object(val_id) = val
@@ -13133,6 +12700,7 @@ fn fast_eval_type_in_poll(
                             fallback_module,
                             verified,
                             depth + 1,
+                            budget,
                         )
                     } else if arguments.len() == 1 && builtin_classes.set == Some(*target_cls) {
                         fast_eval_strict_set_in_poll(
@@ -13146,6 +12714,7 @@ fn fast_eval_type_in_poll(
                             fallback_module,
                             verified,
                             depth + 1,
+                            budget,
                         )
                     } else if arguments.len() == 2 && builtin_classes.map == Some(*target_cls) {
                         fast_eval_strict_map_in_poll(
@@ -13160,11 +12729,13 @@ fn fast_eval_type_in_poll(
                             fallback_module,
                             verified,
                             depth + 1,
+                            budget,
                         )
                     } else if arguments.len() == 1
                         && builtin_classes.collection == Some(*target_cls)
                     {
                         let Value::Object(id) = val else {
+                            let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
                             return fast_type_is_resolved(
                                 &arguments[0],
                                 env,
@@ -13174,6 +12745,7 @@ fn fast_eval_type_in_poll(
                                 builtin_classes,
                                 fallback_module,
                                 depth + 1,
+                                &mut struct_budget,
                             )
                             .then_some(false);
                         };
@@ -13190,6 +12762,7 @@ fn fast_eval_type_in_poll(
                                 fallback_module,
                                 verified,
                                 depth + 1,
+                                budget,
                             ),
                             crate::heap::CollectionKind::Set => fast_eval_strict_set_in_poll(
                                 &arguments[0],
@@ -13202,18 +12775,23 @@ fn fast_eval_type_in_poll(
                                 fallback_module,
                                 verified,
                                 depth + 1,
+                                budget,
                             ),
-                            _ => fast_type_is_resolved(
-                                &arguments[0],
-                                env,
-                                heap,
-                                resolved_declarations,
-                                program,
-                                builtin_classes,
-                                fallback_module,
-                                depth + 1,
-                            )
-                            .then_some(false),
+                            _ => {
+                                let mut struct_budget = (*budget).min(FAST_POLL_TYPE_STRUCT_BUDGET);
+                                fast_type_is_resolved(
+                                    &arguments[0],
+                                    env,
+                                    heap,
+                                    resolved_declarations,
+                                    program,
+                                    builtin_classes,
+                                    fallback_module,
+                                    depth + 1,
+                                    &mut struct_budget,
+                                )
+                                .then_some(false)
+                            }
                         }
                     } else {
                         None
@@ -13231,7 +12809,7 @@ fn fast_eval_type_in_poll(
                         if !meta.parameters.is_empty() {
                             return None;
                         }
-                        fast_eval_type_in_poll(
+                        fast_eval_type_in_poll_budget(
                             &meta.body,
                             val,
                             &alias.environment,
@@ -13242,6 +12820,7 @@ fn fast_eval_type_in_poll(
                             None,
                             verified,
                             depth + 1,
+                            budget,
                         )
                     } else {
                         let name = alias.type_alias.as_ref().and_then(PklString::as_str)?;
@@ -13271,7 +12850,7 @@ fn fast_eval_type_in_poll(
                     }
                 }
                 Some(type_resolution::DeclarationValue::Builtin(bty)) if arguments.is_empty() => {
-                    fast_eval_type_in_poll(
+                    fast_eval_type_in_poll_budget(
                         bty,
                         val,
                         env,
@@ -13282,6 +12861,7 @@ fn fast_eval_type_in_poll(
                         fallback_module,
                         verified,
                         depth + 1,
+                        budget,
                     )
                 }
                 _ => None,
@@ -13291,7 +12871,847 @@ fn fast_eval_type_in_poll(
     }
 }
 
-#[inline]
+#[allow(clippy::too_many_arguments, clippy::vec_box)]
+#[cfg_attr(target_arch = "wasm32", inline(never))]
+fn poll_fast_get_method(
+    name: &PklString,
+    code: &[Instruction],
+    pc: usize,
+    block: usize,
+    consumed: usize,
+    max_steps: usize,
+    active_type_trackers: usize,
+    frames: &[Box<Frame>],
+    stack: &mut identity::OperandStack,
+    heap: &mut Heap,
+    program: &Program,
+    executable_roots: &ExecutableRoots,
+    cur_exec_block: &mut usize,
+    cur_exec_root: &mut Option<ExecutableOwnerId>,
+) -> Option<usize> {
+    if name == "toString"
+        && active_type_trackers == 0
+        && let Some(Value::Int(n)) = stack.last()
+    {
+        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+            (
+                Some(Instruction::PrepareMethodCall {
+                    lookup,
+                    arity: 0,
+                    after_arguments: false,
+                }),
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l2,
+                    arity: 0,
+                    after_arguments: true,
+                }),
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+            ) if *lookup == pc && *l2 == pc => 4,
+            (
+                Some(Instruction::PrepareMethodCall {
+                    lookup, arity: 0, ..
+                }),
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+                _,
+            ) if *lookup == pc => 3,
+            (
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+                _,
+                _,
+            ) => 2,
+            _ => 0,
+        };
+        if skip > 0 && consumed + skip <= max_steps {
+            let frame = frames.last().unwrap();
+            let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                Some(o)
+            } else {
+                if *cur_exec_block != block {
+                    *cur_exec_block = block;
+                    *cur_exec_root = executable_roots.get(&block).copied();
+                }
+                *cur_exec_root
+            };
+            if !exec_owner.is_some_and(|owner| {
+                heap.existing_method_call_cache(owner, (block, pc))
+                    .ok()
+                    .flatten()
+                    .is_some_and(|c| {
+                        c.is_megamorphic() || c.contains_builtin_class(classes::BuiltinClass::Int)
+                    })
+            }) {
+                return None;
+            }
+            let s = if let (
+                Some(Instruction::Constant(Value::String(suffix))),
+                Some(Instruction::Add),
+            ) = (code.get(pc + skip), code.get(pc + skip + 1))
+                && consumed + skip + 2 <= max_steps
+                && let Some(sfx) = suffix.as_str()
+                && sfx.is_ascii()
+                && sfx.len() <= 16
+            {
+                let mut ibuf = [0u8; 24];
+                let num_str = format_i64_buf(n.get(), &mut ibuf);
+                let mut out = [0u8; 40];
+                let nlen = num_str.len();
+                let slen = sfx.len();
+                out[..nlen].copy_from_slice(num_str.as_bytes());
+                out[nlen..nlen + slen].copy_from_slice(sfx.as_bytes());
+                let combined = PklString::from(
+                    std::str::from_utf8(&out[..nlen + slen]).expect("ASCII integer + suffix"),
+                );
+                let Some(Value::Int(_)) = stack.pop() else {
+                    unreachable!()
+                };
+                stack.push_raw(Value::String(combined));
+                return Some(skip + 2);
+            } else {
+                format_i64_pkl_string(n.get())
+            };
+            let Some(Value::Int(_)) = stack.pop() else {
+                unreachable!()
+            };
+            stack.push_raw(Value::String(s));
+            return Some(skip);
+        }
+        return None;
+    }
+    if active_type_trackers == 0
+        && let Some(Value::String(text)) = stack.last()
+    {
+        if name == "toString" {
+            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                (
+                    Some(Instruction::PrepareMethodCall {
+                        lookup,
+                        arity: 0,
+                        after_arguments: false,
+                    }),
+                    Some(Instruction::PrepareMethodCall {
+                        lookup: l2,
+                        arity: 0,
+                        after_arguments: true,
+                    }),
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                ) if *lookup == pc && *l2 == pc => 4,
+                (
+                    Some(Instruction::PrepareMethodCall {
+                        lookup, arity: 0, ..
+                    }),
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                    _,
+                ) if *lookup == pc => 3,
+                (
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                    _,
+                    _,
+                ) => 2,
+                _ => 0,
+            };
+            if skip > 0 && consumed + skip <= max_steps {
+                let frame = frames.last().unwrap();
+                let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                    Some(o)
+                } else {
+                    if *cur_exec_block != block {
+                        *cur_exec_block = block;
+                        *cur_exec_root = executable_roots.get(&block).copied();
+                    }
+                    *cur_exec_root
+                };
+                if exec_owner.is_some_and(|owner| {
+                    heap.existing_method_call_cache(owner, (block, pc))
+                        .ok()
+                        .flatten()
+                        .is_some_and(|c| {
+                            c.is_megamorphic()
+                                || c.contains_builtin_class(classes::BuiltinClass::String)
+                        })
+                }) {
+                    return Some(skip);
+                }
+            }
+        } else if matches!(name.as_str(), Some("startsWith" | "endsWith" | "contains"))
+            && consumed + 5 <= max_steps
+            && let (
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l1,
+                    arity: 0,
+                    after_arguments: false,
+                }),
+                Some(arg_instr),
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l2,
+                    arity: 1,
+                    after_arguments: true,
+                }),
+                Some(Instruction::Call {
+                    arity: 1,
+                    method: true,
+                }),
+            ) = (
+                code.get(pc + 1),
+                code.get(pc + 2),
+                code.get(pc + 3),
+                code.get(pc + 4),
+            )
+            && *l1 == pc
+            && *l2 == pc
+        {
+            let frame = frames.last().unwrap();
+            let arg_str = match arg_instr {
+                Instruction::Constant(Value::String(s)) => Some(s),
+                Instruction::LoadLocal(depth) => depth
+                    .checked_add(1)
+                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                    .and_then(|idx| match &frame.environment.locals[idx] {
+                        Value::String(s) => Some(s),
+                        _ => None,
+                    }),
+                _ => None,
+            };
+            if let Some(pat) = arg_str
+                && let (Some(t), Some(p)) = (text.as_str(), pat.as_str())
+            {
+                let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                    Some(o)
+                } else {
+                    if *cur_exec_block != block {
+                        *cur_exec_block = block;
+                        *cur_exec_root = executable_roots.get(&block).copied();
+                    }
+                    *cur_exec_root
+                };
+                if exec_owner.is_some_and(|owner| {
+                    heap.existing_method_call_cache(owner, (block, pc))
+                        .ok()
+                        .flatten()
+                        .is_some_and(|c| {
+                            c.is_megamorphic()
+                                || c.contains_builtin_class(classes::BuiltinClass::String)
+                        })
+                }) {
+                    let res = match name.as_str() {
+                        Some("startsWith") => t.starts_with(p),
+                        Some("endsWith") => t.ends_with(p),
+                        _ => t.contains(p),
+                    };
+                    stack.pop();
+                    stack.push_raw(Value::Bool(res));
+                    return Some(5);
+                }
+            }
+        }
+        return None;
+    }
+    let &Value::Object(recv_id) = stack.last()? else {
+        return None;
+    };
+    let obj = heap.get(recv_id).ok()?;
+    if obj.collection_kind == CollectionKind::Dynamic
+        && obj.reference.is_none()
+        && obj.pair.is_none()
+        && obj.function.is_none()
+        && obj.native_function.is_none()
+        && (obj.class_definition.is_none() || obj.is_module)
+        && obj.member_deprecations.is_empty()
+    {
+        let val = fast_lookup_cached(obj, None, name, true)?;
+        let cloned = val.clone();
+        let Some(Value::Object(_)) = stack.pop() else {
+            unreachable!()
+        };
+        stack.push_raw(cloned);
+        return Some(1);
+    }
+    if obj.collection_kind == CollectionKind::List
+        && obj.parent.is_none()
+        && obj.instance_class.is_none()
+        && obj.pair.is_none()
+        && obj.reference.is_none()
+        && obj.foreign_map_entry.is_none()
+        && matches!(name.as_str(), Some("map" | "fold" | "toList" | "contains"))
+    {
+        let frame = frames.last().unwrap();
+        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+            Some(o)
+        } else {
+            if *cur_exec_block != block {
+                *cur_exec_block = block;
+                *cur_exec_root = executable_roots.get(&block).copied();
+            }
+            *cur_exec_root
+        };
+        let cached_list = exec_owner.is_some_and(|owner| {
+            heap.existing_method_call_cache(owner, (block, pc))
+                .ok()
+                .flatten()
+                .is_some_and(|c| {
+                    c.is_megamorphic() || c.contains_builtin_class(classes::BuiltinClass::List)
+                })
+        });
+        if !cached_list {
+            return None;
+        }
+        if name == "toList" && active_type_trackers == 0 {
+            let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+                (
+                    Some(Instruction::PrepareMethodCall {
+                        lookup,
+                        arity: 0,
+                        after_arguments: false,
+                    }),
+                    Some(Instruction::PrepareMethodCall {
+                        lookup: l2,
+                        arity: 0,
+                        after_arguments: true,
+                    }),
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                ) if *lookup == pc && *l2 == pc => 4,
+                (
+                    Some(Instruction::PrepareMethodCall {
+                        lookup, arity: 0, ..
+                    }),
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                    _,
+                ) if *lookup == pc => 3,
+                (
+                    Some(Instruction::Call {
+                        arity: 0,
+                        method: true,
+                    }),
+                    _,
+                    _,
+                ) => 2,
+                _ => 0,
+            };
+            if skip > 0 && consumed + skip <= max_steps {
+                return Some(skip);
+            }
+            return None;
+        }
+        if name == "contains"
+            && active_type_trackers == 0
+            && consumed + 5 <= max_steps
+            && let Some(elems) = obj.list_elements.as_deref()
+            && elems.len() <= 512
+            && let (
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l1,
+                    arity: 0,
+                    after_arguments: false,
+                }),
+                Some(arg_instr),
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l2,
+                    arity: 1,
+                    after_arguments: true,
+                }),
+                Some(Instruction::Call {
+                    arity: 1,
+                    method: true,
+                }),
+            ) = (
+                code.get(pc + 1),
+                code.get(pc + 2),
+                code.get(pc + 3),
+                code.get(pc + 4),
+            )
+            && *l1 == pc
+            && *l2 == pc
+        {
+            let arg_ref = match arg_instr {
+                Instruction::Constant(v) => Some(v),
+                Instruction::LoadLocal(depth) => depth
+                    .checked_add(1)
+                    .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                    .map(|idx| &frame.environment.locals[idx]),
+                _ => None,
+            };
+            if let Some(needle) = arg_ref
+                && matches!(needle, Value::String(_) | Value::Int(_) | Value::Bool(_))
+                && elems.iter().all(|e| !matches!(e, Value::Object(_)))
+            {
+                let found = elems.iter().any(|e| equality::same_key(heap, e, needle));
+                stack.pop();
+                stack.push_raw(Value::Bool(found));
+                return Some(5);
+            }
+            return None;
+        }
+        if name == "map" || name == "fold" {
+            let (fn_block, arity) = if name == "map" {
+                (program.collection_transform_blocks[0], 1)
+            } else {
+                (program.list_fold_block, 2)
+            };
+            let id = heap.allocate_function(
+                Function {
+                    block: fn_block,
+                    arity,
+                    method: true,
+                    captured_this: Some(Value::Object(recv_id)),
+                },
+                None,
+                Environment::default(),
+            );
+            let Some(Value::Object(_)) = stack.pop() else {
+                unreachable!()
+            };
+            stack.push_raw(Value::Function(id));
+            return Some(1);
+        }
+        return None;
+    }
+    if obj.collection_kind == CollectionKind::Map
+        && active_type_trackers == 0
+        && obj.parent.is_none()
+        && !obj.has_object_collection_key
+        && obj.instance_class.is_none()
+        && obj.pair.is_none()
+        && obj.reference.is_none()
+        && obj.foreign_map_entry.is_none()
+        && matches!(name.as_str(), Some("getOrNull" | "containsKey"))
+        && consumed + 5 <= max_steps
+        && let (
+            Some(Instruction::PrepareMethodCall {
+                lookup: l1,
+                arity: 0,
+                after_arguments: false,
+            }),
+            Some(arg_instr),
+            Some(Instruction::PrepareMethodCall {
+                lookup: l2,
+                arity: 1,
+                after_arguments: true,
+            }),
+            Some(Instruction::Call {
+                arity: 1,
+                method: true,
+            }),
+        ) = (
+            code.get(pc + 1),
+            code.get(pc + 2),
+            code.get(pc + 3),
+            code.get(pc + 4),
+        )
+        && *l1 == pc
+        && *l2 == pc
+    {
+        let frame = frames.last().unwrap();
+        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+            Some(o)
+        } else {
+            if *cur_exec_block != block {
+                *cur_exec_block = block;
+                *cur_exec_root = executable_roots.get(&block).copied();
+            }
+            *cur_exec_root
+        };
+        let arg_ref = match arg_instr {
+            Instruction::Constant(v) => Some(v),
+            Instruction::LoadLocal(depth) => depth
+                .checked_add(1)
+                .and_then(|off| frame.environment.locals.len().checked_sub(off))
+                .map(|idx| &frame.environment.locals[idx]),
+            _ => None,
+        };
+        if let Some(key_ref) = arg_ref
+            && matches!(key_ref, Value::String(_) | Value::Int(_) | Value::Bool(_))
+            && exec_owner.is_some_and(|owner| {
+                heap.existing_method_call_cache(owner, (block, pc))
+                    .ok()
+                    .flatten()
+                    .is_some_and(|c| {
+                        c.is_megamorphic() || c.contains_builtin_class(classes::BuiltinClass::Map)
+                    })
+            })
+            && let Ok(hash) = equality::java_hash_on_heap(heap, key_ref)
+        {
+            let mut matched_slot = None;
+            for slot in obj.map_index().candidates(hash) {
+                if equality::same_key(heap, key_ref, &obj.collection_members[slot].key) {
+                    matched_slot = Some(slot);
+                    break;
+                }
+            }
+            let result = if name == "containsKey" {
+                Some(Value::Bool(matched_slot.is_some()))
+            } else if let Some(slot) = matched_slot {
+                let member = &obj.collection_members[slot];
+                if let Some(cs) = obj.cache_slots.get(slot)
+                    && cs.key.entry
+                    && cs.key.owner.is_none()
+                    && !cs.key.method
+                    && cs.key.name == member.name
+                {
+                    Some(cs.value.clone())
+                } else {
+                    let ck = CacheKey {
+                        owner: None,
+                        name: member.name.clone(),
+                        method: false,
+                        entry: true,
+                    };
+                    obj.cache_get_completed(&ck).cloned()
+                }
+            } else {
+                Some(Value::Null)
+            };
+            if let Some(val) = result {
+                stack.pop();
+                stack.push_raw(val);
+                return Some(5);
+            }
+        }
+        return None;
+    }
+    if obj.collection_kind == CollectionKind::Listing
+        && name == "toList"
+        && active_type_trackers == 0
+        && obj.collection_cast.is_none()
+        && obj.reference.is_none()
+        && obj.pair.is_none()
+        && obj.class_definition.is_none()
+        && !obj.is_module
+        && obj.foreign_map_entry.is_none()
+        && !obj.has_object_collection_key
+        && !obj.collection_members.is_empty()
+        && obj.collection_members.len() <= 512
+        && obj.collection_members.len() == obj.members.len()
+        && collections::is_single_level_leaf_collection(heap, obj)
+    {
+        let skip = match (code.get(pc + 1), code.get(pc + 2), code.get(pc + 3)) {
+            (
+                Some(Instruction::PrepareMethodCall {
+                    lookup,
+                    arity: 0,
+                    after_arguments: false,
+                }),
+                Some(Instruction::PrepareMethodCall {
+                    lookup: l2,
+                    arity: 0,
+                    after_arguments: true,
+                }),
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+            ) if *lookup == pc && *l2 == pc => 4,
+            (
+                Some(Instruction::PrepareMethodCall {
+                    lookup, arity: 0, ..
+                }),
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+                _,
+            ) if *lookup == pc => 3,
+            (
+                Some(Instruction::Call {
+                    arity: 0,
+                    method: true,
+                }),
+                _,
+                _,
+            ) => 2,
+            _ => 0,
+        };
+        let frame = frames.last().unwrap();
+        let exec_owner = if let Some(o) = frame.environment.executable_owner {
+            Some(o)
+        } else {
+            if *cur_exec_block != block {
+                *cur_exec_block = block;
+                *cur_exec_root = executable_roots.get(&block).copied();
+            }
+            *cur_exec_root
+        };
+        if skip > 0
+            && consumed + skip <= max_steps
+            && obj.cache_slots.len() >= obj.collection_members.len()
+            && exec_owner.is_some_and(|owner| {
+                heap.existing_method_call_cache(owner, (block, pc))
+                    .ok()
+                    .flatten()
+                    .is_some_and(|c| {
+                        c.is_megamorphic()
+                            || c.contains_builtin_class(classes::BuiltinClass::Listing)
+                    })
+            })
+        {
+            let mut values = Vec::with_capacity(obj.collection_members.len());
+            let mut approx_bytes = obj
+                .collection_members
+                .len()
+                .saturating_mul(std::mem::size_of::<Value>());
+            let mut ok = true;
+            for idx in 0..obj.collection_members.len() {
+                let cm = &obj.collection_members[idx];
+                let m = &obj.members[idx];
+                let slot = &obj.cache_slots[idx];
+                if cm.kind == crate::heap::CollectionMemberKind::Element
+                    && !m.local
+                    && !m.method
+                    && !m.hidden()
+                    && !m.external()
+                    && !m.definition()
+                    && slot.key.entry
+                    && slot.key.owner.is_none()
+                    && !slot.key.method
+                    && slot.key.name == cm.name
+                {
+                    if let Value::String(s) = &slot.value {
+                        approx_bytes = approx_bytes.saturating_add(s.as_str().map_or(16, str::len));
+                    }
+                    values.push(slot.value.clone());
+                } else {
+                    ok = false;
+                    break;
+                }
+            }
+            if ok {
+                heap.note_external_allocation(approx_bytes);
+                let list_id = heap.allocate_strict_list(values);
+                stack.pop();
+                stack.push_raw(Value::Object(list_id));
+                return Some(skip);
+            }
+        }
+    }
+    None
+}
+
+#[allow(clippy::too_many_arguments, clippy::vec_box)]
+#[cfg_attr(target_arch = "wasm32", inline(never))]
+fn poll_fast_prepare_method_call(
+    lookup: usize,
+    arity: usize,
+    after_arguments: bool,
+    code: &[Instruction],
+    block: usize,
+    frames: &[Box<Frame>],
+    stack: &identity::OperandStack,
+    heap: &Heap,
+    executable_roots: &ExecutableRoots,
+    cur_exec_block: &mut usize,
+    cur_exec_root: &mut Option<ExecutableOwnerId>,
+    prep_method_cache: &mut [Option<(ExecutableOwnerId, usize, usize, ObjectId)>; 4],
+    prep_method_next: &mut usize,
+) -> bool {
+    if stack.len() <= arity {
+        return false;
+    }
+    let Some(Value::Function(function_id)) = stack.get(stack.len() - arity - 1) else {
+        return false;
+    };
+    let Ok(obj) = heap.get(*function_id) else {
+        return false;
+    };
+    let has_method = obj.function.as_ref().is_none_or(|f| f.method);
+    if !has_method {
+        return true;
+    }
+    let has_receiver = obj.native_function.is_some()
+        || obj
+            .function
+            .as_ref()
+            .is_some_and(|f| f.captured_this.is_some())
+        || obj.environment.this_value.is_some();
+    if !has_receiver {
+        return true;
+    }
+    match code.get(lookup) {
+        Some(Instruction::GetMethodProperty {
+            owner_depth, local, ..
+        }) => {
+            let Some(&scope) = frames.last().unwrap().environment.scopes.get(*owner_depth) else {
+                return false;
+            };
+            let Ok(owner_obj) = heap.get(scope.owner) else {
+                return false;
+            };
+            let Some(class) = owner_obj.class_definition.as_ref() else {
+                return true;
+            };
+            let direct = *local || !(class.open || class.abstract_);
+            if !direct {
+                return false;
+            }
+            if !after_arguments {
+                return true;
+            }
+            if let Some((decl_owner, decl_code)) = obj.method_declaration
+                && heap
+                    .get(decl_owner)
+                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
+            {
+                return false;
+            }
+            true
+        }
+        Some(Instruction::GetMethod(_) | Instruction::GetImplicitMethod(_)) => {
+            if after_arguments {
+                return true;
+            }
+            let frame = frames.last().unwrap();
+            if frame.method_call_site.is_some() {
+                return false;
+            }
+            if let Some((decl_owner, decl_code)) = obj.method_declaration
+                && heap
+                    .get(decl_owner)
+                    .is_ok_and(|o| o.member_deprecations.contains_key(&decl_code))
+            {
+                return false;
+            }
+            let recv_val = obj
+                .native_function
+                .as_ref()
+                .map(|n| &n.receiver)
+                .or_else(|| obj.function.as_ref().and_then(|f| f.captured_this.as_ref()))
+                .or(obj.environment.this_value.as_ref());
+            let Some(recv_val) = recv_val else {
+                return false;
+            };
+            let exec_owner = if let Some(o) = frame.environment.executable_owner {
+                Some(o)
+            } else {
+                if *cur_exec_block != block {
+                    *cur_exec_block = block;
+                    *cur_exec_root = executable_roots.get(&block).copied();
+                }
+                *cur_exec_root
+            };
+            let Some(owner) = exec_owner else {
+                return false;
+            };
+            match recv_val {
+                Value::Object(recv_id) => {
+                    let Ok(recv_obj) = heap.get(*recv_id) else {
+                        return false;
+                    };
+                    if let Some(recv_cls) = recv_obj.instance_class {
+                        let key = Some((owner, block, lookup, recv_cls));
+                        if prep_method_cache[0] == key
+                            || prep_method_cache[1] == key
+                            || prep_method_cache[2] == key
+                            || prep_method_cache[3] == key
+                        {
+                            return true;
+                        }
+                        if heap
+                            .existing_method_call_cache(owner, (block, lookup))
+                            .ok()
+                            .flatten()
+                            .is_some_and(|c| {
+                                c.is_megamorphic() || c.contains_declared_class(recv_cls)
+                            })
+                        {
+                            prep_method_cache[*prep_method_next] = key;
+                            *prep_method_next = (*prep_method_next + 1) & 3;
+                            true
+                        } else {
+                            false
+                        }
+                    } else if recv_obj.class_definition.is_none()
+                        && !recv_obj.is_module
+                        && recv_obj.pair.is_none()
+                        && recv_obj.reference.is_none()
+                        && recv_obj.foreign_map_entry.is_none()
+                    {
+                        let builtin_cls = match recv_obj.collection_kind {
+                            CollectionKind::List if recv_obj.parent.is_none() => {
+                                Some(classes::BuiltinClass::List)
+                            }
+                            CollectionKind::Map if recv_obj.parent.is_none() => {
+                                Some(classes::BuiltinClass::Map)
+                            }
+                            CollectionKind::Set if recv_obj.parent.is_none() => {
+                                Some(classes::BuiltinClass::Set)
+                            }
+                            CollectionKind::Mapping
+                            | CollectionKind::Listing
+                            | CollectionKind::Dynamic
+                                if recv_obj.parent.is_none_or(|p| {
+                                    heap.get_fast(p).is_some_and(|pobj| {
+                                        matches!(
+                                            pobj.builtin_type.as_deref(),
+                                            Some(TypeCheck::Collection(_))
+                                        )
+                                    })
+                                }) =>
+                            {
+                                Some(match recv_obj.collection_kind {
+                                    CollectionKind::Mapping => classes::BuiltinClass::Mapping,
+                                    CollectionKind::Listing => classes::BuiltinClass::Listing,
+                                    _ => classes::BuiltinClass::Dynamic,
+                                })
+                            }
+                            _ => None,
+                        };
+                        builtin_cls.is_some_and(|builtin_cls| {
+                            heap.existing_method_call_cache(owner, (block, lookup))
+                                .ok()
+                                .flatten()
+                                .is_some_and(|c| {
+                                    c.is_megamorphic() || c.contains_builtin_class(builtin_cls)
+                                })
+                        })
+                    } else {
+                        false
+                    }
+                }
+                Value::String(_) | Value::Int(_) | Value::Float(_) | Value::Bool(_) => {
+                    let builtin_cls = match recv_val {
+                        Value::String(_) => classes::BuiltinClass::String,
+                        Value::Int(_) => classes::BuiltinClass::Int,
+                        Value::Float(_) => classes::BuiltinClass::Float,
+                        Value::Bool(_) => classes::BuiltinClass::Boolean,
+                        _ => unreachable!(),
+                    };
+                    heap.existing_method_call_cache(owner, (block, lookup))
+                        .ok()
+                        .flatten()
+                        .is_some_and(|c| {
+                            c.is_megamorphic() || c.contains_builtin_class(builtin_cls)
+                        })
+                }
+                _ => false,
+            }
+        }
+        _ => false,
+    }
+}
+
+#[cfg_attr(not(target_arch = "wasm32"), inline)]
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn is_non_capturing_lambda(code: &[Instruction], arity: usize) -> bool {
     if code.is_empty() || code.len() > 32 {
         return false;
@@ -13412,7 +13832,13 @@ fn format_i64_pkl_string(n: i64) -> PklString {
     PklString::from(format_i64_buf(n, &mut buf))
 }
 
-#[inline]
+/// Cap on total UTF-8/UTF-16 byte length produced by string concatenation or
+/// interpolation (`+`, `"\(...)"`) so exponential `s = s + s` chains fail cleanly
+/// with a `RuntimeError` instead of aborting the host process via OOM.
+const MAX_STRING_CONCAT_BYTES: usize = 128 * 1024 * 1024;
+
+#[cfg_attr(not(target_arch = "wasm32"), inline)]
+#[cfg_attr(target_arch = "wasm32", inline(never))]
 fn finish_interpolation_on_stack(
     stack: &mut identity::OperandStack,
     count: usize,
@@ -13426,11 +13852,30 @@ fn finish_interpolation_on_stack(
         .len()
         .checked_sub(count)
         .ok_or_else(|| invalid("interpolation stack underflow"))?;
-    let all_utf8 = stack[start..].iter().all(|v| match v {
-        Value::String(s) => s.as_str().is_some(),
-        Value::Int(_) => true,
-        _ => false,
-    });
+    let mut total_bytes = 0usize;
+    let mut all_utf8 = true;
+    for v in &stack[start..] {
+        match v {
+            Value::String(s) => {
+                total_bytes = total_bytes.saturating_add(s.len_bytes());
+                if s.as_str().is_none() {
+                    all_utf8 = false;
+                }
+            }
+            Value::Int(_) => {
+                total_bytes = total_bytes.saturating_add(20);
+            }
+            _ => {
+                all_utf8 = false;
+            }
+        }
+        if total_bytes > MAX_STRING_CONCAT_BYTES {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "String length exceeds maximum supported size.",
+            ));
+        }
+    }
     if all_utf8 {
         scratch.clear();
         let mut num_buf = [0u8; 24];
@@ -13554,9 +13999,15 @@ fn binary(
             _ => return Err(invalid("invalid binary instruction")),
         }),
         (Value::Bytes(left), Value::Bytes(right)) if matches!(instruction, Instruction::Add) => {
-            Ok(Value::Bytes(left.concatenate(&right)))
+            Ok(Value::Bytes(left.try_concatenate(&right)?))
         }
         (Value::String(left), Value::String(right)) if matches!(instruction, Instruction::Add) => {
+            if left.len_bytes().saturating_add(right.len_bytes()) > MAX_STRING_CONCAT_BYTES {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "String length exceeds maximum supported size.",
+                ));
+            }
             Ok(Value::string(left.concat(&right)))
         }
         (Value::String(left), Value::String(right)) => {
@@ -14034,6 +14485,8 @@ fn compile_unit_body_at_with_syntax(
         module_recipes,
         instrument,
         replaying_prefix_error: false,
+        type_compile_depth: 0,
+        type_compile_nodes: 0,
     };
     let module_name = resolved
         .module
@@ -14341,7 +14794,12 @@ struct Compiler<'a> {
     module_recipes: crate::heap::FastMap<Span, usize>,
     instrument: bool,
     replaying_prefix_error: bool,
+    type_compile_depth: usize,
+    type_compile_nodes: usize,
 }
+
+const MAX_TYPE_COMPILE_DEPTH: usize = 128;
+const MAX_TYPE_COMPILE_NODES: usize = 65_536;
 
 fn authored_type_constraints(ty: &crate::syntax::Type) -> bool {
     use crate::syntax::TypeKind;
@@ -15697,6 +16155,8 @@ fn type_name_value(ty: &TypeCheck, module: &PklString) -> PklString {
     type_name_value_with_heap(ty, module, None)
 }
 
+const MAX_TYPE_NAME_DISPLAY_BYTES: usize = 1024 * 1024;
+
 fn type_name_value_with_heap(ty: &TypeCheck, module: &PklString, heap: Option<&Heap>) -> PklString {
     enum Part<'a> {
         Type(&'a TypeCheck),
@@ -15704,9 +16164,15 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &PklString, heap: Option<&H
     }
     let mut pending = vec![Part::Type(ty)];
     let mut result = crate::pkl_string::PklStringBuilder::default();
+    let mut written_bytes = 0usize;
     while let Some(part) = pending.pop() {
+        if written_bytes >= MAX_TYPE_NAME_DISPLAY_BYTES {
+            result.push_str("...");
+            break;
+        }
         let ty = match part {
             Part::Text(text) => {
+                written_bytes = written_bytes.saturating_add(text.len_bytes());
                 result.push_value(&text);
                 continue;
             }
@@ -15761,7 +16227,9 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &PklString, heap: Option<&H
             TypeCheck::Pair { .. } => "Pair".into(),
             TypeCheck::CollectionBase { .. } => "Collection".into(),
             TypeCheck::StringLiteral(value) => {
-                result.push_value(&value.quoted());
+                let q = value.quoted();
+                written_bytes = written_bytes.saturating_add(q.len_bytes());
+                result.push_value(&q);
                 continue;
             }
             TypeCheck::Nullable(inner) => {
@@ -15782,8 +16250,14 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &PklString, heap: Option<&H
                     if seen.insert(value.clone()) {
                         if seen.len() > 1 {
                             result.push('|');
+                            written_bytes = written_bytes.saturating_add(1);
                         }
-                        result.push_value(&value.quoted());
+                        let q = value.quoted();
+                        written_bytes = written_bytes.saturating_add(q.len_bytes());
+                        result.push_value(&q);
+                        if written_bytes >= MAX_TYPE_NAME_DISPLAY_BYTES {
+                            break;
+                        }
                     }
                 }
                 continue;
@@ -15799,6 +16273,7 @@ fn type_name_value_with_heap(ty: &TypeCheck, module: &PklString, heap: Option<&H
             }
             _ => format!("{ty:?}").into(),
         };
+        written_bytes = written_bytes.saturating_add(text.len_bytes());
         result.push_value(&text);
     }
     result.finish()
@@ -16452,9 +16927,24 @@ impl<'a> Compiler<'a> {
         parameters: &BTreeMap<PklString, Span>,
         aliases: &mut BTreeSet<Span>,
     ) -> Span {
+        self.type_source_span_at_depth(ty, parameters, aliases, 0)
+    }
+
+    fn type_source_span_at_depth(
+        &self,
+        ty: &crate::syntax::Type,
+        parameters: &BTreeMap<PklString, Span>,
+        aliases: &mut BTreeSet<Span>,
+        depth: usize,
+    ) -> Span {
         use crate::syntax::{ExprKind, TypeKind};
+        if depth >= MAX_TYPE_COMPILE_DEPTH {
+            return ty.unparenthesized_span.unwrap_or(ty.span);
+        }
         match &ty.kind {
-            TypeKind::Nullable(inner) => self.type_source_span_at(inner, parameters, aliases),
+            TypeKind::Nullable(inner) => {
+                self.type_source_span_at_depth(inner, parameters, aliases, depth + 1)
+            }
             // ParenthesizedType resolves to its inner Java type node. Alias
             // use-site labels remain distinct from expanded failure spans.
             TypeKind::Union { .. } => ty.unparenthesized_span.unwrap_or(ty.span),
@@ -16477,14 +16967,20 @@ impl<'a> Compiler<'a> {
                         .map(|(parameter, argument)| {
                             (
                                 parameter.name.clone(),
-                                self.type_source_span_at(argument, parameters, aliases),
+                                self.type_source_span_at_depth(
+                                    argument,
+                                    parameters,
+                                    aliases,
+                                    depth + 1,
+                                ),
                             )
                         })
                         .collect();
                     if !aliases.insert(member.expr.span) {
                         return ty.span;
                     }
-                    let span = self.type_source_span_at(aliased, &substitutions, aliases);
+                    let span =
+                        self.type_source_span_at_depth(aliased, &substitutions, aliases, depth + 1);
                     aliases.remove(&member.expr.span);
                     return span;
                 }
@@ -16511,7 +17007,23 @@ impl<'a> Compiler<'a> {
         aliases: &mut BTreeSet<Span>,
         parameters: &BTreeMap<PklString, TypeCheck>,
     ) -> Result<TypeCheck, RuntimeError> {
-        let check = self.compile_type_at_unlocated(ty, limit, aliases, parameters)?;
+        if self.type_compile_depth >= MAX_TYPE_COMPILE_DEPTH {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Type expression exceeds maximum nesting depth.",
+            ));
+        }
+        self.type_compile_nodes = self.type_compile_nodes.saturating_add(1);
+        if self.type_compile_nodes > MAX_TYPE_COMPILE_NODES {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Type expression expansion exceeds maximum complexity budget.",
+            ));
+        }
+        self.type_compile_depth += 1;
+        let compiled = self.compile_type_at_unlocated(ty, limit, aliases, parameters);
+        self.type_compile_depth -= 1;
+        let check = compiled?;
         if matches!(&ty.kind, crate::syntax::TypeKind::Named { path, arguments, .. }
             if path.len() == 1 && arguments.is_empty() && parameters.contains_key(&path[0]))
         {
@@ -17298,6 +17810,25 @@ impl<'a> Compiler<'a> {
     }
 
     fn default_type_with_origin(
+        &mut self,
+        check: &TypeCheck,
+        output: &mut Code,
+        span: Span,
+        origin: Option<&RuntimeFrame>,
+    ) -> Result<bool, RuntimeError> {
+        if self.type_compile_depth >= MAX_TYPE_COMPILE_DEPTH {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Type default expression exceeds maximum nesting depth.",
+            ));
+        }
+        self.type_compile_depth += 1;
+        let res = self.default_type_with_origin_inner(check, output, span, origin);
+        self.type_compile_depth -= 1;
+        res
+    }
+
+    fn default_type_with_origin_inner(
         &mut self,
         check: &TypeCheck,
         output: &mut Code,

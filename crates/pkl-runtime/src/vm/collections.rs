@@ -204,6 +204,7 @@ impl Vm {
         id
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn amendment_class_parent(&self, class: ObjectId) -> Result<ObjectId, RuntimeError> {
         let prototype = self.heap.get_class(class)?.prototype;
         self.check_class_instantiable(self.heap.class_definition(class)?)?;
@@ -308,19 +309,42 @@ impl Vm {
                         .iter()
                         .all(|val| matches!(val, Value::String(s) if s.as_str().is_some()))
                 {
-                    let total_bytes: usize = elems
-                        .iter()
-                        .map(|val| match val {
-                            Value::String(s) => s.as_str().unwrap().len(),
-                            _ => unreachable!(),
-                        })
-                        .sum::<usize>()
-                        + sep_str.len().saturating_mul(elems.len() - 1);
-                    let mut out = std::mem::take(&mut self.scratch_utf8);
-                    out.clear();
-                    if out.capacity() < total_bytes {
-                        out.reserve(total_bytes - out.capacity());
+                    let mut total_bytes: usize = 0;
+                    for val in elems.iter() {
+                        if let Value::String(s) = val {
+                            total_bytes = total_bytes
+                                .checked_add(s.as_str().unwrap().len())
+                                .ok_or_else(|| {
+                                    RuntimeError::new(
+                                        ErrorKind::Type,
+                                        "String length exceeds maximum allowed size.",
+                                    )
+                                })?;
+                        }
                     }
+                    let sep_bytes =
+                        sep_str.len().checked_mul(elems.len() - 1).ok_or_else(|| {
+                            RuntimeError::new(
+                                ErrorKind::Type,
+                                "String length exceeds maximum allowed size.",
+                            )
+                        })?;
+                    total_bytes = total_bytes.checked_add(sep_bytes).ok_or_else(|| {
+                        RuntimeError::new(
+                            ErrorKind::Type,
+                            "String length exceeds maximum allowed size.",
+                        )
+                    })?;
+                    if total_bytes > super::MAX_STRING_CONCAT_BYTES {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "String length exceeds maximum allowed size.",
+                        ));
+                    }
+                    let mut out = String::new();
+                    out.try_reserve_exact(total_bytes).map_err(|_| {
+                        RuntimeError::new(ErrorKind::Type, "String size exceeds available memory.")
+                    })?;
                     for (idx, val) in elems.iter().enumerate() {
                         if idx != 0 {
                             out.push_str(sep_str);
@@ -329,12 +353,7 @@ impl Vm {
                             out.push_str(s.as_str().unwrap());
                         }
                     }
-                    let joined = PklString::from(out.as_str());
-                    out.clear();
-                    if out.capacity() <= 512 * 1024 {
-                        self.scratch_utf8 = out;
-                    }
-                    self.stack.push(Value::String(joined));
+                    self.stack.push(Value::String(PklString::from(out)));
                     return Ok(());
                 }
                 if elems.iter().all(|val| {
@@ -351,12 +370,37 @@ impl Vm {
                     let mut out = crate::pkl_string::PklStringBuilder::default();
                     for (idx, val) in elems.iter().enumerate() {
                         if idx != 0 {
+                            if out.len_bytes_approx().saturating_add(separator.len_bytes())
+                                > super::MAX_STRING_CONCAT_BYTES
+                            {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "String length exceeds maximum allowed size.",
+                                ));
+                            }
                             out.push_value(&separator);
                         }
                         if let Value::String(s) = val {
+                            if out.len_bytes_approx().saturating_add(s.len_bytes())
+                                > super::MAX_STRING_CONCAT_BYTES
+                            {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "String length exceeds maximum allowed size.",
+                                ));
+                            }
                             out.push_value(s);
                         } else {
-                            out.push_value(&scalar_string(val)?);
+                            let piece = scalar_string(val)?;
+                            if out.len_bytes_approx().saturating_add(piece.len_bytes())
+                                > super::MAX_STRING_CONCAT_BYTES
+                            {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "String length exceeds maximum allowed size.",
+                                ));
+                            }
+                            out.push_value(&piece);
                         }
                     }
                     self.stack.push(Value::String(out.finish()));
@@ -415,6 +459,17 @@ impl Vm {
             let Value::String(text) = self.pop()? else {
                 return Err(invalid("non-string collection element rendering"));
             };
+            if run
+                .output
+                .len_bytes_approx()
+                .saturating_add(text.len_bytes())
+                > super::MAX_STRING_CONCAT_BYTES
+            {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "String length exceeds maximum allowed size.",
+                ));
+            }
             run.output.push_value(&text);
         }
         let Some(value) = run.values.get(run.next).cloned() else {
@@ -422,6 +477,17 @@ impl Vm {
             return Ok(());
         };
         if run.next != 0 {
+            if run
+                .output
+                .len_bytes_approx()
+                .saturating_add(run.separator.len_bytes())
+                > super::MAX_STRING_CONCAT_BYTES
+            {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "String length exceeds maximum allowed size.",
+                ));
+            }
             run.output.push_value(&run.separator);
         }
         run.next += 1;
@@ -527,6 +593,8 @@ pub(super) fn is_single_level_leaf_collection(heap: &Heap, object: &Object) -> b
     }
 }
 
+pub(super) const MAX_MATERIALIZED_REPEAT_LIST: usize = 2_000_000;
+
 /// Read declaration order without forcing member values. Overrides retain their
 /// inherited position; properties and entries have distinct key namespaces.
 pub fn ordered_members(
@@ -546,6 +614,35 @@ pub fn ordered_members(
                     kind: CollectionMemberKind::Element,
                 })
                 .collect());
+        }
+        if let Some(base_len) = first.repeat_base_len
+            && first.collection_members.len() < first.length
+        {
+            if base_len == 0 {
+                return Ok(Vec::new());
+            }
+            if first.length > MAX_MATERIALIZED_REPEAT_LIST {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "List of length {} exceeds maximum materialized length ({}).",
+                        first.length, MAX_MATERIALIZED_REPEAT_LIST
+                    ),
+                ));
+            }
+            let mut out = Vec::new();
+            out.try_reserve_exact(first.length).map_err(|_| {
+                RuntimeError::new(ErrorKind::Type, "List size exceeds available memory.")
+            })?;
+            for idx in 0..first.length {
+                let template = &first.collection_members[idx % base_len];
+                out.push(CollectionMember {
+                    key: Value::Int((idx as i64).into()),
+                    name: template.name.clone(),
+                    kind: CollectionMemberKind::Element,
+                });
+            }
+            return Ok(out);
         }
         return Ok(first.collection_members.clone());
     }
@@ -823,24 +920,35 @@ pub(crate) fn cached_render_value(
     if entry {
         if let Some(elems) = &object.list_elements
             && let Value::Int(index) = &member.key
-            && index.get() >= 0
+            && let Ok(idx) = usize::try_from(index.get())
         {
-            return Ok(elems.get(index.get() as usize).cloned());
+            return Ok(elems.get(idx).cloned());
         }
         if object.collection_kind == CollectionKind::List
             && object.parent.is_none()
             && let Value::Int(index) = &member.key
-            && index.get() >= 0
-            && let Some(slot) = object.cache_slots.get(index.get() as usize)
-            && slot.key.entry
-            && slot.key.owner.is_none()
-            && !slot.key.method
-            && slot
-                .entry_key
-                .as_ref()
-                .is_some_and(|key| matches!(key, Value::Int(stored) if stored.get() == index.get()))
+            && let Ok(idx) = usize::try_from(index.get())
         {
-            return Ok(Some(slot.value.clone()));
+            if let Some(slot) = object.cache_slots.get(idx)
+                && slot.key.entry
+                && slot.key.owner.is_none()
+                && !slot.key.method
+                && slot.entry_key.as_ref().is_some_and(
+                    |key| matches!(key, Value::Int(stored) if stored.get() == index.get()),
+                )
+            {
+                return Ok(Some(slot.value.clone()));
+            }
+            if let Some(base_len) = object.repeat_base_len
+                && base_len > 0
+                && idx < object.length
+                && let Some(slot) = object.cache_slots.get(idx % base_len)
+                && slot.key.entry
+                && slot.key.owner.is_none()
+                && !slot.key.method
+            {
+                return Ok(Some(slot.value.clone()));
+            }
         }
         if object.cache_index.len() == object.cache_slots.len() && object.cache_index.has_hash() {
             let hash = equality::java_hash_on_heap(heap, &member.key)?.unwrap_or(0);
@@ -897,7 +1005,7 @@ pub(super) fn forcing_members(
     let receiver_obj = heap.get(receiver)?;
     if receiver_obj.collection_kind == CollectionKind::Map
         || (receiver_obj.collection_kind == CollectionKind::List
-            && receiver_obj.list_elements.is_some())
+            && (receiver_obj.list_elements.is_some() || receiver_obj.repeat_base_len.is_some()))
     {
         return ordered_members(heap, receiver);
     }
@@ -1322,6 +1430,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn prepare_set_element(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let id = self.builder()?;
@@ -1334,6 +1443,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn add_set_element(&mut self) -> Result<(), RuntimeError> {
         let present = self.pop()?;
         let value = self.pop()?;
@@ -1732,6 +1842,7 @@ impl Vm {
             .collect())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn prepare_map_entry(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         let key = self.pop()?;
@@ -1745,6 +1856,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn add_map_entry(&mut self) -> Result<(), RuntimeError> {
         let Value::Bool(append_order) = self.pop()? else {
             return Err(invalid("Map builder contains result"));
@@ -1761,6 +1873,7 @@ impl Vm {
         self.insert_map_entry_ordered(id, key, value, Some(append_order))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     fn next_map_entry(&mut self, iterator: ObjectId, end: usize) -> Result<(), RuntimeError> {
         let state = self
             .heap
@@ -2225,7 +2338,10 @@ impl Vm {
                 .map(|id| self.heap.get(id).map(|o| o.length))
                 .transpose()?
                 .unwrap_or(0);
-            if index < 0 || index.get() as usize >= parent_length {
+            if usize::try_from(index.get())
+                .ok()
+                .is_none_or(|i| i >= parent_length)
+            {
                 return Err(RuntimeError::new(
                     ErrorKind::Type,
                     format!(
@@ -2560,8 +2676,8 @@ impl Vm {
             if let Some(elems) = &object.list_elements
                 && descriptor.kind == CollectionMemberKind::Element
                 && let Value::Int(idx) = &descriptor.key
-                && idx.get() >= 0
-                && (idx.get() as usize) < elems.len()
+                && let Ok(i) = usize::try_from(idx.get())
+                && i < elems.len()
             {
                 return Ok(Member {
                     flags: 0,
@@ -2667,88 +2783,7 @@ impl Vm {
                 kind,
                 has_parent,
                 specialized,
-            } => {
-                let parent = if has_parent {
-                    let mut value = self.pop()?;
-                    while let Value::NullWithDefault(id) = value {
-                        value = self.heap.null_default(id)?;
-                    }
-                    match value {
-                        Value::Null => Some(self.empty_object(CollectionKind::Dynamic)),
-                        Value::Class(class) => Some(self.amendment_class_parent(class)?),
-                        value @ (Value::Bool(_)
-                        | Value::Int(_)
-                        | Value::Float(_)
-                        | Value::Duration(_)
-                        | Value::IntSeq(_)
-                        | Value::Regex(_)
-                        | Value::Bytes(_)
-                        | Value::TypeAlias(_)
-                        | Value::DataSize(_)
-                        | Value::String(_)) => {
-                            return Err(external_amendment_error(value_type_name(&value)));
-                        }
-                        value => Some(value.as_object()?),
-                    }
-                } else {
-                    None
-                };
-                let (kind, length) = if let Some(id) = parent {
-                    let object = self.heap.get(id)?;
-                    if object.reference.is_some() {
-                        return Err(external_amendment_error("pkl.ref#Reference"));
-                    }
-                    if object.collection_kind == CollectionKind::Dynamic
-                        && object.builtin_type.is_none()
-                        && let Some(class) = typed_class_ref(&self.heap, id)?
-                    {
-                        self.check_class_instantiable(class)?;
-                    }
-                    if matches!(
-                        object.collection_kind,
-                        CollectionKind::List | CollectionKind::Map | CollectionKind::Set
-                    ) {
-                        return Err(external_amendment_error(format!(
-                            "{:?}",
-                            object.collection_kind
-                        )));
-                    }
-                    (object.collection_kind, object.length)
-                } else {
-                    (kind, 0)
-                };
-                let environment = if parent.is_none()
-                    && matches!(
-                        kind,
-                        CollectionKind::List | CollectionKind::Set | CollectionKind::Map
-                    ) {
-                    Environment::default()
-                } else {
-                    self.frames
-                        .last()
-                        .expect("active frame")
-                        .environment
-                        .clone()
-                };
-                let is_module = parent
-                    .map(|id| self.heap.get(id).map(|o| o.is_module))
-                    .transpose()?
-                    .unwrap_or(false);
-                let id = self.heap.allocate(Object {
-                    is_module,
-                    parent,
-                    collection_kind: kind,
-                    length,
-                    environment,
-                    specialized_literal: specialized,
-                    ..Object::default()
-                });
-                self.frames
-                    .last_mut()
-                    .expect("active frame")
-                    .builders
-                    .push(id);
-            }
+            } => self.col_begin_collection(kind, has_parent, specialized)?,
             Instruction::SetCollectionDefault { defined, origin } => {
                 let value = if defined { Some(self.pop()?) } else { None };
                 let target = self.builder()?;
@@ -2842,346 +2877,9 @@ impl Vm {
                 }
                 self.add_collection_member(*member, None, CollectionMemberKind::Element, None)?
             }
-            Instruction::AddCollectionEntry {
-                member,
-                check_index,
-                span,
-            } => {
-                let key = self.pop()?;
-                let target = self.builder()?;
-                let (is_typed, specialized_literal, needs_obj_prep) = {
-                    let obj = self.heap.get(target)?;
-                    let is_typed = obj.collection_kind == CollectionKind::Dynamic
-                        && is_typed_class(&self.heap, target)?;
-                    let needs_obj_prep =
-                        matches!(key, Value::Object(_)) || obj.has_object_collection_key;
-                    (is_typed, obj.specialized_literal, needs_obj_prep)
-                };
-                if !is_typed && !check_index && needs_obj_prep {
-                    if self.heap.get(target)?.members.len() > 4
-                        && self.prepare_keys(vec![key.clone()])?
-                    {
-                        self.stack.push(key);
-                        return Ok(());
-                    }
-                    let candidates = self.declaration_candidates(target, &key, false)?;
-                    if self.search_key(&key, candidates)? {
-                        self.stack.push(key);
-                        return Ok(());
-                    }
-                    if self.prepare_insertion(&key, CollectionMemberKind::Entry)? {
-                        self.stack.push(key);
-                        return Ok(());
-                    }
-                }
-                if check_index {
-                    let parent = self.heap.get(self.builder()?)?.parent;
-                    let length = parent
-                        .map(|id| self.heap.get(id).map(|o| o.length))
-                        .transpose()?
-                        .unwrap_or(0);
-                    let Value::Int(index) = key else {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Expected value of type `Int`, but got type `{}`.",
-                                value_type_name(&key)
-                            ),
-                        ));
-                    };
-                    if index < 0 || index.get() as usize >= length {
-                        return Err(RuntimeError::new(
-                            ErrorKind::Type,
-                            format!(
-                                "Element index `{index}` is out of range `0`..`{}`.",
-                                length as i64 - 1
-                            ),
-                        ));
-                    }
-                }
-                let generated_typed = !specialized_literal && is_typed;
-                self.add_collection_member(*member, Some(key), CollectionMemberKind::Entry, None)
-                    .map_err(|error| {
-                        if generated_typed {
-                            error.at(span)
-                        } else {
-                            error
-                        }
-                    })?;
-            }
+            Instruction::AddCollectionEntry { .. } => self.col_add_collection_entry(instruction)?,
             Instruction::Subscript { .. } | Instruction::SuperSubscript { .. } => {
-                if self.resume_entry_lookup()? {
-                    return Ok(());
-                }
-                let key = self.pop()?;
-                let is_super = matches!(instruction, Instruction::SuperSubscript { .. });
-                let receiver = if is_super {
-                    self.scope(0)?.receiver
-                } else {
-                    let value = self.pop()?;
-                    if let Value::String(text) = &value {
-                        let Instruction::Subscript { key_span } = instruction else {
-                            unreachable!("ordinary subscript instruction")
-                        };
-                        let value = self.subscript_string(text, key, key_span)?;
-                        self.stack.push(value);
-                        return Ok(());
-                    }
-                    if let Value::Bytes(bytes) = &value {
-                        let value = self.subscript_bytes(bytes, key)?;
-                        self.stack.push(value);
-                        return Ok(());
-                    }
-                    if matches!(value, Value::IntSeq(_)) {
-                        let headline = format!(
-                            "Operator `[]` is not defined for operand types `IntSeq` and `{}`.",
-                            crate::diagnostic_values::type_name(
-                                &key,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?
-                        );
-                        let left_val = crate::diagnostic_values::render(
-                            &value,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        let right_val = crate::diagnostic_values::render(
-                            &key,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        return Err(RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            headline,
-                            &[("Left operand", left_val), ("Right operand", right_val)],
-                        ));
-                    }
-                    value.as_object()?
-                };
-                if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
-                    let headline = PklString::join(
-                        &[
-                            "Operator `[]` is not defined for operand types `Set` and `".into(),
-                            crate::diagnostic_values::type_name(
-                                &key,
-                                &self.heap,
-                                &self.program.module_name,
-                            )?,
-                            "`.".into(),
-                        ],
-                        "",
-                    );
-                    let left_val = crate::diagnostic_values::render(
-                        &Value::Object(receiver),
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    let right_val = crate::diagnostic_values::render(
-                        &key,
-                        &self.heap,
-                        &self.program.module_name,
-                        80,
-                    )?;
-                    return Err(RuntimeError::with_program_values(
-                        ErrorKind::Type,
-                        headline,
-                        &[("Left operand", left_val), ("Right operand", right_val)],
-                    ));
-                }
-                if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Map {
-                    if self.prepare_map_lookup(receiver, &key)? {
-                        self.stack.extend([Value::Object(receiver), key]);
-                        return Ok(());
-                    }
-                    let Some(value) = self.map_value(receiver, &key)? else {
-                        return self.fail_missing_key(receiver, key);
-                    };
-                    self.stack.push(value);
-                    return Ok(());
-                }
-                if !is_super && self.heap.get(receiver)?.reference.is_some() {
-                    self.stack.push(Value::Object(receiver));
-                    self.stack.push(key.clone());
-                    if let Some(result) = self.reference_access(receiver, None, Some(key))? {
-                        self.pop()?;
-                        self.pop()?;
-                        self.stack.push(result);
-                    }
-                    return Ok(());
-                }
-                if let Instruction::SuperSubscript { end } = instruction {
-                    let owner = self.heap.get(self.scope(0)?.owner)?.parent;
-                    return self.super_entry_lookup(receiver, owner, key, end, false);
-                }
-                if !is_super
-                    && matches!(
-                        self.heap.get(receiver)?.collection_kind,
-                        CollectionKind::Mapping | CollectionKind::Dynamic
-                    )
-                {
-                    return self.mapping_lookup(receiver, key, mapping_ops::LookupMode::Subscript);
-                }
-                let owner = if is_super {
-                    let Some(parent) = self.heap.get(self.scope(0)?.owner)?.parent else {
-                        self.stack.push(key);
-                        return self.force(
-                            receiver,
-                            receiver,
-                            "default".into(),
-                            false,
-                            true,
-                            false,
-                        );
-                    };
-                    parent
-                } else {
-                    receiver
-                };
-                if self.heap.get(owner)?.members.len() > 4
-                    && self.prepare_keys(vec![key.clone()])?
-                {
-                    if !is_super {
-                        self.stack.push(Value::Object(receiver));
-                    }
-                    self.stack.push(key);
-                    return Ok(());
-                }
-                let candidates = self.declaration_candidates(owner, &key, true)?;
-                if self.search_key(&key, candidates)? {
-                    if !is_super {
-                        self.stack.push(Value::Object(receiver));
-                    }
-                    self.stack.push(key);
-                    return Ok(());
-                }
-                let object = self.heap.get(receiver)?;
-                if !is_super
-                    && matches!(
-                        object.collection_kind,
-                        CollectionKind::Listing | CollectionKind::List
-                    )
-                {
-                    let Value::Int(index) = key else {
-                        let name = format!("{:?}", object.collection_kind);
-                        let headline = format!(
-                            "Operator `[]` is not defined for operand types `{name}` and `{}`.",
-                            value_type_name(&key)
-                        );
-                        let left_val = crate::diagnostic_values::render(
-                            &Value::Object(receiver),
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        let right_val = crate::diagnostic_values::render(
-                            &key,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        return Err(RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            headline,
-                            &[("Left operand", left_val), ("Right operand", right_val)],
-                        ));
-                    };
-                    if index < 0 || index.get() as usize >= object.length {
-                        let headline: PklString = format!(
-                            "Element index `{}` is out of range `0`..`{}`.",
-                            strings::diagnostic_integer(index.get()),
-                            strings::diagnostic_integer(object.length as i64 - 1)
-                        )
-                        .into();
-                        if object.collection_kind == CollectionKind::List {
-                            let rendered = crate::diagnostic_values::render_string(
-                                &Value::Object(receiver),
-                                &self.heap,
-                                &self.program.module_name,
-                                80,
-                            )?;
-                            return Err(RuntimeError::with_program_values(
-                                ErrorKind::Type,
-                                headline,
-                                &[("Collection", rendered)],
-                            ));
-                        }
-                        return Err(RuntimeError::new(ErrorKind::Type, headline));
-                    }
-                }
-                let member = if self.heap.get(owner)?.collection_kind == CollectionKind::List
-                    && self.heap.get(owner)?.parent.is_none()
-                {
-                    if let Value::Int(index) = &key
-                        && index.get() >= 0
-                    {
-                        let obj = self.heap.get(owner)?;
-                        let idx = index.get() as usize;
-                        if let Some(elems) = &obj.list_elements {
-                            if let Some(val) = elems.get(idx) {
-                                self.stack.push(val.clone());
-                                return Ok(());
-                            }
-                            None
-                        } else if idx < obj.collection_members.len() {
-                            Some(obj.collection_members[idx].clone())
-                        } else if idx < obj.length && !obj.collection_members.is_empty() {
-                            let base_len = obj
-                                .repeat_base_len
-                                .unwrap_or(obj.collection_members.len())
-                                .max(1);
-                            let resolved_idx = idx % base_len;
-                            Some(obj.collection_members[resolved_idx].clone())
-                        } else {
-                            None
-                        }
-                    } else {
-                        None
-                    }
-                } else {
-                    let candidates = self.declaration_candidates(owner, &key, true)?;
-                    ordered_members(&self.heap, owner)?
-                        .into_iter()
-                        .rev()
-                        .find(|m| {
-                            m.kind != CollectionMemberKind::Property
-                                && candidates.iter().any(|candidate| {
-                                    equality::identical_key(&self.heap, candidate, &m.key)
-                                })
-                                && same_key(&self.heap, &key, &m.key)
-                        })
-                };
-                if member.is_none() && self.prepare_keys(vec![key.clone()])? {
-                    if !is_super {
-                        self.stack.push(Value::Object(receiver));
-                    }
-                    self.stack.push(key);
-                    return Ok(());
-                }
-                if let Instruction::SuperSubscript { end } = instruction {
-                    if member.is_none() {
-                        // ReadSuperEntryNode uses the dynamic receiver's default,
-                        // not the lexical owner's. Keep the evaluated key rooted
-                        // while property/type resolution or the callback suspends.
-                        self.stack.push(key);
-                        return self.force(
-                            receiver,
-                            receiver,
-                            "default".into(),
-                            false,
-                            true,
-                            false,
-                        );
-                    }
-                    self.frames.last_mut().expect("super entry frame").pc = end;
-                }
-                let Some(member) = member else {
-                    return self.fail_missing_key(receiver, key);
-                };
-                self.force_key_probe(receiver, owner, member.name, !is_super, key)?;
+                self.col_subscript(instruction)?;
             }
             Instruction::EntryKey => {
                 let force = self
@@ -3221,617 +2919,15 @@ impl Vm {
                 self.super_entry_lookup(force.receiver, owner, key, end, true)?;
             }
             Instruction::OpenIterator { nullable, spread } => {
-                let value = self.pop()?;
-                if let Value::Bytes(bytes) = value {
-                    let id = self.heap.allocate(Object {
-                        bytes_iterator: Some(Box::new((bytes, 0, spread))),
-                        ..Default::default()
-                    });
-                    self.stack.push(Value::Object(id));
-                    return Ok(());
-                }
-                if let Value::IntSeq(sequence) = value {
-                    let id = self.heap.allocate(Object {
-                        int_seq_iterator: Some(Box::new(sequence.cursor(!spread))),
-                        ..Default::default()
-                    });
-                    self.stack.push(Value::Object(id));
-                    return Ok(());
-                }
-                let iterator = if nullable && value == Value::Null {
-                    let source = self.heap.allocate(Object::default());
-                    Some(CollectionIterator {
-                        source,
-                        members: Vec::new(),
-                        position: 0,
-                        force_members: Vec::new(),
-                        force_position: 0,
-                        awaiting_value: false,
-                        members_refreshed: true,
-                    })
-                } else {
-                    let source = match value.as_object() {
-                        Ok(source) => source,
-                        Err(_) => {
-                            let mut error = RuntimeError::new(
-                                ErrorKind::Type,
-                                format!(
-                                    "Cannot iterate over value of type `{}`.",
-                                    value_type_name(&value)
-                                ),
-                            );
-                            if !(spread && value.is_null()) {
-                                let rendered = crate::diagnostic_values::render(
-                                    &value,
-                                    &self.heap,
-                                    &self.program.module_name,
-                                    80,
-                                )?;
-                                error.push_program_value("Value", rendered);
-                            }
-                            if spread && value.is_null() {
-                                let frame = self.frames.last().expect("active frame");
-                                error.spread_hint = self
-                                    .program
-                                    .metadata
-                                    .get(frame.block)
-                                    .and_then(|metadata| metadata.spans.get(frame.pc - 1))
-                                    .copied()
-                                    .flatten()
-                                    .map(Box::new);
-                            }
-                            return Err(error);
-                        }
-                    };
-                    if self.heap.get(source)?.reference.is_some() {
-                        let rendered = crate::diagnostic_values::render(
-                            &value,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        return Err(RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            "Cannot iterate over value of type `pkl.ref#Reference`.",
-                            &[("Value", rendered)],
-                        ));
-                    }
-                    if self.heap.get(source)?.is_module {
-                        let headline = PklString::from("Cannot iterate over value of type `")
-                            .concat(&self.program.module_name)
-                            .concat(&"`.".into());
-                        let rendered = crate::diagnostic_values::render(
-                            &value,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        let mut error = RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            headline,
-                            &[("Value", rendered)],
-                        );
-                        if spread {
-                            error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
-                        }
-                        self.frames
-                            .last_mut()
-                            .expect("active frame")
-                            .callsite_hidden = true;
-                        return Err(error);
-                    }
-                    if let Some(class) = typed_class(&self.heap, source)? {
-                        let headline = PklString::from("Cannot iterate over value of type `")
-                            .concat(&reference::type_name(
-                                &TypeCheck::Class {
-                                    module: class.module.clone(),
-                                    id: class.id,
-                                    name: class.name,
-                                },
-                                &self.program.module_name,
-                            ))
-                            .concat(&"`.".into());
-                        let rendered = crate::diagnostic_values::render(
-                            &value,
-                            &self.heap,
-                            &self.program.module_name,
-                            80,
-                        )?;
-                        let mut error = RuntimeError::with_program_values(
-                            ErrorKind::Type,
-                            headline,
-                            &[("Value", rendered)],
-                        );
-                        if spread {
-                            error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
-                        }
-                        return Err(error);
-                    }
-                    let members = ordered_members(&self.heap, source)?;
-                    let src_obj = self.heap.get(source)?;
-                    let same_force_order = src_obj.collection_kind == CollectionKind::Map
-                        || (src_obj.collection_kind == CollectionKind::List
-                            && src_obj.list_elements.is_some())
-                        || (!src_obj.collection_members.is_empty()
-                            && is_single_level_leaf_collection(&self.heap, src_obj)
-                            && src_obj.collection_members.len() == src_obj.members.len()
-                            && members.len() == src_obj.collection_members.len());
-                    let force_members = if same_force_order {
-                        members.clone()
-                    } else {
-                        forcing_members(&self.heap, source)?
-                    };
-                    Some(CollectionIterator {
-                        source,
-                        force_members,
-                        members,
-                        position: 0,
-                        force_position: 0,
-                        awaiting_value: false,
-                        members_refreshed: false,
-                    })
-                };
-                let id = self.heap.allocate(Object {
-                    iterator: iterator.map(Box::new),
-                    ..Object::default()
-                });
-                self.stack.push(Value::Object(id));
+                self.col_open_iterator(nullable, spread)?;
             }
             Instruction::EnterForScope { bindings } => self.enter_for_scope(bindings)?,
             Instruction::LeaveForScope => self.leave_for_scope()?,
-            Instruction::IteratorNext { end } => {
-                let id = self
-                    .stack
-                    .iter()
-                    .rev()
-                    .filter_map(Value::heap_id)
-                    .find(|id| {
-                        self.heap.get(*id).is_ok_and(|object| {
-                            object.iterator.is_some()
-                                || object.int_seq_iterator.is_some()
-                                || object.bytes_iterator.is_some()
-                        })
-                    })
-                    .or_else(|| self.stack.last().and_then(Value::heap_id))
-                    .ok_or_else(|| invalid("missing iterator"))?;
-                if let Some(cursor) = self.heap.get_mut(id)?.bytes_iterator.as_mut() {
-                    if let Some(byte) = cursor.0.get(cursor.1).copied() {
-                        let value = if cursor.2 {
-                            i64::from(byte)
-                        } else {
-                            i64::from(byte as i8)
-                        };
-                        self.stack.extend([
-                            Value::Int((cursor.1 as i64).into()),
-                            Value::Int(value.into()),
-                        ]);
-                        cursor.1 += 1;
-                    } else {
-                        self.jump(end)?;
-                    }
-                    return Ok(());
-                }
-                if let Some(cursor) = self.heap.get_mut(id)?.int_seq_iterator.as_mut() {
-                    if let Some((index, value)) = cursor.next() {
-                        self.stack
-                            .extend([Value::Int(index.into()), Value::Int(value.into())]);
-                    } else {
-                        self.jump(end)?;
-                    }
-                    return Ok(());
-                }
-                let source = self
-                    .heap
-                    .get(id)?
-                    .iterator
-                    .as_ref()
-                    .ok_or_else(|| invalid("missing iterator"))?
-                    .source;
-                if self.heap.get(source)?.collection_kind == CollectionKind::Map {
-                    self.next_map_entry(id, end)?;
-                    return Ok(());
-                }
-                let awaiting = self
-                    .heap
-                    .get(id)?
-                    .iterator
-                    .as_ref()
-                    .is_some_and(|iterator| iterator.awaiting_value);
-                if awaiting {
-                    self.pop()?;
-                    self.heap
-                        .get_mut(id)?
-                        .iterator
-                        .as_mut()
-                        .expect("active iterator")
-                        .awaiting_value = false;
-                }
-                let forcing = self
-                    .heap
-                    .get_mut(id)?
-                    .iterator
-                    .as_mut()
-                    .and_then(|iterator| {
-                        let member = iterator.force_members.get(iterator.force_position)?.clone();
-                        iterator.force_position += 1;
-                        iterator.awaiting_value = true;
-                        Some((iterator.source, member))
-                    });
-                if let Some((source, member)) = forcing {
-                    let caller = self.frames.len() - 1;
-                    self.frames[caller].pc -= 1;
-                    self.force_collection_member(source, member)?;
-                    if self.frames.len() > caller + 1 {
-                        self.frames[caller].callsite_hidden = true;
-                    }
-                    return Ok(());
-                }
-                let (source, needs_refresh) = {
-                    let iter = self
-                        .heap
-                        .get(id)?
-                        .iterator
-                        .as_ref()
-                        .expect("active iterator");
-                    (iter.source, !iter.members_refreshed)
-                };
-                if needs_refresh {
-                    if !self.heap.key_equalities.is_empty() {
-                        let effective = ordered_members(&self.heap, source)?;
-                        let iter = self
-                            .heap
-                            .get_mut(id)?
-                            .iterator
-                            .as_mut()
-                            .expect("active iterator");
-                        iter.members = effective;
-                        iter.members_refreshed = true;
-                    } else {
-                        self.heap
-                            .get_mut(id)?
-                            .iterator
-                            .as_mut()
-                            .expect("active iterator")
-                            .members_refreshed = true;
-                    }
-                }
-                let next = self
-                    .heap
-                    .get_mut(id)?
-                    .iterator
-                    .as_mut()
-                    .and_then(|iterator| {
-                        let member = iterator.members.get(iterator.position)?.clone();
-                        iterator.position += 1;
-                        Some((iterator.source, member))
-                    });
-                if let Some((source, member)) = next {
-                    self.stack.push(member.key.clone());
-                    let caller = self.frames.len() - 1;
-                    self.force_collection_member(source, member)?;
-                    if self.frames.len() > caller + 1 {
-                        self.frames[caller].callsite_hidden = true;
-                    }
-                } else {
-                    self.jump(end)?;
-                }
-            }
-            Instruction::SpreadMember => {
-                let value = self.pop()?;
-                let key = self.pop()?;
-                let iterator = self
-                    .stack
-                    .last()
-                    .ok_or_else(|| invalid("missing spread iterator"))?
-                    .as_object()?;
-                if self.heap.get(iterator)?.int_seq_iterator.is_some()
-                    || self.heap.get(iterator)?.bytes_iterator.is_some()
-                {
-                    self.stack.push(value);
-                    self.append_strict_element()?;
-                    return Ok(());
-                }
-                let state = self
-                    .heap
-                    .get(iterator)?
-                    .iterator
-                    .as_ref()
-                    .ok_or_else(|| invalid("empty spread iterator"))?;
-                let source_member = state.members[state.position - 1].clone();
-                let mut member = self.source_member(state.source, &source_member)?;
-                let target = self.builder()?;
-                let object = self.heap.get(target)?;
-                let target_kind = object.collection_kind;
-                let needs_obj_prep =
-                    matches!(key, Value::Object(_)) || object.has_object_collection_key;
-                let is_typed = is_typed_class(&self.heap, target)?;
-                let forbidden = if is_typed {
-                    source_member.kind != CollectionMemberKind::Property
-                } else {
-                    match target_kind {
-                        CollectionKind::Listing | CollectionKind::List | CollectionKind::Set => {
-                            source_member.kind != CollectionMemberKind::Element
-                        }
-                        CollectionKind::Mapping | CollectionKind::Map => {
-                            source_member.kind != CollectionMemberKind::Entry
-                        }
-                        CollectionKind::Dynamic => false,
-                    }
-                };
-                if forbidden {
-                    let kind = match source_member.kind {
-                        CollectionMemberKind::Property => "properties",
-                        CollectionMemberKind::Entry => "entries",
-                        CollectionMemberKind::Element => "elements",
-                    };
-                    let type_label = typed_class_ref(&self.heap, target)?.map_or_else(
-                        || PklString::from(format!("{target_kind:?}")),
-                        |class| {
-                            class
-                                .module
-                                .as_ref()
-                                .unwrap_or(&self.program.module_name)
-                                .concat(&"#".into())
-                                .concat(&class.name)
-                        },
-                    );
-                    return Err(self.spread_error(
-                        PklString::from(format!(
-                            "Cannot spread object containing {kind} into object of type `"
-                        ))
-                        .concat(&type_label)
-                        .concat(&"`.".into()),
-                        &member,
-                    ));
-                }
-                if needs_obj_prep {
-                    if source_member.kind == CollectionMemberKind::Entry {
-                        if self.heap.get(target)?.members.len() > 4
-                            && self.prepare_keys(vec![key.clone()])?
-                        {
-                            self.stack.push(key);
-                            return Ok(());
-                        }
-                        let candidates = self.declaration_candidates(target, &key, false)?;
-                        if self.search_key(&key, candidates)? {
-                            self.stack.push(key);
-                            self.stack.push(value);
-                            return Ok(());
-                        }
-                    }
-                    let insertion_key = if source_member.kind == CollectionMemberKind::Element {
-                        Value::Int((self.heap.get(target)?.length as i64).into())
-                    } else {
-                        key.clone()
-                    };
-                    if self.prepare_insertion(&insertion_key, source_member.kind)? {
-                        self.stack.push(key);
-                        self.stack.push(value);
-                        return Ok(());
-                    }
-                }
-                let object = self.heap.get(target)?;
-                if source_member.kind != CollectionMemberKind::Element
-                    && object
-                        .collection_members
-                        .iter()
-                        .any(|m| same_member(&self.heap, &source_member, m))
-                {
-                    let label = if source_member.kind == CollectionMemberKind::Property {
-                        "property"
-                    } else {
-                        "entry key"
-                    };
-                    let key = if source_member.kind == CollectionMemberKind::Property {
-                        scalar_string(&key)?
-                    } else {
-                        display_value(&key)
-                    };
-                    return Err(self.spread_error(PklString::join(&[format!("Cannot spread object because the enclosing object already has a declaration of {label} `").into(),key,"`.".into()], ""), &member));
-                }
-                member.constant = false;
-                let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);
-                // GeneratorSpreadNode retains the throwing spread node and
-                // inserts the source member's header under its qualified name.
-                // Keep the validation error's message, hint and provenance.
-                if let Err(error) =
-                    self.add_collection_member(member.clone(), key, source_member.kind, Some(value))
-                {
-                    return Err(self.spread_member_error(error, &member));
-                }
-            }
-            Instruction::OpenPredicate => {
-                let target = self.builder()?;
-                let object = self.heap.get(target)?;
-                let is_typed = is_typed_class(&self.heap, target)?;
-                if object.is_module || is_typed || object.collection_kind == CollectionKind::List {
-                    let label = typed_class_ref(&self.heap, target)?.map_or_else(
-                        || {
-                            if object.is_module {
-                                self.program.module_name.clone()
-                            } else {
-                                PklString::from(format!("{:?}", object.collection_kind))
-                            }
-                        },
-                        |class| {
-                            class
-                                .module
-                                .as_ref()
-                                .unwrap_or(&self.program.module_name)
-                                .concat(&"#".into())
-                                .concat(&class.name)
-                        },
-                    );
-                    return Err(RuntimeError::new(
-                        ErrorKind::Type,
-                        PklString::from("Object of type `")
-                            .concat(&label)
-                            .concat(&"` cannot have a predicate member.".into()),
-                    ));
-                }
-                let source = object.parent.unwrap_or(target);
-                let members = if object.parent.is_some() {
-                    predicate_members(&self.heap, source)?
-                } else {
-                    Vec::new()
-                };
-                let previous_this = self.current_custom_this()?;
-                let id = self.heap.allocate(Object {
-                    predicate_iterator: Some(Box::new(PredicateIterator {
-                        source,
-                        members,
-                        position: 0,
-                        awaiting_value: false,
-                        previous_this,
-                    })),
-                    ..Object::default()
-                });
-                self.stack.push(Value::Object(id));
-            }
-            Instruction::PredicateNext { end } => {
-                let id = self
-                    .stack
-                    .last()
-                    .and_then(Value::heap_id)
-                    .filter(|id| {
-                        self.heap
-                            .get(*id)
-                            .is_ok_and(|object| object.predicate_iterator.is_some())
-                    })
-                    .or_else(|| {
-                        self.stack
-                            .iter()
-                            .rev()
-                            .filter_map(Value::heap_id)
-                            .find(|id| {
-                                self.heap
-                                    .get(*id)
-                                    .is_ok_and(|object| object.predicate_iterator.is_some())
-                            })
-                    })
-                    .ok_or_else(|| invalid("missing predicate iterator"))?;
-                let state = self
-                    .heap
-                    .get(id)?
-                    .predicate_iterator
-                    .as_ref()
-                    .expect("predicate iterator");
-                let source = state.source;
-                let awaiting_value = state.awaiting_value;
-                let previous_this = state.previous_this.clone();
-                let next = state
-                    .members
-                    .get(state.position - usize::from(awaiting_value))
-                    .cloned();
-                if awaiting_value {
-                    let value = self.pop()?;
-                    let (owner, member) =
-                        next.ok_or_else(|| invalid("missing pending predicate member"))?;
-                    self.complete_cache(
-                        owner,
-                        CacheKey {
-                            owner: None,
-                            name: member.name.clone(),
-                            method: false,
-                            entry: true,
-                        },
-                        value.clone(),
-                    )?;
-                    self.heap
-                        .get_mut(id)?
-                        .predicate_iterator
-                        .as_mut()
-                        .expect("predicate iterator")
-                        .awaiting_value = false;
-                    self.set_current_custom_this(Some(value))?;
-                    return Ok(());
-                }
-                let Some((owner, member)) = next else {
-                    self.set_current_custom_this(previous_this)?;
-                    self.pop()?;
-                    self.jump(end)?;
-                    return Ok(());
-                };
-                self.heap
-                    .get_mut(id)?
-                    .predicate_iterator
-                    .as_mut()
-                    .expect("predicate iterator")
-                    .position += 1;
-                let key = CacheKey {
-                    owner: None,
-                    name: member.name.clone(),
-                    method: false,
-                    entry: true,
-                };
-                if let Some(value) = self.cached_slot(owner, &key)? {
-                    self.set_current_custom_this(Some(value))?;
-                } else {
-                    self.heap
-                        .get_mut(id)?
-                        .predicate_iterator
-                        .as_mut()
-                        .expect("predicate iterator")
-                        .awaiting_value = true;
-                    let caller = self.frames.len() - 1;
-                    self.frames[caller].pc -= 1;
-                    self.force_key_mode(
-                        source,
-                        owner,
-                        member.name.clone(),
-                        false,
-                        false,
-                        false,
-                        true,
-                        true,
-                    )?;
-                    if self.frames.len() > caller + 1 {
-                        self.frames[caller].callsite_hidden = true;
-                    }
-                }
-            }
-            Instruction::AddPredicateMember(member) => {
-                let applicable = self.pop()?;
-                let id = self
-                    .stack
-                    .last()
-                    .ok_or_else(|| invalid("missing predicate iterator"))?
-                    .as_object()?;
-                let state = self
-                    .heap
-                    .get(id)?
-                    .predicate_iterator
-                    .as_ref()
-                    .ok_or_else(|| invalid("missing predicate iterator"))?;
-                let key = state.members[state.position - 1].1.key.clone();
-                let kind = state.members[state.position - 1].1.kind;
-                let previous_this = state.previous_this.clone();
-                self.set_current_custom_this(previous_this)?;
-                let Value::Bool(applicable) = applicable else {
-                    return Err(type_error(
-                        &TypeCheck::Boolean,
-                        &applicable,
-                        &self.program.module_name,
-                        &self.heap,
-                    )?);
-                };
-                if applicable {
-                    // Selected elements replace existing indices; they do not
-                    // append or increase the collection's length.
-                    self.add_collection_member(
-                        *member,
-                        Some(key),
-                        CollectionMemberKind::Entry,
-                        None,
-                    )?;
-                    self.heap
-                        .get_mut(self.builder()?)?
-                        .collection_members
-                        .last_mut()
-                        .ok_or_else(|| invalid("missing selected predicate member"))?
-                        .kind = kind;
-                }
-            }
+            Instruction::IteratorNext { end } => self.col_iterator_next(end)?,
+            Instruction::SpreadMember => self.col_spread_member()?,
+            Instruction::OpenPredicate => self.col_open_predicate()?,
+            Instruction::PredicateNext { end } => self.col_predicate_next(end)?,
+            Instruction::AddPredicateMember(_) => self.col_add_predicate_member(instruction)?,
             Instruction::PrepareSetElement => self.prepare_set_element()?,
             Instruction::AddSetElement => self.add_set_element()?,
             Instruction::PutSetKey => {
@@ -3856,6 +2952,1078 @@ impl Vm {
         }
         if empty_amendment {
             self.end_collection()?;
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_begin_collection(
+        &mut self,
+        kind: CollectionKind,
+        has_parent: bool,
+        specialized: bool,
+    ) -> Result<(), RuntimeError> {
+        let parent = if has_parent {
+            let mut value = self.pop()?;
+            while let Value::NullWithDefault(id) = value {
+                value = self.heap.null_default(id)?;
+            }
+            match value {
+                Value::Null => Some(self.empty_object(CollectionKind::Dynamic)),
+                Value::Class(class) => Some(self.amendment_class_parent(class)?),
+                value @ (Value::Bool(_)
+                | Value::Int(_)
+                | Value::Float(_)
+                | Value::Duration(_)
+                | Value::IntSeq(_)
+                | Value::Regex(_)
+                | Value::Bytes(_)
+                | Value::TypeAlias(_)
+                | Value::DataSize(_)
+                | Value::String(_)) => {
+                    return Err(external_amendment_error(value_type_name(&value)));
+                }
+                value => Some(value.as_object()?),
+            }
+        } else {
+            None
+        };
+        let (kind, length) = if let Some(id) = parent {
+            let object = self.heap.get(id)?;
+            if object.reference.is_some() {
+                return Err(external_amendment_error("pkl.ref#Reference"));
+            }
+            if object.collection_kind == CollectionKind::Dynamic
+                && object.builtin_type.is_none()
+                && let Some(class) = typed_class_ref(&self.heap, id)?
+            {
+                self.check_class_instantiable(class)?;
+            }
+            if matches!(
+                object.collection_kind,
+                CollectionKind::List | CollectionKind::Map | CollectionKind::Set
+            ) {
+                return Err(external_amendment_error(format!(
+                    "{:?}",
+                    object.collection_kind
+                )));
+            }
+            (object.collection_kind, object.length)
+        } else {
+            (kind, 0)
+        };
+        let environment = if parent.is_none()
+            && matches!(
+                kind,
+                CollectionKind::List | CollectionKind::Set | CollectionKind::Map
+            ) {
+            Environment::default()
+        } else {
+            self.frames
+                .last()
+                .expect("active frame")
+                .environment
+                .clone()
+        };
+        let is_module = parent
+            .map(|id| self.heap.get(id).map(|o| o.is_module))
+            .transpose()?
+            .unwrap_or(false);
+        let id = self.heap.allocate(Object {
+            is_module,
+            parent,
+            collection_kind: kind,
+            length,
+            environment,
+            specialized_literal: specialized,
+            ..Object::default()
+        });
+        self.frames
+            .last_mut()
+            .expect("active frame")
+            .builders
+            .push(id);
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_add_collection_entry(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        let Instruction::AddCollectionEntry {
+            member,
+            check_index,
+            span,
+        } = instruction
+        else {
+            unreachable!("col_add_collection_entry")
+        };
+        let key = self.pop()?;
+        let target = self.builder()?;
+        let (is_typed, specialized_literal, needs_obj_prep) = {
+            let obj = self.heap.get(target)?;
+            let is_typed = obj.collection_kind == CollectionKind::Dynamic
+                && is_typed_class(&self.heap, target)?;
+            let needs_obj_prep = matches!(key, Value::Object(_)) || obj.has_object_collection_key;
+            (is_typed, obj.specialized_literal, needs_obj_prep)
+        };
+        if !is_typed && !check_index && needs_obj_prep {
+            if self.heap.get(target)?.members.len() > 4 && self.prepare_keys(vec![key.clone()])? {
+                self.stack.push(key);
+                return Ok(());
+            }
+            let candidates = self.declaration_candidates(target, &key, false)?;
+            if self.search_key(&key, candidates)? {
+                self.stack.push(key);
+                return Ok(());
+            }
+            if self.prepare_insertion(&key, CollectionMemberKind::Entry)? {
+                self.stack.push(key);
+                return Ok(());
+            }
+        }
+        if check_index {
+            let parent = self.heap.get(self.builder()?)?.parent;
+            let length = parent
+                .map(|id| self.heap.get(id).map(|o| o.length))
+                .transpose()?
+                .unwrap_or(0);
+            let Value::Int(index) = key else {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Expected value of type `Int`, but got type `{}`.",
+                        value_type_name(&key)
+                    ),
+                ));
+            };
+            if usize::try_from(index.get())
+                .ok()
+                .is_none_or(|i| i >= length)
+            {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    format!(
+                        "Element index `{index}` is out of range `0`..`{}`.",
+                        length as i64 - 1
+                    ),
+                ));
+            }
+        }
+        let generated_typed = !specialized_literal && is_typed;
+        self.add_collection_member(*member, Some(key), CollectionMemberKind::Entry, None)
+            .map_err(|error| {
+                if generated_typed {
+                    error.at(span)
+                } else {
+                    error
+                }
+            })?;
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_subscript(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        if self.resume_entry_lookup()? {
+            return Ok(());
+        }
+        let key = self.pop()?;
+        let is_super = matches!(instruction, Instruction::SuperSubscript { .. });
+        let receiver = if is_super {
+            self.scope(0)?.receiver
+        } else {
+            let value = self.pop()?;
+            if let Value::String(text) = &value {
+                let Instruction::Subscript { key_span } = instruction else {
+                    unreachable!("ordinary subscript instruction")
+                };
+                let value = self.subscript_string(text, key, key_span)?;
+                self.stack.push(value);
+                return Ok(());
+            }
+            if let Value::Bytes(bytes) = &value {
+                let value = self.subscript_bytes(bytes, key)?;
+                self.stack.push(value);
+                return Ok(());
+            }
+            if matches!(value, Value::IntSeq(_)) {
+                let headline = format!(
+                    "Operator `[]` is not defined for operand types `IntSeq` and `{}`.",
+                    crate::diagnostic_values::type_name(
+                        &key,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?
+                );
+                let left_val = crate::diagnostic_values::render(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                let right_val = crate::diagnostic_values::render(
+                    &key,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Left operand", left_val), ("Right operand", right_val)],
+                ));
+            }
+            value.as_object()?
+        };
+        if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Set {
+            let headline = PklString::join(
+                &[
+                    "Operator `[]` is not defined for operand types `Set` and `".into(),
+                    crate::diagnostic_values::type_name(
+                        &key,
+                        &self.heap,
+                        &self.program.module_name,
+                    )?,
+                    "`.".into(),
+                ],
+                "",
+            );
+            let left_val = crate::diagnostic_values::render(
+                &Value::Object(receiver),
+                &self.heap,
+                &self.program.module_name,
+                80,
+            )?;
+            let right_val =
+                crate::diagnostic_values::render(&key, &self.heap, &self.program.module_name, 80)?;
+            return Err(RuntimeError::with_program_values(
+                ErrorKind::Type,
+                headline,
+                &[("Left operand", left_val), ("Right operand", right_val)],
+            ));
+        }
+        if !is_super && self.heap.get(receiver)?.collection_kind == CollectionKind::Map {
+            if self.prepare_map_lookup(receiver, &key)? {
+                self.stack.extend([Value::Object(receiver), key]);
+                return Ok(());
+            }
+            let Some(value) = self.map_value(receiver, &key)? else {
+                return self.fail_missing_key(receiver, key);
+            };
+            self.stack.push(value);
+            return Ok(());
+        }
+        if !is_super && self.heap.get(receiver)?.reference.is_some() {
+            self.stack.push(Value::Object(receiver));
+            self.stack.push(key.clone());
+            if let Some(result) = self.reference_access(receiver, None, Some(key))? {
+                self.pop()?;
+                self.pop()?;
+                self.stack.push(result);
+            }
+            return Ok(());
+        }
+        if let Instruction::SuperSubscript { end } = instruction {
+            let owner = self.heap.get(self.scope(0)?.owner)?.parent;
+            return self.super_entry_lookup(receiver, owner, key, end, false);
+        }
+        if !is_super
+            && matches!(
+                self.heap.get(receiver)?.collection_kind,
+                CollectionKind::Mapping | CollectionKind::Dynamic
+            )
+        {
+            return self.mapping_lookup(receiver, key, mapping_ops::LookupMode::Subscript);
+        }
+        let owner = if is_super {
+            let Some(parent) = self.heap.get(self.scope(0)?.owner)?.parent else {
+                self.stack.push(key);
+                return self.force(receiver, receiver, "default".into(), false, true, false);
+            };
+            parent
+        } else {
+            receiver
+        };
+        if self.heap.get(owner)?.members.len() > 4 && self.prepare_keys(vec![key.clone()])? {
+            if !is_super {
+                self.stack.push(Value::Object(receiver));
+            }
+            self.stack.push(key);
+            return Ok(());
+        }
+        let candidates = self.declaration_candidates(owner, &key, true)?;
+        if self.search_key(&key, candidates)? {
+            if !is_super {
+                self.stack.push(Value::Object(receiver));
+            }
+            self.stack.push(key);
+            return Ok(());
+        }
+        let object = self.heap.get(receiver)?;
+        if !is_super
+            && matches!(
+                object.collection_kind,
+                CollectionKind::Listing | CollectionKind::List
+            )
+        {
+            let Value::Int(index) = key else {
+                let name = format!("{:?}", object.collection_kind);
+                let headline = format!(
+                    "Operator `[]` is not defined for operand types `{name}` and `{}`.",
+                    value_type_name(&key)
+                );
+                let left_val = crate::diagnostic_values::render(
+                    &Value::Object(receiver),
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                let right_val = crate::diagnostic_values::render(
+                    &key,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Left operand", left_val), ("Right operand", right_val)],
+                ));
+            };
+            if usize::try_from(index.get())
+                .ok()
+                .is_none_or(|i| i >= object.length)
+            {
+                let headline: PklString = format!(
+                    "Element index `{}` is out of range `0`..`{}`.",
+                    strings::diagnostic_integer(index.get()),
+                    strings::diagnostic_integer(object.length as i64 - 1)
+                )
+                .into();
+                if object.collection_kind == CollectionKind::List {
+                    let rendered = crate::diagnostic_values::render_string(
+                        &Value::Object(receiver),
+                        &self.heap,
+                        &self.program.module_name,
+                        80,
+                    )?;
+                    return Err(RuntimeError::with_program_values(
+                        ErrorKind::Type,
+                        headline,
+                        &[("Collection", rendered)],
+                    ));
+                }
+                return Err(RuntimeError::new(ErrorKind::Type, headline));
+            }
+        }
+        let member = if self.heap.get(owner)?.collection_kind == CollectionKind::List
+            && self.heap.get(owner)?.parent.is_none()
+        {
+            if let Value::Int(index) = &key
+                && index.get() >= 0
+            {
+                let obj = self.heap.get(owner)?;
+                if let Ok(idx) = usize::try_from(index.get()) {
+                    if let Some(elems) = &obj.list_elements {
+                        if let Some(val) = elems.get(idx) {
+                            self.stack.push(val.clone());
+                            return Ok(());
+                        }
+                        None
+                    } else if idx < obj.collection_members.len() {
+                        Some(obj.collection_members[idx].clone())
+                    } else if idx < obj.length && !obj.collection_members.is_empty() {
+                        let base_len = obj
+                            .repeat_base_len
+                            .unwrap_or(obj.collection_members.len())
+                            .max(1);
+                        let resolved_idx = idx % base_len;
+                        if let Some(slot) = obj.cache_slots.get(resolved_idx)
+                            && slot.key.entry
+                            && slot.key.owner.is_none()
+                            && !slot.key.method
+                        {
+                            self.stack.push(slot.value.clone());
+                            return Ok(());
+                        }
+                        Some(obj.collection_members[resolved_idx].clone())
+                    } else {
+                        None
+                    }
+                } else {
+                    None
+                }
+            } else {
+                None
+            }
+        } else {
+            let candidates = self.declaration_candidates(owner, &key, true)?;
+            ordered_members(&self.heap, owner)?
+                .into_iter()
+                .rev()
+                .find(|m| {
+                    m.kind != CollectionMemberKind::Property
+                        && candidates
+                            .iter()
+                            .any(|candidate| equality::identical_key(&self.heap, candidate, &m.key))
+                        && same_key(&self.heap, &key, &m.key)
+                })
+        };
+        if member.is_none() && self.prepare_keys(vec![key.clone()])? {
+            if !is_super {
+                self.stack.push(Value::Object(receiver));
+            }
+            self.stack.push(key);
+            return Ok(());
+        }
+        if let Instruction::SuperSubscript { end } = instruction {
+            if member.is_none() {
+                // ReadSuperEntryNode uses the dynamic receiver's default,
+                // not the lexical owner's. Keep the evaluated key rooted
+                // while property/type resolution or the callback suspends.
+                self.stack.push(key);
+                return self.force(receiver, receiver, "default".into(), false, true, false);
+            }
+            self.frames.last_mut().expect("super entry frame").pc = end;
+        }
+        let Some(member) = member else {
+            return self.fail_missing_key(receiver, key);
+        };
+        self.force_key_probe(receiver, owner, member.name, !is_super, key)
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_open_iterator(&mut self, nullable: bool, spread: bool) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        if let Value::Bytes(bytes) = value {
+            let id = self.heap.allocate(Object {
+                bytes_iterator: Some(Box::new((bytes, 0, spread))),
+                ..Default::default()
+            });
+            self.stack.push(Value::Object(id));
+            return Ok(());
+        }
+        if let Value::IntSeq(sequence) = value {
+            let id = self.heap.allocate(Object {
+                int_seq_iterator: Some(Box::new(sequence.cursor(!spread))),
+                ..Default::default()
+            });
+            self.stack.push(Value::Object(id));
+            return Ok(());
+        }
+        let iterator = if nullable && value == Value::Null {
+            let source = self.heap.allocate(Object::default());
+            Some(CollectionIterator {
+                source,
+                members: Vec::new(),
+                position: 0,
+                force_members: Vec::new(),
+                force_position: 0,
+                awaiting_value: false,
+                members_refreshed: true,
+            })
+        } else {
+            let source = match value.as_object() {
+                Ok(source) => source,
+                Err(_) => {
+                    let mut error = RuntimeError::new(
+                        ErrorKind::Type,
+                        format!(
+                            "Cannot iterate over value of type `{}`.",
+                            value_type_name(&value)
+                        ),
+                    );
+                    if !(spread && value.is_null()) {
+                        let rendered = crate::diagnostic_values::render(
+                            &value,
+                            &self.heap,
+                            &self.program.module_name,
+                            80,
+                        )?;
+                        error.push_program_value("Value", rendered);
+                    }
+                    if spread && value.is_null() {
+                        let frame = self.frames.last().expect("active frame");
+                        error.spread_hint = self
+                            .program
+                            .metadata
+                            .get(frame.block)
+                            .and_then(|metadata| metadata.spans.get(frame.pc - 1))
+                            .copied()
+                            .flatten()
+                            .map(Box::new);
+                    }
+                    return Err(error);
+                }
+            };
+            if self.heap.get(source)?.reference.is_some() {
+                let rendered = crate::diagnostic_values::render(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                return Err(RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    "Cannot iterate over value of type `pkl.ref#Reference`.",
+                    &[("Value", rendered)],
+                ));
+            }
+            if self.heap.get(source)?.is_module {
+                let headline = PklString::from("Cannot iterate over value of type `")
+                    .concat(&self.program.module_name)
+                    .concat(&"`.".into());
+                let rendered = crate::diagnostic_values::render(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                let mut error = RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Value", rendered)],
+                );
+                if spread {
+                    error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
+                }
+                self.frames
+                    .last_mut()
+                    .expect("active frame")
+                    .callsite_hidden = true;
+                return Err(error);
+            }
+            if let Some(class) = typed_class(&self.heap, source)? {
+                let headline = PklString::from("Cannot iterate over value of type `")
+                    .concat(&reference::type_name(
+                        &TypeCheck::Class {
+                            module: class.module.clone(),
+                            id: class.id,
+                            name: class.name,
+                        },
+                        &self.program.module_name,
+                    ))
+                    .concat(&"`.".into());
+                let rendered = crate::diagnostic_values::render(
+                    &value,
+                    &self.heap,
+                    &self.program.module_name,
+                    80,
+                )?;
+                let mut error = RuntimeError::with_program_values(
+                    ErrorKind::Type,
+                    headline,
+                    &[("Value", rendered)],
+                );
+                if spread {
+                    error.hint = Some("`Typed` values are not iterable. If you mean to spread its members, convert it to `Dynamic` using `toDynamic()`.".into());
+                }
+                return Err(error);
+            }
+            let members = ordered_members(&self.heap, source)?;
+            let src_obj = self.heap.get(source)?;
+            let same_force_order = src_obj.collection_kind == CollectionKind::Map
+                || (src_obj.collection_kind == CollectionKind::List
+                    && (src_obj.list_elements.is_some() || src_obj.repeat_base_len.is_some()))
+                || (!src_obj.collection_members.is_empty()
+                    && is_single_level_leaf_collection(&self.heap, src_obj)
+                    && src_obj.collection_members.len() == src_obj.members.len()
+                    && members.len() == src_obj.collection_members.len());
+            let force_members = if same_force_order {
+                members.clone()
+            } else {
+                forcing_members(&self.heap, source)?
+            };
+            Some(CollectionIterator {
+                source,
+                force_members,
+                members,
+                position: 0,
+                force_position: 0,
+                awaiting_value: false,
+                members_refreshed: false,
+            })
+        };
+        let id = self.heap.allocate(Object {
+            iterator: iterator.map(Box::new),
+            ..Object::default()
+        });
+        self.stack.push(Value::Object(id));
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_iterator_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        let id = self
+            .stack
+            .iter()
+            .rev()
+            .filter_map(Value::heap_id)
+            .find(|id| {
+                self.heap.get(*id).is_ok_and(|object| {
+                    object.iterator.is_some()
+                        || object.int_seq_iterator.is_some()
+                        || object.bytes_iterator.is_some()
+                })
+            })
+            .or_else(|| self.stack.last().and_then(Value::heap_id))
+            .ok_or_else(|| invalid("missing iterator"))?;
+        if let Some(cursor) = self.heap.get_mut(id)?.bytes_iterator.as_mut() {
+            if let Some(byte) = cursor.0.get(cursor.1).copied() {
+                let value = if cursor.2 {
+                    i64::from(byte)
+                } else {
+                    i64::from(byte as i8)
+                };
+                self.stack.extend([
+                    Value::Int((cursor.1 as i64).into()),
+                    Value::Int(value.into()),
+                ]);
+                cursor.1 += 1;
+            } else {
+                self.jump(end)?;
+            }
+            return Ok(());
+        }
+        if let Some(cursor) = self.heap.get_mut(id)?.int_seq_iterator.as_mut() {
+            if let Some((index, value)) = cursor.next() {
+                self.stack
+                    .extend([Value::Int(index.into()), Value::Int(value.into())]);
+            } else {
+                self.jump(end)?;
+            }
+            return Ok(());
+        }
+        let source = self
+            .heap
+            .get(id)?
+            .iterator
+            .as_ref()
+            .ok_or_else(|| invalid("missing iterator"))?
+            .source;
+        if self.heap.get(source)?.collection_kind == CollectionKind::Map {
+            self.next_map_entry(id, end)?;
+            return Ok(());
+        }
+        let awaiting = self
+            .heap
+            .get(id)?
+            .iterator
+            .as_ref()
+            .is_some_and(|iterator| iterator.awaiting_value);
+        if awaiting {
+            self.pop()?;
+            self.heap
+                .get_mut(id)?
+                .iterator
+                .as_mut()
+                .expect("active iterator")
+                .awaiting_value = false;
+        }
+        let forcing = self
+            .heap
+            .get_mut(id)?
+            .iterator
+            .as_mut()
+            .and_then(|iterator| {
+                let member = iterator.force_members.get(iterator.force_position)?.clone();
+                iterator.force_position += 1;
+                iterator.awaiting_value = true;
+                Some((iterator.source, member))
+            });
+        if let Some((source, member)) = forcing {
+            let caller = self.frames.len() - 1;
+            self.frames[caller].pc -= 1;
+            self.force_collection_member(source, member)?;
+            if self.frames.len() > caller + 1 {
+                self.frames[caller].callsite_hidden = true;
+            }
+            return Ok(());
+        }
+        let (source, needs_refresh) = {
+            let iter = self
+                .heap
+                .get(id)?
+                .iterator
+                .as_ref()
+                .expect("active iterator");
+            (iter.source, !iter.members_refreshed)
+        };
+        if needs_refresh {
+            if !self.heap.key_equalities.is_empty() {
+                let effective = ordered_members(&self.heap, source)?;
+                let iter = self
+                    .heap
+                    .get_mut(id)?
+                    .iterator
+                    .as_mut()
+                    .expect("active iterator");
+                iter.members = effective;
+                iter.members_refreshed = true;
+            } else {
+                self.heap
+                    .get_mut(id)?
+                    .iterator
+                    .as_mut()
+                    .expect("active iterator")
+                    .members_refreshed = true;
+            }
+        }
+        let next = self
+            .heap
+            .get_mut(id)?
+            .iterator
+            .as_mut()
+            .and_then(|iterator| {
+                let member = iterator.members.get(iterator.position)?.clone();
+                iterator.position += 1;
+                Some((iterator.source, member))
+            });
+        if let Some((source, member)) = next {
+            self.stack.push(member.key.clone());
+            let caller = self.frames.len() - 1;
+            self.force_collection_member(source, member)?;
+            if self.frames.len() > caller + 1 {
+                self.frames[caller].callsite_hidden = true;
+            }
+        } else {
+            self.jump(end)?;
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_spread_member(&mut self) -> Result<(), RuntimeError> {
+        let value = self.pop()?;
+        let key = self.pop()?;
+        let iterator = self
+            .stack
+            .last()
+            .ok_or_else(|| invalid("missing spread iterator"))?
+            .as_object()?;
+        if self.heap.get(iterator)?.int_seq_iterator.is_some()
+            || self.heap.get(iterator)?.bytes_iterator.is_some()
+        {
+            self.stack.push(value);
+            self.append_strict_element()?;
+            return Ok(());
+        }
+        let state = self
+            .heap
+            .get(iterator)?
+            .iterator
+            .as_ref()
+            .ok_or_else(|| invalid("empty spread iterator"))?;
+        let source_member = state.members[state.position - 1].clone();
+        let mut member = self.source_member(state.source, &source_member)?;
+        let target = self.builder()?;
+        let object = self.heap.get(target)?;
+        let target_kind = object.collection_kind;
+        let needs_obj_prep = matches!(key, Value::Object(_)) || object.has_object_collection_key;
+        let is_typed = is_typed_class(&self.heap, target)?;
+        let forbidden = if is_typed {
+            source_member.kind != CollectionMemberKind::Property
+        } else {
+            match target_kind {
+                CollectionKind::Listing | CollectionKind::List | CollectionKind::Set => {
+                    source_member.kind != CollectionMemberKind::Element
+                }
+                CollectionKind::Mapping | CollectionKind::Map => {
+                    source_member.kind != CollectionMemberKind::Entry
+                }
+                CollectionKind::Dynamic => false,
+            }
+        };
+        if forbidden {
+            let kind = match source_member.kind {
+                CollectionMemberKind::Property => "properties",
+                CollectionMemberKind::Entry => "entries",
+                CollectionMemberKind::Element => "elements",
+            };
+            let type_label = typed_class_ref(&self.heap, target)?.map_or_else(
+                || PklString::from(format!("{target_kind:?}")),
+                |class| {
+                    class
+                        .module
+                        .as_ref()
+                        .unwrap_or(&self.program.module_name)
+                        .concat(&"#".into())
+                        .concat(&class.name)
+                },
+            );
+            return Err(self.spread_error(
+                PklString::from(format!(
+                    "Cannot spread object containing {kind} into object of type `"
+                ))
+                .concat(&type_label)
+                .concat(&"`.".into()),
+                &member,
+            ));
+        }
+        if needs_obj_prep {
+            if source_member.kind == CollectionMemberKind::Entry {
+                if self.heap.get(target)?.members.len() > 4
+                    && self.prepare_keys(vec![key.clone()])?
+                {
+                    self.stack.push(key);
+                    return Ok(());
+                }
+                let candidates = self.declaration_candidates(target, &key, false)?;
+                if self.search_key(&key, candidates)? {
+                    self.stack.push(key);
+                    self.stack.push(value);
+                    return Ok(());
+                }
+            }
+            let insertion_key = if source_member.kind == CollectionMemberKind::Element {
+                Value::Int((self.heap.get(target)?.length as i64).into())
+            } else {
+                key.clone()
+            };
+            if self.prepare_insertion(&insertion_key, source_member.kind)? {
+                self.stack.push(key);
+                self.stack.push(value);
+                return Ok(());
+            }
+        }
+        let object = self.heap.get(target)?;
+        if source_member.kind != CollectionMemberKind::Element
+            && object
+                .collection_members
+                .iter()
+                .any(|m| same_member(&self.heap, &source_member, m))
+        {
+            let label = if source_member.kind == CollectionMemberKind::Property {
+                "property"
+            } else {
+                "entry key"
+            };
+            let key = if source_member.kind == CollectionMemberKind::Property {
+                scalar_string(&key)?
+            } else {
+                display_value(&key)
+            };
+            return Err(self.spread_error(
+                PklString::join(
+                    &[
+                        format!(
+                            "Cannot spread object because the enclosing object already has a declaration of {label} `"
+                        )
+                        .into(),
+                        key,
+                        "`.".into(),
+                    ],
+                    "",
+                ),
+                &member,
+            ));
+        }
+        member.constant = false;
+        let key = (source_member.kind != CollectionMemberKind::Element).then_some(key);
+        // GeneratorSpreadNode retains the throwing spread node and
+        // inserts the source member's header under its qualified name.
+        // Keep the validation error's message, hint and provenance.
+        if let Err(error) =
+            self.add_collection_member(member.clone(), key, source_member.kind, Some(value))
+        {
+            return Err(self.spread_member_error(error, &member));
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_open_predicate(&mut self) -> Result<(), RuntimeError> {
+        let target = self.builder()?;
+        let object = self.heap.get(target)?;
+        let is_typed = is_typed_class(&self.heap, target)?;
+        if object.is_module || is_typed || object.collection_kind == CollectionKind::List {
+            let label = typed_class_ref(&self.heap, target)?.map_or_else(
+                || {
+                    if object.is_module {
+                        self.program.module_name.clone()
+                    } else {
+                        PklString::from(format!("{:?}", object.collection_kind))
+                    }
+                },
+                |class| {
+                    class
+                        .module
+                        .as_ref()
+                        .unwrap_or(&self.program.module_name)
+                        .concat(&"#".into())
+                        .concat(&class.name)
+                },
+            );
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                PklString::from("Object of type `")
+                    .concat(&label)
+                    .concat(&"` cannot have a predicate member.".into()),
+            ));
+        }
+        let source = object.parent.unwrap_or(target);
+        let members = if object.parent.is_some() {
+            predicate_members(&self.heap, source)?
+        } else {
+            Vec::new()
+        };
+        let previous_this = self.current_custom_this()?;
+        let id = self.heap.allocate(Object {
+            predicate_iterator: Some(Box::new(PredicateIterator {
+                source,
+                members,
+                position: 0,
+                awaiting_value: false,
+                previous_this,
+            })),
+            ..Object::default()
+        });
+        self.stack.push(Value::Object(id));
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_predicate_next(&mut self, end: usize) -> Result<(), RuntimeError> {
+        let id = self
+            .stack
+            .last()
+            .and_then(Value::heap_id)
+            .filter(|id| {
+                self.heap
+                    .get(*id)
+                    .is_ok_and(|object| object.predicate_iterator.is_some())
+            })
+            .or_else(|| {
+                self.stack
+                    .iter()
+                    .rev()
+                    .filter_map(Value::heap_id)
+                    .find(|id| {
+                        self.heap
+                            .get(*id)
+                            .is_ok_and(|object| object.predicate_iterator.is_some())
+                    })
+            })
+            .ok_or_else(|| invalid("missing predicate iterator"))?;
+        let state = self
+            .heap
+            .get(id)?
+            .predicate_iterator
+            .as_ref()
+            .expect("predicate iterator");
+        let source = state.source;
+        let awaiting_value = state.awaiting_value;
+        let previous_this = state.previous_this.clone();
+        let next = state
+            .members
+            .get(state.position - usize::from(awaiting_value))
+            .cloned();
+        if awaiting_value {
+            let value = self.pop()?;
+            let (owner, member) =
+                next.ok_or_else(|| invalid("missing pending predicate member"))?;
+            self.complete_cache(
+                owner,
+                CacheKey {
+                    owner: None,
+                    name: member.name.clone(),
+                    method: false,
+                    entry: true,
+                },
+                value.clone(),
+            )?;
+            self.heap
+                .get_mut(id)?
+                .predicate_iterator
+                .as_mut()
+                .expect("predicate iterator")
+                .awaiting_value = false;
+            self.set_current_custom_this(Some(value))?;
+            return Ok(());
+        }
+        let Some((owner, member)) = next else {
+            self.set_current_custom_this(previous_this)?;
+            self.pop()?;
+            self.jump(end)?;
+            return Ok(());
+        };
+        self.heap
+            .get_mut(id)?
+            .predicate_iterator
+            .as_mut()
+            .expect("predicate iterator")
+            .position += 1;
+        let key = CacheKey {
+            owner: None,
+            name: member.name.clone(),
+            method: false,
+            entry: true,
+        };
+        if let Some(value) = self.cached_slot(owner, &key)? {
+            self.set_current_custom_this(Some(value))?;
+        } else {
+            self.heap
+                .get_mut(id)?
+                .predicate_iterator
+                .as_mut()
+                .expect("predicate iterator")
+                .awaiting_value = true;
+            let caller = self.frames.len() - 1;
+            self.frames[caller].pc -= 1;
+            self.force_key_mode(
+                source,
+                owner,
+                member.name.clone(),
+                false,
+                false,
+                false,
+                true,
+                true,
+            )?;
+            if self.frames.len() > caller + 1 {
+                self.frames[caller].callsite_hidden = true;
+            }
+        }
+        Ok(())
+    }
+
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
+    fn col_add_predicate_member(&mut self, instruction: Instruction) -> Result<(), RuntimeError> {
+        let Instruction::AddPredicateMember(member) = instruction else {
+            unreachable!("col_add_predicate_member")
+        };
+        let applicable = self.pop()?;
+        let id = self
+            .stack
+            .last()
+            .ok_or_else(|| invalid("missing predicate iterator"))?
+            .as_object()?;
+        let state = self
+            .heap
+            .get(id)?
+            .predicate_iterator
+            .as_ref()
+            .ok_or_else(|| invalid("missing predicate iterator"))?;
+        let key = state.members[state.position - 1].1.key.clone();
+        let kind = state.members[state.position - 1].1.kind;
+        let previous_this = state.previous_this.clone();
+        self.set_current_custom_this(previous_this)?;
+        let Value::Bool(applicable) = applicable else {
+            return Err(type_error(
+                &TypeCheck::Boolean,
+                &applicable,
+                &self.program.module_name,
+                &self.heap,
+            )?);
+        };
+        if applicable {
+            // Selected elements replace existing indices; they do not
+            // append or increase the collection's length.
+            self.add_collection_member(*member, Some(key), CollectionMemberKind::Entry, None)?;
+            self.heap
+                .get_mut(self.builder()?)?
+                .collection_members
+                .last_mut()
+                .ok_or_else(|| invalid("missing selected predicate member"))?
+                .kind = kind;
         }
         Ok(())
     }

@@ -10,13 +10,13 @@
 
 | Component | Location | Current Version | Format / Runtime Output |
 | --- | --- | --- | --- |
-| Rust workspace crates (8 publishable crates + 3 internal/binding crates) | [Cargo.toml](../Cargo.toml) (`[workspace.package]` + `[workspace.dependencies]`) | `0.32.0-rc.3` | Cargo SemVer (`0.32.0-rc.3`); `crates/pkl` published as `pkl-lang` (`[lib] name = "pkl"`) |
+| Rust workspace crates (8 publishable crates + 3 internal/binding crates) | [Cargo.toml](../Cargo.toml) (`[workspace.package]` + `[workspace.dependencies]`) | `0.32.0` | Cargo SemVer (`0.32.0`); `crates/pkl` published as `pkl-lang` (`[lib] name = "pkl"`) |
 | `pkl` CLI binary | `crates/pkl/src/release.rs` | `0.32.0` (language baseline) | `pkl-rs 0.32.0 (<os>, native)` |
 | `pkldoc` CLI binary | `crates/pkl-doc/src/scope.rs`, `cli.rs` | `0.32.0` (language baseline) | `pkldoc-rs 0.32.0 (<os>, native)` |
-| `@openedges/pkl-wasm` npm package | [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) | `0.32.0-rc.3` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
-| `@openedges/pkl-napi` npm package | [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) | `0.32.0-rc.3` | npm SemVer (`--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
-| Homebrew Tap formula | `openedges/homebrew-tap` (`Formula/pkl-rs.rb`) | `0.32.0-rc.3` | Rendered from `SHA256SUMS.txt` by [tools/render_homebrew_formula.py](../tools/render_homebrew_formula.py) |
-| Git release tags | Git tags (`v*`) | `v0.32.0-rc.3` *(GA: `v0.32.0`)* | Triggers [.github/workflows/release.yml](../.github/workflows/release.yml) |
+| `@openedges/pkl-wasm` npm package | [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) | `0.32.0` | npm SemVer (`latest` on GA, `--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
+| `@openedges/pkl-napi` npm package | [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) | `0.32.0` | npm SemVer (`latest` on GA, `--tag next` on prereleases) + `PKL_VERSION = "0.32.0"` |
+| Homebrew Tap formula | `openedges/homebrew-tap` (`Formula/pkl-rs.rb`) | `0.32.0` | Rendered from `SHA256SUMS.txt` by [tools/render_homebrew_formula.py](../tools/render_homebrew_formula.py) |
+| Git release tags | Git tags (`v*`) | `v0.32.0` | Triggers [.github/workflows/release.yml](../.github/workflows/release.yml) |
 
 ### Version Rules
 
@@ -91,7 +91,7 @@ Release tags are the authoritative trigger for [.github/workflows/release.yml](.
 1. **Annotated tags only**:
    - Always create annotated tags with `-a` (and `-s` when GPG/SSH signing is configured):
      ```sh
-     git tag -a v0.32.0-rc.1 -m "pkl-rs v0.32.0-rc.1"
+     git tag -a v0.32.0 -m "pkl-rs v0.32.0"
      ```
    - Never use lightweight tags (`git tag v0.32.0`) for releases.
 2. **Strict immutability**:
@@ -102,7 +102,7 @@ Release tags are the authoritative trigger for [.github/workflows/release.yml](.
 4. **Mechanical tag-to-manifest lockstep (`tools/check_release_version.py`)**:
    - Before any cross-platform macOS/Windows/Linux build starts, `release.yml::verify-tag` runs [tools/check_release_version.py](../tools/check_release_version.py) to guarantee exact equality across:
      - Git tag (stripped of `v`)
-     - Root [Cargo.toml](../Cargo.toml) (`[workspace.package].version`)
+     - Root [Cargo.toml](../Cargo.toml) (`[workspace.package].version` and `[workspace.dependencies]` internal crate pins)
      - [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) (`version`)
      - [packages/pkl-napi/package.json](../packages/pkl-napi/package.json) (`version`)
    - Mismatched tags fail fast in seconds without consuming cross-platform runner minutes.
@@ -116,10 +116,10 @@ Release tags are the authoritative trigger for [.github/workflows/release.yml](.
 Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
 
 1. **Version & manifest lockstep**
-   - Update `[workspace.package].version` in [Cargo.toml](../Cargo.toml), sync [Cargo.lock](../Cargo.lock) (`cargo update --workspace --offline`), and align [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) and [packages/pkl-napi/package.json](../packages/pkl-napi/package.json).
+   - Update `[workspace.package].version` and internal `[workspace.dependencies]` pins in [Cargo.toml](../Cargo.toml), sync [Cargo.lock](../Cargo.lock) (`cargo update --workspace --offline`), and align [packages/pkl-wasm/package.json](../packages/pkl-wasm/package.json) and [packages/pkl-napi/package.json](../packages/pkl-napi/package.json).
    - Verify exact lockstep locally before tagging:
      ```sh
-     python3 tools/check_release_version.py --tag v0.32.0-rc.1
+     python3 tools/check_release_version.py --tag v0.32.0
      cargo xtask verify
      ```
 2. **Changelog & legal notices**
@@ -135,8 +135,8 @@ Before creating and pushing a release tag (`vX.Y.Z` or `vX.Y.Z-rc.N`):
    - Optionally dry-run [.github/workflows/release.yml](../.github/workflows/release.yml) via `workflow_dispatch` (`publish_github_release=false`, `publish_npm=false`, `publish_crates=false`, `publish_homebrew=false`) to verify all 7 CLI targets, `@openedges/pkl-wasm` (`<= 2.50 MiB` gzip-9), 7-addon `@openedges/pkl-napi`, all 8 `.crate` packages (`<= 10 MiB`), container smoke tests (Debian 12, Rocky 9, Ubuntu 22.04, Alpine 3.21), `SHA256SUMS.txt`, and `Formula/pkl-rs.rb` (`ruby -c`).
    - Create and push the annotated tag from the verified commit on `main` (or `release/<MAJOR>.<MINOR>`):
      ```sh
-     git tag -a v0.32.0-rc.1 -m "pkl-rs v0.32.0-rc.1"
-     git push github v0.32.0-rc.1
+     git tag -a v0.32.0 -m "pkl-rs v0.32.0"
+     git push origin v0.32.0
      ```
      Pushing a `v*` tag automatically publishes the **GitHub Release** (marking `-*` tags as prereleases).
    - Once the GitHub Release and `SHA256SUMS.txt` are verified, run `workflow_dispatch` on the tagged commit with the desired channel toggles enabled:

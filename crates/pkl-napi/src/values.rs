@@ -14,7 +14,7 @@ use pkl_runtime::{
     duration::{Duration, DurationUnit},
     pkl_binary_decode::{
         DecodedClassInfo, DecodedIntSeq, DecodedObject, DecodedObjectMember, DecodedReference,
-        DecodedValue, ObjectMemberKind, decode_lossless,
+        DecodedValue, ObjectMemberKind, decode, decode_lossless,
     },
     value::PklString,
 };
@@ -181,9 +181,24 @@ pub fn decoded_value_to_js<'env>(env: &'env Env, value: &DecodedValue) -> Result
     }
 }
 
+const MAX_JS_VALUE_DEPTH: usize = 128;
+
 /// Converts a dehydrated JS value into a Rust `DecodedValue` with strict 64-bit `BigInt`,
 /// owned `Uint8Array`, and lossless UTF-16 validation.
 pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedValue, NativeError> {
+    js_to_decoded_value_depth(value, 0)
+}
+
+fn js_to_decoded_value_depth(
+    value: JsAnyIn<'_>,
+    depth: usize,
+) -> std::result::Result<DecodedValue, NativeError> {
+    if depth > MAX_JS_VALUE_DEPTH {
+        return Err(NativeError::invalid_argument(
+            "Maximum value nesting depth exceeded.",
+        ));
+    }
+    let next_depth = depth + 1;
     match value {
         Either8::A(_) => Ok(DecodedValue::Null),
         Either8::B(b) => Ok(DecodedValue::Bool(b)),
@@ -199,7 +214,7 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                     .get::<JsAnyIn<'_>>(i)
                     .map_err(|e| NativeError::invalid_argument(format!("Invalid array item: {e}")))?
                     .ok_or_else(|| NativeError::invalid_argument("Missing array element"))?;
-                out.push(js_to_decoded_value(item)?);
+                out.push(js_to_decoded_value_depth(item, next_depth)?);
             }
             Ok(DecodedValue::List(out))
         }
@@ -216,7 +231,7 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                             .get::<JsAnyIn<'_>>(i)
                             .map_err(|e| NativeError::invalid_argument(e.to_string()))?
                             .ok_or_else(|| NativeError::invalid_argument("Missing set item"))?;
-                        out.push(js_to_decoded_value(item)?);
+                        out.push(js_to_decoded_value_depth(item, next_depth)?);
                     }
                     Ok(DecodedValue::Set(out))
                 }
@@ -236,7 +251,10 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                             .get::<JsAnyIn<'_>>(1)
                             .map_err(|e| NativeError::invalid_argument(e.to_string()))?
                             .ok_or_else(|| NativeError::invalid_argument("Missing map value"))?;
-                        out.push((js_to_decoded_value(k)?, js_to_decoded_value(v)?));
+                        out.push((
+                            js_to_decoded_value_depth(k, next_depth)?,
+                            js_to_decoded_value_depth(v, next_depth)?,
+                        ));
                     }
                     Ok(DecodedValue::Map(out))
                 }
@@ -291,8 +309,8 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                         .map_err(|e| NativeError::invalid_argument(e.to_string()))?
                         .ok_or_else(|| NativeError::invalid_argument("Missing pair.second"))?;
                     Ok(DecodedValue::Pair(
-                        Box::new(js_to_decoded_value(first)?),
-                        Box::new(js_to_decoded_value(second)?),
+                        Box::new(js_to_decoded_value_depth(first, next_depth)?),
+                        Box::new(js_to_decoded_value_depth(second, next_depth)?),
                     ))
                 }
                 Some("object") => {
@@ -330,7 +348,7 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                         members.push(DecodedObjectMember {
                             kind: ObjectMemberKind::Property,
                             key: DecodedValue::String(utf16_to_pkl(&k)),
-                            value: js_to_decoded_value(v)?,
+                            value: js_to_decoded_value_depth(v, next_depth)?,
                         });
                     }
                     let entries = get_required_array(&obj, "entries")?;
@@ -349,8 +367,8 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                             .ok_or_else(|| NativeError::invalid_argument("Missing entry value"))?;
                         members.push(DecodedObjectMember {
                             kind: ObjectMemberKind::Entry,
-                            key: js_to_decoded_value(k)?,
-                            value: js_to_decoded_value(v)?,
+                            key: js_to_decoded_value_depth(k, next_depth)?,
+                            value: js_to_decoded_value_depth(v, next_depth)?,
                         });
                     }
                     let elements = get_required_array(&obj, "elements")?;
@@ -362,7 +380,7 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                         members.push(DecodedObjectMember {
                             kind: ObjectMemberKind::Element,
                             key: DecodedValue::Int(i as i64),
-                            value: js_to_decoded_value(v)?,
+                            value: js_to_decoded_value_depth(v, next_depth)?,
                         });
                     }
 
@@ -440,11 +458,11 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                             .ok_or_else(|| {
                                 NativeError::invalid_argument("Missing reference path item")
                             })?;
-                        path.push(js_to_decoded_value(item)?);
+                        path.push(js_to_decoded_value_depth(item, next_depth)?);
                     }
                     Ok(DecodedValue::Reference(DecodedReference {
-                        domain: Box::new(js_to_decoded_value(domain)?),
-                        data: Box::new(js_to_decoded_value(data)?),
+                        domain: Box::new(js_to_decoded_value_depth(domain, next_depth)?),
+                        data: Box::new(js_to_decoded_value_depth(data, next_depth)?),
                         path,
                     }))
                 }
@@ -464,7 +482,7 @@ pub fn js_to_decoded_value(value: JsAnyIn<'_>) -> std::result::Result<DecodedVal
                             members.push(DecodedObjectMember {
                                 kind: ObjectMemberKind::Property,
                                 key: DecodedValue::String(PklString::from(k.as_str())),
-                                value: js_to_decoded_value(val)?,
+                                value: js_to_decoded_value_depth(val, next_depth)?,
                             });
                         }
                     }
@@ -493,9 +511,18 @@ fn get_required_array<'env>(
 }
 
 #[napi]
-pub fn product_decode_pkl_binary<'env>(env: &'env Env, bytes: Uint8Array) -> Result<Object<'env>> {
+pub fn product_decode_pkl_binary<'env>(
+    env: &'env Env,
+    bytes: Uint8Array,
+    strict: Option<bool>,
+) -> Result<Object<'env>> {
     let raw = bytes.to_vec();
-    match decode_lossless(&raw) {
+    let decoded = if strict.unwrap_or(false) {
+        decode(&raw)
+    } else {
+        decode_lossless(&raw)
+    };
+    match decoded {
         Ok(decoded) => {
             let js_val = decoded_value_to_js(env, &decoded)?;
             to_js_outcome(env, Ok(js_val))

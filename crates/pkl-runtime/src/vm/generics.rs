@@ -16,121 +16,367 @@ impl TypeCheck {
     /// substituted, so changing recursive arguments never expand bytecode.
     pub(super) fn substituted(&self, environment: &Environment) -> Result<Self, RuntimeError> {
         use TypeCheck::*;
-        let sub = |ty: &TypeCheck| ty.substituted(environment);
-        Ok(match self {
-            Shared(node) if !node.node().has_parameters => self.clone(),
-            Shared(node) => {
-                let value = node.node().ty.substituted(environment)?;
-                if matches!(node.node().ty, Parameter { .. }) {
-                    value
-                } else {
-                    value.with_optional_source_section(node.node().source_section.clone())
-                }
-            }
-            Declared { recipe, arguments } => Declared {
-                recipe: *recipe,
-                arguments: arguments.iter().map(sub).collect::<Result<_, _>>()?,
+        enum Work<'a> {
+            Visit(&'a TypeCheck, usize),
+            WrapShared {
+                ptr: usize,
+                is_parameter: bool,
+                section: Option<crate::type_source::TypeSourceSection>,
             },
-            Parameter { block, name } => environment
-                .type_arguments
-                .get(&(*block, name.clone()))
-                .cloned()
-                .ok_or_else(|| invalid("unbound generic constraint parameter"))?,
-            NamedAlias {
-                declaration,
-                name,
-                arguments,
-                expanded,
-                default_origin,
-            } => NamedAlias {
-                declaration: *declaration,
-                default_origin: default_origin.clone(),
-                name: name.clone(),
-                arguments: arguments.iter().map(sub).collect::<Result<_, _>>()?,
-                expanded: Box::new(sub(expanded)?),
+            RebuildDeclared {
+                recipe: usize,
+                count: usize,
             },
-            Function {
-                parameters,
-                result,
-                syntax,
-            } => Function {
-                parameters: parameters
-                    .as_ref()
-                    .map(|args| args.iter().map(sub).collect::<Result<_, _>>())
-                    .transpose()?,
-                result: Box::new(sub(result)?),
-                syntax: *syntax,
+            RebuildNamedAlias {
+                declaration: usize,
+                name: PklString,
+                default_origin: Option<Box<RuntimeFrame>>,
+                arg_count: usize,
             },
-            Reference { domain, referent } => Reference {
-                domain: Box::new(sub(domain)?),
-                referent: Box::new(sub(referent)?),
+            RebuildFunction {
+                param_count: Option<usize>,
+                syntax: bool,
             },
-            ParameterizedCollection { kind, arguments } => ParameterizedCollection {
-                kind: *kind,
-                arguments: arguments
-                    .iter()
-                    .map(|(ty, span)| Ok((sub(ty)?, *span)))
-                    .collect::<Result<_, RuntimeError>>()?,
+            RebuildReference,
+            RebuildParameterized {
+                kind: CollectionKind,
+                spans: Vec<Span>,
             },
-            Pair { arguments } => Pair {
-                arguments: arguments
-                    .iter()
-                    .map(|(ty, span)| Ok((sub(ty)?, *span)))
-                    .collect::<Result<_, RuntimeError>>()?,
+            RebuildPair {
+                spans: Vec<Span>,
             },
-            CollectionBase { arguments } => CollectionBase {
-                arguments: arguments
-                    .iter()
-                    .map(|(ty, span)| Ok((sub(ty)?, *span)))
-                    .collect::<Result<_, RuntimeError>>()?,
+            RebuildCollectionBase {
+                spans: Vec<Span>,
             },
-            VarArgs { element, span } => VarArgs {
-                element: Box::new(sub(element)?),
-                span: *span,
+            RebuildVarArgs {
+                span: Span,
             },
-            Nullable(inner) => Nullable(Box::new(sub(inner)?)),
-            Alias(inner) => Alias(Box::new(sub(inner)?)),
-            GenericAlias(inner) => GenericAlias(Box::new(sub(inner)?)),
-            Union {
-                string_literals,
-                types,
-                spans,
-                labels,
-                default,
-            } => Union {
-                string_literals: *string_literals,
-                types: types.iter().map(sub).collect::<Result<_, _>>()?,
-                spans: spans.clone(),
-                labels: labels.clone(),
-                default: *default,
+            RebuildNullable,
+            RebuildAlias,
+            RebuildGenericAlias,
+            RebuildUnion {
+                string_literals: bool,
+                count: usize,
+                spans: Vec<Span>,
+                labels: Vec<Span>,
+                default: Option<usize>,
             },
-            Constrained {
-                base,
-                base_span,
-                constraints,
-            } => Constrained {
-                base: Box::new(sub(base)?),
-                base_span: *base_span,
-                constraints: constraints
-                    .iter()
-                    .map(|constraint| {
-                        let mut result = constraint.clone();
-                        for (name, argument) in &constraint.arguments {
-                            if let Some(source) = argument.argument_source(environment) {
-                                result.argument_sources.insert(name.clone(), source);
+            RebuildConstrained {
+                base_span: Span,
+                constraints: Vec<ConstraintCode>,
+                arg_counts: Vec<(usize, Vec<PklString>)>,
+            },
+        }
+
+        let mut work = vec![Work::Visit(self, 0)];
+        let mut values: Vec<TypeCheck> = Vec::new();
+        let mut memo: crate::heap::FastMap<usize, TypeCheck> = crate::heap::FastMap::default();
+        let mut expanded_nodes: usize = 0;
+
+        while let Some(step) = work.pop() {
+            match step {
+                Work::Visit(cur, depth) => {
+                    if depth > MAX_TYPE_COMPILE_DEPTH {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type expression exceeds maximum nesting depth.",
+                        ));
+                    }
+                    expanded_nodes += 1;
+                    if expanded_nodes > MAX_TYPE_COMPILE_NODES {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type expression exceeds maximum expansion complexity.",
+                        ));
+                    }
+                    let next_depth = depth + 1;
+                    match cur {
+                        Shared(node) if !node.node().has_parameters => values.push(cur.clone()),
+                        Shared(node) => {
+                            let ptr = node.as_ptr_id();
+                            if let Some(cached) = memo.get(&ptr) {
+                                values.push(cached.clone());
+                            } else {
+                                work.push(Work::WrapShared {
+                                    ptr,
+                                    is_parameter: matches!(node.node().ty, Parameter { .. }),
+                                    section: node.node().source_section.clone(),
+                                });
+                                work.push(Work::Visit(&node.node().ty, next_depth));
                             }
                         }
-                        result.arguments = constraint
-                            .arguments
-                            .iter()
-                            .map(|(name, ty)| Ok((name.clone(), sub(ty)?)))
-                            .collect::<Result<_, RuntimeError>>()?;
-                        Ok(result)
-                    })
-                    .collect::<Result<_, RuntimeError>>()?,
-            },
-            _ => self.clone(),
-        })
+                        Declared { recipe, arguments } => {
+                            work.push(Work::RebuildDeclared {
+                                recipe: *recipe,
+                                count: arguments.len(),
+                            });
+                            for arg in arguments.iter().rev() {
+                                work.push(Work::Visit(arg, next_depth));
+                            }
+                        }
+                        Parameter { block, name } => {
+                            let resolved = environment
+                                .type_arguments
+                                .get(&(*block, name.clone()))
+                                .cloned()
+                                .ok_or_else(|| invalid("unbound generic constraint parameter"))?;
+                            values.push(resolved);
+                        }
+                        NamedAlias {
+                            declaration,
+                            name,
+                            arguments,
+                            expanded,
+                            default_origin,
+                        } => {
+                            work.push(Work::RebuildNamedAlias {
+                                declaration: *declaration,
+                                name: name.clone(),
+                                default_origin: default_origin.clone(),
+                                arg_count: arguments.len(),
+                            });
+                            work.push(Work::Visit(expanded, next_depth));
+                            for arg in arguments.iter().rev() {
+                                work.push(Work::Visit(arg, next_depth));
+                            }
+                        }
+                        Function {
+                            parameters,
+                            result,
+                            syntax,
+                        } => {
+                            work.push(Work::RebuildFunction {
+                                param_count: parameters.as_ref().map(Vec::len),
+                                syntax: *syntax,
+                            });
+                            work.push(Work::Visit(result, next_depth));
+                            if let Some(params) = parameters {
+                                for p in params.iter().rev() {
+                                    work.push(Work::Visit(p, next_depth));
+                                }
+                            }
+                        }
+                        Reference { domain, referent } => {
+                            work.push(Work::RebuildReference);
+                            work.push(Work::Visit(referent, next_depth));
+                            work.push(Work::Visit(domain, next_depth));
+                        }
+                        ParameterizedCollection { kind, arguments } => {
+                            work.push(Work::RebuildParameterized {
+                                kind: *kind,
+                                spans: arguments.iter().map(|(_, s)| *s).collect(),
+                            });
+                            for (ty, _) in arguments.iter().rev() {
+                                work.push(Work::Visit(ty, next_depth));
+                            }
+                        }
+                        Pair { arguments } => {
+                            work.push(Work::RebuildPair {
+                                spans: arguments.iter().map(|(_, s)| *s).collect(),
+                            });
+                            for (ty, _) in arguments.iter().rev() {
+                                work.push(Work::Visit(ty, next_depth));
+                            }
+                        }
+                        CollectionBase { arguments } => {
+                            work.push(Work::RebuildCollectionBase {
+                                spans: arguments.iter().map(|(_, s)| *s).collect(),
+                            });
+                            for (ty, _) in arguments.iter().rev() {
+                                work.push(Work::Visit(ty, next_depth));
+                            }
+                        }
+                        VarArgs { element, span } => {
+                            work.push(Work::RebuildVarArgs { span: *span });
+                            work.push(Work::Visit(element, next_depth));
+                        }
+                        Nullable(inner) => {
+                            work.push(Work::RebuildNullable);
+                            work.push(Work::Visit(inner, next_depth));
+                        }
+                        Alias(inner) => {
+                            work.push(Work::RebuildAlias);
+                            work.push(Work::Visit(inner, next_depth));
+                        }
+                        GenericAlias(inner) => {
+                            work.push(Work::RebuildGenericAlias);
+                            work.push(Work::Visit(inner, next_depth));
+                        }
+                        Union {
+                            string_literals,
+                            types,
+                            spans,
+                            labels,
+                            default,
+                        } => {
+                            work.push(Work::RebuildUnion {
+                                string_literals: *string_literals,
+                                count: types.len(),
+                                spans: spans.clone(),
+                                labels: labels.clone(),
+                                default: *default,
+                            });
+                            for item in types.iter().rev() {
+                                work.push(Work::Visit(item, next_depth));
+                            }
+                        }
+                        Constrained {
+                            base,
+                            base_span,
+                            constraints,
+                        } => {
+                            let mut cloned_constraints = Vec::with_capacity(constraints.len());
+                            let mut arg_counts = Vec::with_capacity(constraints.len());
+                            let mut to_visit: Vec<&TypeCheck> = Vec::new();
+                            for (ci, constraint) in constraints.iter().enumerate() {
+                                let mut result = constraint.clone();
+                                let mut names = Vec::with_capacity(constraint.arguments.len());
+                                for (name, argument) in &constraint.arguments {
+                                    if let Some(source) = argument.argument_source(environment) {
+                                        result.argument_sources.insert(name.clone(), source);
+                                    }
+                                    names.push(name.clone());
+                                    to_visit.push(argument);
+                                }
+                                result.arguments.clear();
+                                arg_counts.push((ci, names));
+                                cloned_constraints.push(result);
+                            }
+                            work.push(Work::RebuildConstrained {
+                                base_span: *base_span,
+                                constraints: cloned_constraints,
+                                arg_counts,
+                            });
+                            for arg in to_visit.into_iter().rev() {
+                                work.push(Work::Visit(arg, next_depth));
+                            }
+                            work.push(Work::Visit(base, next_depth));
+                        }
+                        _ => values.push(cur.clone()),
+                    }
+                }
+                Work::WrapShared {
+                    ptr,
+                    is_parameter,
+                    section,
+                } => {
+                    let value = values.pop().expect("shared substituted value");
+                    let wrapped = if is_parameter {
+                        value
+                    } else {
+                        value.with_optional_source_section(section)
+                    };
+                    let shared = wrapped.shared();
+                    memo.insert(ptr, shared.clone());
+                    values.push(shared);
+                }
+                Work::RebuildDeclared { recipe, count } => {
+                    let arguments = values.split_off(values.len() - count);
+                    values.push(Declared { recipe, arguments });
+                }
+                Work::RebuildNamedAlias {
+                    declaration,
+                    name,
+                    default_origin,
+                    arg_count,
+                } => {
+                    let expanded = Box::new(values.pop().expect("named alias expanded"));
+                    let arguments = values.split_off(values.len() - arg_count);
+                    values.push(NamedAlias {
+                        declaration,
+                        default_origin,
+                        name,
+                        arguments,
+                        expanded,
+                    });
+                }
+                Work::RebuildFunction {
+                    param_count,
+                    syntax,
+                } => {
+                    let result = Box::new(values.pop().expect("function return"));
+                    let parameters = param_count.map(|c| values.split_off(values.len() - c));
+                    values.push(Function {
+                        parameters,
+                        result,
+                        syntax,
+                    });
+                }
+                Work::RebuildReference => {
+                    let referent = Box::new(values.pop().expect("reference referent"));
+                    let domain = Box::new(values.pop().expect("reference domain"));
+                    values.push(Reference { domain, referent });
+                }
+                Work::RebuildParameterized { kind, spans } => {
+                    let tys = values.split_off(values.len() - spans.len());
+                    let arguments = tys.into_iter().zip(spans).collect();
+                    values.push(ParameterizedCollection { kind, arguments });
+                }
+                Work::RebuildPair { spans } => {
+                    let tys = values.split_off(values.len() - spans.len());
+                    let arguments = tys.into_iter().zip(spans).collect();
+                    values.push(Pair { arguments });
+                }
+                Work::RebuildCollectionBase { spans } => {
+                    let tys = values.split_off(values.len() - spans.len());
+                    let arguments = tys.into_iter().zip(spans).collect();
+                    values.push(CollectionBase { arguments });
+                }
+                Work::RebuildVarArgs { span } => {
+                    let element = Box::new(values.pop().expect("varargs element"));
+                    values.push(VarArgs { element, span });
+                }
+                Work::RebuildNullable => {
+                    let inner = Box::new(values.pop().expect("nullable inner"));
+                    values.push(Nullable(inner));
+                }
+                Work::RebuildAlias => {
+                    let inner = Box::new(values.pop().expect("alias inner"));
+                    values.push(Alias(inner));
+                }
+                Work::RebuildGenericAlias => {
+                    let inner = Box::new(values.pop().expect("generic alias inner"));
+                    values.push(GenericAlias(inner));
+                }
+                Work::RebuildUnion {
+                    string_literals,
+                    count,
+                    spans,
+                    labels,
+                    default,
+                } => {
+                    let types = values.split_off(values.len() - count);
+                    values.push(Union {
+                        string_literals,
+                        types,
+                        spans,
+                        labels,
+                        default,
+                    });
+                }
+                Work::RebuildConstrained {
+                    base_span,
+                    mut constraints,
+                    arg_counts,
+                } => {
+                    let total_args: usize = arg_counts.iter().map(|(_, ns)| ns.len()).sum();
+                    let mut arg_iter = values.split_off(values.len() - total_args).into_iter();
+                    let base = Box::new(values.pop().expect("constrained base"));
+                    for (ci, names) in arg_counts {
+                        for name in names {
+                            let ty = arg_iter.next().expect("constraint argument");
+                            constraints[ci].arguments.insert(name, ty);
+                        }
+                    }
+                    values.push(Constrained {
+                        base,
+                        base_span,
+                        constraints,
+                    });
+                }
+            }
+        }
+        Ok(values.pop().expect("substituted type"))
     }
 }
 
@@ -254,6 +500,7 @@ impl GenericDefaultRun {
 impl Vm {
     /// Default construction is VM work: each descent/allocation and each unwind
     /// consumes fuel, and every unpublished object remains traced between steps.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_generic_default(&mut self) -> Result<(), RuntimeError> {
         use crate::heap::CollectionKind;
         let mut run = self
@@ -690,6 +937,9 @@ impl std::fmt::Debug for SharedTypeCheck {
 impl SharedTypeCheck {
     fn node(&self) -> &SharedNode {
         self.0.as_deref().expect("live shared type")
+    }
+    pub(super) fn as_ptr_id(&self) -> usize {
+        self.0.as_ref().map_or(0, |a| Arc::as_ptr(a) as usize)
     }
     pub(super) fn noop(&self) -> bool {
         self.node().noop

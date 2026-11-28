@@ -62,9 +62,11 @@ fn copy_tree_raw(src: &Path, dst: &Path) {
         let target = dst.join(name);
         let meta = fs::symlink_metadata(&entry).expect("lstat");
         if meta.file_type().is_symlink() {
-            let link_target = fs::read_link(&entry).expect("read_link");
             #[cfg(unix)]
-            std::os::unix::fs::symlink(&link_target, &target).expect("symlink");
+            {
+                let link_target = fs::read_link(&entry).expect("read_link");
+                std::os::unix::fs::symlink(&link_target, &target).expect("symlink");
+            }
         } else if meta.is_dir() {
             copy_tree_raw(&entry, &target);
         } else if meta.is_file() {
@@ -459,4 +461,104 @@ fn mordant_help_usage_error_and_eval_color_parity() {
         stderr.contains("Left operand : 1\nRight operand: \"x\"\n"),
         "{stderr:?}"
     );
+}
+
+#[test]
+fn round2_pkldoc_member_source_link_sanitizes_javascript_url() {
+    let tmp = TempDir::new("xss-source-link");
+    let pkg_dir = tmp.path().join("pkg");
+    let out_dir = tmp.path().join("out");
+    let cache_dir = tmp.path().join("cache");
+    fs::create_dir_all(&pkg_dir).unwrap();
+    fs::write(
+        pkg_dir.join("doc-package-info.pkl"),
+        r#"/// Sample XSS sanitization test package.
+amends "pkl:DocPackageInfo"
+name = "com.example.xss"
+version = "1.0.0"
+importUri = "package://example.com/xss@1.0.0/"
+authors { "test@example.com" }
+sourceCode = "javascript:alert(1)"
+sourceCodeUrlScheme = "javascript:alert(1)//%{path}#L%{line}-%{endLine}"
+issueTracker = "https://example.com/issues"
+"#,
+    )
+    .unwrap();
+    fs::write(
+        pkg_dir.join("Sample.pkl"),
+        "module com.example.xss.Sample\n\n/// A sample property.\nfoo: String = \"ok\"\n",
+    )
+    .unwrap();
+
+    let (code, _stdout, stderr) = run(&[
+        "--output-dir",
+        out_dir.to_str().unwrap(),
+        "--cache-dir",
+        cache_dir.to_str().unwrap(),
+        "--no-symlinks",
+        "--test-mode",
+        pkg_dir.join("doc-package-info.pkl").to_str().unwrap(),
+        pkg_dir.join("Sample.pkl").to_str().unwrap(),
+    ]);
+    assert_eq!(code, 0, "stderr: {stderr}");
+    let html = fs::read_to_string(out_dir.join("com.example.xss/1.0.0/Sample/index.html"))
+        .expect("read Sample/index.html");
+    assert!(
+        !html.contains("href=\"javascript:"),
+        "javascript: href must be sanitized in member source links:\n{html}"
+    );
+}
+
+#[test]
+fn round3_pkldoc_sanitizes_javascript_double_slash_and_metadata_urls() {
+    let tmp = TempDir::new("r3-xss-double-slash");
+    let pkg_dir = tmp.path().join("pkg");
+    let out_dir = tmp.path().join("out");
+    let cache_dir = tmp.path().join("cache");
+    fs::create_dir_all(&pkg_dir).unwrap();
+    fs::write(
+        pkg_dir.join("doc-package-info.pkl"),
+        r#"/// Package with dangerous scheme-relative javascript:// URLs.
+amends "pkl:DocPackageInfo"
+name = "com.example.xss3"
+version = "1.0.0"
+importUri = "package://example.com/xss3@1.0.0/"
+authors { "test@example.com" }
+sourceCode = "javascript://example.com/%0aalert(1)"
+sourceCodeUrlScheme = "javascript://example.com/%0aalert(1)/%{path}#L%{line}-%{endLine}"
+issueTracker = "vbscript:msgbox(1)"
+"#,
+    )
+    .unwrap();
+    fs::write(
+        pkg_dir.join("Sample.pkl"),
+        "module com.example.xss3.Sample\n\n/// Safe doc with [bad](javascript://x/%0aalert(1)).\nfoo: String = \"ok\"\n",
+    )
+    .unwrap();
+
+    let (code, _stdout, stderr) = run(&[
+        "--output-dir",
+        out_dir.to_str().unwrap(),
+        "--cache-dir",
+        cache_dir.to_str().unwrap(),
+        "--no-symlinks",
+        "--test-mode",
+        pkg_dir.join("doc-package-info.pkl").to_str().unwrap(),
+        pkg_dir.join("Sample.pkl").to_str().unwrap(),
+    ]);
+    assert_eq!(code, 0, "stderr: {stderr}");
+    for rel in [
+        "com.example.xss3/1.0.0/index.html",
+        "com.example.xss3/1.0.0/Sample/index.html",
+    ] {
+        let html = fs::read_to_string(out_dir.join(rel)).expect(rel);
+        assert!(
+            !html.to_ascii_lowercase().contains("href=\"javascript:"),
+            "javascript: URL leaked in {rel}:\n{html}"
+        );
+        assert!(
+            !html.to_ascii_lowercase().contains("href=\"vbscript:"),
+            "vbscript: URL leaked in {rel}:\n{html}"
+        );
+    }
 }

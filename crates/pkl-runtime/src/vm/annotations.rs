@@ -267,6 +267,7 @@ pub(super) fn builtin_members(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn read_module_version(&mut self) -> Result<(), RuntimeError> {
         let module = self
             .stack
@@ -293,6 +294,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_module_version(&mut self) -> Result<(), RuntimeError> {
         let value = self.pop()?;
         if value.is_null() {
@@ -366,6 +368,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn append_annotation(&mut self) -> Result<(), RuntimeError> {
         let annotation = self.pop()?;
         let owner = self.heap.declaration_object(
@@ -377,6 +380,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn initialize_deprecation(&mut self) -> Result<(), RuntimeError> {
         let owner = self
             .stack
@@ -401,6 +405,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn publish_member_annotations(&mut self, code: usize) -> Result<(), RuntimeError> {
         let annotations = self.pop()?.as_object()?;
         let owner = self.heap.declaration_object(
@@ -411,6 +416,7 @@ impl Vm {
         self.publish_annotations(owner, annotations, code)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn store_deprecation(&mut self) -> Result<(), RuntimeError> {
         let message = self.pop()?;
         let owner = self

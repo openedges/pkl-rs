@@ -89,7 +89,7 @@ SUITE_SPECS: tuple[SuiteSpec, ...] = (
     ),
     SuiteSpec(
         "packages",
-        "Standalone @pkl-rs/wasm (gzip-9 <= 2.50 MiB + npm pack), @pkl-rs/napi (run + pack-install), and release CLI smoke",
+        "Standalone @openedges/pkl-wasm (gzip-9 <= 2.50 MiB + npm pack), @openedges/pkl-napi (run + pack-install), and release CLI smoke",
         False,
         False,
         False,
@@ -649,6 +649,12 @@ def build_suite_steps(
                 "--fuzz-dir",
                 str(out_root / "m7-fuzz" / "fuzz"),
             ]
+            js_dir = out_root / "m7-js" / "js-analysis"
+            if (js_dir / "report.json").is_file():
+                cmd.extend(["--js-analysis-dir", str(js_dir)])
+            browser_smoke_dir = out_root / "m6" / "browser-smoke"
+            if browser_smoke_dir.is_dir():
+                cmd.extend(["--browser-smoke-dir", str(browser_smoke_dir)])
         if local_checkpoint:
             cmd.append("--local-checkpoint")
         return [Step("m7-verify-release", cmd, py_env)]

@@ -58,6 +58,9 @@ impl<T> CodeStorage<T> {
     pub fn is_empty(&self) -> bool {
         self.len() == 0
     }
+    pub(super) fn fixed_len(&self) -> usize {
+        self.fixed.len()
+    }
     pub fn next_id(&self) -> usize {
         self.next
     }

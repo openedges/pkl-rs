@@ -22,6 +22,18 @@ const OUT_STAGE_RELOADED: i64 = 1;
 const OUT_STAGE_OUTPUT: i64 = 2;
 const OUT_STAGE_TEXT: i64 = 3;
 
+pub(super) struct OutputBenchmarkRestore {
+    pub(super) unit_id: crate::modules::UnitId,
+    pub(super) std_key: PklString,
+    pub(super) original_uri: PklString,
+    pub(super) resolved_uri: PklString,
+    pub(super) saved_std: Option<modules::CachedModule>,
+    pub(super) saved_orig: Option<modules::CachedModule>,
+    pub(super) saved_res: Option<modules::CachedModule>,
+    pub(super) saved_module_index: Option<ObjectId>,
+    pub(super) saved_class_index: crate::heap::FastMap<usize, ObjectId>,
+}
+
 const MAX_BENCHMARK_REPETITIONS: i64 = 1_000_000;
 
 fn bench_key(name: &str) -> CacheKey {
@@ -197,6 +209,7 @@ impl Vm {
         Ok(self.heap.allocate(object))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn platform_current(&mut self) -> Result<(), RuntimeError> {
         let Some(platform_meta) = self.platform_metadata.clone() else {
             return Err(RuntimeError::new(
@@ -420,6 +433,14 @@ impl Vm {
         state_id: ObjectId,
         src_mod_id: ObjectId,
     ) -> Result<(), RuntimeError> {
+        if let Some(saved) = self
+            .frames
+            .last_mut()
+            .and_then(|frame| frame.benchmark_restore.take())
+        {
+            self.apply_output_benchmark_restore(*saved);
+            return Ok(());
+        }
         let Some(unit_id) = self.heap.get(src_mod_id)?.module_unit else {
             return Ok(());
         };
@@ -443,6 +464,7 @@ impl Vm {
         let saved_std = self.benchmark_get(state_id, "saved_std")?;
         let saved_orig = self.benchmark_get(state_id, "saved_orig")?;
         let saved_res = self.benchmark_get(state_id, "saved_res")?;
+        self.last_warm_module = None;
         restore(&mut self.modules_stdlib, &std_uri, saved_std);
         restore(
             &mut self.modules_original,
@@ -455,6 +477,33 @@ impl Vm {
             saved_res,
         );
         Ok(())
+    }
+
+    pub(super) fn apply_output_benchmark_restore(&mut self, saved: OutputBenchmarkRestore) {
+        self.last_warm_module = None;
+        let restore = |cache: &mut modules::ModuleCache,
+                       uri: &PklString,
+                       entry: Option<modules::CachedModule>| {
+            if let Some(entry) = entry {
+                cache.insert(uri.clone(), entry);
+            } else {
+                cache.remove(uri.clone());
+            }
+        };
+        restore(&mut self.modules_stdlib, &saved.std_key, saved.saved_std);
+        restore(
+            &mut self.modules_original,
+            &saved.original_uri,
+            saved.saved_orig,
+        );
+        restore(
+            &mut self.modules_resolved,
+            &saved.resolved_uri,
+            saved.saved_res,
+        );
+        self.heap
+            .restore_local_module_index(saved.unit_id, saved.saved_module_index);
+        self.heap.restore_local_class_index(saved.saved_class_index);
     }
 
     fn launch_benchmark_repetition(
@@ -489,9 +538,23 @@ impl Vm {
                         let std_slot = self.modules_stdlib.get(&std_key).cloned();
                         let orig_slot = self.modules_original.get(&identity.original_uri).cloned();
                         let res_slot = self.modules_resolved.get(&identity.resolved_uri).cloned();
-                        self.save_module_cache_slot(state_id, "saved_std", std_slot)?;
-                        self.save_module_cache_slot(state_id, "saved_orig", orig_slot)?;
-                        self.save_module_cache_slot(state_id, "saved_res", res_slot)?;
+                        self.save_module_cache_slot(state_id, "saved_std", std_slot.clone())?;
+                        self.save_module_cache_slot(state_id, "saved_orig", orig_slot.clone())?;
+                        self.save_module_cache_slot(state_id, "saved_res", res_slot.clone())?;
+                        let saved_module_index = self.heap.get_local_module_index(unit_id);
+                        let saved_class_index = self.heap.snapshot_local_class_index();
+                        self.frames.last_mut().unwrap().benchmark_restore =
+                            Some(Box::new(OutputBenchmarkRestore {
+                                unit_id,
+                                std_key,
+                                original_uri: identity.original_uri,
+                                resolved_uri: identity.resolved_uri,
+                                saved_std: std_slot,
+                                saved_orig: orig_slot,
+                                saved_res: res_slot,
+                                saved_module_index,
+                                saved_class_index,
+                            }));
                     }
                     self.benchmark_set(
                         state_id,

@@ -182,6 +182,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn enter_for_scope(&mut self, bindings: usize) -> Result<(), RuntimeError> {
         let owner = self.current_executable()?;
         let frame = self.frames.last().expect("generator frame");
@@ -208,6 +209,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn leave_for_scope(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last_mut().expect("generator frame");
         let scope = frame

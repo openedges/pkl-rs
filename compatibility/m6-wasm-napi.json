@@ -42,12 +42,12 @@
       "createRepl",
       "analyzeImportGraph"
     ],
-    "napi_package": "@pkl-rs/napi",
+    "napi_package": "@openedges/pkl-napi",
     "napi_specific_exports": [
       "Project"
     ],
     "version": "0.32.0",
-    "wasm_package": "@pkl-rs/wasm",
+    "wasm_package": "@openedges/pkl-wasm",
     "wasm_specific_exports": [
       "init",
       "VirtualFileSystem"
@@ -181,32 +181,32 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "6d1e39e74323085d8798b7cd001f6cfa3d3569bdcce1ea0d67eedfa168d9fae7",
+          "sha256": "3ffe3c5db77eba70209c296ef084570c1c221ad7d8dab06a88d23db02f886525",
           "symbol": "SourceSession"
         },
         {
           "path": "crates/pkl-cli/src/eval_cmd.rs",
-          "sha256": "6252ae6a8ebef795e09fa0a254bef661d49476d5bc614a570295d987ad6c0220",
+          "sha256": "9fa844684224ce85c92bb26ebc287c791ce768d882e7a3e9b426d0989a89730f",
           "symbol": "cmd_eval"
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
+          "sha256": "e554354dd69999838754f64f047f36e7c4148c5535d5f66ec2d5faabe37d169e",
           "symbol": "WasmEvaluator"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "createEvaluator"
         },
         {
           "path": "packages/pkl-napi/src/index.mjs",
-          "sha256": "a25cc23a89f55af0f90aeff79ddf67bca7814fb61e46b2f3ca9dbe7f9cbb8c7d",
+          "sha256": "bdc919ee36a7b7df0cbddd20a8a9671567ff609eafac7cff38758653fad6b957",
           "symbol": "createEvaluator"
         }
       ],
@@ -233,42 +233,42 @@
       "implementation_links": [
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "EvalAsyncTask"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "EvalCloseTask"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "product_monotonic_clock_ms"
         },
         {
           "path": "crates/pkl-napi/src/error.rs",
-          "sha256": "b4d416003472d54e1cd7db789e0e4b578a598dcc19e6496aada7d8ff7356eb18",
+          "sha256": "d7dd1641eff1172935bbaafed4acd3c44cc19827aeb5eba080509db5ea77cb87",
           "symbol": "parse_i64_bigint"
         },
         {
           "path": "crates/pkl-napi/src/values.rs",
-          "sha256": "d4ca5ec2ac1245136c1cb65d54144bdf44e3c0be52cd94ba4ec32795bdbb6aba",
+          "sha256": "0e9c5be817ec018395339a8a82dcec9bf49ea1c1ca3c2fb7be7f5918cadff035",
           "symbol": "product_decode_pkl_binary"
         },
         {
           "path": "crates/pkl-napi/src/values.rs",
-          "sha256": "d4ca5ec2ac1245136c1cb65d54144bdf44e3c0be52cd94ba4ec32795bdbb6aba",
+          "sha256": "0e9c5be817ec018395339a8a82dcec9bf49ea1c1ca3c2fb7be7f5918cadff035",
           "symbol": "product_measure_conversion"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "sha256": "3d9a903c9d86ee857cbb182bb6cab44b8d8fef0bf996ecb9faa55784754212e1",
           "symbol": "parseTimeoutMs"
         },
         {
-          "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "path": "packages/pkl-napi/src/testing.cjs",
+          "sha256": "bf9444f3b79527b0ba18c863a2f0594eccb56e9b8d48b2ee7aa5a97d97119387",
           "symbol": "measureConversion"
         }
       ],
@@ -303,42 +303,42 @@
       "implementation_links": [
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeEvaluator"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "product_format"
         },
         {
           "path": "crates/pkl-napi/src/schema.rs",
-          "sha256": "48761c5ac9b87d159b8a521e1e64cbd93b101c0d689cf39ebb7c12c794d74f04",
+          "sha256": "68b5be56f6f51748af51fcb9df2f93e02cd362b502f00e5f5e20ab658f6743b1",
           "symbol": "module_schema_to_js"
         },
         {
           "path": "crates/pkl-napi/src/repl.rs",
-          "sha256": "9d321a749b9488d91b365ab36ac4f919a78100d97215cb7009f01ff5e0a65b64",
+          "sha256": "a0d94296476910b60a2a5d2b9f6fe8919c6468dfea3815dc4afa70f9f60944d8",
           "symbol": "NativeReplSession"
         },
         {
           "path": "crates/pkl-napi/src/error.rs",
-          "sha256": "b4d416003472d54e1cd7db789e0e4b578a598dcc19e6496aada7d8ff7356eb18",
+          "sha256": "d7dd1641eff1172935bbaafed4acd3c44cc19827aeb5eba080509db5ea77cb87",
           "symbol": "NativeError"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "sha256": "3d9a903c9d86ee857cbb182bb6cab44b8d8fef0bf996ecb9faa55784754212e1",
           "symbol": "capabilities"
         },
         {
           "path": "packages/pkl-napi/src/index.mjs",
-          "sha256": "a25cc23a89f55af0f90aeff79ddf67bca7814fb61e46b2f3ca9dbe7f9cbb8c7d",
+          "sha256": "bdc919ee36a7b7df0cbddd20a8a9671567ff609eafac7cff38758653fad6b957",
           "symbol": "createEvaluator"
         },
         {
           "path": "packages/pkl-napi/src/index.d.ts",
-          "sha256": "11b879e6d64f0f90643010084d769fada05b0f84ae1bb5a7a42569372fce8084",
+          "sha256": "43ba5bfd245436a8b2dde7b12fec0527becd7ae647b870e507cbba967c37fc34",
           "symbol": "PklError"
         }
       ],
@@ -361,32 +361,32 @@
       "implementation_links": [
         {
           "path": "crates/pkl-napi/src/bridge.rs",
-          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "sha256": "c7a332d6c645500600e796c96038cd8fd2c504206443c7f277dcd3086e11958b",
           "symbol": "JsBridge"
         },
         {
           "path": "crates/pkl-napi/src/bridge.rs",
-          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "sha256": "c7a332d6c645500600e796c96038cd8fd2c504206443c7f277dcd3086e11958b",
           "symbol": "JsModuleReaderAdapter"
         },
         {
           "path": "crates/pkl-napi/src/bridge.rs",
-          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "sha256": "c7a332d6c645500600e796c96038cd8fd2c504206443c7f277dcd3086e11958b",
           "symbol": "JsResourceReaderAdapter"
         },
         {
           "path": "crates/pkl-napi/src/bridge.rs",
-          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "sha256": "c7a332d6c645500600e796c96038cd8fd2c504206443c7f277dcd3086e11958b",
           "symbol": "JsSecurityAdapter"
         },
         {
           "path": "crates/pkl-napi/src/bridge.rs",
-          "sha256": "f034f37bfa7594add08efa29377b0d367eb322fbb298e3a68028585912413d6e",
+          "sha256": "c7a332d6c645500600e796c96038cd8fd2c504206443c7f277dcd3086e11958b",
           "symbol": "JsFrameTransformerAdapter"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeExternalReaderOption"
         }
       ],
@@ -411,27 +411,27 @@
       "implementation_links": [
         {
           "path": "crates/pkl/src/project.rs",
-          "sha256": "eea81f1e77387ef61dc3e82bdd9b3d649ee0cfa459f2ef6593dd67116ca7fd3d",
+          "sha256": "e28fae9966f4050fafe236849dfc4508bb059c9b5956ee7218a84624ec3339ae",
           "symbol": "Project"
         },
         {
           "path": "crates/pkl-host-native/src/http.rs",
-          "sha256": "1ed4744bb100a47e3366114ed4c7752d32336ec60640767ea9c906f7fc287fc3",
+          "sha256": "ac2ec987635741b7e4fe4e15a5bf63525c9d558282b3f3dd2cf4d26aaf67cb6b",
           "symbol": "NativeHttpClient"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeProject"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeHttpOptions"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "sha256": "3d9a903c9d86ee857cbb182bb6cab44b8d8fef0bf996ecb9faa55784754212e1",
           "symbol": "Project"
         }
       ],
@@ -458,27 +458,27 @@
       "implementation_links": [
         {
           "path": "crates/pkl-host-native/src/driver.rs",
-          "sha256": "f3b6c6198701985aa7edbf9a4bf6c8c475f7caa07c46c05202f30b60ad21d978",
+          "sha256": "8a4e89fa84bb7b226a29f52daf2eded2d6e07e1c87133c361a0d40a73d3c2c55",
           "symbol": "NativeHost"
         },
         {
           "path": "crates/pkl/src/analyzer.rs",
-          "sha256": "e55574a625107ec2bdb68ef04cff51fce433ea5f580b46069e3776822ed63947",
+          "sha256": "2746656d3ae13b9ddcd20a3022c58501a3310e5e57a66ce0b110851d75f56b55",
           "symbol": "Analyzer"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "NativeAnalyzer"
         },
         {
           "path": "crates/pkl-napi/src/product.rs",
-          "sha256": "34d00fb6fbcf49101e98566c434f691c6be8987903914e4e642dfee9305d9369",
+          "sha256": "66c41da55760e8259ca565e2b4955d1caf8938d926381bdd05c6ff7b5a56c286",
           "symbol": "AnalyzeImportGraphTask"
         },
         {
           "path": "packages/pkl-napi/src/runtime.cjs",
-          "sha256": "222a930863333160002e03d9aacbcf8159c264cea5bd7e2684f0bbacdfd54070",
+          "sha256": "3d9a903c9d86ee857cbb182bb6cab44b8d8fef0bf996ecb9faa55784754212e1",
           "symbol": "buildNativeOptions"
         }
       ],
@@ -499,7 +499,7 @@
       "implementation_links": [
         {
           "path": "crates/pkl/src/lib.rs",
-          "sha256": "1720b3fc93af20123ed1dcd5d532d534dfef5bb8d03758def230286ec07b79ce",
+          "sha256": "218b74dde43d643535b69a005f3fefe79b58fa591f91b6def87fb7042456cfd7",
           "symbol": "Evaluator"
         },
         {
@@ -523,7 +523,7 @@
         "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",
         "m6:pack:platform-support-matrix-metadata"
       ],
-      "description": "Reproducible npm pack + clean isolated temp directory install & live execution of @pkl-rs/wasm (Node + Chromium), @pkl-rs/napi (ESM + CJS), and platform support matrix metadata",
+      "description": "Reproducible npm pack + clean isolated temp directory install & live execution of @openedges/pkl-wasm (Node + Chromium), @openedges/pkl-napi (ESM + CJS), and platform support matrix metadata",
       "executable_case_ids": [
         "m6:pack:wasm-npm-pack-clean-install-node-and-browser",
         "m6:pack:napi-npm-pack-clean-install-esm-and-cjs",
@@ -532,32 +532,32 @@
       "implementation_links": [
         {
           "path": "packages/pkl-wasm/package.json",
-          "sha256": "11922d42a79e0d85bc5cd502812f15d7e15266304c9680ff90f79176b685bc12",
+          "sha256": "fa3706e5496dc9416e5956ca47d2fafb08af9afb5ff6a7b3b15232814b182f9f",
           "symbol": "pklPlatformSupport"
         },
         {
           "path": "packages/pkl-wasm/scripts/build.mjs",
-          "sha256": "7a51d0158f861444255cc9b0704f20949a1fc811b65366c04c456e557889ce62",
+          "sha256": "89d1a6400382e34bb202d2a3f1231713c044dbc81db67e96e595cac5c44ef926",
           "symbol": "resolveExecutable"
         },
         {
           "path": "packages/pkl-wasm/src/index.d.ts",
-          "sha256": "a185f994b7b11d3871c2b8bca89d7a4bfe017b570d219a2ba43678095e8c3023",
+          "sha256": "bd03a621a437e0520ea3eb71ea1c8fad30860242d07962a5f8dd353956ee6ad3",
           "symbol": "VirtualFileSystem"
         },
         {
           "path": "packages/pkl-napi/package.json",
-          "sha256": "a3bf7208138fd4215696301821091504113a39549ecf4dda6ef617edfcce882f",
+          "sha256": "0caf41ca3086b0ab1e067ee5f7c67c119a1847b63df7abe85a5fdfcc3d26c26f",
           "symbol": "pklPlatformSupport"
         },
         {
           "path": "packages/pkl-napi/scripts/build.mjs",
-          "sha256": "5968a6de169dab6d67bc76580e66cefcf5263340ee1b87476646d8df5ade1087",
+          "sha256": "b385b5320292b60eb57c54ead5319eb2f22ea0ab49c685de3153165a80612652",
           "symbol": "platformBinaryName"
         },
         {
           "path": "packages/pkl-napi/src/index.d.ts",
-          "sha256": "11b879e6d64f0f90643010084d769fada05b0f84ae1bb5a7a42569372fce8084",
+          "sha256": "43ba5bfd245436a8b2dde7b12fec0527becd7ae647b870e507cbba967c37fc34",
           "symbol": "createEvaluator"
         }
       ],
@@ -590,7 +590,7 @@
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
+          "sha256": "5ee0be5ff0498539d04bd5da5a54033ff9cd909b035aa98a6b9a7032b29ebd70",
           "symbol": "getDeferredWasmCapabilityError"
         },
         {
@@ -600,7 +600,7 @@
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "11bc1468f43925f49a2df8655c19381d1c097302ce2ecfeacd9db795e082cdfe",
+          "sha256": "215c44c46ff51d4025b59f1bf870cf994403d48e0f8cae5156014d422d8e8742",
           "symbol": "WasmHostCore"
         }
       ],
@@ -645,22 +645,22 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/evaluation/session.rs",
-          "sha256": "6d1e39e74323085d8798b7cd001f6cfa3d3569bdcce1ea0d67eedfa168d9fae7",
+          "sha256": "3ffe3c5db77eba70209c296ef084570c1c221ad7d8dab06a88d23db02f886525",
           "symbol": "SourceSession"
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
+          "sha256": "e554354dd69999838754f64f047f36e7c4148c5535d5f66ec2d5faabe37d169e",
           "symbol": "WasmEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "createEvaluator"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "Evaluator"
         },
         {
@@ -690,12 +690,12 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/pkl_binary_decode.rs",
-          "sha256": "1ba942e41e0c035f40308e3be58aa924688046649562030afd07e41bde7d2b4d",
+          "sha256": "ab90da799d768c61e313e9681c40a63d85fcd8018d706a2c884fd0cdd2b27041",
           "symbol": "DecodedValue"
         },
         {
           "path": "crates/pkl-wasm/src/product/decode.rs",
-          "sha256": "6dc0bb19ec91a125de4bb78e35883024ff3d030500ddccf2a4c1b4014a8006e1",
+          "sha256": "f4bbfd84b61648539cfa66e6312d6213a09402870434cc4ca7282886defbb87c",
           "symbol": "decode_pkl_binary_to_js"
         },
         {
@@ -710,17 +710,17 @@
         },
         {
           "path": "packages/pkl-wasm/src/values.mjs",
-          "sha256": "228163bd0ca8e2388565c0b574df9744db02af4a0a1e9016efa6b0a568a98ccd",
+          "sha256": "bdfcbf54b483b64b5195c7921717bc41d19f21662eab2e26425a25244a75fdb1",
           "symbol": "PklObject"
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
+          "sha256": "5ee0be5ff0498539d04bd5da5a54033ff9cd909b035aa98a6b9a7032b29ebd70",
           "symbol": "normalizeTimeoutMs"
         },
         {
-          "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "path": "packages/pkl-wasm/src/testing.mjs",
+          "sha256": "58a43da0cb243409a94f156a65aec5709b9dff65ae3970f1ecace9d6da3e8a6f",
           "symbol": "measureConversion"
         }
       ],
@@ -757,32 +757,32 @@
         },
         {
           "path": "crates/pkl-wasm/src/product/schema.rs",
-          "sha256": "e1cd80749dde9812613b27435a23eb6fefd981b9b70110696b63af9a47401654",
+          "sha256": "d6f8c13c475016407d8db3cebb3ba887ed23097b16698bccd8f8741450037bd0",
           "symbol": "module_schema_to_js"
         },
         {
           "path": "crates/pkl-wasm/src/product/repl.rs",
-          "sha256": "b2a2a060dadc33f5f9c5662c91fa6458cba376e7fd7018382c9590d1f4a993fe",
+          "sha256": "73cba7882858616a43cda244da4f6d10ffa31b9b56454dbf21b595914de8d598",
           "symbol": "WasmReplSession"
         },
         {
           "path": "crates/pkl-wasm/src/product/analyzer.rs",
-          "sha256": "a6cf07c45d6a5da3f25eb744f548b33ef82fbaa462da456f0351594fa0b7bd86",
+          "sha256": "ab645c673dccb765ab71c50443e73826baede1ffbbc2dd3b91e052ab42b2ef7a",
           "symbol": "WasmImportAnalyzer"
         },
         {
           "path": "crates/pkl-wasm/src/product/test_runner.rs",
-          "sha256": "3c71a5d0fdecc2ae75b71500b8a506eef346c4aeb97d9a2db01203db6d3de973",
+          "sha256": "359ca153b786908c5da10deb6cf04eaf3b047c242e8d8313e92df2da2b6952dc",
           "symbol": "render_test_report_js"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "createRepl"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "analyzeImportGraph"
         }
       ],
@@ -809,37 +809,37 @@
       "implementation_links": [
         {
           "path": "crates/pkl-runtime/src/host/security.rs",
-          "sha256": "2b5ce43d89ccc4532ac8b078f0df090d5fbb8ef058e0461a4a6f0d2904184ccf",
+          "sha256": "a2693b4d4820a94c172f3d497aff62ee4f7448303b548bad7336fdda0ecdff5d",
           "symbol": "SecurityPolicy"
         },
         {
           "path": "crates/pkl-runtime/src/packages/zip.rs",
-          "sha256": "03d11d8e8696343e0d651015caeebc9f4233b147448268261599de53bf9026b4",
+          "sha256": "ba525ebcedb135969f2c7c3e85fb544706b7a27eb5c362fc1c46980acb003424",
           "symbol": "ZipArchive"
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "11bc1468f43925f49a2df8655c19381d1c097302ce2ecfeacd9db795e082cdfe",
+          "sha256": "215c44c46ff51d4025b59f1bf870cf994403d48e0f8cae5156014d422d8e8742",
           "symbol": "WasmHostCore"
         },
         {
           "path": "crates/pkl-wasm/src/product/host_core.rs",
-          "sha256": "11bc1468f43925f49a2df8655c19381d1c097302ce2ecfeacd9db795e082cdfe",
+          "sha256": "215c44c46ff51d4025b59f1bf870cf994403d48e0f8cae5156014d422d8e8742",
           "symbol": "WasmPackageCache"
         },
         {
           "path": "packages/pkl-wasm/src/vfs.mjs",
-          "sha256": "14853247163022e5524ecd08ac21b828bdfd4dd6f0cf121e18316684fb6a1e5a",
+          "sha256": "56d6904b09f9ef832a6dc7232f71aec69f4b85bdb95fe9f674f287ec7711a4e4",
           "symbol": "VirtualFileSystem"
         },
         {
           "path": "packages/pkl-wasm/src/vfs.mjs",
-          "sha256": "14853247163022e5524ecd08ac21b828bdfd4dd6f0cf121e18316684fb6a1e5a",
+          "sha256": "56d6904b09f9ef832a6dc7232f71aec69f4b85bdb95fe9f674f287ec7711a4e4",
           "symbol": "isUnderRootDir"
         },
         {
           "path": "packages/pkl-wasm/src/host.mjs",
-          "sha256": "652fa4cf8f6dd03f50e9e170b1b96fc57d55f9f3b95bfef47148531ce19fc8b0",
+          "sha256": "5ee0be5ff0498539d04bd5da5a54033ff9cd909b035aa98a6b9a7032b29ebd70",
           "symbol": "driveWasmSession"
         }
       ],
@@ -863,7 +863,7 @@
         "m6:wasm-node:cap-gap-native-fs",
         "m6:wasm-node:cap-gap-external-readers"
       ],
-      "description": "Node.js clean-installed packed @pkl-rs/wasm execution: auto-init, renderers, output.files, formatter, VFS/async loaders, pure-Wasm package loading, lossless values, 64-bit clock/lifecycle, and capability-gap honesty",
+      "description": "Node.js clean-installed packed @openedges/pkl-wasm execution: auto-init, renderers, output.files, formatter, VFS/async loaders, pure-Wasm package loading, lossless values, 64-bit clock/lifecycle, and capability-gap honesty",
       "executable_case_ids": [
         "m6:wasm-node:eval-renderers-and-stdlib",
         "m6:wasm-node:eval-output-bytes-and-files",
@@ -887,17 +887,17 @@
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "format"
         },
         {
           "path": "packages/pkl-wasm/src/index.mjs",
-          "sha256": "2889592b6aeeb783d0969abb2dd5d05f83a51f6eb44a1ffb54d383f0a23ca480",
+          "sha256": "1634c9ed6388c50559107cc5d78d73d6e45312dcc858050ebd53c1bb4228c0d1",
           "symbol": "decodePklBinary"
         },
         {
           "path": "crates/pkl-wasm/src/product/evaluator.rs",
-          "sha256": "0d59212da02d681188427843c86b89bcfb1e8a4be843b90a655da7ac6eab9424",
+          "sha256": "e554354dd69999838754f64f047f36e7c4148c5535d5f66ec2d5faabe37d169e",
           "symbol": "WasmEvaluator"
         }
       ],
@@ -906,11 +906,11 @@
     }
   },
   "schema_version": 1,
-  "scope": "Complete M6 Wasm & N-API Product Completion manifest: unified `@pkl-rs/wasm` (browser + Node, VFS, async loaders, pure-Wasm package archives) and `@pkl-rs/napi` (dual ESM+CJS, native FS/HTTP/HTTPS/CA/proxy/projects/packages/external readers, non-blocking async + cancel/timeout/close), lossless BigInt/Uint8Array/UTF-16 & 64-bit clock, 4-way cross-target raw-byte parity (Java == Native == N-API == Wasm), clean-install packaging verification, and explicit capability-gap honesty (`capability-blocked` separated and never counted as compatibility passes). Freshness checks never claim runtime compatibility passes (`coverage_gate: null`).",
+  "scope": "Complete M6 Wasm & N-API Product Completion manifest: unified `@openedges/pkl-wasm` (browser + Node, VFS, async loaders, pure-Wasm package archives) and `@openedges/pkl-napi` (dual ESM+CJS, native FS/HTTP/HTTPS/CA/proxy/projects/packages/external readers, non-blocking async + cancel/timeout/close), lossless BigInt/Uint8Array/UTF-16 & 64-bit clock, 4-way cross-target raw-byte parity (Java == Native == N-API == Wasm), clean-install packaging verification, and explicit capability-gap honesty (`capability-blocked` separated and never counted as compatibility passes). Freshness checks never claim runtime compatibility passes (`coverage_gate: null`).",
   "sources": {
     "compatibility/inventory.json": "a9b21752adad9a269a54854c0dd298256757be88ad95c1388e30d7c78e407070",
-    "compatibility/m6-mappings.json": "933a7c0a0a3d8945a6dea1c0538da04bae4c5d427f8b38e05d11d039bbd74a4a",
-    "tests/fixtures/m6/cases.json": "1d403337fca5aeea4c7ff9863d6e9804ecc0baf50b8cc936a31f6b734bca6f04",
+    "compatibility/m6-mappings.json": "419bcbd174acfa83b1b67a44f29e85ede8ff7830655a4ed85297914ce192a082",
+    "tests/fixtures/m6/cases.json": "551f457e86728a373bbf45d81d94da2a31c58c1ac6cf76421fd449d66477b7e6",
     "tests/fixtures/m6/oracle/M6OracleProbe.java": "9e2525a08382b98fcd5ee5cd8a9a8d2a035db925ae973641220869311ed76a1f",
     "tests/fixtures/m6/runners/canonical_value.mjs": "cf227ed499da5d21400668963d2053f03d001a78d30dde7b3c8ad4566925acb7",
     "tests/fixtures/m6/runners/case_executor.mjs": "ab04f435158482a775790b6c108586cf2d1a37b7f67c0cf70dc2f34dc8eb4143",

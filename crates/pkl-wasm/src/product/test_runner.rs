@@ -2,7 +2,7 @@
 //! `evaluateTest` in Wasm shares 100% of fact span extraction, example diffing, and
 //! Spec / Minimal / JUnit rendering with native Pkl 0.32.0.
 
-use super::util::{StructuredError, get_prop, rust_string_from_js, set_prop};
+use super::util::{StructuredError, define_own_prop, get_prop, rust_string_from_js, set_prop};
 use js_sys::{Array, Object};
 use pkl_runtime::packages::test_runner::{
     TestError, TestFailure, TestReporterKind, TestResult, TestResults, TestSectionName,
@@ -22,7 +22,7 @@ pub fn extract_fact_spans_js(source: &str) -> Result<JsValue, JsValue> {
             set_prop(&entry, "line", JsValue::from_f64(line as f64))?;
             arr.push(&entry);
         }
-        set_prop(&obj, &group, arr.into())?;
+        define_own_prop(&obj, &group, arr.into())?;
     }
     Ok(obj.into())
 }

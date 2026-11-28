@@ -35,14 +35,20 @@ impl<'a> Builder<'a> {
             NodeType::Module => self.format_module(node),
             NodeType::DocComment
             | NodeType::ObjectSpread
-            | NodeType::NonNullExpr
             | NodeType::SuperAccessExpr
-            | NodeType::ImportExpr
-            | NodeType::UnaryMinusExpr
-            | NodeType::LogicalNotExpr
-            | NodeType::NullableType => {
+            | NodeType::ImportExpr => {
                 FormatNode::Nodes(self.format_generic_const(&node.children, None))
             }
+            NodeType::NonNullExpr
+            | NodeType::NullableType
+            | NodeType::SubscriptExpr
+            | NodeType::SuperSubscriptExpr
+            | NodeType::AmendsExpr
+            | NodeType::QualifiedAccessExpr
+            | NodeType::BinaryOpExpr
+            | NodeType::ConstrainedType
+            | NodeType::UnionType => self.format_left_spine(node),
+            NodeType::UnaryMinusExpr | NodeType::LogicalNotExpr => self.format_unary_chain(node),
             NodeType::DocCommentLine => self.format_doc_comment(node),
             NodeType::LineComment
             | NodeType::BlockComment
@@ -65,8 +71,10 @@ impl<'a> Builder<'a> {
             | NodeType::Operator => FormatNode::Text(self.text(node)),
             NodeType::StringNewline => self.must_force_line(),
             NodeType::StringContinuation => {
-                let escape = self.text(node);
-                let prefix = escape[..escape.len() - 1].to_string();
+                // Mirror upstream `Builder.java` (`escape.substring(0, escape.length() - 1)`):
+                // preserves CRLF `\\\r\n` as `\\\r` + ForceLine (`\n`) while staying panic-free.
+                let mut prefix = self.text(node);
+                prefix.pop();
                 FormatNode::Nodes(vec![FormatNode::Text(prefix), self.must_force_line()])
             }
             NodeType::ModuleDeclaration => self.format_module_declaration(node),
@@ -148,16 +156,11 @@ impl<'a> Builder<'a> {
             }
             NodeType::IfThenExpr => self.format_if_then(node),
             NodeType::IfElseExpr => self.format_if_else(node),
-            NodeType::NewExpr | NodeType::AmendsExpr => self.format_new_expr(node),
+            NodeType::NewExpr => self.format_new_expr(node),
             NodeType::NewHeader => self.format_new_header(node),
             NodeType::UnqualifiedAccessExpr => self.format_unqualified_access_expression(node),
-            NodeType::QualifiedAccessExpr => self.format_qualified_access_expression(node),
-            NodeType::BinaryOpExpr => self.format_binary_op_expr(node),
             NodeType::FunctionLiteralExpr => self.format_function_literal_expr(node),
             NodeType::FunctionLiteralBody => self.format_function_literal_body(node),
-            NodeType::SubscriptExpr | NodeType::SuperSubscriptExpr => {
-                self.format_subscript_expr(node)
-            }
             NodeType::TraceExpr | NodeType::ThrowExpr | NodeType::ReadExpr => {
                 self.format_trace_throw_read_expr(node)
             }
@@ -168,8 +171,6 @@ impl<'a> Builder<'a> {
             NodeType::LetParameter => self.format_let_parameter(node),
             NodeType::TypeAnnotation => self.format_type_annotation(node),
             NodeType::DeclaredType => self.format_declared_type(node),
-            NodeType::ConstrainedType => self.format_constrained_type(node),
-            NodeType::UnionType => self.format_union_type(node),
             NodeType::FunctionType => self.format_function_type(node),
             NodeType::StringConstantType => self.format(&node.children[0]),
             NodeType::ParenthesizedType => self.format_parenthesized_type(node),
@@ -285,74 +286,6 @@ impl<'a> Builder<'a> {
         FormatNode::Nodes(self.format_generic_const(children, None))
     }
 
-    fn format_qualified_access_expression(&mut self, node: &Node) -> FormatNode {
-        let mut lambda_count = 0usize;
-        let mut method_call_count = 0usize;
-        let mut index_before_first_method_call = 0usize;
-        let mut flat: Vec<&Node> = Vec::new();
-
-        gather_facts(
-            node,
-            &mut flat,
-            &mut lambda_count,
-            &mut method_call_count,
-            &mut index_before_first_method_call,
-        );
-
-        let leading_sep = |this: &Self, prev: &Node, next: &Node| {
-            if prev.kind == NodeType::Operator {
-                None
-            } else if next.kind == NodeType::Operator {
-                Some(this.line())
-            } else {
-                Some(this.space_or_line())
-            }
-        };
-
-        let trailing_sep = |this: &Self, prev: &Node, next: &Node| {
-            if prev.kind == NodeType::Operator {
-                None
-            } else if next.kind == NodeType::Operator {
-                Some(if lambda_count > 1 {
-                    this.force_line()
-                } else {
-                    this.line()
-                })
-            } else {
-                Some(this.space_or_line())
-            }
-        };
-
-        let nodes = if method_call_count == 1 && is_method_call(last_proper_node_refs(&flat)) {
-            let (call_chain, args_list) = split_function_call_node(&flat);
-            let leading_formatted = self.format_generic_refs(&call_chain, leading_sep);
-            let leading_nodes = self.indent_after_first_newline(leading_formatted, true);
-            let trailing_nodes = self.format_generic_refs(&args_list, trailing_sep);
-            let sep = self.get_base_separator(call_chain[call_chain.len() - 1], args_list[0]);
-            if let Some(s) = sep {
-                concat3(leading_nodes, s, trailing_nodes)
-            } else {
-                concat2(leading_nodes, trailing_nodes)
-            }
-        } else if method_call_count > 0 && index_before_first_method_call > 0 {
-            let leading = &flat[..index_before_first_method_call];
-            let trailing = &flat[index_before_first_method_call..];
-            let leading_formatted = self.format_generic_refs(leading, leading_sep);
-            let leading_nodes = self.indent_after_first_newline(leading_formatted, true);
-            let trailing_nodes = self.format_generic_refs(trailing, trailing_sep);
-            concat3(leading_nodes, self.line(), trailing_nodes)
-        } else {
-            self.format_generic_refs(&flat, trailing_sep)
-        };
-
-        let should_group = node.children.len() == flat.len();
-        let indented = self.indent_after_first_newline(nodes, should_group);
-        FormatNode::Group {
-            id: self.new_id(),
-            nodes: indented,
-        }
-    }
-
     fn format_amends_extends_clause(&mut self, node: &Node) -> FormatNode {
         let sep = self.space_or_line();
         let mut result =
@@ -427,7 +360,7 @@ impl<'a> Builder<'a> {
     fn format_class_header(&mut self, node: &Node) -> FormatNode {
         let sep = self.space_or_line();
         let nodes = self.format_generic_const(&node.children, Some(sep));
-        self.group_on_space(&nodes)
+        self.group_on_space(nodes)
     }
 
     fn format_class_header_extends(&mut self, node: &Node) -> FormatNode {
@@ -496,7 +429,7 @@ impl<'a> Builder<'a> {
                     }
                 },
             );
-            this.group_on_space(&formatted)
+            this.group_on_space(formatted)
         });
         FormatNode::Nodes(nodes)
     }
@@ -737,18 +670,7 @@ impl<'a> Builder<'a> {
         };
         if two_by_2 {
             let pairs = self.pair_arguments(children);
-            let nodes = self.format_generic_with_gen(&pairs, sep_fn, |this, n, _| {
-                if n.kind == NodeType::ArgumentListElements {
-                    let s = this.space_or_line();
-                    let inner = this.format_generic_const(&n.children, Some(s));
-                    FormatNode::Group {
-                        id: this.new_id(),
-                        nodes: inner,
-                    }
-                } else {
-                    this.format(n)
-                }
-            });
+            let nodes = self.format_paired_arguments(&pairs, should_multiline);
             return FormatNode::Indent(nodes);
         }
         if has_trailing_lambda {
@@ -853,9 +775,23 @@ impl<'a> Builder<'a> {
                 .should_multiline_nodes(elements_node, |this, n| this.is_terminal_single(n, ","))
     }
 
-    fn pair_arguments(&self, nodes: &[Node]) -> Vec<Node> {
+    fn should_multiline_refs<F>(&self, nodes: &[&Node], predicate: F) -> bool
+    where
+        F: Fn(&Self, &Node) -> bool,
+    {
+        for idx in 0..nodes.len().saturating_sub(1) {
+            let prev = nodes[idx];
+            let next = nodes[idx + 1];
+            if (predicate(self, prev) || predicate(self, next)) && lines_between(prev, next) > 0 {
+                return true;
+            }
+        }
+        false
+    }
+
+    fn pair_arguments<'b>(&self, nodes: &'b [Node]) -> Vec<PairedArg<'b>> {
         let mut res = Vec::new();
-        let mut tmp: Vec<Node> = Vec::new();
+        let mut tmp: Vec<&'b Node> = Vec::new();
         let mut commas = 0usize;
         for node in nodes {
             if self.is_terminal_single(node, ",") {
@@ -865,28 +801,147 @@ impl<'a> Builder<'a> {
                     while tmp.last().is_some_and(|n| n.kind.is_affix()) {
                         suffixes.push(tmp.pop().expect("non-empty"));
                     }
-                    res.push(Node::from_children(
-                        NodeType::ArgumentListElements,
-                        std::mem::take(&mut tmp),
-                    ));
+                    res.push(PairedArg::from_group(std::mem::take(&mut tmp)));
                     for suffix in suffixes.into_iter().rev() {
-                        res.push(suffix);
+                        res.push(PairedArg::Single(suffix));
                     }
-                    res.push(node.clone());
+                    res.push(PairedArg::Single(node));
                     commas = 0;
                 } else {
-                    tmp.push(node.clone());
+                    tmp.push(node);
                 }
             } else if tmp.is_empty() && node.kind.is_affix() {
-                res.push(node.clone());
+                res.push(PairedArg::Single(node));
             } else {
-                tmp.push(node.clone());
+                tmp.push(node);
             }
         }
         if !tmp.is_empty() {
-            res.push(Node::from_children(NodeType::ArgumentListElements, tmp));
+            res.push(PairedArg::from_group(tmp));
         }
         res
+    }
+
+    fn format_paired_arguments(
+        &mut self,
+        pairs: &[PairedArg<'_>],
+        should_multiline: bool,
+    ) -> Vec<FormatNode> {
+        let filtered: Vec<&PairedArg<'_>> = pairs
+            .iter()
+            .filter(|pair| match pair {
+                PairedArg::Single(node) => !self.is_semicolon(node),
+                PairedArg::Group { .. } => true,
+            })
+            .collect();
+        if filtered.is_empty() {
+            return Vec::new();
+        }
+        if filtered.len() == 1 {
+            return vec![match filtered[0] {
+                PairedArg::Single(node) => self.format(node),
+                PairedArg::Group { children, .. } => {
+                    let inner_multiline = self
+                        .should_multiline_refs(children, |this, n| this.is_terminal_single(n, ","));
+                    let inner_sep = |this: &Self, _: &Node, _: &Node| {
+                        Some(if inner_multiline {
+                            this.force_spacey_line()
+                        } else {
+                            this.space_or_line()
+                        })
+                    };
+                    FormatNode::Indent(self.format_generic_refs(children, inner_sep))
+                }
+            }];
+        }
+        let format_pair = |this: &mut Self, item: &PairedArg<'_>| match item {
+            PairedArg::Group { children, .. } => {
+                let s = this.space_or_line();
+                let inner = this.format_generic_refs(children, |_, _, _| Some(s.clone()));
+                FormatNode::Group {
+                    id: this.new_id(),
+                    nodes: inner,
+                }
+            }
+            PairedArg::Single(node) => this.format(node),
+        };
+        let mut nodes = Vec::new();
+        let mut prev = filtered[0];
+        for &child in &filtered[1..] {
+            nodes.push(format_pair(self, prev));
+            let sep = self
+                .get_base_separator_paired(prev, child)
+                .unwrap_or_else(|| {
+                    if should_multiline {
+                        self.force_spacey_line()
+                    } else {
+                        self.space_or_line()
+                    }
+                });
+            nodes.push(sep);
+            prev = child;
+        }
+        nodes.push(format_pair(self, filtered[filtered.len() - 1]));
+        nodes
+    }
+
+    fn get_base_separator_paired(
+        &self,
+        prev: &PairedArg<'_>,
+        next: &PairedArg<'_>,
+    ) -> Option<FormatNode> {
+        let prev_span = prev.span();
+        let next_span = next.span();
+        let line_diff = next_span.line_begin as isize - prev_span.line_end as isize;
+        if prev.ends_in_line_comment() {
+            return Some(if line_diff > 1 {
+                two_newlines()
+            } else {
+                self.must_force_line()
+            });
+        }
+        if next.has_leading_affix_on_line(prev_span.line_end) {
+            return Some(FormatNode::Space);
+        }
+        let prev_kind = prev.kind();
+        let next_kind = next.kind();
+        if prev_kind == NodeType::DocComment {
+            return Some(self.must_force_line());
+        }
+        if prev_kind == NodeType::Annotation {
+            return Some(self.force_line());
+        }
+        if is_force_line_affix(prev_kind) || next_kind.is_affix() {
+            return Some(if line_diff > 1 {
+                two_newlines()
+            } else {
+                self.must_force_line()
+            });
+        }
+        if prev_kind == NodeType::BlockComment {
+            return Some(if line_diff > 0 {
+                self.force_spacey_line()
+            } else {
+                FormatNode::Space
+            });
+        }
+        if is_empty_suffix(next_kind)
+            || prev.is_terminal(self, &["[", "!", "@", "[["])
+            || next.is_terminal(self, &["]", "?", ","])
+        {
+            return Some(FormatNode::Empty);
+        }
+        if prev.is_terminal(self, &["class", "function", "new"])
+            || next.is_terminal(self, &["=", "{", "->", "class", "function"])
+            || next_kind == NodeType::ObjectBody
+            || prev_kind == NodeType::ModifierList
+        {
+            return Some(FormatNode::Space);
+        }
+        if next_kind == NodeType::DocComment {
+            return Some(two_newlines());
+        }
+        None
     }
 
     fn format_parameter_list_elements(&mut self, node: &Node) -> FormatNode {
@@ -923,17 +978,24 @@ impl<'a> Builder<'a> {
     fn format_object_parameter_list(&mut self, node: &Node) -> FormatNode {
         let group_id = self.new_id();
         let sep = self.space_or_line();
-        let non_wrapping_nodes =
-            FormatNode::Nodes(self.format_generic_const(&node.children, Some(sep)));
-        let wrapping_nodes = indent_one(FormatNode::Indent(vec![
-            self.line(),
-            non_wrapping_nodes.clone(),
-        ]));
-        let not_wrapped = FormatNode::Nodes(vec![FormatNode::Space, non_wrapping_nodes]);
-        let iw = self.if_wrap(group_id, wrapping_nodes, not_wrapped);
+        let body = self.format_generic_const(&node.children, Some(sep));
+        let wrapped_node = if self.no_newlines {
+            let mut flat = Vec::with_capacity(body.len() + 1);
+            flat.push(FormatNode::Space);
+            flat.extend(body);
+            FormatNode::Nodes(flat)
+        } else {
+            FormatNode::IfWrapPrefix {
+                id: group_id,
+                wrap_indent: 2,
+                wrap_prefix: Box::new(self.line()),
+                no_wrap_prefix: Box::new(FormatNode::Space),
+                body,
+            }
+        };
         FormatNode::Group {
             id: group_id,
-            nodes: vec![iw],
+            nodes: vec![wrapped_node],
         }
     }
 
@@ -1141,14 +1203,22 @@ impl<'a> Builder<'a> {
                     i += 1;
                 }
                 let elems = &nodes[start..i];
-                self.no_newlines = !is_multiline_list(elems);
                 let prev_node = prev.expect("prev must exist before interpolation");
-                if let Some(base_sep) = self.get_base_separator(prev_node, &elems[0]) {
-                    result.push(base_sep);
-                }
-                result.extend(self.format_generic_const(elems, None));
-                if let Some(end_sep) = self.get_base_separator(&elems[elems.len() - 1], &nodes[i]) {
-                    result.push(end_sep);
+                let spans_newline = is_multiline_list(elems)
+                    || (i < nodes.len() && prev_node.span.line_begin < nodes[i].span.line_end)
+                    || elems.iter().any(ends_in_line_comment);
+                self.no_newlines = !spans_newline;
+                if !elems.is_empty() {
+                    if let Some(base_sep) = self.get_base_separator(prev_node, &elems[0]) {
+                        result.push(base_sep);
+                    }
+                    result.extend(self.format_generic_const(elems, None));
+                    if i < nodes.len()
+                        && let Some(end_sep) =
+                            self.get_base_separator(&elems[elems.len() - 1], &nodes[i])
+                    {
+                        result.push(end_sep);
+                    }
                 }
                 self.no_newlines = prev_no_newlines;
                 is_in_interpolation = false;
@@ -1159,9 +1229,10 @@ impl<'a> Builder<'a> {
             if elem.kind == NodeType::Terminal && self.text(elem).ends_with('(') {
                 is_in_interpolation = true;
             }
-            match self.format(elem) {
-                FormatNode::Nodes(inner) => result.extend(inner),
-                other => result.push(other),
+            let mut formatted = self.format(elem);
+            match &mut formatted {
+                FormatNode::Nodes(inner) => result.extend(std::mem::take(inner)),
+                _ => result.push(formatted),
             }
             prev = Some(elem);
         }
@@ -1242,14 +1313,374 @@ impl<'a> Builder<'a> {
         if node.children.len() == 1 {
             let expr = &node.children[0];
             if expr.kind == NodeType::IfExpr {
-                if let FormatNode::Group { nodes, .. } = self.format_if(expr) {
-                    return FormatNode::Nodes(nodes);
+                if let FormatNode::Group { nodes, .. } = &mut self.format_if(expr) {
+                    return FormatNode::Nodes(std::mem::take(nodes));
                 }
                 unreachable!("format_if always returns Group");
             }
             return indent_one(self.format(expr));
         }
         FormatNode::Indent(self.format_generic_const(&node.children, None))
+    }
+
+    /// Iteratively formats arbitrary interleaved left-leaning CST chains
+    /// (`NonNullExpr`, `NullableType`, `SubscriptExpr`, `SuperSubscriptExpr`,
+    /// `AmendsExpr`, `QualifiedAccessExpr`, `BinaryOpExpr`, `ConstrainedType`,
+    /// `UnionType`) in O(1) call-stack depth so deep interleaved chains
+    /// (e.g. `a.b!!.c[0]!!...`, `Int?(true)?(false)...`, `a + b * c...`) cannot
+    /// overflow the native stack.
+    fn format_left_spine(&mut self, root: &Node) -> FormatNode {
+        enum LeftFrame<'b> {
+            Postfix(&'b Node),
+            Amends(&'b Node),
+            Constrained(&'b Node),
+            Union(&'b Node),
+            Qualified {
+                node: &'b Node,
+                flat: Vec<&'b Node>,
+                lambda_count: usize,
+                method_call_count: usize,
+                index_before_first_method_call: usize,
+            },
+            Binary {
+                node: &'b Node,
+                flat: Vec<&'b Node>,
+                should_multiline: bool,
+            },
+        }
+
+        let mut spine: Vec<LeftFrame<'_>> = Vec::new();
+        let mut cur = root;
+        loop {
+            match cur.kind {
+                NodeType::NonNullExpr
+                | NodeType::NullableType
+                | NodeType::SubscriptExpr
+                | NodeType::SuperSubscriptExpr => {
+                    if let Some(first) = cur.children.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Postfix(cur));
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                NodeType::AmendsExpr => {
+                    if let Some(first) = cur.children.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Amends(cur));
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                NodeType::ConstrainedType => {
+                    if let Some(first) = cur.children.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Constrained(cur));
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                NodeType::UnionType => {
+                    if let Some(first) = cur.children.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Union(cur));
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                NodeType::QualifiedAccessExpr => {
+                    let mut lambda_count = 0usize;
+                    let mut method_call_count = 0usize;
+                    let mut index_before_first_method_call = 0usize;
+                    let mut flat: Vec<&Node> = Vec::new();
+                    gather_facts(
+                        cur,
+                        &mut flat,
+                        &mut lambda_count,
+                        &mut method_call_count,
+                        &mut index_before_first_method_call,
+                    );
+                    if let Some(&first) = flat.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Qualified {
+                            node: cur,
+                            flat,
+                            lambda_count,
+                            method_call_count,
+                            index_before_first_method_call,
+                        });
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                NodeType::BinaryOpExpr => {
+                    let flat = self.flatten_binary_operator_exprs(cur);
+                    let should_multiline =
+                        self.should_multiline_nodes(cur, |_, n| n.kind == NodeType::Operator);
+                    if let Some(&first) = flat.iter().find(|c| !self.is_semicolon(c)) {
+                        spine.push(LeftFrame::Binary {
+                            node: cur,
+                            flat,
+                            should_multiline,
+                        });
+                        cur = first;
+                    } else {
+                        break;
+                    }
+                }
+                _ => break,
+            }
+        }
+
+        let mut acc = match cur.kind {
+            NodeType::NonNullExpr
+            | NodeType::NullableType
+            | NodeType::SubscriptExpr
+            | NodeType::SuperSubscriptExpr => FormatNode::Nodes(Vec::new()),
+            NodeType::AmendsExpr
+            | NodeType::ConstrainedType
+            | NodeType::UnionType
+            | NodeType::QualifiedAccessExpr
+            | NodeType::BinaryOpExpr => FormatNode::Group {
+                id: self.new_id(),
+                nodes: Vec::new(),
+            },
+            _ => self.format(cur),
+        };
+
+        while let Some(frame) = spine.pop() {
+            acc = match frame {
+                LeftFrame::Postfix(parent) => {
+                    let refs: Vec<&Node> = parent.children.iter().collect();
+                    FormatNode::Nodes(
+                        self.format_generic_refs_with_first(&refs, acc, |_, _, _| None),
+                    )
+                }
+                LeftFrame::Amends(parent) => {
+                    let sep = self.space_or_line();
+                    let refs: Vec<&Node> = parent.children.iter().collect();
+                    let nodes = self
+                        .format_generic_refs_with_first(&refs, acc, |_, _, _| Some(sep.clone()));
+                    FormatNode::Group {
+                        id: self.new_id(),
+                        nodes,
+                    }
+                }
+                LeftFrame::Constrained(parent) => {
+                    let refs: Vec<&Node> = parent.children.iter().collect();
+                    let nodes = self.format_generic_refs_with_first(&refs, acc, |this, _, next| {
+                        if next.kind == NodeType::ConstrainedTypeConstraint {
+                            None
+                        } else {
+                            Some(this.space_or_line())
+                        }
+                    });
+                    FormatNode::Group {
+                        id: self.new_id(),
+                        nodes,
+                    }
+                }
+                LeftFrame::Union(parent) => {
+                    let refs: Vec<&Node> = parent.children.iter().collect();
+                    let nodes =
+                        self.format_generic_refs_with_first(&refs, acc, |this, prev, next| {
+                            if this.is_terminal_single(next, "|") {
+                                Some(this.space_or_line())
+                            } else if this.is_terminal_single(prev, "|") {
+                                Some(FormatNode::Space)
+                            } else {
+                                None
+                            }
+                        });
+                    let indented = self.indent_after_first_newline(nodes, false);
+                    FormatNode::Group {
+                        id: self.new_id(),
+                        nodes: indented,
+                    }
+                }
+                LeftFrame::Qualified {
+                    node,
+                    flat,
+                    lambda_count,
+                    method_call_count,
+                    index_before_first_method_call,
+                } => {
+                    let leading_sep = |this: &Self, prev: &Node, next: &Node| {
+                        if prev.kind == NodeType::Operator {
+                            None
+                        } else if next.kind == NodeType::Operator {
+                            Some(this.line())
+                        } else {
+                            Some(this.space_or_line())
+                        }
+                    };
+                    let trailing_sep = |this: &Self, prev: &Node, next: &Node| {
+                        if prev.kind == NodeType::Operator {
+                            None
+                        } else if next.kind == NodeType::Operator {
+                            Some(if lambda_count > 1 {
+                                this.force_line()
+                            } else {
+                                this.line()
+                            })
+                        } else {
+                            Some(this.space_or_line())
+                        }
+                    };
+                    let nodes =
+                        if method_call_count == 1 && is_method_call(last_proper_node_refs(&flat)) {
+                            let (call_chain, args_list) = split_function_call_node(&flat);
+                            let leading_formatted =
+                                self.format_generic_refs_with_first(&call_chain, acc, leading_sep);
+                            let leading_nodes =
+                                self.indent_after_first_newline(leading_formatted, true);
+                            let trailing_nodes = self.format_generic_refs(&args_list, trailing_sep);
+                            let sep = self
+                                .get_base_separator(call_chain[call_chain.len() - 1], args_list[0]);
+                            if let Some(s) = sep {
+                                concat3(leading_nodes, s, trailing_nodes)
+                            } else {
+                                concat2(leading_nodes, trailing_nodes)
+                            }
+                        } else if method_call_count > 0 && index_before_first_method_call > 0 {
+                            let leading = &flat[..index_before_first_method_call];
+                            let trailing = &flat[index_before_first_method_call..];
+                            let leading_formatted =
+                                self.format_generic_refs_with_first(leading, acc, leading_sep);
+                            let leading_nodes =
+                                self.indent_after_first_newline(leading_formatted, true);
+                            let trailing_nodes = self.format_generic_refs(trailing, trailing_sep);
+                            concat3(leading_nodes, self.line(), trailing_nodes)
+                        } else {
+                            self.format_generic_refs_with_first(&flat, acc, trailing_sep)
+                        };
+                    let should_group = node.children.len() == flat.len();
+                    let indented = self.indent_after_first_newline(nodes, should_group);
+                    FormatNode::Group {
+                        id: self.new_id(),
+                        nodes: indented,
+                    }
+                }
+                LeftFrame::Binary {
+                    node,
+                    flat,
+                    should_multiline,
+                } => {
+                    let nodes =
+                        self.format_generic_refs_with_first(&flat, acc, |this, prev, next| {
+                            let sep = if should_multiline {
+                                this.force_spacey_line()
+                            } else {
+                                this.space_or_line()
+                            };
+                            if prev.kind == NodeType::Operator {
+                                return Some(if this.text(prev) == "-" {
+                                    sep
+                                } else {
+                                    FormatNode::Space
+                                });
+                            }
+                            if next.kind == NodeType::Operator {
+                                return Some(if this.text(next) == "-" {
+                                    FormatNode::Space
+                                } else {
+                                    sep
+                                });
+                            }
+                            Some(sep)
+                        });
+                    let should_group = node.children.len() == flat.len();
+                    let indented = self.indent_after_first_newline(nodes, should_group);
+                    FormatNode::Group {
+                        id: self.new_id(),
+                        nodes: indented,
+                    }
+                }
+            };
+        }
+        acc
+    }
+
+    fn format_generic_refs_with_first<S>(
+        &mut self,
+        children: &[&Node],
+        first_node: FormatNode,
+        separator_fn: S,
+    ) -> Vec<FormatNode>
+    where
+        S: Fn(&Self, &Node, &Node) -> Option<FormatNode>,
+    {
+        let filtered: Vec<&Node> = children
+            .iter()
+            .copied()
+            .filter(|child| !self.is_semicolon(child))
+            .collect();
+        if filtered.is_empty() {
+            return Vec::new();
+        }
+        if filtered.len() == 1 {
+            return vec![first_node];
+        }
+        let mut nodes = Vec::with_capacity(filtered.len() * 2);
+        let mut prev = filtered[0];
+        nodes.push(first_node);
+        for &child in &filtered[1..] {
+            if let Some(separator) = self.get_separator(prev, child, &separator_fn) {
+                nodes.push(separator);
+            }
+            nodes.push(self.format(child));
+            prev = child;
+        }
+        nodes
+    }
+
+    /// Iteratively formats right-leaning chains of `UnaryMinusExpr` / `LogicalNotExpr`.
+    fn format_unary_chain(&mut self, node: &Node) -> FormatNode {
+        fn is_unary_kind(kind: NodeType) -> bool {
+            matches!(kind, NodeType::UnaryMinusExpr | NodeType::LogicalNotExpr)
+        }
+        let mut spine: Vec<&Node> = Vec::new();
+        let mut cur = node;
+        loop {
+            spine.push(cur);
+            if let Some(last) = cur.children.iter().rev().find(|c| !self.is_semicolon(c))
+                && is_unary_kind(last.kind)
+            {
+                cur = last;
+            } else {
+                break;
+            }
+        }
+        let base = spine.pop().expect("non-empty spine");
+        let mut acc = FormatNode::Nodes(self.format_generic_const(&base.children, None));
+        while let Some(parent) = spine.pop() {
+            let filtered: Vec<&Node> = parent
+                .children
+                .iter()
+                .filter(|c| !self.is_semicolon(c))
+                .collect();
+            if filtered.len() <= 1 {
+                acc = FormatNode::Nodes(vec![acc]);
+                continue;
+            }
+            let last_idx = filtered.len() - 1;
+            let mut nodes = Vec::with_capacity(filtered.len() * 2);
+            let mut prev = filtered[0];
+            for &child in &filtered[1..last_idx] {
+                nodes.push(self.format(prev));
+                if let Some(sep) = self.get_base_separator(prev, child) {
+                    nodes.push(sep);
+                }
+                prev = child;
+            }
+            nodes.push(self.format(prev));
+            if let Some(sep) = self.get_base_separator(prev, filtered[last_idx]) {
+                nodes.push(sep);
+            }
+            nodes.push(acc);
+            acc = FormatNode::Nodes(nodes);
+        }
+        acc
     }
 
     fn format_new_expr(&mut self, node: &Node) -> FormatNode {
@@ -1382,8 +1813,8 @@ impl<'a> Builder<'a> {
             },
             |this, n, _| {
                 if n.kind == NodeType::LetExpr {
-                    if let FormatNode::Group { nodes, .. } = this.format_let_expr(n) {
-                        return FormatNode::Nodes(nodes);
+                    if let FormatNode::Group { nodes, .. } = &mut this.format_let_expr(n) {
+                        return FormatNode::Nodes(std::mem::take(nodes));
                     }
                     unreachable!("format_let_expr always returns Group");
                 }
@@ -1423,44 +1854,6 @@ impl<'a> Builder<'a> {
         indent_one(self.format_class_property(node))
     }
 
-    fn format_binary_op_expr(&mut self, node: &Node) -> FormatNode {
-        let flat = self.flatten_binary_operator_exprs(node);
-        let should_multiline =
-            self.should_multiline_nodes(node, |_, n| n.kind == NodeType::Operator);
-        let nodes = self.format_generic_refs(&flat, |this, prev, next| {
-            let sep = if should_multiline {
-                this.force_spacey_line()
-            } else {
-                this.space_or_line()
-            };
-            if prev.kind == NodeType::Operator {
-                return Some(if this.text(prev) == "-" {
-                    sep
-                } else {
-                    FormatNode::Space
-                });
-            }
-            if next.kind == NodeType::Operator {
-                return Some(if this.text(next) == "-" {
-                    FormatNode::Space
-                } else {
-                    sep
-                });
-            }
-            Some(sep)
-        });
-        let should_group = node.children.len() == flat.len();
-        let indented = self.indent_after_first_newline(nodes, should_group);
-        FormatNode::Group {
-            id: self.new_id(),
-            nodes: indented,
-        }
-    }
-
-    fn format_subscript_expr(&mut self, node: &Node) -> FormatNode {
-        FormatNode::Nodes(self.format_generic_const(&node.children, None))
-    }
-
     fn format_trace_throw_read_expr(&mut self, node: &Node) -> FormatNode {
         let nodes = self.format_generic_with_gen(
             &node.children,
@@ -1488,37 +1881,6 @@ impl<'a> Builder<'a> {
     fn format_declared_type(&mut self, node: &Node) -> FormatNode {
         let sep = self.space_or_line();
         FormatNode::Nodes(self.format_generic_const(&node.children, Some(sep)))
-    }
-
-    fn format_constrained_type(&mut self, node: &Node) -> FormatNode {
-        let nodes = self.format_generic(&node.children, |this, _, next| {
-            if next.kind == NodeType::ConstrainedTypeConstraint {
-                None
-            } else {
-                Some(this.space_or_line())
-            }
-        });
-        FormatNode::Group {
-            id: self.new_id(),
-            nodes,
-        }
-    }
-
-    fn format_union_type(&mut self, node: &Node) -> FormatNode {
-        let nodes = self.format_generic(&node.children, |this, prev, next| {
-            if this.is_terminal_single(next, "|") {
-                Some(this.space_or_line())
-            } else if this.is_terminal_single(prev, "|") {
-                Some(FormatNode::Space)
-            } else {
-                None
-            }
-        });
-        let indented = self.indent_after_first_newline(nodes, false);
-        FormatNode::Group {
-            id: self.new_id(),
-            nodes: indented,
-        }
     }
 
     fn format_function_type(&mut self, node: &Node) -> FormatNode {
@@ -1684,13 +2046,18 @@ impl<'a> Builder<'a> {
     ) {
         if !entry.leading_affixes.is_empty() {
             let sep = self.space_or_line();
-            nodes.extend(
-                self.format_generic_refs(&entry.leading_affixes, |_, _, _| Some(sep.clone())),
-            );
-            nodes.push(self.force_line());
+            let leading =
+                self.format_generic_refs(&entry.leading_affixes, |_, _, _| Some(sep.clone()));
+            if !leading.is_empty() {
+                nodes.extend(leading);
+                nodes.push(self.force_line());
+            }
         }
         nodes.push(self.format(entry.import_node));
         for affix in &entry.trailing_affixes {
+            if self.is_semicolon(affix) {
+                continue;
+            }
             nodes.push(FormatNode::Space);
             nodes.push(self.format(affix));
         }
@@ -1881,9 +2248,12 @@ impl<'a> Builder<'a> {
         let str_chars = node
             .find_child_by_type(NodeType::StringChars)
             .expect("import must have StringChars");
-        let start = str_chars.span.char_index + 1;
-        let end = str_chars.span.char_index + str_chars.span.length - 1;
-        String::from_utf16_lossy(&self.source[start..end])
+        let start = str_chars.span.char_index;
+        let len = str_chars.span.length;
+        if len < 2 {
+            return String::new();
+        }
+        String::from_utf16_lossy(&self.source[start + 1..start + len - 1])
     }
 
     fn get_separator_const(&self, prev: &Node, next: &Node, separator: FormatNode) -> FormatNode {
@@ -1965,7 +2335,6 @@ impl<'a> Builder<'a> {
     }
 
     fn must_force_line(&self) -> FormatNode {
-        assert!(!self.no_newlines, "Tried to render Pkl code as single line");
         FormatNode::ForceLine
     }
 
@@ -2037,19 +2406,31 @@ impl<'a> Builder<'a> {
         nodes
     }
 
-    fn group_on_space(&mut self, fnodes: &[FormatNode]) -> FormatNode {
-        let mut res = Vec::new();
+    fn group_on_space(&mut self, mut fnodes: Vec<FormatNode>) -> FormatNode {
+        let mut split_starts = Vec::new();
+        let mut start = 0usize;
         for (i, node) in fnodes.iter().enumerate() {
-            if i > 0 && matches!(node, FormatNode::SpaceOrLine | FormatNode::Space) {
-                res.push(self.group_on_space(&fnodes[i..]));
-                break;
+            if i > start && matches!(node, FormatNode::SpaceOrLine | FormatNode::Space) {
+                split_starts.push(start);
+                start = i;
             }
-            res.push(node.clone());
         }
-        FormatNode::Group {
+        split_starts.push(start);
+        let mut acc: Option<FormatNode> = None;
+        for start in split_starts.into_iter().rev() {
+            let mut nodes = fnodes.split_off(start);
+            if let Some(tail) = acc.take() {
+                nodes.push(tail);
+            }
+            acc = Some(FormatNode::Group {
+                id: self.new_id(),
+                nodes,
+            });
+        }
+        acc.unwrap_or_else(|| FormatNode::Group {
             id: self.new_id(),
-            nodes: res,
-        }
+            nodes: Vec::new(),
+        })
     }
 
     fn flatten_binary_operator_exprs<'b>(&self, node: &'b Node) -> Vec<&'b Node> {
@@ -2063,21 +2444,23 @@ impl<'a> Builder<'a> {
     }
 
     fn flatten_binary_operator_exprs_prec<'b>(&self, node: &'b Node, prec: u8) -> Vec<&'b Node> {
-        let op_node = node
-            .children
-            .iter()
-            .find(|c| c.kind == NodeType::Operator)
-            .expect("BinaryOpExpr must contain Operator");
-        if prec != Operator::by_name(&self.text(op_node)).prec() {
-            return vec![node];
-        }
         let mut result = Vec::new();
-        for child in &node.children {
-            if child.kind == NodeType::BinaryOpExpr {
-                result.extend(self.flatten_binary_operator_exprs_prec(child, prec));
-            } else {
-                result.push(child);
+        let mut stack: Vec<&'b Node> = vec![node];
+        while let Some(cur) = stack.pop() {
+            if cur.kind == NodeType::BinaryOpExpr {
+                let op_node = cur
+                    .children
+                    .iter()
+                    .find(|c| c.kind == NodeType::Operator)
+                    .expect("BinaryOpExpr must contain Operator");
+                if prec == Operator::by_name(&self.text(op_node)).prec() {
+                    for child in cur.children.iter().rev() {
+                        stack.push(child);
+                    }
+                    continue;
+                }
             }
+            result.push(cur);
         }
         result
     }
@@ -2112,15 +2495,12 @@ fn gather_facts<'a>(
     method_call_count: &mut usize,
     index_before_first_method_call: &mut usize,
 ) {
-    for child in &current.children {
+    let mut stack: Vec<&'a Node> = current.children.iter().rev().collect();
+    while let Some(child) = stack.pop() {
         if child.kind == NodeType::QualifiedAccessExpr {
-            gather_facts(
-                child,
-                flat,
-                lambda_count,
-                method_call_count,
-                index_before_first_method_call,
-            );
+            for grandchild in child.children.iter().rev() {
+                stack.push(grandchild);
+            }
         } else {
             flat.push(child);
             if is_method_call(Some(child)) {
@@ -2303,4 +2683,71 @@ fn concat3(mut a: Vec<FormatNode>, mid: FormatNode, b: Vec<FormatNode>) -> Vec<F
     a.push(mid);
     a.extend(b);
     a
+}
+
+enum PairedArg<'a> {
+    Single(&'a Node),
+    Group {
+        span: crate::FullSpan,
+        children: Vec<&'a Node>,
+    },
+}
+
+impl<'a> PairedArg<'a> {
+    fn from_group(children: Vec<&'a Node>) -> Self {
+        assert!(
+            !children.is_empty(),
+            "No children given for PairedArg::Group"
+        );
+        let first = children[0].span;
+        let last = children[children.len() - 1].span;
+        Self::Group {
+            span: first.end_with(last),
+            children,
+        }
+    }
+
+    fn span(&self) -> crate::FullSpan {
+        match self {
+            Self::Single(n) => n.span,
+            Self::Group { span, .. } => *span,
+        }
+    }
+
+    fn kind(&self) -> NodeType {
+        match self {
+            Self::Single(n) => n.kind,
+            Self::Group { .. } => NodeType::ArgumentListElements,
+        }
+    }
+
+    fn ends_in_line_comment(&self) -> bool {
+        match self {
+            Self::Single(n) => ends_in_line_comment(n),
+            Self::Group { children, .. } => {
+                children.last().is_some_and(|n| ends_in_line_comment(n))
+            }
+        }
+    }
+
+    fn has_leading_affix_on_line(&self, line_end: usize) -> bool {
+        let mut cur = match self {
+            Self::Single(n) => Some(*n),
+            Self::Group { children, .. } => children.first().copied(),
+        };
+        while let Some(n) = cur {
+            if n.kind.is_affix() && line_end == n.span.line_begin {
+                return true;
+            }
+            cur = n.children.first();
+        }
+        false
+    }
+
+    fn is_terminal(&self, builder: &Builder<'_>, texts: &[&str]) -> bool {
+        match self {
+            Self::Single(n) => builder.is_terminal(n, texts),
+            Self::Group { .. } => false,
+        }
+    }
 }

@@ -222,7 +222,7 @@
     },
     "m7:soak:napi-and-wasm-memory-reclamation": {
       "track": "soak",
-      "description": "All 6 long-running memory reclamation scenarios bounded on @pkl-rs/napi and @pkl-rs/wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
+      "description": "All 6 long-running memory reclamation scenarios bounded on @openedges/pkl-napi and @openedges/pkl-wasm (bounded RSS, heap, Wasm pages, FDs, child PIDs)",
       "soak_pairs": [
         "napi-node/repeated-success",
         "napi-node/repeated-failure",

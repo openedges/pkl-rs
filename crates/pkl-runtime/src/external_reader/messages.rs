@@ -567,7 +567,7 @@ impl ExternalReaderError {
     ///
     /// Note that `ResourceManager.doRead` renders `ExternalReaderProcessException`
     /// with its bare message (no `externalReaderFailure` wrapper), whereas `IOException`
-    /// renders `I/O error reading resource \`<uri>\`.\nIOException: <msg>`.
+    /// renders ``I/O error reading resource `<uri>`.\nIOException: <msg>``.
     pub fn into_read_failure(self) -> ReadFailure {
         match self {
             Self::Process(msg) => ReadFailure::ExternalReaderProcess {

@@ -36,6 +36,14 @@ pub struct BufReadLineEditor<R: BufRead, W: Write> {
     history_path: Option<PathBuf>,
 }
 
+const MAX_HISTORY_ENTRIES: usize = 10_000;
+const MAX_HISTORY_BYTES: u64 = 4 * 1024 * 1024;
+
+fn path_is_symlink_or_junction(path: &Path) -> bool {
+    fs::symlink_metadata(path)
+        .is_ok_and(|meta| pkl_host_native::is_symlink_or_junction(path, &meta))
+}
+
 impl<R: BufRead, W: Write> BufReadLineEditor<R, W> {
     pub fn new(input: R, output: W, is_tty: bool, dumb_term: bool) -> Self {
         Self {
@@ -53,13 +61,22 @@ impl<R: BufRead, W: Write> BufReadLineEditor<R, W> {
     pub fn with_history_file(mut self, path: PathBuf) -> Self {
         if let Some(parent) = path.parent() {
             let legacy = parent.join("repl-history.bin");
-            let _ = fs::remove_file(legacy);
+            if !path_is_symlink_or_junction(&legacy) {
+                let _ = fs::remove_file(legacy);
+            }
         }
-        if let Ok(existing) = fs::read_to_string(&path) {
+        if fs::symlink_metadata(&path).is_ok_and(|m| m.len() <= MAX_HISTORY_BYTES)
+            && let Ok(bytes) = pkl_host_native::read_path_nofollow_bounded(&path)
+            && let Ok(existing) = String::from_utf8(bytes)
+        {
             for line in existing.lines() {
                 if !line.is_empty() {
                     self.history.push(line.to_string());
                 }
+            }
+            if self.history.len() > MAX_HISTORY_ENTRIES {
+                let excess = self.history.len() - MAX_HISTORY_ENTRIES;
+                self.history.drain(..excess);
             }
         }
         self.history_path = Some(path);
@@ -86,6 +103,10 @@ impl<R: BufRead, W: Write> LineEditor for BufReadLineEditor<R, W> {
         }
         if !line.trim().is_empty() {
             self.history.push(line.clone());
+            if self.history.len() > MAX_HISTORY_ENTRIES {
+                let excess = self.history.len() - MAX_HISTORY_ENTRIES;
+                self.history.drain(..excess);
+            }
         }
         Ok(Some(line))
     }
@@ -114,15 +135,22 @@ impl<R: BufRead, W: Write> LineEditor for BufReadLineEditor<R, W> {
         let Some(ref path) = self.history_path else {
             return;
         };
+        if path_is_symlink_or_junction(path) {
+            return;
+        }
         if let Some(parent) = path.parent() {
+            if path_is_symlink_or_junction(parent) {
+                return;
+            }
             let _ = fs::create_dir_all(parent);
         }
+        let start = self.history.len().saturating_sub(MAX_HISTORY_ENTRIES);
         let mut buf = String::new();
-        for entry in &self.history {
+        for entry in &self.history[start..] {
             buf.push_str(entry);
             buf.push('\n');
         }
-        let _ = fs::write(path, buf);
+        let _ = pkl_host_native::write_file_nofollow(path, buf.as_bytes());
     }
 }
 
@@ -135,23 +163,32 @@ pub fn default_pkl_home_dir() -> Option<PathBuf> {
     }
     std::env::var_os("HOME")
         .filter(|h| !h.is_empty())
+        .or_else(|| std::env::var_os("USERPROFILE").filter(|h| !h.is_empty()))
         .map(|home| PathBuf::from(home).join(".pkl"))
 }
 
-/// Returns `true` when `TERM` is `"dumb"` or unset/empty on Unix.
+/// Returns `true` when `TERM` is `"dumb"` (or unset/empty on Unix).
 pub fn is_dumb_terminal() -> bool {
     match std::env::var("TERM") {
         Ok(val) => val.eq_ignore_ascii_case("dumb") || val.trim().is_empty(),
-        Err(_) => true,
+        Err(_) => !cfg!(windows),
     }
 }
 
 /// Completes filesystem path entries relative to `working_dir` for `:load <partial>`
 /// (mirrors `FileCompleter` in `ReplCompleters.kt`).
 pub fn complete_file_paths(working_dir: &Path, partial: &str) -> Vec<String> {
-    let (dir_prefix, file_prefix) = match partial.rfind('/') {
-        Some(idx) => (&partial[..=idx], &partial[idx + 1..]),
-        None => ("", partial),
+    let split_idx = if cfg!(windows) {
+        partial.rfind(['/', '\\'])
+    } else {
+        partial.rfind('/')
+    };
+    let (dir_prefix, file_prefix, sep) = match split_idx {
+        Some(idx) => {
+            let sep = partial.as_bytes()[idx] as char;
+            (&partial[..=idx], &partial[idx + 1..], sep)
+        }
+        None => ("", partial, '/'),
     };
     let search_dir = if dir_prefix.is_empty() {
         working_dir.to_path_buf()
@@ -170,7 +207,7 @@ pub fn complete_file_paths(working_dir: &Path, partial: &str) -> Vec<String> {
         let is_dir = entry.file_type().map(|t| t.is_dir()).unwrap_or(false);
         let mut candidate = format!("{dir_prefix}{name}");
         if is_dir {
-            candidate.push('/');
+            candidate.push(sep);
         }
         results.push(candidate);
     }

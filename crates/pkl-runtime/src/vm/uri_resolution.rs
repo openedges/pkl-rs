@@ -140,6 +140,7 @@ impl Program {
     }
 }
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_read_resolution(
         &mut self,
         request: ReadRequest,
@@ -193,6 +194,7 @@ impl Vm {
         Ok(())
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn prepare_module_imports(&mut self, unit: UnitId) -> Result<(), RuntimeError> {
         if self.program.units[unit.0 as usize].import_order.is_empty() {
             return Ok(());
@@ -427,24 +429,37 @@ impl Vm {
                         && crate::host::resources::import_triple_path(&parsed_authored)?.is_none()
                         && let Some(key) = key_to_resolve
                     {
-                        let key = key.clone();
-                        let authored_uri = parsed_authored.clone();
-                        self.frames.last_mut().unwrap().uri_resolution =
-                            Some(Box::new(Resolution {
-                                module: module
-                                    .clone()
-                                    .ok_or_else(|| invalid("missing declaration identity"))?,
-                                path: PklString::default(),
-                                candidates: VecDeque::new(),
-                                selected: None,
-                                declaration_key: None,
-                                wrapper_fragment_paths: false,
-                                target: Target::Import { current, remaining },
-                            }));
-                        return self.wait_module(ModuleRequestKind::ResolveImportUri {
-                            key,
-                            authored_uri,
-                        });
+                        if self.pure_standard_host
+                            && !is_dep_notation
+                            && key.kind == crate::modules::ModuleKeyKind::StandardFile
+                            && key
+                                .uri
+                                .as_str()
+                                .is_some_and(crate::host::resources::is_clean_file_uri)
+                            && let Ok(resolved) =
+                                crate::host::resolve_module_key_uri(&parsed_authored, &key.uri)
+                        {
+                            current.prepared_uri = Some(resolved);
+                        } else {
+                            let key = key.clone();
+                            let authored_uri = parsed_authored.clone();
+                            self.frames.last_mut().unwrap().uri_resolution =
+                                Some(Box::new(Resolution {
+                                    module: module
+                                        .clone()
+                                        .ok_or_else(|| invalid("missing declaration identity"))?,
+                                    path: PklString::default(),
+                                    candidates: VecDeque::new(),
+                                    selected: None,
+                                    declaration_key: None,
+                                    wrapper_fragment_paths: false,
+                                    target: Target::Import { current, remaining },
+                                }));
+                            return self.wait_module(ModuleRequestKind::ResolveImportUri {
+                                key,
+                                authored_uri,
+                            });
+                        }
                     }
                     let (absolute, original) = crate::host::resources::prepare_module_uri(
                         current
@@ -533,7 +548,7 @@ impl Vm {
         let uri = current.spec.original_uri.clone();
         let module =
             module.ok_or_else(|| invalid("import clause requires a declaration ModuleKey"))?;
-        self.frames.last_mut().unwrap().uri_resolution = Some(Box::new(Resolution {
+        let run = Box::new(Resolution {
             module,
             path: PklString::default(),
             candidates: VecDeque::new(),
@@ -541,7 +556,21 @@ impl Vm {
             declaration_key: None,
             wrapper_fragment_paths: false,
             target: Target::Import { current, remaining },
-        }));
+        });
+        if self.pure_standard_host
+            && uri
+                .as_str()
+                .is_some_and(crate::host::resources::is_clean_file_uri)
+        {
+            let key = crate::modules::ModuleKey {
+                id: crate::modules::ModuleKeyId(modules::next_key_id()?),
+                uri,
+                kind: crate::modules::ModuleKeyKind::StandardFile,
+                handle: PklString::default(),
+            };
+            return self.apply_selected_clause_key(run, key);
+        }
+        self.frames.last_mut().unwrap().uri_resolution = Some(run);
         self.wait_module(ModuleRequestKind::SelectKey {
             id: crate::modules::ModuleKeyId(modules::next_key_id()?),
             uri,
@@ -552,7 +581,7 @@ impl Vm {
         &mut self,
         result: Result<crate::modules::ModuleKey, ModuleHostError>,
     ) -> Result<(), RuntimeError> {
-        let mut run = self
+        let run = self
             .frames
             .last_mut()
             .and_then(|frame| frame.uri_resolution.take())
@@ -564,6 +593,13 @@ impl Vm {
             }
             _ => invalid("clause key completion without a clause"),
         })?;
+        self.apply_selected_clause_key(run, key)
+    }
+    fn apply_selected_clause_key(
+        &mut self,
+        mut run: Box<Resolution>,
+        key: crate::modules::ModuleKey,
+    ) -> Result<(), RuntimeError> {
         let Target::Import { current, .. } = &run.target else {
             return Err(invalid("missing import clause"));
         };
@@ -705,7 +741,11 @@ impl Vm {
             && src.text.len_bytes() <= 256 * 1024
             && !program
                 .type_recipes
-                .iter_with_ids()
+                .iter_with_ids_from(if is_base_module {
+                    0
+                } else {
+                    program.type_recipes.fixed_len()
+                })
                 .any(|(_, r)| r.unit == unit)
         {
             Some((src, modules::source_text_hash(&src.text)))
@@ -999,6 +1039,7 @@ pub(super) fn module_import_order_filtered(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn module_relative_path_to(&mut self) -> Result<(), RuntimeError> {
         let other = self.pop()?.as_object()?;
         let receiver = self.conversion_receiver()?;

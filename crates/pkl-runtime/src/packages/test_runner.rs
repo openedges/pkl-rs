@@ -6,6 +6,7 @@ use crate::source::{SourceText, Span};
 use crate::syntax::{ExprKind, ObjectMember};
 use std::collections::BTreeMap;
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum TestReporterKind {
     #[default]
@@ -13,6 +14,7 @@ pub enum TestReporterKind {
     Minimal,
 }
 
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum TestSectionName {
     Facts,

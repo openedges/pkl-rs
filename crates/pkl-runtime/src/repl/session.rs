@@ -620,7 +620,14 @@ impl ReplSession {
                     SeqStep::Continue
                 }
                 HostPoll::Ready(Err(err)) => {
+                    let abort_seq = matches!(
+                        err.kind,
+                        ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                    );
                     self.record_seq_error(seq, err, Some(&source), true);
+                    if abort_seq {
+                        return SeqStep::Finished(std::mem::take(&mut seq.responses));
+                    }
                     SeqStep::Continue
                 }
                 other => {
@@ -668,7 +675,14 @@ impl ReplSession {
                     SeqStep::Continue
                 }
                 HostPoll::Ready(Err(err)) => {
+                    let abort_seq = matches!(
+                        err.kind,
+                        ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                    );
                     self.record_seq_error(seq, err, Some(&compiled.source), false);
+                    if abort_seq {
+                        return SeqStep::Finished(std::mem::take(&mut seq.responses));
+                    }
                     SeqStep::Continue
                 }
                 other => {
@@ -686,7 +700,14 @@ impl ReplSession {
                     SeqStep::Continue
                 }
                 HostPoll::Ready(Err(err)) => {
+                    let abort_seq = matches!(
+                        err.kind,
+                        ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                    );
                     self.record_seq_error(seq, err, Some(&source), true);
+                    if abort_seq {
+                        return SeqStep::Finished(std::mem::take(&mut seq.responses));
+                    }
                     SeqStep::Continue
                 }
                 other => {
@@ -787,13 +808,29 @@ impl ReplSession {
         self.host.read_request(token)
     }
 
+    fn sync_active_on_host_err(&mut self, err: &RuntimeError) {
+        if !self.host.is_active()
+            || matches!(
+                err.kind,
+                ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+            )
+        {
+            self.active = None;
+            self.request_timeout_ms = None;
+        }
+    }
+
     pub fn complete_read(
         &mut self,
         token: &str,
         result: Result<ReadResult, ReadFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_read(token, result, now_ms)
+        let res = self.host.complete_read(token, result, now_ms);
+        if let Err(ref err) = res {
+            self.sync_active_on_host_err(err);
+        }
+        res
     }
 
     pub fn complete_module(
@@ -802,7 +839,11 @@ impl ReplSession {
         completion: ModuleCompletion,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_module(token, completion, now_ms)
+        let res = self.host.complete_module(token, completion, now_ms);
+        if let Err(ref err) = res {
+            self.sync_active_on_host_err(err);
+        }
+        res
     }
 
     pub fn complete_glob(
@@ -811,7 +852,11 @@ impl ReplSession {
         completion: GlobCompletion,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_glob(token, completion, now_ms)
+        let res = self.host.complete_glob(token, completion, now_ms);
+        if let Err(ref err) = res {
+            self.sync_active_on_host_err(err);
+        }
+        res
     }
 
     pub fn acknowledge_log(
@@ -820,7 +865,11 @@ impl ReplSession {
         result: Result<(), LoggerFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.acknowledge_log(token, result, now_ms)
+        let res = self.host.acknowledge_log(token, result, now_ms);
+        if let Err(ref err) = res {
+            self.sync_active_on_host_err(err);
+        }
+        res
     }
 
     pub fn complete_frame_transform(
@@ -829,10 +878,35 @@ impl ReplSession {
         result: Result<LogFrame, LoggerFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_frame_transform(token, result, now_ms)
+        let res = self.host.complete_frame_transform(token, result, now_ms);
+        if let Err(ref err) = res {
+            self.sync_active_on_host_err(err);
+        }
+        res
+    }
+
+    pub fn set_reusable_timeouts(&mut self, reusable: bool) {
+        self.host.set_reusable_timeouts(reusable);
+    }
+
+    pub fn set_platform_metadata(&mut self, metadata: Option<crate::logging::PlatformMetadata>) {
+        self.host.set_platform_metadata(metadata);
+    }
+
+    pub fn is_closed(&self) -> bool {
+        self.host.is_closed()
+    }
+
+    /// Aborts only the active REPL request without closing the session or losing
+    /// already-defined REPL bindings.
+    pub fn abort_active_operation(&mut self) {
+        self.active = None;
+        self.request_timeout_ms = None;
+        self.host.abort_active_operation();
     }
 
     pub fn cancel(&mut self) {
+        self.active = None;
         self.host.cancel();
     }
 

@@ -319,8 +319,8 @@ impl SourceSession {
             Some("output.text") => Some(crate::vm::WarmPublicOp::PklBinaryOutputText),
             Some("output.value") => Some(crate::vm::WarmPublicOp::PklBinaryOutputValue),
             Some("output.bytes") => Some(crate::vm::WarmPublicOp::PklBinaryOutputBytes),
-            _ if self.query_repl_resolved_ok => Some(crate::vm::WarmPublicOp::Query {
-                expression: &expression,
+            Some(expr_str) if self.query_repl_resolved_ok => Some(crate::vm::WarmPublicOp::Query {
+                expression: expr_str,
                 raw_value: true,
                 encode_pkl_binary: true,
             }),
@@ -343,7 +343,8 @@ impl SourceSession {
             self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
         }
         self.retain_active_query_text();
-        if started_warm {
+        let warm_failed = started_warm && self.host.public_primary_id().is_none();
+        if started_warm && !warm_failed {
             self.sync_primary_source();
         } else {
             self.reset_provisional_source(&source);
@@ -355,7 +356,7 @@ impl SourceSession {
             Some("output.bytes" | "module" | "output.value") => Call::OutputBytes,
             _ => Call::Path(index),
         };
-        let query_slot = if started_warm {
+        let query_slot = if started_warm && !warm_failed {
             call.expression()
         } else {
             None
@@ -403,7 +404,8 @@ impl SourceSession {
             self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
         }
         self.retain_active_query_text();
-        if started_warm {
+        let warm_failed = started_warm && self.host.public_primary_id().is_none();
+        if started_warm && !warm_failed {
             self.sync_primary_source();
         } else {
             self.reset_provisional_source(&source);
@@ -454,7 +456,8 @@ impl SourceSession {
             self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
         }
         self.retain_active_query_text();
-        if started_warm {
+        let warm_failed = started_warm && self.host.public_primary_id().is_none();
+        if started_warm && !warm_failed {
             self.sync_primary_source();
         } else {
             self.reset_provisional_source(&source);
@@ -463,6 +466,85 @@ impl SourceSession {
         self.public_queries.push(None);
         self.last_expression = None;
         Ok(())
+    }
+
+    /// Zero-allocation fast path for repeated warm evaluations (`output.text` or
+    /// cached query expression) against a pure standard host without allocating a
+    /// `ModuleSourceSpec` or `SourceText` or growing `self.paths`.
+    pub fn try_start_warm_evaluation_str(
+        &mut self,
+        uri: &str,
+        expression: &str,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<bool, RuntimeError> {
+        self.open()?;
+        if !self.public_lifecycle {
+            return Err(error(
+                "ModuleSource operations require the public lifecycle profile",
+            ));
+        }
+        if !self.pure_standard_host || !self.calls.is_empty() || uri == "repl:text" {
+            return Ok(false);
+        }
+        let is_output_text = expression == "output.text";
+        if !is_output_text && !self.query_repl_resolved_ok {
+            return Ok(false);
+        }
+        self.module = None;
+        self.host.set_session_root(None);
+        self.host.maybe_auto_gc_between_operations();
+        let op = if is_output_text {
+            crate::vm::WarmPublicOp::OutputText
+        } else {
+            crate::vm::WarmPublicOp::Query {
+                expression,
+                raw_value: false,
+                encode_pkl_binary: false,
+            }
+        };
+        if !self
+            .host
+            .try_start_warm_cached_public_op_str(uri, op, now_ms, timeout_ms)?
+        {
+            return Ok(false);
+        }
+        self.retain_active_query_text();
+        let warm_failed = self.host.public_primary_id().is_none();
+        if warm_failed {
+            let spec = crate::modules::ModuleSourceSpec {
+                uri: PklString::from(uri),
+                contents: None,
+            };
+            self.reset_provisional_source(&spec);
+        } else {
+            self.sync_primary_source();
+        }
+        let call = if is_output_text {
+            Call::OutputText
+        } else {
+            let index = if let Some(last) = self.paths.len().checked_sub(1)
+                && self.paths[last].original().as_str() == Some(expression)
+            {
+                last
+            } else if let Some(pos) = self
+                .paths
+                .iter()
+                .rposition(|p| p.original().as_str() == Some(expression))
+            {
+                pos
+            } else {
+                let idx = self.paths.len();
+                self.paths.push(SourceText::from(expression));
+                idx
+            };
+            Call::Path(index)
+        };
+        let query_slot = if warm_failed { None } else { call.expression() };
+        self.calls.push(call);
+        self.public_queries.push(query_slot);
+        self.last_expression = query_slot;
+        Ok(true)
     }
 
     pub fn start_evaluation(
@@ -491,18 +573,26 @@ impl SourceSession {
             && (source.contents.is_none() || source.uri != "repl:text")
             && (is_output_text || self.query_repl_resolved_ok)
         {
-            let op = if is_output_text {
-                crate::vm::WarmPublicOp::OutputText
+            let warm_op = if is_output_text {
+                Some(crate::vm::WarmPublicOp::OutputText)
             } else {
-                crate::vm::WarmPublicOp::Query {
-                    expression: &expression,
-                    raw_value: false,
-                    encode_pkl_binary: false,
-                }
+                expression
+                    .original()
+                    .as_str()
+                    .map(|expr_str| crate::vm::WarmPublicOp::Query {
+                        expression: expr_str,
+                        raw_value: false,
+                        encode_pkl_binary: false,
+                    })
             };
-            started_warm =
-                self.host
-                    .try_start_warm_cached_public_op(&source.uri, op, now_ms, timeout_ms)?;
+            if let Some(op) = warm_op {
+                started_warm = self.host.try_start_warm_cached_public_op(
+                    &source.uri,
+                    op,
+                    now_ms,
+                    timeout_ms,
+                )?;
+            }
         }
         if !started_warm {
             let entry = self
@@ -511,19 +601,28 @@ impl SourceSession {
             self.host.start(entry, Vec::new(), now_ms, timeout_ms)?;
         }
         self.retain_active_query_text();
-        if started_warm {
+        let warm_failed = started_warm && self.host.public_primary_id().is_none();
+        if started_warm && !warm_failed {
             self.sync_primary_source();
         } else {
             self.reset_provisional_source(&source);
         }
-        let index = self.paths.len();
-        self.paths.push(expression);
         let call = if is_output_text {
+            if !started_warm {
+                self.paths.push(expression);
+            }
             Call::OutputText
+        } else if started_warm
+            && let Some(last) = self.paths.len().checked_sub(1)
+            && self.paths[last].original() == expression.original()
+        {
+            Call::Path(last)
         } else {
+            let index = self.paths.len();
+            self.paths.push(expression);
             Call::Path(index)
         };
-        let query_slot = if started_warm {
+        let query_slot = if started_warm && !warm_failed {
             call.expression()
         } else {
             None
@@ -1314,10 +1413,17 @@ impl SourceSession {
                     });
                 }
                 Err(error) => {
-                    self.initialization_failed = true;
                     self.last_expression = None;
-                    if !self.host.is_closed() {
-                        self.setup_failure = Some(error);
+                    if !matches!(
+                        error.kind,
+                        ErrorKind::Timeout | ErrorKind::Cancelled | ErrorKind::Closed
+                    ) {
+                        self.initialization_failed = true;
+                        if !self.host.is_closed() {
+                            self.setup_failure = Some(error);
+                        }
+                    } else if !self.public_lifecycle && self.module.is_none() {
+                        self.module_started = false;
                     }
                 }
             }
@@ -1346,6 +1452,8 @@ impl SourceSession {
                                     if !self.host.is_closed() {
                                         self.setup_failure = Some(error.clone());
                                     }
+                                } else if !self.public_lifecycle && self.module.is_none() {
+                                    self.module_started = false;
                                 }
                             }
                         }
@@ -1372,11 +1480,31 @@ impl SourceSession {
             }
             if self.host.is_closed() {
                 self.calls.clear();
+                self.public_queries.clear();
+                self.awaiting_query_resolve = false;
                 self.module = None;
                 self.setup_failure = None;
+            } else if self.host.context_depth() == 0 {
+                self.calls.clear();
+                self.public_queries.clear();
+                self.awaiting_query_resolve = false;
             }
         }
         event
+    }
+
+    fn sync_inactive_after_host_err(&mut self) {
+        if self.host.is_closed() {
+            self.calls.clear();
+            self.public_queries.clear();
+            self.awaiting_query_resolve = false;
+            self.module = None;
+            self.setup_failure = None;
+        } else if self.host.context_depth() == 0 {
+            self.calls.clear();
+            self.public_queries.clear();
+            self.awaiting_query_resolve = false;
+        }
     }
 
     pub fn resume(
@@ -1385,7 +1513,11 @@ impl SourceSession {
         completion: Result<Value, RuntimeError>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.resume(token, completion, now_ms)
+        let res = self.host.resume(token, completion, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     /// Use the shared URI policy and the actual pending request, rather than
     /// rebuilding a resource request from the Host transport's display URI.
@@ -1396,8 +1528,13 @@ impl SourceSession {
         environment: &[(String, String)],
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host
-            .resume_default_read(token, properties, environment, now_ms)
+        let res = self
+            .host
+            .resume_default_read(token, properties, environment, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
 
     pub fn complete_read(
@@ -1406,7 +1543,11 @@ impl SourceSession {
         result: Result<crate::resources::ReadResult, crate::host::ReadFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_read(token, result, now_ms)
+        let res = self.host.complete_read(token, result, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
 
     pub fn module_request(
@@ -1424,7 +1565,11 @@ impl SourceSession {
         failure: crate::host::ReadFailure,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.reject_read(token, failure, now_ms)
+        let res = self.host.reject_read(token, failure, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn acknowledge_log(
         &mut self,
@@ -1432,7 +1577,11 @@ impl SourceSession {
         completion: Result<(), LoggerFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.acknowledge_log(token, completion, now_ms)
+        let res = self.host.acknowledge_log(token, completion, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn complete_frame_transform(
         &mut self,
@@ -1440,8 +1589,13 @@ impl SourceSession {
         completion: Result<crate::logging::LogFrame, LoggerFailure>,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host
-            .complete_frame_transform(token, completion, now_ms)
+        let res = self
+            .host
+            .complete_frame_transform(token, completion, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn set_frame_transformer(
         &mut self,
@@ -1455,6 +1609,42 @@ impl SourceSession {
     pub fn close_from_callback(&mut self, token: &str) -> Result<(), RuntimeError> {
         self.host.close_from_callback(token)
     }
+    pub fn with_reusable_timeouts(mut self, reusable: bool) -> Self {
+        self.host.set_reusable_timeouts(reusable);
+        self
+    }
+
+    pub fn set_reusable_timeouts(&mut self, reusable: bool) {
+        self.host.set_reusable_timeouts(reusable);
+    }
+
+    pub fn reusable_timeouts(&self) -> bool {
+        self.host.reusable_timeouts()
+    }
+
+    /// Aborts only the currently active operation while preserving the VM heap
+    /// and warm module cache for subsequent evaluations.
+    pub fn abort_active_operation(&mut self) {
+        self.host.abort_active_operation();
+        self.calls.clear();
+        self.public_queries.clear();
+        self.awaiting_query_resolve = false;
+        self.last_expression = None;
+        if self.public_lifecycle {
+            self.release_module();
+        } else {
+            self.last_completed_call = None;
+            if let Some(module) = &self.module {
+                // Module setup already succeeded; preserve the live module root for reuse.
+                self.host.set_session_root(Some(module.clone()));
+            } else if self.setup_failure.is_none() {
+                // Aborted mid-setup; allow a subsequent operation to start setup cleanly.
+                self.module_started = false;
+                self.host.set_session_root(None);
+            }
+        }
+    }
+
     pub fn cancel(&mut self) {
         self.host.cancel();
         self.release_module();
@@ -1490,7 +1680,11 @@ impl SourceSession {
         completion: crate::glob::GlobCompletion,
         now_ms: u64,
     ) -> Result<(), RuntimeError> {
-        self.host.complete_glob(token, completion, now_ms)
+        let res = self.host.complete_glob(token, completion, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn complete_default_glob(
         &mut self,
@@ -1499,8 +1693,13 @@ impl SourceSession {
         environment: &[(String, String)],
         now_ms: u64,
     ) -> Result<bool, RuntimeError> {
-        self.host
-            .complete_default_glob(token, properties, environment, now_ms)
+        let res = self
+            .host
+            .complete_default_glob(token, properties, environment, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn drain_cancelled_globs(&mut self) -> Vec<String> {
         self.host.drain_cancelled_globs()
@@ -1520,6 +1719,8 @@ impl SourceSession {
         let res = self.host.complete_module(token, completion, now_ms);
         if res.is_ok() && query_ok {
             self.query_repl_resolved_ok = true;
+        } else if res.is_err() {
+            self.sync_inactive_after_host_err();
         }
         res
     }
@@ -1529,7 +1730,11 @@ impl SourceSession {
         token: &str,
         now_ms: u64,
     ) -> Result<bool, RuntimeError> {
-        self.host.complete_default_module(token, now_ms)
+        let res = self.host.complete_default_module(token, now_ms);
+        if res.is_err() {
+            self.sync_inactive_after_host_err();
+        }
+        res
     }
     pub fn drain_cancelled_modules(&mut self) -> Vec<String> {
         self.host.drain_cancelled_modules()
@@ -1693,6 +1898,7 @@ impl SourceSession {
     }
     fn release_module(&mut self) {
         self.module = None;
+        self.module_started = false;
         self.host.set_session_root(None);
         self.calls.clear();
         self.public_queries.clear();

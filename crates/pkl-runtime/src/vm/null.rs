@@ -45,6 +45,7 @@ impl Vm {
         }))
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_null_default(&self) -> Result<(), RuntimeError> {
         let value = self
             .stack

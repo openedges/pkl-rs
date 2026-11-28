@@ -103,6 +103,7 @@ impl Vm {
             }),
         )
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_mixin_argument(&mut self) -> Result<(), RuntimeError> {
         let id = self
             .frames
@@ -164,6 +165,7 @@ impl Vm {
             ..Default::default()
         })))
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn check_object_parameters(
         &self,
         target: ParameterTarget,
@@ -262,6 +264,7 @@ impl Vm {
         };
         Err(RuntimeError::new(ErrorKind::Type, message))
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn prepare_function_amendment(
         &mut self,
         body: usize,
@@ -296,6 +299,7 @@ impl Vm {
         }
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn begin_function_amendment(
         &mut self,
         end: usize,
@@ -346,6 +350,7 @@ impl Vm {
         }
         Ok(())
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn invoke_amended_parent(&mut self) -> Result<(), RuntimeError> {
         let frame = self.frames.last().unwrap();
         let owner = frame
@@ -380,6 +385,7 @@ impl Vm {
         };
         self.invoke_function(parent, arguments, false)
     }
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn continue_function_amendment(&mut self) -> Result<(), RuntimeError> {
         let owner = self
             .frames

@@ -7,7 +7,7 @@ use pkl_runtime::value::PklString;
 use std::sync::Arc;
 
 /// A single Pkl stack frame (`org.pkl.core.StackFrame`).
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct StackFrame {
     module_uri: String,
     member_name: Option<String>,
@@ -172,6 +172,7 @@ impl StackFrameTransformer for DefaultTransformer {
 }
 
 /// Built-in stack-frame transformers mirroring `org.pkl.core.StackFrameTransformers`.
+#[derive(Clone, Copy, Debug, Default)]
 pub struct StackFrameTransformers;
 
 impl StackFrameTransformers {

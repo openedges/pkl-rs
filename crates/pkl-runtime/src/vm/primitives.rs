@@ -576,25 +576,37 @@ impl Vm {
                         self.stack.push(Value::Object(empty));
                         return Ok(true);
                     }
-                    let builder = self.heap.allocate(Object {
-                        collection_kind: crate::heap::CollectionKind::List,
-                        ..Default::default()
-                    });
-                    self.frames
-                        .last_mut()
-                        .expect("String property frame")
-                        .builders
-                        .push(builder);
+                    let len = text.code_point_len();
+                    if len > super::collections::MAX_MATERIALIZED_REPEAT_LIST {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            format!(
+                                "List size ({len}) exceeds maximum supported length ({}).",
+                                super::collections::MAX_MATERIALIZED_REPEAT_LIST
+                            ),
+                        ));
+                    }
+                    let mut elems = Vec::new();
+                    if elems.try_reserve(len).is_err() {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "List size exceeds available memory.",
+                        ));
+                    }
+                    let mut extra_bytes = len.saturating_mul(std::mem::size_of::<Value>());
                     // Java String.codePoints combines valid pairs and preserves
                     // unpaired UTF-16 units. Iterate once, without replacement.
                     for point in char::decode_utf16(text.encode_utf16()) {
                         let value = if name == "chars" {
-                            Value::String(match point {
+                            let s: PklString = match point {
                                 Ok(point) => point.to_string().into(),
                                 Err(point) => {
                                     PklString::from_utf16(vec![point.unpaired_surrogate()])
                                 }
-                            })
+                            };
+                            extra_bytes =
+                                extra_bytes.saturating_add(s.as_str().map_or(16, str::len));
+                            Value::String(s)
                         } else {
                             Value::Int(
                                 match point {
@@ -604,15 +616,11 @@ impl Vm {
                                 .into(),
                             )
                         };
-                        self.stack.push(value);
-                        self.append_strict_element()?;
+                        elems.push(value);
                     }
-                    self.frames
-                        .last_mut()
-                        .expect("String property frame")
-                        .builders
-                        .pop();
-                    self.stack.push(Value::Object(builder));
+                    self.heap.note_external_allocation(extra_bytes);
+                    let list_id = self.heap.allocate_strict_list(elems);
+                    self.stack.push(Value::Object(list_id));
                     return Ok(true);
                 }
                 let value = match name {

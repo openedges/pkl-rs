@@ -13,6 +13,24 @@ impl Input<'_> {
         }
         high
     }
+    pub fn at_bounded(self, pos: usize, end: usize) -> u32 {
+        let high = u32::from(self.0[pos]);
+        if (0xd800..=0xdbff).contains(&high)
+            && pos + 1 < end
+            && let Some(&low) = self.0.get(pos + 1)
+            && (0xdc00..=0xdfff).contains(&low)
+        {
+            return 0x10000 + ((high - 0xd800) << 10) + u32::from(low - 0xdc00);
+        }
+        high
+    }
+    pub fn next_bounded(self, pos: usize, end: usize) -> usize {
+        pos + if self.at_bounded(pos, end) >= 0x10000 {
+            2
+        } else {
+            1
+        }
+    }
     pub fn next(self, pos: usize) -> usize {
         pos + if self.at(pos) >= 0x10000 { 2 } else { 1 }
     }

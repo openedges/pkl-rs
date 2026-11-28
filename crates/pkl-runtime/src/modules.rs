@@ -262,7 +262,11 @@ impl ModuleHostError {
             }
             Self::Io(cause) => cause.into_runtime("loading module", uri),
             Self::Denied(message) => RuntimeError::new(ErrorKind::Host, message),
-            Self::SecurityManagerException { message } | Self::HttpClientException { message } => {
+            Self::SecurityManagerException { message } => {
+                let text = message.unwrap_or_else(|| "None (cause has no message)".into());
+                RuntimeError::host_security(text)
+            }
+            Self::HttpClientException { message } => {
                 let text = message.unwrap_or_else(|| "None (cause has no message)".into());
                 RuntimeError::host_language(text)
             }
@@ -444,7 +448,7 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
             })();
             Some(ModuleCompletion::ImportChecked(result))
         }
-        ModuleRequestKind::Resolve { key, .. } | ModuleRequestKind::ResolveKey { key, .. }
+        ModuleRequestKind::Resolve { key, .. }
             if key.kind == ModuleKeyKind::StandardLibrary
                 && stdlib_kind(&key.uri) == Some(StdlibKind::Cached) =>
         {
@@ -454,11 +458,23 @@ pub fn default_completion(request: &ModuleRequest) -> Option<ModuleCompletion> {
                 source_uri: key.uri.clone(),
             })))
         }
-        ModuleRequestKind::ResolveKey { key, .. } if key.kind == ModuleKeyKind::Synthetic => {
-            Some(ModuleCompletion::Resolved(Ok(ResolvedModule {
-                original_uri: key.uri.clone(),
-                resolved_uri: key.uri.clone(),
-                source_uri: key.uri.clone(),
+        ModuleRequestKind::ResolveKey {
+            key,
+            resolved_key_id,
+            ..
+        } if (key.kind == ModuleKeyKind::StandardLibrary
+            && stdlib_kind(&key.uri) == Some(StdlibKind::Cached))
+            || key.kind == ModuleKeyKind::Synthetic =>
+        {
+            Some(ModuleCompletion::KeyResolved(Ok(ResolvedModuleKey {
+                id: *resolved_key_id,
+                key: key.clone(),
+                handle: key.handle.clone(),
+                module: ResolvedModule {
+                    original_uri: key.uri.clone(),
+                    resolved_uri: key.uri.clone(),
+                    source_uri: key.uri.clone(),
+                },
             })))
         }
         _ => None,

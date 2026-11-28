@@ -112,11 +112,14 @@ impl ReadFailure {
         let uri = uri.into();
         match self {
             Self::Io(failure) => failure.into_runtime("reading resource", uri),
-            Self::SecurityManagerException { message }
-            | Self::HttpClientException { message }
-            | Self::ExternalReaderProcess { message } => RuntimeError::host_language(
+            Self::SecurityManagerException { message } => RuntimeError::host_security(
                 message.unwrap_or_else(|| "None (cause has no message)".into()),
             ),
+            Self::HttpClientException { message } | Self::ExternalReaderProcess { message } => {
+                RuntimeError::host_language(
+                    message.unwrap_or_else(|| "None (cause has no message)".into()),
+                )
+            }
             Self::UriSyntax { reason } => {
                 let mut error = RuntimeError::host_language(
                     PklString::from("Resource URI `")

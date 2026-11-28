@@ -379,9 +379,20 @@ impl Vm {
         let mut memo: BTreeMap<(usize, *const TypeCheck), (TypeCheck, TypeCheck, bool)> =
             BTreeMap::new();
         let mut next_context = 1;
+        let mut visited_nodes: usize = 0;
+        let mut alias_depth: usize = 0;
         while let Some(task) = work.pop() {
             match task {
                 Work::Visit(ty, context) => {
+                    visited_nodes += 1;
+                    if visited_nodes > MAX_TYPE_COMPILE_NODES || work.len() > MAX_TYPE_COMPILE_NODES
+                    {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type expression exceeds maximum expansion complexity.",
+                        )
+                        .into());
+                    }
                     if let TypeCheck::Shared(node) = &ty {
                         if !node.has_declared() {
                             values.push((ty, false));
@@ -703,6 +714,15 @@ impl Vm {
                         );
                     }
                     let body = metadata.body.substituted(&lexical)?;
+                    alias_depth += 1;
+                    if alias_depth > MAX_TYPE_COMPILE_DEPTH {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type expression exceeds maximum nesting depth.",
+                        )
+                        .at(span)
+                        .into());
+                    }
                     let context = (next_context, Arc::new(lexical));
                     next_context += 1;
                     work.push(Work::ExpandedAlias {
@@ -721,6 +741,7 @@ impl Vm {
                     origin,
                     use_origin,
                 } => {
+                    alias_depth = alias_depth.saturating_sub(1);
                     let (expanded, _) = values.pop().expect("alias expansion");
                     values.push((
                         TypeCheck::NamedAlias {
@@ -828,6 +849,7 @@ impl Vm {
         }
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn resolve_instruction_types(
         &mut self,
         mut instruction: Instruction,
@@ -1148,6 +1170,7 @@ impl Vm {
         self.force(need.owner, need.owner, import.clone(), true, true, false)
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn step_declared_type(&mut self) -> Result<(), RuntimeError> {
         let mut run = self
             .frames
@@ -1420,6 +1443,7 @@ impl Vm {
     /// Type substitution and validation have their own bounded native frame.
     /// Keeping them outside the general opcode match avoids retaining that
     /// match's debug-build temporaries during nested type metadata operations.
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn type_instruction(
         &mut self,
         instruction: Instruction,

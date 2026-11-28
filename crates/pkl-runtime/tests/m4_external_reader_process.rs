@@ -627,10 +627,9 @@ fn real_subprocess_bare_executable_resolved_via_path_and_project_relative_resolu
             .expect("chmod fixture copy");
     }
 
-    let proj_file_uri = format!(
-        "file://{}/PklProject",
-        canonical_proj.to_string_lossy().replace('\\', "/")
-    );
+    let proj_file_uri =
+        pkl_runtime::packages::resolver::file_uri_from_path(&canonical_proj.join("PklProject"))
+            .expect("project file URI");
     let resolve_pkl = format!(
         r#"
 import "pkl:EvaluatorSettings"
@@ -664,11 +663,13 @@ wd = r.externalResourceReaders!!["projext"].workingDir
             .lines()
             .find(|l| l.starts_with(&prefix))
             .unwrap_or_else(|| panic!("missing {key} in:\n{resolved_pcf}"));
-        line[prefix.len()..line.len() - 1].to_string()
+        line[prefix.len()..line.len() - 1].replace("\\\\", "\\")
     };
     let resolved_exe = extract("exe");
     let resolved_wd = extract("wd");
-    assert_eq!(resolved_wd, canonical_proj.to_string_lossy());
+    let expected_wd = canonical_proj.to_string_lossy();
+    let expected_wd = expected_wd.strip_prefix(r"\\?\").unwrap_or(&expected_wd);
+    assert_eq!(resolved_wd, expected_wd);
 
     let mut reg = ExternalReaderRegistry::new(0);
     reg.register_resource_reader(

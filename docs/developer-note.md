@@ -31,7 +31,7 @@ pkl-rs는 Java로 구현된 설정 언어 Apple Pkl을 JVM 없이 쓸 수 있도
 - **호환성**: 같은 입력에 대해 출력, 오류 문구, 종료 코드, 생성 파일이 Java 구현과 byte 단위로 같다.
 - **성능**: 실행 시간과 메모리 사용량이 기준 구현 이하다.
 
-범위는 언어, 표준 라이브러리 모듈 23개, 렌더러 9종, CLI 전체 명령, REPL, server, formatter, `pkldoc`이다. 여기에 Rust API와 `@pkl-rs/napi`, `@pkl-rs/wasm` 패키지가 더해진다.
+범위는 언어, 표준 라이브러리 모듈 23개, 렌더러 9종, CLI 전체 명령, REPL, server, formatter, `pkldoc`이다. 여기에 Rust API와 `@openedges/pkl-napi`, `@openedges/pkl-wasm` 패키지가 더해진다.
 
 ## 첫 구현: 빨리 도달하고 끝내지 못했다
 

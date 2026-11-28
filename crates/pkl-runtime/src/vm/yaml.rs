@@ -15,6 +15,7 @@ pub(super) struct Checkpoint {
     indent: usize,
     containers_len: usize,
     utf16: bool,
+    last_newline_units: usize,
 }
 
 pub(super) struct Emitter {
@@ -24,16 +25,25 @@ pub(super) struct Emitter {
     indent: usize,
     containers: Vec<bool>,
     mode: Mode,
+    last_newline_units: usize,
 }
 impl Emitter {
     pub(super) fn new(mode: Mode, width: usize) -> Self {
         Self {
             text_buf: String::with_capacity(1024),
             units: None,
-            width,
+            width: width.clamp(1, 1_048_576),
             indent: 0,
             containers: Vec::with_capacity(8),
             mode,
+            last_newline_units: 0,
+        }
+    }
+    #[inline]
+    pub(super) fn byte_len(&self) -> usize {
+        match &self.units {
+            Some(u) => u.len().saturating_mul(2),
+            None => self.text_buf.len(),
         }
     }
     #[inline]
@@ -50,6 +60,7 @@ impl Emitter {
             indent: self.indent,
             containers_len: self.containers.len(),
             utf16: self.units.is_some(),
+            last_newline_units: self.last_newline_units,
         }
     }
     #[inline]
@@ -64,6 +75,7 @@ impl Emitter {
         }
         self.indent = cp.indent;
         self.containers.truncate(cp.containers_len);
+        self.last_newline_units = cp.last_newline_units;
     }
     fn promote_utf16(&mut self) -> &mut Vec<u16> {
         let text_buf = &mut self.text_buf;
@@ -100,55 +112,81 @@ impl Emitter {
         }
     }
     #[inline]
-    fn spaces(&mut self, mut length: usize) {
+    fn spaces(&mut self, mut length: usize) -> usize {
+        let requested = length;
         match &mut self.units {
-            Some(u) => u.resize(u.len() + length, 32),
+            Some(u) => {
+                if u.try_reserve(length).is_ok()
+                    && let Some(new_len) = u.len().checked_add(length)
+                {
+                    u.resize(new_len, 32);
+                    return requested;
+                }
+                0
+            }
             None => {
+                if self.text_buf.try_reserve(length).is_err() {
+                    return 0;
+                }
                 const SPACES: &str = "                                ";
                 while length > 0 {
                     let chunk = length.min(SPACES.len());
                     self.text_buf.push_str(&SPACES[..chunk]);
                     length -= chunk;
                 }
+                requested
             }
         }
     }
     #[inline]
     pub(super) fn newline(&mut self) {
         if self.is_empty() {
+            self.last_newline_units = 0;
             return;
         }
-        match &mut self.units {
+        let nl: usize = match &mut self.units {
             Some(u) => {
                 if u.last() != Some(&10) {
                     u.push(10);
+                    1
+                } else {
+                    0
                 }
             }
             None => {
                 if !self.text_buf.ends_with('\n') {
                     self.text_buf.push('\n');
+                    1
+                } else {
+                    0
                 }
             }
-        }
-        self.spaces(self.indent);
+        };
+        let sp = self.spaces(self.indent);
+        self.last_newline_units = nl.saturating_add(sp);
     }
     fn undo_newline(&mut self) {
-        if !self.is_empty() {
+        let strip = std::mem::take(&mut self.last_newline_units);
+        if strip > 0 && !self.is_empty() {
             match &mut self.units {
-                Some(u) => u.truncate(u.len() - self.indent - 1),
-                None => self
-                    .text_buf
-                    .truncate(self.text_buf.len() - self.indent - 1),
+                Some(u) => u.truncate(u.len().saturating_sub(strip)),
+                None => {
+                    let mut target = self.text_buf.len().saturating_sub(strip);
+                    while target > 0 && !self.text_buf.is_char_boundary(target) {
+                        target -= 1;
+                    }
+                    self.text_buf.truncate(target);
+                }
             }
         }
     }
     pub(super) fn start(&mut self, sequence: bool) {
         let enclosing_sequence = self.containers.last() == Some(&true);
         if enclosing_sequence || (!sequence && !self.containers.is_empty()) {
-            self.indent += self.width;
+            self.indent = self.indent.saturating_add(self.width);
         }
         if enclosing_sequence {
-            self.spaces(self.width - 1);
+            self.spaces(self.width.saturating_sub(1));
         } else {
             self.newline();
         }
@@ -165,7 +203,7 @@ impl Emitter {
             self.text(if sequence { "[]" } else { "{}" });
         }
         if enclosing_sequence || (!sequence && !self.containers.is_empty()) {
-            self.indent -= self.width;
+            self.indent = self.indent.saturating_sub(self.width);
         }
     }
     pub(super) fn member(&mut self, element: bool, first: bool) {

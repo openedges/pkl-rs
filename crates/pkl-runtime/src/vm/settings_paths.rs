@@ -12,6 +12,7 @@
 use super::*;
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn resolve_evaluator_settings_path(&mut self) -> Result<(), RuntimeError> {
         let locals = &self
             .frames

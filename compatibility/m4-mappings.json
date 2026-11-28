@@ -368,7 +368,7 @@
         { "path": "crates/pkl-runtime/src/packages/test_runner.rs", "symbol": "TestResults" },
         { "path": "crates/pkl-host-native/src/driver.rs", "symbol": "NativeHost" },
         { "path": "crates/pkl-host-native/src/cli.rs", "symbol": "run_cli" },
-        { "path": "crates/pkl-host-native/src/bin/pkl_m4_cli.rs", "symbol": "main" }
+        { "path": "crates/pkl-host-native/examples/pkl_m4_cli.rs", "symbol": "main" }
       ]
     },
     "m4:pantry:packaged-distribution": {

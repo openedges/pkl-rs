@@ -46,8 +46,14 @@ try {
   // Verify TypeScript declarations & native addon are packed in installed package
   const installedRoot = join(consumerDir, "node_modules", "@openedges", "pkl-napi");
   assert.ok(existsSync(join(installedRoot, "dist", "index.d.ts")), "dist/index.d.ts missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "index.d.mts")), "dist/index.d.mts missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "index.d.cts")), "dist/index.d.cts missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "testing.d.mts")), "dist/testing.d.mts missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "testing.d.cts")), "dist/testing.d.cts missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.mjs")), "dist/index.mjs missing");
   assert.ok(existsSync(join(installedRoot, "dist", "index.cjs")), "dist/index.cjs missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "testing.mjs")), "dist/testing.mjs missing");
+  assert.ok(existsSync(join(installedRoot, "dist", "testing.cjs")), "dist/testing.cjs missing");
   for (const legalFile of ["LICENSE", "NOTICE", "THIRD-PARTY-NOTICES.md"]) {
     assert.ok(existsSync(join(installedRoot, legalFile)), `${legalFile} missing from packed @openedges/pkl-napi tarball`);
   }
@@ -69,6 +75,7 @@ try {
   writeFileSync(
     join(consumerDir, "check.mjs"),
     `import assert from "node:assert/strict";
+import * as topLevel from "@openedges/pkl-napi";
 import {
   PKL_VERSION,
   capabilities,
@@ -76,11 +83,15 @@ import {
   ModuleSource,
   PklError,
   format,
+} from "@openedges/pkl-napi";
+import {
   roundtripInteger,
   roundtripBytes,
-} from "@openedges/pkl-napi";
+} from "@openedges/pkl-napi/testing";
 
 assert.equal(PKL_VERSION, "0.32.0");
+assert.equal("roundtripInteger" in topLevel, false);
+assert.equal("measureConversion" in topLevel, false);
 assert.equal(capabilities().runtime, "napi-node");
 assert.equal(capabilities().nativeFs, true);
 assert.equal(format("a=1\\n"), "a = 1\\n");

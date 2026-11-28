@@ -317,7 +317,7 @@ impl PackageData {
     }
 
     pub fn read(path: &Path) -> Result<Self, DocGeneratorError> {
-        let json_str = fs::read_to_string(path).map_err(|e| {
+        let json_str = pkl_host_native::read_path_to_string_bounded(path).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error reading `{}`: {e}", path.display()))
         })?;
         let value = parse_json(&json_str).map_err(|e| {
@@ -335,7 +335,7 @@ impl PackageData {
                 DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
             })?;
         }
-        fs::write(path, json_str.as_bytes()).map_err(|e| {
+        pkl_host_native::write_file_nofollow(path, json_str.as_bytes()).map_err(|e| {
             DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
         })
     }
@@ -983,11 +983,10 @@ fn find_types_used_by(
         PType::Module => {
             if enclosing.simple_name() != MODULE_CLASS_NAME {
                 let mod_name = enclosing.module_name();
-                let mod_path = if mod_name.len() >= enclosing_package.module_name_prefix.len() {
-                    mod_name[enclosing_package.module_name_prefix.len()..].replace('.', "/")
-                } else {
-                    mod_name.replace('.', "/")
-                };
+                let mod_path = mod_name
+                    .get(enclosing_package.module_name_prefix.len()..)
+                    .unwrap_or(mod_name)
+                    .replace('.', "/");
                 push_unique_type_ref(
                     result,
                     TypeRef {
@@ -1010,6 +1009,7 @@ fn find_types_used_by(
             }
         }
         PType::Nothing | PType::StringLiteral(_) | PType::TypeVariable(_) | PType::Unknown => {}
+        _ => {}
     }
 }
 

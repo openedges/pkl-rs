@@ -28,7 +28,16 @@ pub(super) fn write_string(
         return true;
     }
     let indent_pkl = if s.as_bytes().contains(&b'\n') {
-        let mut ind = String::with_capacity(indent.len() * depth);
+        let Some(total) = indent.len().checked_mul(depth) else {
+            return false;
+        };
+        if total > 16 * 1024 * 1024 {
+            return false;
+        }
+        let mut ind = String::new();
+        if ind.try_reserve_exact(total).is_err() {
+            return false;
+        }
         for _ in 0..depth {
             ind.push_str(indent);
         }

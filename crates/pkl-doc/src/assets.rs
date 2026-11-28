@@ -96,18 +96,39 @@ pub fn copy_resource(resource_name: &str, target_dir: &Path) -> io::Result<()> {
             format!("Failed to load class path resource `{resource_name}`."),
         )
     })?;
-    let target_file = target_dir.join(resource_name);
+    let target_file = crate::util::join_confined_output_path(target_dir, resource_name)
+        .map_err(|e| io::Error::new(io::ErrorKind::PermissionDenied, e.to_string()))?;
     if let Some(parent) = target_file.parent() {
         fs::create_dir_all(parent)?;
     }
-    fs::write(&target_file, bytes)
+    let canon_root = pkl_host_native::canonicalize_root_dir(target_dir)
+        .unwrap_or_else(|_| target_dir.to_path_buf());
+    let checked =
+        crate::util::ensure_path_under_canon_root(target_dir, &canon_root, &target_file, false)
+            .map_err(|e| io::Error::new(io::ErrorKind::PermissionDenied, e.to_string()))?;
+    pkl_host_native::write_file_nofollow(&checked, bytes)
 }
 
 /// Writes all 17 static resources into `target_dir` concurrently across scoped threads,
 /// matching upstream `HtmlGenerator.kt:87-111`.
 pub fn write_all_static_resources(target_dir: &Path) -> io::Result<()> {
+    let canon_root = pkl_host_native::canonicalize_root_dir(target_dir)
+        .unwrap_or_else(|_| target_dir.to_path_buf());
     for dir in ["fonts", "scripts", "styles", "images"] {
-        fs::create_dir_all(target_dir.join(dir))?;
+        let dir_path = crate::util::join_confined_output_path(target_dir, dir)
+            .map_err(|e| io::Error::new(io::ErrorKind::PermissionDenied, e.to_string()))?;
+        fs::create_dir_all(&dir_path)?;
+        let canon_dir = fs::canonicalize(&dir_path)?;
+        if !canon_dir.starts_with(&canon_root) {
+            return Err(io::Error::new(
+                io::ErrorKind::PermissionDenied,
+                format!(
+                    "Refusing to access path `{}` outside output directory `{}`.",
+                    dir_path.display(),
+                    target_dir.display()
+                ),
+            ));
+        }
     }
     let next = AtomicUsize::new(0);
     let first_err: Mutex<Option<io::Error>> = Mutex::new(None);
@@ -123,7 +144,16 @@ pub fn write_all_static_resources(target_dir: &Path) -> io::Result<()> {
                         break;
                     }
                     let (name, bytes) = STATIC_RESOURCES[idx];
-                    if let Err(err) = fs::write(target_dir.join(name), bytes) {
+                    let target = target_dir.join(name);
+                    let res = crate::util::ensure_path_under_canon_root(
+                        target_dir,
+                        &canon_root,
+                        &target,
+                        false,
+                    )
+                    .map_err(|e| io::Error::new(io::ErrorKind::PermissionDenied, e.to_string()))
+                    .and_then(|checked| pkl_host_native::write_file_nofollow(&checked, bytes));
+                    if let Err(err) = res {
                         let mut guard = first_err.lock().unwrap_or_else(|e| e.into_inner());
                         if guard.is_none() {
                             *guard = Some(err);

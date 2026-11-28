@@ -14,7 +14,7 @@ use crate::packages::mvs::relativize_paths;
 use crate::packages::project::{
     PKL_PROJECT_DEPS_FILENAME, PackageSpec, Project, ProjectDepEntry, ProjectDeps,
 };
-use crate::packages::zip::build_deterministic_package_zip;
+use crate::packages::zip::try_build_deterministic_package_zip;
 use crate::source::{SourceText, Span};
 use crate::syntax::*;
 use crate::value::PklString;
@@ -371,11 +371,17 @@ fn glob_to_regex_string(pattern: &str) -> Result<String, ModuleHostError> {
                     out.push_str("[^/]*");
                 }
             }
-            '+' | '@' => {
+            '+' => {
                 if next == Some('(') {
                     return Err(invalid("Extended globbing features are not supported."));
                 }
                 out.push_str("\\+");
+            }
+            '@' => {
+                if next == Some('(') {
+                    return Err(invalid("Extended globbing features are not supported."));
+                }
+                out.push('@');
             }
             '!' => {
                 if next == Some('(') {
@@ -599,7 +605,22 @@ pub fn validate_local_projects_included(projects: &[Project]) -> Result<(), Modu
                 .strip_prefix("file://")
                 .or_else(|| local_dep.project_file_uri.strip_prefix("file:"))
                 .unwrap_or(&local_dep.project_file_uri);
-            let local_file = PathBuf::from(crate::packages::zip::percent_decode(local_raw));
+            let local_decoded = crate::packages::zip::percent_decode(local_raw);
+            let local_trimmed = {
+                let b = local_decoded.as_bytes();
+                if cfg!(windows)
+                    && b.len() >= 3
+                    && b[0] == b'/'
+                    && b[1].is_ascii_alphabetic()
+                    && b[2] == b':'
+                    && (b.len() == 3 || b[3] == b'/' || b[3] == b'\\')
+                {
+                    &local_decoded[1..]
+                } else {
+                    local_decoded.as_str()
+                }
+            };
+            let local_file = PathBuf::from(local_trimmed);
             let dep_dir = normalize_lexical(local_file.parent().unwrap_or(&local_file));
             if !included_dirs.iter().any(|d| d == &dep_dir) {
                 return Err(ModuleHostError::EvalError {
@@ -729,12 +750,41 @@ impl<'a, H: PackagerHost + ?Sized> ProjectPackager<'a, H> {
         Ok((ordered, stdout_lines))
     }
 
-    fn resolve_output_dir(&self, pkg: &PackageSpec) -> PathBuf {
+    fn resolve_output_dir(&self, pkg: &PackageSpec) -> Result<PathBuf, ModuleHostError> {
+        if pkg.name.is_empty()
+            || pkg.name.contains(['/', '\\', '\0'])
+            || (cfg!(windows) && pkg.name.contains(':'))
+            || pkg.name == "."
+            || pkg.name == ".."
+        {
+            return Err(ModuleHostError::EvalError {
+                message: format!(
+                    "Invalid package name `{}`: must not contain path separators or traversal segments.",
+                    pkg.name
+                )
+                .into(),
+                hint: None,
+            });
+        }
+        let version_str = pkg.version.to_string();
+        if version_str.contains(['/', '\\', '\0'])
+            || (cfg!(windows) && version_str.contains(':'))
+            || version_str == "."
+            || version_str == ".."
+        {
+            return Err(ModuleHostError::EvalError {
+                message: format!(
+                    "Invalid package version `{version_str}`: must not contain path separators or traversal segments."
+                )
+                .into(),
+                hint: None,
+            });
+        }
         let substituted = self
             .output_path_pattern
             .replace("%{name}", &pkg.name)
-            .replace("%{version}", &pkg.version.to_string());
-        self.working_dir.join(substituted)
+            .replace("%{version}", &version_str);
+        Ok(self.working_dir.join(substituted))
     }
 
     fn do_package(&mut self, project: &Project) -> Result<PackageArtifactResult, ModuleHostError> {
@@ -778,7 +828,9 @@ impl<'a, H: PackagerHost + ?Sized> ProjectPackager<'a, H> {
             .iter()
             .map(|(rel, bytes)| (rel.as_str(), bytes.as_slice()))
             .collect();
-        let zip_bytes = build_deterministic_package_zip(&zip_entries);
+        let zip_bytes = try_build_deterministic_package_zip(&zip_entries).map_err(|err| {
+            ModuleHostError::Io(format!("Failed to build package ZIP: {err}").into())
+        })?;
         let zip_sha256 = sha256_hex(&zip_bytes);
 
         // 4. Build metadata dependencies (recursively packaging local deps if not overridden)
@@ -817,9 +869,21 @@ impl<'a, H: PackagerHost + ?Sized> ProjectPackager<'a, H> {
         let metadata_sha256 = sha256_hex(metadata_bytes);
 
         // 6. Compute output paths & write all 4 artifacts (exact leaf filename)
-        let output_dir = self.resolve_output_dir(pkg);
+        let output_dir = self.resolve_output_dir(pkg)?;
         let pkg_uri_str = pkg.uri.uri.as_str().unwrap_or("");
         let metadata_file_name = pkg_uri_str.rsplit('/').next().unwrap_or(&pkg.name);
+        if metadata_file_name.is_empty()
+            || metadata_file_name.contains(['/', '\\', '\0'])
+            || (cfg!(windows) && metadata_file_name.contains(':'))
+            || metadata_file_name == "."
+            || metadata_file_name == ".."
+        {
+            return Err(ModuleHostError::EvalError {
+                message: format!("Invalid package artifact filename `{metadata_file_name}`.")
+                    .into(),
+                hint: None,
+            });
+        }
         let metadata_file = output_dir.join(metadata_file_name);
         let metadata_checksum_file = output_dir.join(format!("{metadata_file_name}.sha256"));
         let zip_file = output_dir.join(format!("{metadata_file_name}.zip"));

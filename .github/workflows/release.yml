@@ -22,7 +22,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: Release tag label when running manually (e.g. v0.32.0-rc.1; defaults to dry-run snapshot label)
+        description: Release tag label when running manually (e.g. v0.32.0; defaults to dry-run snapshot label)
         required: false
         default: ''
         type: string
@@ -79,13 +79,15 @@ jobs:
             tools/check_release_version.py
           sparse-checkout-cone-mode: false
       - name: Verify Cargo/npm version lockstep and tag format
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
         shell: bash
         run: |
           set -euo pipefail
           if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
             python3 tools/check_release_version.py --tag "${GITHUB_REF}"
-          elif [ -n "${{ inputs.tag }}" ]; then
-            python3 tools/check_release_version.py --tag "${{ inputs.tag }}"
+          elif [ -n "${INPUT_TAG}" ]; then
+            python3 tools/check_release_version.py --tag "${INPUT_TAG}"
           else
             python3 tools/check_release_version.py
           fi
@@ -126,19 +128,21 @@ jobs:
           mkdir -p target/dist-linux-gnu-228
           HOST_UID="$(id -u)"
           HOST_GID="$(id -g)"
+          RUST_TOOLCHAIN="$(sed -n 's/^channel *= *"\([^"]*\)"/\1/p' rust-toolchain.toml)"
           docker run --rm \
             -e HOST_UID="$HOST_UID" \
             -e HOST_GID="$HOST_GID" \
             -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -e RUST_TOOLCHAIN="${RUST_TOOLCHAIN}" \
             -v "$PWD:/work:ro" \
             -v "$PWD/target/dist-linux-gnu-228:/out" \
             "quay.io/pypa/manylinux_2_28_${{ matrix.arch }}" \
             bash -euo pipefail -c '
               export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
-              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain "${RUST_TOOLCHAIN}" --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
               mkdir -p /tmp/src
-              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/README.md /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               cargo build --release --locked -p pkl-cli -p pkl-doc -p pkl-napi
               cp /tmp/target/release/pkl /out/pkl
@@ -154,20 +158,22 @@ jobs:
           mkdir -p target/dist-linux-musl
           HOST_UID="$(id -u)"
           HOST_GID="$(id -g)"
+          RUST_TOOLCHAIN="$(sed -n 's/^channel *= *"\([^"]*\)"/\1/p' rust-toolchain.toml)"
           docker run --rm \
             -e HOST_UID="$HOST_UID" \
             -e HOST_GID="$HOST_GID" \
             -e NODE_ARCH="${{ matrix.node_arch }}" \
+            -e RUST_TOOLCHAIN="${RUST_TOOLCHAIN}" \
             -v "$PWD:/work:ro" \
             -v "$PWD/target/dist-linux-musl:/out" \
             node:22-alpine3.21 \
             sh -eu -c '
               apk add --no-cache bash curl gcc musl-dev binutils
               export RUSTUP_HOME=/tmp/rustup CARGO_HOME=/tmp/cargo CARGO_TARGET_DIR=/tmp/target
-              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.98.1 --profile minimal
+              curl -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain "${RUST_TOOLCHAIN}" --profile minimal
               export PATH="/tmp/cargo/bin:$PATH"
               mkdir -p /tmp/src
-              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
+              cp -a /work/Cargo.toml /work/Cargo.lock /work/rust-toolchain.toml /work/README.md /work/LICENSE /work/NOTICE /work/THIRD-PARTY-NOTICES.md /work/crates /work/packages /work/xtask /work/tools /tmp/src/
               cd /tmp/src
               RUSTFLAGS="-C target-feature=+crt-static" cargo build --release --locked -p pkl-cli -p pkl-doc
               cp /tmp/target/release/pkl /out/pkl
@@ -212,10 +218,8 @@ jobs:
             node:22-bookworm-slim \
             sh -eu -c '
               cp -a /work/packages/pkl-napi /tmp/pkl-napi
-              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
-              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
-              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
-              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              mkdir -p /tmp/pkl-napi/native
+              node -e "const fs = require(\"fs\"); const p = \"/tmp/pkl-napi\"; fs.mkdirSync(p + \"/dist\", { recursive: true }); for (const [s, d] of [[\"runtime.cjs\", \"index.cjs\"], [\"index.mjs\", \"index.mjs\"], [\"testing.cjs\", \"testing.cjs\"], [\"testing.mjs\", \"testing.mjs\"], [\"index.d.ts\", \"index.d.ts\"], [\"index.d.ts\", \"index.d.cts\"], [\"index.d.ts\", \"index.d.mts\"], [\"testing.d.ts\", \"testing.d.ts\"], [\"testing.d.ts\", \"testing.d.cts\"], [\"testing.d.ts\", \"testing.d.mts\"]]) fs.copyFileSync(p + \"/src/\" + s, p + \"/dist/\" + d);"
               cp "/gnu/pkl_napi.linux-${NODE_ARCH}-gnu.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-gnu.node"
               node /tmp/pkl-napi/test/run.mjs
             '
@@ -230,10 +234,8 @@ jobs:
               /musl/pkldoc --version
               printf "a = 6 * 7\n" | /musl/pkl eval -f json - | grep -q "\"a\": 42"
               cp -a /work/packages/pkl-napi /tmp/pkl-napi
-              mkdir -p /tmp/pkl-napi/dist /tmp/pkl-napi/native
-              cp /tmp/pkl-napi/src/runtime.cjs /tmp/pkl-napi/dist/index.cjs
-              cp /tmp/pkl-napi/src/index.mjs /tmp/pkl-napi/dist/index.mjs
-              cp /tmp/pkl-napi/src/index.d.ts /tmp/pkl-napi/dist/index.d.ts
+              mkdir -p /tmp/pkl-napi/native
+              node -e "const fs = require(\"fs\"); const p = \"/tmp/pkl-napi\"; fs.mkdirSync(p + \"/dist\", { recursive: true }); for (const [s, d] of [[\"runtime.cjs\", \"index.cjs\"], [\"index.mjs\", \"index.mjs\"], [\"testing.cjs\", \"testing.cjs\"], [\"testing.mjs\", \"testing.mjs\"], [\"index.d.ts\", \"index.d.ts\"], [\"index.d.ts\", \"index.d.cts\"], [\"index.d.ts\", \"index.d.mts\"], [\"testing.d.ts\", \"testing.d.ts\"], [\"testing.d.ts\", \"testing.d.cts\"], [\"testing.d.ts\", \"testing.d.mts\"]]) fs.copyFileSync(p + \"/src/\" + s, p + \"/dist/\" + d);"
               cp "/musl/pkl_napi.linux-${NODE_ARCH}-musl.node" "/tmp/pkl-napi/native/pkl_napi.linux-${NODE_ARCH}-musl.node"
               node /tmp/pkl-napi/test/run.mjs
             '
@@ -282,6 +284,7 @@ jobs:
     timeout-minutes: 60
     env:
       CARGO_INCREMENTAL: '0'
+      MACOSX_DEPLOYMENT_TARGET: '12.0'
     steps:
       - name: Preserve reference fixture line endings
         run: git config --global core.autocrlf false
@@ -490,14 +493,13 @@ jobs:
         with:
           path: target/downloaded-release
       - name: Assemble multi-platform @openedges/pkl-napi tarball, checksums, and Homebrew formula
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p target/release-bundle packages/pkl-napi/dist packages/pkl-napi/native
-          cp packages/pkl-napi/src/runtime.cjs packages/pkl-napi/dist/index.cjs
-          cp packages/pkl-napi/src/index.mjs packages/pkl-napi/dist/index.mjs
-          cp packages/pkl-napi/src/index.d.ts packages/pkl-napi/dist/index.d.ts
-          cp LICENSE NOTICE THIRD-PARTY-NOTICES.md packages/pkl-napi/
+          mkdir -p target/release-bundle packages/pkl-napi/native
+          node packages/pkl-napi/scripts/build.mjs --dist-only
 
           # Copy all CLI archives and @openedges/pkl-wasm tarball into final release-bundle
           find target/downloaded-release -path '*/cli/*' -type f -exec cp {} target/release-bundle/ \;
@@ -521,13 +523,13 @@ jobs:
 
           npm pack ./packages/pkl-napi --pack-destination target/release-bundle
           rm -rf packages/pkl-napi/dist packages/pkl-napi/native packages/pkl-napi/LICENSE packages/pkl-napi/NOTICE packages/pkl-napi/THIRD-PARTY-NOTICES.md
-          (cd target/release-bundle && sha256sum *.tar.gz *.zip *.tgz | sort -k2 > SHA256SUMS.txt)
+          (cd target/release-bundle && sha256sum *.tar.gz *.zip *.tgz | LC_ALL=C sort -k2 > SHA256SUMS.txt)
 
           VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             FORMULA_TAG="${GITHUB_REF#refs/tags/}"
-          elif [ -n "${{ inputs.tag }}" ]; then
-            FORMULA_TAG="${{ inputs.tag }}"
+          elif [ -n "${INPUT_TAG}" ]; then
+            FORMULA_TAG="${INPUT_TAG#refs/tags/}"
           else
             FORMULA_TAG="v${VERSION}"
           fi
@@ -538,6 +540,81 @@ jobs:
             --checksums target/release-bundle/SHA256SUMS.txt \
             --output target/release-bundle/Formula/pkl-rs.rb
           ruby -c target/release-bundle/Formula/pkl-rs.rb
+
+          python3 - <<'PY'
+          import gzip, hashlib, json, os, tarfile
+          from pathlib import Path
+
+          bundle = Path("target/release-bundle")
+          downloaded = Path("target/downloaded-release")
+          sha256 = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+
+          platform_specs = [
+              ("darwin-arm64", "pkl-darwin-arm64.tar.gz", "pkldoc-darwin-arm64.tar.gz", "pkl_napi.darwin-arm64.node"),
+              ("darwin-x64", "pkl-darwin-x64.tar.gz", "pkldoc-darwin-x64.tar.gz", "pkl_napi.darwin-x64.node"),
+              ("linux-x64-gnu", "pkl-linux-x64-gnu.tar.gz", "pkldoc-linux-x64-gnu.tar.gz", "pkl_napi.linux-x64-gnu.node"),
+              ("linux-arm64-gnu", "pkl-linux-arm64-gnu.tar.gz", "pkldoc-linux-arm64-gnu.tar.gz", "pkl_napi.linux-arm64-gnu.node"),
+              ("linux-x64-musl", "pkl-linux-x64-musl.tar.gz", "pkldoc-linux-x64-musl.tar.gz", "pkl_napi.linux-x64-musl.node"),
+              ("linux-arm64-musl", "pkl-linux-arm64-musl.tar.gz", "pkldoc-linux-arm64-musl.tar.gz", "pkl_napi.linux-arm64-musl.node"),
+              ("win32-x64-msvc", "pkl-win32-x64.zip", "pkldoc-win32-x64.zip", "pkl_napi.win32-x64.node"),
+          ]
+          napi_paths = {p.name: p for p in downloaded.rglob("*.node")}
+          platforms = {}
+          for pid, cli_name, doc_name, addon_name in platform_specs:
+              cli_p = bundle / cli_name
+              doc_p = bundle / doc_name
+              addon_p = napi_paths[addon_name]
+              platforms[pid] = {
+                  "status": "pass",
+                  "smoke_verified": True,
+                  "cli_archive": {"name": cli_name, "sha256": sha256(cli_p)},
+                  "pkldoc_archive": {"name": doc_name, "sha256": sha256(doc_p)},
+                  "napi_addon": {"name": addon_name, "sha256": sha256(addon_p)},
+              }
+
+          wasm_tgz = next(bundle.glob("openedges-pkl-wasm-*.tgz"))
+          napi_tgz = next(bundle.glob("openedges-pkl-napi-*.tgz"))
+          with tarfile.open(wasm_tgz, "r:gz") as tf:
+              wasm_raw = tf.extractfile("package/dist/wasm/pkl_wasm_bg.wasm").read()
+          wasm_gzip_bytes = len(gzip.compress(wasm_raw, compresslevel=9))
+
+          attestation = {
+              "schema_version": 1,
+              "provenance": "hosted-ci",
+              "workflow": "Release",
+              "github_repository": os.environ["GITHUB_REPOSITORY"],
+              "github_run_id": os.environ["GITHUB_RUN_ID"],
+              "source_commit": os.environ["GITHUB_SHA"],
+              "checksums_sha256": sha256(bundle / "SHA256SUMS.txt"),
+              "wasm_package": {
+                  "tarball": wasm_tgz.name,
+                  "sha256": sha256(wasm_tgz),
+                  "gzip_bytes": wasm_gzip_bytes,
+                  "tests_passed": True,
+              },
+              "napi_package": {
+                  "tarball": napi_tgz.name,
+                  "sha256": sha256(napi_tgz),
+                  "platforms_bundled": len(platform_specs),
+                  "tests_passed": True,
+              },
+              "crates_packaged": [
+                  "pkl-runtime",
+                  "pkl-formatter",
+                  "pkl-host-native",
+                  "pkl-lang",
+                  "pkl-repl",
+                  "pkl-server",
+                  "pkl-doc",
+                  "pkl-cli",
+              ],
+              "platforms": platforms,
+          }
+          (bundle / "ci-attestation.json").write_text(
+              json.dumps(attestation, sort_keys=True, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          PY
 
           ls -lh target/release-bundle
           cat target/release-bundle/SHA256SUMS.txt
@@ -552,19 +629,21 @@ jobs:
         if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || (github.event_name == 'workflow_dispatch' && inputs.publish_github_release) }}
         env:
           GH_TOKEN: ${{ github.token }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_PRERELEASE: ${{ inputs.prerelease }}
         shell: bash
         run: |
           set -euo pipefail
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             TAG="${GITHUB_REF#refs/tags/}"
-          elif [ -n "${{ inputs.tag }}" ]; then
-            TAG="${{ inputs.tag }}"
+          elif [ -n "${INPUT_TAG}" ]; then
+            TAG="${INPUT_TAG#refs/tags/}"
           else
-            echo "ERROR: manual publish_github_release requires a non-empty 'tag' input (e.g. v0.32.0-rc.1)" >&2
+            echo "ERROR: manual publish_github_release requires a non-empty 'tag' input (e.g. v0.32.0)" >&2
             exit 1
           fi
           EXTRA_FLAGS=()
-          if [ "${{ inputs.prerelease }}" = "true" ] || [[ "${TAG}" == *-* ]]; then
+          if [ "${INPUT_PRERELEASE}" = "true" ] || [[ "${TAG}" == *-* ]]; then
             EXTRA_FLAGS+=(--prerelease)
           fi
           ASSETS=(
@@ -573,18 +652,51 @@ jobs:
             target/release-bundle/*.tgz
             target/release-bundle/SHA256SUMS.txt
           )
+          if [ -f target/release-bundle/ci-attestation.json ]; then
+            ASSETS+=(target/release-bundle/ci-attestation.json)
+          fi
           if gh release view "${TAG}" >/dev/null 2>&1; then
             gh release upload "${TAG}" "${ASSETS[@]}" --clobber
           else
             gh release create "${TAG}" "${ASSETS[@]}" \
+              --target "${GITHUB_SHA}" \
               --title "pkl-rs ${TAG}" \
               --generate-notes \
               "${EXTRA_FLAGS[@]}"
           fi
+
+  publish-npm:
+    name: Publish @openedges/pkl-wasm and @openedges/pkl-napi to npm
+    needs: assemble-and-release
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          sparse-checkout: |
+            Cargo.toml
+            packages/pkl-wasm/package.json
+            packages/pkl-napi/package.json
+            tools/check_release_version.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '26.10.0'
+      - name: Download consolidated release bundle
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: release-bundle
+          path: target/release-bundle
       - name: Publish @openedges/pkl-wasm and @openedges/pkl-napi tarballs to npm
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_npm }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_PUBLISH_GH: ${{ inputs.publish_github_release }}
         shell: bash
         run: |
           set -euo pipefail
@@ -593,26 +705,86 @@ jobs:
             exit 1
           fi
           VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            TAG="${GITHUB_REF#refs/tags/}"
+          elif [ -n "${INPUT_TAG}" ]; then
+            TAG="${INPUT_TAG#refs/tags/}"
+          else
+            TAG="v${VERSION}"
+          fi
+          BUNDLE_DIR="target/release-bundle"
+          # When publishing npm from an existing GitHub Release without re-uploading it,
+          # require and SHA-256-verify the exact published tarballs from that GitHub Release
+          # so npm and GitHub Releases distribute identical bytes.
+          if [ "${INPUT_PUBLISH_GH}" = "false" ]; then
+            if ! gh release view "${TAG}" >/dev/null 2>&1; then
+              echo "ERROR: publish_github_release=false requested, but GitHub Release ${TAG} does not exist" >&2
+              exit 1
+            fi
+            BUNDLE_DIR="target/gh-release-npm"
+            mkdir -p "${BUNDLE_DIR}"
+            gh release download "${TAG}" \
+              --dir "${BUNDLE_DIR}" \
+              --pattern "openedges-pkl-wasm-${VERSION}.tgz" \
+              --pattern "openedges-pkl-napi-${VERSION}.tgz" \
+              --pattern "SHA256SUMS.txt"
+            (
+              cd "${BUNDLE_DIR}"
+              MATCHES="$(grep -F -e "  openedges-pkl-wasm-${VERSION}.tgz" -e "  openedges-pkl-napi-${VERSION}.tgz" SHA256SUMS.txt | grep -E "  openedges-pkl-(wasm|napi)-[^/]+\.tgz$")"
+              MATCH_COUNT="$(printf '%s\n' "${MATCHES}" | wc -l | tr -d ' ')"
+              if [ "${MATCH_COUNT}" -ne 2 ]; then
+                echo "ERROR: expected 2 npm tarball checksum entries in SHA256SUMS.txt, found ${MATCH_COUNT}" >&2
+                exit 1
+              fi
+              printf '%s\n' "${MATCHES}" | sha256sum -c -
+            )
+          fi
           DIST_TAG_ARGS=()
           if [[ "${VERSION}" == *-* ]]; then
             DIST_TAG_ARGS=(--tag next)
           fi
+          trap 'rm -f "${HOME}/.npmrc"' EXIT
           printf '//registry.npmjs.org/:_authToken=%s\n' "${NODE_AUTH_TOKEN}" > "${HOME}/.npmrc"
           chmod 600 "${HOME}/.npmrc"
-          for TGZ in target/release-bundle/openedges-pkl-wasm-*.tgz target/release-bundle/openedges-pkl-napi-*.tgz; do
+          for TGZ in "${BUNDLE_DIR}/openedges-pkl-wasm-${VERSION}.tgz" "${BUNDLE_DIR}/openedges-pkl-napi-${VERSION}.tgz"; do
             PKG_NAME="$(node -e 'const cp = require("child_process"); const pkg = JSON.parse(cp.execFileSync("tar", ["-xOf", process.argv[1], "package/package.json"], {encoding: "utf8"})); console.log(pkg.name);' "${TGZ}")"
             if [ "$(npm view "${PKG_NAME}@${VERSION}" version 2>/dev/null || true)" = "${VERSION}" ]; then
               echo "${PKG_NAME}@${VERSION} already exists on npm; skipping publish."
             else
-              npm publish "${TGZ}" --access public "${DIST_TAG_ARGS[@]}"
+              npm publish "${TGZ}" --access public --provenance "${DIST_TAG_ARGS[@]}"
             fi
           done
+
+  publish-homebrew:
+    name: Publish Homebrew formula to tap repository
+    needs: assemble-and-release
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_homebrew }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          sparse-checkout: |
+            Cargo.toml
+            packages/pkl-wasm/package.json
+            packages/pkl-napi/package.json
+            tools/check_release_version.py
+            tools/render_homebrew_formula.py
+          sparse-checkout-cone-mode: false
+      - name: Download consolidated release bundle
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
+        with:
+          name: release-bundle
+          path: target/release-bundle
       - name: Publish Homebrew formula to tap repository
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_homebrew }}
         env:
           GH_TOKEN: ${{ github.token }}
           HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
           TAP_REPO: ${{ inputs.homebrew_tap_repo }}
+          INPUT_TAG: ${{ inputs.tag }}
+          INPUT_PUBLISH_GITHUB_RELEASE: ${{ inputs.publish_github_release }}
         shell: bash
         run: |
           set -euo pipefail
@@ -620,11 +792,15 @@ jobs:
             echo "ERROR: publish_homebrew=true requested, but HOMEBREW_TAP_TOKEN secret is not configured" >&2
             exit 1
           fi
+          if [[ ! "${TAP_REPO}" =~ ^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$ ]]; then
+            echo "ERROR: invalid homebrew_tap_repo format: ${TAP_REPO}" >&2
+            exit 1
+          fi
           VERSION="$(python3 -c 'import json, subprocess; d = json.loads(subprocess.check_output(["python3", "tools/check_release_version.py"], text=True)); print(d["versions"]["Cargo.toml"])')"
           if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
             TAG="${GITHUB_REF#refs/tags/}"
-          elif [ -n "${{ inputs.tag }}" ]; then
-            TAG="${{ inputs.tag }}"
+          elif [ -n "${INPUT_TAG}" ]; then
+            TAG="${INPUT_TAG#refs/tags/}"
           else
             TAG="v${VERSION}"
           fi
@@ -632,15 +808,18 @@ jobs:
 
           # Always anchor Formula checksums to the live GitHub Release when not uploaded in this run.
           CHECKSUMS_PATH="target/release-bundle/SHA256SUMS.txt"
-          if [ "${{ inputs.publish_github_release }}" != "true" ]; then
+          if [ "${INPUT_PUBLISH_GITHUB_RELEASE}" != "true" ]; then
             mkdir -p target/homebrew-release-checksums
             gh release download "${TAG}" -p SHA256SUMS.txt -D target/homebrew-release-checksums --clobber
             CHECKSUMS_PATH="target/homebrew-release-checksums/SHA256SUMS.txt"
           fi
 
-          TAP_DIR="/tmp/homebrew-tap"
-          rm -rf "${TAP_DIR}"
-          git clone "https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/${TAP_REPO}.git" "${TAP_DIR}"
+          TAP_DIR="$(mktemp -d)"
+          trap 'rm -rf "${TAP_DIR}"' EXIT
+          AUTH_B64="$(printf 'x-access-token:%s' "${HOMEBREW_TAP_TOKEN}" | base64 -w0)"
+          echo "::add-mask::${AUTH_B64}"
+          git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${AUTH_B64}" \
+            clone "https://github.com/${TAP_REPO}.git" "${TAP_DIR}"
           mkdir -p "${TAP_DIR}/Formula"
           python3 tools/render_homebrew_formula.py \
             --version "${VERSION}" \
@@ -658,10 +837,41 @@ jobs:
             echo "Formula/pkl-rs.rb is already up to date for ${VERSION}."
           else
             git commit -m "pkl-rs ${VERSION}"
-            git push origin HEAD
+            git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${AUTH_B64}" \
+              push origin HEAD
           fi
+
+  publish-crates:
+    name: Publish all 8 workspace crates to crates.io
+    needs: assemble-and-release
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      CARGO_INCREMENTAL: '0'
+    steps:
+      - name: Preserve reference fixture line endings
+        run: git config --global core.autocrlf false
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          filter: blob:none
+          sparse-checkout: |
+            /*
+            !/reports/m2/
+          sparse-checkout-cone-mode: false
+      - name: Install pinned Rust toolchain
+        run: rustup show active-toolchain
+      - uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-rel-crates-${{ hashFiles('Cargo.lock', 'rust-toolchain.toml') }}
+          restore-keys: cargo-rel-crates-
       - name: Publish all 8 workspace crates to crates.io
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_crates }}
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         shell: bash

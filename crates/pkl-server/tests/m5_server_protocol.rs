@@ -231,7 +231,7 @@ fn evaluate_module_binary_and_output_format() {
         } => {
             assert_eq!(evaluator_id, eval_id);
             let decoded = decode_pkl_binary(&bytes).expect("decode pkl-binary");
-            match decoded {
+            match &decoded {
                 DecodedValue::Object(DecodedObject {
                     class_name,
                     module_uri,
@@ -657,7 +657,7 @@ fn client_resource_read_and_glob_callbacks() {
     };
 
     let decoded = decode_pkl_binary(&result_bytes).expect("decode");
-    match decoded {
+    match &decoded {
         DecodedValue::List(items) => {
             assert_eq!(items.len(), 3);
             assert_eq!(items[0], DecodedValue::String("hello-cb".into()));
@@ -1043,9 +1043,10 @@ fn env_properties_isolation_and_project_local_deps() {
         .join("../../tests/fixtures/m5/server/proj")
         .canonicalize()
         .expect("proj fixture dir");
-    let proj_uri = format!("file://{}/PklProject", proj_dir.display());
-    let dep_uri = format!("file://{}/local_dep/PklProject", proj_dir.display());
-    let main_uri = format!("file://{}/main.pkl", proj_dir.display());
+    let proj_uri = pkl_host_native::path_to_file_uri(&proj_dir.join("PklProject")).to_java_utf8();
+    let dep_uri = pkl_host_native::path_to_file_uri(&proj_dir.join("local_dep").join("PklProject"))
+        .to_java_utf8();
+    let main_uri = pkl_host_native::path_to_file_uri(&proj_dir.join("main.pkl")).to_java_utf8();
     let mut deps = BTreeMap::new();
     deps.insert(
         "localDep".into(),
@@ -1378,4 +1379,239 @@ fn close_evaluator_sends_close_external_process_0x32() {
         marker_contents, "closed\n",
         "expected external reader to receive 0x32 CloseExternalProcess on CloseEvaluator"
     );
+}
+
+#[test]
+fn close_evaluator_while_blocked_on_callback_does_not_deadlock_and_mismatched_eval_id_fails() {
+    // 1. CloseEvaluator while evaluation is waiting on a client ReadResourceRequest must
+    //    unblock immediately without deadlocking the server reader thread.
+    let mut client = TestClient::spawn();
+    let eval_id = create_ok(
+        &mut client,
+        ServerMessage::CreateEvaluatorRequest {
+            request_id: 1,
+            allowed_modules: Some(vec!["pkl:".into(), "repl:".into()]),
+            allowed_resources: Some(vec!["cbres:".into()]),
+            client_module_readers: None,
+            client_resource_readers: Some(vec![ResourceReaderSpec {
+                scheme: "cbres".into(),
+                has_hierarchical_uris: true,
+                is_globbable: false,
+            }]),
+            module_paths: None,
+            env: None,
+            properties: None,
+            timeout_seconds: None,
+            root_dir: None,
+            cache_dir: None,
+            output_format: None,
+            project: None,
+            http: None,
+            external_module_readers: None,
+            external_resource_readers: None,
+            trace_mode: None,
+        },
+    );
+
+    client.send(&ServerMessage::EvaluateRequest {
+        request_id: 2,
+        evaluator_id: eval_id,
+        module_uri: "repl:text".into(),
+        module_text: Some("v = read(\"cbres:/hang.txt\").text\n".into()),
+        expr: Some("v".into()),
+    });
+
+    // Wait for the server to suspend on ReadResourceRequest, then immediately send CloseEvaluator
+    // WITHOUT answering the callback.
+    match client.recv().expect("ReadResourceRequest") {
+        ServerMessage::ReadResourceRequest { evaluator_id, .. } => {
+            assert_eq!(evaluator_id, eval_id);
+        }
+        other => panic!("expected ReadResourceRequest, got {other:?}"),
+    }
+    client.send(&ServerMessage::CloseEvaluator {
+        evaluator_id: eval_id,
+    });
+    match client.recv().expect("EvaluateResponse after close") {
+        ServerMessage::EvaluateResponse {
+            request_id: 2,
+            result: None,
+            error: Some(_),
+            ..
+        } => {}
+        other => panic!("expected failed EvaluateResponse on close, got {other:?}"),
+    }
+    assert!(client.close_and_join().is_ok());
+
+    // 2. Sending a ReadResourceResponse with a forged/mismatched evaluatorId must be rejected.
+    let mut client2 = TestClient::spawn();
+    let eval_id2 = create_ok(
+        &mut client2,
+        ServerMessage::CreateEvaluatorRequest {
+            request_id: 1,
+            allowed_modules: Some(vec!["pkl:".into(), "repl:".into()]),
+            allowed_resources: Some(vec!["cbres:".into()]),
+            client_module_readers: None,
+            client_resource_readers: Some(vec![ResourceReaderSpec {
+                scheme: "cbres".into(),
+                has_hierarchical_uris: true,
+                is_globbable: false,
+            }]),
+            module_paths: None,
+            env: None,
+            properties: None,
+            timeout_seconds: None,
+            root_dir: None,
+            cache_dir: None,
+            output_format: None,
+            project: None,
+            http: None,
+            external_module_readers: None,
+            external_resource_readers: None,
+            trace_mode: None,
+        },
+    );
+    client2.send(&ServerMessage::EvaluateRequest {
+        request_id: 2,
+        evaluator_id: eval_id2,
+        module_uri: "repl:text".into(),
+        module_text: Some("v = read(\"cbres:/auth.txt\").text\n".into()),
+        expr: Some("v".into()),
+    });
+    let cb_req_id = match client2.recv().expect("ReadResourceRequest") {
+        ServerMessage::ReadResourceRequest { request_id, .. } => request_id,
+        other => panic!("expected ReadResourceRequest, got {other:?}"),
+    };
+    client2.send(&ServerMessage::ReadResourceResponse {
+        request_id: cb_req_id,
+        evaluator_id: eval_id2.wrapping_add(1),
+        contents: Some(b"forged".to_vec()),
+        error: None,
+    });
+    let err = client2
+        .close_and_join()
+        .expect_err("mismatched evaluatorId response must fail server loop");
+    assert!(
+        err.to_string().contains("Mismatched evaluatorId"),
+        "unexpected error: {err}"
+    );
+}
+
+#[test]
+fn round4_late_callback_response_after_close_evaluator_does_not_crash_server() {
+    let mut client = TestClient::spawn();
+    let eval_id1 = create_ok(
+        &mut client,
+        ServerMessage::CreateEvaluatorRequest {
+            request_id: 1,
+            allowed_modules: Some(vec!["pkl:".into(), "repl:".into()]),
+            allowed_resources: Some(vec!["cbres:".into()]),
+            client_module_readers: None,
+            client_resource_readers: Some(vec![ResourceReaderSpec {
+                scheme: "cbres".into(),
+                has_hierarchical_uris: true,
+                is_globbable: false,
+            }]),
+            module_paths: None,
+            env: None,
+            properties: None,
+            timeout_seconds: None,
+            root_dir: None,
+            cache_dir: None,
+            output_format: None,
+            project: None,
+            http: None,
+            external_module_readers: None,
+            external_resource_readers: None,
+            trace_mode: None,
+        },
+    );
+    let eval_id2 = create_ok(
+        &mut client,
+        ServerMessage::CreateEvaluatorRequest {
+            request_id: 2,
+            allowed_modules: Some(vec!["pkl:".into(), "repl:".into()]),
+            allowed_resources: Some(vec!["prop:".into()]),
+            client_module_readers: None,
+            client_resource_readers: None,
+            module_paths: None,
+            env: None,
+            properties: None,
+            timeout_seconds: None,
+            root_dir: None,
+            cache_dir: None,
+            output_format: None,
+            project: None,
+            http: None,
+            external_module_readers: None,
+            external_resource_readers: None,
+            trace_mode: None,
+        },
+    );
+
+    client.send(&ServerMessage::EvaluateRequest {
+        request_id: 3,
+        evaluator_id: eval_id1,
+        module_uri: "repl:text".into(),
+        module_text: Some("v = read(\"cbres:/slow.txt\").text\n".into()),
+        expr: Some("v".into()),
+    });
+    let cb_req_id = match client.recv().expect("ReadResourceRequest") {
+        ServerMessage::ReadResourceRequest {
+            request_id,
+            evaluator_id,
+            ..
+        } => {
+            assert_eq!(evaluator_id, eval_id1);
+            request_id
+        }
+        other => panic!("expected ReadResourceRequest, got {other:?}"),
+    };
+
+    // Close evaluator 1 first, observe its aborted EvaluateResponse, then deliver a late
+    // in-flight callback response for the already-cancelled request_id.
+    client.send(&ServerMessage::CloseEvaluator {
+        evaluator_id: eval_id1,
+    });
+    match client.recv().expect("aborted EvaluateResponse") {
+        ServerMessage::EvaluateResponse {
+            request_id: 3,
+            result: None,
+            error: Some(_),
+            ..
+        } => {}
+        other => panic!("expected aborted EvaluateResponse, got {other:?}"),
+    }
+    client.send(&ServerMessage::ReadResourceResponse {
+        request_id: cb_req_id,
+        evaluator_id: eval_id1,
+        contents: Some(b"late-payload".to_vec()),
+        error: None,
+    });
+
+    // Evaluator 2 on the same server connection must continue operating normally.
+    client.send(&ServerMessage::EvaluateRequest {
+        request_id: 4,
+        evaluator_id: eval_id2,
+        module_uri: "repl:text".into(),
+        module_text: Some("x = 21 * 2\n".into()),
+        expr: Some("x".into()),
+    });
+    match client.recv().expect("eval2 EvaluateResponse") {
+        ServerMessage::EvaluateResponse {
+            request_id: 4,
+            evaluator_id,
+            result: Some(bytes),
+            error: None,
+        } => {
+            assert_eq!(evaluator_id, eval_id2);
+            assert_eq!(decode_pkl_binary(&bytes).unwrap(), DecodedValue::Int(42));
+        }
+        other => panic!("expected healthy eval2 response after late callback, got {other:?}"),
+    }
+
+    client.send(&ServerMessage::CloseEvaluator {
+        evaluator_id: eval_id2,
+    });
+    assert!(client.close_and_join().is_ok());
 }

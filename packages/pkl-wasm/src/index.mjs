@@ -2,13 +2,13 @@ import { PklError, toPklError } from './errors.mjs';
 import {
   buildRustHostConfig,
   driveWasmSession,
+  formatTimeoutMessage,
   monotonicNowMs,
   normalizeTimeoutMs,
 } from './host.mjs';
 import {
   PKL_VERSION,
   capabilities,
-  ensureInitSync,
   getWasmBindings,
   getWasmMemory,
   init,
@@ -25,11 +25,10 @@ import {
   PklReference,
   PklRegex,
   PklTypeAlias,
-  dehydrateValue,
   hydrateSchema,
   hydrateValue,
   tryDecodePklBinaryFast,
-  unpackColumnarBuffer,
+  unpackColumnarSlice,
 } from './values.mjs';
 import { VirtualFileSystem, fileUriToPath, pathToFileUri } from './vfs.mjs';
 
@@ -54,72 +53,90 @@ export {
 /**
  * Module input constructors matching Apple Pkl `ModuleSource`.
  */
-export const ModuleSource = Object.freeze({
+export class ModuleSource {
+  /**
+   * @param {string} uri
+   * @param {string} [contents]
+   */
+  constructor(uri, contents = undefined) {
+    if (typeof uri !== 'string' || uri.length === 0) {
+      throw new PklError('ModuleSource uri must be a non-empty string.', 'invalid-argument');
+    }
+    if (contents !== undefined && typeof contents !== 'string') {
+      throw new PklError('ModuleSource contents must be a string or undefined.', 'invalid-argument');
+    }
+    this.uri = uri;
+    if (contents !== undefined) {
+      this.contents = contents;
+    }
+    Object.freeze(this);
+  }
+
   /**
    * Inline Pkl source text (defaults to `uri = "repl:text"`).
    * @param {string} text
    * @param {string} [uri]
-   * @returns {{ readonly uri: string, readonly contents: string }}
+   * @returns {ModuleSource}
    */
-  text(text, uri = 'repl:text') {
+  static text(text, uri = 'repl:text') {
     if (typeof text !== 'string') {
       throw new PklError('ModuleSource.text expects a string', 'invalid-argument');
     }
-    if (typeof uri !== 'string') {
-      throw new PklError('ModuleSource.text uri must be a string', 'invalid-argument');
+    if (typeof uri !== 'string' || uri.length === 0) {
+      throw new PklError('ModuleSource.text uri must be a non-empty string', 'invalid-argument');
     }
-    return Object.freeze({ uri, contents: text });
-  },
+    return new ModuleSource(uri, text);
+  }
 
   /**
    * Module backed by an arbitrary URI (`file:///...`, `https://...`, `package://...`, custom scheme).
    * @param {string} uri
-   * @returns {{ readonly uri: string }}
+   * @returns {ModuleSource}
    */
-  uri(uri) {
+  static uri(uri) {
     if (typeof uri !== 'string' || uri.length === 0) {
       throw new PklError('ModuleSource.uri expects a non-empty URI string', 'invalid-argument');
     }
-    return Object.freeze({ uri });
-  },
+    return new ModuleSource(uri, undefined);
+  }
 
   /**
    * Module backed by a VFS/POSIX path converted to a `file://` URI.
    * @param {string} path
-   * @returns {{ readonly uri: string }}
+   * @returns {ModuleSource}
    */
-  path(path) {
-    return Object.freeze({ uri: pathToFileUri(path) });
-  },
+  static path(path) {
+    return new ModuleSource(pathToFileUri(path), undefined);
+  }
 
   /**
    * Module backed by a `modulepath:` URI.
    * @param {string} path
-   * @returns {{ readonly uri: string }}
+   * @returns {ModuleSource}
    */
-  modulePath(path) {
+  static modulePath(path) {
     if (typeof path !== 'string' || path.length === 0) {
       throw new PklError('ModuleSource.modulePath expects a non-empty path', 'invalid-argument');
     }
-    const uri = path.startsWith('modulepath:')
-      ? path
-      : path.startsWith('/')
-        ? `modulepath:${path}`
-        : `modulepath:/${path}`;
-    return Object.freeze({ uri });
-  },
-});
+    const rest = path.startsWith('modulepath:') ? path.slice('modulepath:'.length) : path;
+    const uri = rest.startsWith('/') ? `modulepath:${rest}` : `modulepath:/${rest}`;
+    return new ModuleSource(uri, undefined);
+  }
+}
 
 function normalizeModuleSource(source) {
-  if (!source || typeof source !== 'object' || typeof source.uri !== 'string') {
+  if (!source || typeof source !== 'object' || typeof source.uri !== 'string' || source.uri.length === 0) {
     throw new PklError(
       'Expected a ModuleSource created via ModuleSource.text/uri/path/modulePath',
       'invalid-argument',
     );
   }
+  if (source.contents !== undefined && typeof source.contents !== 'string') {
+    throw new PklError('ModuleSource.contents must be a string.', 'invalid-argument');
+  }
   return {
     uri: source.uri,
-    contents: source.contents === undefined ? null : String(source.contents),
+    contents: source.contents === undefined ? null : source.contents,
   };
 }
 
@@ -128,12 +145,27 @@ function normalizeModuleSource(source) {
  * Auto-initializes synchronously in Node.js; call `await init()` first in browsers.
  *
  * @param {string} source
- * @param {{ grammarVersion?: 1 | 2 }} [options]
+ * @param {{ grammarVersion?: 1 | 2 | null }} [options]
  * @returns {string}
  */
 export function format(source, options = undefined) {
+  if (typeof source !== 'string') {
+    throw new PklError('format source must be a string.', 'invalid-argument');
+  }
+  const grammarVersion = options?.grammarVersion;
+  if (
+    grammarVersion !== undefined &&
+    grammarVersion !== null &&
+    grammarVersion !== 1 &&
+    grammarVersion !== 2
+  ) {
+    throw new PklError(
+      `Invalid grammarVersion "${grammarVersion}". Expected 1 or 2.`,
+      'invalid-argument',
+    );
+  }
   const wasm = getWasmBindings();
-  const gv = options?.grammarVersion ?? 2;
+  const gv = grammarVersion ?? 2;
   try {
     return wasm.wasmFormat(source, gv);
   } catch (err) {
@@ -167,119 +199,6 @@ export function decodePklBinary(bytes, options = undefined) {
   } catch (err) {
     throw toPklError(err, 'decode');
   }
-}
-
-/**
- * Lossless JS <-> Rust value round-trip helper across the Wasm boundary.
- * @param {any} value
- * @returns {any}
- */
-export function roundtripValue(value) {
-  const wasm = getWasmBindings();
-  const dehydrated = dehydrateValue(value);
-  try {
-    const raw = wasm.wasmRoundtripValue(dehydrated);
-    return hydrateValue(raw);
-  } catch (err) {
-    throw toPklError(err, 'invalid-argument');
-  }
-}
-
-/**
- * Lossless signed 64-bit BigInt round-trip helper (`i64::MIN..=i64::MAX`).
- * @param {bigint} value
- * @returns {bigint}
- */
-export function roundtripInteger(value) {
-  const wasm = getWasmBindings();
-  try {
-    return wasm.wasmValidateInt64(value);
-  } catch (err) {
-    throw toPklError(err, 'invalid-argument');
-  }
-}
-
-/**
- * Lossless owned `Uint8Array` round-trip helper.
- * @param {Uint8Array} value
- * @returns {Uint8Array}
- */
-export function roundtripBytes(value) {
-  const wasm = getWasmBindings();
-  if (!(value instanceof Uint8Array)) {
-    throw new PklError('expected Uint8Array', 'invalid-argument');
-  }
-  try {
-    return wasm.roundtripBytes(value);
-  } catch (err) {
-    throw toPklError(err, 'invalid-argument');
-  }
-}
-
-/**
- * Lossless UTF-16 string round-trip helper (preserves unpaired surrogates and astral scalars).
- * @param {string} value
- * @returns {string}
- */
-export function roundtripString(value) {
-  const wasm = getWasmBindings();
-  if (typeof value !== 'string') {
-    throw new PklError('expected string', 'invalid-argument');
-  }
-  try {
-    return wasm.roundtripString(value);
-  } catch (err) {
-    throw toPklError(err, 'invalid-argument');
-  }
-}
-
-/**
- * Measures JS <-> Rust Wasm value conversion round-trip overhead for M6 telemetry.
- * @param {number} [iterations]
- * @param {any} [sampleValue]
- */
-export function measureConversion(iterations = 1000, sampleValue = undefined) {
-  ensureInitSync();
-  if (!Number.isInteger(iterations) || iterations <= 0) {
-    throw new PklError('iterations must be a positive integer', 'invalid-argument');
-  }
-  const payload =
-    sampleValue !== undefined
-      ? sampleValue
-      : new PklObject(
-          'Benchmark#Payload',
-          'file:///bench.pkl',
-          {
-            id: 9223372036854775807n,
-            ratio: 3.141592653589793,
-            label: 'hello-🚀-pkl',
-            active: true,
-            raw: new Uint8Array([0, 1, 127, 128, 255]),
-            dur: new PklDuration(250, 'ms'),
-            size: new PklDataSize(64, 'mib'),
-            tags: ['a', 'b', 'c'],
-          },
-          new Map([['k', 42n]]),
-          ['elem0'],
-        );
-
-  const now = () =>
-    typeof performance !== 'undefined' && typeof performance.now === 'function'
-      ? performance.now()
-      : Date.now();
-  const t0 = now();
-  let last;
-  for (let i = 0; i < iterations; i += 1) {
-    last = roundtripValue(payload);
-  }
-  const totalMs = Math.max(0, now() - t0);
-  return {
-    iterations,
-    totalMs,
-    avgUs: (totalMs * 1000) / iterations,
-    opsPerSec: totalMs > 0 ? (iterations * 1000) / totalMs : Infinity,
-    sample: last,
-  };
 }
 
 function pklEscapeStr(s) {
@@ -349,6 +268,32 @@ if (ex == null) ""
 else new PcfRenderer { omitNullProperties = false; useCustomStringDelimiters = true }.renderDocument(new Dynamic { examples = ex })
 `;
 
+const WASM_FINALIZER =
+  typeof FinalizationRegistry === 'function'
+    ? new FinalizationRegistry((box) => {
+        const wasm = box.wasm;
+        box.wasm = null;
+        if (!wasm) return;
+        try {
+          if (typeof wasm.close === 'function') wasm.close();
+        } catch {
+          // Best-effort GC cleanup
+        }
+        try {
+          if (typeof wasm.free === 'function') wasm.free();
+        } catch {
+          // Best-effort GC cleanup
+        }
+      })
+    : null;
+
+function isControlFlowPklError(err) {
+  return (
+    err instanceof PklError &&
+    (err.kind === 'cancelled' || err.kind === 'timeout' || err.kind === 'closed')
+  );
+}
+
 /**
  * Product Pkl 0.32.0 WebAssembly evaluator with module caching across calls,
  * cooperative async Host suspension, 64-bit timeouts, and explicit lifecycle cleanup.
@@ -370,6 +315,10 @@ export class Evaluator {
     deferredCapabilityError = null,
   ) {
     this._wasm = wasmEvaluator;
+    this._wasmBox = { wasm: wasmEvaluator };
+    if (WASM_FINALIZER && wasmEvaluator) {
+      WASM_FINALIZER.register(this, this._wasmBox, this);
+    }
     this._bindings = wasmBindings;
     this._hostHooks = hostHooks;
     this._defaultTimeoutMs = defaultTimeoutMs;
@@ -377,10 +326,14 @@ export class Evaluator {
     this._deferredCapabilityError = deferredCapabilityError;
     this._clockState = { last: 0n };
     this._closed = false;
+    this._closePromise = null;
+    this._resolveClose = null;
     this._cancelled = false;
+    this._cancelGen = 0;
     this._inFlightCount = 0;
     this._pendingQueueCount = 0;
     this._colCache = { ab: null, base: -1, len: -1, gen: 0, hdr: null };
+    this._fastUriIds = new Map();
     /** @type {Set<(kind: "cancelled" | "closed") => void>} */
     this._activeCancelHooks = new Set();
     /** @type {Promise<any>} */
@@ -400,12 +353,24 @@ export class Evaluator {
   }
 
   _disposeWasmIfClosed() {
-    if (this._closed && this._inFlightCount === 0 && this._wasm) {
-      const wasm = this._wasm;
-      this._wasm = null;
-      this._colCache = null;
-      if (typeof wasm.free === 'function') {
-        wasm.free();
+    if (this._closed && this._inFlightCount === 0) {
+      if (this._wasm) {
+        const wasm = this._wasm;
+        this._wasm = null;
+        this._wasmBox.wasm = null;
+        this._colCache = null;
+        this._fastUriIds = null;
+        if (WASM_FINALIZER) {
+          WASM_FINALIZER.unregister(this);
+        }
+        if (typeof wasm.free === 'function') {
+          wasm.free();
+        }
+      }
+      if (this._resolveClose) {
+        const resolve = this._resolveClose;
+        this._resolveClose = null;
+        resolve();
       }
     }
   }
@@ -415,8 +380,8 @@ export class Evaluator {
   }
 
   cancel() {
-    if (this._cancelled || this._closed || !this._wasm) return;
-    this._cancelled = true;
+    if (this._closed || !this._wasm) return;
+    this._cancelGen += 1;
     this._wasm.cancel();
     for (const hook of Array.from(this._activeCancelHooks)) {
       hook('cancelled');
@@ -424,8 +389,9 @@ export class Evaluator {
   }
 
   close() {
-    if (this._closed) return;
+    if (this._closed) return this._closePromise || Promise.resolve();
     this._closed = true;
+    this._cancelGen += 1;
     if (this._defaultSignal) {
       this._defaultSignal.removeEventListener('abort', this._onDefaultAbort);
     }
@@ -435,67 +401,82 @@ export class Evaluator {
     for (const hook of Array.from(this._activeCancelHooks)) {
       hook('closed');
     }
+    if (this._inFlightCount > 0) {
+      this._closePromise = new Promise((resolve) => {
+        this._resolveClose = resolve;
+      });
+      this._disposeWasmIfClosed();
+      return this._closePromise;
+    }
     this._disposeWasmIfClosed();
+    this._closePromise = Promise.resolve();
+    return this._closePromise;
   }
 
-  /**
-   * Serializes operations on one `WasmEvaluator` instance while respecting `close()`,
-   * pre-aborted `signal`, `cancel()`, and per-call `timeoutMs` / `signal`.
-   */
-  _runSerialized(callOptions, startFn) {
-    const task = async () => {
+  async _executeOp(callOptions, startFn) {
+    if (this._closed || !this._wasm || this._wasm.isClosed()) {
+      throw new PklError('Evaluator has been closed.', 'closed');
+    }
+    if (this._deferredCapabilityError) {
+      throw this._deferredCapabilityError;
+    }
+    if (
+      this._cancelled ||
+      this._defaultSignal?.aborted ||
+      callOptions?.signal?.aborted
+    ) {
+      throw new PklError('Evaluation was cancelled.', 'cancelled');
+    }
+    const timeoutMs =
+      callOptions?.timeoutMs !== undefined
+        ? normalizeTimeoutMs(callOptions.timeoutMs)
+        : this._defaultTimeoutMs;
+    const now = monotonicNowMs(this._clockState);
+    this._inFlightCount += 1;
+    try {
+      try {
+        startFn(now, timeoutMs);
+      } catch (err) {
+        throw toPklError(err);
+      }
+      const signals = [];
+      if (this._defaultSignal) signals.push(this._defaultSignal);
+      if (callOptions?.signal) signals.push(callOptions.signal);
+      return await driveWasmSession({
+        wasmObj: this._wasm,
+        hostHooks: this._hostHooks,
+        clockState: this._clockState,
+        timeoutMs,
+        signals,
+        onRegisterCancel: (fn) => {
+          this._activeCancelHooks.add(fn);
+          return () => this._activeCancelHooks.delete(fn);
+        },
+        onCapturedLog: this._testLogBuffer
+          ? (msg) => {
+              if (this._testLogBuffer) this._testLogBuffer.push(msg);
+            }
+          : undefined,
+      });
+    } finally {
+      this._inFlightCount -= 1;
+      this._disposeWasmIfClosed();
+    }
+  }
+
+  _enqueueTask(task) {
+    const enqueueGen = this._cancelGen;
+    const guarded = () => {
       if (this._closed || !this._wasm || this._wasm.isClosed()) {
         throw new PklError('Evaluator has been closed.', 'closed');
       }
-      if (this._deferredCapabilityError) {
-        throw this._deferredCapabilityError;
-      }
-      if (
-        this._cancelled ||
-        this._defaultSignal?.aborted ||
-        callOptions?.signal?.aborted
-      ) {
+      if (this._cancelGen !== enqueueGen) {
         throw new PklError('Evaluation was cancelled.', 'cancelled');
       }
-      const timeoutMs =
-        callOptions?.timeoutMs !== undefined
-          ? normalizeTimeoutMs(callOptions.timeoutMs)
-          : this._defaultTimeoutMs;
-      const now = monotonicNowMs(this._clockState);
-      this._inFlightCount += 1;
-      try {
-        try {
-          startFn(now, timeoutMs);
-        } catch (err) {
-          throw toPklError(err);
-        }
-        const signals = [];
-        if (this._defaultSignal) signals.push(this._defaultSignal);
-        if (callOptions?.signal) signals.push(callOptions.signal);
-        return await driveWasmSession({
-          wasmObj: this._wasm,
-          hostHooks: this._hostHooks,
-          clockState: this._clockState,
-          timeoutMs,
-          signals,
-          onRegisterCancel: (fn) => {
-            this._activeCancelHooks.add(fn);
-            return () => this._activeCancelHooks.delete(fn);
-          },
-          onCapturedLog: this._testLogBuffer
-            ? (msg) => {
-                if (this._testLogBuffer) this._testLogBuffer.push(msg);
-              }
-            : undefined,
-        });
-      } finally {
-        this._inFlightCount -= 1;
-        this._disposeWasmIfClosed();
-      }
+      return task();
     };
-
     this._pendingQueueCount += 1;
-    const next = this._queue.then(task, task).finally(() => {
+    const next = this._queue.then(guarded, guarded).finally(() => {
       this._pendingQueueCount -= 1;
     });
     this._queue = next.then(
@@ -503,6 +484,14 @@ export class Evaluator {
       () => undefined,
     );
     return next;
+  }
+
+  /**
+   * Serializes operations on one `WasmEvaluator` instance while respecting `close()`,
+   * pre-aborted `signal`, `cancel()`, and per-call `timeoutMs` / `signal`.
+   */
+  _runSerialized(callOptions, startFn) {
+    return this._enqueueTask(() => this._executeOp(callOptions, startFn));
   }
 
   /**
@@ -613,13 +602,11 @@ export class Evaluator {
    * @returns {Promise<any>}
    */
   async evaluateExpressionValue(source, expr, callOptions = undefined) {
+    const spec = normalizeModuleSource(source);
     if (typeof expr !== 'string') {
       throw new PklError('expression must be a string', 'invalid-argument');
     }
     if (
-      source &&
-      typeof source === 'object' &&
-      typeof source.uri === 'string' &&
       !this._closed &&
       this._wasm &&
       this._inFlightCount === 0 &&
@@ -632,20 +619,32 @@ export class Evaluator {
       this._defaultTimeoutMs === null &&
       (expr === 'module' || expr === 'output.value')
     ) {
-      const status = this._wasm.tryEvaluateExpressionColumnarFast(
-        source.uri,
-        source.contents !== undefined && source.contents !== null,
-        expr,
-      );
+      const hasContents = spec.contents !== null;
+      const exprTag = expr === 'module' ? 0 : 1;
+      let status = 0;
+      if (this._fastUriIds !== null) {
+        let uriId = this._fastUriIds.get(spec.uri);
+        if (uriId === undefined && this._fastUriIds.size < 64) {
+          const registered = this._wasm.registerFastUri(spec.uri);
+          if (registered !== 0xffffffff) {
+            uriId = registered;
+            this._fastUriIds.set(spec.uri, uriId);
+          }
+        }
+        if (uriId !== undefined) {
+          status = this._wasm.tryEvaluateExpressionColumnarFastById(uriId, hasContents, exprTag);
+        } else {
+          status = this._wasm.tryEvaluateExpressionColumnarFast(spec.uri, hasContents, expr);
+        }
+      } else {
+        status = this._wasm.tryEvaluateExpressionColumnarFast(spec.uri, hasContents, expr);
+      }
       if (status === 1) {
         const mem = getWasmMemory();
         if (mem) {
           const ptr = this._wasm.fastColumnarPtr();
           const len = this._wasm.fastColumnarLen();
-          const unpacked = unpackColumnarBuffer(
-            new Uint8Array(mem.buffer, ptr, len),
-            this._colCache,
-          );
+          const unpacked = unpackColumnarSlice(mem.buffer, ptr, len, this._colCache);
           if (len > 262144) {
             this._colCache = { ab: null, base: -1, len: -1, gen: 0, hdr: null };
             this._wasm.releaseOversizedColumnar();
@@ -674,6 +673,22 @@ export class Evaluator {
     return hydrateSchema(res.value);
   }
 
+  async _evalExpressionDirect(source, expr, callOptions) {
+    const spec = normalizeModuleSource(source);
+    const res = await this._executeOp(callOptions, (now, timeoutMs) => {
+      this._wasm.startExpression(spec.uri, spec.contents, expr, now, timeoutMs);
+    });
+    return res.value;
+  }
+
+  async _evalExpressionValueDirect(source, expr, callOptions) {
+    const spec = normalizeModuleSource(source);
+    const res = await this._executeOp(callOptions, (now, timeoutMs) => {
+      this._wasm.startExpressionPklBinary(spec.uri, spec.contents, expr, now, timeoutMs);
+    });
+    return decodePklBinary(res.value);
+  }
+
   /**
    * Evaluates a `pkl:test` module (`facts` and `examples`), returning structured `TestResults`
    * plus Pkl 0.32.0 `rendered` output (`spec` | `minimal` | `junit`).
@@ -682,123 +697,274 @@ export class Evaluator {
    * @param {{ overwrite?: boolean, reporter?: "spec" | "minimal" | "junit", timeoutMs?: number | bigint, signal?: AbortSignal }} [options]
    * @returns {Promise<any>}
    */
-  async evaluateTest(source, options = undefined) {
-    if (this.isClosed) {
-      throw new PklError('Evaluator has been closed.', 'closed');
-    }
+  evaluateTest(source, options = undefined) {
     const spec = normalizeModuleSource(source);
     const reporter = options?.reporter ?? 'spec';
     const overwrite = Boolean(options?.overwrite);
-    const callOptions = { timeoutMs: options?.timeoutMs, signal: options?.signal };
+    const requestedTimeoutMs =
+      options?.timeoutMs !== undefined
+        ? normalizeTimeoutMs(options.timeoutMs)
+        : this._defaultTimeoutMs;
+    const callSignal = options?.signal;
     const useColor = this._hostHooks.useColor;
 
-    this._testLogBuffer = [];
-    this._inFlightCount += 1;
-    this._wasm.setCaptureLogs(true);
-    try {
-      const checkVal = await this.evaluateExpressionValue(source, TEST_CHECK_EXPR, callOptions);
-      const moduleName = (checkVal instanceof Map && checkVal.get('moduleName')) || 'test';
-      const moduleUri = (checkVal instanceof Map && checkVal.get('moduleUri')) || spec.uri;
-      const isTest = Boolean(checkVal instanceof Map && checkVal.get('isTest'));
-      const displayUri = moduleUri;
+    return this._enqueueTask(async () => {
+      if (this.isClosed) {
+        throw new PklError('Evaluator has been closed.', 'closed');
+      }
+      if (this._deferredCapabilityError) {
+        throw this._deferredCapabilityError;
+      }
+      if (
+        this._cancelled ||
+        this._defaultSignal?.aborted ||
+        callSignal?.aborted
+      ) {
+        throw new PklError('Evaluation was cancelled.', 'cancelled');
+      }
 
-      if (!isTest) {
-        let renderedErr;
-        try {
-          await this.evaluateExpression(source, 'module as import("pkl:test")', callOptions);
-          renderedErr = `–– Pkl Error ––\nExpected value of type \`pkl.test\`, but got type \`Class\`.\nValue: ${moduleName}\n`;
-        } catch (err) {
-          renderedErr = err instanceof Error ? err.message : String(err);
+      const startCancelGen = this._cancelGen;
+      const startNow = monotonicNowMs(this._clockState);
+      const sharedDeadline =
+        requestedTimeoutMs !== null ? startNow + requestedTimeoutMs : null;
+      const budget = {
+        startCancelGen,
+        requestedTimeoutMs,
+        sharedDeadline,
+        signal: callSignal,
+        nextCallOptions: () => {
+          if (this.isClosed) {
+            throw new PklError('Evaluator has been closed.', 'closed');
+          }
+          if (
+            this._cancelled ||
+            this._cancelGen !== startCancelGen ||
+            this._defaultSignal?.aborted ||
+            callSignal?.aborted
+          ) {
+            throw new PklError('Evaluation was cancelled.', 'cancelled');
+          }
+          if (sharedDeadline === null) {
+            return { timeoutMs: undefined, signal: callSignal };
+          }
+          const now = monotonicNowMs(this._clockState);
+          if (now >= sharedDeadline) {
+            throw new PklError(formatTimeoutMessage(requestedTimeoutMs ?? 0n), 'timeout');
+          }
+          return { timeoutMs: sharedDeadline - now, signal: callSignal };
+        },
+      };
+
+      this._testLogBuffer = [];
+      this._inFlightCount += 1;
+      this._wasm.setCaptureLogs(true);
+      try {
+        const checkVal = await this._evalExpressionValueDirect(
+          source,
+          TEST_CHECK_EXPR,
+          budget.nextCallOptions(),
+        );
+        const moduleName = (checkVal instanceof Map && checkVal.get('moduleName')) || 'test';
+        const moduleUri = (checkVal instanceof Map && checkVal.get('moduleUri')) || spec.uri;
+        const isTest = Boolean(checkVal instanceof Map && checkVal.get('isTest'));
+        const displayUri = moduleUri;
+
+        if (!isTest) {
+          let renderedErr;
+          try {
+            await this._evalExpressionDirect(
+              source,
+              'module as import("pkl:test")',
+              budget.nextCallOptions(),
+            );
+            renderedErr = `–– Pkl Error ––\nExpected value of type \`pkl.test\`, but got type \`Class\`.\nValue: ${moduleName}\n`;
+          } catch (err) {
+            if (isControlFlowPklError(err)) throw err;
+            renderedErr = err instanceof Error ? err.message : String(err);
+          }
+          const logs = this._testLogBuffer.map((l) => `${l}\n`).join('');
+          const rawResults = {
+            moduleName,
+            displayUri,
+            facts: { name: 'facts', results: [] },
+            examples: { name: 'examples', results: [] },
+            logs,
+            error: {
+              message: extractShortErrorMessage(renderedErr),
+              rendered: renderedErr,
+            },
+          };
+          const rendered = (() => {
+            try {
+              return this._bindings.wasmRenderTestReport(rawResults, reporter, useColor);
+            } catch (err) {
+              throw toPklError(err);
+            }
+          })();
+          return finalizeTestResults(rawResults, rendered);
         }
+
+        // Resolve source text for fact/example spans (inline or VFS)
+        let moduleSourceText = spec.contents;
+        if (moduleSourceText === null && moduleUri.startsWith('file:') && this._hostHooks.vfs) {
+          try {
+            const p = fileUriToPath(moduleUri);
+            if (this._hostHooks.vfs.isFile(p)) {
+              moduleSourceText = this._hostHooks.vfs.readText(p);
+            }
+          } catch {
+            moduleSourceText = null;
+          }
+        }
+
+        // 1. Evaluate `facts`
+        const factsSection = await this._evaluateTestFacts(
+          source,
+          spec,
+          moduleUri,
+          moduleSourceText,
+          useColor,
+          budget,
+        );
+
+        // 2. Evaluate `examples`
+        const examplesSection = await this._evaluateTestExamples(
+          source,
+          moduleUri,
+          moduleSourceText,
+          overwrite,
+          useColor,
+          budget,
+        );
+
         const logs = this._testLogBuffer.map((l) => `${l}\n`).join('');
         const rawResults = {
           moduleName,
           displayUri,
-          facts: { name: 'facts', results: [] },
-          examples: { name: 'examples', results: [] },
+          facts: factsSection,
+          examples: examplesSection,
           logs,
-          error: {
-            message: extractShortErrorMessage(renderedErr),
-            rendered: renderedErr,
-          },
+          error: null,
         };
-        const rendered = this._bindings.wasmRenderTestReport(rawResults, reporter, useColor);
-        return finalizeTestResults(rawResults, rendered);
-      }
-
-      // Resolve source text for fact/example spans (inline or VFS)
-      let moduleSourceText = spec.contents;
-      if (moduleSourceText === null && moduleUri.startsWith('file:') && this._hostHooks.vfs) {
-        try {
-          const p = fileUriToPath(moduleUri);
-          if (this._hostHooks.vfs.isFile(p)) {
-            moduleSourceText = this._hostHooks.vfs.readText(p);
+        const rendered = (() => {
+          try {
+            return this._bindings.wasmRenderTestReport(rawResults, reporter, useColor);
+          } catch (err) {
+            throw toPklError(err);
           }
-        } catch {
-          moduleSourceText = null;
+        })();
+        return finalizeTestResults(rawResults, rendered);
+      } catch (err) {
+        if (err instanceof PklError && err.kind === 'timeout' && requestedTimeoutMs !== null) {
+          throw new PklError(formatTimeoutMessage(requestedTimeoutMs), 'timeout');
         }
+        throw err;
+      } finally {
+        if (this._wasm) {
+          this._wasm.setCaptureLogs(false);
+        }
+        this._testLogBuffer = null;
+        this._inFlightCount -= 1;
+        this._disposeWasmIfClosed();
       }
+    });
+  }
 
-      // 1. Evaluate `facts`
-      const factsSection = await this._evaluateTestFacts(
-        source,
-        spec,
-        moduleUri,
-        moduleSourceText,
-        useColor,
-        callOptions,
-      );
-
-      // 2. Evaluate `examples`
-      const examplesSection = await this._evaluateTestExamples(
-        source,
-        moduleUri,
-        moduleSourceText,
-        overwrite,
-        useColor,
-        callOptions,
-      );
-
-      const logs = this._testLogBuffer.map((l) => `${l}\n`).join('');
-      const rawResults = {
-        moduleName,
-        displayUri,
-        facts: factsSection,
-        examples: examplesSection,
-        logs,
-        error: null,
+  async _awaitWithBudget(promise, budget) {
+    let timerId = null;
+    let settled = false;
+    const listeners = [];
+    let unregisterCancel = () => {};
+    const abortPromise = new Promise((_, reject) => {
+      const fail = (kind) => {
+        if (settled) return;
+        settled = true;
+        if (kind === 'timeout') {
+          reject(new PklError(formatTimeoutMessage(budget.requestedTimeoutMs ?? 0n), 'timeout'));
+        } else if (kind === 'closed') {
+          reject(new PklError('Evaluator has been closed.', 'closed'));
+        } else {
+          reject(new PklError('Evaluation was cancelled.', 'cancelled'));
+        }
       };
-      const rendered = this._bindings.wasmRenderTestReport(rawResults, reporter, useColor);
-      return finalizeTestResults(rawResults, rendered);
-    } finally {
-      if (this._wasm) {
-        this._wasm.setCaptureLogs(false);
+      if (this.isClosed) {
+        fail('closed');
+        return;
       }
-      this._testLogBuffer = null;
-      this._inFlightCount -= 1;
-      this._disposeWasmIfClosed();
+      if (
+        this._cancelled ||
+        (budget.startCancelGen !== undefined && this._cancelGen !== budget.startCancelGen) ||
+        this._defaultSignal?.aborted ||
+        budget.signal?.aborted
+      ) {
+        fail('cancelled');
+        return;
+      }
+      const hook = (kind) => fail(kind);
+      this._activeCancelHooks.add(hook);
+      unregisterCancel = () => this._activeCancelHooks.delete(hook);
+      for (const sig of [this._defaultSignal, budget.signal]) {
+        if (!sig) continue;
+        const handler = () => fail('cancelled');
+        sig.addEventListener('abort', handler, { once: true });
+        listeners.push({ sig, handler });
+      }
+      const armTimer = () => {
+        if (settled || budget.sharedDeadline === null) return;
+        const now = monotonicNowMs(this._clockState);
+        if (now >= budget.sharedDeadline) {
+          fail('timeout');
+          return;
+        }
+        const rem = budget.sharedDeadline - now;
+        const delayMs = rem > 2_147_483_647n ? 2_147_483_647 : Number(rem);
+        timerId = setTimeout(() => {
+          timerId = null;
+          armTimer();
+        }, delayMs);
+      };
+      armTimer();
+    });
+    abortPromise.catch(() => {});
+    try {
+      return await Promise.race([promise, abortPromise]);
+    } finally {
+      settled = true;
+      if (timerId !== null) clearTimeout(timerId);
+      unregisterCancel();
+      for (const { sig, handler } of listeners) {
+        sig.removeEventListener('abort', handler);
+      }
     }
   }
 
-  async _evaluateTestFacts(source, spec, moduleUri, moduleSourceText, useColor, callOptions) {
-    const shape = await this.evaluateExpressionValue(
+  async _evaluateTestFacts(source, spec, moduleUri, moduleSourceText, useColor, budget) {
+    const shape = await this._evalExpressionValueDirect(
       source,
       'if (facts == null) null else facts.toMap().mapValues((_, g) -> g.length)',
-      callOptions,
+      budget.nextCallOptions(),
     );
     if (!(shape instanceof Map)) {
       return { name: 'facts', results: [] };
     }
     const factSpans =
       typeof moduleSourceText === 'string'
-        ? this._bindings.wasmExtractFactSpans(moduleSourceText)
+        ? (() => {
+            try {
+              return this._bindings.wasmExtractFactSpans(moduleSourceText);
+            } catch (err) {
+              throw toPklError(err);
+            }
+          })()
         : {};
     const results = [];
 
     for (const [groupKey, lenVal] of shape.entries()) {
       const groupName = String(groupKey);
       const count = typeof lenVal === 'bigint' ? Number(lenVal) : Number(lenVal || 0);
-      const groupLocs = factSpans[groupName] || [];
+      const groupLocs = Object.prototype.hasOwnProperty.call(factSpans, groupName)
+        ? factSpans[groupName]
+        : [];
       let totalAsserts = 0;
       const failures = [];
       const errors = [];
@@ -807,7 +973,11 @@ export class Evaluator {
         totalAsserts += 1;
         const expr = `facts[${pklEscapeStr(groupName)}][${idx}]`;
         try {
-          const val = await this.evaluateExpressionValue(source, expr, callOptions);
+          const val = await this._evalExpressionValueDirect(
+            source,
+            expr,
+            budget.nextCallOptions(),
+          );
           if (val === false) {
             const locInfo = groupLocs[idx];
             if (!locInfo) {
@@ -822,19 +992,23 @@ export class Evaluator {
               if (this._hostHooks.powerAssertions) {
                 const probeExpr = `(null as Any(${locInfo.expr}))`;
                 try {
-                  const probeRes = await this._runSerialized(callOptions, (now, timeoutMs) => {
-                    this._wasm.startPowerAssertionProbe(
-                      spec.uri,
-                      spec.contents,
-                      probeExpr,
-                      location,
-                      useColor,
-                      now,
-                      timeoutMs,
-                    );
-                  });
+                  const probeRes = await this._executeOp(
+                    budget.nextCallOptions(),
+                    (now, timeoutMs) => {
+                      this._wasm.startPowerAssertionProbe(
+                        spec.uri,
+                        spec.contents,
+                        probeExpr,
+                        location,
+                        useColor,
+                        now,
+                        timeoutMs,
+                      );
+                    },
+                  );
                   paFailure = probeRes.value;
-                } catch {
+                } catch (probeErr) {
+                  if (isControlFlowPklError(probeErr)) throw probeErr;
                   paFailure = null;
                 }
               }
@@ -845,6 +1019,7 @@ export class Evaluator {
             }
           }
         } catch (err) {
+          if (isControlFlowPklError(err)) throw err;
           const rendered = err instanceof Error ? err.message : String(err);
           errors.push({
             message: extractShortErrorMessage(rendered),
@@ -871,9 +1046,13 @@ export class Evaluator {
     moduleSourceText,
     overwrite,
     useColor,
-    callOptions,
+    budget,
   ) {
-    const isNull = await this.evaluateExpressionValue(source, 'examples == null', callOptions);
+    const isNull = await this._evalExpressionValueDirect(
+      source,
+      'examples == null',
+      budget.nextCallOptions(),
+    );
     if (isNull === true) {
       return { name: 'examples', results: [] };
     }
@@ -898,41 +1077,82 @@ export class Evaluator {
     const expectedUri = pathToFileUri(expectedPath);
     const actualUri = pathToFileUri(actualPath);
 
+    try {
+      if (typeof this._hostHooks.securityManager?.checkResolveModule === 'function') {
+        await this._awaitWithBudget(
+          Promise.resolve().then(() =>
+            this._hostHooks.securityManager.checkResolveModule(moduleUri),
+          ),
+          budget,
+        );
+        await this._awaitWithBudget(
+          Promise.resolve().then(() =>
+            this._hostHooks.securityManager.checkResolveModule(expectedUri),
+          ),
+          budget,
+        );
+        await this._awaitWithBudget(
+          Promise.resolve().then(() =>
+            this._hostHooks.securityManager.checkResolveModule(actualUri),
+          ),
+          budget,
+        );
+      } else {
+        this._wasm.checkResolveModule(moduleUri);
+        this._wasm.checkResolveModule(expectedUri);
+        this._wasm.checkResolveModule(actualUri);
+      }
+    } catch (err) {
+      if (isControlFlowPklError(err)) throw err;
+      throw toPklError(err, 'security');
+    }
+
+    budget.nextCallOptions();
     if (vfs.isFile(actualPath)) vfs.delete(actualPath);
     if (overwrite && vfs.isFile(expectedPath)) vfs.delete(expectedPath);
 
-    const actualMap = await this.evaluateExpressionValue(
+    const actualMap = await this._evalExpressionValueDirect(
       source,
       RENDER_ACTUAL_EXAMPLES_EXPR,
-      callOptions,
+      budget.nextCallOptions(),
     );
     const actualGroups = mapToRenderedGroups(actualMap);
-    const fullDoc = await this.evaluateExpression(source, RENDER_EXAMPLES_DOC_EXPR, callOptions);
+    const fullDoc = await this._evalExpressionDirect(
+      source,
+      RENDER_EXAMPLES_DOC_EXPR,
+      budget.nextCallOptions(),
+    );
 
     let expectedGroups = null;
     let expectedSource = null;
     if (vfs.isFile(expectedPath)) {
       expectedSource = vfs.readText(expectedPath);
-      const expMap = await this.evaluateExpressionValue(
+      const expMap = await this._evalExpressionValueDirect(
         ModuleSource.text(expectedSource, expectedUri),
         RENDER_EXPECTED_EXAMPLES_EXPR,
-        callOptions,
+        budget.nextCallOptions(),
       );
       expectedGroups = mapToRenderedGroups(expMap);
     }
 
-    const evalOut = this._bindings.wasmEvaluateExamples(
-      actualGroups,
-      expectedGroups,
-      moduleUri,
-      expectedUri,
-      actualUri,
-      fullDoc,
-      moduleSourceText,
-      expectedSource,
-      useColor,
-    );
+    let evalOut;
+    try {
+      evalOut = this._bindings.wasmEvaluateExamples(
+        actualGroups,
+        expectedGroups,
+        moduleUri,
+        expectedUri,
+        actualUri,
+        fullDoc,
+        moduleSourceText,
+        expectedSource,
+        useColor,
+      );
+    } catch (err) {
+      throw toPklError(err);
+    }
 
+    budget.nextCallOptions();
     if (typeof evalOut.generatedExpectedPcf === 'string') {
       vfs.write(expectedPath, evalOut.generatedExpectedPcf);
     }
@@ -954,22 +1174,46 @@ function mapToRenderedGroups(val) {
 }
 
 function finalizeTestResults(raw, rendered) {
-  const sumSection = (sec) => {
-    const results = sec.results || [];
-    let totalTests = results.length;
+  const enrichSection = (sec) => {
+    const rawResults = sec.results || [];
+    let totalTests = rawResults.length;
     let totalFailures = 0;
     let totalAsserts = 0;
     let totalAssertsFailed = 0;
-    for (const r of results) {
-      const f = (r.failures?.length || 0) + (r.errors?.length || 0);
-      totalAsserts += r.totalAsserts || 0;
+    const results = rawResults.map((r) => {
+      const failures = r.failures || [];
+      const errors = r.errors || [];
+      const f = failures.length + errors.length;
+      const asserts = r.totalAsserts || 0;
+      totalAsserts += asserts;
       totalAssertsFailed += f;
       if (f > 0) totalFailures += 1;
-    }
-    return { totalTests, totalFailures, totalAsserts, totalAssertsFailed };
+      return {
+        name: r.name,
+        totalAsserts: asserts,
+        failed: f > 0,
+        isExampleWritten: Boolean(r.isExampleWritten),
+        failures,
+        errors,
+      };
+    });
+    return {
+      section: {
+        name: sec.name,
+        failed: totalFailures > 0,
+        totalTests,
+        totalFailures,
+        totalAsserts,
+        results,
+      },
+      totalTests,
+      totalFailures,
+      totalAsserts,
+      totalAssertsFailed,
+    };
   };
-  const fStats = sumSection(raw.facts);
-  const eStats = sumSection(raw.examples);
+  const fStats = enrichSection(raw.facts);
+  const eStats = enrichSection(raw.examples);
   const failed = Boolean(raw.error) || fStats.totalFailures > 0 || eStats.totalFailures > 0;
   return {
     moduleName: raw.moduleName,
@@ -979,8 +1223,8 @@ function finalizeTestResults(raw, rendered) {
     totalFailures: fStats.totalFailures + eStats.totalFailures,
     totalAsserts: fStats.totalAsserts + eStats.totalAsserts,
     totalAssertsFailed: fStats.totalAssertsFailed + eStats.totalAssertsFailed,
-    facts: raw.facts,
-    examples: raw.examples,
+    facts: fStats.section,
+    examples: eStats.section,
     logs: raw.logs,
     error: raw.error,
     rendered,
@@ -1031,6 +1275,10 @@ export class ReplSession {
     deferredCapabilityError = null,
   ) {
     this._wasm = wasmRepl;
+    this._wasmBox = { wasm: wasmRepl };
+    if (WASM_FINALIZER && wasmRepl) {
+      WASM_FINALIZER.register(this, this._wasmBox, this);
+    }
     this._hostHooks = hostHooks;
     this._defaultTimeoutMs = defaultTimeoutMs;
     this._defaultSignal = defaultSignal;
@@ -1038,15 +1286,19 @@ export class ReplSession {
     this._clockState = { last: 0n };
     this._nextId = 1;
     this._closed = false;
+    this._closePromise = null;
+    this._resolveClose = null;
     this._cancelled = false;
+    this._cancelGen = 0;
     this._inFlightCount = 0;
     this._pendingQueueCount = 0;
     this._activeCancelHooks = new Set();
     this._queue = Promise.resolve();
 
     this._onDefaultAbort = () => {
-      if (this._cancelled || this._closed || !this._wasm) return;
+      if (this._closed || !this._wasm) return;
       this._cancelled = true;
+      this._cancelGen += 1;
       this._wasm.cancel();
       for (const hook of Array.from(this._activeCancelHooks)) {
         hook('cancelled');
@@ -1062,11 +1314,22 @@ export class ReplSession {
   }
 
   _disposeWasmIfClosed() {
-    if (this._closed && this._inFlightCount === 0 && this._wasm) {
-      const wasm = this._wasm;
-      this._wasm = null;
-      if (typeof wasm.free === 'function') {
-        wasm.free();
+    if (this._closed && this._inFlightCount === 0) {
+      if (this._wasm) {
+        const wasm = this._wasm;
+        this._wasm = null;
+        this._wasmBox.wasm = null;
+        if (WASM_FINALIZER) {
+          WASM_FINALIZER.unregister(this);
+        }
+        if (typeof wasm.free === 'function') {
+          wasm.free();
+        }
+      }
+      if (this._resolveClose) {
+        const resolve = this._resolveClose;
+        this._resolveClose = null;
+        resolve();
       }
     }
   }
@@ -1075,9 +1338,19 @@ export class ReplSession {
     return this._closed || !this._wasm || this._wasm.isClosed();
   }
 
+  cancel() {
+    if (this._closed || !this._wasm) return;
+    this._cancelGen += 1;
+    this._wasm.cancel();
+    for (const hook of Array.from(this._activeCancelHooks)) {
+      hook('cancelled');
+    }
+  }
+
   close() {
-    if (this._closed) return;
+    if (this._closed) return this._closePromise || Promise.resolve();
     this._closed = true;
+    this._cancelGen += 1;
     if (this._defaultSignal) {
       this._defaultSignal.removeEventListener('abort', this._onDefaultAbort);
     }
@@ -1087,10 +1360,20 @@ export class ReplSession {
     for (const hook of Array.from(this._activeCancelHooks)) {
       hook('closed');
     }
+    if (this._inFlightCount > 0) {
+      this._closePromise = new Promise((resolve) => {
+        this._resolveClose = resolve;
+      });
+      this._disposeWasmIfClosed();
+      return this._closePromise;
+    }
     this._disposeWasmIfClosed();
+    this._closePromise = Promise.resolve();
+    return this._closePromise;
   }
 
   _runRequest(explicitId, startFn) {
+    const enqueueGen = this._cancelGen;
     const task = async () => {
       if (this.isClosed) {
         throw new PklError('REPL session has been closed.', 'closed');
@@ -1098,7 +1381,7 @@ export class ReplSession {
       if (this._deferredCapabilityError) {
         throw this._deferredCapabilityError;
       }
-      if (this._cancelled || this._defaultSignal?.aborted) {
+      if (this._cancelled || this._defaultSignal?.aborted || this._cancelGen !== enqueueGen) {
         throw new PklError('REPL evaluation was cancelled.', 'cancelled');
       }
       const seq = this._nextId++;
@@ -1165,18 +1448,36 @@ export class ReplSession {
    */
   async load(uriOrSource, options = undefined) {
     let uri;
+    let inlineContents = null;
     if (typeof uriOrSource === 'string') {
+      if (uriOrSource.length === 0) {
+        throw new PklError(
+          'ReplSession.load expects a non-empty URI string or ModuleSource',
+          'invalid-argument',
+        );
+      }
       uri = uriOrSource;
-    } else if (uriOrSource && typeof uriOrSource === 'object' && typeof uriOrSource.uri === 'string') {
+    } else if (
+      uriOrSource &&
+      typeof uriOrSource === 'object' &&
+      typeof uriOrSource.uri === 'string' &&
+      uriOrSource.uri.length > 0
+    ) {
       uri = uriOrSource.uri;
-      if (typeof uriOrSource.contents === 'string' && uri.startsWith('file:') && this._hostHooks.vfs) {
-        this._hostHooks.vfs.write(fileUriToPath(uri), uriOrSource.contents);
+      if (uriOrSource.contents !== undefined && uriOrSource.contents !== null) {
+        if (typeof uriOrSource.contents !== 'string') {
+          throw new PklError('ModuleSource.contents must be a string.', 'invalid-argument');
+        }
+        inlineContents = uriOrSource.contents;
       }
     } else {
-      throw new PklError('ReplSession.load expects a URI string or ModuleSource', 'invalid-argument');
+      throw new PklError(
+        'ReplSession.load expects a non-empty URI string or ModuleSource',
+        'invalid-argument',
+      );
     }
     return this._runRequest(options?.id, (id, now, timeoutMs) => {
-      this._wasm.startLoad(id, uri, now, timeoutMs);
+      this._wasm.startLoad(id, uri, inlineContents, now, timeoutMs);
     });
   }
 
@@ -1253,8 +1554,19 @@ export async function createRepl(options = {}) {
 export async function analyzeImportGraph(uris, options = {}) {
   await init();
   if (!Array.isArray(uris)) {
-    throw new PklError('analyzeImportGraph expects an array of URI strings', 'invalid-argument');
+    throw new PklError(
+      'analyzeImportGraph expects an array of URI strings or ModuleSource instances',
+      'invalid-argument',
+    );
   }
+  const normalizedUris = uris.map((item) => {
+    if (typeof item === 'string') return item;
+    if (item && typeof item === 'object' && typeof item.uri === 'string') return item.uri;
+    throw new PklError(
+      'analyzeImportGraph entries must be URI strings or ModuleSource instances',
+      'invalid-argument',
+    );
+  });
   const wasm = getWasmBindings();
   const timeoutMs = normalizeTimeoutMs(options?.timeoutMs);
   const { rustConfig, hostHooks, deferredCapabilityError } = buildRustHostConfig(options);
@@ -1263,7 +1575,7 @@ export async function analyzeImportGraph(uris, options = {}) {
   }
   let analyzer;
   try {
-    analyzer = new wasm.WasmImportAnalyzer(uris, rustConfig);
+    analyzer = new wasm.WasmImportAnalyzer(normalizedUris, rustConfig);
   } catch (err) {
     throw toPklError(err, 'configuration');
   }

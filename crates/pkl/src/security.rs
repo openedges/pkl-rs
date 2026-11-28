@@ -1,6 +1,6 @@
 //! SecurityManager SPI and standard policies mirroring `org.pkl.core.{SecurityManager, SecurityManagers}`.
 
-use crate::error::{PklError, Result};
+use crate::error::{PklError, Result, format_module_host_error, format_read_failure};
 use pkl_host_native::CustomSecurityChecker;
 use pkl_runtime::host::security::{
     DEFAULT_ALLOWED_MODULES, DEFAULT_ALLOWED_RESOURCES, SecurityPolicy,
@@ -30,7 +30,7 @@ pub trait SecurityManager: Send + Sync {
 /// Standard allowlist + `rootDir` + trust-level [`SecurityManager`] (`SecurityManagers.standard`).
 #[derive(Clone, Debug)]
 pub struct StandardSecurityManager {
-    policy: SecurityPolicy,
+    fs: pkl_host_native::NativeFs,
 }
 
 impl StandardSecurityManager {
@@ -53,47 +53,43 @@ impl StandardSecurityManager {
         };
         let policy = SecurityPolicy::new(allowed_modules, allowed_resources, root_str)
             .map_err(PklError::configuration)?;
-        Ok(Self { policy })
+        Ok(Self {
+            fs: pkl_host_native::NativeFs::new(policy),
+        })
     }
 
-    pub fn policy(&self) -> &SecurityPolicy {
-        &self.policy
+    #[allow(dead_code)]
+    pub(crate) fn policy(&self) -> &SecurityPolicy {
+        self.fs.policy()
     }
 }
 
 impl SecurityManager for StandardSecurityManager {
     fn check_resolve_module(&self, uri: &str) -> Result<()> {
-        self.policy
+        self.fs
             .check_resolve_module(&PklString::from(uri))
-            .map_err(|err| PklError::security(format_module_host_security(err)))
+            .map_err(|err| PklError::security(format_module_host_error(&err)))
     }
 
     fn check_import_module(&self, importing_module: &str, imported_module: &str) -> Result<()> {
-        self.policy
+        self.fs
+            .policy()
             .check_import_module(
                 &PklString::from(importing_module),
                 &PklString::from(imported_module),
             )
-            .map_err(|err| PklError::security(format_module_host_security(err)))
+            .map_err(|err| PklError::security(format_module_host_error(&err)))
     }
 
     fn check_read_resource(&self, resource_uri: &str) -> Result<()> {
-        self.policy
+        self.fs
             .check_read_resource(&PklString::from(resource_uri))
-            .map_err(|err| PklError::security(format!("{err:?}")))
-    }
-}
-
-fn format_module_host_security(err: pkl_runtime::modules::ModuleHostError) -> String {
-    match err {
-        pkl_runtime::modules::ModuleHostError::SecurityManagerException { message } => {
-            message.map(|m| m.to_java_utf8()).unwrap_or_default()
-        }
-        other => format!("{other:?}"),
+            .map_err(|err| PklError::security(format_read_failure(&err)))
     }
 }
 
 /// Factory helpers mirroring `org.pkl.core.SecurityManagers`.
+#[derive(Clone, Copy, Debug, Default)]
 pub struct SecurityManagers;
 
 impl SecurityManagers {

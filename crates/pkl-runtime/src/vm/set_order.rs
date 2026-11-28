@@ -544,6 +544,7 @@ impl SortRun {
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn set_order(
         &mut self,
         receiver: Value,

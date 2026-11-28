@@ -159,22 +159,34 @@ impl Vm {
         }
     }
 
-    fn protobuf_type_class(&mut self, ty: &TypeCheck) -> Result<Option<ObjectId>, RuntimeError> {
+    fn protobuf_type_class(&mut self, mut ty: &TypeCheck) -> Result<Option<ObjectId>, RuntimeError> {
         // TypeNode.getVmClass is deliberately null for constrained/union/unknown
         // nodes. Do not infer their class from the successful value.
-        let ty = ty.resolved();
-        match ty {
-            TypeCheck::Alias(inner)
-            | TypeCheck::GenericAlias(inner)
-            | TypeCheck::NamedAlias {
-                expanded: inner, ..
-            } => return self.protobuf_type_class(inner),
-            TypeCheck::IntegerAlias { .. } => {
-                return Ok(Some(
-                    self.canonical_builtin_class(classes::BuiltinClass::Int),
-                ));
+        let mut depth = 0usize;
+        loop {
+            ty = ty.resolved();
+            match ty {
+                TypeCheck::Alias(inner)
+                | TypeCheck::GenericAlias(inner)
+                | TypeCheck::NamedAlias {
+                    expanded: inner, ..
+                } => {
+                    depth += 1;
+                    if depth > MAX_TYPE_COMPILE_DEPTH {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Type expression exceeds maximum nesting depth.",
+                        ));
+                    }
+                    ty = inner;
+                }
+                TypeCheck::IntegerAlias { .. } => {
+                    return Ok(Some(
+                        self.canonical_builtin_class(classes::BuiltinClass::Int),
+                    ));
+                }
+                _ => break,
             }
-            _ => {}
         }
         if matches!(
             ty,
@@ -201,7 +213,35 @@ impl Vm {
         property_env: &Environment,
         wrapper: bool,
     ) -> Result<Option<Option<TypeCheck>>, RuntimeError> {
+        let mut nodes = 0usize;
+        self.protobuf_normalize_type_bounded(ty, property_env, wrapper, 0, &mut nodes)
+    }
+
+    fn protobuf_normalize_type_bounded(
+        &mut self,
+        mut ty: &TypeCheck,
+        property_env: &Environment,
+        wrapper: bool,
+        mut depth: usize,
+        nodes: &mut usize,
+    ) -> Result<Option<Option<TypeCheck>>, RuntimeError> {
         use TypeCheck as T;
+        loop {
+            *nodes += 1;
+            if *nodes > MAX_TYPE_COMPILE_NODES || depth > MAX_TYPE_COMPILE_DEPTH {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "Type expression exceeds maximum expansion complexity.",
+                ));
+            }
+            match ty.resolved() {
+                T::Nullable(inner) | T::Alias(inner) | T::GenericAlias(inner) => {
+                    ty = inner;
+                    depth += 1;
+                }
+                _ => break,
+            }
+        }
         let normalized = match ty.resolved() {
             T::IntegerAlias { .. } => T::Int,
             T::StringLiteral(_)
@@ -209,9 +249,6 @@ impl Vm {
                 string_literals: true,
                 ..
             } => T::String,
-            T::Nullable(inner) | T::Alias(inner) | T::GenericAlias(inner) => {
-                return self.protobuf_normalize_type(inner, property_env, wrapper);
-            }
             T::NamedAlias {
                 declaration,
                 expanded: inner,
@@ -237,19 +274,36 @@ impl Vm {
                     else {
                         return Ok(None);
                     };
-                    return self.protobuf_normalize_type(&unparameterized, &lexical, wrapper);
+                    return self.protobuf_normalize_type_bounded(
+                        &unparameterized,
+                        &lexical,
+                        wrapper,
+                        depth + 1,
+                        nodes,
+                    );
                 }
                 let next_env = self
                     .alias_check_environment(*declaration, property_env)?
                     .unwrap_or_else(|| property_env.clone());
-                return self.protobuf_normalize_type(inner, &next_env, wrapper);
+                return self.protobuf_normalize_type_bounded(
+                    inner,
+                    &next_env,
+                    wrapper,
+                    depth + 1,
+                    nodes,
+                );
             }
             T::ParameterizedCollection {
                 kind: CollectionKind::Listing,
                 arguments,
             } => {
-                let Some(inner) =
-                    self.protobuf_normalize_type(&arguments[0].0, property_env, wrapper)?
+                let Some(inner) = self.protobuf_normalize_type_bounded(
+                    &arguments[0].0,
+                    property_env,
+                    wrapper,
+                    depth + 1,
+                    nodes,
+                )?
                 else {
                     return Ok(None);
                 };
@@ -266,8 +320,13 @@ impl Vm {
                 kind: CollectionKind::Mapping,
                 arguments,
             } => {
-                let Some(key) =
-                    self.protobuf_normalize_type(&arguments[0].0, property_env, wrapper)?
+                let Some(key) = self.protobuf_normalize_type_bounded(
+                    &arguments[0].0,
+                    property_env,
+                    wrapper,
+                    depth + 1,
+                    nodes,
+                )?
                 else {
                     return Ok(None);
                 };
@@ -299,8 +358,13 @@ impl Vm {
                     }
                     return Err(error);
                 }
-                let Some(inner) =
-                    self.protobuf_normalize_type(&arguments[1].0, property_env, wrapper)?
+                let Some(inner) = self.protobuf_normalize_type_bounded(
+                    &arguments[1].0,
+                    property_env,
+                    wrapper,
+                    depth + 1,
+                    nodes,
+                )?
                 else {
                     return Ok(None);
                 };
@@ -317,8 +381,13 @@ impl Vm {
                 let mut elements = Vec::new();
                 let mut has_string = false;
                 for element in types {
-                    let Some(resolved) =
-                        self.protobuf_normalize_type(element, property_env, wrapper)?
+                    let Some(resolved) = self.protobuf_normalize_type_bounded(
+                        element,
+                        property_env,
+                        wrapper,
+                        depth + 1,
+                        nodes,
+                    )?
                     else {
                         return Ok(None);
                     };
@@ -390,14 +459,33 @@ impl Vm {
     }
 
     fn protobuf_alternatives(ty: &TypeCheck, output: &mut Vec<TypeCheck>) {
-        if let TypeCheck::Union { types, .. } = ty.resolved() {
-            for ty in types {
-                if matches!(ty.resolved(), TypeCheck::Union { .. }) {
-                    Self::protobuf_alternatives(ty, output);
+        enum AltWork<'a> {
+            Expand(&'a TypeCheck),
+            Emit(&'a TypeCheck),
+        }
+        let mut stack = vec![AltWork::Expand(ty)];
+        let mut emitted = 0usize;
+        while let Some(step) = stack.pop() {
+            match step {
+                AltWork::Expand(cur) => {
+                    if let TypeCheck::Union { types, .. } = cur.resolved() {
+                        for item in types.iter().rev() {
+                            // A nested union with no successful child still executes its own
+                            // TypeNode before the next sibling, exactly as computeName does.
+                            stack.push(AltWork::Emit(item));
+                            if matches!(item.resolved(), TypeCheck::Union { .. }) {
+                                stack.push(AltWork::Expand(item));
+                            }
+                        }
+                    }
                 }
-                // A nested union with no successful child still executes its own
-                // TypeNode before the next sibling, exactly as computeName does.
-                output.push(ty.clone());
+                AltWork::Emit(item) => {
+                    emitted += 1;
+                    if emitted > MAX_TYPE_COMPILE_NODES {
+                        break;
+                    }
+                    output.push(item.clone());
+                }
             }
         }
     }

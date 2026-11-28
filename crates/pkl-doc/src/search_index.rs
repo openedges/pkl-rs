@@ -7,7 +7,27 @@ use crate::model::{
 };
 use crate::package_data::{ElementRef, ModuleData, PackageData};
 use crate::runtime_data::path_to_uri_display;
-use crate::util::encode_path;
+use crate::util::{encode_path, join_confined_output_path};
+
+/// Serializes `s` as a JSON string literal safe inside `searchData='[...]';`
+/// (escapes `'` -> `\u0027`, U+2028 -> `\u2028`, U+2029 -> `\u2029` so untrusted
+/// symbols/annotations cannot break out of the JS single-quoted string literal).
+fn push_search_index_json_string(out: &mut String, s: &str) {
+    if !s.contains(['\'', '\u{2028}', '\u{2029}']) {
+        push_json_string(out, s);
+        return;
+    }
+    let mut tmp = String::with_capacity(s.len() + 8);
+    push_json_string(&mut tmp, s);
+    for ch in tmp.chars() {
+        match ch {
+            '\'' => out.push_str("\\u0027"),
+            '\u{2028}' => out.push_str("\\u2028"),
+            '\u{2029}' => out.push_str("\\u2029"),
+            other => out.push(other),
+        }
+    }
+}
 use pkl_runtime::pkl_binary_decode::DecodedObject;
 use pkl_runtime::schema::{PClass, PClassMethod, PClassProperty, PType, SchemaStore, TypeAlias};
 use std::fs;
@@ -75,14 +95,14 @@ impl SearchIndexEntry {
 
     fn write_json(&self, out: &mut String) {
         out.push_str("{\"name\":");
-        push_json_string(out, &self.name);
+        push_search_index_json_string(out, &self.name);
         out.push_str(",\"kind\":");
         out.push_str(&(self.kind as i32).to_string());
         out.push_str(",\"url\":");
-        push_json_string(out, &self.url);
+        push_search_index_json_string(out, &self.url);
         if let Some(ref sig) = self.sig {
             out.push_str(",\"sig\":");
-            push_json_string(out, sig);
+            push_search_index_json_string(out, sig);
         }
         if let Some(par_id) = self.par_id {
             out.push_str(",\"parId\":");
@@ -98,7 +118,7 @@ impl SearchIndexEntry {
                 if idx > 0 {
                     out.push(',');
                 }
-                push_json_string(out, item);
+                push_search_index_json_string(out, item);
             }
             out.push(']');
         }
@@ -198,20 +218,23 @@ impl<'a> SearchIndexGenerator<'a> {
         if !self.search_index_file.is_file() {
             return Ok(Vec::new());
         }
-        let text = fs::read_to_string(&self.search_index_file).map_err(|e| {
-            DocGeneratorError::bug(format!(
-                "I/O error reading `{}`: {e}",
-                self.search_index_file.display()
-            ))
-        })?;
-        if !(text.starts_with(PREFIX) && text.ends_with(POSTFIX)) {
+        let text =
+            pkl_host_native::read_path_to_string_bounded(&self.search_index_file).map_err(|e| {
+                DocGeneratorError::bug(format!(
+                    "I/O error reading `{}`: {e}",
+                    self.search_index_file.display()
+                ))
+            })?;
+        let Some(json_str) = text
+            .strip_prefix(PREFIX)
+            .and_then(|rest| rest.strip_suffix(POSTFIX))
+        else {
             let _ = writeln!(
                 self.console_out,
                 "[error] Incorrect existing search-index.js; either doesnt start with prefix '{PREFIX}', or end with postfix '{POSTFIX}'"
             );
             return Ok(Vec::new());
-        }
-        let json_str = &text[PREFIX.len()..text.len() - POSTFIX.len()];
+        };
         let val = parse_json(json_str)?;
         let items = val
             .as_array()
@@ -287,12 +310,13 @@ impl<'a> SearchIndexGenerator<'a> {
         doc_package: &DocPackage,
         writes: &mut Vec<crate::generator::PendingFile>,
         logs: &mut Vec<String>,
-    ) {
-        let path = output_dir.join(format!(
+    ) -> Result<(), DocGeneratorError> {
+        let rel = format!(
             "{}/{}/search-index.js",
             encode_path(doc_package.name()),
             doc_package.version()
-        ));
+        );
+        let path = join_confined_output_path(output_dir, &rel)?;
         let entries = build_package_entries(doc_package);
         let bytes = format_entries_js(&entries);
         logs.push(format!("Wrote file {}\r", path_to_uri_display(&path)));
@@ -300,14 +324,16 @@ impl<'a> SearchIndexGenerator<'a> {
             path,
             bytes: crate::generator::FileBytes::Owned(bytes),
         });
+        Ok(())
     }
 
     pub fn generate(&mut self, doc_package: &DocPackage) -> Result<(), DocGeneratorError> {
-        let path = self.output_dir.join(format!(
+        let rel = format!(
             "{}/{}/search-index.js",
             encode_path(doc_package.name()),
             doc_package.version()
-        ));
+        );
+        let path = join_confined_output_path(self.output_dir, &rel)?;
         let entries = build_package_entries(doc_package);
         self.write_entries(&path, &entries)
     }
@@ -317,19 +343,21 @@ impl<'a> SearchIndexGenerator<'a> {
         path: &Path,
         entries: &[SearchIndexEntry],
     ) -> Result<(), DocGeneratorError> {
-        if let Some(parent) = path.parent() {
+        let checked = crate::util::ensure_path_under_output_dir(self.output_dir, path)?;
+        if let Some(parent) = checked.parent() {
             fs::create_dir_all(parent).map_err(|e| {
-                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
+                DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", checked.display()))
             })?;
         }
+        let checked = crate::util::ensure_path_under_output_dir(self.output_dir, &checked)?;
         let bytes = format_entries_js(entries);
-        fs::write(path, &bytes).map_err(|e| {
-            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", path.display()))
+        pkl_host_native::write_file_nofollow(&checked, &bytes).map_err(|e| {
+            DocGeneratorError::bug(format!("I/O error writing `{}`: {e}", checked.display()))
         })?;
         let _ = write!(
             self.console_out,
             "Wrote file {}\r",
-            path_to_uri_display(path)
+            path_to_uri_display(&checked)
         );
         Ok(())
     }
@@ -638,5 +666,63 @@ fn append_type(store: &SchemaStore, ty: &PType, out: &mut String) {
         PType::TypeVariable(tp) => {
             out.push_str(&tp.name);
         }
+        _ => {}
+    }
+}
+
+#[cfg(test)]
+mod security_tests {
+    use super::*;
+
+    #[test]
+    fn search_index_escapes_single_quotes_and_handles_short_corrupt_index() {
+        let entry = SearchIndexEntry {
+            name: "foo';alert(1);//".to_string(),
+            kind: Kind::Property,
+            url: "a/index.html#x".to_string(),
+            sig: Some(": String".to_string()),
+            par_id: Some(0),
+            deprecated: None,
+            aka: None,
+        };
+        let bytes = format_entries_js(&[entry]);
+        let js = String::from_utf8(bytes).unwrap();
+        assert!(js.starts_with(PREFIX) && js.ends_with(POSTFIX));
+        let inner = js
+            .strip_prefix(PREFIX)
+            .and_then(|s| s.strip_suffix(POSTFIX))
+            .unwrap();
+        assert!(
+            !inner.contains('\''),
+            "unescaped single quote in searchData: {js}"
+        );
+        assert!(inner.contains("\\u0027"));
+
+        // Short overlapping `"searchData=';\n"` must not panic when reading existing index.
+        let dir = std::env::temp_dir().join(format!("pkl-doc-si-test-{}", std::process::id()));
+        let _ = fs::remove_dir_all(&dir);
+        fs::create_dir_all(&dir).unwrap();
+        fs::write(dir.join("search-index.js"), "searchData=';\n").unwrap();
+        let mut out = Vec::new();
+        let mut generator = SearchIndexGenerator::new(&dir, &mut out);
+        let parsed = generator.get_current_search_index().unwrap();
+        assert!(parsed.is_empty());
+        let _ = fs::remove_dir_all(&dir);
+    }
+
+    #[test]
+    fn json_and_markdown_enforce_recursion_depth_limits() {
+        let deep_json = format!("{}{}", "[".repeat(256), "]".repeat(256));
+        assert!(parse_json(&deep_json).is_err());
+
+        let deep_md = format!("{}hello", "> ".repeat(256));
+        let rendered = crate::markdown::render_markdown_trimmed(&deep_md, |label| {
+            crate::markdown::RefLinkResolution {
+                destination: String::new(),
+                label: label.to_string(),
+                code_only_if_short: true,
+            }
+        });
+        assert!(rendered.is_some());
     }
 }

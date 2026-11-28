@@ -390,3 +390,101 @@ fn language_snippet_tests_corpus_never_panics_and_formatted_outputs_are_idempote
         &non_idempotent[..non_idempotent.len().min(10)]
     );
 }
+
+#[test]
+fn wave2_formatter_malformed_and_adversarial_inputs_do_not_panic() {
+    // Previously panicked via OOB token slice, unreachable!(), or assert!(!self.no_newlines).
+    for bad in ["a = (", "import \"a\\\n\"", "a = \"\\(1 // c\n)\""] {
+        let _ = format_str_latest(bad);
+    }
+
+    // Deep nesting exceeds MAX_PARSE_DEPTH cleanly without stack overflow.
+    let deep = format!("a = {}1{}\n", "(".repeat(400), ")".repeat(400));
+    assert!(
+        format_str_latest(&deep).is_err(),
+        "deeply nested expression must fail cleanly with depth error"
+    );
+
+    // Moderate nesting within MAX_PARSE_DEPTH formats cleanly on the default thread stack.
+    let valid_nested = format!("a = {}1{}\n", "(".repeat(64), ")".repeat(64));
+    assert!(format_str_latest(&valid_nested).is_ok());
+
+    // Nested object parameter lists must format in linear time (no exponential cloning).
+    let mut nested = String::from("a = ");
+    for i in 0..24 {
+        nested.push_str(&format!("new {{ p{i} -> "));
+    }
+    nested.push('1');
+    for _ in 0..24 {
+        nested.push_str(" }");
+    }
+    nested.push('\n');
+    let formatted = format_str_latest(&nested).expect("nested object param list must format");
+    assert!(formatted.contains("p23"));
+}
+
+#[test]
+fn round2_formatter_semicolon_import_deep_chains_and_width_bounded() {
+    // 1. Semicolon-terminated import must not panic and must be idempotent.
+    let imp = format_str_latest("import \"a.pkl\";\n").expect("semicolon import formats");
+    assert_eq!(imp, "import \"a.pkl\"\n");
+    assert_eq!(format_str_latest(&imp).unwrap(), imp);
+
+    // 2. Deep left-leaning / right-leaning chains must not stack overflow.
+    let non_null = format!("a = x{}\n", "!!".repeat(300));
+    let _ = format_str_latest(&non_null);
+    let nullable_type = format!("a: Int{}\n", "?".repeat(300));
+    let _ = format_str_latest(&nullable_type);
+    let unary_chain = format!("a = {}true\n", "!".repeat(300));
+    let _ = format_str_latest(&unary_chain);
+    let amends_chain = format!("a = base{}\n", " {}".repeat(300));
+    let _ = format_str_latest(&amends_chain);
+
+    // 3. Deep nested groups stay linear with short-circuiting width_bounded.
+    let nested_lists = format!("a = {}1{}\n", "List(".repeat(80), ")".repeat(80));
+    let out = format_str_latest(&nested_lists).expect("nested lists format quickly");
+    assert!(out.contains("List("));
+}
+
+#[test]
+fn round3_formatter_interleaved_chains_do_not_stack_overflow() {
+    // P1-9: Deeply interleaved unary/postfix/member/subscript/coalesce/pipe chains must not overflow stack.
+    let mut interleaved = String::from("a = ");
+    for _ in 0..350 {
+        interleaved.push('!');
+    }
+    interleaved.push('x');
+    for _ in 0..350 {
+        interleaved.push_str(".a[0]!!");
+    }
+    interleaved.push('\n');
+    let _ = format_str_latest(&interleaved);
+
+    let mut binary_chain = String::from("b = 1");
+    for _ in 0..350 {
+        binary_chain.push_str(" ?? 2 + 3 |> f");
+    }
+    binary_chain.push('\n');
+    let _ = format_str_latest(&binary_chain);
+}
+
+#[test]
+fn round4_formatter_deep_left_chain_and_custom_delim_import_sorting() {
+    // P1-12: Deep left-leaning arithmetic chain must format without recursive clone stack overflow.
+    let mut deep = String::from("x = 1");
+    for _ in 0..4_000 {
+        deep.push_str(" + 1");
+    }
+    deep.push('\n');
+    let out = format_str_latest(&deep).expect("deep left-leaning chain must format");
+    assert!(out.starts_with("x ="));
+
+    // P2-7: Custom-delimited import `#"pkl:json"#` matches Java `Builder.java:1451`
+    // (`substring(1, len-1)` preserves `#`, so it is NOT classified as stdlib `pkl:`).
+    let imports = "import #\"pkl:json\"#\nimport \"pkl:base\"\n";
+    let formatted = format_str_latest(imports).expect("custom delim import formats");
+    assert_eq!(
+        formatted, "import \"pkl:base\"\n\nimport #\"pkl:json\"#\n",
+        "stdlib import must precede custom-delimited non-stdlib import"
+    );
+}

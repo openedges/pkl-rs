@@ -1,7 +1,7 @@
 //! Evaluator settings, output formats, color modes, and `pkl:settings` data types
 //! mirroring `org.pkl.core.{OutputFormat, evaluatorSettings.*}` and `org.pkl.core.settings.PklSettings`.
 
-use crate::error::{PklError, Result};
+use crate::error::{PklError, Result, format_module_host_error};
 pub use pkl_runtime::logging::TraceMode;
 pub use pkl_runtime::packages::project::{
     DEFAULT_EDITOR_URL_SCHEME, EvaluatorColor, EvaluatorExternalReader as ExternalReaderSpec,
@@ -11,8 +11,10 @@ pub use pkl_runtime::packages::project::{
 use std::fmt;
 use std::io::IsTerminal;
 use std::path::Path;
+use std::str::FromStr;
 
 /// Built-in Pkl output formats (`org.pkl.core.OutputFormat`).
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub enum OutputFormat {
     Json,
@@ -63,8 +65,21 @@ impl fmt::Display for OutputFormat {
     }
 }
 
+impl FromStr for OutputFormat {
+    type Err = PklError;
+
+    fn from_str(s: &str) -> Result<Self> {
+        Self::parse(s).ok_or_else(|| {
+            PklError::invalid_argument(format!(
+                "Invalid output format `{s}`. Expected one of: json, jsonnet, pcf, plist, properties, textproto, xml, yaml, pkl-binary."
+            ))
+        })
+    }
+}
+
 /// ANSI color mode mirroring `org.pkl.core.evaluatorSettings.Color`.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[non_exhaustive]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Hash)]
 pub enum Color {
     Never,
     #[default]
@@ -73,6 +88,14 @@ pub enum Color {
 }
 
 impl Color {
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Never => "never",
+            Self::Auto => "auto",
+            Self::Always => "always",
+        }
+    }
+
     /// Resolves whether ANSI colors should be enabled (`Color.hasColor()`).
     ///
     /// Mirrors Apple Pkl 0.32.0 `Color.kt`: `Auto` checks interactive console
@@ -97,18 +120,33 @@ impl Color {
     }
 }
 
+impl fmt::Display for Color {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
+    }
+}
+
+impl FromStr for Color {
+    type Err = PklError;
+
+    fn from_str(s: &str) -> Result<Self> {
+        Self::parse(s)
+    }
+}
+
 impl From<EvaluatorColor> for Color {
     fn from(c: EvaluatorColor) -> Self {
         match c {
             EvaluatorColor::Never => Self::Never,
             EvaluatorColor::Auto => Self::Auto,
             EvaluatorColor::Always => Self::Always,
+            _ => Self::Auto,
         }
     }
 }
 
 /// Editor link scheme (`org.pkl.core.settings.PklSettings.Editor`).
-#[derive(Clone, Debug, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Editor {
     pub url_scheme: String,
 }
@@ -144,13 +182,25 @@ impl PklSettings {
     /// Loads `PklSettings` from a `settings.pkl` module source (e.g. `pkl:settings` or file path).
     pub fn load(source: &crate::ModuleSource) -> Result<Self> {
         let mut evaluator = crate::EvaluatorBuilder::preconfigured()
+            .with_allowed_modules(
+                pkl_runtime::packages::project::SETTINGS_ALLOWED_MODULES
+                    .iter()
+                    .map(|s| (*s).to_string())
+                    .collect(),
+            )
+            .with_allowed_resources(
+                pkl_runtime::packages::project::SETTINGS_ALLOWED_RESOURCES
+                    .iter()
+                    .map(|s| (*s).to_string())
+                    .collect(),
+            )
             .with_module_cache_dir(None)
             .build()?;
         let bytes = evaluator.evaluate_expression_pkl_binary(source, "output.value")?;
         let decoded = pkl_runtime::pkl_binary_decode::decode_lossless(&bytes)
             .map_err(|err| PklError::decode(format!("Failed to decode settings: {err}")))?;
         let parsed = RuntimePklSettings::from_decoded_value(&decoded, source.get_uri())
-            .map_err(|err| PklError::configuration(format!("{err:?}")))?;
+            .map_err(|err| PklError::configuration(format_module_host_error(&err)))?;
         Ok(Self {
             editor: Editor::new(parsed.editor_url_scheme),
             http: parsed.http,
@@ -166,5 +216,45 @@ impl PklSettings {
             }
         }
         Ok(Self::default())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn output_format_and_color_display_and_from_str() {
+        for fmt in [
+            OutputFormat::Json,
+            OutputFormat::Jsonnet,
+            OutputFormat::Pcf,
+            OutputFormat::Plist,
+            OutputFormat::Properties,
+            OutputFormat::TextProto,
+            OutputFormat::Xml,
+            OutputFormat::Yaml,
+            OutputFormat::PklBinary,
+        ] {
+            let parsed: OutputFormat = fmt.to_string().parse().unwrap();
+            assert_eq!(parsed, fmt);
+        }
+        assert!("unknown".parse::<OutputFormat>().is_err());
+
+        for color in [Color::Never, Color::Auto, Color::Always] {
+            let parsed: Color = color.to_string().parse().unwrap();
+            assert_eq!(parsed, color);
+        }
+        assert_eq!("ALWAYS".parse::<Color>().unwrap(), Color::Always);
+        assert!("invalid".parse::<Color>().is_err());
+    }
+
+    #[test]
+    fn pkl_settings_load_blocks_http_import() {
+        let src = crate::ModuleSource::text(
+            "amends \"pkl:settings\"\nimport \"http://127.0.0.1:9/evil.pkl\" as evil\n",
+        );
+        let err = PklSettings::load(&src).expect_err("settings.pkl must not allow http: imports");
+        assert_eq!(err.kind(), crate::PklErrorKind::Security, "err={err:?}");
     }
 }

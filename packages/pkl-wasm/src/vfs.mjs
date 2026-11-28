@@ -1,22 +1,101 @@
 import { PklError } from './errors.mjs';
 
 const textEncoder = new TextEncoder();
-const textDecoder = new TextDecoder('utf-8', { fatal: false });
+const textDecoder = new TextDecoder('utf-8', { fatal: false, ignoreBOM: true });
+
+function hexDigitValue(code) {
+  if (code >= 0x30 && code <= 0x39) return code - 0x30;
+  if (code >= 0x41 && code <= 0x46) return code - 0x41 + 10;
+  if (code >= 0x61 && code <= 0x66) return code - 0x61 + 10;
+  return -1;
+}
+
+/**
+ * Byte-level `%XX` decoder matching Rust `percent_decode_path` so malformed
+ * trailing escapes (e.g. `%00%ZZ`) never skip decoding earlier `%00` / `%2e%2e`.
+ * @param {string} raw
+ * @returns {string}
+ */
+function percentDecodeUtf8(raw) {
+  if (!raw.includes('%')) return raw;
+  const srcBytes = textEncoder.encode(raw);
+  const out = new Uint8Array(srcBytes.length);
+  let outLen = 0;
+  let i = 0;
+  while (i < srcBytes.length) {
+    if (srcBytes[i] === 0x25 /* '%' */ && i + 2 < srcBytes.length) {
+      const hi = hexDigitValue(srcBytes[i + 1]);
+      const lo = hexDigitValue(srcBytes[i + 2]);
+      if (hi >= 0 && lo >= 0) {
+        out[outLen++] = (hi << 4) | lo;
+        i += 3;
+        continue;
+      }
+    }
+    out[outLen++] = srcBytes[i++];
+  }
+  return textDecoder.decode(out.subarray(0, outLen));
+}
+
+function isWindowsStyleVfsPath(p) {
+  return (
+    p.startsWith('\\\\') ||
+    p.startsWith('//?/') ||
+    /^[A-Za-z]:[\\/]/.test(p) ||
+    /^\/[A-Za-z]:[\\/]/.test(p)
+  );
+}
 
 /**
  * Normalizes a POSIX virtual path to an absolute `/...` form resolving `.` and `..`.
  * @param {string} inputPath
  * @param {string} [baseDir]
+ * @param {{ preservePosixBackslash?: boolean }} [opts]
  * @returns {string}
  */
 export function normalizeVfsPath(inputPath, baseDir = '/') {
   if (typeof inputPath !== 'string' || inputPath.length === 0) {
     throw new PklError('VFS path must be a non-empty string', 'invalid-argument');
   }
-  const replaced = inputPath.replace(/\\/g, '/');
-  const combined = replaced.startsWith('/')
-    ? replaced
-    : `${baseDir.replace(/\\/g, '/').replace(/\/+$/, '')}/${replaced}`;
+  if (inputPath.includes('\0') || (typeof baseDir === 'string' && baseDir.includes('\0'))) {
+    throw new PklError('VFS path must not contain NUL bytes', 'invalid-argument');
+  }
+  const isWindows =
+    isWindowsStyleVfsPath(inputPath) ||
+    (typeof baseDir === 'string' && isWindowsStyleVfsPath(baseDir));
+  let replaced = isWindows ? inputPath.replace(/\\/g, '/') : inputPath;
+  if (replaced.startsWith('//?/')) {
+    const afterVerbatim = replaced.slice(4);
+    if (/^[A-Za-z]:(?:\/|$)/.test(afterVerbatim)) {
+      replaced = afterVerbatim;
+    }
+  }
+  let combined;
+  if (/^[A-Za-z]:(?:\/|$)/.test(replaced)) {
+    combined = `/${replaced}`;
+  } else if (replaced.startsWith('/')) {
+    combined = replaced;
+  } else {
+    const normBase = isWindows
+      ? baseDir.replace(/\\/g, '/').replace(/\/+$/, '')
+      : baseDir.replace(/\/+$/, '');
+    combined = `${normBase}/${replaced}`;
+  }
+  const driveMatch = /^\/([A-Za-z]:)(?:\/(.*))?$/.exec(combined);
+  if (driveMatch) {
+    const drive = driveMatch[1].toUpperCase();
+    const rest = driveMatch[2] ?? '';
+    const parts = [];
+    for (const seg of rest.split('/')) {
+      if (seg === '' || seg === '.') continue;
+      if (seg === '..') {
+        parts.pop();
+      } else {
+        parts.push(seg);
+      }
+    }
+    return parts.length === 0 ? `/${drive}` : `/${drive}/${parts.join('/')}`;
+  }
   const parts = [];
   for (const seg of combined.split('/')) {
     if (seg === '' || seg === '.') continue;
@@ -125,11 +204,9 @@ export function fileUriToPath(uri) {
     }
     rest = slashIdx >= 0 ? afterSlashes.slice(slashIdx) : '/';
   }
-  let decoded;
-  try {
-    decoded = decodeURIComponent(rest);
-  } catch {
-    decoded = rest;
+  const decoded = percentDecodeUtf8(rest);
+  if (decoded.includes('\0')) {
+    throw new PklError(`File URI must not contain NUL bytes: \`${uri}\``, 'invalid-argument');
   }
   if (!decoded.startsWith('/')) {
     throw new PklError(`File URI must have a leading slash: \`${uri}\``, 'invalid-argument');
@@ -138,66 +215,177 @@ export function fileUriToPath(uri) {
 }
 
 /**
- * Compiles a POSIX glob pattern supporting `*`, `**`, `?`, `[...]`, `{a,b}` into a RegExp.
+ * Compiles a POSIX glob pattern supporting `*`, `**`, `?`, `[...]`, `{a,b}` into a
+ * linear-state-space matcher immune to catastrophic backtracking (ReDoS).
  * @param {string} pattern
- * @returns {RegExp}
+ * @param {string} [baseDir]
+ * @returns {(path: string) => boolean}
  */
-function compileGlob(pattern) {
-  const norm = normalizeVfsPath(pattern);
-  let regex = '^';
+function compileGlob(pattern, baseDir = '/') {
+  const norm = normalizeVfsPath(pattern, baseDir);
+  /** @type {Array<any>} */
+  const tokens = [];
   let i = 0;
   while (i < norm.length) {
     const ch = norm[i];
     if (ch === '*') {
       if (norm[i + 1] === '*') {
         if (norm[i + 2] === '/') {
-          regex += '(?:.*/)?';
+          // Collapse redundant consecutive `**/` segments.
+          const last = tokens[tokens.length - 1];
+          if (!(last && last.kind === 'lit' && last.ch === '/' && tokens.length >= 3 && tokens[tokens.length - 3].kind === 'branch')) {
+            const baseIdx = tokens.length;
+            tokens.push({ kind: 'branch', skipTo: baseIdx + 3 });
+            tokens.push({ kind: 'anyTree' });
+            tokens.push({ kind: 'lit', ch: '/' });
+          }
           i += 3;
         } else {
-          regex += '.*';
+          if (tokens.length === 0 || tokens[tokens.length - 1].kind !== 'anyTree') {
+            tokens.push({ kind: 'anyTree' });
+          }
           i += 2;
         }
       } else {
-        regex += '[^/]*';
+        if (tokens.length === 0 || tokens[tokens.length - 1].kind !== 'star') {
+          tokens.push({ kind: 'star' });
+        }
         i += 1;
       }
     } else if (ch === '?') {
-      regex += '[^/]';
+      tokens.push({ kind: 'qmark' });
       i += 1;
     } else if (ch === '[') {
       const close = norm.indexOf(']', i + 1);
       if (close > i) {
-        let cls = norm.slice(i + 1, close);
-        if (cls.startsWith('!')) cls = `^${cls.slice(1)}`;
-        regex += `[${cls}]`;
+        let raw = norm.slice(i + 1, close);
+        const negated = raw.startsWith('!') || raw.startsWith('^');
+        if (negated) raw = raw.slice(1);
+        const chars = new Set();
+        const ranges = [];
+        for (let k = 0; k < raw.length; k += 1) {
+          if (k + 2 < raw.length && raw[k + 1] === '-') {
+            ranges.push([raw.charCodeAt(k), raw.charCodeAt(k + 2)]);
+            k += 2;
+          } else {
+            chars.add(raw.charCodeAt(k));
+          }
+        }
+        tokens.push({ kind: 'class', negated, chars, ranges });
         i = close + 1;
       } else {
-        regex += '\\[';
+        tokens.push({ kind: 'lit', ch: '[' });
         i += 1;
       }
     } else if (ch === '{') {
       const close = norm.indexOf('}', i + 1);
       if (close > i) {
-        const alts = norm
-          .slice(i + 1, close)
-          .split(',')
-          .map((alt) => alt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-        regex += `(?:${alts.join('|')})`;
+        const alts = norm.slice(i + 1, close).split(',');
+        tokens.push({ kind: 'alt', alts });
         i = close + 1;
       } else {
-        regex += '\\{';
+        tokens.push({ kind: 'lit', ch: '{' });
         i += 1;
       }
-    } else if ('\\^$.|+()'.includes(ch)) {
-      regex += `\\${ch}`;
-      i += 1;
     } else {
-      regex += ch;
+      tokens.push({ kind: 'lit', ch });
       i += 1;
     }
   }
-  regex += '$';
-  return new RegExp(regex);
+
+  const tLen = tokens.length;
+  return (text) => {
+    const sLen = text.length;
+    const stride = sLen + 1;
+    const totalStates = (tLen + 1) * stride;
+    if (totalStates > 4_000_000) {
+      throw new PklError('Glob pattern or path exceeds complexity limit', 'invalid-argument');
+    }
+    const visited = new Uint8Array(totalStates);
+    const tStack = [0];
+    const sStack = [0];
+    while (tStack.length > 0) {
+      const ti = tStack.pop();
+      const si = sStack.pop();
+      if (ti === tLen) {
+        if (si === sLen) return true;
+        continue;
+      }
+      const key = ti * stride + si;
+      if (visited[key] !== 0) continue;
+      visited[key] = 1;
+
+      const tok = tokens[ti];
+      switch (tok.kind) {
+        case 'lit':
+          if (si < sLen && text[si] === tok.ch) {
+            tStack.push(ti + 1);
+            sStack.push(si + 1);
+          }
+          break;
+        case 'qmark':
+          if (si < sLen && text[si] !== '/') {
+            tStack.push(ti + 1);
+            sStack.push(si + 1);
+          }
+          break;
+        case 'class':
+          if (si < sLen) {
+            const code = text.charCodeAt(si);
+            if (tok.negated && code === 47 /* '/' */) {
+              break;
+            }
+            let matched = tok.chars.has(code);
+            if (!matched) {
+              for (let r = 0; r < tok.ranges.length; r += 1) {
+                const [lo, hi] = tok.ranges[r];
+                if (code >= lo && code <= hi) {
+                  matched = true;
+                  break;
+                }
+              }
+            }
+            if (tok.negated ? !matched : matched) {
+              tStack.push(ti + 1);
+              sStack.push(si + 1);
+            }
+          }
+          break;
+        case 'star':
+          tStack.push(ti + 1);
+          sStack.push(si);
+          if (si < sLen && text[si] !== '/') {
+            tStack.push(ti);
+            sStack.push(si + 1);
+          }
+          break;
+        case 'anyTree':
+          tStack.push(ti + 1);
+          sStack.push(si);
+          if (si < sLen) {
+            tStack.push(ti);
+            sStack.push(si + 1);
+          }
+          break;
+        case 'branch':
+          tStack.push(tok.skipTo);
+          sStack.push(si);
+          tStack.push(ti + 1);
+          sStack.push(si);
+          break;
+        case 'alt':
+          for (let a = 0; a < tok.alts.length; a += 1) {
+            const opt = tok.alts[a];
+            if (text.startsWith(opt, si)) {
+              tStack.push(ti + 1);
+              sStack.push(si + opt.length);
+            }
+          }
+          break;
+      }
+    }
+    return false;
+  };
 }
 
 /**
@@ -252,11 +440,18 @@ export class VirtualFileSystem {
    * @param {string} path
    */
   _ensureParentDirs(path) {
+    const ancestors = [];
     let cur = path;
     while (cur !== '/') {
       const idx = cur.lastIndexOf('/');
       cur = idx <= 0 ? '/' : cur.slice(0, idx);
-      this._dirs.add(cur);
+      if (this._files.has(cur)) {
+        throw new PklError(`Cannot create directory \`${cur}\`: file already exists`, 'io');
+      }
+      ancestors.push(cur);
+    }
+    for (let i = 0; i < ancestors.length; i += 1) {
+      this._dirs.add(ancestors[i]);
     }
   }
 
@@ -267,8 +462,8 @@ export class VirtualFileSystem {
    */
   write(path, content) {
     const norm = this._resolve(path);
-    if (norm === '/') {
-      throw new PklError('Cannot write file at root directory `/`', 'io');
+    if (norm === '/' || /^\/[A-Za-z]:$/.test(norm)) {
+      throw new PklError(`Cannot write file at root directory \`${norm}\``, 'io');
     }
     if (this._dirs.has(norm)) {
       throw new PklError(`Cannot overwrite directory \`${norm}\` with a file`, 'io');
@@ -371,8 +566,8 @@ export class VirtualFileSystem {
    */
   delete(path) {
     const norm = this._resolve(path);
-    if (norm === '/') {
-      throw new PklError('Cannot delete root directory `/`', 'io');
+    if (norm === '/' || (this._rootDir !== null && norm === this._rootDir)) {
+      throw new PklError(`Cannot delete root directory \`${norm}\``, 'io');
     }
     if (this._files.delete(norm)) {
       return true;
@@ -447,11 +642,11 @@ export class VirtualFileSystem {
    * @returns {string[]}
    */
   glob(pattern) {
-    const re = compileGlob(pattern);
+    const matcher = compileGlob(pattern, this._rootDir ?? '/');
     const matches = [];
     for (const filePath of this._files.keys()) {
       if (this._rootDir && !isUnderRootDir(filePath, this._rootDir)) continue;
-      if (re.test(filePath)) matches.push(filePath);
+      if (matcher(filePath)) matches.push(filePath);
     }
     matches.sort();
     return matches;

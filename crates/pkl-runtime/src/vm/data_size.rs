@@ -151,6 +151,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn data_size_operation(
         &mut self,
         receiver: Value,

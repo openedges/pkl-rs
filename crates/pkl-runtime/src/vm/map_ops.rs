@@ -77,6 +77,7 @@ pub(super) fn blocks(
 }
 
 impl Vm {
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn map_ops(
         &mut self,
         receiver: Value,

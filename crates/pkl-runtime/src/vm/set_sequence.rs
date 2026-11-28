@@ -378,7 +378,33 @@ impl Vm {
             };
             let source = receiver.as_object()?;
             let collection_kind = self.heap.get(source)?.collection_kind;
-            let mut input = values(self, source)?;
+            let mut repeat_factor: u128 = 1;
+            let mut input = if matches!(kind, Repeat) {
+                let obj = self.heap.get(source)?;
+                if obj.collection_kind == CollectionKind::List
+                    && obj.parent.is_none()
+                    && obj.list_elements.is_none()
+                    && let Some(base_len) = obj.repeat_base_len
+                    && obj.collection_members.len() < obj.length
+                {
+                    if base_len == 0 || obj.length == 0 {
+                        Vec::new()
+                    } else {
+                        repeat_factor = (obj.length / base_len) as u128;
+                        obj.collection_members[..base_len]
+                            .iter()
+                            .map(|m| {
+                                collections::cached_render_value(&self.heap, source, m)?
+                                    .ok_or_else(|| invalid("strict Set sequence value"))
+                            })
+                            .collect::<Result<Vec<_>, _>>()?
+                    }
+                } else {
+                    values(self, source)?
+                }
+            } else {
+                values(self, source)?
+            };
             let step = self.frames.last().unwrap().pc;
             let mut other = None;
             let mut other_values = vec![];
@@ -455,7 +481,16 @@ impl Vm {
                     if n == 1 && collection_kind == CollectionKind::List {
                         return self.set_sequence_return(step, receiver);
                     }
-                    repeats = n;
+                    let combined_repeats = repeat_factor
+                        .checked_mul(n as u128)
+                        .and_then(|v| i64::try_from(v).ok())
+                        .ok_or_else(|| {
+                            RuntimeError::new(
+                                ErrorKind::Type,
+                                "List size exceeds maximum supported length.",
+                            )
+                        })?;
+                    repeats = combined_repeats;
                 } else {
                     if n == 0 {
                         let value = if matches!(kind, Drop | DropLast) {
@@ -811,8 +846,19 @@ impl Vm {
                 let value = self.finish_set_sequence(&run)?;
                 return self.set_sequence_return(run.step, value);
             }
-            let total = (run.values.len() as u64).saturating_mul(run.repeats as u64);
-            let total_count = total as usize;
+            let total = (run.values.len() as u128)
+                .checked_mul(run.repeats as u128)
+                .and_then(|n| {
+                    let max_len = (usize::MAX as u128).min(i64::MAX as u128);
+                    (n <= max_len).then_some(n as usize)
+                })
+                .ok_or_else(|| {
+                    RuntimeError::new(
+                        ErrorKind::Type,
+                        "List size exceeds maximum supported length.",
+                    )
+                })?;
+            let total_count = total;
             let count_to_populate = if run.repeats == 0 {
                 0
             } else if total_count <= 65_536 {
@@ -823,9 +869,18 @@ impl Vm {
             let object = self.heap.get_mut(builder)?;
             object.length = total_count;
             object.repeat_base_len = Some(run.values.len());
-            object.collection_members.reserve(count_to_populate);
-            object.members.reserve(count_to_populate);
-            object.cache_slots.reserve(count_to_populate);
+            if object
+                .collection_members
+                .try_reserve(count_to_populate)
+                .is_err()
+                || object.members.try_reserve(count_to_populate).is_err()
+                || object.cache_slots.try_reserve(count_to_populate).is_err()
+            {
+                return Err(RuntimeError::new(
+                    ErrorKind::Type,
+                    "List size exceeds available memory.",
+                ));
+            }
             let m_len = run.values.len().max(1);
             for i in 0..count_to_populate {
                 let val = run.values[i % m_len].clone();

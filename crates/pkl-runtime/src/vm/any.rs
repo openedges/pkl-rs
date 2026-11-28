@@ -109,6 +109,7 @@ impl Vm {
         false
     }
 
+    #[cfg_attr(target_arch = "wasm32", inline(never))]
     pub(super) fn if_non_null(&mut self, receiver: Value) -> Result<(), RuntimeError> {
         let Value::Function(function) = self.pop()? else {
             return Err(invalid("checked ifNonNull function"));

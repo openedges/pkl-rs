@@ -331,6 +331,8 @@ enum Task {
     UnionResult(UnionState),
 }
 
+const MAX_UNION_TYPECHECK_BRANCHES: usize = 65_536;
+
 pub(super) struct TypeRun {
     pub(super) node: Option<TypeNodeId>,
     value: Value,
@@ -348,6 +350,7 @@ pub(super) struct TypeRun {
     tracker: Option<Trace>,
     constraint_source: Option<Arc<crate::value::RuntimeSource>>,
     constraint_section: Option<crate::type_source::TypeSourceSection>,
+    union_branches: usize,
 }
 pub(super) fn environment_roots(environment: &Environment, roots: &mut Vec<Value>) {
     roots.extend(environment.locals.iter().cloned());
@@ -457,22 +460,36 @@ impl TypeRun {
 // Function parameter/result and Reference referent types are metadata; they do
 // not evaluate constraints in this frame. The remaining wrappers can do so.
 pub(super) fn needs_custom_this(ty: &TypeCheck) -> bool {
-    match ty {
-        TypeCheck::Shared(node) => node.needs_custom_this(),
-        TypeCheck::Constrained { .. } | TypeCheck::Declared { .. } => true,
-        TypeCheck::NamedAlias { expanded, .. }
-        | TypeCheck::Nullable(expanded)
-        | TypeCheck::Alias(expanded)
-        | TypeCheck::GenericAlias(expanded) => needs_custom_this(expanded),
-        TypeCheck::Reference { domain, .. } => needs_custom_this(domain),
-        TypeCheck::ParameterizedCollection { arguments, .. }
-        | TypeCheck::Pair { arguments }
-        | TypeCheck::CollectionBase { arguments } => {
-            arguments.iter().any(|(ty, _)| needs_custom_this(ty))
+    let mut stack = vec![ty];
+    while let Some(cur) = stack.pop() {
+        match cur {
+            TypeCheck::Shared(node) => {
+                if node.needs_custom_this() {
+                    return true;
+                }
+            }
+            TypeCheck::Constrained { .. } | TypeCheck::Declared { .. } => return true,
+            TypeCheck::NamedAlias { expanded, .. }
+            | TypeCheck::Nullable(expanded)
+            | TypeCheck::Alias(expanded)
+            | TypeCheck::GenericAlias(expanded) => stack.push(expanded),
+            TypeCheck::Reference { domain, .. } => stack.push(domain),
+            TypeCheck::ParameterizedCollection { arguments, .. }
+            | TypeCheck::Pair { arguments }
+            | TypeCheck::CollectionBase { arguments } => {
+                for (arg, _) in arguments {
+                    stack.push(arg);
+                }
+            }
+            TypeCheck::Union { types, .. } => {
+                for item in types {
+                    stack.push(item);
+                }
+            }
+            _ => {}
         }
-        TypeCheck::Union { types, .. } => types.iter().any(needs_custom_this),
-        _ => false,
     }
+    false
 }
 
 fn module_environment(environment: &Environment) -> Result<Environment, RuntimeError> {
@@ -619,11 +636,15 @@ pub(super) fn try_fast_leaf_type(ty: &TypeCheck, value: &Value) -> Option<bool> 
     }
 }
 
+const FAST_HEAP_TYPE_STRUCT_BUDGET: usize = 256;
+const FAST_HEAP_TYPE_EVAL_BUDGET: usize = 8192;
+
 #[inline]
-fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
-    if depth >= 8 {
+fn is_fast_heap_type(ty: &TypeCheck, depth: u8, budget: &mut usize) -> bool {
+    if depth >= 8 || *budget == 0 {
         return false;
     }
+    *budget -= 1;
     match ty.resolved() {
         TypeCheck::Any
         | TypeCheck::Unknown
@@ -643,13 +664,16 @@ fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
         | TypeCheck::Collection(_) => true,
         TypeCheck::MetaClass(name) => name == "Class" || name == "TypeAlias",
         TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) | TypeCheck::Nullable(inner) => {
-            is_fast_heap_type(inner, depth + 1)
+            is_fast_heap_type(inner, depth + 1, budget)
         }
         TypeCheck::NamedAlias {
             arguments,
             expanded: inner,
             ..
-        } => arguments.iter().all(|a| !a.has_declared()) && is_fast_heap_type(inner, depth + 1),
+        } => {
+            arguments.iter().all(|a| !a.has_declared())
+                && is_fast_heap_type(inner, depth + 1, budget)
+        }
         TypeCheck::Union {
             string_literals: true,
             types,
@@ -659,26 +683,31 @@ fn is_fast_heap_type(ty: &TypeCheck, depth: u8) -> bool {
             string_literals: false,
             types,
             ..
-        } => !types.is_empty() && types.iter().all(|alt| is_fast_heap_type(alt, depth + 1)),
+        } => {
+            !types.is_empty()
+                && types
+                    .iter()
+                    .all(|alt| is_fast_heap_type(alt, depth + 1, budget))
+        }
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::List | crate::heap::CollectionKind::Set,
             arguments,
         } if arguments.len() == 1 => {
             (arguments[0].0.noop() && !arguments[0].0.has_declared())
-                || is_fast_heap_type(&arguments[0].0, depth + 1)
+                || is_fast_heap_type(&arguments[0].0, depth + 1, budget)
         }
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
             arguments,
         } if arguments.len() == 2 => {
             ((arguments[0].0.noop() && !arguments[0].0.has_declared())
-                || is_fast_heap_type(&arguments[0].0, depth + 1))
+                || is_fast_heap_type(&arguments[0].0, depth + 1, budget))
                 && ((arguments[1].0.noop() && !arguments[1].0.has_declared())
-                    || is_fast_heap_type(&arguments[1].0, depth + 1))
+                    || is_fast_heap_type(&arguments[1].0, depth + 1, budget))
         }
         TypeCheck::CollectionBase { arguments } if arguments.len() <= 1 => {
             arguments.first().is_none_or(|(ty, _)| {
-                (ty.noop() && !ty.has_declared()) || is_fast_heap_type(ty, depth + 1)
+                (ty.noop() && !ty.has_declared()) || is_fast_heap_type(ty, depth + 1, budget)
             })
         }
         _ => false,
@@ -691,9 +720,11 @@ fn try_fast_strict_list_check(
     value: &Value,
     heap: &Heap,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
     let elem_noop = elem_ty.noop() && !elem_ty.has_declared();
-    if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
+    let mut struct_budget = (*budget).min(FAST_HEAP_TYPE_STRUCT_BUDGET);
+    if !elem_noop && !is_fast_heap_type(elem_ty, depth, &mut struct_budget) {
         return None;
     }
     let Value::Object(id) = value else {
@@ -724,7 +755,7 @@ fn try_fast_strict_list_check(
         return Some(true);
     }
     for val in elems {
-        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1) {
+        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1, budget) {
             Some(true) => continue,
             Some(false) => return Some(false),
             None => return None,
@@ -739,9 +770,11 @@ fn try_fast_strict_set_check(
     value: &Value,
     heap: &Heap,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
     let elem_noop = elem_ty.noop() && !elem_ty.has_declared();
-    if !elem_noop && !is_fast_heap_type(elem_ty, depth) {
+    let mut struct_budget = (*budget).min(FAST_HEAP_TYPE_STRUCT_BUDGET);
+    if !elem_noop && !is_fast_heap_type(elem_ty, depth, &mut struct_budget) {
         return None;
     }
     let Value::Object(id) = value else {
@@ -771,7 +804,7 @@ fn try_fast_strict_set_check(
     }
     for &idx in order {
         let val = object.set_entries.get(idx)?;
-        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1) {
+        match try_fast_type_with_heap_depth(elem_ty, val, heap, depth + 1, budget) {
             Some(true) => continue,
             Some(false) => return Some(false),
             None => return None,
@@ -787,11 +820,13 @@ fn try_fast_strict_map_check(
     value: &Value,
     heap: &Heap,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
     let key_noop = key_ty.noop() && !key_ty.has_declared();
     let val_noop = val_ty.noop() && !val_ty.has_declared();
-    if (!key_noop && !is_fast_heap_type(key_ty, depth))
-        || (!val_noop && !is_fast_heap_type(val_ty, depth))
+    let mut struct_budget = (*budget).min(FAST_HEAP_TYPE_STRUCT_BUDGET);
+    if (!key_noop && !is_fast_heap_type(key_ty, depth, &mut struct_budget))
+        || (!val_noop && !is_fast_heap_type(val_ty, depth, &mut struct_budget))
     {
         return None;
     }
@@ -816,13 +851,13 @@ fn try_fast_strict_map_check(
     if key_noop && val_noop {
         return Some(true);
     }
-    let check_member =
+    let mut check_member =
         |member: &crate::heap::CollectionMember, slot_hint: Option<usize>| -> Option<bool> {
             if member.kind == crate::heap::CollectionMemberKind::Property {
                 return Some(true);
             }
             if !key_noop {
-                match try_fast_type_with_heap_depth(key_ty, &member.key, heap, depth + 1) {
+                match try_fast_type_with_heap_depth(key_ty, &member.key, heap, depth + 1, budget) {
                     Some(true) => {}
                     other => return other,
                 }
@@ -847,7 +882,7 @@ fn try_fast_strict_map_check(
                         entry: true,
                     })?
                 };
-                match try_fast_type_with_heap_depth(val_ty, val, heap, depth + 1) {
+                match try_fast_type_with_heap_depth(val_ty, val, heap, depth + 1, budget) {
                     Some(true) => {}
                     other => return other,
                 }
@@ -878,7 +913,8 @@ fn try_fast_strict_map_check(
 }
 
 fn try_fast_type_with_heap(ty: &TypeCheck, value: &Value, heap: &Heap) -> Option<bool> {
-    try_fast_type_with_heap_depth(ty, value, heap, 0)
+    let mut budget = FAST_HEAP_TYPE_EVAL_BUDGET;
+    try_fast_type_with_heap_depth(ty, value, heap, 0, &mut budget)
 }
 
 fn try_fast_type_with_heap_depth(
@@ -886,7 +922,12 @@ fn try_fast_type_with_heap_depth(
     value: &Value,
     heap: &Heap,
     depth: u8,
+    budget: &mut usize,
 ) -> Option<bool> {
+    if *budget == 0 {
+        return None;
+    }
+    *budget -= 1;
     if let Some(matched) = try_fast_leaf_type(ty, value) {
         return Some(matched);
     }
@@ -910,20 +951,25 @@ fn try_fast_type_with_heap_depth(
             kind: crate::heap::CollectionKind::List,
             arguments,
         } if arguments.len() == 1 => {
-            try_fast_strict_list_check(&arguments[0].0, value, heap, depth + 1)
+            try_fast_strict_list_check(&arguments[0].0, value, heap, depth + 1, budget)
         }
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Set,
             arguments,
         } if arguments.len() == 1 => {
-            try_fast_strict_set_check(&arguments[0].0, value, heap, depth + 1)
+            try_fast_strict_set_check(&arguments[0].0, value, heap, depth + 1, budget)
         }
         TypeCheck::ParameterizedCollection {
             kind: crate::heap::CollectionKind::Map,
             arguments,
-        } if arguments.len() == 2 => {
-            try_fast_strict_map_check(&arguments[0].0, &arguments[1].0, value, heap, depth + 1)
-        }
+        } if arguments.len() == 2 => try_fast_strict_map_check(
+            &arguments[0].0,
+            &arguments[1].0,
+            value,
+            heap,
+            depth + 1,
+            budget,
+        ),
         TypeCheck::CollectionBase { arguments } if arguments.is_empty() => Some(
             TypeCheck::CollectionBase {
                 arguments: Vec::new(),
@@ -932,38 +978,39 @@ fn try_fast_type_with_heap_depth(
         ),
         TypeCheck::CollectionBase { arguments } if arguments.len() == 1 => {
             let elem_ty = &arguments[0].0;
+            let mut struct_budget = (*budget).min(FAST_HEAP_TYPE_STRUCT_BUDGET);
             let elem_fast = (elem_ty.noop() && !elem_ty.has_declared())
-                || is_fast_heap_type(elem_ty, depth + 1);
+                || is_fast_heap_type(elem_ty, depth + 1, &mut struct_budget);
             let Value::Object(id) = value else {
                 return elem_fast.then_some(false);
             };
             let object = heap.get(*id).ok()?;
             match object.collection_kind {
                 crate::heap::CollectionKind::List => {
-                    try_fast_strict_list_check(elem_ty, value, heap, depth + 1)
+                    try_fast_strict_list_check(elem_ty, value, heap, depth + 1, budget)
                 }
                 crate::heap::CollectionKind::Set => {
-                    try_fast_strict_set_check(elem_ty, value, heap, depth + 1)
+                    try_fast_strict_set_check(elem_ty, value, heap, depth + 1, budget)
                 }
                 _ => elem_fast.then_some(false),
             }
         }
         TypeCheck::Nullable(inner) => {
             if value.is_null() {
-                try_fast_type_with_heap_depth(inner, value, heap, depth + 1).map(|_| true)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1, budget).map(|_| true)
             } else {
-                try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
+                try_fast_type_with_heap_depth(inner, value, heap, depth + 1, budget)
             }
         }
         TypeCheck::Alias(inner) | TypeCheck::GenericAlias(inner) => {
-            try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
+            try_fast_type_with_heap_depth(inner, value, heap, depth + 1, budget)
         }
         TypeCheck::NamedAlias {
             arguments,
             expanded: inner,
             ..
         } if arguments.iter().all(|a| !a.has_declared()) => {
-            try_fast_type_with_heap_depth(inner, value, heap, depth + 1)
+            try_fast_type_with_heap_depth(inner, value, heap, depth + 1, budget)
         }
         TypeCheck::Union {
             types,
@@ -983,7 +1030,7 @@ fn try_fast_type_with_heap_depth(
             ..
         } if !types.is_empty() => {
             for alt in types {
-                match try_fast_type_with_heap_depth(alt, value, heap, depth + 1) {
+                match try_fast_type_with_heap_depth(alt, value, heap, depth + 1, budget) {
                     Some(true) => return Some(true),
                     Some(false) => continue,
                     None => return None,
@@ -1364,6 +1411,7 @@ impl Vm {
             tracker: None,
             constraint_source: None,
             constraint_section: None,
+            union_branches: 0,
         }));
         Ok(())
     }
@@ -1507,6 +1555,12 @@ impl Vm {
             .and_then(|metadata| metadata.source.clone());
         self.frames.last_mut().expect("type frame").type_run = Some(run);
         self.frames.last_mut().expect("type frame").callsite_hidden = true;
+        if self.frames.len() >= 16_384 {
+            return Err(RuntimeError::new(
+                ErrorKind::Cycle,
+                "evaluation frame limit exceeded",
+            ));
+        }
         let mut frame = self.alloc_frame(constraint.block, 0, self.stack.len(), environment);
         frame.return_to_type = true;
         frame.diagnostic_member = Some(member);
@@ -1910,6 +1964,13 @@ impl Vm {
                     string_literals: false,
                     ..
                 } if !types.is_empty() => {
+                    run.union_branches = run.union_branches.saturating_add(1);
+                    if run.union_branches > MAX_UNION_TYPECHECK_BRANCHES {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Union type check exceeded maximum branch evaluations.",
+                        ));
+                    }
                     let parent_test = run.in_type_test;
                     let parent_eager = run.eager;
                     run.eager |= union_eager(&types);
@@ -1949,11 +2010,16 @@ impl Vm {
                 TypeCheck::ParameterizedCollection { kind, arguments }
                     if TypeCheck::Collection(kind).accepts(&run.value, &self.heap) =>
                 {
-                    if kind == crate::heap::CollectionKind::List
-                        && arguments.len() == 1
-                        && try_fast_strict_list_check(&arguments[0].0, &run.value, &self.heap, 0)
-                            == Some(true)
-                    {
+                    if kind == crate::heap::CollectionKind::List && arguments.len() == 1 && {
+                        let mut budget = FAST_HEAP_TYPE_EVAL_BUDGET;
+                        try_fast_strict_list_check(
+                            &arguments[0].0,
+                            &run.value,
+                            &self.heap,
+                            0,
+                            &mut budget,
+                        ) == Some(true)
+                    } {
                         run.outcome = Some(Ok(run.value.clone()));
                         self.frames.last_mut().expect("type frame").type_run = Some(run);
                         return Ok(());
@@ -2457,6 +2523,13 @@ impl Vm {
                             return Ok(());
                         }
                     }
+                    run.union_branches = run.union_branches.saturating_add(1);
+                    if run.union_branches > MAX_UNION_TYPECHECK_BRANCHES {
+                        return Err(RuntimeError::new(
+                            ErrorKind::Type,
+                            "Union type check exceeded maximum branch evaluations.",
+                        ));
+                    }
                     let ty = state.types[state.index].clone();
                     let span = state.spans[state.index];
                     let index = state.index;
@@ -2476,47 +2549,121 @@ fn restore_collection(run: &mut TypeRun, state: &CollectionState) {
     run.eager = state.eager;
 }
 fn union_eager(types: &[TypeCheck]) -> bool {
-    let mut pending: Vec<_> = types.iter().rev().collect();
-    let mut kinds = Vec::new();
-    while let Some(ty) = pending.pop() {
-        match ty.resolved() {
-            TypeCheck::ParameterizedCollection { kind, .. } => {
-                if kinds.contains(&Some(*kind)) {
-                    return true;
-                }
-                kinds.push(Some(*kind));
-            }
-            TypeCheck::CollectionBase { arguments } if !arguments.is_empty() => {
-                if kinds.contains(&None) {
-                    return true;
-                }
-                kinds.push(None);
-            }
-            TypeCheck::GenericAlias(inner) => {
-                if matches!(inner.unaliased(), TypeCheck::CollectionBase { arguments } if !arguments.is_empty())
-                {
-                    if kinds.contains(&None) {
-                        return true;
-                    }
-                    kinds.push(None);
-                }
-                if let TypeCheck::ParameterizedCollection { kind, .. } = inner.unaliased() {
-                    if kinds.contains(&Some(*kind)) {
-                        return true;
-                    }
-                    kinds.push(Some(*kind));
-                }
-                pending.push(inner);
-            }
-            TypeCheck::Alias(inner)
-            | TypeCheck::Nullable(inner)
-            | TypeCheck::NamedAlias {
-                expanded: inner, ..
-            }
-            | TypeCheck::Constrained { base: inner, .. } => pending.push(inner),
-            TypeCheck::Union { types, .. } => pending.extend(types.iter().rev()),
-            _ => {}
+    const BASE_BIT: u8 = 1 << 6;
+    fn kind_bit(kind: crate::heap::CollectionKind) -> u8 {
+        match kind {
+            crate::heap::CollectionKind::Dynamic => 1 << 0,
+            crate::heap::CollectionKind::Listing => 1 << 1,
+            crate::heap::CollectionKind::Mapping => 1 << 2,
+            crate::heap::CollectionKind::List => 1 << 3,
+            crate::heap::CollectionKind::Map => 1 << 4,
+            crate::heap::CollectionKind::Set => 1 << 5,
         }
+    }
+    enum Work<'a> {
+        Enter(&'a TypeCheck),
+        Exit {
+            key: usize,
+            self_mask: u8,
+            child_count: usize,
+        },
+    }
+    let mut memo: crate::heap::FastMap<usize, (u8, bool)> = crate::heap::FastMap::default();
+    let mut work: Vec<Work<'_>> = Vec::new();
+    let mut results: Vec<(u8, bool)> = Vec::new();
+    let mut total_mask: u8 = 0;
+
+    for root in types {
+        work.push(Work::Enter(root));
+        while let Some(task) = work.pop() {
+            match task {
+                Work::Enter(ty) => {
+                    let resolved = ty.resolved();
+                    let key = resolved as *const TypeCheck as usize;
+                    if let Some(&cached) = memo.get(&key) {
+                        results.push(cached);
+                        continue;
+                    }
+                    match resolved {
+                        TypeCheck::ParameterizedCollection { kind, .. } => {
+                            let val = (kind_bit(*kind), false);
+                            memo.insert(key, val);
+                            results.push(val);
+                        }
+                        TypeCheck::CollectionBase { arguments } if !arguments.is_empty() => {
+                            let val = (BASE_BIT, false);
+                            memo.insert(key, val);
+                            results.push(val);
+                        }
+                        TypeCheck::GenericAlias(inner) => {
+                            let self_mask = match inner.unaliased() {
+                                TypeCheck::CollectionBase { arguments }
+                                    if !arguments.is_empty() =>
+                                {
+                                    BASE_BIT
+                                }
+                                TypeCheck::ParameterizedCollection { kind, .. } => kind_bit(*kind),
+                                _ => 0,
+                            };
+                            work.push(Work::Exit {
+                                key,
+                                self_mask,
+                                child_count: 1,
+                            });
+                            work.push(Work::Enter(inner));
+                        }
+                        TypeCheck::Alias(inner)
+                        | TypeCheck::Nullable(inner)
+                        | TypeCheck::NamedAlias {
+                            expanded: inner, ..
+                        }
+                        | TypeCheck::Constrained { base: inner, .. } => {
+                            work.push(Work::Exit {
+                                key,
+                                self_mask: 0,
+                                child_count: 1,
+                            });
+                            work.push(Work::Enter(inner));
+                        }
+                        TypeCheck::Union { types, .. } => {
+                            work.push(Work::Exit {
+                                key,
+                                self_mask: 0,
+                                child_count: types.len(),
+                            });
+                            work.extend(types.iter().rev().map(Work::Enter));
+                        }
+                        _ => {
+                            memo.insert(key, (0, false));
+                            results.push((0, false));
+                        }
+                    }
+                }
+                Work::Exit {
+                    key,
+                    self_mask,
+                    child_count,
+                } => {
+                    let start = results.len() - child_count;
+                    let mut mask = self_mask;
+                    let mut dup = false;
+                    for &(child_mask, child_dup) in &results[start..] {
+                        if child_dup || (mask & child_mask) != 0 {
+                            dup = true;
+                        }
+                        mask |= child_mask;
+                    }
+                    results.truncate(start);
+                    memo.insert(key, (mask, dup));
+                    results.push((mask, dup));
+                }
+            }
+        }
+        let (mask, dup) = results.pop().unwrap_or((0, false));
+        if dup || (total_mask & mask) != 0 {
+            return true;
+        }
+        total_mask |= mask;
     }
     false
 }
@@ -2542,7 +2689,9 @@ impl Vm {
         let receiver_obj = self.heap.get(receiver)?;
         if let Some(elems) = &receiver_obj.list_elements {
             let idx = match &item.member.key {
-                Value::Int(i) if i.get() >= 0 => i.get() as usize,
+                Value::Int(i) => {
+                    usize::try_from(i.get()).map_err(|_| invalid("compact List element key"))?
+                }
                 _ => return Err(invalid("compact List element key")),
             };
             let value = elems
@@ -2652,6 +2801,10 @@ impl Vm {
                         }
                     }
                 } else {
+                    // Preserves virtual repeated lists (`repeat_base_len`) in O(base_len):
+                    // `complete_cache` updates `cache_slots[idx]` in place, so all
+                    // `0..object.length` virtual accesses see the cast values without
+                    // materializing or losing replacements past `base_len`.
                     for (name, value) in state.replacements {
                         let key = CacheKey {
                             entry: true,

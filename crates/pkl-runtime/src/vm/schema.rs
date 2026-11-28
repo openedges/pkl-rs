@@ -188,6 +188,9 @@ pub(crate) struct VmSchemaExtractor {
     /// an expected cache slot.
     attempted_members: BTreeSet<MemberForceKey>,
     attempted_stdlibs: BTreeSet<PklString>,
+    /// Owner for the currently executing temporary schema-preparation `CodeArena`.
+    /// Rooted in `vm.schema_roots` while pending, then eligible for GC retirement once done.
+    current_arena_owner: Option<ExecutableOwnerId>,
 }
 
 impl VmSchemaExtractor {
@@ -205,10 +208,60 @@ impl VmSchemaExtractor {
             decoded_annotations: BTreeMap::new(),
             attempted_members: BTreeSet::new(),
             attempted_stdlibs: BTreeSet::new(),
+            current_arena_owner: None,
         })
     }
 
+    fn sync_gc_roots(&self, vm: &mut Vm) {
+        vm.schema_roots.clear();
+        vm.schema_roots.push(Value::Object(self.root_module));
+        if let Some(owner) = self.current_arena_owner {
+            vm.schema_roots.push(owner.root());
+        }
+        if let Some(reachable) = &self.reachable {
+            vm.schema_roots
+                .extend(reachable.modules.iter().copied().map(Value::Object));
+            vm.schema_roots
+                .extend(reachable.classes.iter().copied().map(Value::Class));
+            vm.schema_roots
+                .extend(reachable.aliases.iter().copied().map(Value::TypeAlias));
+        }
+        vm.schema_roots.extend(
+            self.pending_builtin_anns
+                .iter()
+                .map(|k| Value::Object(k.owner)),
+        );
+        vm.schema_roots
+            .extend(self.pending_ann_ids.iter().copied().map(Value::Object));
+        vm.schema_roots
+            .extend(self.decoded_annotations.keys().copied().map(Value::Object));
+        vm.schema_roots.extend(
+            self.attempted_members
+                .iter()
+                .map(|k| Value::Object(k.owner)),
+        );
+    }
+
     pub(crate) fn step(
+        &mut self,
+        session: &mut SourceSession,
+        last_result: Option<Value>,
+        now_ms: u64,
+        timeout_ms: Option<u64>,
+    ) -> Result<SchemaStep, RuntimeError> {
+        self.sync_gc_roots(session.vm_mut());
+        let outcome = self.step_inner(session, last_result, now_ms, timeout_ms);
+        match &outcome {
+            Ok(SchemaStep::RunPending) => self.sync_gc_roots(session.vm_mut()),
+            Ok(SchemaStep::Done(_)) | Err(_) => {
+                self.current_arena_owner = None;
+                session.vm_mut().schema_roots.clear();
+            }
+        }
+        outcome
+    }
+
+    fn step_inner(
         &mut self,
         session: &mut SourceSession,
         last_result: Option<Value>,
@@ -261,8 +314,13 @@ impl VmSchemaExtractor {
                 for req in &needed_members {
                     self.attempted_members.insert(req.clone());
                 }
-                let (entry, inputs) =
-                    build_force_members_block(session.vm_mut(), &needed_stdlibs, &needed_members)?;
+                let (entry, inputs, owner) = build_force_members_block(
+                    session.vm_mut(),
+                    self.root_module,
+                    &needed_stdlibs,
+                    &needed_members,
+                )?;
+                self.current_arena_owner = Some(owner);
                 session
                     .host_session_mut()
                     .start(entry, inputs, now_ms, timeout_ms)?;
@@ -307,8 +365,9 @@ impl VmSchemaExtractor {
             };
             if !needed_builtin_anns.is_empty() {
                 self.pending_builtin_anns = needed_builtin_anns;
-                let (entry, inputs) =
+                let (entry, inputs, owner) =
                     build_builtin_annotations_block(session.vm_mut(), &self.pending_builtin_anns)?;
+                self.current_arena_owner = Some(owner);
                 session
                     .host_session_mut()
                     .start(entry, inputs, now_ms, timeout_ms)?;
@@ -339,8 +398,9 @@ impl VmSchemaExtractor {
             }
             if !remaining_ann_ids.is_empty() {
                 self.pending_ann_ids = remaining_ann_ids;
-                let (entry, inputs) =
+                let (entry, inputs, owner) =
                     build_encode_annotations_block(session.vm_mut(), &self.pending_ann_ids)?;
+                self.current_arena_owner = Some(owner);
                 session
                     .host_session_mut()
                     .start(entry, inputs, now_ms, timeout_ms)?;
@@ -410,7 +470,7 @@ impl VmSchemaExtractor {
             };
             let decoded = decode_lossless(&bytes)
                 .map_err(|err| invalid(&format!("failed to decode annotation: {err}")))?;
-            let DecodedValue::Object(obj) = decoded else {
+            let Ok(obj) = decoded.into_object() else {
                 return Err(invalid("expected DecodedValue::Object for annotation"));
             };
             self.decoded_annotations.insert(ann_id, obj);
@@ -1072,11 +1132,44 @@ struct ReachableSet {
     aliases: BTreeSet<ObjectId>,
 }
 
+fn finish_schema_code_arena(vm: &mut Vm, arena_start: query_lifecycle::Start) -> ExecutableOwnerId {
+    let owner = vm.heap.allocate_executable();
+    let arena = arena_start.finish(Arc::make_mut(&mut vm.program), owner, false);
+    for block in arena.blocks.clone() {
+        vm.executable_roots.insert(block, owner);
+    }
+    vm.declaration_roots_dirty = true;
+    vm.code_arenas.push(arena);
+    owner
+}
+
 fn build_force_members_block(
     vm: &mut Vm,
+    root_module: ObjectId,
     needed_stdlibs: &[PklString],
     needed_members: &[MemberForceKey],
-) -> Result<(usize, Vec<Value>), RuntimeError> {
+) -> Result<(usize, Vec<Value>, ExecutableOwnerId), RuntimeError> {
+    let importer_unit = vm
+        .heap
+        .get(root_module)
+        .ok()
+        .and_then(|o| o.module_unit)
+        .filter(|u| {
+            vm.program
+                .units
+                .get(u.0 as usize)
+                .is_some_and(|unit| unit.identity.is_some())
+        })
+        .or_else(|| {
+            vm.program.units.iter_with_ids().find_map(|(id, unit)| {
+                unit.identity
+                    .as_ref()
+                    .map(|_| crate::modules::UnitId(id as u32))
+            })
+        })
+        .unwrap_or(crate::modules::UnitId(0));
+
+    let arena_start = query_lifecycle::CodeArena::begin(Arc::make_mut(&mut vm.program));
     let mut code = Vec::new();
     let mut inputs = Vec::new();
 
@@ -1088,7 +1181,7 @@ fn build_force_members_block(
             code.push(Instruction::ImportModule(Box::new(modules::ImportSpec {
                 authored: uri.clone(),
                 span: Span::default(),
-                unit: crate::modules::UnitId(u32::MAX),
+                unit: importer_unit,
                 absolute_uri: uri.clone(),
                 original_uri: uri.clone(),
             })));
@@ -1163,13 +1256,15 @@ fn build_force_members_block(
 
     let program = Arc::make_mut(&mut vm.program);
     let entry = program.alloc_block(code, BlockMetadata::default())?;
-    Ok((entry, inputs))
+    let owner = finish_schema_code_arena(vm, arena_start);
+    Ok((entry, inputs, owner))
 }
 
 fn build_builtin_annotations_block(
     vm: &mut Vm,
     keys: &[BuiltinAnnKey],
-) -> Result<(usize, Vec<Value>), RuntimeError> {
+) -> Result<(usize, Vec<Value>, ExecutableOwnerId), RuntimeError> {
+    let arena_start = query_lifecycle::CodeArena::begin(Arc::make_mut(&mut vm.program));
     let mut code = Vec::new();
     let mut inputs = Vec::new();
 
@@ -1220,13 +1315,15 @@ fn build_builtin_annotations_block(
 
     let program = Arc::make_mut(&mut vm.program);
     let entry = program.alloc_block(code, BlockMetadata::default())?;
-    Ok((entry, inputs))
+    let owner = finish_schema_code_arena(vm, arena_start);
+    Ok((entry, inputs, owner))
 }
 
 fn build_encode_annotations_block(
     vm: &mut Vm,
     ann_ids: &[ObjectId],
-) -> Result<(usize, Vec<Value>), RuntimeError> {
+) -> Result<(usize, Vec<Value>, ExecutableOwnerId), RuntimeError> {
+    let arena_start = query_lifecycle::CodeArena::begin(Arc::make_mut(&mut vm.program));
     let mut code = Vec::new();
     let mut inputs = Vec::with_capacity(ann_ids.len());
 
@@ -1244,7 +1341,8 @@ fn build_encode_annotations_block(
 
     let program = Arc::make_mut(&mut vm.program);
     let entry = program.alloc_block(code, BlockMetadata::default())?;
-    Ok((entry, inputs))
+    let owner = finish_schema_code_arena(vm, arena_start);
+    Ok((entry, inputs, owner))
 }
 
 fn extract_list_values(vm: &Vm, list_val: Value) -> Result<Vec<Value>, RuntimeError> {
@@ -2336,18 +2434,45 @@ impl<'a> SchemaBuilder<'a> {
     }
 
     fn export_type(&mut self, ty: &Type, ctx: &TypeCtx) -> Result<PType, RuntimeError> {
+        let mut nodes = 0usize;
+        self.export_type_bounded(ty, ctx, 0, &mut nodes)
+    }
+
+    fn export_type_bounded(
+        &mut self,
+        ty: &Type,
+        ctx: &TypeCtx,
+        depth: usize,
+        nodes: &mut usize,
+    ) -> Result<PType, RuntimeError> {
+        if depth > MAX_TYPE_COMPILE_DEPTH {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Type expression exceeds maximum nesting depth.",
+            ));
+        }
+        *nodes += 1;
+        if *nodes > MAX_TYPE_COMPILE_NODES {
+            return Err(RuntimeError::new(
+                ErrorKind::Type,
+                "Type expression exceeds maximum expansion complexity.",
+            ));
+        }
         match &ty.kind {
             TypeKind::Unknown => Ok(PType::Unknown),
             TypeKind::Nothing => Ok(PType::Nothing),
             TypeKind::Module => Ok(PType::Module),
             TypeKind::String(lit) => Ok(PType::StringLiteral(lit.to_java_utf8())),
-            TypeKind::Nullable(inner) => {
-                Ok(PType::Nullable(Box::new(self.export_type(inner, ctx)?)))
-            }
+            TypeKind::Nullable(inner) => Ok(PType::Nullable(Box::new(self.export_type_bounded(
+                inner,
+                ctx,
+                depth + 1,
+                nodes,
+            )?))),
             TypeKind::Union { types, .. } => {
                 let mut elems = Vec::with_capacity(types.len());
                 for t in types {
-                    elems.push(self.export_type(t, ctx)?);
+                    elems.push(self.export_type_bounded(t, ctx, depth + 1, nodes)?);
                 }
                 Ok(PType::Union(elems))
             }
@@ -2357,16 +2482,16 @@ impl<'a> SchemaBuilder<'a> {
             } => {
                 let mut params = Vec::with_capacity(parameters.len());
                 for t in parameters {
-                    params.push(self.export_type(t, ctx)?);
+                    params.push(self.export_type_bounded(t, ctx, depth + 1, nodes)?);
                 }
-                let ret = self.export_type(return_type, ctx)?;
+                let ret = self.export_type_bounded(return_type, ctx, depth + 1, nodes)?;
                 Ok(PType::Function {
                     parameter_types: params,
                     return_type: Box::new(ret),
                 })
             }
             TypeKind::Constrained { base, constraints } => {
-                let base_type = self.export_type(base, ctx)?;
+                let base_type = self.export_type_bounded(base, ctx, depth + 1, nodes)?;
                 let mut texts = Vec::with_capacity(constraints.len());
                 for expr in constraints {
                     let slice = ctx
@@ -2413,7 +2538,7 @@ impl<'a> SchemaBuilder<'a> {
                         } else {
                             let mut args = Vec::with_capacity(arguments.len());
                             for a in arguments {
-                                args.push(self.export_type(a, ctx)?);
+                                args.push(self.export_type_bounded(a, ctx, depth + 1, nodes)?);
                             }
                             args
                         };
@@ -2437,14 +2562,20 @@ impl<'a> SchemaBuilder<'a> {
                         let alias_id = self.export_type_alias(alias_obj_id)?;
                         let mut type_arguments = Vec::with_capacity(arguments.len());
                         for a in arguments {
-                            type_arguments.push(self.export_type(a, ctx)?);
+                            type_arguments.push(self.export_type_bounded(
+                                a,
+                                ctx,
+                                depth + 1,
+                                nodes,
+                            )?);
                         }
                         let alias = self.store.type_alias(alias_id).clone();
                         let aliased_type = substitute_type_params(
                             &alias.aliased_type,
                             &alias.type_parameters,
                             &type_arguments,
-                        );
+                            nodes,
+                        )?;
                         Ok(PType::Alias {
                             alias_id,
                             alias_info: alias.info,
@@ -2550,72 +2681,215 @@ fn export_type_parameter(tp: &crate::syntax::TypeParameter) -> TypeParameter {
     }
 }
 
-fn substitute_type_params(ty: &PType, params: &[TypeParameter], args: &[PType]) -> PType {
+fn substitute_type_params(
+    ty: &PType,
+    params: &[TypeParameter],
+    args: &[PType],
+    nodes: &mut usize,
+) -> Result<PType, RuntimeError> {
     if params.is_empty() {
-        return ty.clone();
+        return Ok(ty.clone());
     }
-    match ty {
-        PType::TypeVariable(tp) => {
-            if let Some(idx) = params.iter().position(|p| p.name == tp.name) {
-                args.get(idx).cloned().unwrap_or(PType::Unknown)
-            } else {
-                ty.clone()
+    enum SubWork<'a> {
+        Visit(&'a PType, usize),
+        BuildClass {
+            class_id: ClassId,
+            class_info: PClassInfo,
+            count: usize,
+        },
+        BuildNullable,
+        BuildUnion(usize),
+        BuildFunction(usize),
+        BuildConstrained(Vec<String>),
+        BuildAlias {
+            alias_id: TypeAliasId,
+            alias_info: TypeAliasInfo,
+            arg_count: usize,
+        },
+    }
+    let mut work = vec![SubWork::Visit(ty, 0)];
+    let mut out: Vec<PType> = Vec::new();
+    while let Some(step) = work.pop() {
+        match step {
+            SubWork::Visit(cur, depth) => {
+                if depth > MAX_TYPE_COMPILE_DEPTH {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Type expression exceeds maximum nesting depth.",
+                    ));
+                }
+                *nodes += 1;
+                if *nodes > MAX_TYPE_COMPILE_NODES {
+                    return Err(RuntimeError::new(
+                        ErrorKind::Type,
+                        "Type expression exceeds maximum expansion complexity.",
+                    ));
+                }
+                match cur {
+                    PType::TypeVariable(tp) => {
+                        if let Some(idx) = params.iter().position(|p| p.name == tp.name) {
+                            let replacement = args.get(idx).cloned().unwrap_or(PType::Unknown);
+                            let rep_nodes = count_ptype_nodes(&replacement, MAX_TYPE_COMPILE_NODES);
+                            *nodes = nodes.saturating_add(rep_nodes);
+                            if *nodes > MAX_TYPE_COMPILE_NODES {
+                                return Err(RuntimeError::new(
+                                    ErrorKind::Type,
+                                    "Type expression exceeds maximum expansion complexity.",
+                                ));
+                            }
+                            out.push(replacement);
+                        } else {
+                            out.push(cur.clone());
+                        }
+                    }
+                    PType::Class {
+                        class_id,
+                        class_info,
+                        type_arguments,
+                    } => {
+                        work.push(SubWork::BuildClass {
+                            class_id: *class_id,
+                            class_info: class_info.clone(),
+                            count: type_arguments.len(),
+                        });
+                        for a in type_arguments.iter().rev() {
+                            work.push(SubWork::Visit(a, depth + 1));
+                        }
+                    }
+                    PType::Nullable(inner) => {
+                        work.push(SubWork::BuildNullable);
+                        work.push(SubWork::Visit(inner, depth + 1));
+                    }
+                    PType::Union(elems) => {
+                        work.push(SubWork::BuildUnion(elems.len()));
+                        for e in elems.iter().rev() {
+                            work.push(SubWork::Visit(e, depth + 1));
+                        }
+                    }
+                    PType::Function {
+                        parameter_types,
+                        return_type,
+                    } => {
+                        work.push(SubWork::BuildFunction(parameter_types.len()));
+                        work.push(SubWork::Visit(return_type, depth + 1));
+                        for p in parameter_types.iter().rev() {
+                            work.push(SubWork::Visit(p, depth + 1));
+                        }
+                    }
+                    PType::Constrained {
+                        base_type,
+                        constraints,
+                    } => {
+                        work.push(SubWork::BuildConstrained(constraints.clone()));
+                        work.push(SubWork::Visit(base_type, depth + 1));
+                    }
+                    PType::Alias {
+                        alias_id,
+                        alias_info,
+                        type_arguments,
+                        aliased_type,
+                    } => {
+                        work.push(SubWork::BuildAlias {
+                            alias_id: *alias_id,
+                            alias_info: alias_info.clone(),
+                            arg_count: type_arguments.len(),
+                        });
+                        work.push(SubWork::Visit(aliased_type, depth + 1));
+                        for a in type_arguments.iter().rev() {
+                            work.push(SubWork::Visit(a, depth + 1));
+                        }
+                    }
+                    PType::Unknown | PType::Nothing | PType::Module | PType::StringLiteral(_) => {
+                        out.push(cur.clone());
+                    }
+                }
+            }
+            SubWork::BuildClass {
+                class_id,
+                class_info,
+                count,
+            } => {
+                let type_arguments = out.split_off(out.len() - count);
+                out.push(PType::Class {
+                    class_id,
+                    class_info,
+                    type_arguments,
+                });
+            }
+            SubWork::BuildNullable => {
+                let inner = Box::new(out.pop().expect("nullable inner"));
+                out.push(PType::Nullable(inner));
+            }
+            SubWork::BuildUnion(count) => {
+                let elems = out.split_off(out.len() - count);
+                out.push(PType::Union(elems));
+            }
+            SubWork::BuildFunction(count) => {
+                let return_type = Box::new(out.pop().expect("fn return"));
+                let parameter_types = out.split_off(out.len() - count);
+                out.push(PType::Function {
+                    parameter_types,
+                    return_type,
+                });
+            }
+            SubWork::BuildConstrained(constraints) => {
+                let base_type = Box::new(out.pop().expect("constrained base"));
+                out.push(PType::Constrained {
+                    base_type,
+                    constraints,
+                });
+            }
+            SubWork::BuildAlias {
+                alias_id,
+                alias_info,
+                arg_count,
+            } => {
+                let aliased_type = Box::new(out.pop().expect("aliased type"));
+                let type_arguments = out.split_off(out.len() - arg_count);
+                out.push(PType::Alias {
+                    alias_id,
+                    alias_info,
+                    type_arguments,
+                    aliased_type,
+                });
             }
         }
-        PType::Class {
-            class_id,
-            class_info,
-            type_arguments,
-        } => PType::Class {
-            class_id: *class_id,
-            class_info: class_info.clone(),
-            type_arguments: type_arguments
-                .iter()
-                .map(|a| substitute_type_params(a, params, args))
-                .collect(),
-        },
-        PType::Nullable(inner) => {
-            PType::Nullable(Box::new(substitute_type_params(inner, params, args)))
-        }
-        PType::Union(elems) => PType::Union(
-            elems
-                .iter()
-                .map(|e| substitute_type_params(e, params, args))
-                .collect(),
-        ),
-        PType::Function {
-            parameter_types,
-            return_type,
-        } => PType::Function {
-            parameter_types: parameter_types
-                .iter()
-                .map(|p| substitute_type_params(p, params, args))
-                .collect(),
-            return_type: Box::new(substitute_type_params(return_type, params, args)),
-        },
-        PType::Constrained {
-            base_type,
-            constraints,
-        } => PType::Constrained {
-            base_type: Box::new(substitute_type_params(base_type, params, args)),
-            constraints: constraints.clone(),
-        },
-        PType::Alias {
-            alias_id,
-            alias_info,
-            type_arguments,
-            aliased_type,
-        } => PType::Alias {
-            alias_id: *alias_id,
-            alias_info: alias_info.clone(),
-            type_arguments: type_arguments
-                .iter()
-                .map(|a| substitute_type_params(a, params, args))
-                .collect(),
-            aliased_type: Box::new(substitute_type_params(aliased_type, params, args)),
-        },
-        PType::Unknown | PType::Nothing | PType::Module | PType::StringLiteral(_) => ty.clone(),
     }
+    Ok(out.pop().expect("substituted PType"))
+}
+
+fn count_ptype_nodes(ty: &PType, limit: usize) -> usize {
+    let mut stack = vec![ty];
+    let mut count = 0usize;
+    while let Some(cur) = stack.pop() {
+        count += 1;
+        if count > limit {
+            return count;
+        }
+        match cur {
+            PType::Class { type_arguments, .. } => stack.extend(type_arguments.iter()),
+            PType::Nullable(inner) => stack.push(inner),
+            PType::Union(elems) => stack.extend(elems.iter()),
+            PType::Function {
+                parameter_types,
+                return_type,
+            } => {
+                stack.extend(parameter_types.iter());
+                stack.push(return_type);
+            }
+            PType::Constrained { base_type, .. } => stack.push(base_type),
+            PType::Alias {
+                type_arguments,
+                aliased_type,
+                ..
+            } => {
+                stack.extend(type_arguments.iter());
+                stack.push(aliased_type);
+            }
+            _ => {}
+        }
+    }
+    count
 }
 
 #[cfg(test)]

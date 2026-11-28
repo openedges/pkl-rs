@@ -57,9 +57,11 @@ impl<'a> Parser<'a> {
                                 parser.depth = self.depth;
                                 parser.expressions = self.expressions;
                                 parser.member_path.clone_from(&self.member_path);
-                                parser.entry_counts.clone_from(&self.entry_counts);
                                 parser.expectation = Some(")".into());
                                 parser.enter_expression_scope()?;
+                                parser.entry_counts = std::mem::take(&mut self.entry_counts);
+                                parser.entry_counts_undo =
+                                    std::mem::take(&mut self.entry_counts_undo);
                                 frames.push(InterpolationFrame {
                                     parser: std::mem::replace(self, parser),
                                     machine: std::mem::replace(
@@ -129,6 +131,8 @@ impl<'a> Parser<'a> {
                         let mut frame = frames.pop().expect("completed interpolation");
                         frame.parser.expressions = self.expressions;
                         frame.parser.entry_counts = std::mem::take(&mut self.entry_counts);
+                        frame.parser.entry_counts_undo =
+                            std::mem::take(&mut self.entry_counts_undo);
                         frame.parser.pending.append(&mut self.pending);
                         frame
                             .parser
@@ -153,7 +157,10 @@ impl<'a> Parser<'a> {
         // Restore the caller's parser on errors as well as success. Each frame
         // owns only flat parser state and Expr trees with iterative destruction.
         if result.is_err() && !frames.is_empty() {
-            *self = frames.remove(0).parser;
+            let mut root = frames.remove(0).parser;
+            root.entry_counts = std::mem::take(&mut self.entry_counts);
+            root.entry_counts_undo = std::mem::take(&mut self.entry_counts_undo);
+            *self = root;
         }
         result
     }

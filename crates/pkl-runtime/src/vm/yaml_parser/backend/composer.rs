@@ -8,6 +8,8 @@ use super::parser::{Event, EventId, Parser};
 use super::{Document, Node, NodeId, NodeKind, Settings, Text, YamlError};
 use std::collections::{BTreeMap, BTreeSet};
 
+const MAX_YAML_NESTING_DEPTH: usize = 256;
+
 /// Outcome of one cooperative step in [`Backend::step`].
 #[derive(Debug)]
 pub enum StepOutcome {
@@ -52,10 +54,38 @@ impl ComposeState {
     }
 }
 
+const MAX_YAML_MERGE_ENTRIES: usize = 500_000;
+const MAX_YAML_TOTAL_MERGE_ENTRIES: usize = 2_000_000;
+const MAX_YAML_MERGE_ROUNDS: usize = 128;
+
+fn flatten_state_fingerprint(entries: &[(NodeId, NodeId)]) -> (usize, u64, u64) {
+    // Two independent 64-bit mixing accumulators (128-bit digest + length) so
+    // non-terminating merge cycle detection stays O(1) memory per round instead
+    // of cloning the full O(MAX_YAML_MERGE_ENTRIES) entry vector up to 128 times.
+    let mut h1: u64 = 0xcbf29ce484222325;
+    let mut h2: u64 = 0x9e3779b97f4a7c15;
+    for &(k, v) in entries {
+        let ku = k.0 as u64;
+        let vu = v.0 as u64;
+        h1 ^= ku;
+        h1 = h1.wrapping_mul(0x100000001b3);
+        h1 ^= vu;
+        h1 = h1.wrapping_mul(0x100000001b3);
+        h2 = h2
+            .wrapping_add(ku.wrapping_mul(0xbf58476d1ce4e5b9))
+            .rotate_left(27);
+        h2 ^= vu.wrapping_mul(0x94d049bb133111eb);
+        h2 = h2.wrapping_mul(0x517cc1b727220a95);
+    }
+    (entries.len(), h1, h2)
+}
+
 struct FlattenState {
     target_id: NodeId,
     to_process: Vec<(NodeId, NodeId)>,
-    seen: BTreeSet<Vec<(NodeId, NodeId)>>,
+    seen: BTreeSet<(usize, u64, u64)>,
+    rounds: usize,
+    total_merged_entries: usize,
     started_round: bool,
     process: bool,
     updated: Vec<(NodeId, NodeId)>,
@@ -72,6 +102,8 @@ impl FlattenState {
             target_id,
             to_process: entries,
             seen: BTreeSet::new(),
+            rounds: 0,
+            total_merged_entries: 0,
             started_round: false,
             process: false,
             updated: Vec::new(),
@@ -328,6 +360,14 @@ impl Backend {
                         let collection = !matches!(node.kind, NodeKind::Scalar { .. });
                         state.nodes.push(node);
                         if collection {
+                            if state.stack.len() >= MAX_YAML_NESTING_DEPTH {
+                                return Err(YamlError::plain(
+                                    ErrorKind::Engine,
+                                    format!(
+                                        "YAML nesting depth exceeds the specified max={MAX_YAML_NESTING_DEPTH}"
+                                    ),
+                                ));
+                            }
                             state.stack.push(Collection { id, key: None });
                             self.phase = ComposePhase::Composing { single, state };
                             continue;
@@ -354,7 +394,17 @@ impl Backend {
                 } => {
                     remaining -= 1;
                     if !flatten.started_round {
-                        if !flatten.seen.insert(flatten.to_process.clone()) {
+                        flatten.rounds += 1;
+                        if flatten.rounds > MAX_YAML_MERGE_ROUNDS {
+                            return Err(YamlError::plain(
+                                ErrorKind::Engine,
+                                "Number of merge expansion rounds exceeds maximum allowed",
+                            ));
+                        }
+                        if !flatten
+                            .seen
+                            .insert(flatten_state_fingerprint(&flatten.to_process))
+                        {
                             return Err(YamlError::plain(
                                 ErrorKind::Unsupported,
                                 "Nonterminating explicit merge expansion requires the pinned Java lifecycle outcome",
@@ -367,6 +417,7 @@ impl Backend {
                         flatten.merge_idx = 0;
                         flatten.refs.clear();
                         flatten.ref_idx = 0;
+                        remaining = remaining.saturating_sub(flatten.to_process.len());
                         for &(key, value) in &flatten.to_process {
                             if state.nodes[key.0].tag == tag("merge") {
                                 flatten.merge_tuples.push((key, value));
@@ -404,6 +455,24 @@ impl Backend {
                         let NodeKind::Mapping { entries, .. } = &state.nodes[mapped.0].kind else {
                             unreachable!()
                         };
+                        remaining = remaining.saturating_sub(entries.len());
+                        flatten.total_merged_entries =
+                            flatten.total_merged_entries.saturating_add(entries.len());
+                        if flatten.updated.len().saturating_add(entries.len())
+                            > MAX_YAML_MERGE_ENTRIES
+                            || flatten.total_merged_entries > MAX_YAML_TOTAL_MERGE_ENTRIES
+                        {
+                            return Err(YamlError::plain(
+                                ErrorKind::Engine,
+                                "Number of merged mapping entries exceeds maximum allowed",
+                            ));
+                        }
+                        if flatten.updated.try_reserve(entries.len()).is_err() {
+                            return Err(YamlError::plain(
+                                ErrorKind::Engine,
+                                "Memory limit exceeded while expanding YAML merge keys",
+                            ));
+                        }
                         let mut found = BTreeSet::new();
                         for &(key, value) in entries {
                             if let NodeKind::Scalar { value: scalar, .. } = &state.nodes[key.0].kind

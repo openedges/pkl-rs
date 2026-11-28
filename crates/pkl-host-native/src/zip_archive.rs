@@ -4,6 +4,40 @@
 
 use std::collections::BTreeMap;
 
+const MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES: usize = 128 * 1024 * 1024;
+const MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES: usize = 256 * 1024 * 1024;
+const MAX_ZIP_INITIAL_ALLOC_BYTES: usize = 64 * 1024;
+const MAX_ZIP_PATH_BYTES: usize = 8192;
+const MAX_ZIP_PATH_DEPTH: usize = 2048;
+
+fn validate_entry_name(raw_name: &str) -> Result<(), String> {
+    if raw_name.len() > MAX_ZIP_PATH_BYTES {
+        return Err("Invalid ZIP: entry path exceeds maximum allowed byte length".to_string());
+    }
+    if raw_name.contains('\0') || raw_name.contains('\\') {
+        return Err(format!(
+            "Invalid ZIP: entry `{raw_name}` contains forbidden NUL or backslash"
+        ));
+    }
+    let mut depth = 0usize;
+    for seg in raw_name.split('/') {
+        if seg == ".." {
+            return Err(format!(
+                "Invalid ZIP: entry `{raw_name}` contains forbidden parent-directory traversal (`..`)"
+            ));
+        }
+        if !seg.is_empty() {
+            depth += 1;
+            if depth > MAX_ZIP_PATH_DEPTH {
+                return Err(format!(
+                    "Invalid ZIP: entry `{raw_name}` exceeds maximum directory nesting depth"
+                ));
+            }
+        }
+    }
+    Ok(())
+}
+
 /// Parsed read-only ZIP archive mapping normalized relative paths (no leading `/`) to bytes.
 #[derive(Clone, Debug)]
 pub struct ZipReader {
@@ -26,17 +60,26 @@ impl ZipReader {
         let actual_cd_offset = eocd_pos
             .checked_sub(cd_size)
             .ok_or_else(|| "Invalid ZIP: central directory size exceeds file length".to_string())?;
-        let base_offset = actual_cd_offset.saturating_sub(cd_offset_declared);
+        let base_offset = actual_cd_offset
+            .checked_sub(cd_offset_declared)
+            .ok_or_else(|| {
+                "Invalid ZIP: declared central directory offset exceeds actual offset".to_string()
+            })?;
 
         let mut entries = BTreeMap::new();
+        let mut total_uncompressed: usize = 0;
         let mut cursor = actual_cd_offset;
         for _ in 0..total_entries {
-            if cursor + 46 > eocd_pos {
+            let Some(cd_fixed_end) = cursor.checked_add(46) else {
+                return Err("Invalid ZIP: central directory offset overflow".to_string());
+            };
+            if cd_fixed_end > eocd_pos {
                 return Err("Invalid ZIP: truncated central directory entry".to_string());
             }
             if &data[cursor..cursor + 4] != b"PK\x01\x02" {
                 return Err("Invalid ZIP: bad central directory signature".to_string());
             }
+            let version_made_by = read_u16(data, cursor + 4);
             let method = read_u16(data, cursor + 10);
             let expected_crc = read_u32(data, cursor + 16);
             let comp_size = read_u32(data, cursor + 20) as usize;
@@ -44,21 +87,38 @@ impl ZipReader {
             let name_len = read_u16(data, cursor + 28) as usize;
             let extra_len = read_u16(data, cursor + 30) as usize;
             let comment_len = read_u16(data, cursor + 32) as usize;
-            let local_offset = read_u32(data, cursor + 42) as usize + base_offset;
+            let external_attrs = read_u32(data, cursor + 38);
+            let local_offset = (read_u32(data, cursor + 42) as usize)
+                .checked_add(base_offset)
+                .ok_or_else(|| "Invalid ZIP: local header offset overflow".to_string())?;
 
-            let name_start = cursor + 46;
-            let name_end = name_start + name_len;
-            if name_end + extra_len + comment_len > eocd_pos {
+            let name_start = cd_fixed_end;
+            let name_end = name_start
+                .checked_add(name_len)
+                .ok_or_else(|| "Invalid ZIP: central directory name overflow".to_string())?;
+            let next_cursor = name_end
+                .checked_add(extra_len)
+                .and_then(|n| n.checked_add(comment_len))
+                .ok_or_else(|| "Invalid ZIP: central directory entry overflow".to_string())?;
+            if next_cursor > eocd_pos {
                 return Err("Invalid ZIP: central directory entry overflows".to_string());
             }
             let raw_name = String::from_utf8_lossy(&data[name_start..name_end]).into_owned();
-            cursor = name_end + extra_len + comment_len;
+            cursor = next_cursor;
 
-            if raw_name.ends_with('/') {
+            validate_entry_name(&raw_name)?;
+
+            // Skip Unix/macOS symlink entries (`S_IFLNK = 0o120000` when OS == 3 Unix or 19 macOS).
+            let is_unix_symlink = matches!(version_made_by >> 8, 3 | 19)
+                && ((external_attrs >> 16) & 0o170000) == 0o120000;
+            if is_unix_symlink || raw_name.ends_with('/') {
                 continue;
             }
 
-            if local_offset + 30 > data.len()
+            let local_fixed_end = local_offset
+                .checked_add(30)
+                .ok_or_else(|| "Invalid ZIP: local header offset overflow".to_string())?;
+            if local_fixed_end > data.len()
                 || &data[local_offset..local_offset + 4] != b"PK\x03\x04"
             {
                 return Err(format!(
@@ -67,17 +127,41 @@ impl ZipReader {
             }
             let lf_name_len = read_u16(data, local_offset + 26) as usize;
             let lf_extra_len = read_u16(data, local_offset + 28) as usize;
-            let payload_start = local_offset + 30 + lf_name_len + lf_extra_len;
+            let payload_start = local_fixed_end
+                .checked_add(lf_name_len)
+                .and_then(|n| n.checked_add(lf_extra_len))
+                .ok_or_else(|| "Invalid ZIP: local payload offset overflow".to_string())?;
             let payload_end = payload_start
                 .checked_add(comp_size)
                 .ok_or_else(|| "Invalid ZIP: entry size overflow".to_string())?;
             if payload_end > data.len() {
                 return Err(format!("Invalid ZIP: truncated payload for `{raw_name}`"));
             }
+            if uncomp_size > MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES {
+                return Err(format!(
+                    "Invalid ZIP: entry `{raw_name}` uncompressed size {uncomp_size} exceeds maximum limit"
+                ));
+            }
+            let remaining_budget =
+                MAX_ZIP_TOTAL_UNCOMPRESSED_BYTES.saturating_sub(total_uncompressed);
+            let entry_limit = remaining_budget.min(MAX_ZIP_ENTRY_UNCOMPRESSED_BYTES);
+            if uncomp_size > entry_limit {
+                return Err(format!(
+                    "Invalid ZIP: archive total uncompressed size exceeds maximum limit at `{raw_name}`"
+                ));
+            }
+
             let compressed = &data[payload_start..payload_end];
             let decoded = match method {
-                0 => compressed.to_vec(),
-                8 => inflate_raw(compressed)?,
+                0 => {
+                    if compressed.len() != uncomp_size {
+                        return Err(format!(
+                            "Invalid ZIP: stored entry size mismatch for `{raw_name}`"
+                        ));
+                    }
+                    compressed.to_vec()
+                }
+                8 => inflate_raw(compressed, uncomp_size, entry_limit)?,
                 other => {
                     return Err(format!(
                         "Unsupported ZIP compression method `{other}` for `{raw_name}`"
@@ -92,6 +176,7 @@ impl ZipReader {
             if crc32(&decoded) != expected_crc {
                 return Err(format!("Invalid ZIP: CRC-32 mismatch for `{raw_name}`"));
             }
+            total_uncompressed = total_uncompressed.saturating_add(decoded.len());
             let normalized = raw_name.trim_start_matches('/').to_string();
             if !normalized.is_empty() {
                 entries.insert(normalized, decoded);
@@ -297,7 +382,11 @@ impl HuffmanTree {
     }
 }
 
-fn inflate_raw(input: &[u8]) -> Result<Vec<u8>, String> {
+fn inflate_raw(
+    input: &[u8],
+    expected_size: usize,
+    max_output_bytes: usize,
+) -> Result<Vec<u8>, String> {
     const LEN_BASE: [u16; 29] = [
         3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115,
         131, 163, 195, 227, 258,
@@ -318,7 +407,11 @@ fn inflate_raw(input: &[u8]) -> Result<Vec<u8>, String> {
     ];
 
     let mut reader = BitReader::new(input);
-    let mut out = Vec::new();
+    let mut out = Vec::with_capacity(
+        expected_size
+            .min(max_output_bytes)
+            .min(MAX_ZIP_INITIAL_ALLOC_BYTES),
+    );
     loop {
         let bfinal = reader.read_bits(1)?;
         let btype = reader.read_bits(2)?;
@@ -330,7 +423,14 @@ fn inflate_raw(input: &[u8]) -> Result<Vec<u8>, String> {
                 if len != !nlen {
                     return Err("Invalid stored block length complement".to_string());
                 }
+                if out.len().saturating_add(usize::from(len)) > max_output_bytes {
+                    return Err(
+                        "Invalid ZIP: decompressed entry exceeds maximum allowed size".to_string(),
+                    );
+                }
                 let block = reader.read_aligned_bytes(usize::from(len))?;
+                out.try_reserve(block.len())
+                    .map_err(|_| "ZIP inflate out of memory".to_string())?;
                 out.extend_from_slice(&block);
             }
             1 | 2 => {
@@ -400,6 +500,12 @@ fn inflate_raw(input: &[u8]) -> Result<Vec<u8>, String> {
                 loop {
                     let sym = lit_tree.decode(&mut reader)?;
                     if sym < 256 {
+                        if out.len() >= max_output_bytes {
+                            return Err(
+                                "Invalid ZIP: decompressed entry exceeds maximum allowed size"
+                                    .to_string(),
+                            );
+                        }
                         out.push(sym as u8);
                     } else if sym == 256 {
                         break;
@@ -416,6 +522,14 @@ fn inflate_raw(input: &[u8]) -> Result<Vec<u8>, String> {
                         if dist == 0 || dist > out.len() {
                             return Err("DEFLATE back-reference before start of output".to_string());
                         }
+                        if out.len().saturating_add(length) > max_output_bytes {
+                            return Err(
+                                "Invalid ZIP: decompressed entry exceeds maximum allowed size"
+                                    .to_string(),
+                            );
+                        }
+                        out.try_reserve(length)
+                            .map_err(|_| "ZIP inflate out of memory".to_string())?;
                         for _ in 0..length {
                             let b = out[out.len() - dist];
                             out.push(b);

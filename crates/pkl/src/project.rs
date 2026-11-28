@@ -1,16 +1,17 @@
 //! PklProject loading and discovery mirroring `org.pkl.core.project.Project`.
 
-use crate::error::{PklError, Result};
+use crate::error::{PklError, Result, format_module_host_error};
 use crate::settings::PklEvaluatorSettings;
-use pkl_host_native::{NativeHost, NativeHostConfig, path_to_file_uri};
+use pkl_host_native::{NativeHost, NativeHostConfig, NativeHostExtensions, path_to_file_uri};
 use pkl_runtime::evaluation::frontend::DiagnosticProfile;
+use pkl_runtime::evaluation::session::SourceSession;
 use pkl_runtime::modules::ModuleSourceSpec;
 use pkl_runtime::packages::project::{
     PackageSpec, Project as RuntimeProject, ProjectDependenciesManager, ProjectDeps,
     find_project_dir_with,
 };
 use pkl_runtime::pkl_binary_decode::decode_lossless as decode_pkl_binary;
-use pkl_runtime::value::PklString;
+use pkl_runtime::value::{ErrorKind, PklString};
 use std::path::{Path, PathBuf};
 
 /// Loaded `PklProject` descriptor (`org.pkl.core.project.Project`).
@@ -32,15 +33,6 @@ impl Project {
         environment: Vec<(String, String)>,
         properties: Vec<(String, String)>,
     ) -> Result<Self> {
-        let project_path = project_file.as_ref();
-        let abs = if project_path.is_absolute() {
-            project_path.to_path_buf()
-        } else {
-            std::env::current_dir()?.join(project_path)
-        };
-        let canonical = std::fs::canonicalize(&abs).unwrap_or(abs);
-        let project_uri = path_to_file_uri(&canonical).to_java_utf8();
-
         let config = NativeHostConfig {
             allowed_modules: Some(
                 pkl_runtime::host::security::DEFAULT_ALLOWED_MODULES
@@ -59,22 +51,100 @@ impl Project {
             internal_pkl_binary_eval: true,
             ..Default::default()
         };
-        let host = NativeHost::new(config).map_err(PklError::configuration)?;
+        Self::load_from_path_with_host_config(project_file, config, None)
+    }
+
+    #[doc(hidden)]
+    pub fn load_from_path_with_host_config(
+        project_file: impl AsRef<Path>,
+        mut config: NativeHostConfig,
+        extensions: Option<NativeHostExtensions>,
+    ) -> Result<Self> {
+        let project_path = project_file.as_ref();
+        let abs = if project_path.is_absolute() {
+            project_path.to_path_buf()
+        } else {
+            std::env::current_dir()?.join(project_path)
+        };
+        let canonical = std::fs::canonicalize(&abs).unwrap_or(abs);
+        let project_uri = path_to_file_uri(&canonical).to_java_utf8();
+
+        config.internal_pkl_binary_eval = true;
+        let timeout_ms = config.timeout_ms;
+        let host = match extensions {
+            Some(ext) => NativeHost::with_extensions(config, ext),
+            None => NativeHost::new(config),
+        }
+        .map_err(PklError::configuration)?;
         let mut session = host.new_public_session(DiagnosticProfile::CliBundledSettings);
         let spec = ModuleSourceSpec {
             uri: PklString::from(project_uri.as_str()),
             contents: None,
         };
-        let bytes = host
-            .evaluate_expression_pkl_binary_on(&mut session, spec, "output.value")
-            .map_err(PklError::evaluation)?;
+        let resolved_spec = match host.resolve_module_source_spec(spec) {
+            Ok(s) => s,
+            Err(err) => {
+                let mapped = match &err {
+                    pkl_runtime::modules::ModuleHostError::SecurityManagerException { .. } => {
+                        PklError::security(format_module_host_error(&err))
+                    }
+                    pkl_runtime::modules::ModuleHostError::Io(_)
+                    | pkl_runtime::modules::ModuleHostError::NotFound => {
+                        PklError::io(format_module_host_error(&err))
+                    }
+                    _ => PklError::evaluation(format_module_host_error(&err)),
+                };
+                session.close();
+                host.close();
+                return Err(mapped);
+            }
+        };
+        let eval_res = (|| -> std::result::Result<Vec<u8>, pkl_runtime::value::RuntimeError> {
+            let now = if timeout_ms.is_some() {
+                host.clock_ms()
+            } else {
+                session.host_session().last_clock()
+            };
+            let mut stderr = Vec::new();
+            session.start_evaluation_pkl_binary(resolved_spec, "output.value", now, timeout_ms)?;
+            let val = host.drive_public_session(&mut session, &mut stderr)?;
+            SourceSession::result_bytes(val).map(|b| b.to_vec())
+        })();
+        let bytes = match eval_res {
+            Ok(b) => b,
+            Err(err) => {
+                let mapped = match err.kind {
+                    ErrorKind::Timeout => PklError::timeout(
+                        pkl_runtime::host::format_timeout_message(timeout_ms.unwrap_or(0)),
+                    ),
+                    ErrorKind::Cancelled => PklError::cancelled(err.message.to_java_utf8()),
+                    ErrorKind::Closed => PklError::closed(err.message.to_java_utf8()),
+                    _ => {
+                        let is_security = err.is_security_error();
+                        let rendered = session.format_error(err);
+                        if is_security {
+                            PklError::security(rendered)
+                        } else {
+                            PklError::evaluation(rendered)
+                        }
+                    }
+                };
+                session.close();
+                host.close();
+                return Err(mapped);
+            }
+        };
         session.close();
         host.close();
 
         let decoded = decode_pkl_binary(&bytes)
             .map_err(|err| PklError::decode(format!("Failed to decode PklProject: {err}")))?;
-        let mut runtime_project = RuntimeProject::from_decoded_value(&decoded)
-            .map_err(|err| PklError::evaluation(format!("Failed to parse PklProject: {err:?}")))?;
+        let mut runtime_project = RuntimeProject::from_decoded_value(&decoded).map_err(|err| {
+            PklError::evaluation(format!(
+                "Failed to parse PklProject: {}",
+                format_module_host_error(&err)
+            ))
+        })?;
         if let Some(dir) = canonical.parent() {
             runtime_project.project_dir = dir.to_path_buf();
             runtime_project.project_file_uri = project_uri;
@@ -91,18 +161,26 @@ impl Project {
             runtime_project.project_dir.clone(),
         );
         if deps_json_path.is_file() {
-            let raw = std::fs::read_to_string(&deps_json_path)?;
+            let raw_bytes = pkl_host_native::read_path_nofollow_bounded(&deps_json_path)?;
+            let raw = String::from_utf8(raw_bytes).map_err(|err| {
+                PklError::io(format!(
+                    "I/O error reading `{}`: {err}",
+                    deps_json_path.display()
+                ))
+            })?;
             let deps_uri = mgr.project_deps_file_uri();
             let deps = ProjectDeps::parse(&raw, &deps_uri).map_err(|err| {
                 PklError::configuration(format!(
-                    "Failed to parse `{}`: {err:?}",
-                    deps_json_path.display()
+                    "Failed to parse `{}`: {}",
+                    deps_json_path.display(),
+                    format_module_host_error(&err)
                 ))
             })?;
             mgr.initialize_with_deps(deps).map_err(|err| {
                 PklError::configuration(format!(
-                    "Failed to initialize project dependencies for `{}`: {err:?}",
-                    deps_json_path.display()
+                    "Failed to initialize project dependencies for `{}`: {}",
+                    deps_json_path.display(),
+                    format_module_host_error(&err)
                 ))
             })?;
         }
@@ -146,11 +224,13 @@ impl Project {
         &self.inner.tests
     }
 
+    #[doc(hidden)]
     pub fn dependencies_manager(&self) -> Option<&ProjectDependenciesManager> {
         self.dependencies_manager.as_ref()
     }
 
-    pub fn runtime_project(&self) -> &RuntimeProject {
+    #[allow(dead_code)]
+    pub(crate) fn runtime_project(&self) -> &RuntimeProject {
         &self.inner
     }
 }

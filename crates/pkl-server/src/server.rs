@@ -42,6 +42,10 @@ impl<W: Write + Send + 'static> StreamWriter<W> {
         }
     }
 
+    fn mark_closed(&self) {
+        self.closed.store(true, Ordering::SeqCst);
+    }
+
     fn close(&self) {
         self.closed.store(true, Ordering::SeqCst);
         let mut guard = self.inner.lock().unwrap_or_else(|e| e.into_inner());
@@ -100,13 +104,29 @@ impl PendingSlot {
             if let Some(res) = guard.take() {
                 return res;
             }
-            guard = self.ready.wait(guard).unwrap_or_else(|e| e.into_inner());
+            if pkl_host_native::is_current_thread_eval_cancelled() {
+                return Err(ExternalReaderError::Cancelled);
+            }
+            let (next_guard, _) = self
+                .ready
+                .wait_timeout(guard, std::time::Duration::from_millis(50))
+                .unwrap_or_else(|e| e.into_inner());
+            guard = next_guard;
         }
     }
 }
 
+const MAX_RECENTLY_CANCELLED_IDS: usize = 4096;
+
 struct PendingCallbacks {
     slots: Mutex<HashMap<i64, (i64, Arc<PendingSlot>)>>,
+    /// Bounded FIFO + set of recently cancelled/closed request IDs so late
+    /// in-flight client responses arriving after `CloseEvaluator` or eval
+    /// timeout are discarded cleanly instead of crashing the entire server.
+    cancelled: Mutex<(
+        std::collections::VecDeque<i64>,
+        std::collections::HashSet<i64>,
+    )>,
     closed: AtomicBool,
 }
 
@@ -114,8 +134,41 @@ impl PendingCallbacks {
     fn new() -> Self {
         Self {
             slots: Mutex::new(HashMap::new()),
+            cancelled: Mutex::new((
+                std::collections::VecDeque::new(),
+                std::collections::HashSet::new(),
+            )),
             closed: AtomicBool::new(false),
         }
+    }
+
+    fn record_cancelled(&self, request_id: i64) {
+        let mut guard = self.cancelled.lock().unwrap_or_else(|e| e.into_inner());
+        let (queue, set) = &mut *guard;
+        if set.insert(request_id) {
+            queue.push_back(request_id);
+            while set.len() > MAX_RECENTLY_CANCELLED_IDS {
+                while let Some(&front) = queue.front() {
+                    if set.contains(&front) {
+                        break;
+                    }
+                    queue.pop_front();
+                }
+                if let Some(evicted) = queue.pop_front() {
+                    set.remove(&evicted);
+                } else {
+                    break;
+                }
+            }
+            if queue.len() > MAX_RECENTLY_CANCELLED_IDS * 2 {
+                queue.retain(|id| set.contains(id));
+            }
+        }
+    }
+
+    fn take_cancelled(&self, request_id: i64) -> bool {
+        let mut guard = self.cancelled.lock().unwrap_or_else(|e| e.into_inner());
+        guard.1.remove(&request_id)
     }
 
     fn register(
@@ -126,6 +179,11 @@ impl PendingCallbacks {
         let mut map = self.slots.lock().unwrap_or_else(|e| e.into_inner());
         if self.closed.load(Ordering::SeqCst) {
             return Err(ExternalReaderError::Closed);
+        }
+        if map.contains_key(&request_id) {
+            return Err(ExternalReaderError::Protocol(format!(
+                "Duplicate in-flight request ID `{request_id}`."
+            )));
         }
         let slot = PendingSlot::new();
         map.insert(request_id, (evaluator_id, Arc::clone(&slot)));
@@ -139,14 +197,45 @@ impl PendingCallbacks {
             .remove(&request_id);
     }
 
+    fn cancel_request(&self, request_id: i64) {
+        let removed = self
+            .slots
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .remove(&request_id)
+            .is_some();
+        if removed {
+            self.record_cancelled(request_id);
+        }
+    }
+
     fn complete_response(&self, msg: ServerMessage) -> Result<(), ExternalReaderError> {
         let request_id = msg.request_id().unwrap_or(0);
+        let response_evaluator_id = msg.evaluator_id();
         let simple_name = msg.java_simple_name();
-        let slot = {
+        let entry = {
             let mut map = self.slots.lock().unwrap_or_else(|e| e.into_inner());
-            map.remove(&request_id).map(|(_, slot)| slot)
+            match map.get(&request_id) {
+                Some(&(expected_eval_id, _))
+                    if response_evaluator_id.is_some_and(|got| got != expected_eval_id) =>
+                {
+                    return Err(ExternalReaderError::Protocol(format!(
+                        "Mismatched evaluatorId in `{simple_name}` for requestId `{request_id}`: expected `{expected_eval_id}`, got `{}`.",
+                        response_evaluator_id.unwrap_or_default()
+                    )));
+                }
+                _ => map.remove(&request_id).map(|(_, slot)| slot),
+            }
         };
-        let Some(slot) = slot else {
+        let Some(slot) = entry else {
+            if self.take_cancelled(request_id) {
+                if debug_enabled() {
+                    debug_log(format_args!(
+                        "Discarding late `{simple_name}` for cancelled/closed request ID `{request_id}`."
+                    ));
+                }
+                return Ok(());
+            }
             return Err(ExternalReaderError::unknown_request_id(
                 simple_name,
                 request_id,
@@ -158,16 +247,21 @@ impl PendingCallbacks {
     }
 
     fn cancel_evaluator(&self, evaluator_id: i64, err: ExternalReaderError) {
-        let removed: Vec<Arc<PendingSlot>> = {
+        let (ids, removed): (Vec<i64>, Vec<Arc<PendingSlot>>) = {
             let mut map = self.slots.lock().unwrap_or_else(|e| e.into_inner());
             let ids: Vec<i64> = map
                 .iter()
                 .filter_map(|(&req_id, &(ev_id, _))| (ev_id == evaluator_id).then_some(req_id))
                 .collect();
-            ids.into_iter()
-                .filter_map(|id| map.remove(&id).map(|(_, slot)| slot))
-                .collect()
+            let slots = ids
+                .iter()
+                .filter_map(|id| map.remove(id).map(|(_, slot)| slot))
+                .collect();
+            (ids, slots)
         };
+        for id in ids {
+            self.record_cancelled(id);
+        }
         for slot in removed {
             slot.complete(Err(err.clone()));
         }
@@ -202,6 +296,9 @@ impl ExternalReaderTransport for ServerClientTransport {
         if self.closed.load(Ordering::SeqCst) {
             return Err(ExternalReaderError::Closed);
         }
+        if pkl_host_native::is_current_thread_eval_cancelled() {
+            return Err(ExternalReaderError::Cancelled);
+        }
         let request_id = message.request_id().ok_or_else(|| {
             ExternalReaderError::Protocol("Expected request message with requestId".into())
         })?;
@@ -211,7 +308,11 @@ impl ExternalReaderTransport for ServerClientTransport {
             self.pending.remove(request_id);
             return Err(err);
         }
-        slot.wait()
+        let res = slot.wait();
+        if matches!(res, Err(ExternalReaderError::Cancelled)) {
+            self.pending.cancel_request(request_id);
+        }
+        res
     }
 
     fn send_one_way(&self, message: ExternalReaderMessage) -> Result<(), ExternalReaderError> {
@@ -235,7 +336,6 @@ impl ExternalReaderTransport for ServerClientTransport {
     }
 
     fn cancel(&self) {
-        self.closed.store(true, Ordering::SeqCst);
         self.pending
             .cancel_evaluator(self.evaluator_id, ExternalReaderError::Cancelled);
     }
@@ -329,6 +429,16 @@ pub fn run_stream_server<R: Read + Send + 'static, W: Write + Send + 'static>(
             }
         })
         .map_err(|e| ServerError::new(format!("Failed to spawn server worker thread: {e}")))?;
+
+    let (close_tx, close_rx) = mpsc::channel::<Arc<ServerEvaluator>>();
+    let closer = thread::Builder::new()
+        .name("pkl-server-closer".into())
+        .spawn(move || {
+            for evaluator in close_rx {
+                evaluator.finish_close();
+            }
+        })
+        .map_err(|e| ServerError::new(format!("Failed to spawn server closer thread: {e}")))?;
 
     let mut evaluators: HashMap<i64, Arc<ServerEvaluator>> = HashMap::new();
     let mut reader = BufReader::new(input);
@@ -443,13 +553,12 @@ pub fn run_stream_server<R: Read + Send + 'static, W: Write + Send + 'static>(
             }
             ServerMessage::CloseEvaluator { evaluator_id } => {
                 if let Some(evaluator) = evaluators.remove(&evaluator_id) {
-                    evaluator.close();
-                } else {
-                    if debug_enabled() {
-                        debug_log(format_args!(
-                            "Ignoring close request for unknown evaluator ID `{evaluator_id}`."
-                        ));
-                    }
+                    evaluator.begin_close();
+                    let _ = close_tx.send(evaluator);
+                } else if debug_enabled() {
+                    debug_log(format_args!(
+                        "Ignoring close request for unknown evaluator ID `{evaluator_id}`."
+                    ));
                 }
             }
             ServerMessage::EvaluateRequest {
@@ -524,26 +633,60 @@ pub fn run_stream_server<R: Read + Send + 'static, W: Write + Send + 'static>(
     // Shutdown sequence matching `Server.close()` (`Server.kt:90-97`):
     // 1. Fail any pending client callbacks so blocked evaluations unblock immediately.
     // 2. Drop the job queue sender so no further jobs wait after in-flight work completes.
-    // 3. Cancel/close all evaluators if terminating on error or after draining worker on clean EOF.
+    // 3. On error, mark writer closed and abort all evaluators before joining worker/closer
+    //    so LogMessage pipe backpressure or blocking external readers cannot deadlock teardown.
     pending.fail_all(ExternalReaderError::Closed);
     drop(tx);
     if loop_error.is_some() {
+        writer.mark_closed();
         for (_, evaluator) in evaluators.drain() {
-            evaluator.close();
+            evaluator.abort_immediately();
+            let _ = close_tx.send(evaluator);
         }
-        writer.close();
+        drop(close_tx);
         let _ = worker.join();
+        let _ = closer.join();
+        writer.close();
     } else {
         // Wait for any already-queued non-callback evaluations to flush responses before closing.
         let _ = worker.join();
         for (_, evaluator) in evaluators.drain() {
-            evaluator.close();
+            evaluator.begin_close();
+            let _ = close_tx.send(evaluator);
         }
+        drop(close_tx);
+        let _ = closer.join();
         writer.close();
     }
 
     match loop_error {
         Some(err) => Err(err),
         None => Ok(()),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::{MAX_RECENTLY_CANCELLED_IDS, PendingCallbacks};
+
+    #[test]
+    fn round5_pending_callbacks_cancelled_eviction_preserves_live_ids() {
+        let pending = PendingCallbacks::new();
+        for id in 1..=(MAX_RECENTLY_CANCELLED_IDS as i64) {
+            pending.record_cancelled(id);
+        }
+        // Consume all but the last ID; previously stale entries remained in the FIFO queue
+        // and caused the live ID to be evicted prematurely on subsequent cancellations.
+        for id in 1..(MAX_RECENTLY_CANCELLED_IDS as i64) {
+            assert!(pending.take_cancelled(id));
+        }
+        let survivor = MAX_RECENTLY_CANCELLED_IDS as i64;
+        for id in 100_000..100_100 {
+            pending.record_cancelled(id);
+        }
+        assert!(
+            pending.take_cancelled(survivor),
+            "live cancelled ID {survivor} must not be evicted by consumed queue entries"
+        );
     }
 }

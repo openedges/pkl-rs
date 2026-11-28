@@ -6,6 +6,7 @@ use crate::pkl_binary_decode::DecodedValue;
 use std::collections::{BTreeMap, BTreeSet};
 
 /// Completion candidate hint for a `pkl:Command` flag or argument.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum CommandCompletionCandidates {
     Path,
@@ -13,6 +14,7 @@ pub enum CommandCompletionCandidates {
 }
 
 /// Collection wrapper kind for multiple-valued command options.
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CommandCollectionKind {
     Listing,
@@ -21,6 +23,7 @@ pub enum CommandCollectionKind {
 }
 
 /// Map/mapping wrapper kind for key=value command options.
+#[non_exhaustive]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum CommandMapKind {
     Mapping,
@@ -28,6 +31,7 @@ pub enum CommandMapKind {
 }
 
 /// Built-in value parser kind resolved from a `pkl:Command` options property type.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum CommandValueKind {
     String,
@@ -103,6 +107,7 @@ pub struct ArgumentSpec {
     pub completion_candidates: Option<CommandCompletionCandidates>,
 }
 
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub enum CommandOptionSpec {
     Flag(FlagSpec),
@@ -139,6 +144,7 @@ pub struct CommandSpec {
 }
 
 /// Parsed runtime value for a CLI flag or argument before Pkl synthesis.
+#[non_exhaustive]
 #[derive(Clone, Debug, PartialEq)]
 pub enum ParsedOptionValue {
     String(String),
@@ -170,6 +176,7 @@ pub struct InvokedCommandLevel {
 }
 
 /// Outcome of parsing CLI args against a [`CommandSpec`].
+#[non_exhaustive]
 #[derive(Clone, Debug)]
 pub enum CommandParseOutcome {
     Execute(Vec<InvokedCommandLevel>),
